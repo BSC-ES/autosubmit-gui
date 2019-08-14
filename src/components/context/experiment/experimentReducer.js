@@ -37,6 +37,7 @@ export default (state, action) => {
             return {
                 ...state,
                 loadingGraph: true,
+                enabledGraphSearch: false,
             };
         case CLEAR_EXPERIMENTS:
             return {
@@ -56,6 +57,7 @@ export default (state, action) => {
                 ...state,
                 data: action.payload,
                 loadingGraph: false,
+                enabledGraphSearch: true,
             };
         default:
             return null;

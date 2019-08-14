@@ -33,6 +33,9 @@ class GraphRepresentation extends Component {
   render(){
     //const experimentContext = useContext(ExperimentContext);
     //{ data, loadingGraph, cleanGraphData, updateSelection } = experimentContext;
+
+    if (this.props.loadingGraph) return <Spinner />;
+
     if (this.props.data === null){
       return(
         <Fragment>
@@ -56,9 +59,9 @@ class GraphRepresentation extends Component {
         })
       );
 
-      this.props.data.edges.map(edge => {
-        edges_array.push({ from: edge.from, to: edge.to });
-      });
+      this.props.data.edges.map(edge => 
+        edges_array.push({ from: edge.from, to: edge.to })
+      );
     }
 
     const graph = {
@@ -105,16 +108,15 @@ class GraphRepresentation extends Component {
       select: (event) => {
         var { nodes, edges } = event;
         //setCurrent(nodes);
-        console.log("Selected nodes:");
         console.log(nodes);
+        console.log(edges);
         this.props.updateSelection(nodes);
         //setCurrent(nodes);
         // console.log("Selected edges:");
         // console.log(edges);
       }
     };
-    console.log(this.props.loadingGraph)
-    if (this.props.loadingGraph) return <Spinner />;
+    
 
     if (this.props.data.error === false) {
       return (

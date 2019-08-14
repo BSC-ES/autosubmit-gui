@@ -20,7 +20,8 @@ const ExperimentState = props => {
         loading: false,
         data: null,
         loadingGraph: false,
-        selection: null
+        selection: null,
+        enabledGraphSearch: true,
     }
 
     const [state, dispatch] = useReducer(ExperimentReducer, initialState);
@@ -81,6 +82,7 @@ const ExperimentState = props => {
             loadingGraph: state.loadingGraph,
             data: state.data,
             selection: state.selection,
+            enabledGraphSearch: state.enabledGraphSearch,
             searchExperiments,
             clearExperiments,
             getExperiment,

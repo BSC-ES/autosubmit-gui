@@ -13,7 +13,7 @@ const ExperimentCentral = ({ match }) => {
     <Fragment>
         <Experiment expidToken={expid} />
         <GraphRepresentation data={data} updateSelection={updateSelection} loadingGraph={loadingGraph} cleanGraphData={cleanGraphData} />
-        { data && <Selection />}
+        <Selection />
     </Fragment>
     );
 };  
