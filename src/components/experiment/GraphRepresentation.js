@@ -91,7 +91,7 @@ class GraphRepresentation extends Component {
       interaction: {
         dragNodes: true,
         hoverConnectedEdges: true,
-        multiselect: true,
+        // multiselect: true,
         navigationButtons: true,
       },
       physics: {

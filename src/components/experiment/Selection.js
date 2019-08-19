@@ -5,7 +5,7 @@ const Selection = () => {
     const experimentContext = useContext(ExperimentContext);
     const { selection, experiment } = experimentContext;
     const { model, branch, hpc } = experiment;
-    var currentSelection = "Selected nodes: "
+    var currentSelection = "Node: "
     if (selection) {
         selection.map(node => (
             currentSelection += node + ", "

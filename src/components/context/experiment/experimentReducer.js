@@ -6,7 +6,11 @@ import {
     GET_GRAPH,
     SET_LOADING_GRAPH,
     CLEAN_GRAPH_DATA,
+    CLEAN_RUN_DATA,
     UPDATE_SELECTION,
+    SET_LOADING_RUN,
+    GET_EXPERIMENT_RUN,
+    SET_AUTOUPDATE_RUN,
 } from '../types';
 
 export default (state, action) => {
@@ -16,6 +20,12 @@ export default (state, action) => {
                 ...state,
                 data: null,
                 selection: null,
+            };
+        case CLEAN_RUN_DATA:
+            return {
+              ...state,
+              rundata: null,  
+              startAutoUpdateRun: false,
             };
         case UPDATE_SELECTION:
             return {
@@ -28,6 +38,11 @@ export default (state, action) => {
                 experiments: action.payload,
                 loading: false,
             };
+        case SET_AUTOUPDATE_RUN:
+            return {
+                ...state,
+                startAutoUpdateRun: true,
+            };
         case SET_LOADING:
             return {
                 ...state,
@@ -38,6 +53,11 @@ export default (state, action) => {
                 ...state,
                 loadingGraph: true,
                 enabledGraphSearch: false,
+            };
+        case SET_LOADING_RUN:
+            return {
+                ...state,
+                loadingRun: true,                
             };
         case CLEAR_EXPERIMENTS:
             return {
@@ -58,6 +78,12 @@ export default (state, action) => {
                 data: action.payload,
                 loadingGraph: false,
                 enabledGraphSearch: true,
+            };
+        case GET_EXPERIMENT_RUN:
+            return {
+                ...state,
+                rundata: action.payload,
+                loadingRun: false,
             };
         default:
             return null;

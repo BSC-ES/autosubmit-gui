@@ -31,6 +31,7 @@ const Experiment = ({ expidToken }) => {
     time_last_mod,
     description,
     version,
+    updateTime,
   } = experiment;
 
   if (loading)  return <Spinner />;
@@ -44,7 +45,7 @@ const Experiment = ({ expidToken }) => {
         <div>
             <h1>{expid}</h1>
             <p>Description: {description}</p>
-            <small>Version: {version}</small>
+            <small>Version: {version}  |  SleepTime: {updateTime}</small>
         </div>
         <div className='badge badge-primary'>
           Owner: {owner_id} {owner}
