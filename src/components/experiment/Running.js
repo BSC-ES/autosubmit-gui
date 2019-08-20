@@ -15,7 +15,10 @@ class Running extends Component {
 
     componentDidMount(){
         this.props.getExperimentRun(this.props.experiment.expid);
-        this.interval = setInterval(() => this.props.getExperimentRun(this.props.experiment.expid) , this.props.experiment.updateTime * 1000);
+        if (this.props.experiment.running) {
+            this.interval = setInterval(() => this.props.getExperimentRun(this.props.experiment.expid) , this.props.experiment.updateTime * 1000);
+        }
+        
         // if (this.props.rundata){
         //     console.log('DidMount Running.')
         // }
@@ -23,7 +26,9 @@ class Running extends Component {
 
     componentWillUnmount() {
         this.props.cleanRunData();
-        clearInterval(this.interval);
+        if (this.props.experiment.running) {
+            clearInterval(this.interval);
+        }        
     }
     
     

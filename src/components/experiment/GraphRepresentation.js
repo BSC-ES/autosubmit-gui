@@ -106,10 +106,11 @@ class GraphRepresentation extends Component {
 
     const events = {
       select: (event) => {
-        var { nodes, edges } = event;
+        //var { nodes, edges } = event;
+        var { nodes } = event;
         //setCurrent(nodes);
-        console.log(nodes);
-        console.log(edges);
+        // console.log(nodes);
+        // console.log(edges);
         this.props.updateSelection(nodes);
         //setCurrent(nodes);
         // console.log("Selected edges:");

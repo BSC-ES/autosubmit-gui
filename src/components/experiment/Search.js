@@ -14,7 +14,7 @@ const Search = ({ setAlert }) => {
       alertContext.setAlert('Please enter something', 'light');
     } else {
       experimentContext.searchExperiments(text);
-      setText('');
+      //setText('');
     }
   };
 

@@ -32,6 +32,9 @@ const Experiment = ({ expidToken }) => {
     description,
     version,
     updateTime,
+    running,
+    error,
+    error_message,
   } = experiment;
 
   if (loading)  return <Spinner />;
@@ -43,20 +46,21 @@ const Experiment = ({ expidToken }) => {
       </Link>    
       <div className='card text-center'>
         <div>
-            <h1>{expid}</h1>
+            <h1>{expid} {running && <span className='text-success'> - RUNNING - </span>}{!running && <span className='text-danger'> - NOT RUNNING - </span>}</h1>
             <p>Description: {description}</p>
+            {error && <pre className="text-danger">{error_message}</pre>}
             <small>Version: {version}  |  SleepTime: {updateTime}</small>
         </div>
-        <div className='badge badge-primary'>
+        <div className='badge badge-light'>
           Owner: {owner_id} {owner}
         </div>
-        <div className='badge badge-success'>
+        <div className='badge badge-light'>
           Last Access: {time_last_access}
         </div>
         <div className='badge badge-light'>
           Last Modified: {time_last_mod}
         </div>
-        <div className='badge badge-dark'>
+        <div className='badge badge-light'>
           Path: {path}
         </div>
       </div>      

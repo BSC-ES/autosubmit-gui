@@ -16,7 +16,7 @@ const OpenRun = () => {
           <input
             type='submit'
             value='Show Running Data'
-            className='btn btn-primary btn-block'
+            className='btn btn-dark btn-block'
             // disabled={!enabledGraphSearch}
           />
         </form>
