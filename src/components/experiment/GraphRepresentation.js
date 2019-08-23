@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from "react";
+import React, { Component } from "react";
 // import vis from "vis-network";
 import Spinner from "../layout/Spinner";
 import Graph from 'react-graph-vis';
@@ -16,11 +16,15 @@ class GraphRepresentation extends Component {
   //   // eslint-disable-next-line
   // }, []);
 
-  shouldComponentUpdate(nextProps, nextState){
-    if (nextProps.loadingGraph !== this.props.loadingGraph){
+  shouldComponentUpdate(nextProps, nextState){ 
+    
+    if (this.props.shouldUpdateGraph === true){
+      return true
+    }else if (nextProps.data && this.props.data && (nextProps.data.pkl_timestamp !== this.props.data.pkl_timestamp)){
+      console.log("Rerendering")
       return true;
-    }else if (nextProps.data !== this.props.data){
-      return true;
+    }else if (nextProps.loadingGraph !== this.props.loadingGraph){
+      return true;    
     }else{
       return false;
     }
@@ -38,9 +42,12 @@ class GraphRepresentation extends Component {
 
     if (this.props.data === null){
       return(
-        <Fragment>
-          <div>Press the button to show the Graph.</div>
-        </Fragment>
+        <div className="card-body text-left">
+          <p className='lead'>Press <span className='badge badge-info'>Show Graph</span> to see the graph representation of the experiment.</p>
+          <p className='lead'>If the experiment is running, press <span className='badge badge-dark'>Start Job Monitor</span> to start a live tracker of the changes on the experiment's jobs.
+            This process will automatically update the graph's nodes colors and show a log of the detected changes.
+          </p>
+        </div>              
       );       
     }
 
@@ -55,7 +62,8 @@ class GraphRepresentation extends Component {
         nodes_array.push({
           id: node.id,
           label: node.label,
-          color: { background: node.status_color, border: "black" }
+          color: { background: node.status_color, border: "black" },
+          //level: node.priority,
         })
       );
 
@@ -121,26 +129,24 @@ class GraphRepresentation extends Component {
 
     if (this.props.data.error === false) {
       return (
-        <Fragment>
-          <Graph
-            style={experimentStyle}
-            graph={graph}
-            options={options}
-            events={events}
-            getNetwork={network => {
-              //  if you want access to vis.js network api you can set the state in a parent component using this property
-            }}
-          />                  
-        </Fragment> 
+          <div className='card-body p-0'>
+              <Graph
+                style={experimentStyle}
+                graph={graph}
+                options={options}
+                events={events}
+                getNetwork={network => {
+                  //  if you want access to vis.js network api you can set the state in a parent component using this property
+                }}
+              />    
+          </div>            
       );
     }
     else {
       return (
-        <Fragment>
-          <div>
+        <div className="card-body">
             {this.props.data.error_message}
-          </div>
-        </Fragment>
+        </div>
       )
     }    
   }
@@ -148,7 +154,7 @@ class GraphRepresentation extends Component {
 }
 
 const experimentStyle = {
-    height: 800
+    height: 600
   };
 
 export default GraphRepresentation;

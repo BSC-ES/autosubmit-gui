@@ -11,6 +11,14 @@ import {
     SET_LOADING_RUN,
     GET_EXPERIMENT_RUN,
     SET_AUTOUPDATE_RUN,
+    GET_PKL_DATA,
+    SET_LOADING_PKL,
+    UPDATE_NODES,
+    SHOULD_UPDATE_GRAPH,
+    SET_AUTOUPDATE_PKL,
+    CLEAN_PKL_DATA,
+    SET_PKL_CHANGES,
+    UPDATE_EXPERIMENT_TS,
 } from '../types';
 
 export default (state, action) => {
@@ -20,12 +28,22 @@ export default (state, action) => {
                 ...state,
                 data: null,
                 selection: null,
+                enabledGraphSearch: true,
+                loadingGraph: false,
+                loadingPkl: false,
             };
         case CLEAN_RUN_DATA:
             return {
               ...state,
               rundata: null,  
               startAutoUpdateRun: false,
+            };
+        case CLEAN_PKL_DATA:
+            return {
+              ...state,
+              shouldUpdateGraph: false,  
+              startAutoUpdatePkl: false,
+              pklchanges: null,
             };
         case UPDATE_SELECTION:
             return {
@@ -41,12 +59,22 @@ export default (state, action) => {
         case SET_AUTOUPDATE_RUN:
             return {
                 ...state,
-                startAutoUpdateRun: true,
+                startAutoUpdateRun: action.payload,
             };
+        case SET_AUTOUPDATE_PKL:
+            return {
+                ...state,
+                startAutoUpdatePkl: action.payload,
+            }
         case SET_LOADING:
             return {
                 ...state,
                 loading: true,
+            };
+        case SET_LOADING_PKL:
+            return {
+                ...state,
+                loadingPkl: true,
             };
         case SET_LOADING_GRAPH:
             return {
@@ -58,6 +86,11 @@ export default (state, action) => {
             return {
                 ...state,
                 loadingRun: true,                
+            };
+        case SHOULD_UPDATE_GRAPH:
+            return {
+                ...state,
+                shouldUpdateGraph: action.payload,
             };
         case CLEAR_EXPERIMENTS:
             return {
@@ -84,6 +117,27 @@ export default (state, action) => {
                 ...state,
                 rundata: action.payload,
                 loadingRun: false,
+            };
+        case GET_PKL_DATA:
+            return {
+                ...state,
+                pkldata: action.payload,
+                loadingPkl: false,
+            };
+        case UPDATE_NODES:
+            return {
+                ...state,
+                data: action.payload,
+            };
+        case UPDATE_EXPERIMENT_TS:
+            return {
+                ...state,
+                experiment: action.payload,
+            }
+        case SET_PKL_CHANGES:
+            return {
+                ...state,
+                pklchanges: action.payload,
             };
         default:
             return null;

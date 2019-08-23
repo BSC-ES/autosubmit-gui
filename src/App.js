@@ -6,7 +6,7 @@ import About from "./components/pages/About";
 import NotFound from "./components/pages/NotFound";
 import ExperimentCentral from "./components/pages/ExperimentCentral";
 import Home from "./components/pages/Home";
-
+import Footer from "./components/layout/Footer";
 import ExperimentState from './components/context/experiment/ExperimentState';
 import AlertState from './components/context/alert/AlertState';
 
@@ -30,6 +30,7 @@ class App extends Component {
                   <Route component={NotFound} />
                 </Switch>
               </div>
+              <Footer />
             </div>
           </Router>    
         </AlertState>        

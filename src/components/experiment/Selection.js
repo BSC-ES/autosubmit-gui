@@ -3,8 +3,8 @@ import ExperimentContext from '../context/experiment/experimentContext';
 
 const Selection = () => {
     const experimentContext = useContext(ExperimentContext);
-    const { selection, experiment, data } = experimentContext;
-    const { model, branch, hpc } = experiment;
+    const { selection, data } = experimentContext;
+    // const { model, branch, hpc } = experiment;
     //var currentSelection = "Node: "
     var currentNode = ""
     var selectedNode = null
@@ -20,47 +20,65 @@ const Selection = () => {
     }    
     return (
         <Fragment>
-            <div className='card grid-1'>
                 {selectedNode &&
-                    <div>
-                        <div>
-                            <small>Job:</small> <b>{selectedNode.id}</b>
-                        </div>
-                        <div className="grid-3">
-                            <div><strong>Section:</strong> {selectedNode.section}</div>
-                            <div><strong>Status:</strong> {selectedNode.status}</div>
-                            <div><strong>Platform:</strong> {selectedNode.platform_name}</div>
-                        </div>
-                        <div className="grid-3">
-                            <div><strong>Date:</strong> {selectedNode.date}</div>
-                            <div><strong>Priority:</strong> {selectedNode.priority}</div>
-                            <div><strong>Processors:</strong> {selectedNode.processors}</div>
-                        </div>
-                    </div>
+                <Fragment>
+                     <div className='row'>
+                         <div className='col-12'>
+                            <div className="card text-white bg-info" style={experimentStyle}>
+                                <div className='card-header text-center py-0'>
+                                    <small><strong>{selectedNode.id}</strong></small>
+                                </div>
+                                <div className='card-body py-0'>
+                                    <div className='text-left'>
+                                    <small><strong>Date:</strong> {selectedNode.date}</small>
+                                    </div>                        
+                                    <div>
+                                        <small><strong>Section:</strong> {selectedNode.section}</small>
+                                    </div>                            
+                                    <div>
+                                        <small><strong>Platform:</strong> {selectedNode.platform_name}</small>
+                                    </div>                                                                
+                                    <div>
+                                        <small><strong>Priority:</strong> {selectedNode.priority}</small>
+                                    </div>
+                                    <div>
+                                        <small><strong>Processors:</strong> {selectedNode.processors}</small>
+                                    </div>                                                                
+                                    <div>
+                                        <small><strong>Status:</strong></small> {selectedNode.status}
+                                    </div>
+                                    
+                                </div>                            
+                            </div>
+                         </div>
+                    </div>                    
+                </Fragment>                    
                 }  
                 {!selectedNode && data &&
-                    <div>
-                        Select a Node to see more information.
-                    </div>
+                    <div className='row'>
+                        <div className='col-12'>
+                            <div className="card text-white bg-info" style={experimentStyle}>
+                                <div className='card-header text-center py-0'>
+                                    <small>Here goes the Job Id</small>
+                                </div>
+                                <div className='card-body'>
+                                    <div className='text-center'>
+                                    <small>Select a Node to see more information.</small>                                                                        
+                                    </div>
+                                </div>                            
+                            </div>
+                        </div>
+                    </div>                     
                 }              
-            </div>
-            <div>
-            <div className="card grid-3">
-                <div>
-                    <strong>Model:</strong> {model}
-                </div>
-                <div>
-                    <strong>Branch:</strong> {branch}
-                </div>
-                <div>
-                    <strong>Hpc:</strong> {hpc}
-                </div>          
-            </div>
-        </div>
         </Fragment>
+        
         
 
     )
 }
+
+const experimentStyle = {
+    height: 200
+  };
 
 export default Selection;

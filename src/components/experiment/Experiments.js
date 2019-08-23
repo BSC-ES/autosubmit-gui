@@ -10,19 +10,21 @@ const Experiments = () => {
       return <Spinner />
     } else {
       return (
-        <div style={experimentStyle}>
-          {experiments.map(experiment => (
-            <ExperimentItem key={experiment.id} experiment={experiment} />
-          ))}
-        </div>
+        <div className="container">
+          <div className="card-columns">
+            {experiments.map(experiment => (
+              <ExperimentItem key={experiment.id} experiment={experiment} />
+            ))}
+          </div>
+        </div>        
       );
     }
 }
 
-const experimentStyle = {
-  display: 'grid',
-  gridTemplateColumns: 'repeat(3, 1fr)',
-  gridGap: '1rem'
-};
+// const experimentStyle = {
+//   display: 'grid',
+//   gridTemplateColumns: 'repeat(3, 1fr)',
+//   gridGap: '1rem'
+// };
 
 export default Experiments;

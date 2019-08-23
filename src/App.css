@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
 /* Global Styles */
-:root {
+/* :root {
   --primary-color: #dc3545;
   --dark-color: #333333;
   --light-color: #f4f4f4;
@@ -13,7 +13,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
+} */
 
 pre.bash {
   background-color: black;
@@ -22,9 +22,34 @@ pre.bash {
   font-family: Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
   width: 100%;
   display: inline-block;
-  padding: 5px;
+  line-height: 1 !important;
+  /* padding: 5px; */
 }
 
+.page-footer {
+  padding: 2.5rem 9;
+  color: #999;
+  text-align: center;
+  background-color: #f9f9f9;
+  border-top: .05rem solid #e5e5e5;
+}
+
+.container {
+  max-width: 1300px;
+}
+
+.monitorArea {
+  height: 100%;
+  min-height: 50%;
+  width: 100%;
+  font-size: 10px;
+}
+
+.allowResizeVertical {
+  resize: vertical;
+}
+
+/* 
 body {
   font-family: 'Roboto', sans-serif;
   font-size: 1rem;
@@ -48,18 +73,18 @@ ul {
 
 img {
   width: 100%;
-}
+} */
 
 /* Utilities */
-.container {
+/* .container {
   max-width: 1500px;
   margin: auto;
   overflow: hidden;
   padding: 0 2rem;
-}
+} */
 
 /* Text Styles*/
-.x-large {
+/* .x-large {
   font-size: 4rem;
   line-height: 1.2;
   margin-bottom: 1rem;
@@ -106,10 +131,10 @@ img {
 
 .text-left {
   text-align: left;
-}
+} */
 
 /* Center All */
-.all-center {
+/* .all-center {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -117,26 +142,26 @@ img {
   justify-content: center;
   align-items: center;
   text-align: center;
-}
+} */
 
 /* Cards */
-.card {
+/* .card {
   padding: 1rem;
   border: #ccc 1px dotted;
   margin: 0.7rem 0;
-}
+} */
 
 /* List */
-.list {
+/* .list {
   margin: 0.5rem 0;
 }
 
 .list li {
   padding-bottom: 0.3rem;
-}
+} */
 
 /* Padding */
-.p {
+/* .p {
   padding: 0.5rem;
 }
 .p-1 {
@@ -159,10 +184,10 @@ img {
 }
 .py-3 {
   padding: 3rem 0;
-}
+} */
 
 /* Margin */
-.m {
+/* .m {
   margin: 0.5rem;
 }
 .m-1 {
@@ -185,10 +210,10 @@ img {
 }
 .my-3 {
   margin: 3rem 0;
-}
+} */
 
 /* Grid */
-.grid-2 {
+/* .grid-2 {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 1rem;
@@ -315,10 +340,10 @@ img {
 
 .round-img {
   border-radius: 50%;
-}
+} */
 
 /* Forms */
-input {
+/* input {
   margin: 1.2rem 0;
 }
 
@@ -354,10 +379,10 @@ table td {
 
 table th {
   background: var(--light-color);
-}
+} */
 
 /* Navbar */
-.navbar {
+/* .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -384,10 +409,10 @@ table th {
 
 .navbar .welcome span {
   margin-right: 0.6rem;
-}
+} */
 
 /* Mobile Styles */
-@media (max-width: 700px) {
+/* @media (max-width: 700px) {
   .hide-sm {
     display: none;
   }
@@ -399,7 +424,7 @@ table th {
   }
 
   /* Text Styles */
-  .x-large {
+  /* .x-large {
     font-size: 3rem;
   }
 
@@ -409,10 +434,10 @@ table th {
 
   .lead {
     font-size: 1rem;
-  }
+  }  */
 
   /* Navbar */
-  .navbar {
+  /* .navbar {
     display: block;
     text-align: center;
   }
@@ -420,5 +445,5 @@ table th {
   .navbar ul {
     text-align: center;
     justify-content: center;
-  }
-}
+  } */
+/* } */

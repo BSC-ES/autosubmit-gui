@@ -30,6 +30,14 @@ class Running extends Component {
             clearInterval(this.interval);
         }        
     }
+
+    // onSubmit = e => {
+    //     e.preventDefault();
+    //     if (this.props.experiment.running && this.interval) {
+    //         clearInterval(this.interval);
+    //         this.props.setAutoUpdateRun(false);
+    //     }
+    // }
     
     
     render() {
@@ -75,18 +83,38 @@ class Running extends Component {
         }
 
         return (
-            <div>
-                <h3>Logfile: {logfile}</h3>
-                <p>Last Modified: {lastModified}</p>
-                <p><small>TimeStamp: {timeStamp}</small></p>
-                <p><strong>Showing last 40 lines of the log file:</strong></p>
-                <pre className="bash">
-                    <ul style={pStyle}>{logitems}</ul>                    
-                </pre>
-                <br></br>
-                <h3>End of log file.</h3>
-                <br></br>
+            <div className='row'>
+                <div className='col-12'>
+                    <div className="row px-1">
+                        <div className="col-6 text-left"><small>Logfile: {logfile}</small> <small className="text-muted">({timeStamp})</small></div>
+                        <div className="col-6 text-right"><small>Last Modified: {lastModified}</small></div>                        
+                    </div>
+
+                    {/* <p><strong>Showing last 50 lines of the log file:</strong></p> */}
+                    <pre className="bash mb-0">
+                        <ul style={pStyle} className='p-1 mb-0'>{logitems}</ul>                    
+                    </pre>
+                    <div className='text-muted text-center'>
+                        <small>Showing last 50 lines.</small>
+                    </div>
+                    
+
+                </div>
+                
+                {/* {this.props.startAutoUpdateRun && this.interval &&
+                    <div>
+                        <form onSubmit={this.onSubmit} className='form'>
+                        <input
+                        type='submit'
+                        value='Stop Live Update'
+                        className='btn btn-dark btn-block'
+                        // disabled={!enabledGraphSearch}
+                        />
+                        </form>
+                    </div>
+                } */}
             </div>
+            
         )
     }
 }
