@@ -24,6 +24,8 @@ import {
   SET_PKL_CHANGES,
   UPDATE_EXPERIMENT_TS,
   SET_VIS_DATA,
+  SET_VIS_NETWORK,
+  SET_MESSAGE_NAVIGATOR, 
 } from '../types';
 
 const ExperimentState = props => {
@@ -44,6 +46,8 @@ const ExperimentState = props => {
         startAutoUpdatePkl: false,
         shouldUpdateGraph: false,   
         visNodes: null, 
+        visNetwork: null,
+        messageNavigator: null,
     }
 
     const [state, dispatch] = useReducer(ExperimentReducer, initialState);
@@ -184,9 +188,55 @@ const ExperimentState = props => {
       });
     }
 
+    // Graph manipulation
     const updateGraphColor = (idChange, newColor) => {
+      //console.log(state.visNodes);
       state.visNodes.update({id:idChange, color: { background: newColor }});
+    };
+
+    const navigateGraph = (posx, posy) => {
+      // console.log(posx);
+      // console.log(posy);
+      // console.log(state.visNetwork);
+      // console.log(state.visNodes);
+      state.visNetwork.moveTo(
+        {
+          position: {x: posx, y: posy },
+          scale: 0.7,
+          offset: {x: 30, y: 30},
+          animation: false,
+        }
+      );      
+    };
+
+    const navToLatest = (statusCode) => {
+      //const statusCode = 5; // Completed
+      var currentLevel = 0;
+      var latestId = "not found";
+      //console.log(state.data.nodes);
+      if (state.data.nodes) {
+        //console.log("Iterate")
+        for (const node of state.data.nodes){
+          if (node.status_code === statusCode){
+            if (node.level >= currentLevel){
+              currentLevel = node.level;
+              
+              latestId = node.id;
+            }
+          }
+        }
+      }      
+      var currentPosition = state.visNetwork.getPositions([latestId]);
+      //console.log(currentPosition);
+      if (currentPosition[latestId]){
+        navigateGraph(currentPosition[latestId].x, currentPosition[latestId].y);
+        setMessageNavigator(latestId, true)
+      } else {
+        setMessageNavigator("There are no nodes with that status.", false)
+      }
+      
     }
+
 
 
     // Cleaning
@@ -211,6 +261,20 @@ const ExperimentState = props => {
     const setUpdateGraph = (value) => dispatch({ type: SHOULD_UPDATE_GRAPH, payload: value });
     const setPklChanges = (value) => dispatch({ type: SET_PKL_CHANGES, payload: value });
     const setVisData = (value) => dispatch({ type: SET_VIS_DATA, payload: value});
+    const setVisNetwork = (value) => dispatch({ type: SET_VIS_NETWORK, payload: value });
+    const setMessageNavigator = (value, found) => {
+      dispatch({
+        type: SET_MESSAGE_NAVIGATOR,
+        payload: value,
+      });
+
+      // if (found === true){
+      //   setTimeout(() => dispatch({ type: REMOVE_MESSAGE_NAVIGATOR }), 5000);
+      // } else {
+      //   setTimeout(() => dispatch({ type: REMOVE_MESSAGE_NAVIGATOR }), 5000);
+      // }
+      
+    }
 
     // Other Utils
     const hashCode = (value) => {
@@ -255,6 +319,8 @@ const ExperimentState = props => {
             startAutoUpdatePkl: state.startAutoUpdatePkl,
             shouldUpdateGraph: state.shouldUpdateGraph,
             visNodes: state.visNodes,
+            visNetwork: state.visNetwork,
+            messageNavigator: state.messageNavigator,
             setAutoUpdateRun,
             setAutoUpdatePkl,
             searchExperiments,
@@ -271,8 +337,11 @@ const ExperimentState = props => {
             hashCode,       
             timeStampToDate,
             setVisData,
+            setVisNetwork,
             updateGraphColor,
-            setUpdateGraph
+            navigateGraph,
+            setUpdateGraph,
+            navToLatest,
         }}>
             {props.children}
         </ExperimentContext.Provider>

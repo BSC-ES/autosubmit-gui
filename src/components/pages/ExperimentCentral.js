@@ -7,6 +7,7 @@ import Selection from '../experiment/Selection';
 // import OpenRun from '../experiment/OpenRun';
 import Running from '../experiment/Running';
 import JobMonitor from '../experiment/JobMonitor';
+import Navigator from '../experiment/Navigator';
 
 const ExperimentCentral = ({ match }) => {
     const expid = match.params.expid;
@@ -27,7 +28,11 @@ const ExperimentCentral = ({ match }) => {
         rundata,
         pklchanges,
         experiment,
-        setVisData, } = experimentContext;
+        setVisData,
+        setVisNetwork,
+        visNetwork,
+        navigateGraph,
+        navToLatest } = experimentContext;
     
     return (
     <Fragment>
@@ -44,6 +49,9 @@ const ExperimentCentral = ({ match }) => {
                                 cleanGraphData={cleanGraphData} 
                                 shouldUpdateGraph={shouldUpdateGraph} 
                                 setVisData={setVisData}
+                                setVisNetwork={setVisNetwork}
+                                navigateGraph={navigateGraph}
+                                navToLatest={navToLatest}
                             />
                             {/* <GraphRepresentation 
                                 data={data} 
@@ -63,7 +71,10 @@ const ExperimentCentral = ({ match }) => {
                                     pklchanges={pklchanges} />
                             }               
                         </div>
-                    </div>  
+                    </div> 
+                    <div className="card-footer p-0">
+                        {data && visNetwork && <Navigator />}
+                    </div>
                     <div className="card-footer p-0">
 
 

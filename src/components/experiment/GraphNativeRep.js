@@ -24,9 +24,17 @@ class GraphNativeRep extends Component {
 
     updateVisNodes = (nodes) => {
         this.props.setVisData(nodes);
-    }
+    };
 
+    // onSubmit = (x,y) => e => {
+    //   e.preventDefault();
+    //   this.props.navigateGraph(x,y);
+    // };
 
+    onLatest = (statusCode) => e => {
+      e.preventDefault();
+      this.props.navToLatest(statusCode); // Completed
+    };
 
     render () {
         if (this.props.loadingGraph) return <Spinner></Spinner>;
@@ -92,6 +100,8 @@ class GraphNativeRep extends Component {
             interaction: {
               dragNodes: true,
               hoverConnectedEdges: true,
+              hideEdgesOnDrag: true,
+              //hideEdgesOnZoom: true,
               // multiselect: true,
               navigationButtons: true,
             },
@@ -123,8 +133,9 @@ class GraphNativeRep extends Component {
     
             componentDidMount() {
                 var network = new vis.Network(this.refs.myRef, this.props.graph, this.props.options);
+                this.props.setVisNetwork(network);
                 network.on("click", (params) => {
-                    //console.log(params);
+                    console.log(params);
                     if (params.nodes){
                         //console.log(params.nodes);
                         this.props.updateSelection(params.nodes);
@@ -137,6 +148,8 @@ class GraphNativeRep extends Component {
             //     console.log("Unmounting");
             //     this.props.cleanGraphData();
             // }
+
+          
     
             render() {            
                 return (
@@ -149,29 +162,42 @@ class GraphNativeRep extends Component {
 
         this.updateVisNodes(nodes);
     
-        return <VisNetwork 
+        return (
+
+          <VisNetwork 
             graph={graph} 
             options={options} 
             updateSelection={this.props.updateSelection}
             shouldUpdateGraph={this.props.shouldUpdateGraph}
-            />;
+            setVisNetwork={this.props.setVisNetwork}
+          />
+        // <div className="col-12 px-0">
+        //     <div className="row">
+        //       <div className="col-12">
+        //         <VisNetwork 
+        //           graph={graph} 
+        //           options={options} 
+        //           updateSelection={this.props.updateSelection}
+        //           shouldUpdateGraph={this.props.shouldUpdateGraph}
+        //           setVisNetwork={this.props.setVisNetwork}
+        //         />
+        //       </div>
+        //   </div>            
+          
+        // </div>
+        
+
+        );
 
     }
 
 
-  
-
- 
-
-   
-  
-
- 
-
 }
+
 
 const experimentStyle = {
     height: 600
   };
+
 
 export default GraphNativeRep;

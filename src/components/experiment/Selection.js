@@ -3,9 +3,15 @@ import ExperimentContext from '../context/experiment/experimentContext';
 
 const Selection = () => {
     const experimentContext = useContext(ExperimentContext);
-    const { selection, data, experiment } = experimentContext;
+    const { selection, data, experiment} = experimentContext;
     // const { model, branch, hpc } = experiment;
     //var currentSelection = "Node: "
+
+    // const navigateTo = e => {
+    //     e.preventDefault();
+    //     navToLatestCompleted();
+    // };
+
     var currentNode = ""
     var selectedNode = null
     if (selection) {
@@ -96,6 +102,17 @@ const Selection = () => {
                                             </div>
                                         </div>
                                     </div>
+                                    {/* <div>
+                                        <div className="row">
+                                            <form onSubmit={navigateTo(10,10)} className='form'>
+                                                <input
+                                                type='submit'
+                                                value='Go to 10,10'
+                                                className='btn btn-danger btn-block btn-sm'                              
+                                                />
+                                            </form>
+                                        </div>
+                                    </div> */}
                                 </div>                            
                             </div>
                          </div>

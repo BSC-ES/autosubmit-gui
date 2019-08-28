@@ -20,6 +20,9 @@ import {
     SET_PKL_CHANGES,
     UPDATE_EXPERIMENT_TS,
     SET_VIS_DATA,
+    SET_VIS_NETWORK,
+    SET_MESSAGE_NAVIGATOR,
+    REMOVE_MESSAGE_NAVIGATOR,
 } from '../types';
 
 export default (state, action) => {
@@ -145,6 +148,21 @@ export default (state, action) => {
             return {
                 ...state,
                 visNodes: action.payload,
+            };
+        case SET_VIS_NETWORK:
+            return {
+                ...state,
+                visNetwork: action.payload,
+            };
+        case SET_MESSAGE_NAVIGATOR:
+            return {
+                ...state,
+                messageNavigator : action.payload,
+            };
+        case REMOVE_MESSAGE_NAVIGATOR:
+            return {
+                ...state,
+                messageNavigator : null,
             };
         default:
             return null;
