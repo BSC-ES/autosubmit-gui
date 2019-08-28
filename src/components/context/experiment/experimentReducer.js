@@ -36,6 +36,8 @@ export default (state, action) => {
                 loadingGraph: false,
                 loadingPkl: false,
                 visNodes: null,
+                visNetwork: null,
+                messageNavigator: null,
             };
         case CLEAN_RUN_DATA:
             return {
