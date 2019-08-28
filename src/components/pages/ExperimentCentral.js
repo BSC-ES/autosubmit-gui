@@ -1,6 +1,7 @@
 import React, { Fragment, useContext } from 'react';
 import Experiment from '../experiment/Experiment';
-import GraphRepresentation from '../experiment/GraphRepresentation';
+// import GraphRepresentation from '../experiment/GraphRepresentation';
+import GraphNativeRep from '../experiment/GraphNativeRep';
 import ExperimentContext from '../context/experiment/experimentContext';
 import Selection from '../experiment/Selection';
 // import OpenRun from '../experiment/OpenRun';
@@ -25,7 +26,8 @@ const ExperimentCentral = ({ match }) => {
         setAutoUpdateRun,
         rundata,
         pklchanges,
-        experiment } = experimentContext;
+        experiment,
+        setVisData, } = experimentContext;
     
     return (
     <Fragment>
@@ -35,13 +37,21 @@ const ExperimentCentral = ({ match }) => {
                 <div className='card'>
                     <div className='row'>
                         <div className='col-9 pr-0'>
-                            <GraphRepresentation 
+                            <GraphNativeRep 
                                 data={data} 
                                 updateSelection={updateSelection} 
                                 loadingGraph={loadingGraph} 
                                 cleanGraphData={cleanGraphData} 
                                 shouldUpdateGraph={shouldUpdateGraph} 
+                                setVisData={setVisData}
                             />
+                            {/* <GraphRepresentation 
+                                data={data} 
+                                updateSelection={updateSelection} 
+                                loadingGraph={loadingGraph} 
+                                cleanGraphData={cleanGraphData} 
+                                shouldUpdateGraph={shouldUpdateGraph} 
+                            /> */}
                         </div>
                         <div className='col-3 pl-0'>
                             {data && <Selection /> }

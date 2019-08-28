@@ -3,7 +3,7 @@ import ExperimentContext from '../context/experiment/experimentContext';
 
 const Selection = () => {
     const experimentContext = useContext(ExperimentContext);
-    const { selection, data } = experimentContext;
+    const { selection, data, experiment } = experimentContext;
     // const { model, branch, hpc } = experiment;
     //var currentSelection = "Node: "
     var currentNode = ""
@@ -16,6 +16,7 @@ const Selection = () => {
         ));
         //console.log("Current node " + currentNode)
         selectedNode = data.nodes.find(node => node.id === currentNode)    
+        //console.log("Selected node")
         //console.log("Data: " + selectedNode.id + " " + selectedNode.platform_name)
     }    
     return (
@@ -25,29 +26,76 @@ const Selection = () => {
                      <div className='row'>
                          <div className='col-12'>
                             <div className="card text-white bg-info" style={experimentStyle}>
-                                <div className='card-header text-center py-0'>
-                                    <small><strong>{selectedNode.id}</strong></small>
+                                <div className='card-header text-center p-0' style={headerCard}>
+                                    <div className='mh-100 px-0 mx-0'>
+                                        <small><strong>{selectedNode.id}</strong></small>
+                                    </div>                                    
                                 </div>
                                 <div className='card-body py-0'>
                                     <div className='text-left'>
-                                    <small><strong>Date:</strong> {selectedNode.date}</small>
+                                        <small><strong>Date:</strong> {selectedNode.date}</small>
                                     </div>                        
                                     <div>
-                                        <small><strong>Section:</strong> {selectedNode.section}</small>
+                                        <div className='row'>
+                                            <div className='col-12'>
+                                                <small><strong>Section:</strong> {selectedNode.section}</small>
+                                            </div>                                            
+                                        </div>                                        
                                     </div>                            
                                     <div>
-                                        <small><strong>Platform:</strong> {selectedNode.platform_name}</small>
+                                        <div className='row'>
+                                            <div className='col-12'>
+                                                <small><strong>Platform:</strong> {selectedNode.platform_name && selectedNode.platform_name} {!selectedNode.platform_name && experiment.hpc}</small>
+                                            </div>
+                                        </div>                                         
                                     </div>                                                                
-                                    <div>
+                                    {/* <div>
                                         <small><strong>Priority:</strong> {selectedNode.priority}</small>
+                                    </div> */}
+                                    <div>
+                                        <div className='row'>
+                                            <div className='col-6'>
+                                                <small><strong>Processors:</strong> {selectedNode.processors}</small>
+                                            </div>
+                                            <div className='col-6'>
+                                                <small><strong>Wallclock:</strong> {selectedNode.wallclock}</small>
+                                            </div>
+                                        </div>                                        
+                                    </div> 
+                                    <div>
+                                        <div className='row'>
+                                            <div className='col-6'>
+                                                <small><strong>Level:</strong> {selectedNode.level}</small>
+                                            </div>
+                                            <div className='col-6'>
+                                                <small><strong>Out:</strong> {selectedNode.children} <strong>In:</strong> {selectedNode.parents} </small>                                                
+                                            </div>
+                                            
+                                        </div>                                        
+                                    </div>                                                               
+                                    <div>
+                                        <div className='row'>
+                                            <div className='col-12'>
+                                                <small><strong>Status:</strong></small> {selectedNode.status}
+                                            </div>
+                                            {/* <div className='col-4 text-right'>
+                                                <small><strong>c:{data.max_children}/p:{data.max_parents}</strong></small>
+                                            </div> */}
+                                        </div>                                               
                                     </div>
                                     <div>
-                                        <small><strong>Processors:</strong> {selectedNode.processors}</small>
-                                    </div>                                                                
-                                    <div>
-                                        <small><strong>Status:</strong></small> {selectedNode.status}
+                                        <div className='row'>
+                                            <div className='col-4'>
+                                                <small>o:{data.max_children}/i:{data.max_parents} </small>
+                                            </div>
+                                            {/* <div className='col-4'>
+                                                <small>o:{data.avg_children}/i:{data.avg_parents} </small>
+                                            </div> */}
+                                            <div className='col-4'>
+                                                <small>{data.total_jobs}</small>
+                                            </div>
+                                        </div>
                                     </div>
-                                    
                                 </div>                            
                             </div>
                          </div>
@@ -80,5 +128,9 @@ const Selection = () => {
 const experimentStyle = {
     height: 200
   };
+
+const headerCard = {
+    height: 30
+}
 
 export default Selection;

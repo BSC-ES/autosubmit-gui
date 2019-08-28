@@ -5,16 +5,6 @@ import Graph from 'react-graph-vis';
 
 class GraphRepresentation extends Component {
 
- 
-  // { data, loadingGraph, cleanGraphData, updateSelection } = experimentContext;
-  // console.log("Entering GraphRep")
-
-  // useEffect(() => {
-  //   return () => {
-  //     cleanGraphData();
-  //   };
-  //   // eslint-disable-next-line
-  // }, []);
 
   shouldComponentUpdate(nextProps, nextState){ 
     

@@ -1,0 +1,177 @@
+import React, { Component } from "react";
+// import vis from "vis-network";
+import Spinner from "../layout/Spinner";
+import vis from "vis-network";
+
+class GraphNativeRep extends Component {
+
+    shouldComponentUpdate(nextProps, nextState){ 
+        if (this.props.shouldUpdateGraph === true){
+            return true
+          }else if (nextProps.data && this.props.data && (nextProps.data.pkl_timestamp !== this.props.data.pkl_timestamp)){
+            console.log("Rerendering")
+            return true;
+          }else if (nextProps.loadingGraph !== this.props.loadingGraph){
+            return true;    
+          }else{
+            return false;
+          }
+    }
+    componentWillUnmount() {
+        console.log("Unmounting");
+        this.props.cleanGraphData();
+    }
+
+    updateVisNodes = (nodes) => {
+        this.props.setVisData(nodes);
+    }
+
+
+
+    render () {
+        if (this.props.loadingGraph) return <Spinner></Spinner>;
+        if (this.props.data == null){
+            return (
+                <div className="card-body text-left">
+                    <p className='lead'>Press <span className='badge badge-info'>Show Graph</span> to see the graph representation of the experiment.</p>
+                    <p className='lead'>If the experiment is running, press <span className='badge badge-dark'>Start Job Monitor</span> to start a live tracker of the changes on the experiment's jobs.
+                        This process will automatically update the graph's nodes colors and show a log of the detected changes.
+                    </p>
+                </div> 
+            );
+        }
+
+        var nodes_array = [];
+        var edges_array = [];
+    
+        if (this.props.data.nodes !== null || this.props.data.edges !== null) {
+            this.props.data.nodes.map(node => nodes_array.push({
+                id: node.id,
+                label: node.label,
+                color: { background: node.status_color, border: "black" },
+                level: node.level,
+              })
+            );
+      
+            this.props.data.edges.map(edge => 
+              edges_array.push({ from: edge.from, to: edge.to })
+            );
+        }
+    
+        var nodes = new vis.DataSet(nodes_array);
+        var edges = new vis.DataSet(edges_array);
+
+        var shouldEdge = false;
+        if (this.props.data.total_jobs <= 500){
+            shouldEdge = true;
+        }
+        const options = {
+            edges: {
+              arrows: {
+                to: { enabled: true }
+              }
+            },
+            layout: {
+              improvedLayout: false,
+              hierarchical: {
+                nodeSpacing: 190,                
+                blockShifting: false,
+                edgeMinimization: shouldEdge,
+                parentCentralization: true,
+                sortMethod: 'hubsize',
+                direction: 'UD',
+                // work on vis current version
+                // nodeSpacing: 190,
+                // blockShifting: false,
+                // edgeMinimization: false,
+                // parentCentralization: true,
+                // sortMethod: 'hubsize',
+                // direction: 'UD',
+              }
+            },            
+            interaction: {
+              dragNodes: true,
+              hoverConnectedEdges: true,
+              // multiselect: true,
+              navigationButtons: true,
+            },
+            physics: {
+              enabled: false,
+            },
+            nodes: {
+              shape: 'dot',
+              font: {
+                size: 10,
+              },
+            }
+        };
+    
+        const graph = {
+            nodes : nodes,
+            edges : edges,
+        };
+
+        class VisNetwork extends Component {
+        
+            shouldComponentUpdate(nextProps, nextState){ 
+               if (this.props.shouldUpdateGraph === true){
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+    
+            componentDidMount() {
+                var network = new vis.Network(this.refs.myRef, this.props.graph, this.props.options);
+                network.on("click", (params) => {
+                    //console.log(params);
+                    if (params.nodes){
+                        //console.log(params.nodes);
+                        this.props.updateSelection(params.nodes);
+                    }
+                    
+                });
+            }
+    
+            // componentWillUnmount() {
+            //     console.log("Unmounting");
+            //     this.props.cleanGraphData();
+            // }
+    
+            render() {            
+                return (
+                    <div className='card-body p-0'>                    
+                        <div ref="myRef" style={experimentStyle}></div>
+                    </div>
+                );
+            }
+        }
+
+        this.updateVisNodes(nodes);
+    
+        return <VisNetwork 
+            graph={graph} 
+            options={options} 
+            updateSelection={this.props.updateSelection}
+            shouldUpdateGraph={this.props.shouldUpdateGraph}
+            />;
+
+    }
+
+
+  
+
+ 
+
+   
+  
+
+ 
+
+}
+
+const experimentStyle = {
+    height: 600
+  };
+
+export default GraphNativeRep;

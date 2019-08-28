@@ -23,6 +23,7 @@ import {
   CLEAN_PKL_DATA,
   SET_PKL_CHANGES,
   UPDATE_EXPERIMENT_TS,
+  SET_VIS_DATA,
 } from '../types';
 
 const ExperimentState = props => {
@@ -41,7 +42,8 @@ const ExperimentState = props => {
         enabledGraphSearch: true,  
         startAutoUpdateRun: false,  
         startAutoUpdatePkl: false,
-        shouldUpdateGraph: false,    
+        shouldUpdateGraph: false,   
+        visNodes: null, 
     }
 
     const [state, dispatch] = useReducer(ExperimentReducer, initialState);
@@ -100,7 +102,8 @@ const ExperimentState = props => {
       // const actualPkl = res.data;
       
       let retrievedPkl = null;
-      var jobs = {}
+      var jobs = {};
+      var colorChanges = {};
       var changes = ""
       retrievedPkl = res.data;
       if (state.data !== null && retrievedPkl.has_changed === true && retrievedPkl.pkl_content.length > 0){
@@ -112,7 +115,7 @@ const ExperimentState = props => {
           //console.log(jobs[job.name]);
         }
         let requireUpdate = false;
-        console.log('Current ts: '+ state.data.pkl_timestamp);        
+        console.log('Current ts: '+ state.experiment.pkl_timestamp);        
         var newData = state.data;
         //console.log(newData.nodes);
         var expData = state.experiment;
@@ -129,9 +132,12 @@ const ExperimentState = props => {
               newData.nodes[i].status_color = jobs[ newData.nodes[i].id ].status_color;
               newData.nodes[i].status = jobs[ newData.nodes[i].id ].status;
               //console.log(newData.nodes[i].status_color)
+              colorChanges[ newData.nodes[i].id  ] = jobs[ newData.nodes[i].id ].status_color;
               requireUpdate = true;
             }
           }
+
+
           if (requireUpdate){            
             // console.log(newData.pkl_timestamp);
             // console.log(expData.pkl_timestamp);
@@ -144,12 +150,17 @@ const ExperimentState = props => {
             // console.log('Call Update');
             updateNodes(newData);
             updateExperimentTimeStamp(expData);
-            setUpdateGraph(true);
-            setUpdateGraph(false);
+            // setUpdateGraph(true);
+            // setUpdateGraph(false);
             if (state.pklchanges){
               setPklChanges(changes + state.pklchanges);
             } else {
               setPklChanges(changes);
+            }
+
+            for(var key in colorChanges) {
+              //console.log( key, colorChanges[key] );
+              updateGraphColor(key, colorChanges[key]);
             }
             
   
@@ -173,6 +184,11 @@ const ExperimentState = props => {
       });
     }
 
+    const updateGraphColor = (idChange, newColor) => {
+      state.visNodes.update({id:idChange, color: { background: newColor }});
+    }
+
+
     // Cleaning
     const clearExperiments = () => dispatch({ type: CLEAR_EXPERIMENTS });
     const cleanGraphData = () => dispatch({ type: CLEAN_GRAPH_DATA });
@@ -194,6 +210,7 @@ const ExperimentState = props => {
     const setAutoUpdatePkl = (value) => dispatch({ type: SET_AUTOUPDATE_PKL, payload: value });
     const setUpdateGraph = (value) => dispatch({ type: SHOULD_UPDATE_GRAPH, payload: value });
     const setPklChanges = (value) => dispatch({ type: SET_PKL_CHANGES, payload: value });
+    const setVisData = (value) => dispatch({ type: SET_VIS_DATA, payload: value});
 
     // Other Utils
     const hashCode = (value) => {
@@ -237,6 +254,7 @@ const ExperimentState = props => {
             startAutoUpdateRun: state.startAutoUpdateRun,
             startAutoUpdatePkl: state.startAutoUpdatePkl,
             shouldUpdateGraph: state.shouldUpdateGraph,
+            visNodes: state.visNodes,
             setAutoUpdateRun,
             setAutoUpdatePkl,
             searchExperiments,
@@ -252,6 +270,9 @@ const ExperimentState = props => {
             getExperimentPkl,           
             hashCode,       
             timeStampToDate,
+            setVisData,
+            updateGraphColor,
+            setUpdateGraph
         }}>
             {props.children}
         </ExperimentContext.Provider>

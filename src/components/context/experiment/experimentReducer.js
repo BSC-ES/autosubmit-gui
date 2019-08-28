@@ -19,6 +19,7 @@ import {
     CLEAN_PKL_DATA,
     SET_PKL_CHANGES,
     UPDATE_EXPERIMENT_TS,
+    SET_VIS_DATA,
 } from '../types';
 
 export default (state, action) => {
@@ -31,6 +32,7 @@ export default (state, action) => {
                 enabledGraphSearch: true,
                 loadingGraph: false,
                 loadingPkl: false,
+                visNodes: null,
             };
         case CLEAN_RUN_DATA:
             return {
@@ -138,6 +140,11 @@ export default (state, action) => {
             return {
                 ...state,
                 pklchanges: action.payload,
+            };
+        case SET_VIS_DATA:
+            return {
+                ...state,
+                visNodes: action.payload,
             };
         default:
             return null;
