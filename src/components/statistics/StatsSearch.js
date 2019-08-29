@@ -52,6 +52,8 @@ const StatsSearch = () => {
 
     const onSubmitClear = e => {
         e.preventDefault();
+        setHour('');
+        setSection('');
         clearStats();
 
     }
