@@ -20,6 +20,7 @@ class GraphNativeRep extends Component {
     componentWillUnmount() {
         console.log("Unmounting");
         this.props.cleanGraphData();
+        this.props.clearStats();
     }
 
     updateVisNodes = (nodes) => {
@@ -31,10 +32,10 @@ class GraphNativeRep extends Component {
     //   this.props.navigateGraph(x,y);
     // };
 
-    onLatest = (statusCode) => e => {
-      e.preventDefault();
-      this.props.navToLatest(statusCode); // Completed
-    };
+    // onLatest = (statusCode) => e => {
+    //   e.preventDefault();
+    //   this.props.navToLatest(statusCode); // Completed
+    // };
 
     render () {
         if (this.props.loadingGraph) return <Spinner></Spinner>;

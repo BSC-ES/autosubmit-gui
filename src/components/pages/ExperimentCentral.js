@@ -3,15 +3,18 @@ import Experiment from '../experiment/Experiment';
 // import GraphRepresentation from '../experiment/GraphRepresentation';
 import GraphNativeRep from '../experiment/GraphNativeRep';
 import ExperimentContext from '../context/experiment/experimentContext';
+import StatsContext from '../context/statistics/statsContext';
 import Selection from '../experiment/Selection';
 // import OpenRun from '../experiment/OpenRun';
 import Running from '../experiment/Running';
 import JobMonitor from '../experiment/JobMonitor';
 import Navigator from '../experiment/Navigator';
+import StatsSearch from '../statistics/StatsSearch';
 
 const ExperimentCentral = ({ match }) => {
     const expid = match.params.expid;
     const experimentContext = useContext(ExperimentContext);
+    const statsContext = useContext(StatsContext);
     const {data, 
         updateSelection, 
         loadingGraph, 
@@ -34,6 +37,8 @@ const ExperimentCentral = ({ match }) => {
         navigateGraph,
         navToLatest } = experimentContext;
     
+    const { clearStats } = statsContext;
+
     return (
     <Fragment>
         <Experiment expidToken={expid} />     
@@ -52,6 +57,7 @@ const ExperimentCentral = ({ match }) => {
                                 setVisNetwork={setVisNetwork}
                                 navigateGraph={navigateGraph}
                                 navToLatest={navToLatest}
+                                clearStats={clearStats}
                             />
                             {/* <GraphRepresentation 
                                 data={data} 
@@ -101,7 +107,17 @@ const ExperimentCentral = ({ match }) => {
                           
 
                     </div>              
-                </div>                
+                </div> 
+                <div className="card mt-2">
+                    <div className="card-header py-0 text-muted">
+                        <small>Statistics</small>
+                    </div>
+                    <div className="card-body p-1">
+                        <div className='col-12'>
+                            <StatsSearch />    
+                        </div>
+                    </div>                                             
+                </div>
             </div>
         </div>                           
         

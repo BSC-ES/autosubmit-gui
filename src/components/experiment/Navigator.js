@@ -60,7 +60,7 @@ const Navigator = () => {
                         <input
                         type='submit'
                         value='Waiting'
-                        className='btn btn-danger btn-block btn-sm' 
+                        className='btn btn-block btn-sm' 
                         style={waitingColor}                             
                         />
                 </form>
@@ -90,7 +90,7 @@ const Navigator = () => {
                         <input
                         type='submit'
                         value='Queue'
-                        className='btn btn-danger btn-block btn-sm' 
+                        className='btn btn-block btn-sm' 
                         style={queueColor}                             
                         />
                 </form>
@@ -140,13 +140,15 @@ const Navigator = () => {
                         <input
                         type='submit'
                         value='Unknown'
-                        className='btn btn-block btn-sm'  
-                        style={unknownColor}                            
+                        className='btn btn-block btn-sm' 
+                        style={unknownColor}
                         />
+                        
+                        
                 </form>
                 </div>
                 <div className="col-3 px-1 text-center">
-                    {messageNavigator && messageNavigator}
+                    <small>{messageNavigator && messageNavigator}</small>
                 </div>        
           </div>
     )

@@ -46,6 +46,8 @@ const Experiment = ({ expidToken }) => {
     e.preventDefault();
     setAutoUpdateRun(false);
   };
+  
+
 
   // const cleanParentLocal = () => {
   //   console.log('Exp clean ')
@@ -138,7 +140,7 @@ const Experiment = ({ expidToken }) => {
           </div>
           <div className='card-footer p-1'>
             <div className='row'>
-                <div className='col-4'>
+                <div className='col-md-4'>
                   <form onSubmit={onSubmit} className='form'>
                     <input
                       type='submit'
@@ -148,7 +150,7 @@ const Experiment = ({ expidToken }) => {
                     />
                   </form>
                 </div>   
-                <div className="col-4">
+                <div className="col-md-4">
                     {experiment && !startAutoUpdateRun &&
                       <form onSubmit={onSubmitRun} className='form'>
                         <input
@@ -170,7 +172,7 @@ const Experiment = ({ expidToken }) => {
                       </form>
                     }
                 </div>       
-                <div className='col-4'>
+                <div className='col-md-4'>
                   {running && data && !startAutoUpdatePkl &&
                     <form onSubmit={onJobMonitor} className='form'>
                       <input
@@ -192,6 +194,7 @@ const Experiment = ({ expidToken }) => {
                   </form>
                   }
                 </div>
+                
               </div>
           </div>  
           

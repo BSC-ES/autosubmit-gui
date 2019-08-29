@@ -91,13 +91,13 @@ const Selection = () => {
                                     </div>
                                     <div>
                                         <div className='row'>
-                                            <div className='col-4'>
-                                                <small>o:{data.max_children}/i:{data.max_parents} </small>
+                                            <div className='col-md-4 text-left'>
+                                                <small>{data.max_children}/{data.max_parents} </small>
                                             </div>
                                             {/* <div className='col-4'>
                                                 <small>o:{data.avg_children}/i:{data.avg_parents} </small>
                                             </div> */}
-                                            <div className='col-4'>
+                                            <div className='col-md-4 offset-md-4 text-right'>
                                                 <small>{data.total_jobs}</small>
                                             </div>
                                         </div>

@@ -9,6 +9,7 @@ import Home from "./components/pages/Home";
 import Footer from "./components/layout/Footer";
 import ExperimentState from './components/context/experiment/ExperimentState';
 import AlertState from './components/context/alert/AlertState';
+import StatsState from './components/context/statistics/StatsState';
 
 import "./App.css";
 
@@ -16,23 +17,25 @@ class App extends Component {
 
   render() {
     return (
-      <ExperimentState>
+      <ExperimentState>        
         <AlertState>
-          <Router>
-            <div className='App'>
-              <Navbar />
-              <div className='container'>
-                <Alert/>
-                <Switch>
-                  <Route exact path='/' component={Home}/>
-                  <Route exact path='/about' component={About} />
-                  <Route exact path='/experiment/:expid' component={ExperimentCentral}/>
-                  <Route component={NotFound} />
-                </Switch>
+          <StatsState>
+            <Router>
+              <div className='App'>
+                <Navbar />
+                <div className='container'>
+                  <Alert/>
+                  <Switch>
+                    <Route exact path='/' component={Home}/>
+                    <Route exact path='/about' component={About} />
+                    <Route exact path='/experiment/:expid' component={ExperimentCentral}/>
+                    <Route component={NotFound} />
+                  </Switch>
+                </div>
+                <Footer />
               </div>
-              <Footer />
-            </div>
-          </Router>    
+            </Router>    
+          </StatsState>          
         </AlertState>        
       </ExperimentState>
     );
