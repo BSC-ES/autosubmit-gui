@@ -12,15 +12,20 @@ export default (state, action) => {
                 loading: true,
             };
         case GET_EXPERIMENT_STATS:
+            const { result, requestResult, ticks } = action.payload;
             return {
                 ...state,
-                statdata: action.payload,
+                statdata: result,
+                totaldata: requestResult,
+                ticksdata: ticks,
                 loading: false,
             };
         case CLEAR_STATS:
             return {
                 ...state,
                 statdata: null,
+                totaldata: null,
+                ticksdata: null,
                 loading: false,
                 isError: false,
                 errorMessage: "",

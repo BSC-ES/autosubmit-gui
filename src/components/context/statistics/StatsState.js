@@ -14,7 +14,9 @@ const StatsState = props => {
     const initialState = {
         loading: false,
         statdata: null,
+        ticksdata: null,
         isError: false,
+        totaldata: null,
         errorMessage: "",
     }
 
@@ -33,7 +35,9 @@ const StatsState = props => {
         //cleanGraphData();
         const res = await axios.get(`http://84.88.185.30:8888/stats/${expid}/${hours}/${type}`);        
         let result = [];
-        console.log(res.data);
+        var requestResult = null;
+        let ticks = [];
+        //console.log(res.data);
         if (res.data) {
             if (res.data.error === true){
                 setIsError(true, res.data.error_message);
@@ -42,23 +46,25 @@ const StatsState = props => {
                 setIsError(false, "");
             }
             
-            result.push(["name","Queued","Run","Failed Jobs","Failed Queued","Fail Run"])
+            result.push(['Jobs',"Queued","Run","Failed Jobs","Failed Queued","Fail Run"])
             
             for (var i = 0; i < res.data.jobs.length; i++){
                 result.push([
-                    res.data.jobs[i], 
+                    {v: i+1, f: res.data.jobs[i]}, 
                     res.data.stats.queued[i],
                     res.data.stats.run[i],
                     res.data.stats.failed_jobs[i],
                     res.data.stats.fail_queued[i],
                     res.data.stats.fail_run[i]
                 ]);
+                ticks.push({v: i+1, f: res.data.jobs[i]});
             }            
+            requestResult = res.data;
         }
-        console.log(result);
+        //console.log(ticks);
         dispatch({
             type: GET_EXPERIMENT_STATS,
-            payload: result,
+            payload: { result, requestResult, ticks }
         });
     };
 
@@ -83,6 +89,8 @@ const StatsState = props => {
                 statdata: state.statdata,
                 isError: state.isError,
                 errorMessage: state.errorMessage,
+                totaldata: state.totaldata,
+                ticksdata: state.ticksdata,
                 getExperimentStats,
                 clearStats,
             }}>

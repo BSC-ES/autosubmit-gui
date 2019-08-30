@@ -9,11 +9,13 @@ const StatsSearch = () => {
     const experimentContext = useContext(ExperimentContext);
     
     const { getExperimentStats, 
-            statdata, 
+            statdata,             
             loading, 
             clearStats, 
             isError, 
-            errorMessage } = statsContext;
+            errorMessage,
+            totaldata,
+            ticksdata, } = statsContext;
     const { experiment } = experimentContext;
 
     // const data = [
@@ -30,17 +32,44 @@ const StatsSearch = () => {
     //     ]
     // ];
 
+    // const jsonTicks = JSON.stringify({ticksdata});
+    // console.log(jsonTicks['ticksdata'])
     const options = {   
-        chartArea: { width: '90%'},
+        chartArea: { width: '90%',
+                    height: '700px'},
         hAxis: {
             title: 'Jobs',
+            ticks: ticksdata, //ticks: [{v:1, f:'job_1-2323'}, {v:2, f:'job_other'}],
         },
         vAxis: {
             title: 'Hours',
+            
         }, 
+        legend: {
+            position: 'top',
+        },
+        explorer: {
+            actions: ["dragToZoom", "rightClickToReset"],
+            axis: 'horizontal',
+            // maxZoomIn: 4.0,
+        },
     }
+
+    // console.log(options);
     
-    
+    var summary = null;
+    if (totaldata && totaldata.stats && totaldata.stats.totals) {
+        summary = totaldata.stats.totals.map((item, index) =>
+            <li key={index}>
+                {item}
+            </li>
+        );
+        // console.log(totaldata.stats.totals[0]);
+        // for(var i = 0; i < totaldata.stats.totals.length; i++){
+        //     console.log(totaldata.stats.totals[i]);
+        //     summary += <li key={i}>{totaldata.stats.totals[i]}</li>
+        // }
+    }
     
     const onSubmitStats = e => {
         e.preventDefault();    
@@ -62,11 +91,15 @@ const StatsSearch = () => {
     const [section, setSection] = useState('');
     const onChangeHour = e => setHour(e.target.value);
     const onChangeSection = e => setSection(e.target.value);
+    const pStyle = {
+        'listStyleType': 'none',
+    };
+    
 
     return (
         <div className='row'>
             <div className='col-md-4 offset-md-4 text-center'>
-                {!statdata && 
+                {!statdata && experiment && experimentContext.loading === false &&
                     <form onSubmit={onSubmitStats} className='form'>
                         <div className="input-group input-group-sm">                      
                             <input
@@ -88,6 +121,7 @@ const StatsSearch = () => {
                                 type='submit'
                                 value='Get Statistics'
                                 className='btn btn-info'
+                                disabled={loading}
                                 />
                             </div>                    
                         </div>
@@ -106,12 +140,19 @@ const StatsSearch = () => {
                 }   
             </div>
             <div className="col-md-12">
+                {!statdata && experiment && 
+                    <div className="col-md-12 p-3">
+                        <p className="lead">Supply a Section (Type) in the appropriate textbox to filter the jobs that will be included in the query. Also, you can also supply the Hours value that determines how many hours before the current time you want to query. Leave both empty and a query for Any Section since the date of creation of the experiment will be executed.</p>
+                        <p className="lead">Press <span className="badge badge-info">Get Statistics</span> to generate the statistics, this will generate a Bar Chart and some extra statistics below. Drag the mouse inside the chart to zoom in; however, zoom in capabilities are not unlimited, so try to narrow your query.</p>
+                    </div>
+                }
                 {loading && <Spinner />}
                 {statdata && !isError &&
                     <Chart
                     chartType="ColumnChart"
+                    loader={<div>Loading Chart</div>}
                     width={'100%'}
-                    height={'500px'}
+                    height={'700px'}
                     data={statdata}
                     options={options}
                     /> 
@@ -120,6 +161,16 @@ const StatsSearch = () => {
                     <div className="col-md-12 text-center p-3">
                         {errorMessage}
                     </div>
+                }
+                {totaldata &&
+                    <div className="col-md-8 offset-md-4 mt-2">
+                        {totaldata && 
+                            <ul style={pStyle}>
+                                {summary && 
+                                summary}
+                            </ul>                            
+                        }
+                    </div>    
                 }
             </div>
         </div>
