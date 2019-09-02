@@ -21,8 +21,9 @@ import {
     UPDATE_EXPERIMENT_TS,
     SET_VIS_DATA,
     SET_VIS_NETWORK,
-    SET_MESSAGE_NAVIGATOR,
-    REMOVE_MESSAGE_NAVIGATOR,
+    SET_FOUND_NODES,
+    SET_LOADING_SEARCH_JOB,
+    CLEAN_NAV_DATA,
 } from '../types';
 
 export default (state, action) => {
@@ -37,7 +38,7 @@ export default (state, action) => {
                 loadingPkl: false,
                 visNodes: null,
                 visNetwork: null,
-                messageNavigator: null,
+                foundNodes: null,
             };
         case CLEAN_RUN_DATA:
             return {
@@ -51,6 +52,11 @@ export default (state, action) => {
               shouldUpdateGraph: false,  
               startAutoUpdatePkl: false,
               pklchanges: null,
+            };
+        case CLEAN_NAV_DATA:
+            return {
+                ...state,
+                foundNodes: null,
             };
         case UPDATE_SELECTION:
             return {
@@ -156,15 +162,16 @@ export default (state, action) => {
                 ...state,
                 visNetwork: action.payload,
             };
-        case SET_MESSAGE_NAVIGATOR:
+        case SET_FOUND_NODES:
             return {
                 ...state,
-                messageNavigator : action.payload,
+                loadingSearchJob: false,
+                foundNodes: action.payload,
             };
-        case REMOVE_MESSAGE_NAVIGATOR:
+        case SET_LOADING_SEARCH_JOB:
             return {
                 ...state,
-                messageNavigator : null,
+                loadingSearchJob: true,
             };
         default:
             return null;

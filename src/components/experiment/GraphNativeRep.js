@@ -18,7 +18,7 @@ class GraphNativeRep extends Component {
           }
     }
     componentWillUnmount() {
-        console.log("Unmounting");
+        console.log("Unmounting Nav Rep");
         this.props.cleanGraphData();
         this.props.clearStats();
     }
@@ -135,7 +135,7 @@ class GraphNativeRep extends Component {
             componentDidMount() {
                 var network = new vis.Network(this.refs.myRef, this.props.graph, this.props.options);
                 this.props.setVisNetwork(network);
-                network.on("click", (params) => {
+                network.on("select", (params) => {
                     console.log(params);
                     if (params.nodes){
                         //console.log(params.nodes);
@@ -145,10 +145,10 @@ class GraphNativeRep extends Component {
                 });
             }
     
-            // componentWillUnmount() {
-            //     console.log("Unmounting");
-            //     this.props.cleanGraphData();
-            // }
+            componentWillUnmount() {
+                console.log("Unmounting VisNetwork");
+                this.props.cleanNavData();
+            }
 
           
     
@@ -171,6 +171,7 @@ class GraphNativeRep extends Component {
             updateSelection={this.props.updateSelection}
             shouldUpdateGraph={this.props.shouldUpdateGraph}
             setVisNetwork={this.props.setVisNetwork}
+            cleanNavData={this.props.cleanNavData}
           />
         // <div className="col-12 px-0">
         //     <div className="row">

@@ -10,6 +10,7 @@ import Running from '../experiment/Running';
 import JobMonitor from '../experiment/JobMonitor';
 import Navigator from '../experiment/Navigator';
 import StatsSearch from '../statistics/StatsSearch';
+import JobSearcher from '../experiment/JobSearcher';
 
 const ExperimentCentral = ({ match }) => {
     const expid = match.params.expid;
@@ -22,6 +23,7 @@ const ExperimentCentral = ({ match }) => {
         shouldUpdateGraph,
         cleanGraphData, 
         cleanRunData, 
+        cleanNavData,
         getExperimentRun,
         getExperimentPkl, 
         cleanPklData,
@@ -45,7 +47,12 @@ const ExperimentCentral = ({ match }) => {
         <div className="row mt-2">
             <div className="col-12">
                 <div className='card'>
-                    <div className='row'>
+                    {experiment && data &&    
+                        <div className="card-header p-1">
+                            <JobSearcher />                        
+                        </div>
+                    }
+                    <div className='row'>                        
                         <div className='col-9 pr-0'>
                             <GraphNativeRep 
                                 data={data} 
@@ -58,6 +65,7 @@ const ExperimentCentral = ({ match }) => {
                                 navigateGraph={navigateGraph}
                                 navToLatest={navToLatest}
                                 clearStats={clearStats}
+                                cleanNavData={cleanNavData}
                             />
                             {/* <GraphRepresentation 
                                 data={data} 

@@ -15,7 +15,7 @@ const Selection = () => {
     var currentNode = ""
     var selectedNode = null
     if (selection) {
-        //console.log("Current selection " + selection)
+        console.log("Current selection " + selection)
         selection.map(node => (
             // currentSelection += node + ", "
             currentNode = node
@@ -89,19 +89,17 @@ const Selection = () => {
                                             </div> */}
                                         </div>                                               
                                     </div>
-                                    <div>
+                                    {/* <div>
                                         <div className='row'>
                                             <div className='col-md-4 text-left'>
                                                 <small>{data.max_children}/{data.max_parents} </small>
                                             </div>
-                                            {/* <div className='col-4'>
-                                                <small>o:{data.avg_children}/i:{data.avg_parents} </small>
-                                            </div> */}
+                                         
                                             <div className='col-md-4 offset-md-4 text-right'>
                                                 <small>{data.total_jobs}</small>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> */}
                                     {/* <div>
                                         <div className="row">
                                             <form onSubmit={navigateTo(10,10)} className='form'>

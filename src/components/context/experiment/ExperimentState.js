@@ -10,6 +10,7 @@ import {
   GET_GRAPH,
   SET_LOADING_GRAPH,
   CLEAN_GRAPH_DATA,
+  CLEAN_NAV_DATA,
   UPDATE_SELECTION,
   GET_EXPERIMENT_RUN,
   SET_LOADING_RUN,
@@ -25,7 +26,8 @@ import {
   UPDATE_EXPERIMENT_TS,
   SET_VIS_DATA,
   SET_VIS_NETWORK,
-  SET_MESSAGE_NAVIGATOR, 
+  SET_FOUND_NODES,
+  SET_LOADING_SEARCH_JOB,
 } from '../types';
 
 const ExperimentState = props => {
@@ -40,6 +42,7 @@ const ExperimentState = props => {
         loadingGraph: false,
         loadingRun: false,
         loadingPkl: false,
+        loadingSearchJob: false,
         selection: null,
         enabledGraphSearch: true,  
         startAutoUpdateRun: false,  
@@ -47,7 +50,7 @@ const ExperimentState = props => {
         shouldUpdateGraph: false,   
         visNodes: null, 
         visNetwork: null,
-        messageNavigator: null,
+        foundNodes: null,
     }
 
     const [state, dispatch] = useReducer(ExperimentReducer, initialState);
@@ -202,8 +205,8 @@ const ExperimentState = props => {
       state.visNetwork.moveTo(
         {
           position: {x: posx, y: posy },
-          scale: 0.7,
-          offset: {x: 30, y: 30},
+          scale: 0.9,
+          //offset: {x: 30, y: 30},
           animation: false,
         }
       );      
@@ -212,6 +215,7 @@ const ExperimentState = props => {
     const navToLatest = (statusCode) => {
       //const statusCode = 5; // Completed
       var currentLevel = 0;
+      //var currentNode = null;
       var latestId = "not found";
       //console.log(state.data.nodes);
       if (state.data.nodes) {
@@ -220,7 +224,7 @@ const ExperimentState = props => {
           if (node.status_code === statusCode){
             if (node.level >= currentLevel){
               currentLevel = node.level;
-              
+              //currentNode = node;
               latestId = node.id;
             }
           }
@@ -230,11 +234,54 @@ const ExperimentState = props => {
       //console.log(currentPosition);
       if (currentPosition[latestId]){
         navigateGraph(currentPosition[latestId].x, currentPosition[latestId].y);
-        setMessageNavigator(latestId, true)
+        // setMessageNavigator(latestId, true);
+        state.visNetwork.selectNodes([latestId]);
+        updateSelection([latestId]);
+        //updateSelection(currentNode);
       } else {
-        setMessageNavigator("There are no nodes with that status.", false)
+        updateSelection(null);
+        //setMessageNavigator("There are no nodes with that status.", false)
+      }      
+    }
+
+    const navigateTo = Id => {
+      if (state.visNetwork){
+        var currentPosition = state.visNetwork.getPositions([Id]);
+        if (currentPosition[Id]){
+          navigateGraph(currentPosition[Id].x, currentPosition[Id].y);
+          state.visNetwork.selectNodes([Id]);    
+          updateSelection([Id]);         
+        } 
       }
       
+    }
+
+    const searchJobInGraph = async string => {
+      setLoadingSearchJob();
+      if (state.data.nodes) {
+        const foundNodes = await state.data.nodes.filter(node => node.id.indexOf(string) >= 0);
+       // console.log(foundNodes);
+        // console.log(foundNodes.length);
+        if (foundNodes && foundNodes.length > 0) {
+          dispatch({
+            type: SET_FOUND_NODES,
+            payload: foundNodes,
+          });
+
+          //console.log(foundNodes[0].id);
+          navigateTo(foundNodes[0].id);
+          updateSelection([foundNodes[0].id]);
+      
+          //console.log('Life after dispatch')
+          return;
+        }
+      }
+
+      dispatch({
+        type: SET_FOUND_NODES,
+        payload: null,
+      });
+
     }
 
 
@@ -244,12 +291,14 @@ const ExperimentState = props => {
     const cleanGraphData = () => dispatch({ type: CLEAN_GRAPH_DATA });
     const cleanRunData = () => dispatch({ type: CLEAN_RUN_DATA });
     const cleanPklData = () => dispatch({ type: CLEAN_PKL_DATA });
+    const cleanNavData = () => dispatch({ type: CLEAN_NAV_DATA });
 
     // Set Loading
     const setLoading = () => dispatch({ type: SET_LOADING });
     const setLoadingGraph = () => dispatch({ type: SET_LOADING_GRAPH });
     const setLoadingRun = () => dispatch({ type: SET_LOADING_RUN });
     const setLoadingPkl = () => dispatch({ type: SET_LOADING_PKL });
+    const setLoadingSearchJob = () => dispatch({ type: SET_LOADING_SEARCH_JOB});
 
 
     // Action Things
@@ -262,19 +311,7 @@ const ExperimentState = props => {
     const setPklChanges = (value) => dispatch({ type: SET_PKL_CHANGES, payload: value });
     const setVisData = (value) => dispatch({ type: SET_VIS_DATA, payload: value});
     const setVisNetwork = (value) => dispatch({ type: SET_VIS_NETWORK, payload: value });
-    const setMessageNavigator = (value, found) => {
-      dispatch({
-        type: SET_MESSAGE_NAVIGATOR,
-        payload: value,
-      });
 
-      // if (found === true){
-      //   setTimeout(() => dispatch({ type: REMOVE_MESSAGE_NAVIGATOR }), 5000);
-      // } else {
-      //   setTimeout(() => dispatch({ type: REMOVE_MESSAGE_NAVIGATOR }), 5000);
-      // }
-      
-    }
 
     // Other Utils
     const hashCode = (value) => {
@@ -310,6 +347,7 @@ const ExperimentState = props => {
             loadingGraph: state.loadingGraph,
             loadingRun: state.loadingRun,
             loadingPkl: state.loadingPkl,
+            loadingSearchJob: state.loadingSearchJob,
             data: state.data,
             rundata: state.rundata,
             pklchanges: state.pklchanges,
@@ -320,7 +358,7 @@ const ExperimentState = props => {
             shouldUpdateGraph: state.shouldUpdateGraph,
             visNodes: state.visNodes,
             visNetwork: state.visNetwork,
-            messageNavigator: state.messageNavigator,
+            foundNodes: state.foundNodes,
             setAutoUpdateRun,
             setAutoUpdatePkl,
             searchExperiments,
@@ -330,6 +368,7 @@ const ExperimentState = props => {
             cleanGraphData, 
             cleanRunData,
             cleanPklData,
+            cleanNavData,
             setPklChanges,
             updateSelection,
             getExperimentRun, 
@@ -342,6 +381,8 @@ const ExperimentState = props => {
             navigateGraph,
             setUpdateGraph,
             navToLatest,
+            searchJobInGraph,
+            navigateTo,
         }}>
             {props.children}
         </ExperimentContext.Provider>

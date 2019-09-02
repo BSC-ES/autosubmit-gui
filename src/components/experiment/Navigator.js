@@ -4,7 +4,7 @@ import ExperimentContext from '../context/experiment/experimentContext';
 const Navigator = () => {
 
     const experimentContext = useContext(ExperimentContext);
-    const { navToLatest, messageNavigator } = experimentContext;
+    const { navToLatest } = experimentContext;
 
     const WaitingCode = 0;
     const UnknownCode = -2;
@@ -148,7 +148,7 @@ const Navigator = () => {
                 </form>
                 </div>
                 <div className="col-3 px-1 text-center">
-                    <small>{messageNavigator && messageNavigator}</small>
+                    <small>Press the button so see the latest job with that status.</small>
                 </div>        
           </div>
     )
