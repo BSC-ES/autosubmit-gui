@@ -73,8 +73,25 @@ const Selection = () => {
                                             <div className='col-6'>
                                                 <small><strong>Level:</strong> {selectedNode.level}</small>
                                             </div>
-                                            <div className='col-6'>
-                                                <small><strong>Out:</strong> {selectedNode.children} <strong>In:</strong> {selectedNode.parents} </small>                                                
+                                            <div className='col-3 px-1'>
+                                                {selectedNode.children_list && selectedNode.children_list.length > 0 &&
+                                                    <button className="btn btn-dark btn-sm btn-block" data-toggle="modal" data-target="#childrenList">
+                                                        <small><strong>Out:</strong> {selectedNode.children}</small>
+                                                    </button>
+                                                }
+                                                {selectedNode.children_list && selectedNode.children_list.length === 0 &&
+                                                    <small><strong>Out:</strong> {selectedNode.children}</small>
+                                                }                                                
+                                            </div>
+                                            <div className='col-3 px-1'>
+                                                {selectedNode.parent_list && selectedNode.parent_list.length > 0 &&
+                                                    <button className="btn btn-dark btn-sm btn-block" data-toggle="modal" data-target="#parentList">
+                                                        <small><strong>In:</strong> {selectedNode.parents}</small>
+                                                    </button>
+                                                }
+                                                {selectedNode.parent_list && selectedNode.parent_list.length === 0 &&
+                                                    <small><strong>In:</strong> {selectedNode.parents}</small>
+                                                }   
                                             </div>
                                             
                                         </div>                                        
@@ -132,7 +149,59 @@ const Selection = () => {
                             </div>
                         </div>
                     </div>                     
-                }              
+                }    
+                {selectedNode && selectedNode.children_list && selectedNode.children_list.length > 0 &&
+                    <div className="modal fade" id="childrenList" tabIndex="-1" role='dialog' aria-labelledby='childrenListTitle' aria-hidden='true'>
+                        <div className="modal-dialog" role="document">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h5 className="modal-title" id="childrenListTitle">
+                                        Children List
+                                    </h5>
+                                    <button className="close" type="button" data-dismiss='modal' aria-label='Close'>
+                                        <span aria-hidden='true'>&times;</span>
+                                    </button>
+                                </div>
+                                <div className="modal-body">
+                                    {selectedNode.children_list.map((item,index) => 
+                                        <li key={index}>
+                                            {item}
+                                        </li>
+                                    )}
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }   
+                {selectedNode && selectedNode.parent_list && selectedNode.parent_list.length > 0 &&
+                    <div className="modal fade" id="parentList" tabIndex="-1" role='dialog' aria-labelledby='parentListTitle' aria-hidden='true'>
+                        <div className="modal-dialog" role="document">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h5 className="modal-title" id="parentListTitle">
+                                        Parent List
+                                    </h5>
+                                    <button className="close" type="button" data-dismiss='modal' aria-label='Close'>
+                                        <span aria-hidden='true'>&times;</span>
+                                    </button>
+                                </div>
+                                <div className="modal-body">
+                                    {selectedNode.parent_list.map((item,index) => 
+                                        <li key={index}>
+                                            {item}
+                                        </li>
+                                    )}
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }       
         </Fragment>
         
         
