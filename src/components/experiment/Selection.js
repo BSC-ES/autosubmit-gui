@@ -85,7 +85,7 @@ const Selection = () => {
                                             </div>
                                             <div className='col-3 px-1'>
                                                 {selectedNode.parent_list && selectedNode.parent_list.length > 0 &&
-                                                    <button className="btn btn-dark btn-sm btn-block" data-toggle="modal" data-target="#parentList">
+                                                    <button className="btn btn-darkgit pul btn-sm btn-block" data-toggle="modal" data-target="#parentList">
                                                         <small><strong>In:</strong> {selectedNode.parents}</small>
                                                     </button>
                                                 }

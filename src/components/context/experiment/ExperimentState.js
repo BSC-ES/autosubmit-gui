@@ -54,11 +54,13 @@ const ExperimentState = props => {
     }
 
     const [state, dispatch] = useReducer(ExperimentReducer, initialState);
+    // const bscserver = 'http://192.168.11.91:8888'
+    const localserver= 'http://84.88.185.30:8888'
 
     // Search Experiments
     const searchExperiments = async text => {
         setLoading();
-        const res = await axios.get(`http://84.88.185.30:8888/search/${text}`);
+        const res = await axios.get(`${localserver}/search/${text}`);
         dispatch({
             type: SEARCH_EXPERIMENTS,
             payload: res.data.experiment,
@@ -69,7 +71,7 @@ const ExperimentState = props => {
     const getExperiment = async expid => {
         setLoading();
         //cleanGraphData();
-        const res = await axios.get(`http://84.88.185.30:8888/expinfo/${expid}`);        
+        const res = await axios.get(`${localserver}/expinfo/${expid}`);        
         dispatch({
             type: GET_EXPERIMENT,
             payload: res.data,
@@ -80,7 +82,7 @@ const ExperimentState = props => {
     const getExperimentGraph = async expid => {
         setLoadingGraph();
         
-        const res = await axios.get(`http://84.88.185.30:8888/graph/${expid}`);
+        const res = await axios.get(`${localserver}/graph/${expid}`);
         console.log(res.data);
         dispatch({
             type: GET_GRAPH,
@@ -92,7 +94,7 @@ const ExperimentState = props => {
     // Get Experiment Run
     const getExperimentRun = async expid => {
         setLoadingRun();
-        const res = await axios.get(`http://84.88.185.30:8888/exprun/${expid}`);
+        const res = await axios.get(`${localserver}/exprun/${expid}`);
         console.log(res.data);
         dispatch({
             type: GET_EXPERIMENT_RUN,
@@ -104,7 +106,7 @@ const ExperimentState = props => {
     const getExperimentPkl = async (expid, timeStamp) => {
       setLoadingPkl();
       //timeStamp = 1000;
-      const res = await axios.get(`http://84.88.185.30:8888/pklinfo/${expid}/${timeStamp}`);
+      const res = await axios.get(`${localserver}/pklinfo/${expid}/${timeStamp}`);
       console.log(res.data);
       // const actualPkl = res.data;
       
@@ -119,7 +121,7 @@ const ExperimentState = props => {
           job = retrievedPkl.pkl_content[j];
           //console.log(job);
           jobs[ job.name ] = job;
-          //console.log(jobs[job.name]);
+          //console.log(jobs[job.name]);git pu
         }
         let requireUpdate = false;
         console.log('Current ts: '+ state.experiment.pkl_timestamp);        

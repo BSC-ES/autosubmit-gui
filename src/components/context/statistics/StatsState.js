@@ -20,6 +20,10 @@ const StatsState = props => {
         errorMessage: "",
     }
 
+    // const bscserver = 'http://192.168.11.91:8888'
+    const localserver= 'http://84.88.185.30:8888'
+    
+
     const [state, dispatch] = useReducer(StatsReducer, initialState);
 
     // Get Experiment Stats
@@ -33,7 +37,7 @@ const StatsState = props => {
 
         setLoading();
         //cleanGraphData();
-        const res = await axios.get(`http://84.88.185.30:8888/stats/${expid}/${hours}/${type}`);        
+        const res = await axios.get(`${localserver}/stats/${expid}/${hours}/${type}`);        
         let result = [];
         var requestResult = null;
         let ticks = [];
