@@ -21,13 +21,14 @@ const StatsState = props => {
     }
 
     // const bscserver = 'http://192.168.11.91:8888'
-    const localserver= 'http://84.88.185.30:8888'
+    const localserver= 'http://192.168.11.91:8081'
     
 
     const [state, dispatch] = useReducer(StatsReducer, initialState);
 
     // Get Experiment Stats
     const getExperimentStats = async (expid,hours,type)  => {
+        console.log("Getting...")
         if (hours.length === 0){
             hours = 0;
         }
@@ -41,7 +42,7 @@ const StatsState = props => {
         let result = [];
         var requestResult = null;
         let ticks = [];
-        //console.log(res.data);
+        console.log(res.data);
         if (res.data) {
             if (res.data.error === true){
                 setIsError(true, res.data.error_message);
