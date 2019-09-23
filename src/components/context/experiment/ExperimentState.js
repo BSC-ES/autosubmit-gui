@@ -28,6 +28,8 @@ import {
   SET_VIS_NETWORK,
   SET_FOUND_NODES,
   SET_LOADING_SEARCH_JOB,
+  SET_LOADING_STATE,
+  GET_RUNNING_STATE,
 } from '../types';
 
 const ExperimentState = props => {
@@ -35,12 +37,14 @@ const ExperimentState = props => {
         experiments: [],
         experiment: {},
         loading: false,
+        experimentRunning: false,
         data: null,
         rundata: null,
         pkldata: null,
         pklchanges: null,
         loadingGraph: false,
         loadingRun: false,
+        loadingState: false,
         loadingPkl: false,
         loadingSearchJob: false,
         selection: null,
@@ -55,7 +59,7 @@ const ExperimentState = props => {
 
     const [state, dispatch] = useReducer(ExperimentReducer, initialState);
     // const bscserver = 'http://192.168.11.91:8888'
-    const localserver= 'http://192.168.11.91:8081'
+    const localserver= 'http://84.88.185.94:8081'
 
     // Search Experiments
     const searchExperiments = async text => {
@@ -71,7 +75,8 @@ const ExperimentState = props => {
     const getExperiment = async expid => {
         setLoading();
         //cleanGraphData();
-        const res = await axios.get(`${localserver}/expinfo/${expid}`);        
+        const res = await axios.get(`${localserver}/expinfo/${expid}`); 
+        //console.log(res.data);
         dispatch({
             type: GET_EXPERIMENT,
             payload: res.data,
@@ -95,11 +100,23 @@ const ExperimentState = props => {
     const getExperimentRun = async expid => {
         setLoadingRun();
         const res = await axios.get(`${localserver}/exprun/${expid}`);
-        console.log(res.data);
+        //console.log(res.data);
         dispatch({
             type: GET_EXPERIMENT_RUN,
             payload: res.data,
         });
+    }
+
+    // Get Running State
+    const getRunningState = async expid => {
+      setLoadingState();
+      const res = await axios.get(`${localserver}/ifrun/${expid}`);
+      //console.log(res.data);      
+      dispatch({
+        type: GET_RUNNING_STATE,
+        payload: res.data.running,
+      });
+
     }
 
     // Get Experiment Pkl Data
@@ -301,6 +318,7 @@ const ExperimentState = props => {
     const setLoadingRun = () => dispatch({ type: SET_LOADING_RUN });
     const setLoadingPkl = () => dispatch({ type: SET_LOADING_PKL });
     const setLoadingSearchJob = () => dispatch({ type: SET_LOADING_SEARCH_JOB});
+    const setLoadingState = () => dispatch({ type: SET_LOADING_STATE});
 
 
     // Action Things
@@ -350,6 +368,7 @@ const ExperimentState = props => {
             loadingRun: state.loadingRun,
             loadingPkl: state.loadingPkl,
             loadingSearchJob: state.loadingSearchJob,
+            loadingState: state.loadingState,
             data: state.data,
             rundata: state.rundata,
             pklchanges: state.pklchanges,
@@ -360,7 +379,8 @@ const ExperimentState = props => {
             shouldUpdateGraph: state.shouldUpdateGraph,
             visNodes: state.visNodes,
             visNetwork: state.visNetwork,
-            foundNodes: state.foundNodes,
+            foundNodes: state.foundNodes,            
+            experimentRunning: state.experimentRunning,
             setAutoUpdateRun,
             setAutoUpdatePkl,
             searchExperiments,
@@ -385,6 +405,7 @@ const ExperimentState = props => {
             navToLatest,
             searchJobInGraph,
             navigateTo,
+            getRunningState,            
         }}>
             {props.children}
         </ExperimentContext.Provider>

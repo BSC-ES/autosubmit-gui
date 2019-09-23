@@ -24,6 +24,8 @@ import {
     SET_FOUND_NODES,
     SET_LOADING_SEARCH_JOB,
     CLEAN_NAV_DATA,
+    GET_RUNNING_STATE,
+    SET_LOADING_STATE,
 } from '../types';
 
 export default (state, action) => {
@@ -39,6 +41,7 @@ export default (state, action) => {
                 visNodes: null,
                 visNetwork: null,
                 foundNodes: null,
+                experimentRunning: false,
             };
         case CLEAN_RUN_DATA:
             return {
@@ -83,6 +86,11 @@ export default (state, action) => {
             return {
                 ...state,
                 loading: true,
+            };
+        case SET_LOADING_STATE:
+            return {
+                ...state,
+                loadingState: true,
             };
         case SET_LOADING_PKL:
             return {
@@ -137,6 +145,12 @@ export default (state, action) => {
                 pkldata: action.payload,
                 loadingPkl: false,
             };
+        case GET_RUNNING_STATE:
+            return {
+                ...state,
+                experimentRunning: action.payload,
+                loadingState: false,
+            }
         case UPDATE_NODES:
             return {
                 ...state,

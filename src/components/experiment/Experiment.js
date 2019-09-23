@@ -9,15 +9,19 @@ const Experiment = ({ expidToken }) => {
         getExperimentGraph, 
         setAutoUpdatePkl, 
         loading, 
+        loadingState,
         experiment, 
+        experimentRunning,
         enabledGraphSearch, 
         data, 
         startAutoUpdatePkl,
         setAutoUpdateRun, 
-        startAutoUpdateRun } = experimentContext;
+        startAutoUpdateRun,
+        getRunningState } = experimentContext;
 
   useEffect(() => {
     getExperiment(expidToken);
+    getRunningState(expidToken);
     // eslint-disable-next-line
   }, []);
   
@@ -64,7 +68,6 @@ const Experiment = ({ expidToken }) => {
     description,
     version,
     updateTime,
-    running,
     error,
     error_message,
     pkl_timestamp,
@@ -94,8 +97,9 @@ const Experiment = ({ expidToken }) => {
                 <h3 className="font-weight-bold">{expid}</h3>
               </div>
               <div className='col-4 text-right'>
-                {running && <span className='badge badge-success text-right'>RUNNING</span>}
-                {!running && <span className='badge badge-danger text-right'>NOT RUNNING</span>}
+                {loadingState && <span className='badge badge-dark text-right'>LOADING...</span>}
+                {experimentRunning && !loadingState && <span className='badge badge-success text-right'>RUNNING</span>}
+                {!experimentRunning && !loadingState && <span className='badge badge-danger text-right'>NOT RUNNING</span>}
               </div>
             </div>
           </div>
@@ -173,7 +177,7 @@ const Experiment = ({ expidToken }) => {
                     }
                 </div>       
                 <div className='col-md-4'>
-                  {running && data && !startAutoUpdatePkl &&
+                  {experimentRunning && data && !startAutoUpdatePkl &&
                     <form onSubmit={onJobMonitor} className='form'>
                       <input
                         type='submit'
@@ -183,7 +187,7 @@ const Experiment = ({ expidToken }) => {
                       />
                   </form>
                   }
-                  {running && data && startAutoUpdatePkl &&
+                  {experimentRunning && data && startAutoUpdatePkl &&
                     <form onSubmit={onNotJobMonitor} className='form'>
                       <input
                         type='submit'
