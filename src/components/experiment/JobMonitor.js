@@ -6,7 +6,7 @@ class JobMonitor extends Component {
     componentDidMount(){
         if (this.props.experiment) {
             this.props.getExperimentPkl(this.props.experiment.expid, this.props.experiment.pkl_timestamp);
-            if (this.props.experiment.running) {
+            if (this.props.experimentRunning) {
                 this.interval = setInterval(() => this.props.getExperimentPkl(this.props.experiment.expid, this.props.experiment.pkl_timestamp) , this.props.experiment.updateTime * 2000);
             }
         }
@@ -19,7 +19,7 @@ class JobMonitor extends Component {
 
     componentWillUnmount() {
         this.props.cleanPklData();
-        if (this.props.experiment.running) {
+        if (this.props.experimentRunning) {
             clearInterval(this.interval);
         }        
     }

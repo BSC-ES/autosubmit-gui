@@ -14,8 +14,9 @@ class Running extends Component {
     // }
 
     componentDidMount(){
+        console.log(this.props.experimentRunning)
         this.props.getExperimentRun(this.props.experiment.expid);
-        if (this.props.experiment.running) {
+        if (this.props.experimentRunning) {
             this.interval = setInterval(() => this.props.getExperimentRun(this.props.experiment.expid) , this.props.experiment.updateTime * 1000);
         }
         
@@ -25,8 +26,9 @@ class Running extends Component {
     }
 
     componentWillUnmount() {
+        console.log(this.props.experimentRunning)
         this.props.cleanRunData();
-        if (this.props.experiment.running) {
+        if (this.props.experimentRunning) {
             clearInterval(this.interval);
         }        
     }

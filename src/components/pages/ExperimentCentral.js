@@ -37,7 +37,8 @@ const ExperimentCentral = ({ match }) => {
         setVisNetwork,
         visNetwork,
         navigateGraph,
-        navToLatest } = experimentContext;
+        navToLatest,
+        experimentRunning } = experimentContext;
     
     const { clearStats } = statsContext;
 
@@ -82,7 +83,8 @@ const ExperimentCentral = ({ match }) => {
                                     experiment={experiment} 
                                     getExperimentPkl={getExperimentPkl} 
                                     cleanPklData={cleanPklData}
-                                    pklchanges={pklchanges} />
+                                    pklchanges={pklchanges}
+                                    experimentRunning={experimentRunning} />
                             }               
                         </div>
                     </div> 
@@ -100,6 +102,7 @@ const ExperimentCentral = ({ match }) => {
                             experiment={experiment}  
                             startAutoUpdateRun={startAutoUpdateRun}
                             setAutoUpdateRun={setAutoUpdateRun}
+                            experimentRunning={experimentRunning}
                         />} 
 
                         {!startAutoUpdateRun &&
