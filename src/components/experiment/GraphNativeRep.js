@@ -39,7 +39,7 @@ class GraphNativeRep extends Component {
 
     render () {
         if (this.props.loadingGraph) return <Spinner></Spinner>;
-        if (this.props.data == null){
+        if (!this.props.data){
             return (
                 <div className="card-body text-left">
                     <p className='lead'>Press <span className='badge badge-info'>Show Graph</span> to see the graph representation of the experiment.</p>
@@ -53,10 +53,11 @@ class GraphNativeRep extends Component {
         var nodes_array = [];
         var edges_array = [];
     
-        if (this.props.data.nodes !== null || this.props.data.edges !== null) {
+        if (this.props.data.nodes.length > 0 && this.props.data.edges !== null) {
             this.props.data.nodes.map(node => nodes_array.push({
                 id: node.id,
                 label: node.label,
+                shape: node.shape,
                 color: { background: node.status_color, border: "black" },
                 level: node.level,
               })
@@ -65,6 +66,13 @@ class GraphNativeRep extends Component {
             this.props.data.edges.map(edge => 
               edges_array.push({ from: edge.from, to: edge.to })
             );
+        } else {
+          return (
+            <div className="card-body text-left">
+                <p className='lead'>Something has gone very wrong.</p>
+                <p className='lead text-danger'>{this.props.data.error_message}</p>
+            </div> 
+          );
         }
     
         var nodes = new vis.DataSet(nodes_array);
@@ -173,22 +181,6 @@ class GraphNativeRep extends Component {
             setVisNetwork={this.props.setVisNetwork}
             cleanNavData={this.props.cleanNavData}
           />
-        // <div className="col-12 px-0">
-        //     <div className="row">
-        //       <div className="col-12">
-        //         <VisNetwork 
-        //           graph={graph} 
-        //           options={options} 
-        //           updateSelection={this.props.updateSelection}
-        //           shouldUpdateGraph={this.props.shouldUpdateGraph}
-        //           setVisNetwork={this.props.setVisNetwork}
-        //         />
-        //       </div>
-        //   </div>            
-          
-        // </div>
-        
-
         );
 
     }

@@ -163,11 +163,13 @@ const Selection = () => {
                                     </button>
                                 </div>
                                 <div className="modal-body">
-                                    {selectedNode.children_list.map((item,index) => 
-                                        <li key={index}>
-                                            {item}
-                                        </li>
-                                    )}
+                                    <ul>
+                                        {selectedNode.children_list.map((item,index) => 
+                                            <li key={index}>
+                                                {item}
+                                            </li>
+                                        )}
+                                    </ul>
                                 </div>
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -189,11 +191,13 @@ const Selection = () => {
                                     </button>
                                 </div>
                                 <div className="modal-body">
-                                    {selectedNode.parent_list.map((item,index) => 
-                                        <li key={index}>
-                                            {item}
-                                        </li>
-                                    )}
+                                    <ul>
+                                        {selectedNode.parent_list.map((item,index) => 
+                                            <li key={index}>
+                                                {item}
+                                            </li>
+                                        )}
+                                    </ul>
                                 </div>
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>

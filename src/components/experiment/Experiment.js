@@ -7,6 +7,7 @@ const Experiment = ({ expidToken }) => {
   const experimentContext = useContext(ExperimentContext); 
   const { getExperiment, 
         getExperimentGraph, 
+        getExperimentGraphGrouped,
         setAutoUpdatePkl, 
         loading, 
         loadingState,
@@ -50,6 +51,11 @@ const Experiment = ({ expidToken }) => {
     e.preventDefault();
     setAutoUpdateRun(false);
   };
+
+  const onSubmitGroup = mode => e => {
+    e.preventDefault();
+    getExperimentGraphGrouped(experiment.expid, mode);
+  };
   
 
 
@@ -73,7 +79,8 @@ const Experiment = ({ expidToken }) => {
     pkl_timestamp,
     model, 
     branch, 
-    hpc
+    hpc,
+    isGrouped,
   } = experiment;
 
   if (loading)  return <Spinner />;
@@ -144,7 +151,7 @@ const Experiment = ({ expidToken }) => {
           </div>
           <div className='card-footer p-1'>
             <div className='row'>
-                <div className='col-md-4'>
+                <div className='col-md-2'>
                   <form onSubmit={onSubmit} className='form'>
                     <input
                       type='submit'
@@ -153,6 +160,11 @@ const Experiment = ({ expidToken }) => {
                       disabled={!enabledGraphSearch}
                     />
                   </form>
+                </div>
+                <div className='col-md-2'>
+                  <button className="btn btn-info btn-block btn-sm" data-toggle="modal" data-target="#grouptype">
+                      Group By
+                  </button>
                 </div>   
                 <div className="col-md-4">
                     {experiment && !startAutoUpdateRun &&
@@ -177,7 +189,7 @@ const Experiment = ({ expidToken }) => {
                     }
                 </div>       
                 <div className='col-md-4'>
-                  {experimentRunning && data && !startAutoUpdatePkl &&
+                  {experimentRunning && data && !startAutoUpdatePkl && !isGrouped &&
                     <form onSubmit={onJobMonitor} className='form'>
                       <input
                         type='submit'
@@ -205,10 +217,70 @@ const Experiment = ({ expidToken }) => {
         </div>
         </div>
       </div>
-     
-         
-      
+      <div className="modal fade" id="grouptype" tabIndex="-1" role='dialog' aria-labelledby='grouptypeTitle' aria-hidden='true'>
+          <div className="modal-dialog" role="document">
+              <div className="modal-content">
+                  <div className="modal-header">
+                      <h5 className="modal-title" id="grouptypeTitle">
+                          Select your grouping option
+                      </h5>
+                      <button className="close" type="button" data-dismiss='modal' aria-label='Close'>
+                          <span aria-hidden='true'>&times;</span>
+                      </button>
+                  </div>
+                  <div className="modal-body">
+                    <div className="row">
+                      <div className="col-md-3">
+                      <form onSubmit={onSubmitGroup('automatic')} className='form'>
+                          <input
+                            type='submit'
+                            value='Automatic'
+                            className='btn btn-info btn-block btn-sm'
+                            disabled={!enabledGraphSearch}
+                          />
+                      </form>
+                      </div>
+                      <div className="col-md-3">
+                      <form onSubmit={onSubmitGroup('date')} className='form'>
+                          <input
+                            type='submit'
+                            value='Date'
+                            className='btn btn-info btn-block btn-sm'
+                            disabled={!enabledGraphSearch}
+                          />
+                      </form>
+                      </div>
+                      <div className="col-md-3">
+                      <form onSubmit={onSubmitGroup('member')} className='form'>
+                          <input
+                            type='submit'
+                            value='Member'
+                            className='btn btn-info btn-block btn-sm'
+                            disabled={!enabledGraphSearch}
+                          />
+                      </form>
+                      </div> 
+                      <div className="col-md-3">
+                      <form onSubmit={onSubmitGroup('chunk')} className='form'>
+                          <input
+                            type='submit'
+                            value='Chunk'
+                            className='btn btn-info btn-block btn-sm'
+                            disabled={!enabledGraphSearch}
+                          />
+                      </form>
+                      </div>                        
+                    </div>
+                      
+                  </div>
+                  <div className="modal-footer">
+                      <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+              </div>
+          </div>
+      </div>
     </div>
+    
   );
 }
 

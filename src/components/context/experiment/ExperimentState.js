@@ -8,6 +8,7 @@ import {
   CLEAR_EXPERIMENTS,
   GET_EXPERIMENT,
   GET_GRAPH,
+  GET_GRAPH_GROUPED,
   SET_LOADING_GRAPH,
   CLEAN_GRAPH_DATA,
   CLEAN_NAV_DATA,
@@ -55,6 +56,8 @@ const ExperimentState = props => {
         visNodes: null, 
         visNetwork: null,
         foundNodes: null,
+        isGrouped: false,
+        allowJobMonitor: false,
     }
 
     const [state, dispatch] = useReducer(ExperimentReducer, initialState);
@@ -83,6 +86,18 @@ const ExperimentState = props => {
         });
       };
     
+
+    // Get Experiment Graph Grouped
+    const getExperimentGraphGrouped = async (expid, group) => {
+      setLoadingGraph();
+      const res = await axios.get(`${localserver}/group/${expid}/${group}`);
+      console.log(res.data);
+      dispatch({
+        type: GET_GRAPH_GROUPED,
+        payload: res.data,
+      });
+    }
+
     // Get Experiment Graph
     const getExperimentGraph = async expid => {
         setLoadingGraph();
@@ -121,93 +136,97 @@ const ExperimentState = props => {
 
     // Get Experiment Pkl Data
     const getExperimentPkl = async (expid, timeStamp) => {
-      setLoadingPkl();
-      //timeStamp = 1000;
-      const res = await axios.get(`${localserver}/pklinfo/${expid}/${timeStamp}`);
-      console.log(res.data);
-      // const actualPkl = res.data;
-      
-      let retrievedPkl = null;
-      var jobs = {};
-      var colorChanges = {};
-      var changes = ""
-      retrievedPkl = res.data;
-      if (state.data !== null && retrievedPkl.has_changed === true && retrievedPkl.pkl_content.length > 0){
-        //console.log(retrievedPkl.pkl_content.length);
-        for(var j = 0, job; j < retrievedPkl.pkl_content.length; j++){
-          job = retrievedPkl.pkl_content[j];
-          //console.log(job);
-          jobs[ job.name ] = job;
-          //console.log(jobs[job.name]);git pu
-        }
-        let requireUpdate = false;
-        console.log('Current ts: '+ state.experiment.pkl_timestamp);        
-        var newData = state.data;
-        //console.log(newData.nodes);
-        var expData = state.experiment;
-        if (newData.nodes){
-          for(var i = 0; i < newData.nodes.length; i++){
-            // console.log(newNodes[i].id);
-            //console.log(newData.nodes[i]);
-            // console.log(jobs[ newNodes[i].id ]);
+      if (state.isGrouped === false){
+        setLoadingPkl();
+        //timeStamp = 1000;
+        const res = await axios.get(`${localserver}/pklinfo/${expid}/${timeStamp}`);
+        console.log(res.data);
+        // const actualPkl = res.data;
+        
+        let retrievedPkl = null;
+        var jobs = {};
+        var colorChanges = {};
+        var changes = ""
+        retrievedPkl = res.data;
+        if (state.data !== null && retrievedPkl.has_changed === true && retrievedPkl.pkl_content.length > 0){
+          //console.log(retrievedPkl.pkl_content.length);
+          for(var j = 0, job; j < retrievedPkl.pkl_content.length; j++){
+            job = retrievedPkl.pkl_content[j];
+            //console.log(job);
+            jobs[ job.name ] = job;
+            //console.log(jobs[job.name]);git pu
+          }
+          let requireUpdate = false;
+          console.log('Current ts: '+ state.experiment.pkl_timestamp);        
+          var newData = state.data;
+          //console.log(newData.nodes);
+          var expData = state.experiment;
+          if (newData.nodes){
+            for(var i = 0; i < newData.nodes.length; i++){
+              // console.log(newNodes[i].id);
+              //console.log(newData.nodes[i]);
+              // console.log(jobs[ newNodes[i].id ]);
 
-            if (newData.nodes[i].status_code !== jobs[ newData.nodes[i].id ].status_code){
-              // changes += newData.nodes[i].id + " from " + newData.nodes[i].status + " to " + jobs[ newData.nodes[i].id ].status + " || ";
-              changes += timeStampToDate(retrievedPkl.pkl_timestamp) + ": "+ newData.nodes[i].id + " to " + jobs[ newData.nodes[i].id ].status + "\n";
-              newData.nodes[i].status_code = jobs[ newData.nodes[i].id ].status_code;
-              newData.nodes[i].status_color = jobs[ newData.nodes[i].id ].status_color;
-              newData.nodes[i].status = jobs[ newData.nodes[i].id ].status;
-              //console.log(newData.nodes[i].status_color)
-              colorChanges[ newData.nodes[i].id  ] = jobs[ newData.nodes[i].id ].status_color;
-              requireUpdate = true;
+              if (newData.nodes[i].status_code !== jobs[ newData.nodes[i].id ].status_code){
+                // changes += newData.nodes[i].id + " from " + newData.nodes[i].status + " to " + jobs[ newData.nodes[i].id ].status + " || ";
+                changes += timeStampToDate(retrievedPkl.pkl_timestamp) + ": "+ newData.nodes[i].id + " to " + jobs[ newData.nodes[i].id ].status + "\n";
+                newData.nodes[i].status_code = jobs[ newData.nodes[i].id ].status_code;
+                newData.nodes[i].status_color = jobs[ newData.nodes[i].id ].status_color;
+                newData.nodes[i].status = jobs[ newData.nodes[i].id ].status;
+                //console.log(newData.nodes[i].status_color)
+                colorChanges[ newData.nodes[i].id  ] = jobs[ newData.nodes[i].id ].status_color;
+                requireUpdate = true;
+              }
+            }
+
+
+            if (requireUpdate){            
+              // console.log(newData.pkl_timestamp);
+              // console.log(expData.pkl_timestamp);
+              console.log("New ts: " + retrievedPkl.pkl_timestamp)
+              newData.pkl_timestamp = retrievedPkl.pkl_timestamp;
+              expData.pkl_timestamp = retrievedPkl.pkl_timestamp;
+              // console.log(newData.pkl_timestamp);
+              // console.log(expData.pkl_timestamp);
+              
+              updateNodes(newData);
+
+              
+              updateExperimentTimeStamp(expData);
+              // setUpdateGraph(true);
+              // setUpdateGraph(false);
+              if (state.pklchanges){
+                setPklChanges(changes + state.pklchanges);
+              } else {
+                setPklChanges(changes);
+              }
+
+              for(var key in colorChanges) {
+                //console.log( key, colorChanges[key] );
+                updateGraphColor(key, colorChanges[key]);
+              }
+              
+    
+            } else { 
+              console.log('No changes but updating pkl anyway.')
+              expData.pkl_timestamp = retrievedPkl.pkl_timestamp;
+              updateExperimentTimeStamp(expData);
             }
           }
-
-
-          if (requireUpdate){            
-            // console.log(newData.pkl_timestamp);
-            // console.log(expData.pkl_timestamp);
-            console.log("New ts: " + retrievedPkl.pkl_timestamp)
-            newData.pkl_timestamp = retrievedPkl.pkl_timestamp;
-            expData.pkl_timestamp = retrievedPkl.pkl_timestamp;
-            // console.log(newData.pkl_timestamp);
-            // console.log(expData.pkl_timestamp);
-            
-            // console.log('Call Update');
-            updateNodes(newData);
-            updateExperimentTimeStamp(expData);
-            // setUpdateGraph(true);
-            // setUpdateGraph(false);
-            if (state.pklchanges){
-              setPklChanges(changes + state.pklchanges);
-            } else {
-              setPklChanges(changes);
-            }
-
-            for(var key in colorChanges) {
-              //console.log( key, colorChanges[key] );
-              updateGraphColor(key, colorChanges[key]);
-            }
-            
-  
-          } else { 
-            console.log('No changes but updating pkl anyway.')
-            expData.pkl_timestamp = retrievedPkl.pkl_timestamp;
-            updateExperimentTimeStamp(expData);
-          }
         }
-      }
-      // } else {
-      //   var t = new Date( retrievedPkl.pkl_timestamp );
-      //   var formatted = t.toISOString();
-      //   setPklChanges("No news yet... " + formatted)
-      // }
-
-
-      dispatch({
-        type: GET_PKL_DATA,
-        payload: res.data,
-      });
+        dispatch({
+          type: GET_PKL_DATA,
+          payload: res.data,
+        });
+        
+      } else {
+        if (state.pklchanges) {
+          setPklChanges("Can't update grouped graph\n" + state.pklchanges);
+        } else {
+          setPklChanges("Can't update grouped graph\n");
+        }
+        
+      } 
     }
 
     // Graph manipulation
@@ -381,6 +400,8 @@ const ExperimentState = props => {
             visNetwork: state.visNetwork,
             foundNodes: state.foundNodes,            
             experimentRunning: state.experimentRunning,
+            isGrouped: state.isGrouped,
+            allowJobMonitor: state.allowJobMonitor,
             setAutoUpdateRun,
             setAutoUpdatePkl,
             searchExperiments,
@@ -405,7 +426,8 @@ const ExperimentState = props => {
             navToLatest,
             searchJobInGraph,
             navigateTo,
-            getRunningState,            
+            getRunningState,     
+            getExperimentGraphGrouped,       
         }}>
             {props.children}
         </ExperimentContext.Provider>

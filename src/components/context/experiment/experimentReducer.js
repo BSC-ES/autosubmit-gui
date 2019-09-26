@@ -4,6 +4,7 @@ import {
     CLEAR_EXPERIMENTS,
     GET_EXPERIMENT,
     GET_GRAPH,
+    GET_GRAPH_GROUPED,
     SET_LOADING_GRAPH,
     CLEAN_GRAPH_DATA,
     CLEAN_RUN_DATA,
@@ -42,6 +43,8 @@ export default (state, action) => {
                 visNetwork: null,
                 foundNodes: null,
                 experimentRunning: false,
+                isGrouped: false,
+                allowJobMonitor: false,
             };
         case CLEAN_RUN_DATA:
             return {
@@ -132,6 +135,15 @@ export default (state, action) => {
                 data: action.payload,
                 loadingGraph: false,
                 enabledGraphSearch: true,
+                isGrouped: false,
+            };
+        case GET_GRAPH_GROUPED:
+            return {
+                ...state,
+                data: action.payload,
+                loadingGraph: false,
+                enabledGraphSearch: true,
+                isGrouped: true,
             };
         case GET_EXPERIMENT_RUN:
             return {

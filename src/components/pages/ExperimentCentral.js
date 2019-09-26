@@ -79,7 +79,8 @@ const ExperimentCentral = ({ match }) => {
                         <div className='col-3 pl-0'>
                             {data && <Selection /> }
                             {startAutoUpdatePkl &&
-                                <JobMonitor 
+                                <JobMonitor
+                                    data = {data} 
                                     experiment={experiment} 
                                     getExperimentPkl={getExperimentPkl} 
                                     cleanPklData={cleanPklData}
