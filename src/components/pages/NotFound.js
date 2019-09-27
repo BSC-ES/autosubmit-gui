@@ -6,7 +6,7 @@ const NotFound = () => {
         <div>
             <h1>Oops!</h1>
             <p>Looks like you are lost. Better go back home.</p>
-            <Link to='/' className='btn btn-light'>
+            <Link to='/autosubmitapp/' className='btn btn-light'>
                 Back Home
             </Link>  
         </div>

@@ -89,7 +89,7 @@ const Experiment = ({ expidToken }) => {
     <div>
       <div className="row">
         <div className="col">
-          <Link to='/' className='btn btn-light'>
+          <Link to='/autosubmitapp/' className='btn btn-light'>
             Back To Search
           </Link>    
         </div>        

@@ -10,10 +10,10 @@ const Navbar = ({ icon, title }) => {
             <Link className="navbar-brand" to='/'><i className={icon} /> {title}</Link>
             <ul className="navbar-nav">
                 <li className="nav-item">
-                    <Link className="nav-link" to='/'>Home</Link>
+                    <Link className="nav-link" to='/autosubmitapp/'>Home</Link>
                 </li>
                 <li className="nav-item">
-                    <Link className="nav-link" to='/about'>About</Link>
+                    <Link className="nav-link" to='/autosubmitapp/about'>About</Link>
                 </li>
                 
             </ul>
