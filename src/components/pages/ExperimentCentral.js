@@ -80,7 +80,6 @@ const ExperimentCentral = ({ match }) => {
                             {data && <Selection /> }
                             {startAutoUpdatePkl &&
                                 <JobMonitor
-                                    data = {data} 
                                     experiment={experiment} 
                                     getExperimentPkl={getExperimentPkl} 
                                     cleanPklData={cleanPklData}
