@@ -62,7 +62,7 @@ const ExperimentState = props => {
 
     const [state, dispatch] = useReducer(ExperimentReducer, initialState);
     // const bscserver = 'http://192.168.11.91:8888'
-    const localserver= 'http://84.88.185.94:8081'
+    const localserver= 'http://192.168.11.91:8081'
 
     // Search Experiments
     const searchExperiments = async text => {
