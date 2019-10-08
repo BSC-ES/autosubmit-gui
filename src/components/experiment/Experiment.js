@@ -194,7 +194,6 @@ const Experiment = ({ expidToken }) => {
                   
                 </div>
                 <div className='col-md-2'>
-                  {experiment && !data &&
                     <form onSubmit={onSubmitGraph} className='form'>
                       <input
                         type='submit'
@@ -203,8 +202,7 @@ const Experiment = ({ expidToken }) => {
                         disabled={!enabledGraphSearch}
                       />
                     </form>
-                  }
-                  {experiment && data &&
+                  {/* {experiment && data &&
                     <form onSubmit={onClearGraph} className='form'>
                       <input
                         type='submit'
@@ -213,7 +211,7 @@ const Experiment = ({ expidToken }) => {
                         disabled={!enabledGraphSearch}
                       />
                     </form>
-                  }
+                  } */}
                   
                 </div>
                 <div className='col-md-2'>

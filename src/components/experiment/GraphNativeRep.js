@@ -11,9 +11,7 @@ class GraphNativeRep extends Component {
             return true
           }else if (nextProps.data && this.props.data && (nextProps.data.pkl_timestamp !== this.props.data.pkl_timestamp)){
             console.log("Rerendering")
-            return true;
-          } else if (!nextProps.data){
-            return true;        
+            return true;    
           }else if (nextProps.loadingGraph !== this.props.loadingGraph){
             return true;    
           }else{
