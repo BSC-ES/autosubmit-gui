@@ -2,7 +2,6 @@ import React, { Fragment, useContext } from 'react';
 import Experiment from '../experiment/Experiment';
 // import GraphRepresentation from '../experiment/GraphRepresentation';
 import GraphNativeRep from '../experiment/GraphNativeRep';
-import DefaultNativeRep from '../experiment/DefaultNativeRep';
 import TreeNativeRep from '../experiment/TreeNativeRep';
 import ExperimentContext from '../context/experiment/experimentContext';
 import StatsContext from '../context/statistics/statsContext';
@@ -60,9 +59,9 @@ const ExperimentCentral = ({ match }) => {
                     }
                     <div className='row'>                        
                         <div className='col-9 pr-0'>
-                            {!data && !treedata &&
+                            {/* {!data && !treedata &&
                                 <DefaultNativeRep />
-                            }
+                            } */}
 
 
                                 <GraphNativeRep 

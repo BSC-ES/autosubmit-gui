@@ -40,10 +40,10 @@ const Experiment = ({ expidToken }) => {
     getExperimentTree(experiment.expid);
   };
 
-  const onClearGraph = e => {
-    e.preventDefault();
-    cleanGraphData();
-  }
+  // const onClearGraph = e => {
+  //   e.preventDefault();
+  //   cleanGraphData();
+  // }
 
   const onClearTree = e => {
     e.preventDefault();
