@@ -175,7 +175,7 @@ const Experiment = ({ expidToken }) => {
                     <form onSubmit={onSubmitTree} className='form'>
                       <input
                         type='submit'
-                        value='Show Tree'
+                        value='Show Tree View'
                         className='btn btn-info btn-block btn-sm'
                         disabled={!enabledGraphSearch}
                       />
@@ -185,7 +185,7 @@ const Experiment = ({ expidToken }) => {
                     <form onSubmit={onClearTree} className='form'>
                       <input
                         type='submit'
-                        value='Clear Tree'
+                        value='Clear Tree View'
                         className='btn btn-danger btn-block btn-sm'
                         disabled={!enabledGraphSearch}
                       />
