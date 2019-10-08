@@ -25,6 +25,10 @@
   background: transparent;
 }
 
+.fancytree-ext-childcounter span.fancytree-childcounter {
+  border: 0px !important;
+}
+
 pre.bash {
   background-color: black;
   color: white;
@@ -58,6 +62,36 @@ pre.bash {
 .allowResizeVertical {
   resize: vertical;
 }
+
+ul.fancytree-container {
+  height: 600px;
+  max-height: 600px;
+  width: 100%;
+  border: none;
+  overflow: auto;
+}
+
+/* span.fancytree-node.fancytree-clone span.fancytree-title {
+  color: blue;
+} */
+span.fancytree-node.fancytree-clone span.fancytree-title:after {
+  content: "";
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAMAAAC67D+PAAAAFVBMVEVmmcwzmcyZzP8AZswAZv////////9E6giVAAAAB3RSTlP///////8AGksDRgAAADhJREFUGFcly0ESAEAEA0Ei6/9P3sEcVB8kmrwFyni0bOeyyDpy9JTLEaOhQq7Ongf5FeMhHS/4AVnsAZubxDVmAAAAAElFTkSuQmCC") 100% 50% no-repeat;
+  padding-right: 13px;
+}
+
+span.fancytree-node.fancytree-active-clone {
+  /* border-color: blue; */
+  animation: flash 2s ease-out;
+  animation-iteration-count: 1;
+}
+
+@keyframes flash {
+  0% { background-color:none;}
+  50% { background-color:#fbf8b2;}
+  100% {background-color:none;}
+}
+
 
 /* 
 body {

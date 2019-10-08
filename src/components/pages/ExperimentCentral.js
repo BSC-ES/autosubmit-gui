@@ -2,6 +2,8 @@ import React, { Fragment, useContext } from 'react';
 import Experiment from '../experiment/Experiment';
 // import GraphRepresentation from '../experiment/GraphRepresentation';
 import GraphNativeRep from '../experiment/GraphNativeRep';
+import DefaultNativeRep from '../experiment/DefaultNativeRep';
+import TreeNativeRep from '../experiment/TreeNativeRep';
 import ExperimentContext from '../context/experiment/experimentContext';
 import StatsContext from '../context/statistics/statsContext';
 import Selection from '../experiment/Selection';
@@ -17,11 +19,14 @@ const ExperimentCentral = ({ match }) => {
     const experimentContext = useContext(ExperimentContext);
     const statsContext = useContext(StatsContext);
     const {data, 
+        treedata,
         updateSelection, 
         loadingGraph, 
+        loadingTree,
         loadingRun, 
         shouldUpdateGraph,
         cleanGraphData, 
+        cleanTreeData,
         cleanRunData, 
         cleanNavData,
         getExperimentRun,
@@ -55,7 +60,12 @@ const ExperimentCentral = ({ match }) => {
                     }
                     <div className='row'>                        
                         <div className='col-9 pr-0'>
-                            <GraphNativeRep 
+                            {!data && !treedata &&
+                                <DefaultNativeRep />
+                            }
+
+
+                                <GraphNativeRep 
                                 data={data} 
                                 updateSelection={updateSelection} 
                                 loadingGraph={loadingGraph} 
@@ -67,19 +77,20 @@ const ExperimentCentral = ({ match }) => {
                                 navToLatest={navToLatest}
                                 clearStats={clearStats}
                                 cleanNavData={cleanNavData}
-                            />
-                            {/* <GraphRepresentation 
-                                data={data} 
-                                updateSelection={updateSelection} 
-                                loadingGraph={loadingGraph} 
-                                cleanGraphData={cleanGraphData} 
-                                shouldUpdateGraph={shouldUpdateGraph} 
-                            /> */}
+                                />
+
+
+                                <TreeNativeRep 
+                                treedata={treedata}
+                                loadingTree={loadingTree}
+                                cleanTreeData={cleanTreeData}                                
+                                />
+                                                  
                         </div>
                         <div className='col-3 pl-0'>
                             {data && <Selection /> }
                             {startAutoUpdatePkl &&
-                                <JobMonitor
+                                <JobMonitor                                    
                                     experiment={experiment} 
                                     getExperimentPkl={getExperimentPkl} 
                                     cleanPklData={cleanPklData}

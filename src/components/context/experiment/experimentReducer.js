@@ -4,10 +4,13 @@ import {
     CLEAR_EXPERIMENTS,
     GET_EXPERIMENT,
     GET_GRAPH,
+    GET_TREE,
     GET_GRAPH_GROUPED,
+    SET_LOADING_TREE,
     SET_LOADING_GRAPH,
     CLEAN_GRAPH_DATA,
     CLEAN_RUN_DATA,
+    CLEAN_TREE_DATA,
     UPDATE_SELECTION,
     SET_LOADING_RUN,
     GET_EXPERIMENT_RUN,
@@ -42,10 +45,18 @@ export default (state, action) => {
                 visNodes: null,
                 visNetwork: null,
                 foundNodes: null,
-                experimentRunning: false,
+                //experimentRunning: false,
                 isGrouped: false,
                 allowJobMonitor: false,
+                startAutoUpdatePkl: false,
             };
+        case CLEAN_TREE_DATA:
+            return {
+                ...state,
+                treedata: null,
+                enabledGraphSearch: true,
+                loadingTree: false,                
+            }
         case CLEAN_RUN_DATA:
             return {
               ...state,
@@ -106,6 +117,12 @@ export default (state, action) => {
                 loadingGraph: true,
                 enabledGraphSearch: false,
             };
+        case SET_LOADING_TREE:
+            return {
+                ...state,
+                loadingTree: true,
+                enabledGraphSearch: false,
+            };
         case SET_LOADING_RUN:
             return {
                 ...state,
@@ -136,6 +153,13 @@ export default (state, action) => {
                 loadingGraph: false,
                 enabledGraphSearch: true,
                 isGrouped: false,
+            };
+        case GET_TREE:
+            return {
+                ...state,
+                treedata: action.payload,
+                loadingTree: false,
+                enabledGraphSearch: true,
             };
         case GET_GRAPH_GROUPED:
             return {

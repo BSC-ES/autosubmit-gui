@@ -6,11 +6,14 @@ import vis from "vis-network";
 class GraphNativeRep extends Component {
 
     shouldComponentUpdate(nextProps, nextState){ 
+        console.log(this.props.shouldUpdateGraph)
         if (this.props.shouldUpdateGraph === true){
             return true
           }else if (nextProps.data && this.props.data && (nextProps.data.pkl_timestamp !== this.props.data.pkl_timestamp)){
             console.log("Rerendering")
             return true;
+          } else if (!nextProps.data){
+            return true;        
           }else if (nextProps.loadingGraph !== this.props.loadingGraph){
             return true;    
           }else{
@@ -40,15 +43,18 @@ class GraphNativeRep extends Component {
     render () {
         if (this.props.loadingGraph) return <Spinner></Spinner>;
         if (!this.props.data){
-            return (
-                <div className="card-body text-left">
-                    <p className='lead'>Press <span className='badge badge-info'>Show Graph</span> to see the graph representation of the experiment.</p>
-                    <p className='lead'>If the experiment is <span className='badge badge-success'>RUNNING</span> and the Graph has been rendered, press <span className='badge badge-dark'>Start Job Monitor</span> to start a live tracker of the changes on the experiment's jobs.
-                        This process will automatically update the graph's nodes colors and show a log of the detected changes.
-                    </p>
-                </div> 
-            );
+          return null;
         }
+        // if (!this.props.data){
+        //     return (
+        //         <div className="card-body text-left">
+        //             <p className='lead'>Press <span className='badge badge-info'>Show Graph</span> to see the graph representation of the experiment.</p>
+        //             <p className='lead'>If the experiment is <span className='badge badge-success'>RUNNING</span> and the Graph has been rendered, press <span className='badge badge-dark'>Start Job Monitor</span> to start a live tracker of the changes on the experiment's jobs.
+        //                 This process will automatically update the graph's nodes colors and show a log of the detected changes.
+        //             </p>
+        //         </div> 
+        //     );
+        // }
 
         var nodes_array = [];
         var edges_array = [];
@@ -160,7 +166,7 @@ class GraphNativeRep extends Component {
 
           
     
-            render() {            
+            render() {     
                 return (
                     <div className='card-body p-0'>                    
                         <div ref="myRef" style={experimentStyle}></div>

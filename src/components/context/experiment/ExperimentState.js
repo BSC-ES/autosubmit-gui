@@ -8,8 +8,10 @@ import {
   CLEAR_EXPERIMENTS,
   GET_EXPERIMENT,
   GET_GRAPH,
+  GET_TREE,
   GET_GRAPH_GROUPED,
   SET_LOADING_GRAPH,
+  SET_LOADING_TREE,
   CLEAN_GRAPH_DATA,
   CLEAN_NAV_DATA,
   UPDATE_SELECTION,
@@ -31,6 +33,7 @@ import {
   SET_LOADING_SEARCH_JOB,
   SET_LOADING_STATE,
   GET_RUNNING_STATE,
+  CLEAN_TREE_DATA,  
 } from '../types';
 
 const ExperimentState = props => {
@@ -40,9 +43,11 @@ const ExperimentState = props => {
         loading: false,
         experimentRunning: false,
         data: null,
+        treedata: null,
         rundata: null,
         pkldata: null,
         pklchanges: null,
+        loadingTree: false,
         loadingGraph: false,
         loadingRun: false,
         loadingState: false,
@@ -61,8 +66,8 @@ const ExperimentState = props => {
     }
 
     const [state, dispatch] = useReducer(ExperimentReducer, initialState);
-    // const bscserver = 'http://192.168.11.91:8888'
-    const localserver= 'http://192.168.11.91:8081'
+    const localserver = 'http://192.168.11.91:8081'
+    // const localserver= 'http://84.88.185.94:8081'
 
     // Search Experiments
     const searchExperiments = async text => {
@@ -110,6 +115,17 @@ const ExperimentState = props => {
         });
         //this.setState({ data: res.data, loading: false, showGraph: !res.data.error });
       };
+    
+    const getExperimentTree = async expid => {
+      setLoadingTree();
+
+      const res = await axios.get(`${localserver}/tree/${expid}`);
+      console.log(res.data);
+      dispatch({
+        type: GET_TREE,
+        payload: res.data,
+      });
+    }
 
     // Get Experiment Run
     const getExperimentRun = async expid => {
@@ -327,6 +343,7 @@ const ExperimentState = props => {
     // Cleaning
     const clearExperiments = () => dispatch({ type: CLEAR_EXPERIMENTS });
     const cleanGraphData = () => dispatch({ type: CLEAN_GRAPH_DATA });
+    const cleanTreeData = () => dispatch({ type: CLEAN_TREE_DATA });
     const cleanRunData = () => dispatch({ type: CLEAN_RUN_DATA });
     const cleanPklData = () => dispatch({ type: CLEAN_PKL_DATA });
     const cleanNavData = () => dispatch({ type: CLEAN_NAV_DATA });
@@ -334,6 +351,7 @@ const ExperimentState = props => {
     // Set Loading
     const setLoading = () => dispatch({ type: SET_LOADING });
     const setLoadingGraph = () => dispatch({ type: SET_LOADING_GRAPH });
+    const setLoadingTree = () => dispatch({ type: SET_LOADING_TREE });
     const setLoadingRun = () => dispatch({ type: SET_LOADING_RUN });
     const setLoadingPkl = () => dispatch({ type: SET_LOADING_PKL });
     const setLoadingSearchJob = () => dispatch({ type: SET_LOADING_SEARCH_JOB});
@@ -384,11 +402,13 @@ const ExperimentState = props => {
             experiment: state.experiment,
             loading: state.loading,
             loadingGraph: state.loadingGraph,
+            loadingTree: state.loadingTree,
             loadingRun: state.loadingRun,
             loadingPkl: state.loadingPkl,
             loadingSearchJob: state.loadingSearchJob,
             loadingState: state.loadingState,
             data: state.data,
+            treedata: state.treedata,
             rundata: state.rundata,
             pklchanges: state.pklchanges,
             selection: state.selection,
@@ -408,7 +428,9 @@ const ExperimentState = props => {
             clearExperiments,
             getExperiment,
             getExperimentGraph,
+            getExperimentTree,
             cleanGraphData, 
+            cleanTreeData,
             cleanRunData,
             cleanPklData,
             cleanNavData,

@@ -7,18 +7,22 @@ const Experiment = ({ expidToken }) => {
   const experimentContext = useContext(ExperimentContext); 
   const { getExperiment, 
         getExperimentGraph, 
+        getExperimentTree,
         getExperimentGraphGrouped,
         setAutoUpdatePkl, 
+        cleanTreeData,
+        cleanGraphData,
         loading, 
         loadingState,
         experiment, 
         experimentRunning,
         enabledGraphSearch, 
         data, 
+        treedata,
         startAutoUpdatePkl,
         setAutoUpdateRun, 
         startAutoUpdateRun,
-        getRunningState } = experimentContext;
+        getRunningState} = experimentContext;
 
   useEffect(() => {
     getExperiment(expidToken);
@@ -26,10 +30,25 @@ const Experiment = ({ expidToken }) => {
     // eslint-disable-next-line
   }, []);
   
-  const onSubmit = e => {
+  const onSubmitGraph = e => {
     e.preventDefault();
     getExperimentGraph(experiment.expid);
   };
+
+  const onSubmitTree = e => {
+    e.preventDefault();
+    getExperimentTree(experiment.expid);
+  };
+
+  const onClearGraph = e => {
+    e.preventDefault();
+    cleanGraphData();
+  }
+
+  const onClearTree = e => {
+    e.preventDefault();
+    cleanTreeData();
+  }
 
   const onJobMonitor = e => {
     e.preventDefault();
@@ -151,22 +170,58 @@ const Experiment = ({ expidToken }) => {
           </div>
           <div className='card-footer p-1'>
             <div className='row'>
-                <div className='col-md-2'>
-                  <form onSubmit={onSubmit} className='form'>
-                    <input
-                      type='submit'
-                      value='Show Graph'
-                      className='btn btn-info btn-block btn-sm'
-                      disabled={!enabledGraphSearch}
-                    />
-                  </form>
+              <div className='col-md-2'>
+                  {experiment && !treedata &&
+                    <form onSubmit={onSubmitTree} className='form'>
+                      <input
+                        type='submit'
+                        value='Show Tree'
+                        className='btn btn-info btn-block btn-sm'
+                        disabled={!enabledGraphSearch}
+                      />
+                    </form>
+                  }
+                  {experiment && treedata && 
+                    <form onSubmit={onClearTree} className='form'>
+                      <input
+                        type='submit'
+                        value='Clear Tree'
+                        className='btn btn-danger btn-block btn-sm'
+                        disabled={!enabledGraphSearch}
+                      />
+                    </form>
+                  }
+                  
                 </div>
                 <div className='col-md-2'>
-                  <button className="btn btn-info btn-block btn-sm" data-toggle="modal" data-target="#grouptype">
+                  {experiment && !data &&
+                    <form onSubmit={onSubmitGraph} className='form'>
+                      <input
+                        type='submit'
+                        value='Show Graph'
+                        className='btn btn-info btn-block btn-sm'
+                        disabled={!enabledGraphSearch}
+                      />
+                    </form>
+                  }
+                  {experiment && data &&
+                    <form onSubmit={onClearGraph} className='form'>
+                      <input
+                        type='submit'
+                        value='Clear Graph'
+                        className='btn btn-alert btn-block btn-sm'
+                        disabled={!enabledGraphSearch}
+                      />
+                    </form>
+                  }
+                  
+                </div>
+                <div className='col-md-2'>
+                  <button className="btn btn-info btn-block btn-sm" data-toggle="modal" data-target="#grouptype" disabled={!enabledGraphSearch}>
                       Group By
                   </button>
                 </div>   
-                <div className="col-md-4">
+                <div className="col-md-2">
                     {experiment && !startAutoUpdateRun &&
                       <form onSubmit={onSubmitRun} className='form'>
                         <input
