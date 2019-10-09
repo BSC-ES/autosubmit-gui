@@ -14,13 +14,15 @@ const Selection = () => {
 
     var currentNode = ""
     var selectedNode = null
+
+    
     if (selection) {
         console.log("Current selection " + selection)
         selection.map(node => (
-            // currentSelection += node + ", "
+
             currentNode = node
         ));
-        //console.log("Current node " + currentNode)
+  
         selectedNode = data.nodes.find(node => node.id === currentNode)    
         //console.log("Selected node")
         //console.log("Data: " + selectedNode.id + " " + selectedNode.platform_name)

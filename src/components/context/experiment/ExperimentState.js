@@ -247,8 +247,23 @@ const ExperimentState = props => {
 
     // Graph manipulation
     const updateGraphColor = (idChange, newColor) => {
-      //console.log(state.visNodes);
-      state.visNodes.update({id:idChange, color: { background: newColor }});
+      
+      //console.log("Updateing graph color")
+      // var node = state.visNetwork.selectNodes([idChange]);
+      // if (node){
+      //   node.color = newColor;
+      // }
+      // var node = state.visNodes.get(idChange);
+      // node.color = {background: newColor}
+
+      // //console.log(node)
+      
+      //state.visNetwork.unselectAll();
+      state.visNetwork.body.nodes[idChange].options.color.background = newColor;
+      state.visNetwork.selectNodes([idChange]);
+      //console.log(cont)
+      
+      //state.visNodes.update({id:idChange, color: { background: newColor }});
     };
 
     const navigateGraph = (posx, posy) => {

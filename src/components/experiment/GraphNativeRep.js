@@ -7,15 +7,16 @@ class GraphNativeRep extends Component {
 
     shouldComponentUpdate(nextProps, nextState){ 
         if (this.props.shouldUpdateGraph === true){
-            console.log("should Rerender")
+            //console.log("should Rerender")
             return true
           }else if (nextProps.data && this.props.data && (nextProps.data.pkl_timestamp !== this.props.data.pkl_timestamp)){
-            console.log("Rerendering")
+            //console.log("Rerendering")
             return true;
           }else if (nextProps.loadingGraph !== this.props.loadingGraph){
-            console.log("Render because changed loading")
+            //console.log("Render because changed loading")
             return true;    
           }else{
+            //console.log("NO RERENDER")
             return false;
           }
     }
@@ -118,6 +119,10 @@ class GraphNativeRep extends Component {
             },
             physics: {
               enabled: false,
+              stabilization: {    // Determines an initial layout; enabled by default
+                enabled: true,
+                 iterations: 1000
+               }
             },
             nodes: {
               shape: 'dot',
@@ -136,9 +141,10 @@ class GraphNativeRep extends Component {
         
             shouldComponentUpdate(nextProps, nextState){ 
                if (this.props.shouldUpdateGraph === true){
-                  console.log("Should rerender form inside")
+                  //console.log("Should rerender form inside")
                     return true;
                 } else {
+                  //console.log("No RERENDER")
                     return false;
                 }
             }
@@ -147,13 +153,14 @@ class GraphNativeRep extends Component {
                 var network = new vis.Network(this.refs.myRef, this.props.graph, this.props.options);
                 this.props.setVisNetwork(network);
                 network.on("select", (params) => {
-                    console.log(params);
+                    //console.log(params);
                     if (params.nodes){
-                        //console.log(params.nodes);
+
                         this.props.updateSelection(params.nodes);
                     }
                     
                 });
+                //network.enableEditMode();
             }
     
             componentWillUnmount() {

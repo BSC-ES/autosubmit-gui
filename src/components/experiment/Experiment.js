@@ -11,7 +11,6 @@ const Experiment = ({ expidToken }) => {
         getExperimentGraphGrouped,
         setAutoUpdatePkl, 
         cleanTreeData,
-        cleanGraphData,
         loading, 
         loadingState,
         experiment, 
