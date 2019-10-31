@@ -55,19 +55,40 @@ class GraphNativeRep extends Component {
 
         var nodes_array = [];
         var edges_array = [];
-    
+        const graphviz = this.props.data.graphviz;
         if (this.props.data.nodes.length > 0 && this.props.data.edges !== null) {
-            this.props.data.nodes.map(node => nodes_array.push({
-                id: node.id,
-                label: node.label,
-                shape: node.shape,
-                color: { background: node.status_color, border: "black" },
-                level: node.level,
-              })
-            );
+
+            if (graphviz === true){
+              this.props.data.nodes.map(node => nodes_array.push({
+                  id: node.id,
+                  label: node.label,
+                  shape: node.shape,
+                  color: { background: node.status_color, border: "black" },
+                  level: node.level, // receiving x and y from API
+                  fixed: { x: true, y: true},
+                  x: node.x * -90,
+                  y: node.y * -100,
+                  shapeProperties: { borderDashes: node.dashed },
+                })
+              );
+            } else {
+              this.props.data.nodes.map(node => nodes_array.push({
+                  id: node.id,
+                  label: node.label,
+                  shape: node.shape,
+                  color: { background: node.status_color, border: "black" },
+                  level: node.level, // receiving x and y from API
+                  shapeProperties: { borderDashes: node.dashed },
+                  // fixed: { x: true, y: true},
+                  // x: node.x * -90,
+                  // y: node.y * -100,
+                })
+              );              
+            }
+            
       
             this.props.data.edges.map(edge => 
-              edges_array.push({ from: edge.from, to: edge.to })
+              edges_array.push({ from: edge.from, to: edge.to, background: { enabled: edge.is_wrapper, color: '#00e600'} })
             );
         } else {
           return (
@@ -100,6 +121,7 @@ class GraphNativeRep extends Component {
                 parentCentralization: true,
                 sortMethod: 'hubsize',
                 direction: 'UD',
+                enabled: !(graphviz),
                 // work on vis current version
                 // nodeSpacing: 190,
                 // blockShifting: false,
@@ -151,6 +173,11 @@ class GraphNativeRep extends Component {
     
             componentDidMount() {
                 var network = new vis.Network(this.refs.myRef, this.props.graph, this.props.options);
+                // const clusterOptions = {
+                //   joinCondition:function(options) {
+                //     return options.status_code === 0;
+                //   }
+                // }
                 this.props.setVisNetwork(network);
                 network.on("select", (params) => {
                     //console.log(params);
@@ -161,6 +188,7 @@ class GraphNativeRep extends Component {
                     
                 });
                 //network.enableEditMode();
+                //network.clustering.cluster(clusterOptions);
             }
     
             componentWillUnmount() {

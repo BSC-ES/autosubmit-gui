@@ -3,7 +3,7 @@ import Spinner from "../layout/Spinner";
 import { Link } from "react-router-dom";
 import ExperimentContext from '../context/experiment/experimentContext';
 
-const Experiment = ({ expidToken }) => {
+const Experiment = ({ expidToken, refTree }) => {
   const experimentContext = useContext(ExperimentContext); 
   const { getExperiment, 
         getExperimentGraph, 
@@ -32,11 +32,16 @@ const Experiment = ({ expidToken }) => {
   const onSubmitGraph = e => {
     e.preventDefault();
     getExperimentGraph(experiment.expid);
+    window.showGraphTab();
   };
 
   const onSubmitTree = e => {
     e.preventDefault();
     getExperimentTree(experiment.expid);
+    // refTree.current.tab('show');
+    // var object = this.refs.treeview;
+    // object.tab('show');
+    window.showTreeTab();
   };
 
   // const onClearGraph = e => {

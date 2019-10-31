@@ -45,10 +45,10 @@ export default (state, action) => {
                 visNodes: null,
                 visNetwork: null,
                 foundNodes: null,
-                //experimentRunning: false,
+                experimentRunning: false,
                 isGrouped: false,
                 allowJobMonitor: false,
-                startAutoUpdatePkl: false,
+                //startAutoUpdatePkl: false,
             };
         case CLEAN_TREE_DATA:
             return {

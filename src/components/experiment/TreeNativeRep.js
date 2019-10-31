@@ -44,7 +44,13 @@ export class TreeNativeRep extends Component {
         //console.log(this.props.treedata)
         if (this.props.loadingTree) return <Spinner></Spinner>;
         if (!this.props.treedata) {
-            return null;
+            return (
+                <div className="card-body text-left">
+                    <p className='lead'>Press <span className='badge badge-info'>Show Tree View</span> to see the tree view representation of the experiment.</p>
+                    <p className='lead'>Repeating subtrees in the tree view are only shown once, use the searcher to focus only on those items.
+                    </p>
+                </div> 
+            );
         }
         // if (!this.props.treedata){
         //     return (
@@ -71,12 +77,26 @@ export class TreeNativeRep extends Component {
                 var tree = new createTree('#tree', {
                     // extensions: ['edit', 'filter'],
                     extensions: ["clones","filter", "childcounter"],
+                    filter: {
+                        autoApply: true,   // Re-apply last filter if lazy data is loaded
+                        autoExpand: false, // Expand all branches that contain matches while filtered
+                        counter: true,     // Show a badge with number of matching child nodes near parent icons
+                        fuzzy: false,      // Match single characters in order, e.g. 'fb' will match 'FooBar'
+                        hideExpandedCounter: true,  // Hide counter badge if parent is expanded
+                        hideExpanders: false,       // Hide expanders if all child nodes are hidden by filter
+                        highlight: true,   // Highlight matches by wrapping inside <mark> tags
+                        leavesOnly: false, // Match end nodes only
+                        nodata: true,      // Display a 'no data' status node if result is empty
+                        mode: "dimm"       // Grayout unmatched nodes (pass "hide" to remove unmatched node instead)
+                      },
                     clones: {
                         highlightClones: true,
                         highlightActiveClones: true,
                       },
                     source: this.props.treedata,
                 });
+
+                //tree.filterBranches("FORMAT");
 
                 // tree.addClass("fancytree-connectors");
                 // this.props.setVisNetwork(network);
@@ -99,8 +119,10 @@ export class TreeNativeRep extends Component {
     
             render() {            
                 return (
-                    <div className='card-body p-0'>                    
-                        <div id="tree"></div>
+                    <div className='card-body p-0'> 
+                        <div id="tree">
+
+                        </div>
                     </div>
                 );
             }
