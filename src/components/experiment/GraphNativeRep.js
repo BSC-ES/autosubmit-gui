@@ -65,7 +65,7 @@ class GraphNativeRep extends Component {
                   shape: node.shape,
                   color: { background: node.status_color, border: "black" },
                   level: node.level, // receiving x and y from API
-                  fixed: { x: true, y: true},
+                  //fixed: { x: true, y: true},
                   x: node.x * -90,
                   y: node.y * -100,
                   shapeProperties: { borderDashes: node.dashed },
@@ -88,7 +88,7 @@ class GraphNativeRep extends Component {
             
       
             this.props.data.edges.map(edge => 
-              edges_array.push({ from: edge.from, to: edge.to, background: { enabled: edge.is_wrapper, color: '#00e600'} })
+              edges_array.push({ from: edge.from, to: edge.to, dashes: edge.dashed , background: { enabled: edge.is_wrapper, color: '#00e600'} })
             );
         } else {
           return (
