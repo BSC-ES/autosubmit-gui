@@ -86,9 +86,9 @@ class GraphNativeRep extends Component {
               );              
             }
             
-      
+            
             this.props.data.edges.map(edge => 
-              edges_array.push({ from: edge.from, to: edge.to, dashes: edge.dashed , background: { enabled: edge.is_wrapper, color: '#00e600'} })
+              edges_array.push({ from: edge.from, to: edge.to, dashes: edge.dashed , background: { enabled: edge.is_wrapper, color: 'rgba(63, 191, 63, 0.5)'}, arrows: { to: { enabled: !(edge.dashed)}} })
             );
         } else {
           return (
