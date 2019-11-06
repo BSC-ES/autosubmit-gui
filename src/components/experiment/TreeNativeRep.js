@@ -76,7 +76,8 @@ export class TreeNativeRep extends Component {
             componentDidMount() {
                 var tree = new createTree('#tree', {
                     // extensions: ['edit', 'filter'],
-                    extensions: ["clones","filter", "childcounter"],
+                    // extensions: ["clones","filter", "childcounter"],
+                    extensions: ["filter", "childcounter"],
                     filter: {
                         autoApply: true,   // Re-apply last filter if lazy data is loaded
                         autoExpand: false, // Expand all branches that contain matches while filtered
@@ -89,10 +90,10 @@ export class TreeNativeRep extends Component {
                         nodata: true,      // Display a 'no data' status node if result is empty
                         mode: "dimm"       // Grayout unmatched nodes (pass "hide" to remove unmatched node instead)
                       },
-                    clones: {
-                        highlightClones: true,
-                        highlightActiveClones: true,
-                      },
+                    // clones: {
+                    //     highlightClones: true,
+                    //     highlightActiveClones: true,
+                    //   },
                     source: this.props.treedata,
                 });
 

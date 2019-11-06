@@ -64,8 +64,8 @@ pre.bash {
 }
 
 ul.fancytree-container {
-  height: 900px;
-  max-height: 900px;
+  height: 800px;
+  max-height: 800px;
   width: 100%;
   border: none;
   overflow: auto;

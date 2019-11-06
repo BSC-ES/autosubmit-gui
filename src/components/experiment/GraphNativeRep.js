@@ -66,8 +66,8 @@ class GraphNativeRep extends Component {
                   color: { background: node.status_color, border: "black" },
                   level: node.level, // receiving x and y from API
                   //fixed: { x: true, y: true},
-                  x: node.x * -90,
-                  y: node.y * -100,
+                  x: node.x * -80,
+                  y: node.y * -80,
                   shapeProperties: { borderDashes: node.dashed },
                 })
               );
