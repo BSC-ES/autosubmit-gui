@@ -6,12 +6,14 @@ import TreeNativeRep from '../experiment/TreeNativeRep';
 import ExperimentContext from '../context/experiment/experimentContext';
 import StatsContext from '../context/statistics/statsContext';
 import Selection from '../experiment/Selection';
+import SelectionTreeNode from '../experiment/SelectionTreeNode';
 // import OpenRun from '../experiment/OpenRun';
 import Running from '../experiment/Running';
 import JobMonitor from '../experiment/JobMonitor';
 import Navigator from '../experiment/Navigator';
 import StatsSearch from '../statistics/StatsSearch';
 import JobSearcher from '../experiment/JobSearcher';
+import JobFilter from '../experiment/JobFilter';
 
 const ExperimentCentral = ({ match }) => {
     const expid = match.params.expid;
@@ -20,6 +22,7 @@ const ExperimentCentral = ({ match }) => {
     const {data, 
         treedata,
         updateSelection, 
+        updateSelectionTree,
         loadingGraph, 
         loadingTree,
         loadingRun, 
@@ -39,6 +42,7 @@ const ExperimentCentral = ({ match }) => {
         experiment,
         setVisData,
         setVisNetwork,
+        setFancyTree,
         visNetwork,
         navigateGraph,
         navToLatest,
@@ -128,13 +132,23 @@ const ExperimentCentral = ({ match }) => {
                     </div>
                     <div className="tab-pane fade" id="treeview" role="tabpanel" aria-labelledby="treeview-tab">
                         <div className="card">
+                            {experiment && treedata &&    
+                                <div className="card-header p-1">
+                                    <JobFilter />                        
+                                </div>
+                            }
                             <div className="row">
-                                <div className="col-12">
+                                <div className="col-9 pr-0">
                                     <TreeNativeRep 
                                         treedata={treedata}
                                         loadingTree={loadingTree}
                                         cleanTreeData={cleanTreeData}                                
+                                        setFancyTree={setFancyTree}
+                                        updateSelectionTree={updateSelectionTree}
                                     />
+                                </div>
+                                <div className='col-3 pl-0'>
+                                    <SelectionTreeNode />
                                 </div>
                             </div>                            
                         </div>

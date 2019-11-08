@@ -30,6 +30,11 @@ import {
     CLEAN_NAV_DATA,
     GET_RUNNING_STATE,
     SET_LOADING_STATE,
+    SET_FANCYTREE,
+    SET_LOADING_FILTER,
+    FILTER_TREEVIEW_FAILED,
+    UPDATE_SELECTION_TREE,
+    CLEAR_FILTER_TREE,
 } from '../types';
 
 export default (state, action) => {
@@ -55,7 +60,9 @@ export default (state, action) => {
                 ...state,
                 treedata: null,
                 enabledGraphSearch: true,
-                loadingTree: false,                
+                loadingTree: false, 
+                fancyTree: null,    
+                returnFiler: 0,           
             }
         case CLEAN_RUN_DATA:
             return {
@@ -79,6 +86,11 @@ export default (state, action) => {
             return {
                 ...state,
                 selection: action.payload,
+            };
+        case UPDATE_SELECTION_TREE:
+            return {
+                ...state,
+                selectedTreeNode: action.payload,
             };
         case SEARCH_EXPERIMENTS:
             return {
@@ -212,6 +224,11 @@ export default (state, action) => {
                 ...state,
                 visNetwork: action.payload,
             };
+        case SET_FANCYTREE:
+            return {
+                ...state,
+                fancyTree: action.payload,
+            };
         case SET_FOUND_NODES:
             return {
                 ...state,
@@ -223,6 +240,22 @@ export default (state, action) => {
                 ...state,
                 loadingSearchJob: true,
             };
+        case SET_LOADING_FILTER:
+            return {
+                ...state,
+                loadingFilterTree: true,
+            };
+        case FILTER_TREEVIEW_FAILED:
+            return {
+                ...state,
+                loadingFilterTree: false,
+                returnFilter: action.payload,
+            }
+        case CLEAR_FILTER_TREE:
+            return {
+                ...state,
+                returnFilter: 0,
+            }
         default:
             return null;
     };

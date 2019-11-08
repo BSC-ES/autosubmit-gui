@@ -52,6 +52,16 @@ export class TreeNativeRep extends Component {
                 </div> 
             );
         }
+
+        if (this.props.treedata.error === true) {
+            return (
+                <div className="card-body text-left">
+                    <p className='lead'>Something has gone very wrong.</p>
+                    <p className='lead text-danger'>{this.props.treedata.error_message}</p>
+                </div> 
+              );
+        };
+        
         // if (!this.props.treedata){
         //     return (
         //         <div className="card-body text-left">
@@ -71,16 +81,26 @@ export class TreeNativeRep extends Component {
             //     } else {
             //         return false;
             //     }
-            // }
-    
+            // }                  
+            
             componentDidMount() {
+
                 var tree = new createTree('#tree', {
+                    activate: (event, data) => {
+                        //console.log(event)
+                        if (data){
+                            //console.log(data);
+                            //console.log(this);
+                            this.props.updateSelectionTree(data);
+                            //this.updateSelection(data);
+                        }                        
+                    },
                     // extensions: ['edit', 'filter'],
                     // extensions: ["clones","filter", "childcounter"],
                     extensions: ["filter", "childcounter"],
                     filter: {
                         autoApply: true,   // Re-apply last filter if lazy data is loaded
-                        autoExpand: false, // Expand all branches that contain matches while filtered
+                        autoExpand: true, // Expand all branches that contain matches while filtered
                         counter: true,     // Show a badge with number of matching child nodes near parent icons
                         fuzzy: false,      // Match single characters in order, e.g. 'fb' will match 'FooBar'
                         hideExpandedCounter: true,  // Hide counter badge if parent is expanded
@@ -88,7 +108,7 @@ export class TreeNativeRep extends Component {
                         highlight: true,   // Highlight matches by wrapping inside <mark> tags
                         leavesOnly: false, // Match end nodes only
                         nodata: true,      // Display a 'no data' status node if result is empty
-                        mode: "dimm"       // Grayout unmatched nodes (pass "hide" to remove unmatched node instead)
+                        mode: "hide"       // Grayout unmatched nodes (pass "hide" to remove unmatched node instead)
                       },
                     // clones: {
                     //     highlightClones: true,
@@ -96,6 +116,11 @@ export class TreeNativeRep extends Component {
                     //   },
                     source: this.props.treedata,
                 });
+
+                //console.log(tree.activeNode);
+
+
+                this.props.setFancyTree(tree);
 
                 //tree.filterBranches("FORMAT");
 
@@ -133,6 +158,8 @@ export class TreeNativeRep extends Component {
 
             <FancyTree 
               treedata={this.props.treedata.tree} 
+              setFancyTree={this.props.setFancyTree}
+              updateSelectionTree={this.props.updateSelectionTree}
             />
           );
 

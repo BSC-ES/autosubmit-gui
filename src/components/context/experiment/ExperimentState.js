@@ -29,11 +29,16 @@ import {
   UPDATE_EXPERIMENT_TS,
   SET_VIS_DATA,
   SET_VIS_NETWORK,
+  SET_FANCYTREE,
   SET_FOUND_NODES,
   SET_LOADING_SEARCH_JOB,
   SET_LOADING_STATE,
   GET_RUNNING_STATE,
   CLEAN_TREE_DATA,  
+  FILTER_TREEVIEW_FAILED,
+  SET_LOADING_FILTER,
+  UPDATE_SELECTION_TREE,
+  CLEAR_FILTER_TREE,
 } from '../types';
 
 const ExperimentState = props => {
@@ -53,21 +58,25 @@ const ExperimentState = props => {
         loadingState: false,
         loadingPkl: false,
         loadingSearchJob: false,
+        loadingFilterTree: false,
         selection: null,
+        selectedTreeNode: null,
         enabledGraphSearch: true,  
         startAutoUpdateRun: false,  
         startAutoUpdatePkl: false,
         shouldUpdateGraph: false,   
         visNodes: null, 
         visNetwork: null,
+        fancyTree: null,
         foundNodes: null,
         isGrouped: false,
         allowJobMonitor: false,
+        returnFilter: 0,
     }
 
     const [state, dispatch] = useReducer(ExperimentReducer, initialState);
-    //const localserver = 'http://192.168.11.91:8081'
-    const localserver= 'http://84.88.185.94:8081'
+    const localserver = 'http://192.168.11.91:8081'
+    //const localserver= 'http://84.88.185.94:8081'
 
     // Search Experiments
     const searchExperiments = async text => {
@@ -328,7 +337,7 @@ const ExperimentState = props => {
     const searchJobInGraph = async string => {
       setLoadingSearchJob();
       if (state.data.nodes) {
-        const foundNodes = await state.data.nodes.filter(node => node.id.indexOf(string) >= 0);
+        const foundNodes = await state.data.nodes.filter(node => node.id.toUpperCase().indexOf(string.toUpperCase()) >= 0);
        // console.log(foundNodes);
         // console.log(foundNodes.length);
         if (foundNodes && foundNodes.length > 0) {
@@ -353,6 +362,33 @@ const ExperimentState = props => {
 
     }
 
+    const filterTreeView = async string => {
+      setLoadingFilter();
+      if (state.treedata && state.fancyTree) {
+        const count = await state.fancyTree.filterBranches(string);
+        console.log(count);
+        dispatch({
+          type: FILTER_TREEVIEW_FAILED,
+          payload: count,
+        });
+      } else {
+        dispatch({
+          type: FILTER_TREEVIEW_FAILED,
+          payload: 0,
+        });
+      }
+      
+    }
+
+    const clearFilterTreeView = () => {
+      if (state.treedata && state.fancyTree) {
+        state.fancyTree.clearFilter();
+        dispatch({
+          type: CLEAR_FILTER_TREE        
+        });
+      }      
+    }
+
 
 
     // Cleaning
@@ -371,10 +407,12 @@ const ExperimentState = props => {
     const setLoadingPkl = () => dispatch({ type: SET_LOADING_PKL });
     const setLoadingSearchJob = () => dispatch({ type: SET_LOADING_SEARCH_JOB});
     const setLoadingState = () => dispatch({ type: SET_LOADING_STATE});
+    const setLoadingFilter = () => dispatch({ type: SET_LOADING_FILTER});
 
 
     // Action Things
     const updateSelection = (currentSelection) => dispatch({ type: UPDATE_SELECTION, payload: currentSelection });
+    const updateSelectionTree = (currentSelected) => dispatch({ type: UPDATE_SELECTION_TREE, payload: currentSelected });
     const updateNodes = (newdata) => dispatch({ type: UPDATE_NODES, payload: newdata });
     const updateExperimentTimeStamp = (newExperiment) => dispatch({ type: UPDATE_EXPERIMENT_TS, payload: newExperiment});
     const setAutoUpdateRun = (value) => dispatch({ type: SET_AUTOUPDATE_RUN, payload: value });
@@ -383,6 +421,7 @@ const ExperimentState = props => {
     const setPklChanges = (value) => dispatch({ type: SET_PKL_CHANGES, payload: value });
     const setVisData = (value) => dispatch({ type: SET_VIS_DATA, payload: value});
     const setVisNetwork = (value) => dispatch({ type: SET_VIS_NETWORK, payload: value });
+    const setFancyTree = (value) => dispatch({ type: SET_FANCYTREE, payload: value });
 
 
     // Other Utils
@@ -421,12 +460,15 @@ const ExperimentState = props => {
             loadingRun: state.loadingRun,
             loadingPkl: state.loadingPkl,
             loadingSearchJob: state.loadingSearchJob,
+            loadingFilterTree: state.loadingFilterTree,
             loadingState: state.loadingState,
+            returnFilter: state.returnFilter,
             data: state.data,
             treedata: state.treedata,
             rundata: state.rundata,
             pklchanges: state.pklchanges,
             selection: state.selection,
+            selectedTreeNode: state.selectedTreeNode,
             enabledGraphSearch: state.enabledGraphSearch,
             startAutoUpdateRun: state.startAutoUpdateRun,
             startAutoUpdatePkl: state.startAutoUpdatePkl,
@@ -451,12 +493,14 @@ const ExperimentState = props => {
             cleanNavData,
             setPklChanges,
             updateSelection,
+            updateSelectionTree,
             getExperimentRun, 
             getExperimentPkl,           
             hashCode,       
             timeStampToDate,
             setVisData,
             setVisNetwork,
+            setFancyTree,
             updateGraphColor,
             navigateGraph,
             setUpdateGraph,
@@ -464,7 +508,9 @@ const ExperimentState = props => {
             searchJobInGraph,
             navigateTo,
             getRunningState,     
-            getExperimentGraphGrouped,       
+            getExperimentGraphGrouped,    
+            filterTreeView,
+            clearFilterTreeView   
         }}>
             {props.children}
         </ExperimentContext.Provider>

@@ -1,38 +1,30 @@
 import React, { useContext, Fragment } from 'react'
 import ExperimentContext from '../context/experiment/experimentContext';
 
-const Selection = () => {
+const SelectionTreeNode = () => {
     const experimentContext = useContext(ExperimentContext);
-    const { selection, data, experiment} = experimentContext;
-    // const { model, branch, hpc } = experiment;
-    //var currentSelection = "Node: "
+    const { selectedTreeNode, treedata, experiment} = experimentContext;
 
-    // const navigateTo = e => {
-    //     e.preventDefault();
-    //     navToLatestCompleted();
-    // };
+    var selectedNode = null;
+    var currentNode = "";
+    if(selectedTreeNode && selectedTreeNode.node && selectedTreeNode.node.refKey){
+        currentNode = selectedTreeNode.node.refKey;
+        if (treedata && treedata.jobs){
+            selectedNode = treedata.jobs.find(job => job.id === currentNode);
+            //console.log(selectedNode);
+        } else {
+            selectedNode = null;
+        }
+    } else {
+        selectedNode = null;
+    }
 
-    var currentNode = ""
-    var selectedNode = null
-
-    
-    if (selection) {
-        console.log("Current selection " + selection)
-        selection.map(node => (
-
-            currentNode = node
-        ));
-  
-        selectedNode = data.nodes.find(node => node.id === currentNode)    
-        //console.log("Selected node")
-        //console.log("Data: " + selectedNode.id + " " + selectedNode.platform_name)
-    }    
     return (
         <Fragment>
                 {selectedNode &&
                 <Fragment>
-                     <div className='row'>
-                         <div className='col-12'>
+                     {/* <div className='row'> */}
+                         <div className='col-12 px-0'>
                             <div className="card text-white bg-info" style={experimentStyle}>
                                 <div className='card-header text-center p-0' style={headerCard}>
                                     <div className='mh-100 px-0 mx-0'>
@@ -47,6 +39,20 @@ const Selection = () => {
                                         <div className='row'>
                                             <div className='col-12'>
                                                 <small><strong>Section:</strong> {selectedNode.section}</small>
+                                            </div>                                            
+                                        </div>                                        
+                                    </div>  
+                                    <div>
+                                        <div className='row'>
+                                            <div className='col-12'>
+                                                <small><strong>Member:</strong> {selectedNode.member}</small>
+                                            </div>                                            
+                                        </div>                                        
+                                    </div>  
+                                    <div>
+                                        <div className='row'>
+                                            <div className='col-12'>
+                                                <small><strong>Chunk:</strong> {selectedNode.chunk}</small>
                                             </div>                                            
                                         </div>                                        
                                     </div>                            
@@ -73,11 +79,11 @@ const Selection = () => {
                                     <div>
                                         <div className='row'>
                                             <div className='col-6'>
-                                                <small><strong>Level:</strong> {selectedNode.level}</small>
+                                                <small><strong>Priority:</strong> {selectedNode.priority}</small>
                                             </div>
                                             <div className='col-3 px-1'>
                                                 {selectedNode.children_list && selectedNode.children_list.length > 0 &&
-                                                    <button className="btn btn-dark btn-sm btn-block" data-toggle="modal" data-target="#childrenList">
+                                                    <button className="btn btn-dark btn-sm btn-block" data-toggle="modal" data-target="#childrenList-tree">
                                                         <small><strong>Out:</strong> {selectedNode.children}</small>
                                                     </button>
                                                 }
@@ -87,7 +93,7 @@ const Selection = () => {
                                             </div>
                                             <div className='col-3 px-1'>
                                                 {selectedNode.parent_list && selectedNode.parent_list.length > 0 &&
-                                                    <button className="btn btn-darkgit pul btn-sm btn-block" data-toggle="modal" data-target="#parentList">
+                                                    <button className="btn btn-darkgit pul btn-sm btn-block" data-toggle="modal" data-target="#parentList-tree">
                                                         <small><strong>In:</strong> {selectedNode.parents}</small>
                                                     </button>
                                                 }
@@ -108,8 +114,47 @@ const Selection = () => {
                                             </div> */}
                                         </div>                                               
                                     </div>
-                                   
-                                   
+                                    {selectedNode.custom_directives && selectedNode.custom_directives.length > 0 &&
+                                        <div>
+                                            <div className='row'>
+                                                <div className="col-12">
+                                                    <small><strong>Custom Directives:</strong></small>
+                                                </div>
+                                            </div>
+                                            <div className='row'>
+                                                <div className="col-12">
+                                                    <small>{selectedNode.custom_directives}</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    {selectedNode.wrapper &&
+                                        <div>
+                                            <div className="row">
+                                                <div className="col-12">
+                                                    <small><strong>Wrapper:</strong></small>
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="col-12">
+                                                    <small>{selectedNode.wrapper}</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    {selectedNode.wrapper_code &&
+                                        <div>
+                                            <div className="row">
+                                                <div className="col-6">
+                                                    <small><strong>Code:</strong></small>
+                                                </div>
+                                                <div className="col-6">
+                                                    <small>{selectedNode.wrapper_code}</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    
                                     {/* <div>
                                         <div className='row'>
                                             <div className='col-md-4 text-left'>
@@ -135,31 +180,29 @@ const Selection = () => {
                                 </div>                            
                             </div>
                          </div>
-                    </div>                    
+                    {/* </div>                     */}
                 </Fragment>                    
                 }  
-                {!selectedNode && data &&
-                    <div className='row'>
-                        <div className='col-12'>
-                            <div className="card text-white bg-info" style={experimentStyle}>
-                                <div className='card-header text-center py-0'>
-                                    <small>Here goes the Job Id</small>
-                                </div>
-                                <div className='card-body'>
-                                    <div className='text-center'>
-                                    <small>Select a Node to see more information.</small>                                                                        
-                                    </div>
-                                </div>                            
+                {!selectedNode && treedata && treedata.jobs &&
+                    <div className='col-12 px-0'>
+                        <div className="card text-white bg-info" style={experimentStyle}>
+                            <div className='card-header text-center py-0'>
+                                <small>Here goes the Job Id</small>
                             </div>
+                            <div className='card-body'>
+                                <div className='text-center'>
+                                <small>Select a Node to see more information.</small>                                                                        
+                                </div>
+                            </div>                            
                         </div>
-                    </div>                     
+                    </div>                   
                 }    
                 {selectedNode && selectedNode.children_list && selectedNode.children_list.length > 0 &&
-                    <div className="modal fade" id="childrenList" tabIndex="-1" role='dialog' aria-labelledby='childrenListTitle' aria-hidden='true'>
+                    <div className="modal fade" id="childrenList-tree" tabIndex="-1" role='dialog' aria-labelledby='childrenListTitle-tree' aria-hidden='true'>
                         <div className="modal-dialog" role="document">
                             <div className="modal-content">
                                 <div className="modal-header">
-                                    <h5 className="modal-title" id="childrenListTitle">
+                                    <h5 className="modal-title" id="childrenListTitle-tree">
                                         Children List
                                     </h5>
                                     <button className="close" type="button" data-dismiss='modal' aria-label='Close'>
@@ -183,11 +226,11 @@ const Selection = () => {
                     </div>
                 }   
                 {selectedNode && selectedNode.parent_list && selectedNode.parent_list.length > 0 &&
-                    <div className="modal fade" id="parentList" tabIndex="-1" role='dialog' aria-labelledby='parentListTitle' aria-hidden='true'>
+                    <div className="modal fade" id="parentList-tree" tabIndex="-1" role='dialog' aria-labelledby='parentListTitle-tree' aria-hidden='true'>
                         <div className="modal-dialog" role="document">
                             <div className="modal-content">
                                 <div className="modal-header">
-                                    <h5 className="modal-title" id="parentListTitle">
+                                    <h5 className="modal-title" id="parentListTitle-tree">
                                         Parent List
                                     </h5>
                                     <button className="close" type="button" data-dismiss='modal' aria-label='Close'>
@@ -211,18 +254,15 @@ const Selection = () => {
                     </div>
                 }       
         </Fragment>
-        
-        
-
     )
 }
 
 const experimentStyle = {
-    height: 200
+    height: 800
   };
 
 const headerCard = {
     height: 30
 }
 
-export default Selection;
+export default SelectionTreeNode

@@ -129,7 +129,7 @@ const Experiment = ({ expidToken, refTree }) => {
               <div className='col-4 text-right'>
                 {loadingState && <span className='badge badge-dark text-right'>LOADING...</span>}
                 {experimentRunning && !loadingState && <span className='badge badge-success text-right'>RUNNING</span>}
-                {!experimentRunning && !loadingState && <span className='badge badge-danger text-right'>NOT RUNNING</span>}
+                {!experimentRunning && !loadingState && <span className='badge badge-secondary text-right'>NOT RUNNING</span>}
               </div>
             </div>
           </div>
@@ -190,7 +190,7 @@ const Experiment = ({ expidToken, refTree }) => {
                       <input
                         type='submit'
                         value='Clear Tree View'
-                        className='btn btn-danger btn-block btn-sm'
+                        className='btn btn-secondary btn-block btn-sm'
                         disabled={!enabledGraphSearch}
                       />
                     </form>
