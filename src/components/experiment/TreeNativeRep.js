@@ -117,9 +117,9 @@ export class TreeNativeRep extends Component {
                     source: this.props.treedata,
                 });
 
-                //console.log(tree.activeNode);
+                //console.log(tree.activeNode);             
 
-
+                console.log(tree);
                 this.props.setFancyTree(tree);
 
                 //tree.filterBranches("FORMAT");

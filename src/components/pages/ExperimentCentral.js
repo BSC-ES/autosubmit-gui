@@ -100,34 +100,7 @@ const ExperimentCentral = ({ match }) => {
                             </div> 
                             <div className="card-footer p-0">
                                 {data && visNetwork && <Navigator />}
-                            </div>
-                            <div className="card-footer p-0">
-
-
-                                {startAutoUpdateRun && <Running 
-                                    rundata={rundata}
-                                    loadingRun={loadingRun} 
-                                    cleanRunData={cleanRunData} 
-                                    getExperimentRun={getExperimentRun}
-                                    experiment={experiment}  
-                                    startAutoUpdateRun={startAutoUpdateRun}
-                                    setAutoUpdateRun={setAutoUpdateRun}
-                                    experimentRunning={experimentRunning}
-                                />} 
-
-                                {!startAutoUpdateRun &&
-                                    <div className="row">
-                                        <div className="col-12 text-center">
-                                            <p className="lead">
-                                                Press <span className='badge badge-dark'>Show Log</span> to see the last 50 lines of the running log of this experiment. 
-                                                If the experiment is running, the log will update automatically.
-                                            </p>                                            
-                                        </div>                                            
-                                    </div>
-                                }
-                                
-
-                            </div>              
+                            </div>                                        
                         </div> 
                     </div>
                     <div className="tab-pane fade" id="treeview" role="tabpanel" aria-labelledby="treeview-tab">
@@ -153,7 +126,31 @@ const ExperimentCentral = ({ match }) => {
                             </div>                            
                         </div>
                     </div>
-                </div>                        
+                </div>         
+
+                <div className="card-footer p-0">
+                    {startAutoUpdateRun && <Running 
+                        rundata={rundata}
+                        loadingRun={loadingRun} 
+                        cleanRunData={cleanRunData} 
+                        getExperimentRun={getExperimentRun}
+                        experiment={experiment}  
+                        startAutoUpdateRun={startAutoUpdateRun}
+                        setAutoUpdateRun={setAutoUpdateRun}
+                        experimentRunning={experimentRunning}
+                    />} 
+                    {!startAutoUpdateRun &&
+                        <div className="row">
+                            <div className="col-12 text-center">
+                                <p className="lead">
+                                    Press <span className='badge badge-dark'>Show Log</span> to see the last 50 lines of the running log of this experiment. 
+                                    If the experiment is running, the log will update automatically.
+                                </p>                                            
+                            </div>                                            
+                        </div>
+                    }                    
+                </div>
+
                 <div className="card mt-2">
                     <div className="card-header py-0 text-muted">
                         <small>Statistics</small>
