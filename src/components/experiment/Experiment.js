@@ -68,6 +68,7 @@ const Experiment = ({ expidToken, refTree }) => {
   const onSubmitRun = e => {
     e.preventDefault();
     setAutoUpdateRun(true);
+    window.showLogTab();
   };
 
   const onStopSubmitRun = e => {
@@ -174,7 +175,17 @@ const Experiment = ({ expidToken, refTree }) => {
           </div>
           <div className='card-footer p-1'>
             <div className='row'>
-              <div className='col-md-2'>
+                <div className='col-md-2'>
+                    <form onSubmit={onSubmitGraph} className='form'>
+                      <input
+                        type='submit'
+                        value='Show Graph'
+                        className='btn btn-info btn-block btn-sm'
+                        disabled={!enabledGraphSearch}
+                      />
+                    </form>
+                </div>
+                <div className='col-md-2'>
                   {experiment && !treedata &&
                     <form onSubmit={onSubmitTree} className='form'>
                       <input
@@ -197,27 +208,7 @@ const Experiment = ({ expidToken, refTree }) => {
                   }
                   
                 </div>
-                <div className='col-md-2'>
-                    <form onSubmit={onSubmitGraph} className='form'>
-                      <input
-                        type='submit'
-                        value='Show Graph'
-                        className='btn btn-info btn-block btn-sm'
-                        disabled={!enabledGraphSearch}
-                      />
-                    </form>
-                  {/* {experiment && data &&
-                    <form onSubmit={onClearGraph} className='form'>
-                      <input
-                        type='submit'
-                        value='Clear Graph'
-                        className='btn btn-alert btn-block btn-sm'
-                        disabled={!enabledGraphSearch}
-                      />
-                    </form>
-                  } */}
-                  
-                </div>
+               
                 <div className='col-md-2'>
                   <button className="btn btn-info btn-block btn-sm" data-toggle="modal" data-target="#grouptype" disabled={!enabledGraphSearch}>
                       Group By
@@ -239,7 +230,7 @@ const Experiment = ({ expidToken, refTree }) => {
                         <input
                         type='submit'
                         value='Hide Log'
-                        className='btn btn-danger btn-sm btn-block'
+                        className='btn btn-secondary btn-sm btn-block'
                         // disabled={!enabledGraphSearch}
                         />
                       </form>
