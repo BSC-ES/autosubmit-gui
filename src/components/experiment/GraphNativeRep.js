@@ -44,7 +44,7 @@ class GraphNativeRep extends Component {
         if (this.props.loadingGraph) return <Spinner></Spinner>;
         if (!this.props.data){
             return (
-                <div className="card-body text-left">
+                <div className="card-body text-left" style={experimentStyle}>
                     <p className='lead'>Press <span className='badge badge-info'>Show Graph</span> to see the graph representation of the experiment.</p>
                     <p className='lead'>If the experiment is <span className='badge badge-success'>RUNNING</span> and the Graph has been rendered, press <span className='badge badge-dark'>Start Job Monitor</span> to start a live tracker of the changes on the experiment's jobs.
                         This process will automatically update the graph's nodes colors and show a log of the detected changes.
@@ -92,7 +92,7 @@ class GraphNativeRep extends Component {
             );
         } else {
           return (
-            <div className="card-body text-left">
+            <div className="card-body text-left" style={experimentStyle}>
                 <p className='lead'>Something has gone very wrong.</p>
                 <p className='lead text-danger'>{this.props.data.error_message}</p>
             </div> 

@@ -133,7 +133,7 @@ const ExperimentCentral = ({ match }) => {
                         </div>
                     </div>
                     <div className="tab-pane fade" id="log" role="tabpanel" aria-labelledby="log-tab">
-                        <div className="card">
+                        <div className="card" style={experimentStyle}>
                             {startAutoUpdateRun && <Running 
                             rundata={rundata}
                             loadingRun={loadingRun} 
@@ -157,7 +157,7 @@ const ExperimentCentral = ({ match }) => {
                         </div>
                     </div>
                     <div className="tab-pane fade" id="stats" role="tabpanel" aria-labelledby="stats-tab">
-                        <div className="card mt-2">
+                        <div className="card mt-2" style={experimentStyle}>
                             <div className="card-header py-0 text-muted">
                                 <small>Statistics</small>
                             </div>
@@ -179,5 +179,10 @@ const ExperimentCentral = ({ match }) => {
     </Fragment>
     );
 };  
+
+const experimentStyle = {
+    height: 600
+  };
+
 
 export default ExperimentCentral;

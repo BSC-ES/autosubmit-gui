@@ -45,7 +45,7 @@ export class TreeNativeRep extends Component {
         if (this.props.loadingTree) return <Spinner></Spinner>;
         if (!this.props.treedata) {
             return (
-                <div className="card-body text-left">
+                <div className="card-body text-left" style={experimentStyle}>
                     <p className='lead'>Press <span className='badge badge-info'>Show Tree View</span> to see the tree view representation of the experiment.</p>
                     <p className='lead'>Repeating subtrees in the tree view are only shown once, use the searcher to focus only on those items.
                     </p>
@@ -55,7 +55,7 @@ export class TreeNativeRep extends Component {
 
         if (this.props.treedata.error === true) {
             return (
-                <div className="card-body text-left">
+                <div className="card-body text-left" style={experimentStyle}>
                     <p className='lead'>Something has gone very wrong.</p>
                     <p className='lead text-danger'>{this.props.treedata.error_message}</p>
                 </div> 
@@ -177,5 +177,11 @@ export class TreeNativeRep extends Component {
 //     maxHeight: 600,
 //     height: 600
 //   };
+
+const experimentStyle = {
+    height: 600
+};
+
+
 
 export default TreeNativeRep
