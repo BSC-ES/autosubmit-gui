@@ -8,7 +8,6 @@ const Experiment = ({ expidToken, refTree }) => {
   const { getExperiment, 
         getExperimentGraph, 
         getExperimentTree,
-        getExperimentGraphGrouped,
         setAutoUpdatePkl, 
         cleanTreeData,
         loading, 
@@ -76,10 +75,10 @@ const Experiment = ({ expidToken, refTree }) => {
     setAutoUpdateRun(false);
   };
 
-  const onSubmitGroup = mode => e => {
-    e.preventDefault();
-    getExperimentGraphGrouped(experiment.expid, mode);
-  };
+  // const onSubmitGroup = mode => e => {
+  //   e.preventDefault();
+  //   getExperimentGraphGrouped(experiment.expid, mode);
+  // };
   
 
 
@@ -209,11 +208,11 @@ const Experiment = ({ expidToken, refTree }) => {
                   
                 </div>
                
-                <div className='col-md-2'>
+                {/* <div className='col-md-2'>
                   <button className="btn btn-info btn-block btn-sm" data-toggle="modal" data-target="#grouptype" disabled={!enabledGraphSearch}>
                       Group By
                   </button>
-                </div>   
+                </div>    */}
                 <div className="col-md-2">
                     {experiment && !startAutoUpdateRun &&
                       <form onSubmit={onSubmitRun} className='form'>
@@ -265,7 +264,7 @@ const Experiment = ({ expidToken, refTree }) => {
         </div>
         </div>
       </div>
-      <div className="modal fade" id="grouptype" tabIndex="-1" role='dialog' aria-labelledby='grouptypeTitle' aria-hidden='true'>
+      {/* <div className="modal fade" id="grouptype" tabIndex="-1" role='dialog' aria-labelledby='grouptypeTitle' aria-hidden='true'>
           <div className="modal-dialog" role="document">
               <div className="modal-content">
                   <div className="modal-header">
@@ -326,7 +325,7 @@ const Experiment = ({ expidToken, refTree }) => {
                   </div>
               </div>
           </div>
-      </div>
+      </div> */}
     </div>
     
   );

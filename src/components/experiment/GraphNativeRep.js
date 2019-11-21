@@ -49,6 +49,7 @@ class GraphNativeRep extends Component {
                     <p className='lead'>If the experiment is <span className='badge badge-success'>RUNNING</span> and the Graph has been rendered, press <span className='badge badge-dark'>Start Job Monitor</span> to start a live tracker of the changes on the experiment's jobs.
                         This process will automatically update the graph's nodes colors and show a log of the detected changes.
                     </p>
+                    <p className='lead'>The graph will be clustered by date-member by default. You can double click on any of these clusters to open it.</p>
                 </div> 
             );
         }
@@ -56,6 +57,8 @@ class GraphNativeRep extends Component {
         var nodes_array = [];
         var edges_array = [];
         const graphviz = this.props.data.graphviz;
+        const groups = this.props.data.groups;
+        const groups_data = this.props.data.groups_data;
         if (this.props.data.nodes.length > 0 && this.props.data.edges !== null) {
 
             if (graphviz === true){
@@ -86,10 +89,17 @@ class GraphNativeRep extends Component {
               );              
             }
             
-            
+          if (this.props.data.edges){
             this.props.data.edges.map(edge => 
               edges_array.push({ from: edge.from, to: edge.to, dashes: edge.dashed , background: { enabled: edge.is_wrapper, color: 'rgba(63, 191, 63, 0.5)'}, arrows: { to: { enabled: !(edge.dashed)}} })
             );
+          }
+          
+          if (this.props.data.fake_edges){
+            this.props.data.fake_edges.map(edge =>
+              edges_array.push({ from: edge.from, to: edge.to, dashes: edge.dashed , background: { enabled: edge.is_wrapper, color: 'rgba(63, 191, 63, 0.5)'}, arrows: { to: { enabled: !(edge.dashed)}} })
+            );
+          }            
         } else {
           return (
             <div className="card-body text-left" style={experimentStyle}>
@@ -173,22 +183,74 @@ class GraphNativeRep extends Component {
     
             componentDidMount() {
                 var network = new vis.Network(this.refs.myRef, this.props.graph, this.props.options);
-                // const clusterOptions = {
+                const groups_data  = this.props.groups_data;
+                // const clusterOptions = {                  
                 //   joinCondition:function(options) {
-                //     return options.status_code === 0;
+                //     const result = options.shape === "square";
+                //     // console.log(result)
+                //     return result;
                 //   }
                 // }
+                //console.log(this.props.groups_data);
                 this.props.setVisNetwork(network);
                 network.on("select", (params) => {
-                    //console.log(params);
+                    //console.log(network);                    
                     if (params.nodes){
-
-                        this.props.updateSelection(params.nodes);
-                    }
-                    
+                      if (params.nodes.length === 1){
+                        if (network.isCluster(params.nodes[0])){
+                      
+                        }else{
+                          this.props.updateSelection(params.nodes);
+                        }
+                      }                        
+                    }                    
                 });
+
+                network.on("doubleClick", (params) => {
+                    if (params.nodes) {
+                      if (params.nodes.length === 1) {
+                        if (network.isCluster(params.nodes[0])){
+                          var OpenClusterObj = {}
+                          OpenClusterObj.releaseFunction = function(clusterPosition, containedNodesPositions) {
+                            return containedNodesPositions;
+                          }
+                          network.openCluster(params.nodes[0], OpenClusterObj);
+                        }
+                      }
+                    }
+                });
+
                 //network.enableEditMode();
-                //network.clustering.cluster(clusterOptions);
+                console.log(this.props.isGraphViz);
+                if (this.props.isGraphViz){
+                  const groups = this.props.clusterGroups;
+                  
+                  var clusterOptionsByDateMember;
+                  for (var i = 0; i < groups.length; i++) {
+                    var startingName = groups[i];
+                    // if (positions[startingName]){
+                    //   console.log(positions[startingName]);
+                    // }                    
+                    clusterOptionsByDateMember = {
+                      // eslint-disable-next-line no-loop-func
+                      joinCondition: function(options){
+                        return options.id.startsWith(startingName);
+                      },
+                      processProperties: function (clusterOptions, childNodes, childEdges) {
+                        var totalMass = 0;
+                        for (var i = 0; i < childNodes.length; i++) {
+                            totalMass += childNodes[i].mass;
+                        }
+                        clusterOptions.mass = totalMass;
+                        return clusterOptions;
+                      },
+                      clusterNodeProperties: {id: 'cluster:' + startingName, borderWidth: 3, shape: 'box', label:startingName.split("_").join("\n"), 'color': groups_data[startingName].color, 'font' : {'size':50}}
+                    };
+                    network.clustering.cluster(clusterOptionsByDateMember);
+                  }
+                  
+                }
+                
             }
     
             componentWillUnmount() {
@@ -218,6 +280,9 @@ class GraphNativeRep extends Component {
             shouldUpdateGraph={this.props.shouldUpdateGraph}
             setVisNetwork={this.props.setVisNetwork}
             cleanNavData={this.props.cleanNavData}
+            isGraphViz={graphviz}
+            clusterGroups={groups}
+            groups_data={groups_data}
           />
         );
 

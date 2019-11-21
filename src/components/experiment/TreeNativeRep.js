@@ -88,7 +88,13 @@ export class TreeNativeRep extends Component {
                 var tree = new createTree('#tree', {
                     activate: (event, data) => {
                         //console.log(event)
+                        //console.log(data)
+                        //console.log(tree)
                         if (data){
+                            //tree.activeNode.setTitle("Honk")
+                            // console.log(tree.activeNode.getParent())
+                            console.log(tree.activeNode)
+                            //data.node.title = "Honk";
                             //console.log(data);
                             //console.log(this);
                             this.props.updateSelectionTree(data);
