@@ -67,8 +67,8 @@ class GraphNativeRep extends Component {
                   label: node.label,
                   shape: node.shape,
                   color: { background: node.status_color, border: "black" },
-                  level: node.level, // receiving x and y from API
-                  //fixed: { x: true, y: true},
+                  // level: node.level, // receiving x and y from API
+                  // fixed: { x: true, y: true},
                   x: node.x * -80,
                   y: node.y * -80,
                   shapeProperties: { borderDashes: node.dashed },
@@ -80,7 +80,8 @@ class GraphNativeRep extends Component {
                   label: node.label,
                   shape: node.shape,
                   color: { background: node.status_color, border: "black" },
-                  level: node.level, // receiving x and y from API
+                  level: node.level, 
+                  //y: node.level*80,
                   shapeProperties: { borderDashes: node.dashed },
                   // fixed: { x: true, y: true},
                   // x: node.x * -90,
@@ -132,13 +133,6 @@ class GraphNativeRep extends Component {
                 sortMethod: 'hubsize',
                 direction: 'UD',
                 enabled: !(graphviz),
-                // work on vis current version
-                // nodeSpacing: 190,
-                // blockShifting: false,
-                // edgeMinimization: false,
-                // parentCentralization: true,
-                // sortMethod: 'hubsize',
-                // direction: 'UD',
               }
             },            
             interaction: {
@@ -222,7 +216,7 @@ class GraphNativeRep extends Component {
 
                 //network.enableEditMode();
                 console.log(this.props.isGraphViz);
-                if (this.props.isGraphViz){
+                if (this.props.isGraphViz && this.props.clusterGroups){
                   const groups = this.props.clusterGroups;
                   
                   var clusterOptionsByDateMember;
