@@ -14,6 +14,7 @@ import Navigator from '../experiment/Navigator';
 import StatsSearch from '../statistics/StatsSearch';
 import JobSearcher from '../experiment/JobSearcher';
 import JobFilter from '../experiment/JobFilter';
+import WrapperList from '../experiment/WrapperList';
 
 const ExperimentCentral = ({ match }) => {
     const expid = match.params.expid;
@@ -93,15 +94,33 @@ const ExperimentCentral = ({ match }) => {
                                     />                     
                                 </div>
                                 <div className='col-3 pl-0'>
-                                    {data && <Selection /> }
-                                    {startAutoUpdatePkl &&
-                                        <JobMonitor                                    
-                                            experiment={experiment} 
-                                            getExperimentPkl={getExperimentPkl} 
-                                            cleanPklData={cleanPklData}
-                                            pklchanges={pklchanges}
-                                            experimentRunning={experimentRunning} />
-                                    }               
+                                    <ul className="nav nav-tabs" id="myTabSide" role="tablist">
+                                        <li className="nav-item">
+                                            <a className="nav-link active" id="selection-tab" data-toggle="tab" href="#selection" role="tab" aria-controls="selection" aria-selected="true">Selection</a>
+                                        </li>
+                                        <li className="nav-item">
+                                            <a className="nav-link" id="wrapper-tab" data-toggle="tab" href="#wrapper" role="tab" aria-controls="treeview" aria-selected="false">Wrappers</a>
+                                        </li>                                       
+                                    </ul>
+                                    <div className="tab-content" id="myTabSideContent">
+                                        <div className="tab-pane fade show active" id="selection" role="tabpanel" aria-labelledby="selection-tab">
+                                            {data && <Selection /> }
+                                            {startAutoUpdatePkl &&
+                                                <JobMonitor                                    
+                                                    experiment={experiment} 
+                                                    getExperimentPkl={getExperimentPkl} 
+                                                    cleanPklData={cleanPklData}
+                                                    pklchanges={pklchanges}
+                                                    experimentRunning={experimentRunning} />
+                                            }
+                                        </div>
+                                        <div className="tab-pane fade show" id="wrapper" role="tabpanel" aria-labelledby="wrapper-tab">
+                                            <div>
+                                                <WrapperList />
+                                            </div>                                            
+                                        </div>
+                                    </div>
+                                                  
                                 </div>
                             </div> 
                             <div className="card-footer p-0">

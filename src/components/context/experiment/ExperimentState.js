@@ -75,8 +75,8 @@ const ExperimentState = props => {
     }
 
     const [state, dispatch] = useReducer(ExperimentReducer, initialState);
-    const localserver = 'http://192.168.11.91:8081'
-    // const localserver= 'http://84.88.185.94:8081'
+    // const localserver = 'http://192.168.11.91:8081'
+    const localserver= 'http://84.88.185.94:8081'
 
     // Search Experiments
     const searchExperiments = async text => {
@@ -275,15 +275,16 @@ const ExperimentState = props => {
       //state.visNodes.update({id:idChange, color: { background: newColor }});
     };
 
-    const navigateGraph = (posx, posy) => {
+    const navigateGraph = (posx, posy, cScale = 0.9) => {
       // console.log(posx);
       // console.log(posy);
       // console.log(state.visNetwork);
       // console.log(state.visNodes);
+      if (cScale <= 0.05)  cScale = 0.05;
       state.visNetwork.moveTo(
         {
           position: {x: posx, y: posy },
-          scale: 0.9,
+          scale: cScale,
           //offset: {x: 30, y: 30},
           animation: false,
         }
@@ -332,6 +333,20 @@ const ExperimentState = props => {
         } 
       }
       
+    }
+
+    const navigateToGroup = IdList => {
+      if (state.visNetwork) {
+        
+        const currentLength = IdList.length;
+        const Id = IdList[parseInt(Math.floor(IdList.length/2))]
+        const rescale = Math.sqrt(currentLength)*0.065
+        var currentPosition = state.visNetwork.getPositions(Id);
+        if (currentPosition[Id]){
+          navigateGraph(currentPosition[Id].x, currentPosition[Id].y, 0.6 - rescale);
+          state.visNetwork.selectNodes(IdList);
+        }        
+      }
     }
 
     const searchJobInGraph = async string => {
@@ -510,7 +525,8 @@ const ExperimentState = props => {
             getRunningState,     
             getExperimentGraphGrouped,    
             filterTreeView,
-            clearFilterTreeView   
+            clearFilterTreeView,
+            navigateToGroup          
         }}>
             {props.children}
         </ExperimentContext.Provider>

@@ -58,7 +58,8 @@ class GraphNativeRep extends Component {
         var edges_array = [];
         const graphviz = this.props.data.graphviz;
         const groups = this.props.data.groups;
-        const groups_data = this.props.data.groups_data;
+        const groups_data = this.props.data.groups_data;        
+
         if (this.props.data.nodes.length > 0 && this.props.data.edges !== null) {
 
             if (graphviz === true){
@@ -69,7 +70,7 @@ class GraphNativeRep extends Component {
                   color: { background: node.status_color, border: "black" },
                   // level: node.level, // receiving x and y from API
                   // fixed: { x: true, y: true},
-                  x: node.x * -80,
+                  x: node.x * 80,
                   y: node.y * -80,
                   shapeProperties: { borderDashes: node.dashed },
                 })
@@ -118,6 +119,7 @@ class GraphNativeRep extends Component {
             shouldEdge = true;
         }
         const options = {
+            autoResize: true,
             edges: {
               arrows: {
                 to: { enabled: true }
@@ -140,7 +142,7 @@ class GraphNativeRep extends Component {
               hoverConnectedEdges: true,
               hideEdgesOnDrag: true,
               //hideEdgesOnZoom: true,
-              // multiselect: true,
+              multiselect: true,
               navigationButtons: true,
             },
             physics: {
