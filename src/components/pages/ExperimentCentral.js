@@ -15,6 +15,9 @@ import StatsSearch from '../statistics/StatsSearch';
 import JobSearcher from '../experiment/JobSearcher';
 import JobFilter from '../experiment/JobFilter';
 import WrapperList from '../experiment/WrapperList';
+import GraphControl from '../experiment/GraphControl';
+import LogControl from '../experiment/LogControl';
+import TreeControl from '../experiment/TreeControl';
 
 const ExperimentCentral = ({ match }) => {
     const expid = match.params.expid;
@@ -47,7 +50,8 @@ const ExperimentCentral = ({ match }) => {
         visNetwork,
         navigateGraph,
         navToLatest,
-        experimentRunning } = experimentContext;
+        experimentRunning,
+        isGrouped } = experimentContext;
     const { clearStats } = statsContext;
 
     return (
@@ -72,6 +76,9 @@ const ExperimentCentral = ({ match }) => {
                 <div className="tab-content" id="myTabContent">
                     <div className="tab-pane fade show active" id="graph" role="tabpanel" aria-labelledby="graph-tab">
                         <div className='card'>
+                            {experiment &&
+                                <GraphControl/>
+                            }
                             {experiment && data &&    
                                 <div className="card-header p-1">
                                     <JobSearcher />                        
@@ -91,6 +98,7 @@ const ExperimentCentral = ({ match }) => {
                                         navToLatest={navToLatest}
                                         clearStats={clearStats}
                                         cleanNavData={cleanNavData}
+                                        isGrouped={isGrouped}
                                     />                     
                                 </div>
                                 <div className='col-3 pl-0'>
@@ -130,6 +138,9 @@ const ExperimentCentral = ({ match }) => {
                     </div>
                     <div className="tab-pane fade" id="treeview" role="tabpanel" aria-labelledby="treeview-tab">
                         <div className="card">
+                            {experiment &&
+                                <TreeControl />
+                            }
                             {experiment && treedata &&    
                                 <div className="card-header p-1">
                                     <JobFilter />                        
@@ -153,6 +164,9 @@ const ExperimentCentral = ({ match }) => {
                     </div>
                     <div className="tab-pane fade" id="log" role="tabpanel" aria-labelledby="log-tab">
                         <div className="card" style={experimentStyle}>
+                            {experiment &&
+                                <LogControl />
+                            }
                             {startAutoUpdateRun && <Running 
                             rundata={rundata}
                             loadingRun={loadingRun} 

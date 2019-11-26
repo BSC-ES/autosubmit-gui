@@ -6,20 +6,20 @@ import ExperimentContext from '../context/experiment/experimentContext';
 const Experiment = ({ expidToken, refTree }) => {
   const experimentContext = useContext(ExperimentContext); 
   const { getExperiment, 
-        getExperimentGraph, 
-        getExperimentTree,
-        setAutoUpdatePkl, 
-        cleanTreeData,
+        // getExperimentGraph, 
+        //getExperimentTree,
+        //setAutoUpdatePkl, 
+        //cleanTreeData,
         loading, 
         loadingState,
         experiment, 
         experimentRunning,
-        enabledGraphSearch, 
-        data, 
-        treedata,
-        startAutoUpdatePkl,
-        setAutoUpdateRun, 
-        startAutoUpdateRun,
+        //enabledGraphSearch, 
+        //data, 
+        //treedata,
+        //startAutoUpdatePkl,
+        // setAutoUpdateRun, 
+        // startAutoUpdateRun,
         getRunningState} = experimentContext;
 
   useEffect(() => {
@@ -28,52 +28,52 @@ const Experiment = ({ expidToken, refTree }) => {
     // eslint-disable-next-line
   }, []);
   
-  const onSubmitGraph = e => {
-    e.preventDefault();
-    getExperimentGraph(experiment.expid);
-    window.showGraphTab();
-  };
+  // const onSubmitGraph = e => {
+  //   e.preventDefault();
+  //   getExperimentGraph(experiment.expid);
+  //   window.showGraphTab();
+  // };
 
-  const onSubmitTree = e => {
-    e.preventDefault();
-    getExperimentTree(experiment.expid);
-    // refTree.current.tab('show');
-    // var object = this.refs.treeview;
-    // object.tab('show');
-    window.showTreeTab();
-  };
+  // const onSubmitTree = e => {
+  //   e.preventDefault();
+  //   getExperimentTree(experiment.expid);
+  //   // refTree.current.tab('show');
+  //   // var object = this.refs.treeview;
+  //   // object.tab('show');
+  //   window.showTreeTab();
+  // };
 
   // const onClearGraph = e => {
   //   e.preventDefault();
   //   cleanGraphData();
   // }
 
-  const onClearTree = e => {
-    e.preventDefault();
-    cleanTreeData();
-  }
+  // const onClearTree = e => {
+  //   e.preventDefault();
+  //   cleanTreeData();
+  // }
 
-  const onJobMonitor = e => {
-    e.preventDefault();
-    setAutoUpdatePkl(true);
-  }
+  // const onJobMonitor = e => {
+  //   e.preventDefault();
+  //   setAutoUpdatePkl(true);
+  // }
 
-  const onNotJobMonitor = e => {
-    e.preventDefault();
-    setAutoUpdatePkl(false);
+  // const onNotJobMonitor = e => {
+  //   e.preventDefault();
+  //   setAutoUpdatePkl(false);
 
-  }
+  // }
 
-  const onSubmitRun = e => {
-    e.preventDefault();
-    setAutoUpdateRun(true);
-    window.showLogTab();
-  };
+  // const onSubmitRun = e => {
+  //   e.preventDefault();
+  //   setAutoUpdateRun(true);
+  //   window.showLogTab();
+  // };
 
-  const onStopSubmitRun = e => {
-    e.preventDefault();
-    setAutoUpdateRun(false);
-  };
+  // const onStopSubmitRun = e => {
+  //   e.preventDefault();
+  //   setAutoUpdateRun(false);
+  // };
 
   // const onSubmitGroup = mode => e => {
   //   e.preventDefault();
@@ -103,7 +103,7 @@ const Experiment = ({ expidToken, refTree }) => {
     model, 
     branch, 
     hpc,
-    isGrouped,
+    //isGrouped,
   } = experiment;
 
   if (loading)  return <Spinner />;
@@ -172,7 +172,7 @@ const Experiment = ({ expidToken, refTree }) => {
                 </div>                
             </div>    
           </div>
-          <div className='card-footer p-1'>
+          {/* <div className='card-footer p-1'>
             <div className='row'>
                 <div className='col-md-2'>
                     <form onSubmit={onSubmitGraph} className='form'>
@@ -208,11 +208,11 @@ const Experiment = ({ expidToken, refTree }) => {
                   
                 </div>
                
-                {/* <div className='col-md-2'>
+                <div className='col-md-2'>
                   <button className="btn btn-info btn-block btn-sm" data-toggle="modal" data-target="#grouptype" disabled={!enabledGraphSearch}>
                       Group By
                   </button>
-                </div>    */}
+                </div>    
                 <div className="col-md-2">
                     {experiment && !startAutoUpdateRun &&
                       <form onSubmit={onSubmitRun} className='form'>
@@ -234,7 +234,7 @@ const Experiment = ({ expidToken, refTree }) => {
                         />
                       </form>
                     }
-                </div>       
+                </div>        
                 <div className='col-md-4'>
                   {experimentRunning && data && !startAutoUpdatePkl && !isGrouped &&
                     <form onSubmit={onJobMonitor} className='form'>
@@ -259,7 +259,7 @@ const Experiment = ({ expidToken, refTree }) => {
                 </div>
                 
               </div>
-          </div>  
+          </div>   */}
           
         </div>
         </div>

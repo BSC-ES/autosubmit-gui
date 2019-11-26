@@ -59,6 +59,16 @@ pre.bash {
   font-size: 10px;
 }
 
+/* .wrapper-card {
+  height: ;
+  min-height: 100%;
+} */
+
+.scroll {
+  max-height: 660px;
+  overflow-y: auto;
+}
+
 .allowResizeVertical {
   resize: vertical;
 }

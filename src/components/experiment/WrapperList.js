@@ -21,7 +21,7 @@ const WrapperList = () => {
     if (experiment && data && data.packages && Object.keys(data.packages).length > 0){        
         packages = data.packages;
         wrapperTitles = Object.keys(packages);
-        wrapperItems = wrapperTitles.map((wrapper, index) => 
+        wrapperItems = wrapperTitles.map((wrapper, index) =>             
             <button className="btn-sm btn-warning btn-block" type="button" key={index} onClick={Honk({wrapper})}><small>{wrapper.split("_").slice(1,).join("_")}</small></button>
         );
         // for(var key in packages){
@@ -40,7 +40,7 @@ const WrapperList = () => {
             {experiment && packages  && 
                 <div className="row">
                     <div className="col-12">
-                        <div className="card text-white bg-info" style={experimentStyle}>
+                        <div className="card text-white bg-info scroll" style={experimentStyle}>
                             <div className="card-header text-center p-0" style={headerCard}>
                                 <div className="mh-100 px-0 mx-0">
                                     <small><strong>WRAPPERS</strong></small>
@@ -61,7 +61,7 @@ const WrapperList = () => {
 }
 
 const experimentStyle = {
-    height: 600
+    height: 660
   };
 
 const headerCard = {

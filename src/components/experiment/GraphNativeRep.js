@@ -45,11 +45,14 @@ class GraphNativeRep extends Component {
         if (!this.props.data){
             return (
                 <div className="card-body text-left" style={experimentStyle}>
-                    <p className='lead'>Press <span className='badge badge-info'>Show Graph</span> to see the graph representation of the experiment.</p>
+                    <p className='lead'>Press <span className='badge badge-info'>Classic</span> to see the standard graph representation of the experiment.</p>
+                    <p>For the classic approach, the algorithm will first try to use graphviz, there are some constraints in place that try to identify those instances that could potentially make graphviz run forever. If an experiment is identified to be time-wise out of bounds for graphviz, it will be sent to the regular algorithm. Currently, the regular algorithm does not handle well wrappers; work is being done to developed a general algorithm.</p>
+                    <p className='lead'>Press <span className='badge badge-info'>Grouped</span> to see the grouped by date-member graph representation of the experiment.</p>
+                    <p>If the experiment instance cannot be handled by graphviz, then it would not be possible to group it. Again, work is being done to overcome this.</p>
                     <p className='lead'>If the experiment is <span className='badge badge-success'>RUNNING</span> and the Graph has been rendered, press <span className='badge badge-dark'>Start Job Monitor</span> to start a live tracker of the changes on the experiment's jobs.
                         This process will automatically update the graph's nodes colors and show a log of the detected changes.
                     </p>
-                    <p className='lead'>The graph will be clustered by date-member by default. You can double click on any of these clusters to open it.</p>
+                    <p className='lead'>If there are any defined wrappers, they will be shown on the corresponding tab at the right side of the Graph. You can click on any member of that list and the nodes belonging to that wrapper will be highlighted.</p>
                 </div> 
             );
         }
@@ -58,7 +61,8 @@ class GraphNativeRep extends Component {
         var edges_array = [];
         const graphviz = this.props.data.graphviz;
         const groups = this.props.data.groups;
-        const groups_data = this.props.data.groups_data;        
+        const groups_data = this.props.data.groups_data;   
+        const isGroup = this.props.isGrouped;     
 
         if (this.props.data.nodes.length > 0 && this.props.data.edges !== null) {
 
@@ -180,6 +184,7 @@ class GraphNativeRep extends Component {
             componentDidMount() {
                 var network = new vis.Network(this.refs.myRef, this.props.graph, this.props.options);
                 const groups_data  = this.props.groups_data;
+                const isGroup = this.props.isGroup;
                 // const clusterOptions = {                  
                 //   joinCondition:function(options) {
                 //     const result = options.shape === "square";
@@ -242,7 +247,9 @@ class GraphNativeRep extends Component {
                       },
                       clusterNodeProperties: {id: 'cluster:' + startingName, borderWidth: 3, shape: 'box', label:startingName.split("_").join("\n"), 'color': groups_data[startingName].color, 'font' : {'size':50}}
                     };
-                    network.clustering.cluster(clusterOptionsByDateMember);
+                    if (isGroup === true){
+                      network.clustering.cluster(clusterOptionsByDateMember);  
+                    }                    
                   }
                   
                 }
@@ -279,6 +286,7 @@ class GraphNativeRep extends Component {
             isGraphViz={graphviz}
             clusterGroups={groups}
             groups_data={groups_data}
+            isGroup={isGroup}
           />
         );
 
@@ -289,7 +297,7 @@ class GraphNativeRep extends Component {
 
 
 const experimentStyle = {
-    height: 600
+    height: 700
   };
 
 

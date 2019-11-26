@@ -75,8 +75,8 @@ const ExperimentState = props => {
     }
 
     const [state, dispatch] = useReducer(ExperimentReducer, initialState);
-    // const localserver = 'http://192.168.11.91:8081'
-    const localserver= 'http://84.88.185.94:8081'
+    const localserver = 'http://192.168.11.91:8081'
+    //const localserver= 'http://84.88.185.94:8081'
 
     // Search Experiments
     const searchExperiments = async text => {
@@ -113,14 +113,15 @@ const ExperimentState = props => {
     }
 
     // Get Experiment Graph
-    const getExperimentGraph = async expid => {
+    const getExperimentGraph = async (expid, IsGroup = false) => {
         setLoadingGraph();
         
         const res = await axios.get(`${localserver}/graph/${expid}`);
         console.log(res.data);
+        const resdata = res.data;
         dispatch({
             type: GET_GRAPH,
-            payload: res.data,
+            payload: { resdata, IsGroup } ,
         });
         //this.setState({ data: res.data, loading: false, showGraph: !res.data.error });
       };
@@ -161,7 +162,7 @@ const ExperimentState = props => {
 
     // Get Experiment Pkl Data
     const getExperimentPkl = async (expid, timeStamp) => {
-      if (state.isGrouped === false){
+      // if (state.isGrouped === false){
         setLoadingPkl();
         //timeStamp = 1000;
         const res = await axios.get(`${localserver}/pklinfo/${expid}/${timeStamp}`);
@@ -244,14 +245,14 @@ const ExperimentState = props => {
           payload: res.data,
         });
         
-      } else {
-        if (state.pklchanges) {
-          setPklChanges("Can't update grouped graph\n" + state.pklchanges);
-        } else {
-          setPklChanges("Can't update grouped graph\n");
-        }
+      // } else {
+      //   if (state.pklchanges) {
+      //     setPklChanges("Can't update grouped graph\n" + state.pklchanges);
+      //   } else {
+      //     setPklChanges("Can't update grouped graph\n");
+      //   }
         
-      } 
+      // } 
     }
 
     // Graph manipulation
@@ -337,7 +338,7 @@ const ExperimentState = props => {
 
     const navigateToGroup = IdList => {
       if (state.visNetwork) {
-        
+        state.visNetwork.unselectAll();
         const currentLength = IdList.length;
         const Id = IdList[parseInt(Math.floor(IdList.length/2))]
         const rescale = Math.sqrt(currentLength)*0.065

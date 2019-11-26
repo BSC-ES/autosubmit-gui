@@ -81,6 +81,8 @@ export default (state, action) => {
             return {
                 ...state,
                 foundNodes: null,
+                startAutoUpdatePkl: false,
+                selection: null,
             };
         case UPDATE_SELECTION:
             return {
@@ -159,12 +161,13 @@ export default (state, action) => {
                 data: null,
             };
         case GET_GRAPH:
+            const { resdata, IsGroup } = action.payload;
             return {
                 ...state,
-                data: action.payload,
+                data : resdata,
+                isGrouped: IsGroup,
                 loadingGraph: false,
-                enabledGraphSearch: true,
-                isGrouped: false,
+                enabledGraphSearch: true,                
             };
         case GET_TREE:
             return {
