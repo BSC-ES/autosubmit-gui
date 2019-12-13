@@ -90,8 +90,16 @@ export class TreeNativeRep extends Component {
                         //console.log(event)
                         //console.log(data)
                         //console.log(tree)
+                        console.log(data);
                         if (data){
-                            //tree.activeNode.setTitle("Honk")
+                            var thenode = tree.getNodesByRef("a2a7_20170427_1")
+                            console.log(thenode)
+                            if (thenode){
+                                for (var i = 0; i < thenode.length;i++){
+                                    thenode[i].setTitle("a2a7_20170417_1 <span class='badge badge-warning'> Honked </span>")
+                                }
+                                
+                            }                            
                             // console.log(tree.activeNode.getParent())
                             console.log(tree.activeNode)
                             //data.node.title = "Honk";
@@ -103,7 +111,7 @@ export class TreeNativeRep extends Component {
                     },
                     // extensions: ['edit', 'filter'],
                     // extensions: ["clones","filter", "childcounter"],
-                    extensions: ["filter", "childcounter"],
+                    extensions: ["filter", "childcounter","clones"],
                     filter: {
                         autoApply: true,   // Re-apply last filter if lazy data is loaded
                         autoExpand: true, // Expand all branches that contain matches while filtered

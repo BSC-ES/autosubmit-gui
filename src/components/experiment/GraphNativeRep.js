@@ -85,10 +85,12 @@ class GraphNativeRep extends Component {
                   label: node.label,
                   shape: node.shape,
                   color: { background: node.status_color, border: "black" },
-                  level: node.level, 
+                  //level: node.level, 
                   //y: node.level*80,
                   shapeProperties: { borderDashes: node.dashed },
                   // fixed: { x: true, y: true},
+                  x: node.x * 8000,
+                  y: node.y * 10000,
                   // x: node.x * -90,
                   // y: node.y * -100,
                 })
@@ -138,7 +140,7 @@ class GraphNativeRep extends Component {
                 parentCentralization: true,
                 sortMethod: 'hubsize',
                 direction: 'UD',
-                enabled: !(graphviz),
+                enabled: false,
               }
             },            
             interaction: {
@@ -222,8 +224,8 @@ class GraphNativeRep extends Component {
                 });
 
                 //network.enableEditMode();
-                console.log(this.props.isGraphViz);
-                if (this.props.isGraphViz && this.props.clusterGroups){
+                //console.log(this.props.isGraphViz);
+                if (this.props.clusterGroups){
                   const groups = this.props.clusterGroups;
                   
                   var clusterOptionsByDateMember;

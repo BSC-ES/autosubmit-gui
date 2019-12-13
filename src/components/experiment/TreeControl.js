@@ -8,7 +8,9 @@ const TreeControl = ()  => {
             treedata,
             getExperimentTree,
             cleanTreeData,
-            enabledGraphSearch } = experimentContext;
+            enabledGraphSearch,
+            getExperimentTreePkl,
+            experimentRunning } = experimentContext;
 
     const onSubmitTree = e => {
         e.preventDefault();
@@ -18,6 +20,11 @@ const TreeControl = ()  => {
     const onClearTree = e => {
         e.preventDefault();
         cleanTreeData();
+    }
+
+    const onRequestUpdate = e => {
+      e.preventDefault();
+      getExperimentTreePkl(experiment.expid, experiment.pkl_timestamp);
     }
 
 
@@ -45,8 +52,19 @@ const TreeControl = ()  => {
                       />
                     </form>
                   }
-                  
                 </div>
+                {experiment && treedata && experimentRunning &&
+                <div className='col-md-2'>                  
+                    <form onSubmit={onRequestUpdate} className='form'>
+                      <input
+                        type='submit'
+                        value='Refresh'
+                        className='btn btn-secondary btn-block btn-sm'
+                        disabled={!enabledGraphSearch}
+                      />
+                    </form>                                 
+                </div>
+                } 
             </div>
         </div>
     )

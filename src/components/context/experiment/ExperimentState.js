@@ -76,7 +76,7 @@ const ExperimentState = props => {
 
     const [state, dispatch] = useReducer(ExperimentReducer, initialState);
     const localserver = 'http://192.168.11.91:8081'
-    //const localserver= 'http://84.88.185.94:8081'
+    // const localserver= 'http://84.88.185.94:8081'
 
     // Search Experiments
     const searchExperiments = async text => {
@@ -159,6 +159,43 @@ const ExperimentState = props => {
       });
 
     }
+
+    const getExperimentTreePkl = async (expid, timeStamp) => {
+      const res = await axios.get(`${localserver}/pkltreeinfo/${expid}/${timeStamp}`);
+      const retrievedPklTree = res.data;
+      var jobs = {};
+      if (state.treedata !== null && retrievedPklTree.has_changed === true && retrievedPklTree.pkl_content.length > 0){
+        var currentJobs = state.treedata.jobs;        
+        for(var j = 0, job; j < retrievedPklTree.pkl_content.length; j++){          
+          job = retrievedPklTree.pkl_content[j];
+          jobs[ job.name ] = job;
+        }        
+
+        for (var i = 0, cjob, ijob; i < currentJobs.length; i++){
+          cjob = currentJobs[i];  
+          // Name is id in treedata
+          ijob = jobs[ cjob.id ];          
+          if (cjob.status_code !== ijob.status_code || cjob.minutes !== ijob.minutes){
+            cjob.status_code = ijob.status_code;
+            cjob.status = ijob.status;
+            cjob.status_color = ijob.status_color;
+            cjob.minutes = ijob.minutes;
+            cjob.wrapper = ijob.wrapper;
+            cjob.wrapper_code = ijob.wrapper_id;
+            var newTitle = ijob.title + " " + ((cjob.parents === 0 ? retrievedPklTree.source_tag : "" )) + ((cjob.children === 0 ? retrievedPklTree.target_tag : "" ))
+            + ((cjob.synb === true ? retrievedPklTree.sync_tag : "")) + ((ijob.wrapper_id !== 0 ? ijob.wrapper_tag : "" ));
+            cjob.title = newTitle;
+            var thenode = state.fancyTree.getNodesByRef(cjob.id);
+            if (thenode){
+              thenode[0].setTitle(newTitle);
+            }
+            // console.log(newTitle);
+          }
+        }
+      }
+      console.log(res.data);      
+    }
+
 
     // Get Experiment Pkl Data
     const getExperimentPkl = async (expid, timeStamp) => {
@@ -527,7 +564,8 @@ const ExperimentState = props => {
             getExperimentGraphGrouped,    
             filterTreeView,
             clearFilterTreeView,
-            navigateToGroup          
+            navigateToGroup,
+            getExperimentTreePkl      
         }}>
             {props.children}
         </ExperimentContext.Provider>
