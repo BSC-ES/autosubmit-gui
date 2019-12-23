@@ -11,9 +11,9 @@ const GraphControl = () => {
             setAutoUpdatePkl,
             startAutoUpdatePkl } = experimentContext;
 
-    const onSubmitGraph = group => e => {
+    const onSubmitGraph = (group, layout = 'standard') => e => {
             e.preventDefault();
-            getExperimentGraph(experiment.expid, group);
+            getExperimentGraph(experiment.expid, group, layout);
             //window.showGraphTab();
         };
     
@@ -29,12 +29,22 @@ const GraphControl = () => {
             
     return (
         <div className="card-header p-1">
-            <div className="row justify-content-end">
+            <div className="row justify-content-end">                
                 <div className='col-md-2'>
                     <form onSubmit={onSubmitGraph(false)} className='form'>
                       <input
                         type='submit'
                         value='Classic'
+                        className='btn btn-info btn-block btn-sm'
+                        disabled={!enabledGraphSearch}
+                      />
+                    </form>
+                </div>
+                <div className='col-md-2'>
+                    <form onSubmit={onSubmitGraph(false,'laplacian')} className='form'>
+                      <input
+                        type='submit'
+                        value='Laplacian'
                         className='btn btn-info btn-block btn-sm'
                         disabled={!enabledGraphSearch}
                       />

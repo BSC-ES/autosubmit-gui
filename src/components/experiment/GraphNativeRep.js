@@ -74,8 +74,8 @@ class GraphNativeRep extends Component {
                   color: { background: node.status_color, border: "black" },
                   // level: node.level, // receiving x and y from API
                   // fixed: { x: true, y: true},
-                  x: node.x * 80,
-                  y: node.y * -80,
+                  x: node.x,
+                  y: node.y,
                   shapeProperties: { borderDashes: node.dashed },
                 })
               );
@@ -89,8 +89,8 @@ class GraphNativeRep extends Component {
                   //y: node.level*80,
                   shapeProperties: { borderDashes: node.dashed },
                   // fixed: { x: true, y: true},
-                  x: node.x * 8000,
-                  y: node.y * 10000,
+                  x: node.x,
+                  y: node.y,
                   // x: node.x * -90,
                   // y: node.y * -100,
                 })
@@ -247,7 +247,14 @@ class GraphNativeRep extends Component {
                         clusterOptions.mass = totalMass;
                         return clusterOptions;
                       },
-                      clusterNodeProperties: {id: 'cluster:' + startingName, borderWidth: 3, shape: 'box', label:startingName.split("_").join("\n"), 'color': groups_data[startingName].color, 'font' : {'size':50}}
+                      clusterNodeProperties: {id: 'cluster:' + startingName, 
+                                              borderWidth: 3, 
+                                              shape: 'box', 
+                                              label:startingName.split("_").join("\n"), 
+                                              'color': groups_data[startingName].color, 
+                                              'font' : {'size':50},
+                                              x: groups_data[startingName].x,
+                                              y: groups_data[startingName].y}
                     };
                     if (isGroup === true){
                       network.clustering.cluster(clusterOptionsByDateMember);  
