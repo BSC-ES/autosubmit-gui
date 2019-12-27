@@ -69,14 +69,15 @@ const ExperimentState = props => {
         visNetwork: null,
         fancyTree: null,
         foundNodes: null,
-        isGrouped: false,
+        current_grouped: 'none',
+        current_layout: 'standard',
         allowJobMonitor: false,
         returnFilter: 0,
     }
 
     const [state, dispatch] = useReducer(ExperimentReducer, initialState);
-    const localserver = 'http://192.168.11.91:8081'
-    //const localserver= 'http://84.88.185.94:8081'
+    //const localserver = 'http://192.168.11.91:8081'
+    const localserver= 'http://84.88.185.94:8081'
 
     // Search Experiments
     const searchExperiments = async text => {
@@ -113,15 +114,15 @@ const ExperimentState = props => {
     }
 
     // Get Experiment Graph
-    const getExperimentGraph = async (expid, IsGroup = false, layout = 'standard') => {
+    const getExperimentGraph = async (expid, grouped = 'none', layout = 'standard') => {
         setLoadingGraph();
         
-        const res = await axios.get(`${localserver}/graph/${expid}/${layout}`);
+        const res = await axios.get(`${localserver}/graph/${expid}/${layout}/${grouped}`);
         console.log(res.data);
         const resdata = res.data;
         dispatch({
             type: GET_GRAPH,
-            payload: { resdata, IsGroup } ,
+            payload: { resdata, grouped, layout } ,
         });
         //this.setState({ data: res.data, loading: false, showGraph: !res.data.error });
       };
@@ -530,7 +531,8 @@ const ExperimentState = props => {
             visNetwork: state.visNetwork,
             foundNodes: state.foundNodes,            
             experimentRunning: state.experimentRunning,
-            isGrouped: state.isGrouped,
+            current_grouped: state.current_grouped,
+            current_layout: state.current_layout,
             allowJobMonitor: state.allowJobMonitor,
             setAutoUpdateRun,
             setAutoUpdatePkl,

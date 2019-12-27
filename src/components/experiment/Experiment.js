@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import ExperimentContext from '../context/experiment/experimentContext';
 
 const Experiment = ({ expidToken, refTree }) => {
+  //console.log(expidToken);
   const experimentContext = useContext(ExperimentContext); 
   const { getExperiment, 
         // getExperimentGraph, 
@@ -28,64 +29,7 @@ const Experiment = ({ expidToken, refTree }) => {
     // eslint-disable-next-line
   }, []);
   
-  // const onSubmitGraph = e => {
-  //   e.preventDefault();
-  //   getExperimentGraph(experiment.expid);
-  //   window.showGraphTab();
-  // };
-
-  // const onSubmitTree = e => {
-  //   e.preventDefault();
-  //   getExperimentTree(experiment.expid);
-  //   // refTree.current.tab('show');
-  //   // var object = this.refs.treeview;
-  //   // object.tab('show');
-  //   window.showTreeTab();
-  // };
-
-  // const onClearGraph = e => {
-  //   e.preventDefault();
-  //   cleanGraphData();
-  // }
-
-  // const onClearTree = e => {
-  //   e.preventDefault();
-  //   cleanTreeData();
-  // }
-
-  // const onJobMonitor = e => {
-  //   e.preventDefault();
-  //   setAutoUpdatePkl(true);
-  // }
-
-  // const onNotJobMonitor = e => {
-  //   e.preventDefault();
-  //   setAutoUpdatePkl(false);
-
-  // }
-
-  // const onSubmitRun = e => {
-  //   e.preventDefault();
-  //   setAutoUpdateRun(true);
-  //   window.showLogTab();
-  // };
-
-  // const onStopSubmitRun = e => {
-  //   e.preventDefault();
-  //   setAutoUpdateRun(false);
-  // };
-
-  // const onSubmitGroup = mode => e => {
-  //   e.preventDefault();
-  //   getExperimentGraphGrouped(experiment.expid, mode);
-  // };
-  
-
-
-  // const cleanParentLocal = () => {
-  //   console.log('Exp clean ')
-  //   cleanParent();
-  // };
+  if (experiment === null) return <Spinner />;
 
   const {
     expid,

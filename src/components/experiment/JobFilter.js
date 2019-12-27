@@ -22,6 +22,11 @@ const JobFilter = () => {
         clearFilterTreeView();
     }
 
+    var clearText = "Clear"
+    if (returnFilter && returnFilter >= 0){
+        clearText = "Clear Result"
+    }
+
     return (
         <div className="row">
             <div className="col-md-4 pr-1">
@@ -53,7 +58,7 @@ const JobFilter = () => {
                 <form onSubmit={onClearFilter} className='form'>
                     <input
                     type='submit'
-                    value={"Clear " + returnFilter}
+                    value={clearText}
                     className="btn btn-info btn-sm"
                     />
                 </form>

@@ -51,7 +51,9 @@ export default (state, action) => {
                 visNetwork: null,
                 foundNodes: null,
                 experimentRunning: false,
-                isGrouped: false,
+                experiment: null,
+                current_grouped: 'none',
+                current_layout: 'standard',
                 allowJobMonitor: false,
                 //startAutoUpdatePkl: false,
             };
@@ -161,11 +163,12 @@ export default (state, action) => {
                 data: null,
             };
         case GET_GRAPH:
-            const { resdata, IsGroup } = action.payload;
+            const { resdata, grouped, layout } = action.payload;
             return {
                 ...state,
                 data : resdata,
-                isGrouped: IsGroup,
+                current_grouped: grouped,
+                current_layout: layout,
                 loadingGraph: false,
                 enabledGraphSearch: true,                
             };

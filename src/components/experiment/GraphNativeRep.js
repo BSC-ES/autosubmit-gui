@@ -62,7 +62,7 @@ class GraphNativeRep extends Component {
         const graphviz = this.props.data.graphviz;
         const groups = this.props.data.groups;
         const groups_data = this.props.data.groups_data;   
-        const isGroup = this.props.isGrouped;     
+        const current_grouped = this.props.current_grouped;     
 
         if (this.props.data.nodes.length > 0 && this.props.data.edges !== null) {
 
@@ -72,6 +72,7 @@ class GraphNativeRep extends Component {
                   label: node.label,
                   shape: node.shape,
                   color: { background: node.status_color, border: "black" },
+                  status: node.status,
                   // level: node.level, // receiving x and y from API
                   // fixed: { x: true, y: true},
                   x: node.x,
@@ -85,6 +86,7 @@ class GraphNativeRep extends Component {
                   label: node.label,
                   shape: node.shape,
                   color: { background: node.status_color, border: "black" },
+                  status: node.status,
                   //level: node.level, 
                   //y: node.level*80,
                   shapeProperties: { borderDashes: node.dashed },
@@ -186,7 +188,7 @@ class GraphNativeRep extends Component {
             componentDidMount() {
                 var network = new vis.Network(this.refs.myRef, this.props.graph, this.props.options);
                 const groups_data  = this.props.groups_data;
-                const isGroup = this.props.isGroup;
+                const current_grouped = this.props.current_grouped;
                 // const clusterOptions = {                  
                 //   joinCondition:function(options) {
                 //     const result = options.shape === "square";
@@ -225,42 +227,68 @@ class GraphNativeRep extends Component {
 
                 //network.enableEditMode();
                 //console.log(this.props.isGraphViz);
-                if (this.props.clusterGroups){
+                if (this.props.clusterGroups){                  
                   const groups = this.props.clusterGroups;
-                  
-                  var clusterOptionsByDateMember;
-                  for (var i = 0; i < groups.length; i++) {
-                    var startingName = groups[i];
-                    // if (positions[startingName]){
-                    //   console.log(positions[startingName]);
-                    // }                    
-                    clusterOptionsByDateMember = {
-                      // eslint-disable-next-line no-loop-func
-                      joinCondition: function(options){
-                        return options.id.startsWith(startingName);
-                      },
-                      processProperties: function (clusterOptions, childNodes, childEdges) {
-                        var totalMass = 0;
-                        for (var i = 0; i < childNodes.length; i++) {
-                            totalMass += childNodes[i].mass;
-                        }
-                        clusterOptions.mass = totalMass;
-                        return clusterOptions;
-                      },
-                      clusterNodeProperties: {id: 'cluster:' + startingName, 
-                                              borderWidth: 3, 
-                                              shape: 'box', 
-                                              label:startingName.split("_").join("\n"), 
-                                              'color': groups_data[startingName].color, 
-                                              'font' : {'size':50},
-                                              x: groups_data[startingName].x,
-                                              y: groups_data[startingName].y}
-                    };
-                    if (isGroup === true){
-                      network.clustering.cluster(clusterOptionsByDateMember);  
-                    }                    
-                  }
-                  
+                  if (current_grouped === 'date-member'){
+                    var clusterOptionsByDateMember;
+                    for (var i = 0; i < groups.length; i++) {
+                      var startingName = groups[i];
+                      // if (positions[startingName]){
+                      //   console.log(positions[startingName]);
+                      // }                    
+                      clusterOptionsByDateMember = {
+                        // eslint-disable-next-line no-loop-func
+                        joinCondition: function(options){
+                          return options.id.startsWith(startingName);
+                        },
+                        processProperties: function (clusterOptions, childNodes, childEdges) {
+                          var totalMass = 0;
+                          for (var i = 0; i < childNodes.length; i++) {
+                              totalMass += childNodes[i].mass;
+                          }
+                          clusterOptions.mass = totalMass;
+                          return clusterOptions;
+                        },
+                        clusterNodeProperties: {id: 'cluster:' + startingName, 
+                                                borderWidth: 3, 
+                                                shape: 'box', 
+                                                label:startingName.split("_").join("\n"), 
+                                                'color': groups_data[startingName].color, 
+                                                'font' : {'size':50},
+                                                x: groups_data[startingName].x,
+                                                y: groups_data[startingName].y}
+                      };                      
+                      network.clustering.cluster(clusterOptionsByDateMember);                        
+                    }
+                  } else if (current_grouped === 'status'){
+                    var clusterOptionsByStatus;
+                    for (var j = 0; j < groups.length; j++) {
+                      var statusName = groups[j];
+                      // console.log(statusName);
+                      clusterOptionsByStatus = {                        
+                        // eslint-disable-next-line no-loop-func
+                        joinCondition: function(options){
+                          // console.log(options);
+                          return options.status === statusName;
+                        },
+                        processProperties: function (clusterOptions, childNodes, childEdges) {
+                          var totalMass = 0;
+                          for (var i = 0; i < childNodes.length; i++) {
+                              totalMass += childNodes[i].mass;
+                          }
+                          clusterOptions.mass = totalMass;
+                          return clusterOptions;
+                        },
+                        clusterNodeProperties: {id: statusName, 
+                                                borderWidth: 3, 
+                                                shape: 'box', 
+                                                label:statusName, 
+                                                'color': groups_data[statusName].color, 
+                                                'font' : {'size':50}}
+                      };        
+                      network.clustering.cluster(clusterOptionsByStatus);        
+                    }
+                  }                                    
                 }
                 
             }
@@ -295,7 +323,7 @@ class GraphNativeRep extends Component {
             isGraphViz={graphviz}
             clusterGroups={groups}
             groups_data={groups_data}
-            isGroup={isGroup}
+            current_grouped={current_grouped}
           />
         );
 

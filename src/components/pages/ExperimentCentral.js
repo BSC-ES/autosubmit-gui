@@ -51,7 +51,7 @@ const ExperimentCentral = ({ match }) => {
         navigateGraph,
         navToLatest,
         experimentRunning,
-        isGrouped } = experimentContext;
+        current_grouped } = experimentContext;
     const { clearStats } = statsContext;
 
     return (
@@ -98,7 +98,7 @@ const ExperimentCentral = ({ match }) => {
                                         navToLatest={navToLatest}
                                         clearStats={clearStats}
                                         cleanNavData={cleanNavData}
-                                        isGrouped={isGrouped}
+                                        current_grouped={current_grouped}
                                     />                     
                                 </div>
                                 <div className='col-3 pl-0'>

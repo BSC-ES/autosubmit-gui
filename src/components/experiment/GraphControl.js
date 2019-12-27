@@ -11,9 +11,9 @@ const GraphControl = () => {
             setAutoUpdatePkl,
             startAutoUpdatePkl } = experimentContext;
 
-    const onSubmitGraph = (group, layout = 'standard') => e => {
+    const onSubmitGraph = (grouped = 'none', layout = 'standard') => e => {
             e.preventDefault();
-            getExperimentGraph(experiment.expid, group, layout);
+            getExperimentGraph(experiment.expid, grouped, layout);
             //window.showGraphTab();
         };
     
@@ -31,7 +31,7 @@ const GraphControl = () => {
         <div className="card-header p-1">
             <div className="row justify-content-end">                
                 <div className='col-md-2'>
-                    <form onSubmit={onSubmitGraph(false)} className='form'>
+                    <form onSubmit={onSubmitGraph()} className='form'>
                       <input
                         type='submit'
                         value='Classic'
@@ -41,7 +41,7 @@ const GraphControl = () => {
                     </form>
                 </div>
                 <div className='col-md-2'>
-                    <form onSubmit={onSubmitGraph(false,'laplacian')} className='form'>
+                    <form onSubmit={onSubmitGraph('none','laplacian')} className='form'>
                       <input
                         type='submit'
                         value='Laplacian'
@@ -51,10 +51,20 @@ const GraphControl = () => {
                     </form>
                 </div>
                 <div className='col-md-2'>
-                    <form onSubmit={onSubmitGraph(true)} className='form'>
+                    <form onSubmit={onSubmitGraph('date-member')} className='form'>
                       <input
                         type='submit'
-                        value='Grouped'
+                        value='Grouped by D-M'
+                        className='btn btn-info btn-block btn-sm'
+                        disabled={!enabledGraphSearch}
+                      />
+                    </form>
+                </div>
+                <div className='col-md-2'>
+                    <form onSubmit={onSubmitGraph('status')} className='form'>
+                      <input
+                        type='submit'
+                        value='Grouped by Status'
                         className='btn btn-info btn-block btn-sm'
                         disabled={!enabledGraphSearch}
                       />
