@@ -166,7 +166,9 @@ const ExperimentState = props => {
       const retrievedPklTree = res.data;
       var jobs = {};
       if (state.treedata !== null && retrievedPklTree.has_changed === true && retrievedPklTree.pkl_content.length > 0){
-        var currentJobs = state.treedata.jobs;        
+        var currentJobs = state.treedata.jobs;  
+        const currentPackages = state.treedata.packages;  
+        var referenceHeaders = state.treedata.reference;    
         for(var j = 0, job; j < retrievedPklTree.pkl_content.length; j++){          
           job = retrievedPklTree.pkl_content[j];
           jobs[ job.name ] = job;
@@ -177,6 +179,14 @@ const ExperimentState = props => {
           // Name is id in treedata
           ijob = jobs[ cjob.id ];          
           if (cjob.status_code !== ijob.status_code || cjob.minutes !== ijob.minutes){
+            var is_change_status = false;
+            var new_status = cjob.status;
+            var old_status = ijob.status;
+            if (cjob.status_code !== ijob.status_code){
+              is_change_status = true;
+              new_status = ijob.status;
+              old_status = cjob.status;
+            } 
             cjob.status_code = ijob.status_code;
             cjob.status = ijob.status;
             cjob.status_color = ijob.status_color;
@@ -188,11 +198,78 @@ const ExperimentState = props => {
             cjob.title = newTitle;
             var thenode = state.fancyTree.getNodesByRef(cjob.id);
             if (thenode){
-              thenode[0].setTitle(newTitle);
+              for (var thenode_i in thenode){
+                thenode[thenode_i].setTitle(newTitle);              
+              }              
+              const parents = cjob.tree_parents
+              //console.log(parents)
+              const completed_tag = referenceHeaders['completed_tag']
+              const running_tag = referenceHeaders['running_tag']
+              const queuing_tag = referenceHeaders['queuing_tag']
+              const failed_tag = referenceHeaders['failed_tag']
+              const check_mark = referenceHeaders['check_mark']
+              //console.log(check_mark)
+              //console.log(check_mark);
+              //console.log(referenceHeaders);
+              for (var parent in parents){
+                // console.log(parents[parent])
+                var header_data = referenceHeaders[parents[parent]]
+                // console.log(header_data)
+                if (header_data){
+                  if (is_change_status === true){
+                    if (new_status === "COMPLETED"){
+                      header_data.completed += 1
+                    }
+                    if (new_status === "RUNNING"){
+                      header_data.running += 1
+                    }
+                    if (new_status === "QUEUING"){
+                      header_data.queuing += 1
+                    }
+                    if (new_status === "FAILED"){
+                      header_data.failed += 1
+                    }
+                    if (old_status === "RUNNING"){
+                      header_data.running -= 1
+                    }
+                    if (old_status === "QUEUING"){
+                      header_data.queuimg -= 1
+                    }
+                    if (old_status === "FAILED"){
+                      header_data.failed -= 1
+                    }
+                  }
+                  // Setting new title
+                  const new_completed_tag = completed_tag.replace('%C', header_data.completed).replace('%T', header_data.total);
+                  const new_check_mark = (header_data.completed === header_data.total ? check_mark : "" );
+                  const new_running_tag = (header_data.running > 0 ? running_tag.replace('%R', header_data.running): "");
+                  const new_queuing_tag = (header_data.queuing > 0 ? queuing_tag.replace('%Q', header_data.queuing): "");
+                  const new_failed_tag = (header_data.failed > 0 ? failed_tag.replace('%F', header_data.failed): "");
+                  var theparent = state.fancyTree.getNodesByRef(parents[parent]);
+                  //console.log(parent);
+                  if (theparent){
+                    //Sets new title
+                    var new_title = parents[parent] + new_completed_tag + new_failed_tag + new_running_tag + new_queuing_tag + new_check_mark
+                    theparent[0].setTitle(new_title);
+                    
+                  }                   
+                }                             
+              }
             }
-            // console.log(newTitle);
+           
           }
         }
+        const packages_from_pkl = referenceHeaders['packages']
+        for (var package_pkl of packages_from_pkl){
+          if (!(currentPackages.includes(package_pkl))){
+            console.log("New wrapper found");
+            var rootNode = state.fancyTree.getRootNode();
+            var children = rootNode.addChildren({'title': package_pkl, 'folder': true, 'refKey': package_pkl});
+            // Add items to children
+            //  rootNode.addChildren({'key': '92929292' + (new Date()), 'title': "Honkin", 'folder': true, 'refKey': '929299191' + (new Date())});
+            // TODO: Find jobs related to wraper in jobs, add them to the tree.
+          }
+        }                 
       }
       console.log(res.data);      
     }

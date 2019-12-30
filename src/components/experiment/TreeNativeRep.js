@@ -3,6 +3,7 @@ import Spinner from "../layout/Spinner";
 import 'jquery.fancytree/dist/modules/jquery.fancytree.clones'
 import 'jquery.fancytree/dist/modules/jquery.fancytree.filter';
 import 'jquery.fancytree/dist/modules/jquery.fancytree.childcounter';
+import 'jquery.fancytree/dist/modules/jquery.fancytree.edit';
 // import 'jquery.fancytree/dist/skin-lion/ui.fancytree.less';  // CSS or LESS
 import { createTree } from 'jquery.fancytree';
 
@@ -111,7 +112,7 @@ export class TreeNativeRep extends Component {
                     },
                     // extensions: ['edit', 'filter'],
                     // extensions: ["clones","filter", "childcounter"],
-                    extensions: ["filter", "childcounter","clones"],
+                    extensions: ["filter", "childcounter","clones","edit"],
                     filter: {
                         autoApply: true,   // Re-apply last filter if lazy data is loaded
                         autoExpand: true, // Expand all branches that contain matches while filtered
@@ -119,8 +120,8 @@ export class TreeNativeRep extends Component {
                         fuzzy: false,      // Match single characters in order, e.g. 'fb' will match 'FooBar'
                         hideExpandedCounter: true,  // Hide counter badge if parent is expanded
                         hideExpanders: false,       // Hide expanders if all child nodes are hidden by filter
-                        highlight: true,   // Highlight matches by wrapping inside <mark> tags
-                        leavesOnly: false, // Match end nodes only
+                        highlight: false,   // Highlight matches by wrapping inside <mark> tags
+                        leavesOnly: true, // Match end nodes only
                         nodata: true,      // Display a 'no data' status node if result is empty
                         mode: "hide"       // Grayout unmatched nodes (pass "hide" to remove unmatched node instead)
                       },
@@ -130,6 +131,7 @@ export class TreeNativeRep extends Component {
                     //   },
                     source: this.props.treedata,
                 });
+
 
                 //console.log(tree.activeNode);             
 
