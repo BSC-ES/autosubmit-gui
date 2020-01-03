@@ -76,8 +76,8 @@ const ExperimentState = props => {
     }
 
     const [state, dispatch] = useReducer(ExperimentReducer, initialState);
-    //const localserver = 'http://192.168.11.91:8081'
-    const localserver= 'http://84.88.185.94:8081'
+    const localserver = 'http://192.168.11.91:8081'
+    //const localserver= 'http://84.88.185.94:8081'
 
     // Search Experiments
     const searchExperiments = async text => {
@@ -166,9 +166,15 @@ const ExperimentState = props => {
       const retrievedPklTree = res.data;
       var jobs = {};
       if (state.treedata !== null && retrievedPklTree.has_changed === true && retrievedPklTree.pkl_content.length > 0){
-        var currentJobs = state.treedata.jobs;  
-        const currentPackages = state.treedata.packages;  
+        var currentJobs = state.treedata.jobs;          
         var referenceHeaders = state.treedata.reference;    
+        var currentPackages = referenceHeaders['packages'];
+        const completed_tag = referenceHeaders['completed_tag'];
+        const running_tag = referenceHeaders['running_tag'];
+        const queuing_tag = referenceHeaders['queuing_tag'];
+        const failed_tag = referenceHeaders['failed_tag'];
+        const check_mark = referenceHeaders['check_mark'];
+
         for(var j = 0, job; j < retrievedPklTree.pkl_content.length; j++){          
           job = retrievedPklTree.pkl_content[j];
           jobs[ job.name ] = job;
@@ -192,6 +198,10 @@ const ExperimentState = props => {
             cjob.status_color = ijob.status_color;
             cjob.minutes = ijob.minutes;
             cjob.wrapper = ijob.wrapper;
+            var tree_parent_wrapper = "Wrapper: " + ijob.wrapper
+            if (!(cjob.tree_parents.includes(tree_parent_wrapper))){
+              cjob.tree_parents.push(tree_parent_wrapper);
+            }
             cjob.wrapper_code = ijob.wrapper_id;
             var newTitle = ijob.title + " " + ((cjob.parents === 0 ? retrievedPklTree.source_tag : "" )) + ((cjob.children === 0 ? retrievedPklTree.target_tag : "" ))
             + ((cjob.synb === true ? retrievedPklTree.sync_tag : "")) + ((ijob.wrapper_id !== 0 ? ijob.wrapper_tag : "" ));
@@ -203,11 +213,7 @@ const ExperimentState = props => {
               }              
               const parents = cjob.tree_parents
               //console.log(parents)
-              const completed_tag = referenceHeaders['completed_tag']
-              const running_tag = referenceHeaders['running_tag']
-              const queuing_tag = referenceHeaders['queuing_tag']
-              const failed_tag = referenceHeaders['failed_tag']
-              const check_mark = referenceHeaders['check_mark']
+
               //console.log(check_mark)
               //console.log(check_mark);
               //console.log(referenceHeaders);
@@ -233,7 +239,7 @@ const ExperimentState = props => {
                       header_data.running -= 1
                     }
                     if (old_status === "QUEUING"){
-                      header_data.queuimg -= 1
+                      header_data.queuing -= 1
                     }
                     if (old_status === "FAILED"){
                       header_data.failed -= 1
@@ -259,19 +265,54 @@ const ExperimentState = props => {
            
           }
         }
-        const packages_from_pkl = referenceHeaders['packages']
+        const packages_from_pkl = retrievedPklTree['packages'];
+        //console.log(packages_from_pkl);
+        //console.log(currentPackages);
         for (var package_pkl of packages_from_pkl){
+          //console.log(package_pkl);
+          //console.log(packages_from_pkl[package_pkl]);
+          //console.log(currentPackages);
           if (!(currentPackages.includes(package_pkl))){
-            console.log("New wrapper found");
+            console.log("New wrapper found: " + package_pkl);
+            currentPackages.push(package_pkl);
+            //console.log(currentPackages);
+            var wrapper_pre_title = 'Wrapper: ' + package_pkl;
+            referenceHeaders[wrapper_pre_title] = {'completed': 0, 'failed': 0, 'queuing': 0, 'running': 0, 'total': 0}
+            var header_wrapper = referenceHeaders[wrapper_pre_title]
+            // eslint-disable-next-line no-loop-func
+            var children_jobs = currentJobs.filter(function (x){
+              return x.wrapper === package_pkl;
+            });
+            var children_list = [];
+            for(var k = 0; k < children_jobs.length; k++){
+              if (children_jobs[k].status === "COMPLETED"){
+                header_wrapper.completed += 1;
+              }else if (children_jobs[k].status === "FAILED"){
+                header_wrapper.failed += 1;
+              }else if (children_jobs[k].status === "QUEUING"){
+                header_wrapper.queuing += 1;
+              }else if (children_jobs[k].status === "RUNNING"){
+                header_wrapper.running += 1;
+              }
+              children_list.push({'title': children_jobs[k].title, 'refKey': children_jobs[k].id, 'data': 'Empty', 'children': []})
+            }
+            header_wrapper.total = children_jobs.length;
+            
+            const new_completed_tag = completed_tag.replace('%C', header_wrapper.completed).replace('%T', header_wrapper.total);
+            const new_check_mark = (header_wrapper.completed === header_wrapper.total ? check_mark : "" );
+            const new_running_tag = (header_wrapper.running > 0 ? running_tag.replace('%R', header_wrapper.running): "");
+            const new_queuing_tag = (header_wrapper.queuing > 0 ? queuing_tag.replace('%Q', header_wrapper.queuing): "");
+            const new_failed_tag = (header_wrapper.failed > 0 ? failed_tag.replace('%F', header_wrapper.failed): "");
+            const wrapper_title = wrapper_pre_title + new_completed_tag + new_failed_tag + new_running_tag + new_queuing_tag + new_check_mark
             var rootNode = state.fancyTree.getRootNode();
-            var children = rootNode.addChildren({'title': package_pkl, 'folder': true, 'refKey': package_pkl});
-            // Add items to children
-            //  rootNode.addChildren({'key': '92929292' + (new Date()), 'title': "Honkin", 'folder': true, 'refKey': '929299191' + (new Date())});
-            // TODO: Find jobs related to wraper in jobs, add them to the tree.
+            //console.log(children_list);
+            //console.log()
+            // eslint-disable-next-line no-unused-vars
+            var wrapper_branch_root = rootNode.addChildren({'title': wrapper_title, 'folder': true, 'refKey': wrapper_pre_title, 'expanded': false, 'children': children_list});
           }
         }                 
       }
-      console.log(res.data);      
+      //console.log(res.data);      
     }
 
 
@@ -285,35 +326,89 @@ const ExperimentState = props => {
         // const actualPkl = res.data;
         
         let retrievedPkl = null;
+        var current_jobs = {};
         var jobs = {};
         var colorChanges = {};
+        var shapeChanges = {};
+        var edgeUpdates = {};
+        var new_fakeEdges = {};
         var changes = ""
+        var newData = state.data;
+        var expData = state.experiment;
         retrievedPkl = res.data;
+
         if (state.data !== null && retrievedPkl.has_changed === true && retrievedPkl.pkl_content.length > 0){
+          let pkl_packages = retrievedPkl["packages"];
+          let current_packages = state.data["packages"];
+          
           //console.log(retrievedPkl.pkl_content.length);
+          for(var k = 0, kjob; k < newData.nodes.length; k++){
+            kjob = newData.nodes[k];
+            current_jobs[ kjob.id ] = kjob;
+          }
+
           for(var j = 0, job; j < retrievedPkl.pkl_content.length; j++){
             job = retrievedPkl.pkl_content[j];
-            //console.log(job);
             jobs[ job.name ] = job;
-            //console.log(jobs[job.name]);git pu
           }
+
+          // Updating list of packages and adding to shape change
+          // Shape change currently not working
+          for(var pkl_package in pkl_packages){
+            if (!(Object.keys(current_packages).includes(pkl_package))){
+              current_packages[pkl_package] = pkl_packages[pkl_package];
+              console.log(pkl_packages[pkl_package]);
+              for(var index in pkl_packages[pkl_package]){
+                let index_i = parseInt(index);
+                var job_name = pkl_packages[pkl_package][index_i]
+                //console.log(job_name);
+                shapeChanges[job_name] = "hexagon";
+                console.log(index_i);
+                console.log(pkl_packages[pkl_package].length);
+                var next = (index_i + 1);
+                console.log(next);
+                if (next < pkl_packages[pkl_package].length){                  
+                  console.log(pkl_packages[pkl_package][index_i]);
+                  console.log(pkl_packages[pkl_package][next]);
+                  if(current_jobs[pkl_packages[pkl_package][index_i]].level === current_jobs[pkl_packages[pkl_package][next]].level){
+                    new_fakeEdges[pkl_packages[pkl_package][index_i]] = pkl_packages[pkl_package][next];
+                  }
+                }
+              }
+            }
+          }
+
+
+
+
           let requireUpdate = false;
           console.log('Current ts: '+ state.experiment.pkl_timestamp);        
-          var newData = state.data;
-          //console.log(newData.nodes);
-          var expData = state.experiment;
+          
           if (newData.nodes){
             for(var i = 0; i < newData.nodes.length; i++){
               // console.log(newNodes[i].id);
               //console.log(newData.nodes[i]);
               // console.log(jobs[ newNodes[i].id ]);
 
-              if (newData.nodes[i].status_code !== jobs[ newData.nodes[i].id ].status_code){
+              if (newData.nodes[i].status_code !== jobs[ newData.nodes[i].id ].status_code || newData.nodes[i].package !== jobs[ newData.nodes[i].id ].package){
                 // changes += newData.nodes[i].id + " from " + newData.nodes[i].status + " to " + jobs[ newData.nodes[i].id ].status + " || ";
                 changes += timeStampToDate(retrievedPkl.pkl_timestamp) + ": "+ newData.nodes[i].id + " to " + jobs[ newData.nodes[i].id ].status + "\n";
+                if (newData.nodes[i].package !== jobs[ newData.nodes[i].id ].package){
+                  changes += timeStampToDate(retrievedPkl.pkl_timestamp) + ": "+ newData.nodes[i].id + " added to " + jobs[ newData.nodes[i].id ].package + "\n";
+                  var current_job = current_jobs[newData.nodes[i].id];
+                  var children_current = current_job.children_list;
+                  for(var child in children_current){
+                    if (jobs[children_current[child]].package === jobs[ newData.nodes[i].id ].package){
+                      edgeUpdates[ newData.nodes[i].id ] = children_current[child];
+                    }
+                  } 
+                }                
                 newData.nodes[i].status_code = jobs[ newData.nodes[i].id ].status_code;
                 newData.nodes[i].status_color = jobs[ newData.nodes[i].id ].status_color;
                 newData.nodes[i].status = jobs[ newData.nodes[i].id ].status;
+                newData.nodes[i].package = jobs[ newData.nodes[i].id ].package;
+                newData.nodes[i].dashed = jobs[ newData.nodes[i].id ].dashed;
+                newData.nodes[i].shape = jobs[ newData.nodes[i].id ].shape;
                 //console.log(newData.nodes[i].status_color)
                 colorChanges[ newData.nodes[i].id  ] = jobs[ newData.nodes[i].id ].status_color;
                 requireUpdate = true;
@@ -346,6 +441,20 @@ const ExperimentState = props => {
                 //console.log( key, colorChanges[key] );
                 updateGraphColor(key, colorChanges[key]);
               }
+
+              for(var key_shape in shapeChanges){
+                updateGraphShape(key_shape, shapeChanges[key_shape]);
+                updateGraphBorder(key_shape);               
+              }
+
+              for(var key_edge in edgeUpdates){
+                updateEdgeStyle(key_edge + "-" + edgeUpdates[key_edge]);
+              }
+
+              for(var key_added in new_fakeEdges){
+                addFakeEdge(key_added, new_fakeEdges[key_added]);
+              }
+              
               
     
             } else { 
@@ -359,15 +468,6 @@ const ExperimentState = props => {
           type: GET_PKL_DATA,
           payload: res.data,
         });
-        
-      // } else {
-      //   if (state.pklchanges) {
-      //     setPklChanges("Can't update grouped graph\n" + state.pklchanges);
-      //   } else {
-      //     setPklChanges("Can't update grouped graph\n");
-      //   }
-        
-      // } 
     }
 
     // Graph manipulation
@@ -390,6 +490,34 @@ const ExperimentState = props => {
       
       //state.visNodes.update({id:idChange, color: { background: newColor }});
     };
+
+    const updateGraphBorder = (idChange) => {    
+      console.log("Upate graph border of " + idChange);
+      state.visNetwork.body.nodes[idChange].options.shapeProperties.borderDashes = true;
+      state.visNetwork.selectNodes([idChange]);
+    }
+
+    const updateGraphShape = (idChange, shape) => {
+      console.log("Upate graph shape of " + idChange + " to " + shape);
+      state.visNetwork.body.nodes[idChange].options.shape = shape;
+      state.visNetwork.selectNodes([idChange]);
+    }
+
+    const updateEdgeStyle = (idEdge) => {            
+      if (Object.keys(state.visNetwork.body.edges).includes(idEdge)){
+        console.log("Update style of edge " + idEdge);
+        state.visNetwork.body.edges[idEdge].options.dashes = false;
+        state.visNetwork.body.edges[idEdge].options.background.enabled = true;
+        state.visNetwork.body.edges[idEdge].options.background.color = 'rgba(63, 191, 63, 0.5)';
+      }
+    }
+
+    const addFakeEdge = (source, target) => {
+      let id_edge = source + "-" + target;
+      console.log("Adding fake edge from " + source + " to " + target);
+      state.visNetwork.body.data.edges.add([{id: id_edge, from: source, to: target, dashes: true, background : { enabled: true, color: 'rgba(63, 191, 63, 0.5)'}, arrows: { to: { enabled : false }}}]);
+    }
+
 
     const navigateGraph = (posx, posy, cScale = 0.9) => {
       // console.log(posx);
@@ -634,6 +762,8 @@ const ExperimentState = props => {
             setVisNetwork,
             setFancyTree,
             updateGraphColor,
+            updateGraphBorder,
+            updateGraphShape,
             navigateGraph,
             setUpdateGraph,
             navToLatest,

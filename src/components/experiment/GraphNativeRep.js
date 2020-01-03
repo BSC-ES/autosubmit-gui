@@ -101,13 +101,13 @@ class GraphNativeRep extends Component {
             
           if (this.props.data.edges){
             this.props.data.edges.map(edge => 
-              edges_array.push({ from: edge.from, to: edge.to, dashes: edge.dashed , background: { enabled: edge.is_wrapper, color: 'rgba(63, 191, 63, 0.5)'}, arrows: { to: { enabled: !(edge.dashed)}} })
+              edges_array.push({ id: edge.id, from: edge.from, to: edge.to, dashes: edge.dashed , background: { enabled: edge.is_wrapper, color: 'rgba(63, 191, 63, 0.5)'}, arrows: { to: { enabled: !(edge.dashed)}} })
             );
           }
           
           if (this.props.data.fake_edges){
             this.props.data.fake_edges.map(edge =>
-              edges_array.push({ from: edge.from, to: edge.to, dashes: edge.dashed , background: { enabled: edge.is_wrapper, color: 'rgba(63, 191, 63, 0.5)'}, arrows: { to: { enabled: !(edge.dashed)}} })
+              edges_array.push({ id: edge.id, from: edge.from, to: edge.to, dashes: edge.dashed , background: { enabled: edge.is_wrapper, color: 'rgba(63, 191, 63, 0.5)'}, arrows: { to: { enabled: !(edge.dashed)}} })
             );
           }            
         } else {
