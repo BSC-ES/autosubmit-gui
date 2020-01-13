@@ -12,7 +12,7 @@ const Experiments = () => {
       return (
         <div className="container">
           <div className="card-columns">
-            {experiments.map(experiment => (
+            {experiments && experiments.map(experiment => (
               <ExperimentItem key={experiment.id} experiment={experiment} />
             ))}
           </div>

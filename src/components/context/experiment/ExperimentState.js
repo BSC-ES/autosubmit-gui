@@ -39,6 +39,7 @@ import {
   SET_LOADING_FILTER,
   UPDATE_SELECTION_TREE,
   CLEAR_FILTER_TREE,
+  CURRENT_RUNNING,
 } from '../types';
 
 const ExperimentState = props => {
@@ -88,6 +89,16 @@ const ExperimentState = props => {
             payload: res.data.experiment,
         });
       };
+    
+    const getCurrentRunning = async () => {
+      setLoading();
+      const res = await axios.get(`${localserver}/running/`);
+      console.log(res.data);
+      dispatch({
+        type: CURRENT_RUNNING,
+        payload: res.data.experiment,
+      });
+    }
 
     // Get Experiment
     const getExperiment = async expid => {
@@ -357,19 +368,19 @@ const ExperimentState = props => {
           for(var pkl_package in pkl_packages){
             if (!(Object.keys(current_packages).includes(pkl_package))){
               current_packages[pkl_package] = pkl_packages[pkl_package];
-              console.log(pkl_packages[pkl_package]);
+              //console.log(pkl_packages[pkl_package]);
               for(var index in pkl_packages[pkl_package]){
                 let index_i = parseInt(index);
                 var job_name = pkl_packages[pkl_package][index_i]
                 //console.log(job_name);
                 shapeChanges[job_name] = "hexagon";
-                console.log(index_i);
-                console.log(pkl_packages[pkl_package].length);
+                //console.log(index_i);
+                //console.log(pkl_packages[pkl_package].length);
                 var next = (index_i + 1);
-                console.log(next);
+                //console.log(next);
                 if (next < pkl_packages[pkl_package].length){                  
-                  console.log(pkl_packages[pkl_package][index_i]);
-                  console.log(pkl_packages[pkl_package][next]);
+                  //console.log(pkl_packages[pkl_package][index_i]);
+                  //console.log(pkl_packages[pkl_package][next]);
                   if(current_jobs[pkl_packages[pkl_package][index_i]].level === current_jobs[pkl_packages[pkl_package][next]].level){
                     new_fakeEdges[pkl_packages[pkl_package][index_i]] = pkl_packages[pkl_package][next];
                   }
@@ -492,20 +503,20 @@ const ExperimentState = props => {
     };
 
     const updateGraphBorder = (idChange) => {    
-      console.log("Upate graph border of " + idChange);
+      //console.log("Upate graph border of " + idChange);
       state.visNetwork.body.nodes[idChange].options.shapeProperties.borderDashes = true;
       state.visNetwork.selectNodes([idChange]);
     }
 
     const updateGraphShape = (idChange, shape) => {
-      console.log("Upate graph shape of " + idChange + " to " + shape);
+      //console.log("Upate graph shape of " + idChange + " to " + shape);
       state.visNetwork.body.nodes[idChange].options.shape = shape;
       state.visNetwork.selectNodes([idChange]);
     }
 
     const updateEdgeStyle = (idEdge) => {            
       if (Object.keys(state.visNetwork.body.edges).includes(idEdge)){
-        console.log("Update style of edge " + idEdge);
+        //console.log("Update style of edge " + idEdge);
         state.visNetwork.body.edges[idEdge].options.dashes = false;
         state.visNetwork.body.edges[idEdge].options.background.enabled = true;
         state.visNetwork.body.edges[idEdge].options.background.color = 'rgba(63, 191, 63, 0.5)';
@@ -514,7 +525,7 @@ const ExperimentState = props => {
 
     const addFakeEdge = (source, target) => {
       let id_edge = source + "-" + target;
-      console.log("Adding fake edge from " + source + " to " + target);
+      //console.log("Adding fake edge from " + source + " to " + target);
       state.visNetwork.body.data.edges.add([{id: id_edge, from: source, to: target, dashes: true, background : { enabled: true, color: 'rgba(63, 191, 63, 0.5)'}, arrows: { to: { enabled : false }}}]);
     }
 
@@ -742,6 +753,7 @@ const ExperimentState = props => {
             setAutoUpdateRun,
             setAutoUpdatePkl,
             searchExperiments,
+            getCurrentRunning,
             clearExperiments,
             getExperiment,
             getExperimentGraph,

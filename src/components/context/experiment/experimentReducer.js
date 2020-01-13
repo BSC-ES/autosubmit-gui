@@ -35,6 +35,7 @@ import {
     FILTER_TREEVIEW_FAILED,
     UPDATE_SELECTION_TREE,
     CLEAR_FILTER_TREE,
+    CURRENT_RUNNING,
 } from '../types';
 
 export default (state, action) => {
@@ -97,6 +98,12 @@ export default (state, action) => {
                 selectedTreeNode: action.payload,
             };
         case SEARCH_EXPERIMENTS:
+            return {
+                ...state,
+                experiments: action.payload,
+                loading: false,
+            };
+        case CURRENT_RUNNING:
             return {
                 ...state,
                 experiments: action.payload,

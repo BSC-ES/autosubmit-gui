@@ -18,30 +18,51 @@ const Search = ({ setAlert }) => {
     }
   };
 
+  const onSubmitRunning = e => {
+    e.preventDefault();
+    experimentContext.getCurrentRunning();
+  }
+
   const onChange = e => setText(e.target.value);
 
   return (
     <div className="container">
-      <form onSubmit={onSubmit} className='form'>
-        <div className="input-group mb-3">
-          
-            <input
-              className="form-control"
-              type='text'
-              name='text'
-              placeholder='Search Experiments by Expid or Description...'
-              value={text}
-              onChange={onChange}
-            />
-            <div className="input-group-append">
-              <input          
-                type='submit'
-                value='Search'
-                className='btn btn-dark'
-              />
-            </div>        
+      <div className="row">
+        <div className="col-11">
+          <form onSubmit={onSubmit} className='form'>
+            <div className="input-group mb-3">
+              
+                <input
+                  className="form-control"
+                  type='text'
+                  name='text'
+                  placeholder='Search Experiments by Expid or Description...'
+                  value={text}
+                  onChange={onChange}
+                />
+                <div className="input-group-append">
+                  <input          
+                    type='submit'
+                    value='Search'
+                    className='btn btn-dark'
+                  />
+                </div>        
+            </div>
+          </form>
         </div>
-      </form>
+        <div className="col-1">
+          <form onSubmit={onSubmitRunning} className='form'>
+            <div className="input-group mb-3">
+              <input
+                type='submit'
+                value='Running'
+                className='btn btn-success'>
+              </input>
+            </div>           
+          </form>
+        </div>
+      </div>
+      
       {experimentContext.experiments.length > 0 && (
             <Fragment>
               <button className='btn btn-light btn-block' onClick={experimentContext.clearExperiments}>

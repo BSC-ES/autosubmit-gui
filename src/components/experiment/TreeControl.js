@@ -59,7 +59,7 @@ const TreeControl = ()  => {
                       <input
                         type='submit'
                         value='Refresh'
-                        className='btn btn-secondary btn-block btn-sm'
+                        className='btn btn-success btn-block btn-sm'
                         disabled={!enabledGraphSearch}
                       />
                     </form>                                 
