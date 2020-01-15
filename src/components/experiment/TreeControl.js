@@ -10,6 +10,7 @@ const TreeControl = ()  => {
             cleanTreeData,
             enabledGraphSearch,
             getExperimentTreePkl,
+            loadingTreeRefresh,
             experimentRunning } = experimentContext;
 
     const onSubmitTree = e => {
@@ -31,6 +32,11 @@ const TreeControl = ()  => {
     return (
         <div className="card-header p-1">
             <div className="row justify-content-end">
+              {loadingTreeRefresh && 
+                <div className="col-md-8 text-left">
+                  Querying...
+                </div>              
+              }
                 <div className='col-md-2'>
                   {experiment && !treedata &&
                     <form onSubmit={onSubmitTree} className='form'>

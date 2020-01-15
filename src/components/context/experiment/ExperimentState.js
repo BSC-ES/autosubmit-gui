@@ -40,6 +40,9 @@ import {
   UPDATE_SELECTION_TREE,
   CLEAR_FILTER_TREE,
   CURRENT_RUNNING,
+  SET_LOADING_JOB_MONITOR,
+  SET_LOADING_TREE_REFRESH,
+  PKL_TREE_LOADED,
 } from '../types';
 
 const ExperimentState = props => {
@@ -60,6 +63,8 @@ const ExperimentState = props => {
         loadingPkl: false,
         loadingSearchJob: false,
         loadingFilterTree: false,
+        loadingJobMonitor: false,
+        loadingTreeRefresh: false,
         selection: null,
         selectedTreeNode: null,
         enabledGraphSearch: true,  
@@ -172,9 +177,12 @@ const ExperimentState = props => {
 
     }
 
+    // Get experiment pkl data for tree
     const getExperimentTreePkl = async (expid, timeStamp) => {
+      setLoadingTreeRefresh();
       const res = await axios.get(`${localserver}/pkltreeinfo/${expid}/${timeStamp}`);
       const retrievedPklTree = res.data;
+      console.log(retrievedPklTree);
       var jobs = {};
       if (state.treedata !== null && retrievedPklTree.has_changed === true && retrievedPklTree.pkl_content.length > 0){
         var currentJobs = state.treedata.jobs;          
@@ -209,13 +217,15 @@ const ExperimentState = props => {
             cjob.status_color = ijob.status_color;
             cjob.minutes = ijob.minutes;
             cjob.wrapper = ijob.wrapper;
+            cjob.out = ijob.out;
+            cjob.err = ijob.err;
             var tree_parent_wrapper = "Wrapper: " + ijob.wrapper
             if (!(cjob.tree_parents.includes(tree_parent_wrapper))){
               cjob.tree_parents.push(tree_parent_wrapper);
             }
             cjob.wrapper_code = ijob.wrapper_id;
             var newTitle = ijob.title + " " + ((cjob.parents === 0 ? retrievedPklTree.source_tag : "" )) + ((cjob.children === 0 ? retrievedPklTree.target_tag : "" ))
-            + ((cjob.synb === true ? retrievedPklTree.sync_tag : "")) + ((ijob.wrapper_id !== 0 ? ijob.wrapper_tag : "" ));
+            + ((cjob.sync === true ? retrievedPklTree.sync_tag : "")) + ((ijob.wrapper_id !== 0 ? ijob.wrapper_tag : "" ));
             cjob.title = newTitle;
             var thenode = state.fancyTree.getNodesByRef(cjob.id);
             if (thenode){
@@ -323,14 +333,18 @@ const ExperimentState = props => {
           }
         }                 
       }
+      dispatch({
+        type: PKL_TREE_LOADED,
+      });
       //console.log(res.data);      
     }
 
 
-    // Get Experiment Pkl Data
+    // Get Experiment Pkl Data for Graph changes update
     const getExperimentPkl = async (expid, timeStamp) => {
       // if (state.isGrouped === false){
         setLoadingPkl();
+        setLoadingJobMonitor();
         //timeStamp = 1000;
         const res = await axios.get(`${localserver}/pklinfo/${expid}/${timeStamp}`);
         console.log(res.data);
@@ -420,6 +434,8 @@ const ExperimentState = props => {
                 newData.nodes[i].package = jobs[ newData.nodes[i].id ].package;
                 newData.nodes[i].dashed = jobs[ newData.nodes[i].id ].dashed;
                 newData.nodes[i].shape = jobs[ newData.nodes[i].id ].shape;
+                newData.nodes[i].out = jobs[ newData.nodes[i].id ].out;
+                newData.nodes[i].err = jobs[ newData.nodes[i].id ].err;
                 //console.log(newData.nodes[i].status_color)
                 colorChanges[ newData.nodes[i].id  ] = jobs[ newData.nodes[i].id ].status_color;
                 requireUpdate = true;
@@ -678,6 +694,8 @@ const ExperimentState = props => {
     const setLoadingSearchJob = () => dispatch({ type: SET_LOADING_SEARCH_JOB});
     const setLoadingState = () => dispatch({ type: SET_LOADING_STATE});
     const setLoadingFilter = () => dispatch({ type: SET_LOADING_FILTER});
+    const setLoadingJobMonitor = () => dispatch({ type: SET_LOADING_JOB_MONITOR });
+    const setLoadingTreeRefresh = () => dispatch({ type: SET_LOADING_TREE_REFRESH });
 
 
     // Action Things
@@ -733,6 +751,8 @@ const ExperimentState = props => {
             loadingFilterTree: state.loadingFilterTree,
             loadingState: state.loadingState,
             returnFilter: state.returnFilter,
+            loadingJobMonitor: state.loadingJobMonitor,
+            loadingTreeRefresh: state.loadingTreeRefresh,
             data: state.data,
             treedata: state.treedata,
             rundata: state.rundata,

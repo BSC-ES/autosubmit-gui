@@ -19,6 +19,12 @@ const SelectionTreeNode = () => {
         selectedNode = null;
     }
 
+    const copyContent = (inputname) => e => {
+        e.preventDefault();
+        console.log("Sending " + inputname);
+        window.copyToClip(inputname);
+    }
+
     return (
         <Fragment>
                 {selectedNode &&
@@ -154,6 +160,48 @@ const SelectionTreeNode = () => {
                                             </div>
                                         </div>
                                     }
+                                    <div>
+                                        {selectedNode.out && 
+                                            <div className="row">
+                                                <div className="col-12 px-0">
+                                                    <form onSubmit={copyContent("g_out_t")} className="form">                                            
+                                                        <div className="input-group input-group-sm">  
+                                                            <input
+                                                                className="form-control py-0"
+                                                                type='text'
+                                                                value={selectedNode.out}
+                                                                id = "g_out_t"
+                                                                readOnly
+                                                            />
+                                                            <div className="input-group-append">
+                                                                <input type='submit' className="btn btn-alert btn-sm py-0" value='Copy out'/>                                                    
+                                                            </div>                                                
+                                                        </div>
+                                                    </form>
+                                                </div>                                            
+                                            </div>
+                                        }
+                                        {selectedNode.err &&
+                                            <div className="row">
+                                                <div className="col-12 px-0">
+                                                    <form onSubmit={copyContent("g_err_t")} className="form">
+                                                        <div className="input-group input-group-sm">  
+                                                            <input
+                                                                className="form-control py-0"
+                                                                type='text'
+                                                                value={selectedNode.err}
+                                                                id = "g_err_t"  
+                                                                readOnly                                                  
+                                                            />
+                                                            <div className="input-group-append">
+                                                                <input type='submit' className="btn btn-alert btn-sm py-0" value='Copy err'/> 
+                                                            </div>
+                                                        </div>                                           
+                                                    </form>
+                                                </div>                                                                                        
+                                            </div>
+                                        }
+                                    </div>
                                     
                                     {/* <div>
                                         <div className='row'>

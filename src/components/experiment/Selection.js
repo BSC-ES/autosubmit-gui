@@ -15,6 +15,12 @@ const Selection = () => {
     var currentNode = ""
     var selectedNode = null
 
+    const copyContent = (inputname) => e => {
+        e.preventDefault();
+        console.log("Sending " + inputname);
+        window.copyToClip(inputname);
+    }
+
     
     if (selection) {
         console.log("Current selection " + selection)
@@ -31,7 +37,7 @@ const Selection = () => {
         <Fragment>
                 {selectedNode &&
                 <Fragment>
-                     <div className='row'>
+                    <div className='row'>
                          <div className='col-12'>
                             <div className="card text-white bg-info" style={experimentStyle}>
                                 <div className='card-header text-center p-0' style={headerCard}>
@@ -40,21 +46,50 @@ const Selection = () => {
                                     </div>                                    
                                 </div>
                                 <div className='card-body py-0'>
-                                    <div className='text-left'>
-                                        <small><strong>Date:</strong> {selectedNode.date}</small>
-                                    </div>                        
+                                    <div className="row">
+                                        <div className='col-6 text-left'>
+                                            <small><strong>Date:</strong> {selectedNode.date}</small>
+                                        </div>            
+                                        <div className='col-3 px-1 pt-1'>
+                                            {selectedNode.children_list && selectedNode.children_list.length > 0 &&
+                                                <button className="btn btn-dark btn-sm btn-block" data-toggle="modal" data-target="#childrenList">
+                                                    <small><strong>Out:</strong> {selectedNode.children}</small>
+                                                </button>
+                                            }
+                                            {selectedNode.children_list && selectedNode.children_list.length === 0 &&
+                                                <small><strong>Out:</strong> {selectedNode.children}</small>
+                                            }  
+                                        </div> 
+                                        <div className='col-3 px-1 pt-1'>
+                                            {selectedNode.parent_list && selectedNode.parent_list.length > 0 &&
+                                                <button className="btn btn-darkgit pul btn-sm btn-block" data-toggle="modal" data-target="#parentList">
+                                                    <small><strong>In:</strong> {selectedNode.parents}</small>
+                                                </button>
+                                            }
+                                            {selectedNode.parent_list && selectedNode.parent_list.length === 0 &&
+                                                <small><strong>In:</strong> {selectedNode.parents}</small>
+                                            }   
+                                        </div>                    
+                                    </div>
+                                       
                                     <div>
                                         <div className='row'>
-                                            <div className='col-12'>
+                                            <div className='col-8'>
                                                 <small><strong>Section:</strong> {selectedNode.section}</small>
                                             </div>                                            
+                                            {/* <div className='col-4'>
+                                                <small>{selectedNode.member}</small>
+                                            </div>                  */}
                                         </div>                                        
                                     </div>                            
                                     <div>
                                         <div className='row'>
-                                            <div className='col-12'>
+                                            <div className='col-8'>
                                                 <small><strong>Platform:</strong> {selectedNode.platform_name && selectedNode.platform_name} {!selectedNode.platform_name && experiment.hpc}</small>
                                             </div>
+                                            {/* <div className="col-4">
+                                                <small><strong>Chunk:</strong> {selectedNode.chunk}</small>
+                                            </div> */}
                                         </div>                                         
                                     </div>                                                                
                                     {/* <div>
@@ -69,34 +104,6 @@ const Selection = () => {
                                                 <small><strong>Wallclock:</strong> {selectedNode.wallclock}</small>
                                             </div>
                                         </div>                                        
-                                    </div> 
-                                    <div>
-                                        <div className='row'>
-                                            <div className='col-6'>
-                                                <small><strong>Level:</strong> {selectedNode.level}</small>
-                                            </div>
-                                            <div className='col-3 px-1'>
-                                                {selectedNode.children_list && selectedNode.children_list.length > 0 &&
-                                                    <button className="btn btn-dark btn-sm btn-block" data-toggle="modal" data-target="#childrenList">
-                                                        <small><strong>Out:</strong> {selectedNode.children}</small>
-                                                    </button>
-                                                }
-                                                {selectedNode.children_list && selectedNode.children_list.length === 0 &&
-                                                    <small><strong>Out:</strong> {selectedNode.children}</small>
-                                                }                                                
-                                            </div>
-                                            <div className='col-3 px-1'>
-                                                {selectedNode.parent_list && selectedNode.parent_list.length > 0 &&
-                                                    <button className="btn btn-darkgit pul btn-sm btn-block" data-toggle="modal" data-target="#parentList">
-                                                        <small><strong>In:</strong> {selectedNode.parents}</small>
-                                                    </button>
-                                                }
-                                                {selectedNode.parent_list && selectedNode.parent_list.length === 0 &&
-                                                    <small><strong>In:</strong> {selectedNode.parents}</small>
-                                                }   
-                                            </div>
-                                            
-                                        </div>                                        
                                     </div>                                                               
                                     <div>
                                         <div className='row'>
@@ -108,30 +115,50 @@ const Selection = () => {
                                             </div> */}
                                         </div>                                               
                                     </div>
-                                   
-                                   
-                                    {/* <div>
-                                        <div className='row'>
-                                            <div className='col-md-4 text-left'>
-                                                <small>{data.max_children}/{data.max_parents} </small>
+                                    <div>
+                                        {selectedNode.out && 
+                                            <div className="row">
+                                                <div className="col-12 px-0">
+                                                    <form onSubmit={copyContent("g_out")} className="form">                                            
+                                                        <div className="input-group input-group-sm">  
+                                                            <input
+                                                                className="form-control py-0"
+                                                                type='text'
+                                                                value={selectedNode.out}
+                                                                id = "g_out"
+                                                                readOnly
+                                                            />
+                                                            <div className="input-group-append">
+                                                                <input type='submit' className="btn btn-alert btn-sm py-0" value='Copy out'/>                                                    
+                                                            </div>                                                
+                                                        </div>
+                                                    </form>
+                                                </div>                                            
                                             </div>
-                                         
-                                            <div className='col-md-4 offset-md-4 text-right'>
-                                                <small>{data.total_jobs}</small>
+                                        }
+                                        {selectedNode.err &&
+                                            <div className="row">
+                                                <div className="col-12 px-0">
+                                                    <form onSubmit={copyContent("g_err")} className="form">
+                                                        <div className="input-group input-group-sm">  
+                                                            <input
+                                                                className="form-control py-0"
+                                                                type='text'
+                                                                value={selectedNode.err}
+                                                                id = "g_err"  
+                                                                readOnly                                                  
+                                                            />
+                                                            <div className="input-group-append">
+                                                                <input type='submit' className="btn btn-alert btn-sm py-0" value='Copy err'/> 
+                                                            </div>
+                                                        </div>                                           
+                                                    </form>
+                                                </div>                                                                                        
                                             </div>
-                                        </div>
-                                    </div> */}
-                                    {/* <div>
-                                        <div className="row">
-                                            <form onSubmit={navigateTo(10,10)} className='form'>
-                                                <input
-                                                type='submit'
-                                                value='Go to 10,10'
-                                                className='btn btn-danger btn-block btn-sm'                              
-                                                />
-                                            </form>
-                                        </div>
-                                    </div> */}
+                                        }
+                                        
+                                    </div>
+                                   
                                 </div>                            
                             </div>
                          </div>
@@ -210,10 +237,7 @@ const Selection = () => {
                         </div>
                     </div>
                 }       
-        </Fragment>
-        
-        
-
+        </Fragment>            
     )
 }
 
@@ -224,5 +248,6 @@ const experimentStyle = {
 const headerCard = {
     height: 30
 }
+
 
 export default Selection;

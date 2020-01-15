@@ -36,6 +36,9 @@ import {
     UPDATE_SELECTION_TREE,
     CLEAR_FILTER_TREE,
     CURRENT_RUNNING,
+    SET_LOADING_JOB_MONITOR,
+    SET_LOADING_TREE_REFRESH,
+    PKL_TREE_LOADED,
 } from '../types';
 
 export default (state, action) => {
@@ -151,6 +154,16 @@ export default (state, action) => {
                 ...state,
                 loadingRun: true,                
             };
+        case SET_LOADING_JOB_MONITOR:
+            return {
+                ...state,
+                loadingJobMonitor: true,
+            };
+        case SET_LOADING_TREE_REFRESH:
+            return {
+                ...state,
+                loadingTreeRefresh: true,
+            };
         case SHOULD_UPDATE_GRAPH:
             return {
                 ...state,
@@ -205,6 +218,12 @@ export default (state, action) => {
                 ...state,
                 pkldata: action.payload,
                 loadingPkl: false,
+                loadingJobMonitor: false,
+            };
+        case PKL_TREE_LOADED:
+            return {
+                ...state,
+                loadingTreeRefresh: false,
             };
         case GET_RUNNING_STATE:
             return {

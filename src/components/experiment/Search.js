@@ -30,8 +30,7 @@ const Search = ({ setAlert }) => {
       <div className="row">
         <div className="col-11">
           <form onSubmit={onSubmit} className='form'>
-            <div className="input-group mb-3">
-              
+            <div className="input-group mb-3">              
                 <input
                   className="form-control"
                   type='text'

@@ -8,6 +8,7 @@ const GraphControl = () => {
             enabledGraphSearch,
             experimentRunning,
             data,
+            loadingJobMonitor,
             setAutoUpdatePkl,
             startAutoUpdatePkl } = experimentContext;
 
@@ -29,7 +30,10 @@ const GraphControl = () => {
             
     return (
         <div className="card-header p-1">
-            <div className="row justify-content-end">                
+            <div className="row justify-content-end">   
+                {loadingJobMonitor &&
+                    <div className="col-md-1">Querying...</div>
+                } 
                 <div className='col-md-2'>
                     <form onSubmit={onSubmitGraph()} className='form'>
                       <input
@@ -76,7 +80,7 @@ const GraphControl = () => {
                             <input
                                 type='submit'
                                 value='Start Job Monitor'
-                                className='btn btn-dark btn-block btn-sm'
+                                className='btn btn-success btn-block btn-sm'
                                 disabled={!enabledGraphSearch}
                             />
                         </form>
