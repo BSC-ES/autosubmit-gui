@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, Fragment } from "react";
+import React, { useEffect, useContext } from "react";
 import Spinner from "../layout/Spinner";
 import { Link } from "react-router-dom";
 import ExperimentContext from '../context/experiment/experimentContext';
@@ -33,20 +33,20 @@ const Experiment = ({ expidToken, refTree }) => {
 
   const {
     expid,
-    owner,
-    owner_id,
-    path,
-    time_last_access,
-    time_last_mod,
+    // owner,
+    // owner_id,
+    // path,
+    // time_last_access,
+    // time_last_mod,
     description,
-    version,
-    updateTime,
+    // version,
+    // updateTime,
     error,
     error_message,
-    pkl_timestamp,
-    model, 
-    branch, 
-    hpc,
+    // pkl_timestamp,
+    // model, 
+    // branch, 
+    // hpc,
     //isGrouped,
   } = experiment;
 
@@ -55,14 +55,31 @@ const Experiment = ({ expidToken, refTree }) => {
   return (
     <div>
       <div className="row">
-        <div className="col">
+        <div className="col-md-1">
           <Link to='/autosubmitapp/' className='btn btn-light'>
-            Back To Search
+            <small>Back To Search</small>
           </Link>    
-        </div>        
+        </div>                
+        <div className="col-md-11">
+          <div className="card">
+            <div className="card-header pt-1 pb-0">
+              <div className="row">
+                <div className="col-10 text-left">
+                  <strong className="h3 font-weight-bold">{expid}</strong> {description} {error && <pre className="text-danger">{error_message}</pre>}
+                </div>
+                <div className='col-2 text-right'>
+                  {loadingState && <span className='badge badge-dark text-right'>LOADING...</span>}
+                  {experimentRunning && !loadingState && <span className='badge badge-success text-right'>RUNNING</span>}
+                  {!experimentRunning && !loadingState && <span className='badge badge-secondary text-right'>NOT RUNNING</span>}
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>       
       </div>
-      <br></br>
-      <div className="row">
+      {/* <br></br> */}
+      {/* <div className="row">
         <div className="col-12">
         <div className="card">
           <div className='card-header pt-1 pb-0'>
@@ -70,11 +87,7 @@ const Experiment = ({ expidToken, refTree }) => {
               <div className='col-8 text-left'>
                 <h3 className="font-weight-bold">{expid}</h3>
               </div>
-              <div className='col-4 text-right'>
-                {loadingState && <span className='badge badge-dark text-right'>LOADING...</span>}
-                {experimentRunning && !loadingState && <span className='badge badge-success text-right'>RUNNING</span>}
-                {!experimentRunning && !loadingState && <span className='badge badge-secondary text-right'>NOT RUNNING</span>}
-              </div>
+              
             </div>
           </div>
           <div className='card-text'>
@@ -115,99 +128,10 @@ const Experiment = ({ expidToken, refTree }) => {
                     <small><strong>Hpc:</strong> {hpc}</small>
                 </div>                
             </div>    
-          </div>
-          {/* <div className='card-footer p-1'>
-            <div className='row'>
-                <div className='col-md-2'>
-                    <form onSubmit={onSubmitGraph} className='form'>
-                      <input
-                        type='submit'
-                        value='Show Graph'
-                        className='btn btn-info btn-block btn-sm'
-                        disabled={!enabledGraphSearch}
-                      />
-                    </form>
-                </div>
-                <div className='col-md-2'>
-                  {experiment && !treedata &&
-                    <form onSubmit={onSubmitTree} className='form'>
-                      <input
-                        type='submit'
-                        value='Show Tree View'
-                        className='btn btn-info btn-block btn-sm'
-                        disabled={!enabledGraphSearch}
-                      />
-                    </form>
-                  }
-                  {experiment && treedata && 
-                    <form onSubmit={onClearTree} className='form'>
-                      <input
-                        type='submit'
-                        value='Clear Tree View'
-                        className='btn btn-secondary btn-block btn-sm'
-                        disabled={!enabledGraphSearch}
-                      />
-                    </form>
-                  }
-                  
-                </div>
-               
-                <div className='col-md-2'>
-                  <button className="btn btn-info btn-block btn-sm" data-toggle="modal" data-target="#grouptype" disabled={!enabledGraphSearch}>
-                      Group By
-                  </button>
-                </div>    
-                <div className="col-md-2">
-                    {experiment && !startAutoUpdateRun &&
-                      <form onSubmit={onSubmitRun} className='form'>
-                        <input
-                        type='submit'
-                        value='Show Log'
-                        className='btn btn-dark btn-sm btn-block'
-                        // disabled={!enabledGraphSearch}
-                        />
-                      </form>
-                    }
-                    {experiment && startAutoUpdateRun &&
-                      <form onSubmit={onStopSubmitRun} className='form'>
-                        <input
-                        type='submit'
-                        value='Hide Log'
-                        className='btn btn-secondary btn-sm btn-block'
-                        // disabled={!enabledGraphSearch}
-                        />
-                      </form>
-                    }
-                </div>        
-                <div className='col-md-4'>
-                  {experimentRunning && data && !startAutoUpdatePkl && !isGrouped &&
-                    <form onSubmit={onJobMonitor} className='form'>
-                      <input
-                        type='submit'
-                        value='Start Job Monitor'
-                        className='btn btn-dark btn-block btn-sm'
-                        disabled={!enabledGraphSearch}
-                      />
-                  </form>
-                  }
-                  {experimentRunning && data && startAutoUpdatePkl &&
-                    <form onSubmit={onNotJobMonitor} className='form'>
-                      <input
-                        type='submit'
-                        value='Stop Job Monitor'
-                        className='btn btn-danger btn-block btn-sm'
-                        disabled={!enabledGraphSearch}
-                      />
-                  </form>
-                  }
-                </div>
-                
-              </div>
-          </div>   */}
-          
+          </div>          
         </div>
         </div>
-      </div>
+      </div> */}
       {/* <div className="modal fade" id="grouptype" tabIndex="-1" role='dialog' aria-labelledby='grouptypeTitle' aria-hidden='true'>
           <div className="modal-dialog" role="document">
               <div className="modal-content">

@@ -1,5 +1,6 @@
 import React, { Fragment, useContext} from 'react';
 import Experiment from '../experiment/Experiment';
+import ExperimentColumn from '../experiment/ExperimentColumn';
 // import GraphRepresentation from '../experiment/GraphRepresentation';
 import GraphNativeRep from '../experiment/GraphNativeRep';
 import TreeNativeRep from '../experiment/TreeNativeRep';
@@ -53,12 +54,16 @@ const ExperimentCentral = ({ match }) => {
         experimentRunning,
         current_grouped } = experimentContext;
     const { clearStats } = statsContext;
+    
 
     return (
-    <Fragment>
-        <Experiment expidToken={expid}/>     
+    <Fragment>       
+        <Experiment expidToken={expid}/>      
         <div className="row mt-2">
-            <div className="col-12">
+            <div className="col-2 pr-1">
+                <ExperimentColumn expidToken={expid}/>
+            </div>
+            <div className="col-10">
                 <ul className="nav nav-tabs" id="myTab" role="tablist">
                     <li className="nav-item">
                         <a className="nav-link active" id="graph-tab" data-toggle="tab" href="#graph" role="tab" aria-controls="graph" aria-selected="true">Graph</a>

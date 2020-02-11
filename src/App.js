@@ -31,8 +31,8 @@ class App extends Component {
                     <Route exact path='/autosubmitapp/experiment/:expid' component={ExperimentCentral}/>
                     <Route component={NotFound} />
                   </Switch>
-                </div>
-                <Footer />
+                  <Footer />
+                </div>                
               </div>
             </Router>    
           </StatsState>          
