@@ -11,6 +11,7 @@ const Navigator = () => {
     const SuspendedCode = -3;
     const QueueCode = 3;
     const FailedCode = -1;
+    const HoldCode = 6;
     const CompletedCode = 5;
     const SubmittedCode = 2;
     const RunningCode = 4;
@@ -45,18 +46,21 @@ const Navigator = () => {
     const suspendedColor = {
         background: 'orange'
     }
+    const holdColor = {
+        background: 'salmon'
+    }
 
 
-    const onLatest = (statusCode) => e => {
+    const onLatest = (statusCode, latest = true) => e => {
       e.preventDefault();
-      navToLatest(statusCode); // Completed
+      navToLatest(statusCode, latest); // Completed
     };
 
 
     return (
         <div className="row card-body py-1">
                 <div className="col-1 px-1">
-                <form onSubmit={onLatest(WaitingCode)} className='form'>
+                <form onSubmit={onLatest(WaitingCode, false)} className='form'>
                         <input
                         type='submit'
                         value='Waiting'
@@ -142,13 +146,21 @@ const Navigator = () => {
                         value='Unknown'
                         className='btn btn-block btn-sm' 
                         style={unknownColor}
-                        />
-                        
-                        
+                        />                                                
                 </form>
                 </div>
-                <div className="col-3 px-1 text-center">
-                    <small>Press the button so see the latest job with that status.</small>
+                <div className="col-1 px-1">
+                <form onSubmit={onLatest(HoldCode)} className='form'>
+                        <input
+                        type='submit'
+                        value='Hold'
+                        className='btn btn-block btn-sm' 
+                        style={holdColor}
+                        />                                                
+                </form>
+                </div>
+                <div className="col-2 px-1 text-center">
+                    {/* <small>job with that status.</small> */}
                 </div>        
           </div>
     )

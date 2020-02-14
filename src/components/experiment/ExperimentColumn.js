@@ -63,7 +63,7 @@ const ExperimentColumn = ({ expidToken, refTree }) => {
               </div>
             </div>
           </div> 
-          <div className="card-footer p-1 text-center">
+          <div className="card-footer p-1 text-center scroll-x">
             <div className="row">
                 <div className="col-md-12">
                     {/* <small><strong>Model:</strong> {model}</small>                 */}

@@ -69,6 +69,10 @@ pre.bash {
   overflow-y: auto;
 }
 
+.scroll-x {
+  overflow-x: auto;
+}
+
 .allowResizeVertical {
   resize: vertical;
 }

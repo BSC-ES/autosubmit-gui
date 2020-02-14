@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-const ExperimentItem = ({ experiment: { name, description, user, hpc, status } }) => {
+const ExperimentItem = ({ experiment: { name, description, user, hpc, status, completed, total } }) => {
   return (
     <div className='card'>
       {/* <img
@@ -13,10 +13,13 @@ const ExperimentItem = ({ experiment: { name, description, user, hpc, status } }
       /> */}
       <div className="card-header text-center">
         <div className="row">
-          <div className="col-6 text-left">
+          <div className="col-4 text-left">
             <h3 className="font-weight-bold">{name}</h3>
           </div>
-          <div className="col-6 text-right">
+          <div className="col-4 text-right">
+            <span className='badge badge-default'> {completed} / {total} COMPLETED</span>
+          </div>          
+          <div className="col-4 text-right">
               {status && status === "RUNNING" && <span className='badge badge-success text-right'>{status}</span>}
               {status && status !== "RUNNING" && <span className='badge badge-secondary text-right'>{status}</span>}
           </div>

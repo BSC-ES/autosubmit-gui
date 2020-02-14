@@ -89,6 +89,7 @@ const ExperimentState = props => {
     const searchExperiments = async text => {
         setLoading();
         const res = await axios.get(`${localserver}/search/${text}`);
+        console.log(res.data);
         dispatch({
             type: SEARCH_EXPERIMENTS,
             payload: res.data.experiment,
@@ -562,7 +563,7 @@ const ExperimentState = props => {
       );      
     };
 
-    const navToLatest = (statusCode) => {
+    const navToLatest = (statusCode, latest = true) => {
       //const statusCode = 5; // Completed
       var currentLevel = 0;
       //var currentNode = null;
@@ -570,16 +571,31 @@ const ExperimentState = props => {
       //console.log(state.data.nodes);
       if (state.data.nodes) {
         //console.log("Iterate")
-        for (const node of state.data.nodes){
-          if (node.status_code === statusCode){
-            if (node.level >= currentLevel){
-              currentLevel = node.level;
-              //currentNode = node;
-              latestId = node.id;
+        if (latest === true){
+          for (const node of state.data.nodes){
+            if (node.status_code === statusCode){
+              if (node.level >= currentLevel){
+                currentLevel = node.level;
+                //currentNode = node;
+                latestId = node.id;
+              }
+            }
+          }
+        } else {
+          currentLevel = Number.MAX_VALUE;
+          for (const node of state.data.nodes){
+            if (node.status_code === statusCode){              
+              if (node.level <= currentLevel){
+                currentLevel = node.level;
+                //currentNode = node;
+                latestId = node.id;
+              }           
             }
           }
         }
+        
       }      
+      console.log(latestId);
       var currentPosition = state.visNetwork.getPositions([latestId]);
       //console.log(currentPosition);
       if (currentPosition[latestId]){

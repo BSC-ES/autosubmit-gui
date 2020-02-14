@@ -242,7 +242,7 @@ const Selection = () => {
 }
 
 const experimentStyle = {
-    height: 200
+    height: 250
   };
 
 const headerCard = {
