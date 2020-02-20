@@ -8,7 +8,7 @@ const Experiment = ({ expidToken, refTree }) => {
   const experimentContext = useContext(ExperimentContext); 
   const { getExperiment, 
         // getExperimentGraph, 
-        //getExperimentTree,
+        getExperimentTree,
         //setAutoUpdatePkl, 
         //cleanTreeData,
         loading, 
@@ -26,6 +26,7 @@ const Experiment = ({ expidToken, refTree }) => {
   useEffect(() => {
     getExperiment(expidToken);
     getRunningState(expidToken);
+    getExperimentTree(expidToken);
     // eslint-disable-next-line
   }, []);
   

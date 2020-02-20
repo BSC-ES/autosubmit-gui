@@ -74,17 +74,37 @@ const Selection = () => {
                                        
                                     <div>
                                         <div className='row'>
-                                            <div className='col-8'>
+                                            <div className='col-12'>
                                                 <small><strong>Section:</strong> {selectedNode.section}</small>
                                             </div>                                            
                                             {/* <div className='col-4'>
                                                 <small>{selectedNode.member}</small>
                                             </div>                  */}
                                         </div>                                        
-                                    </div>                            
+                                    </div>  
                                     <div>
                                         <div className='row'>
-                                            <div className='col-8'>
+                                            <div className='col-12'>
+                                                <small><strong>Member:</strong> {selectedNode.member}</small>
+                                            </div>                                            
+                                            {/* <div className='col-4'>
+                                                <small>{selectedNode.member}</small>
+                                            </div>                  */}
+                                        </div>                                        
+                                    </div>    
+                                    <div>
+                                        <div className='row'>
+                                            <div className='col-12'>
+                                                <small><strong>Chunk:</strong> {selectedNode.chunk}</small>
+                                            </div>                                            
+                                            {/* <div className='col-4'>
+                                                <small>{selectedNode.member}</small>
+                                            </div>                  */}
+                                        </div>                                        
+                                    </div>                        
+                                    <div>
+                                        <div className='row'>
+                                            <div className='col-12'>
                                                 <small><strong>Platform:</strong> {selectedNode.platform_name && selectedNode.platform_name} {!selectedNode.platform_name && experiment.hpc}</small>
                                             </div>
                                             {/* <div className="col-4">
@@ -115,6 +135,7 @@ const Selection = () => {
                                             </div> */}
                                         </div>                                               
                                     </div>
+                                    <br></br>
                                     <div>
                                         {selectedNode.out && 
                                             <div className="row">
@@ -242,7 +263,7 @@ const Selection = () => {
 }
 
 const experimentStyle = {
-    height: 250
+    height: 300
   };
 
 const headerCard = {

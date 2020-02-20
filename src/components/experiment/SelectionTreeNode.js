@@ -85,7 +85,7 @@ const SelectionTreeNode = () => {
                                     <div>
                                         <div className='row'>
                                             <div className='col-6'>
-                                                <small><strong>Priority:</strong> {selectedNode.priority}</small>
+                                                {/* <small><strong>Priority:</strong> {selectedNode.priority}</small> */}
                                             </div>
                                             <div className='col-3 px-1'>
                                                 {selectedNode.children_list && selectedNode.children_list.length > 0 &&
@@ -160,6 +160,7 @@ const SelectionTreeNode = () => {
                                             </div>
                                         </div>
                                     }
+                                    <br></br>
                                     <div>
                                         {selectedNode.out && 
                                             <div className="row">

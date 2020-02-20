@@ -38,6 +38,7 @@ const ExperimentCentral = ({ match }) => {
         cleanNavData,
         getExperimentRun,
         getExperimentPkl, 
+        getExperimentTree,
         cleanPklData,
         startAutoUpdateRun, 
         startAutoUpdatePkl,
@@ -58,7 +59,10 @@ const ExperimentCentral = ({ match }) => {
 
     return (
     <Fragment>       
-        <Experiment expidToken={expid}/>      
+        <Experiment 
+            expidToken={expid}
+            getExperimentTree={getExperimentTree}
+        />      
         <div className="row mt-2">
             <div className="col-2 pr-1">
                 <ExperimentColumn expidToken={expid}/>
@@ -66,10 +70,10 @@ const ExperimentCentral = ({ match }) => {
             <div className="col-10">
                 <ul className="nav nav-tabs" id="myTab" role="tablist">
                     <li className="nav-item">
-                        <a className="nav-link active" id="graph-tab" data-toggle="tab" href="#graph" role="tab" aria-controls="graph" aria-selected="true">Graph</a>
+                        <a className="nav-link" id="graph-tab" data-toggle="tab" href="#graph" role="tab" aria-controls="graph" aria-selected="true">Graph</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" id="treeview-tab" data-toggle="tab" href="#treeview" role="tab" aria-controls="treeview" aria-selected="false">Tree View</a>
+                        <a className="nav-link active" id="treeview-tab" data-toggle="tab" href="#treeview" role="tab" aria-controls="treeview" aria-selected="false">Tree View</a>
                     </li>
                     <li className="nav-item">
                         <a className="nav-link" id="log-tab" data-toggle="tab" href="#log" role="tab" aria-controls="log" aria-selected="false">Log</a>
@@ -79,7 +83,7 @@ const ExperimentCentral = ({ match }) => {
                     </li>
                 </ul>
                 <div className="tab-content" id="myTabContent">
-                    <div className="tab-pane fade show active" id="graph" role="tabpanel" aria-labelledby="graph-tab">
+                    <div className="tab-pane fade" id="graph" role="tabpanel" aria-labelledby="graph-tab">
                         <div className='card'>
                             {experiment &&
                                 <GraphControl/>
@@ -141,7 +145,7 @@ const ExperimentCentral = ({ match }) => {
                             </div>                                        
                         </div> 
                     </div>
-                    <div className="tab-pane fade" id="treeview" role="tabpanel" aria-labelledby="treeview-tab">
+                    <div className="tab-pane fade show active" id="treeview" role="tabpanel" aria-labelledby="treeview-tab">
                         <div className="card">
                             {experiment &&
                                 <TreeControl />
@@ -159,6 +163,8 @@ const ExperimentCentral = ({ match }) => {
                                         cleanTreeData={cleanTreeData}                                
                                         setFancyTree={setFancyTree}
                                         updateSelectionTree={updateSelectionTree}
+                                        // getExperimentTree={getExperimentTree}
+                                        // expid={expid}
                                     />
                                 </div>
                                 <div className='col-3 pl-0'>
