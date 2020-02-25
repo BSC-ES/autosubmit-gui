@@ -40,7 +40,10 @@ const SelectionTreeNode = () => {
                                 <div className='card-body py-0'>
                                     <div className='text-left'>
                                         <small><strong>Date:</strong> {selectedNode.date}</small>
-                                    </div>                        
+                                    </div>
+                                    <div className='text-left'>
+                                        <small><strong>Real date:</strong> {selectedNode.date_plus}</small>
+                                    </div>                                                            
                                     <div>
                                         <div className='row'>
                                             <div className='col-12'>

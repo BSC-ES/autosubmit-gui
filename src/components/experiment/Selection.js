@@ -71,7 +71,9 @@ const Selection = () => {
                                             }   
                                         </div>                    
                                     </div>
-                                       
+                                    <div className="text-left">
+                                        <small><strong>Real date:</strong> {selectedNode.date_plus}</small>
+                                    </div>   
                                     <div>
                                         <div className='row'>
                                             <div className='col-12'>
@@ -263,7 +265,7 @@ const Selection = () => {
 }
 
 const experimentStyle = {
-    height: 300
+    height: 320
   };
 
 const headerCard = {

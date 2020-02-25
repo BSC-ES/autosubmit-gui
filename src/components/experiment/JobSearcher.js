@@ -78,7 +78,7 @@ const JobSearcher = () => {
                     </div>
                 </form>
             </div>      
-            <div className="col-md-4 text-center">
+            <div className="col-md-3 text-center">
                 {foundNodes && foundNodes.length > 1 &&
                     <div>
                         <button className="btn-sm btn-info" type="button" onClick={onNext(-1)}>Previous</button>
@@ -102,9 +102,9 @@ const JobSearcher = () => {
                     </div>                            
                 }   
             </div>         
-            <div className="col-md-4 text-right text-muted">
+            <div className="col-md-5 text-right text-muted">
                 {data && 
-                    <small>Max children: {data.max_children} | Max parents: {data.max_parents} | Total #Jobs: {data.total_jobs}</small>
+                    <small>Max out: {data.max_children} | Max in: {data.max_parents} | Total #Jobs: {data.total_jobs} | Chunk unit: <strong>{data.chunk_unit}</strong></small>
                 }
             </div>         
         </div>

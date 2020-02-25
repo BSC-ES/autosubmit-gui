@@ -65,7 +65,7 @@ const JobFilter = () => {
             </div>                         
             <div className="col-md-4 text-right text-muted pr-4">
                 {treedata && treedata.jobs && 
-                    <small>Total #Jobs: {treedata.total}</small>
+                    <small>Total #Jobs: {treedata.total} | Chunk unit: <strong>{treedata.reference.chunk_unit}</strong></small>
                 }
             </div>         
         </div>

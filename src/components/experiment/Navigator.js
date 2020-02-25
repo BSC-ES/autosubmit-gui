@@ -159,8 +159,9 @@ const Navigator = () => {
                         />                                                
                 </form>
                 </div>
-                <div className="col-2 px-1 text-center">
+                <div className="col-1 px-1 text-left">
                     {/* <small>job with that status.</small> */}
+                    <small> &#8592; CLICKABLE </small>
                 </div>        
           </div>
     )
