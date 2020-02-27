@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react';
-import axios from 'axios';
+//import axios from 'axios';
 import ExperimentContext from './experimentContext';
 import ExperimentReducer from './experimentReducer';
 import {
@@ -82,27 +82,32 @@ const ExperimentState = props => {
     }
 
     const [state, dispatch] = useReducer(ExperimentReducer, initialState);
-    const localserver = 'http://192.168.11.91:8081'
+    //const localserver = 'http://192.168.11.91:8081'
     //const localserver= 'http://84.88.185.94:8081'
 
     // Search Experiments
     const searchExperiments = async text => {
         setLoading();
-        const res = await axios.get(`${localserver}/search/${text}`);
-        console.log(res.data);
+        //const res = await axios.get(`${localserver}/search/${text}`);
+        const res = require('../data/running.json')
+        console.log(res);
         dispatch({
             type: SEARCH_EXPERIMENTS,
-            payload: res.data.experiment,
+            payload: res.experiment,
         });
       };
     
     const getCurrentRunning = async () => {
       setLoading();
-      const res = await axios.get(`${localserver}/running/`);
-      console.log(res.data);
+      // const res = await axios.get(`${localserver}/running/`);
+      const res = require('../data/running.json')
+      //console.log(customData);
+      //const res  = JSON.parse(customData);
+      //const res = await axios.get(`running.json`);
+      console.log(res);
       dispatch({
         type: CURRENT_RUNNING,
-        payload: res.data.experiment,
+        payload: res.experiment,
       });
     }
 
@@ -110,11 +115,12 @@ const ExperimentState = props => {
     const getExperiment = async expid => {
         setLoading();
         //cleanGraphData();
-        const res = await axios.get(`${localserver}/expinfo/${expid}`); 
-        //console.log(res.data);
+        const res = require('../data/experiment_'+expid+'.json');
+        //const res = await axios.get(`${localserver}/expinfo/${expid}`); 
+        console.log(res);        
         dispatch({
             type: GET_EXPERIMENT,
-            payload: res.data,
+            payload: res,
         });
       };
     
@@ -122,21 +128,33 @@ const ExperimentState = props => {
     // Get Experiment Graph Grouped
     const getExperimentGraphGrouped = async (expid, group) => {
       setLoadingGraph();
-      const res = await axios.get(`${localserver}/group/${expid}/${group}`);
-      console.log(res.data);
+      const res = require('../data/groupdm_'+expid+'.json');
+      //const res = await axios.get(`${localserver}/group/${expid}/${group}`);
+      console.log(res);
       dispatch({
         type: GET_GRAPH_GROUPED,
-        payload: res.data,
+        payload: res,
       });
     }
 
     // Get Experiment Graph
     const getExperimentGraph = async (expid, grouped = 'none', layout = 'standard') => {
         setLoadingGraph();
-        
-        const res = await axios.get(`${localserver}/graph/${expid}/${layout}/${grouped}`);
-        console.log(res.data);
-        const resdata = res.data;
+        var res = "";
+        if (layout === 'standard'){
+          if (grouped === "status"){
+            res = require('../data/gstatus_'+expid+'.json');
+          } else if (grouped === "date-member"){
+            res = require('../data/groupdm_'+expid+'.json');
+          } else {
+            res = require('../data/gclassic_'+expid+'.json');
+          }          
+        } else {
+          res = require('../data/glaplacian_'+expid+'.json');
+        }        
+        await sleep(1000);
+        console.log(res);
+        const resdata = res;
         dispatch({
             type: GET_GRAPH,
             payload: { resdata, grouped, layout } ,
@@ -146,43 +164,47 @@ const ExperimentState = props => {
     
     const getExperimentTree = async expid => {
       setLoadingTree();
-
-      const res = await axios.get(`${localserver}/tree/${expid}`);
-      console.log(res.data);
+      const res = require('../data/tree_'+expid+'.json');
+      //const res = await axios.get(`${localserver}/tree/${expid}`);
+      await sleep(1000);
+      console.log(res);
       dispatch({
         type: GET_TREE,
-        payload: res.data,
+        payload: res,
       });
     }
 
     // Get Experiment Run
     const getExperimentRun = async expid => {
         setLoadingRun();
-        const res = await axios.get(`${localserver}/exprun/${expid}`);
-        //console.log(res.data);
+        const res = require('../data/log_'+expid+'.json');
+        //const res = await axios.get(`${localserver}/exprun/${expid}`);
+        console.log(res);
         dispatch({
             type: GET_EXPERIMENT_RUN,
-            payload: res.data,
+            payload: res,
         });
     }
 
     // Get Running State
     const getRunningState = async expid => {
       setLoadingState();
-      const res = await axios.get(`${localserver}/ifrun/${expid}`);
-      //console.log(res.data);      
+      const res = require('../data/isrun.json');
+      //const res = await axios.get(`${localserver}/ifrun/${expid}`);
+      console.log(res);      
       dispatch({
         type: GET_RUNNING_STATE,
-        payload: res.data.running,
+        payload: res,
       });
-
     }
 
     // Get experiment pkl data for tree
     const getExperimentTreePkl = async (expid, timeStamp) => {
       setLoadingTreeRefresh();
-      const res = await axios.get(`${localserver}/pkltreeinfo/${expid}/${timeStamp}`);
-      const retrievedPklTree = res.data;
+      await sleep(1000);
+      //const res = await axios.get(`${localserver}/pkltreeinfo/${expid}/${timeStamp}`);
+      const res = require('../data/refresh_'+expid+'.json');
+      const retrievedPklTree = res;
       console.log(retrievedPklTree);
       var jobs = {};
       if (state.treedata !== null && retrievedPklTree.has_changed === true && retrievedPklTree.pkl_content.length > 0){
@@ -347,8 +369,9 @@ const ExperimentState = props => {
         setLoadingPkl();
         setLoadingJobMonitor();
         //timeStamp = 1000;
-        const res = await axios.get(`${localserver}/pklinfo/${expid}/${timeStamp}`);
-        console.log(res.data);
+        //const res = await axios.get(`${localserver}/pklinfo/${expid}/${timeStamp}`);
+        const res = require('../data/jobmonitor_'+expid+'.json');
+        console.log(res);
         // const actualPkl = res.data;
         
         let retrievedPkl = null;
@@ -361,7 +384,7 @@ const ExperimentState = props => {
         var changes = ""
         var newData = state.data;
         var expData = state.experiment;
-        retrievedPkl = res.data;
+        retrievedPkl = res;
 
         if (state.data !== null && retrievedPkl.has_changed === true && retrievedPkl.pkl_content.length > 0){
           let pkl_packages = retrievedPkl["packages"];
@@ -494,7 +517,7 @@ const ExperimentState = props => {
         }
         dispatch({
           type: GET_PKL_DATA,
-          payload: res.data,
+          payload: res,
         });
     }
 
@@ -689,6 +712,10 @@ const ExperimentState = props => {
           type: CLEAR_FILTER_TREE        
         });
       }      
+    }
+
+    const sleep = (ms) => {
+      return new Promise(resolve => setTimeout(resolve, ms));
     }
 
 

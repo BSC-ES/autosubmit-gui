@@ -1,0 +1,210 @@
+{
+    "error": false,
+    "error_message": "",
+    "found": true,
+    "lastModified": "2020-02-27 12:36:21",
+    "logcontent": [
+      {
+        "content": "539166  bsc3252 RUN   bsc_es     login3      80*s01      *fc0_9_SIM Feb 27 08:37",
+        "index": 0
+      },
+      {
+        "content": "                                             32*s02",
+        "index": 1
+      },
+      {
+        "content": "                                             70*s03",
+        "index": 2
+      },
+      {
+        "content": "",
+        "index": 3
+      },
+      {
+        "content": "2020-02-27 13:36:10,317 Job a2iq_19800601_fc0_9_SIM is RUNNING",
+        "index": 4
+      },
+      {
+        "content": "2020-02-27 13:36:10,318 Updating FAILED jobs",
+        "index": 5
+      },
+      {
+        "content": "2020-02-27 13:36:10,318 Update finished",
+        "index": 6
+      },
+      {
+        "content": "2020-02-27 13:36:10,318 Updating WAITING jobs",
+        "index": 7
+      },
+      {
+        "content": "2020-02-27 13:36:10,318 Update finished",
+        "index": 8
+      },
+      {
+        "content": "2020-02-27 13:36:10,318 ",
+        "index": 9
+      },
+      {
+        "content": "Jobs ready for local: 0",
+        "index": 10
+      },
+      {
+        "content": "2020-02-27 13:36:10,318 Number of jobs ready: 0",
+        "index": 11
+      },
+      {
+        "content": "2020-02-27 13:36:10,318 Number of jobs available: 20",
+        "index": 12
+      },
+      {
+        "content": "2020-02-27 13:36:10,319 ",
+        "index": 13
+      },
+      {
+        "content": "Jobs ready for nord3: 0",
+        "index": 14
+      },
+      {
+        "content": "2020-02-27 13:36:10,319 Number of jobs ready: 0",
+        "index": 15
+      },
+      {
+        "content": "2020-02-27 13:36:10,319 Number of jobs available: 20",
+        "index": 16
+      },
+      {
+        "content": "2020-02-27 13:36:20,329 Reloading parameters...",
+        "index": 17
+      },
+      {
+        "content": "2020-02-27 13:36:20,340 Loading parameters...",
+        "index": 18
+      },
+      {
+        "content": "2020-02-27 13:36:20,341 Loading project parameters...",
+        "index": 19
+      },
+      {
+        "content": "2020-02-27 13:36:20,341 ",
+        "index": 20
+      },
+      {
+        "content": "",
+        "index": 21
+      },
+      {
+        "content": "7 of 35 jobs remaining (13:36)",
+        "index": 22
+      },
+      {
+        "content": "2020-02-27 13:36:20,341 Sleep: 10",
+        "index": 23
+      },
+      {
+        "content": "2020-02-27 13:36:20,342 Number of retrials: 2",
+        "index": 24
+      },
+      {
+        "content": "2020-02-27 13:36:20,342 WRAPPER CHECK TIME = 10",
+        "index": 25
+      },
+      {
+        "content": "2020-02-27 13:36:20,859 Command bjobs 539166 in nord3-bsc32 successful with out message: JOBID   USER    STAT  QUEUE      FROM_HOST   EXEC_HOST   JOB_NAME   SUBMIT_TIME",
+        "index": 26
+      },
+      {
+        "content": "539166  bsc3252 RUN   bsc_es     login3      80*s01      *fc0_9_SIM Feb 27 08:37",
+        "index": 27
+      },
+      {
+        "content": "                                             32*s02",
+        "index": 28
+      },
+      {
+        "content": "                                             70*s03",
+        "index": 29
+      },
+      {
+        "content": "",
+        "index": 30
+      },
+      {
+        "content": "2020-02-27 13:36:20,860 Successful check job command: bjobs 539166",
+        "index": 31
+      },
+      {
+        "content": "2020-02-27 13:36:20,860 Output JOBID   USER    STAT  QUEUE      FROM_HOST   EXEC_HOST   JOB_NAME   SUBMIT_TIME",
+        "index": 32
+      },
+      {
+        "content": "539166  bsc3252 RUN   bsc_es     login3      80*s01      *fc0_9_SIM Feb 27 08:37",
+        "index": 33
+      },
+      {
+        "content": "                                             32*s02",
+        "index": 34
+      },
+      {
+        "content": "                                             70*s03",
+        "index": 35
+      },
+      {
+        "content": "",
+        "index": 36
+      },
+      {
+        "content": "2020-02-27 13:36:20,860 Job a2iq_19800601_fc0_9_SIM is RUNNING",
+        "index": 37
+      },
+      {
+        "content": "2020-02-27 13:36:20,878 Updating FAILED jobs",
+        "index": 38
+      },
+      {
+        "content": "2020-02-27 13:36:20,878 Update finished",
+        "index": 39
+      },
+      {
+        "content": "2020-02-27 13:36:20,878 Updating WAITING jobs",
+        "index": 40
+      },
+      {
+        "content": "2020-02-27 13:36:20,878 Update finished",
+        "index": 41
+      },
+      {
+        "content": "2020-02-27 13:36:20,878 ",
+        "index": 42
+      },
+      {
+        "content": "Jobs ready for local: 0",
+        "index": 43
+      },
+      {
+        "content": "2020-02-27 13:36:20,879 Number of jobs ready: 0",
+        "index": 44
+      },
+      {
+        "content": "2020-02-27 13:36:20,879 Number of jobs available: 20",
+        "index": 45
+      },
+      {
+        "content": "2020-02-27 13:36:20,879 ",
+        "index": 46
+      },
+      {
+        "content": "Jobs ready for nord3: 0",
+        "index": 47
+      },
+      {
+        "content": "2020-02-27 13:36:20,879 Number of jobs ready: 0",
+        "index": 48
+      },
+      {
+        "content": "2020-02-27 13:36:20,879 Number of jobs available: 20",
+        "index": 49
+      }
+    ],
+    "logfile": "20200226_163334_run.log",
+    "timeStamp": 1582806981.5617197
+  }

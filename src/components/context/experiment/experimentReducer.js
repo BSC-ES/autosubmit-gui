@@ -139,14 +139,14 @@ export default (state, action) => {
             };
         case SET_LOADING_GRAPH:
             return {
-                ...state,
+                ...state,                
                 loadingGraph: true,
                 enabledGraphSearch: false,
             };
         case SET_LOADING_TREE:
             return {
-                ...state,
-                loadingTree: true,
+                ...state,                
+                loadingTree: true,                
                 enabledGraphSearch: false,
             };
         case SET_LOADING_RUN:

@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/autosubmitapp/static/css/main.15377572.chunk.css",
-    "main.js": "/autosubmitapp/static/js/main.7251a5a7.chunk.js",
-    "main.js.map": "/autosubmitapp/static/js/main.7251a5a7.chunk.js.map",
-    "runtime~main.js": "/autosubmitapp/static/js/runtime~main.a5d9bec1.js",
-    "runtime~main.js.map": "/autosubmitapp/static/js/runtime~main.a5d9bec1.js.map",
-    "static/js/2.c1924120.chunk.js": "/autosubmitapp/static/js/2.c1924120.chunk.js",
-    "static/js/2.c1924120.chunk.js.map": "/autosubmitapp/static/js/2.c1924120.chunk.js.map",
-    "index.html": "/autosubmitapp/index.html",
-    "precache-manifest.0c54fee1eda0a4f05949370447d1ccc3.js": "/autosubmitapp/precache-manifest.0c54fee1eda0a4f05949370447d1ccc3.js",
-    "service-worker.js": "/autosubmitapp/service-worker.js",
-    "static/css/main.15377572.chunk.css.map": "/autosubmitapp/static/css/main.15377572.chunk.css.map"
+    "main.css": "/projects/earthscience/autosubmitapp/static/css/main.15377572.chunk.css",
+    "main.js": "/projects/earthscience/autosubmitapp/static/js/main.76355b5e.chunk.js",
+    "main.js.map": "/projects/earthscience/autosubmitapp/static/js/main.76355b5e.chunk.js.map",
+    "runtime~main.js": "/projects/earthscience/autosubmitapp/static/js/runtime~main.b802cb4e.js",
+    "runtime~main.js.map": "/projects/earthscience/autosubmitapp/static/js/runtime~main.b802cb4e.js.map",
+    "static/js/2.b94ade59.chunk.js": "/projects/earthscience/autosubmitapp/static/js/2.b94ade59.chunk.js",
+    "static/js/2.b94ade59.chunk.js.map": "/projects/earthscience/autosubmitapp/static/js/2.b94ade59.chunk.js.map",
+    "index.html": "/projects/earthscience/autosubmitapp/index.html",
+    "precache-manifest.e388003db5a6bc18ec2ed380ce3aad1b.js": "/projects/earthscience/autosubmitapp/precache-manifest.e388003db5a6bc18ec2ed380ce3aad1b.js",
+    "service-worker.js": "/projects/earthscience/autosubmitapp/service-worker.js",
+    "static/css/main.15377572.chunk.css.map": "/projects/earthscience/autosubmitapp/static/css/main.15377572.chunk.css.map"
   }
 }

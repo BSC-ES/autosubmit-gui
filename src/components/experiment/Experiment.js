@@ -57,7 +57,7 @@ const Experiment = ({ expidToken, refTree }) => {
     <div>
       <div className="row">
         <div className="col-md-1">
-          <Link to='/autosubmitapp/' className='btn btn-light'>
+          <Link to='/projects/earthscience/autosubmitapp/' className='btn btn-light'>
             <small>Back To Search</small>
           </Link>    
         </div>                

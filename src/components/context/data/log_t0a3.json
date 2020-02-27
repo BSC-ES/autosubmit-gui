@@ -1,0 +1,210 @@
+{
+    "error": false,
+    "error_message": "",
+    "found": true,
+    "lastModified": "2020-02-26 17:36:57",
+    "logcontent": [
+      {
+        "content": "Jobs ready for marenostrum4: 0",
+        "index": 0
+      },
+      {
+        "content": "2020-02-26 18:36:38,497 Number of jobs ready: 0",
+        "index": 1
+      },
+      {
+        "content": "2020-02-26 18:36:38,497 Number of jobs available: 50",
+        "index": 2
+      },
+      {
+        "content": "2020-02-26 18:36:38,507 ",
+        "index": 3
+      },
+      {
+        "content": "Jobs ready for local: 0",
+        "index": 4
+      },
+      {
+        "content": "2020-02-26 18:36:38,510 Number of jobs ready: 0",
+        "index": 5
+      },
+      {
+        "content": "2020-02-26 18:36:38,510 Number of jobs available: 50",
+        "index": 6
+      },
+      {
+        "content": "2020-02-26 18:36:38,512 ",
+        "index": 7
+      },
+      {
+        "content": "Jobs ready for transfer_node: 0",
+        "index": 8
+      },
+      {
+        "content": "2020-02-26 18:36:38,515 Number of jobs ready: 0",
+        "index": 9
+      },
+      {
+        "content": "2020-02-26 18:36:38,515 Number of jobs available: 50",
+        "index": 10
+      },
+      {
+        "content": "2020-02-26 18:36:38,524 Saving JobList: /esarchive/autosubmit/t0a3/pkl/job_list_t0a3.pkl",
+        "index": 11
+      },
+      {
+        "content": "2020-02-26 18:36:38,537 Job list saved",
+        "index": 12
+      },
+      {
+        "content": "2020-02-26 18:36:48,607 Reloading parameters...",
+        "index": 13
+      },
+      {
+        "content": "2020-02-26 18:36:48,614 Loading parameters...",
+        "index": 14
+      },
+      {
+        "content": "2020-02-26 18:36:48,615 Loading project parameters...",
+        "index": 15
+      },
+      {
+        "content": "2020-02-26 18:36:48,615 ",
+        "index": 16
+      },
+      {
+        "content": "",
+        "index": 17
+      },
+      {
+        "content": "172 of 705 jobs remaining (18:36)",
+        "index": 18
+      },
+      {
+        "content": "2020-02-26 18:36:48,615 Sleep: 10",
+        "index": 19
+      },
+      {
+        "content": "2020-02-26 18:36:48,615 Number of retrials: 3",
+        "index": 20
+      },
+      {
+        "content": "2020-02-26 18:36:48,615 WRAPPER CHECK TIME = 10",
+        "index": 21
+      },
+      {
+        "content": "2020-02-26 18:36:51,297 Command sacct -n -X -j  8950078, -o jobid,State in mn1.bsc.es successful with out message: 8950078         RUNNING ",
+        "index": 22
+      },
+      {
+        "content": "",
+        "index": 23
+      },
+      {
+        "content": "2020-02-26 18:36:51,297 Output 8950078         RUNNING ",
+        "index": 24
+      },
+      {
+        "content": "",
+        "index": 25
+      },
+      {
+        "content": "2020-02-26 18:36:51,297 Successful check job command: sacct -n -X -j  8950078, -o jobid,State, ",
+        "index": 26
+      },
+      {
+        "content": " output: 8950078         RUNNING ",
+        "index": 27
+      },
+      {
+        "content": "",
+        "index": 28
+      },
+      {
+        "content": "2020-02-26 18:36:51,297 Job t0a3_19810101_fc0_90_SIM is RUNNING",
+        "index": 29
+      },
+      {
+        "content": "2020-02-26 18:36:51,300 Updating FAILED jobs",
+        "index": 30
+      },
+      {
+        "content": "2020-02-26 18:36:51,301 Update finished",
+        "index": 31
+      },
+      {
+        "content": "2020-02-26 18:36:51,301 Updating WAITING jobs",
+        "index": 32
+      },
+      {
+        "content": "2020-02-26 18:36:51,301 Update finished",
+        "index": 33
+      },
+      {
+        "content": "2020-02-26 18:36:51,308 Saving JobList: /esarchive/autosubmit/t0a3/pkl/job_list_t0a3.pkl",
+        "index": 34
+      },
+      {
+        "content": "2020-02-26 18:36:51,320 Job list saved",
+        "index": 35
+      },
+      {
+        "content": "2020-02-26 18:36:51,391 ",
+        "index": 36
+      },
+      {
+        "content": "Jobs ready for marenostrum4: 0",
+        "index": 37
+      },
+      {
+        "content": "2020-02-26 18:36:51,395 Number of jobs ready: 0",
+        "index": 38
+      },
+      {
+        "content": "2020-02-26 18:36:51,395 Number of jobs available: 50",
+        "index": 39
+      },
+      {
+        "content": "2020-02-26 18:36:51,420 ",
+        "index": 40
+      },
+      {
+        "content": "Jobs ready for local: 0",
+        "index": 41
+      },
+      {
+        "content": "2020-02-26 18:36:51,423 Number of jobs ready: 0",
+        "index": 42
+      },
+      {
+        "content": "2020-02-26 18:36:51,423 Number of jobs available: 50",
+        "index": 43
+      },
+      {
+        "content": "2020-02-26 18:36:51,425 ",
+        "index": 44
+      },
+      {
+        "content": "Jobs ready for transfer_node: 0",
+        "index": 45
+      },
+      {
+        "content": "2020-02-26 18:36:51,428 Number of jobs ready: 0",
+        "index": 46
+      },
+      {
+        "content": "2020-02-26 18:36:51,428 Number of jobs available: 50",
+        "index": 47
+      },
+      {
+        "content": "2020-02-26 18:36:51,432 Saving JobList: /esarchive/autosubmit/t0a3/pkl/job_list_t0a3.pkl",
+        "index": 48
+      },
+      {
+        "content": "2020-02-26 18:36:51,444 Job list saved",
+        "index": 49
+      }
+    ],
+    "logfile": "20200226_162711_run.log",
+    "timeStamp": 1582738617.1803277
+  }

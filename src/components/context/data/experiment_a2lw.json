@@ -1,0 +1,32 @@
+{
+    "branch": "develop-dl-ifs",
+    "contents": [
+      "conf",
+      "tmp",
+      "plot",
+      "status",
+      "pkl",
+      "bkp",
+      "proj"
+    ],
+    "contents_conf": [],
+    "contents_pkl": [],
+    "contents_plot": [],
+    "contents_status": [],
+    "contents_tmp": [],
+    "description": "ifs 2016 download automars",
+    "error": false,
+    "error_message": "None",
+    "expid": "a2lw",
+    "hpc": "ecmwf-xc40",
+    "model": "https://earth.bsc.es/gitlab/ces/auto-mars.git",
+    "owner": "pbretonn",
+    "owner_id": 1242,
+    "path": "/esarchive/autosubmit/a2lw",
+    "pkl_timestamp": 1582807459,
+    "running": false,
+    "time_last_access": "2020-02-19 11:52:53",
+    "time_last_mod": "2020-02-20 16:40:52",
+    "updateTime": 10,
+    "version": "3.12.0b0"
+  }

@@ -30,7 +30,7 @@ const ExperimentItem = ({ experiment: { name, description, user, hpc, status, co
         {/* <h4 className="card-title"></h4> */}
         <h6 className="card-subtitle text-muted">Owner: {user}</h6>
         <p className="card-text">{description}</p>        
-        <Link to={`/autosubmitapp/experiment/${name}`} className='btn btn-outline-primary btn-block'>
+        <Link to={`/projects/earthscience/autosubmitapp/experiment/${name}`} className='btn btn-outline-primary btn-block'>
           More
         </Link>
         <p className="card-text text-center"><small className="text-muted">HPC: {hpc}</small></p>

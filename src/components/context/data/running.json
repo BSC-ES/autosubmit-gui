@@ -1,0 +1,48 @@
+{
+  "experiment": [
+    {
+      "completed": 79,
+      "description": "Auto-CALIOPE 2019 HERMESv2",
+      "hpc": "marenostrum4",
+      "id": 4796,
+      "name": "a2kp",
+      "status": "RUNNING",
+      "total": 719,
+      "user": "molid"
+    },
+    {
+      "completed": 830,
+      "description": "ifs 2016 download automars",
+      "hpc": "ecmwf-xc40",
+      "id": 4889,
+      "name": "a2lw",
+      "status": "RUNNING",
+      "total": 1826,
+      "user": "pbretonn"
+    },
+    {
+      "completed": 533,
+      "description": "T511L91-ORCA1L75 restart HR tunning rn_cdsn = 0.27 rn_alb_smlt = 0.80 rn_alb_sdry = 0.85  https://earth.bsc.es/gitlab/es/auto-ecearth3/issues/964#note_62175",
+      "hpc": "marenostrum4",
+      "id": 4479,
+      "name": "t0a3",
+      "status": "RUNNING",
+      "total": 705,
+      "user": "pechevar"
+    },
+    {
+      "completed": 28,
+      "description": "experiment is to provide the binary for a2ip ",
+      "hpc": "nord3",
+      "id": 4713,
+      "name": "a2iq",
+      "status": "RUNNING",
+      "total": 35,
+      "user": "eexarcho"
+    }
+  ]
+}
+
+
+
+

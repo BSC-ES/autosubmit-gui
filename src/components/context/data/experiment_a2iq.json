@@ -1,0 +1,31 @@
+{
+    "branch": "HEAD",
+    "contents": [
+      "conf",
+      "tmp",
+      "plot",
+      "status",
+      "pkl",
+      "proj"
+    ],
+    "contents_conf": [],
+    "contents_pkl": [],
+    "contents_plot": [],
+    "contents_status": [],
+    "contents_tmp": [],
+    "description": "experiment is to provide the binary for a2ip ",
+    "error": false,
+    "error_message": "None",
+    "expid": "a2iq",
+    "hpc": "nord3",
+    "model": "'https://earth.bsc.es/gitlab/es/auto-ecearth3.git'",
+    "owner": "eexarcho",
+    "owner_id": 1237,
+    "path": "/esarchive/autosubmit/a2iq",
+    "pkl_timestamp": 1582801519,
+    "running": false,
+    "time_last_access": "2020-01-24 14:39:42",
+    "time_last_mod": "2020-01-22 13:08:35",
+    "updateTime": 10,
+    "version": "3.11.0-hotfix"
+  }

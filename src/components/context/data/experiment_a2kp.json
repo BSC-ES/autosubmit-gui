@@ -1,0 +1,32 @@
+{
+    "branch": "develop99-hermesv3_bu",
+    "contents": [
+      "conf",
+      "tmp",
+      "plot",
+      "status",
+      "pkl",
+      "proj",
+      "nohup.out"
+    ],
+    "contents_conf": [],
+    "contents_pkl": [],
+    "contents_plot": [],
+    "contents_status": [],
+    "contents_tmp": [],
+    "description": "Auto-CALIOPE 2019 HERMESv2",
+    "error": false,
+    "error_message": "None",
+    "expid": "a2kp",
+    "hpc": "marenostrum4",
+    "model": "https://earth.bsc.es/gitlab/es/auto-caliope.git",
+    "owner": "molid",
+    "owner_id": 1747,
+    "path": "/esarchive/autosubmit/a2kp",
+    "pkl_timestamp": 1582807550,
+    "running": false,
+    "time_last_access": "2020-02-06 14:39:55",
+    "time_last_mod": "2020-02-27 07:07:12",
+    "updateTime": 10,
+    "version": "3.12.0b0"
+  }

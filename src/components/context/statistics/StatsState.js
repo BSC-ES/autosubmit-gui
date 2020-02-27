@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react';
-import axios from 'axios';
+//import axios from 'axios';
 import StatsContext from './statsContext';
 import StatsReducer from './statsReducer';
 import {
@@ -20,7 +20,7 @@ const StatsState = props => {
         errorMessage: "",
     }
 
-    const localserver = 'http://192.168.11.91:8081'
+    //const localserver = 'http://192.168.11.91:8081'
     //const localserver= 'http://84.88.185.94:8081'
     
 
@@ -38,14 +38,15 @@ const StatsState = props => {
 
         setLoading();
         //cleanGraphData();
-        const res = await axios.get(`${localserver}/stats/${expid}/${hours}/${type}`);        
+        const res = require('../data/statistics_'+expid+'.json');
+        //const res = await axios.get(`${localserver}/stats/${expid}/${hours}/${type}`);        
         let result = [];
         var requestResult = null;
         let ticks = [];
-        console.log(res.data);
-        if (res.data) {
-            if (res.data.error === true){
-                setIsError(true, res.data.error_message);
+        console.log(res);
+        if (res) {
+            if (res.error === true){
+                setIsError(true, res.error_message);
             }
             else {
                 setIsError(false, "");
@@ -53,18 +54,18 @@ const StatsState = props => {
             
             result.push(['Jobs',"Queued","Run","Failed Jobs","Failed Queued","Fail Run"])
             
-            for (var i = 0; i < res.data.jobs.length; i++){
+            for (var i = 0; i < res.jobs.length; i++){
                 result.push([
-                    {v: i+1, f: res.data.jobs[i]}, 
-                    res.data.stats.queued[i],
-                    res.data.stats.run[i],
-                    res.data.stats.failed_jobs[i],
-                    res.data.stats.fail_queued[i],
-                    res.data.stats.fail_run[i]
+                    {v: i+1, f: res.jobs[i]}, 
+                    res.stats.queued[i],
+                    res.stats.run[i],
+                    res.stats.failed_jobs[i],
+                    res.stats.fail_queued[i],
+                    res.stats.fail_run[i]
                 ]);
-                ticks.push({v: i+1, f: res.data.jobs[i]});
+                ticks.push({v: i+1, f: res.jobs[i]});
             }            
-            requestResult = res.data;
+            requestResult = res;
         }
         //console.log(ticks);
         dispatch({

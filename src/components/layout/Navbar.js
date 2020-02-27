@@ -7,13 +7,13 @@ const Navbar = ({ icon, title }) => {
 
     <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-3">
         <div className="container">
-            <Link className="navbar-brand" to='/autosubmitapp/'><i className={icon} /> {title}</Link>
+            <Link className="navbar-brand" to='/projects/earthscience/autosubmitapp/'><i className={icon} /> {title}</Link>
             <ul className="navbar-nav">
                 <li className="nav-item">
-                    <Link className="nav-link" to='/autosubmitapp/'>Home</Link>
+                    <Link className="nav-link" to='/projects/earthscience/autosubmitapp/'>Home</Link>
                 </li>
                 <li className="nav-item">
-                    <Link className="nav-link" to='/autosubmitapp/about'>About</Link>
+                    <Link className="nav-link" to='/projects/earthscience/autosubmitapp/about'>About</Link>
                 </li>
                 
             </ul>

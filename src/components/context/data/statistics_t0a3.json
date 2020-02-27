@@ -1,0 +1,43 @@
+{
+    "error": false,
+    "error_message": "",
+    "jobs": [
+      "t0a3_19810101_fc0_90_SIM"
+    ],
+    "otherstats": [],
+    "periodo_fin": "Wed, 26 Feb 2020 18:37:00 GMT",
+    "periodo_ini": "Wed, 26 Feb 2020 06:37:00 GMT",
+    "stats": {
+      "fail_queued": [
+        26.340833333333332
+      ],
+      "fail_run": [
+        0.5630555555555555
+      ],
+      "failed_jobs": [
+        10
+      ],
+      "max_fail": 10,
+      "max_time": 26.340833333333332,
+      "queued": [
+        0
+      ],
+      "run": [
+        0
+      ],
+      "threshold": 12,
+      "totals": [
+        "Period: 2020-02-26 06:37:00 ~ 2020-02-26 18:37:00",
+        "Submitted (#): 10",
+        "Run  (#): 10",
+        "Failed  (#): 10",
+        "Completed (#): 0",
+        "Queueing time (h): 0.0",
+        "Expected consumption real (h): 12.0",
+        "Expected consumption CPU time (h): 28800.0",
+        "Consumption real (h): 3.3",
+        "Consumption CPU time (h): 7924.67",
+        "Consumption (%): 27.52"
+      ]
+    }
+  }

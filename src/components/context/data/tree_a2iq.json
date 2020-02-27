@@ -1,0 +1,1530 @@
+{
+    "error": false,
+    "error_message": "None",
+    "jobs": [
+      {
+        "children": 1,
+        "children_list": [
+          "a2iq_REMOTE_SETUP"
+        ],
+        "chunk": null,
+        "custom_directives": [],
+        "date": "",
+        "date_plus": "",
+        "err": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_LOCAL_SETUP.20200226163334.err",
+        "id": "a2iq_LOCAL_SETUP",
+        "internal_id": "a2iq_LOCAL_SETUP",
+        "label": "a2iq_LOCAL_SETUP",
+        "member": null,
+        "minutes": 2,
+        "out": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_LOCAL_SETUP.20200226163334.out",
+        "parent_list": [],
+        "parents": 0,
+        "platform_name": "LOCAL",
+        "priority": 0,
+        "processors": "1",
+        "section": "LOCAL_SETUP",
+        "status": "COMPLETED",
+        "status_code": 5,
+        "status_color": "yellow",
+        "sync": false,
+        "title": "a2iq_LOCAL_SETUP <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] + 2 min. <span class='badge' style='background-color:#80d4ff'>SOURCE</span>",
+        "tree_parents": [],
+        "wallclock": "",
+        "wrapper": null,
+        "wrapper_code": null
+      },
+      {
+        "children": 1,
+        "children_list": [
+          "a2iq_19800601_fc0_INI"
+        ],
+        "chunk": null,
+        "custom_directives": [],
+        "date": "",
+        "date_plus": "",
+        "err": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_REMOTE_SETUP.20200226163334.err",
+        "id": "a2iq_REMOTE_SETUP",
+        "internal_id": "a2iq_REMOTE_SETUP",
+        "label": "a2iq_REMOTE_SETUP",
+        "member": null,
+        "minutes": 1,
+        "out": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_REMOTE_SETUP.20200226163334.out",
+        "parent_list": [
+          "a2iq_LOCAL_SETUP"
+        ],
+        "parents": 1,
+        "platform_name": null,
+        "priority": 1,
+        "processors": "8",
+        "section": "REMOTE_SETUP",
+        "status": "COMPLETED",
+        "status_code": 5,
+        "status_color": "yellow",
+        "sync": false,
+        "title": "a2iq_REMOTE_SETUP <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 3 ] + 1 min.",
+        "tree_parents": [],
+        "wallclock": "01:00",
+        "wrapper": null,
+        "wrapper_code": null
+      },
+      {
+        "children": 1,
+        "children_list": [
+          "a2iq_19800601_fc0_1_SIM"
+        ],
+        "chunk": null,
+        "custom_directives": [],
+        "date": "19800601",
+        "date_plus": "19800601",
+        "err": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_INI.20200226163334.err",
+        "id": "a2iq_19800601_fc0_INI",
+        "internal_id": "a2iq_19800601_fc0_INI",
+        "label": "a2iq_19800601_fc0_INI",
+        "member": "fc0",
+        "minutes": 1,
+        "out": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_INI.20200226163334.out",
+        "parent_list": [
+          "a2iq_REMOTE_SETUP"
+        ],
+        "parents": 1,
+        "platform_name": null,
+        "priority": 2,
+        "processors": "1",
+        "section": "INI",
+        "status": "COMPLETED",
+        "status_code": 5,
+        "status_color": "yellow",
+        "sync": false,
+        "title": "a2iq_19800601_fc0_INI <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] +  < 1 min.",
+        "tree_parents": [
+          "a2iq_19800601_fc0"
+        ],
+        "wallclock": "02:00",
+        "wrapper": null,
+        "wrapper_code": null
+      },
+      {
+        "children": 2,
+        "children_list": [
+          "a2iq_19800601_fc0_2_SIM",
+          "a2iq_19800601_fc0_1_POST"
+        ],
+        "chunk": 1,
+        "custom_directives": [],
+        "date": "19800601",
+        "date_plus": "19800701",
+        "err": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_1_SIM.20200226163334.err",
+        "id": "a2iq_19800601_fc0_1_SIM",
+        "internal_id": "a2iq_19800601_fc0_1_SIM",
+        "label": "a2iq_19800601_fc0_1_SIM",
+        "member": "fc0",
+        "minutes": 219,
+        "out": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_1_SIM.20200226163334.out",
+        "parent_list": [
+          "a2iq_19800601_fc0_INI"
+        ],
+        "parents": 1,
+        "platform_name": null,
+        "priority": 3,
+        "processors": "182",
+        "section": "SIM",
+        "status": "COMPLETED",
+        "status_code": 5,
+        "status_color": "yellow",
+        "sync": false,
+        "title": "a2iq_19800601_fc0_1_SIM <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 11 ] + 219 min.",
+        "tree_parents": [
+          "a2iq_19800601_fc0"
+        ],
+        "wallclock": "06:00",
+        "wrapper": null,
+        "wrapper_code": null
+      },
+      {
+        "children": 2,
+        "children_list": [
+          "a2iq_19800601_fc0_3_SIM",
+          "a2iq_19800601_fc0_2_POST"
+        ],
+        "chunk": 2,
+        "custom_directives": [],
+        "date": "19800601",
+        "date_plus": "19800801",
+        "err": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_2_SIM.20200226163334.err",
+        "id": "a2iq_19800601_fc0_2_SIM",
+        "internal_id": "a2iq_19800601_fc0_2_SIM",
+        "label": "a2iq_19800601_fc0_2_SIM",
+        "member": "fc0",
+        "minutes": 252,
+        "out": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_2_SIM.20200226163334.out",
+        "parent_list": [
+          "a2iq_19800601_fc0_1_SIM"
+        ],
+        "parents": 1,
+        "platform_name": null,
+        "priority": 3,
+        "processors": "182",
+        "section": "SIM",
+        "status": "COMPLETED",
+        "status_code": 5,
+        "status_color": "yellow",
+        "sync": false,
+        "title": "a2iq_19800601_fc0_2_SIM <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] + 252 min.",
+        "tree_parents": [
+          "a2iq_19800601_fc0"
+        ],
+        "wallclock": "06:00",
+        "wrapper": null,
+        "wrapper_code": null
+      },
+      {
+        "children": 2,
+        "children_list": [
+          "a2iq_19800601_fc0_4_SIM",
+          "a2iq_19800601_fc0_3_POST"
+        ],
+        "chunk": 3,
+        "custom_directives": [],
+        "date": "19800601",
+        "date_plus": "19800901",
+        "err": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_3_SIM.20200226163334.err",
+        "id": "a2iq_19800601_fc0_3_SIM",
+        "internal_id": "a2iq_19800601_fc0_3_SIM",
+        "label": "a2iq_19800601_fc0_3_SIM",
+        "member": "fc0",
+        "minutes": 210,
+        "out": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_3_SIM.20200226163334.out",
+        "parent_list": [
+          "a2iq_19800601_fc0_2_SIM"
+        ],
+        "parents": 1,
+        "platform_name": null,
+        "priority": 3,
+        "processors": "182",
+        "section": "SIM",
+        "status": "COMPLETED",
+        "status_code": 5,
+        "status_color": "yellow",
+        "sync": false,
+        "title": "a2iq_19800601_fc0_3_SIM <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] + 210 min.",
+        "tree_parents": [
+          "a2iq_19800601_fc0"
+        ],
+        "wallclock": "06:00",
+        "wrapper": null,
+        "wrapper_code": null
+      },
+      {
+        "children": 2,
+        "children_list": [
+          "a2iq_19800601_fc0_5_SIM",
+          "a2iq_19800601_fc0_4_POST"
+        ],
+        "chunk": 4,
+        "custom_directives": [],
+        "date": "19800601",
+        "date_plus": "19801001",
+        "err": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_4_SIM.20200226163334.err",
+        "id": "a2iq_19800601_fc0_4_SIM",
+        "internal_id": "a2iq_19800601_fc0_4_SIM",
+        "label": "a2iq_19800601_fc0_4_SIM",
+        "member": "fc0",
+        "minutes": 268,
+        "out": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_4_SIM.20200226163334.out",
+        "parent_list": [
+          "a2iq_19800601_fc0_3_SIM"
+        ],
+        "parents": 1,
+        "platform_name": null,
+        "priority": 3,
+        "processors": "182",
+        "section": "SIM",
+        "status": "COMPLETED",
+        "status_code": 5,
+        "status_color": "yellow",
+        "sync": false,
+        "title": "a2iq_19800601_fc0_4_SIM <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 2 ] + 268 min.",
+        "tree_parents": [
+          "a2iq_19800601_fc0"
+        ],
+        "wallclock": "06:00",
+        "wrapper": null,
+        "wrapper_code": null
+      },
+      {
+        "children": 2,
+        "children_list": [
+          "a2iq_19800601_fc0_6_SIM",
+          "a2iq_19800601_fc0_5_POST"
+        ],
+        "chunk": 5,
+        "custom_directives": [],
+        "date": "19800601",
+        "date_plus": "19801101",
+        "err": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_5_SIM.20200226180818.err",
+        "id": "a2iq_19800601_fc0_5_SIM",
+        "internal_id": "a2iq_19800601_fc0_5_SIM",
+        "label": "a2iq_19800601_fc0_5_SIM",
+        "member": "fc0",
+        "minutes": 210,
+        "out": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_5_SIM.20200226180818.out",
+        "parent_list": [
+          "a2iq_19800601_fc0_4_SIM"
+        ],
+        "parents": 1,
+        "platform_name": null,
+        "priority": 3,
+        "processors": "182",
+        "section": "SIM",
+        "status": "COMPLETED",
+        "status_code": 5,
+        "status_color": "yellow",
+        "sync": false,
+        "title": "a2iq_19800601_fc0_5_SIM <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] + 210 min.",
+        "tree_parents": [
+          "a2iq_19800601_fc0"
+        ],
+        "wallclock": "06:00",
+        "wrapper": null,
+        "wrapper_code": null
+      },
+      {
+        "children": 2,
+        "children_list": [
+          "a2iq_19800601_fc0_7_SIM",
+          "a2iq_19800601_fc0_6_POST"
+        ],
+        "chunk": 6,
+        "custom_directives": [],
+        "date": "19800601",
+        "date_plus": "19801201",
+        "err": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_6_SIM.20200226213948.err",
+        "id": "a2iq_19800601_fc0_6_SIM",
+        "internal_id": "a2iq_19800601_fc0_6_SIM",
+        "label": "a2iq_19800601_fc0_6_SIM",
+        "member": "fc0",
+        "minutes": 211,
+        "out": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_6_SIM.20200226213948.out",
+        "parent_list": [
+          "a2iq_19800601_fc0_5_SIM"
+        ],
+        "parents": 1,
+        "platform_name": null,
+        "priority": 3,
+        "processors": "182",
+        "section": "SIM",
+        "status": "COMPLETED",
+        "status_code": 5,
+        "status_color": "yellow",
+        "sync": false,
+        "title": "a2iq_19800601_fc0_6_SIM <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 6 ] + 211 min.",
+        "tree_parents": [
+          "a2iq_19800601_fc0"
+        ],
+        "wallclock": "06:00",
+        "wrapper": null,
+        "wrapper_code": null
+      },
+      {
+        "children": 2,
+        "children_list": [
+          "a2iq_19800601_fc0_8_SIM",
+          "a2iq_19800601_fc0_7_POST"
+        ],
+        "chunk": 7,
+        "custom_directives": [],
+        "date": "19800601",
+        "date_plus": "19810101",
+        "err": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_7_SIM.20200227011727.err",
+        "id": "a2iq_19800601_fc0_7_SIM",
+        "internal_id": "a2iq_19800601_fc0_7_SIM",
+        "label": "a2iq_19800601_fc0_7_SIM",
+        "member": "fc0",
+        "minutes": 211,
+        "out": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_7_SIM.20200227011727.out",
+        "parent_list": [
+          "a2iq_19800601_fc0_6_SIM"
+        ],
+        "parents": 1,
+        "platform_name": null,
+        "priority": 3,
+        "processors": "182",
+        "section": "SIM",
+        "status": "COMPLETED",
+        "status_code": 5,
+        "status_color": "yellow",
+        "sync": false,
+        "title": "a2iq_19800601_fc0_7_SIM <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 3 ] + 211 min.",
+        "tree_parents": [
+          "a2iq_19800601_fc0"
+        ],
+        "wallclock": "06:00",
+        "wrapper": null,
+        "wrapper_code": null
+      },
+      {
+        "children": 2,
+        "children_list": [
+          "a2iq_19800601_fc0_9_SIM",
+          "a2iq_19800601_fc0_8_POST"
+        ],
+        "chunk": 8,
+        "custom_directives": [],
+        "date": "19800601",
+        "date_plus": "19810201",
+        "err": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_8_SIM.20200227045259.err",
+        "id": "a2iq_19800601_fc0_8_SIM",
+        "internal_id": "a2iq_19800601_fc0_8_SIM",
+        "label": "a2iq_19800601_fc0_8_SIM",
+        "member": "fc0",
+        "minutes": 212,
+        "out": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_8_SIM.20200227045259.out",
+        "parent_list": [
+          "a2iq_19800601_fc0_7_SIM"
+        ],
+        "parents": 1,
+        "platform_name": null,
+        "priority": 3,
+        "processors": "182",
+        "section": "SIM",
+        "status": "COMPLETED",
+        "status_code": 5,
+        "status_color": "yellow",
+        "sync": false,
+        "title": "a2iq_19800601_fc0_8_SIM <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 11 ] + 212 min.",
+        "tree_parents": [
+          "a2iq_19800601_fc0"
+        ],
+        "wallclock": "06:00",
+        "wrapper": null,
+        "wrapper_code": null
+      },
+      {
+        "children": 2,
+        "children_list": [
+          "a2iq_19800601_fc0_10_SIM",
+          "a2iq_19800601_fc0_9_POST"
+        ],
+        "chunk": 9,
+        "custom_directives": [],
+        "date": "19800601",
+        "date_plus": "19810301",
+        "err": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_9_SIM.20200227083729.err",
+        "id": "a2iq_19800601_fc0_9_SIM",
+        "internal_id": "a2iq_19800601_fc0_9_SIM",
+        "label": "a2iq_19800601_fc0_9_SIM",
+        "member": "fc0",
+        "minutes": 294,
+        "out": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_9_SIM.20200227083729.out",
+        "parent_list": [
+          "a2iq_19800601_fc0_8_SIM"
+        ],
+        "parents": 1,
+        "platform_name": null,
+        "priority": 3,
+        "processors": "182",
+        "section": "SIM",
+        "status": "RUNNING",
+        "status_code": 4,
+        "status_color": "green",
+        "sync": false,
+        "title": "a2iq_19800601_fc0_9_SIM <span class='badge' style='background-color: green'>#RUNNING</span> ~ [ 0 ] + 294 min.",
+        "tree_parents": [
+          "a2iq_19800601_fc0"
+        ],
+        "wallclock": "06:00",
+        "wrapper": null,
+        "wrapper_code": null
+      },
+      {
+        "children": 1,
+        "children_list": [
+          "a2iq_19800601_fc0_10_POST"
+        ],
+        "chunk": 10,
+        "custom_directives": [],
+        "date": "19800601",
+        "date_plus": "19810401",
+        "err": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_10_SIM.20200226163334.err",
+        "id": "a2iq_19800601_fc0_10_SIM",
+        "internal_id": "a2iq_19800601_fc0_10_SIM",
+        "label": "a2iq_19800601_fc0_10_SIM",
+        "member": "fc0",
+        "minutes": -1,
+        "out": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_10_SIM.20200226163334.out",
+        "parent_list": [
+          "a2iq_19800601_fc0_9_SIM"
+        ],
+        "parents": 1,
+        "platform_name": null,
+        "priority": 3,
+        "processors": "182",
+        "section": "SIM",
+        "status": "WAITING",
+        "status_code": 0,
+        "status_color": "gray",
+        "sync": false,
+        "title": "a2iq_19800601_fc0_10_SIM <span class='badge' style='background-color: gray'>#WAITING</span>",
+        "tree_parents": [
+          "a2iq_19800601_fc0"
+        ],
+        "wallclock": "06:00",
+        "wrapper": null,
+        "wrapper_code": null
+      },
+      {
+        "children": 1,
+        "children_list": [
+          "a2iq_19800601_fc0_1_CLEAN"
+        ],
+        "chunk": 1,
+        "custom_directives": [],
+        "date": "19800601",
+        "date_plus": "19800701",
+        "err": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_1_POST.20200226163334.err",
+        "id": "a2iq_19800601_fc0_1_POST",
+        "internal_id": "a2iq_19800601_fc0_1_POST",
+        "label": "a2iq_19800601_fc0_1_POST",
+        "member": "fc0",
+        "minutes": 125,
+        "out": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_1_POST.20200226163334.out",
+        "parent_list": [
+          "a2iq_19800601_fc0_1_SIM"
+        ],
+        "parents": 1,
+        "platform_name": null,
+        "priority": 4,
+        "processors": "1",
+        "section": "POST",
+        "status": "COMPLETED",
+        "status_code": 5,
+        "status_color": "yellow",
+        "sync": false,
+        "title": "a2iq_19800601_fc0_1_POST <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] + 125 min.",
+        "tree_parents": [
+          "a2iq_19800601_fc0"
+        ],
+        "wallclock": "70:00",
+        "wrapper": null,
+        "wrapper_code": null
+      },
+      {
+        "children": 1,
+        "children_list": [
+          "a2iq_19800601_fc0_2_CLEAN"
+        ],
+        "chunk": 2,
+        "custom_directives": [],
+        "date": "19800601",
+        "date_plus": "19800801",
+        "err": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_2_POST.20200226163334.err",
+        "id": "a2iq_19800601_fc0_2_POST",
+        "internal_id": "a2iq_19800601_fc0_2_POST",
+        "label": "a2iq_19800601_fc0_2_POST",
+        "member": "fc0",
+        "minutes": 124,
+        "out": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_2_POST.20200226163334.out",
+        "parent_list": [
+          "a2iq_19800601_fc0_2_SIM"
+        ],
+        "parents": 1,
+        "platform_name": null,
+        "priority": 4,
+        "processors": "1",
+        "section": "POST",
+        "status": "COMPLETED",
+        "status_code": 5,
+        "status_color": "yellow",
+        "sync": false,
+        "title": "a2iq_19800601_fc0_2_POST <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] + 124 min.",
+        "tree_parents": [
+          "a2iq_19800601_fc0"
+        ],
+        "wallclock": "70:00",
+        "wrapper": null,
+        "wrapper_code": null
+      },
+      {
+        "children": 1,
+        "children_list": [
+          "a2iq_19800601_fc0_3_CLEAN"
+        ],
+        "chunk": 3,
+        "custom_directives": [],
+        "date": "19800601",
+        "date_plus": "19800901",
+        "err": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_3_POST.20200226163335.err",
+        "id": "a2iq_19800601_fc0_3_POST",
+        "internal_id": "a2iq_19800601_fc0_3_POST",
+        "label": "a2iq_19800601_fc0_3_POST",
+        "member": "fc0",
+        "minutes": 167,
+        "out": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_3_POST.20200226163335.out",
+        "parent_list": [
+          "a2iq_19800601_fc0_3_SIM"
+        ],
+        "parents": 1,
+        "platform_name": null,
+        "priority": 4,
+        "processors": "1",
+        "section": "POST",
+        "status": "COMPLETED",
+        "status_code": 5,
+        "status_color": "yellow",
+        "sync": false,
+        "title": "a2iq_19800601_fc0_3_POST <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] + 167 min.",
+        "tree_parents": [
+          "a2iq_19800601_fc0"
+        ],
+        "wallclock": "70:00",
+        "wrapper": null,
+        "wrapper_code": null
+      },
+      {
+        "children": 1,
+        "children_list": [
+          "a2iq_19800601_fc0_4_CLEAN"
+        ],
+        "chunk": 4,
+        "custom_directives": [],
+        "date": "19800601",
+        "date_plus": "19801001",
+        "err": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_4_POST.20200226180815.err",
+        "id": "a2iq_19800601_fc0_4_POST",
+        "internal_id": "a2iq_19800601_fc0_4_POST",
+        "label": "a2iq_19800601_fc0_4_POST",
+        "member": "fc0",
+        "minutes": 172,
+        "out": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_4_POST.20200226180815.out",
+        "parent_list": [
+          "a2iq_19800601_fc0_4_SIM"
+        ],
+        "parents": 1,
+        "platform_name": null,
+        "priority": 4,
+        "processors": "1",
+        "section": "POST",
+        "status": "COMPLETED",
+        "status_code": 5,
+        "status_color": "yellow",
+        "sync": false,
+        "title": "a2iq_19800601_fc0_4_POST <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] + 172 min.",
+        "tree_parents": [
+          "a2iq_19800601_fc0"
+        ],
+        "wallclock": "70:00",
+        "wrapper": null,
+        "wrapper_code": null
+      },
+      {
+        "children": 1,
+        "children_list": [
+          "a2iq_19800601_fc0_5_CLEAN"
+        ],
+        "chunk": 5,
+        "custom_directives": [],
+        "date": "19800601",
+        "date_plus": "19801101",
+        "err": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_5_POST.20200226213945.err",
+        "id": "a2iq_19800601_fc0_5_POST",
+        "internal_id": "a2iq_19800601_fc0_5_POST",
+        "label": "a2iq_19800601_fc0_5_POST",
+        "member": "fc0",
+        "minutes": 134,
+        "out": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_5_POST.20200226213945.out",
+        "parent_list": [
+          "a2iq_19800601_fc0_5_SIM"
+        ],
+        "parents": 1,
+        "platform_name": null,
+        "priority": 4,
+        "processors": "1",
+        "section": "POST",
+        "status": "COMPLETED",
+        "status_code": 5,
+        "status_color": "yellow",
+        "sync": false,
+        "title": "a2iq_19800601_fc0_5_POST <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] + 134 min.",
+        "tree_parents": [
+          "a2iq_19800601_fc0"
+        ],
+        "wallclock": "70:00",
+        "wrapper": null,
+        "wrapper_code": null
+      },
+      {
+        "children": 1,
+        "children_list": [
+          "a2iq_19800601_fc0_6_CLEAN"
+        ],
+        "chunk": 6,
+        "custom_directives": [],
+        "date": "19800601",
+        "date_plus": "19801201",
+        "err": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_6_POST.20200227011724.err",
+        "id": "a2iq_19800601_fc0_6_POST",
+        "internal_id": "a2iq_19800601_fc0_6_POST",
+        "label": "a2iq_19800601_fc0_6_POST",
+        "member": "fc0",
+        "minutes": 145,
+        "out": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_6_POST.20200227011724.out",
+        "parent_list": [
+          "a2iq_19800601_fc0_6_SIM"
+        ],
+        "parents": 1,
+        "platform_name": null,
+        "priority": 4,
+        "processors": "1",
+        "section": "POST",
+        "status": "COMPLETED",
+        "status_code": 5,
+        "status_color": "yellow",
+        "sync": false,
+        "title": "a2iq_19800601_fc0_6_POST <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 63 ] + 145 min.",
+        "tree_parents": [
+          "a2iq_19800601_fc0"
+        ],
+        "wallclock": "70:00",
+        "wrapper": null,
+        "wrapper_code": null
+      },
+      {
+        "children": 1,
+        "children_list": [
+          "a2iq_19800601_fc0_7_CLEAN"
+        ],
+        "chunk": 7,
+        "custom_directives": [],
+        "date": "19800601",
+        "date_plus": "19810101",
+        "err": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_7_POST.20200227045256.err",
+        "id": "a2iq_19800601_fc0_7_POST",
+        "internal_id": "a2iq_19800601_fc0_7_POST",
+        "label": "a2iq_19800601_fc0_7_POST",
+        "member": "fc0",
+        "minutes": 128,
+        "out": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_7_POST.20200227045256.out",
+        "parent_list": [
+          "a2iq_19800601_fc0_7_SIM"
+        ],
+        "parents": 1,
+        "platform_name": null,
+        "priority": 4,
+        "processors": "1",
+        "section": "POST",
+        "status": "COMPLETED",
+        "status_code": 5,
+        "status_color": "yellow",
+        "sync": false,
+        "title": "a2iq_19800601_fc0_7_POST <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] + 128 min.",
+        "tree_parents": [
+          "a2iq_19800601_fc0"
+        ],
+        "wallclock": "70:00",
+        "wrapper": null,
+        "wrapper_code": null
+      },
+      {
+        "children": 1,
+        "children_list": [
+          "a2iq_19800601_fc0_8_CLEAN"
+        ],
+        "chunk": 8,
+        "custom_directives": [],
+        "date": "19800601",
+        "date_plus": "19810201",
+        "err": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_8_POST.20200227083726.err",
+        "id": "a2iq_19800601_fc0_8_POST",
+        "internal_id": "a2iq_19800601_fc0_8_POST",
+        "label": "a2iq_19800601_fc0_8_POST",
+        "member": "fc0",
+        "minutes": 128,
+        "out": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_8_POST.20200227083726.out",
+        "parent_list": [
+          "a2iq_19800601_fc0_8_SIM"
+        ],
+        "parents": 1,
+        "platform_name": null,
+        "priority": 4,
+        "processors": "1",
+        "section": "POST",
+        "status": "COMPLETED",
+        "status_code": 5,
+        "status_color": "yellow",
+        "sync": false,
+        "title": "a2iq_19800601_fc0_8_POST <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] + 128 min.",
+        "tree_parents": [
+          "a2iq_19800601_fc0"
+        ],
+        "wallclock": "70:00",
+        "wrapper": null,
+        "wrapper_code": null
+      },
+      {
+        "children": 1,
+        "children_list": [
+          "a2iq_19800601_fc0_9_CLEAN"
+        ],
+        "chunk": 9,
+        "custom_directives": [],
+        "date": "19800601",
+        "date_plus": "19810301",
+        "err": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_9_POST.20200226163334.err",
+        "id": "a2iq_19800601_fc0_9_POST",
+        "internal_id": "a2iq_19800601_fc0_9_POST",
+        "label": "a2iq_19800601_fc0_9_POST",
+        "member": "fc0",
+        "minutes": -1,
+        "out": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_9_POST.20200226163334.out",
+        "parent_list": [
+          "a2iq_19800601_fc0_9_SIM"
+        ],
+        "parents": 1,
+        "platform_name": null,
+        "priority": 4,
+        "processors": "1",
+        "section": "POST",
+        "status": "WAITING",
+        "status_code": 0,
+        "status_color": "gray",
+        "sync": false,
+        "title": "a2iq_19800601_fc0_9_POST <span class='badge' style='background-color: gray'>#WAITING</span>",
+        "tree_parents": [
+          "a2iq_19800601_fc0"
+        ],
+        "wallclock": "70:00",
+        "wrapper": null,
+        "wrapper_code": null
+      },
+      {
+        "children": 1,
+        "children_list": [
+          "a2iq_19800601_fc0_10_CLEAN"
+        ],
+        "chunk": 10,
+        "custom_directives": [],
+        "date": "19800601",
+        "date_plus": "19810401",
+        "err": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_10_POST.20200226163334.err",
+        "id": "a2iq_19800601_fc0_10_POST",
+        "internal_id": "a2iq_19800601_fc0_10_POST",
+        "label": "a2iq_19800601_fc0_10_POST",
+        "member": "fc0",
+        "minutes": -1,
+        "out": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_10_POST.20200226163334.out",
+        "parent_list": [
+          "a2iq_19800601_fc0_10_SIM"
+        ],
+        "parents": 1,
+        "platform_name": null,
+        "priority": 4,
+        "processors": "1",
+        "section": "POST",
+        "status": "WAITING",
+        "status_code": 0,
+        "status_color": "gray",
+        "sync": false,
+        "title": "a2iq_19800601_fc0_10_POST <span class='badge' style='background-color: gray'>#WAITING</span>",
+        "tree_parents": [
+          "a2iq_19800601_fc0"
+        ],
+        "wallclock": "70:00",
+        "wrapper": null,
+        "wrapper_code": null
+      },
+      {
+        "children": 1,
+        "children_list": [
+          "a2iq_19800601_fc0_6_TRANSFER"
+        ],
+        "chunk": 1,
+        "custom_directives": [],
+        "date": "19800601",
+        "date_plus": "19800701",
+        "err": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_1_CLEAN.20200226163334.err",
+        "id": "a2iq_19800601_fc0_1_CLEAN",
+        "internal_id": "a2iq_19800601_fc0_1_CLEAN",
+        "label": "a2iq_19800601_fc0_1_CLEAN",
+        "member": "fc0",
+        "minutes": 77,
+        "out": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_1_CLEAN.20200226163334.out",
+        "parent_list": [
+          "a2iq_19800601_fc0_1_POST"
+        ],
+        "parents": 1,
+        "platform_name": null,
+        "priority": 5,
+        "processors": "1",
+        "section": "CLEAN",
+        "status": "COMPLETED",
+        "status_code": 5,
+        "status_color": "yellow",
+        "sync": false,
+        "title": "a2iq_19800601_fc0_1_CLEAN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] + 77 min.",
+        "tree_parents": [
+          "a2iq_19800601_fc0"
+        ],
+        "wallclock": "08:00",
+        "wrapper": null,
+        "wrapper_code": null
+      },
+      {
+        "children": 1,
+        "children_list": [
+          "a2iq_19800601_fc0_6_TRANSFER"
+        ],
+        "chunk": 2,
+        "custom_directives": [],
+        "date": "19800601",
+        "date_plus": "19800801",
+        "err": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_2_CLEAN.20200226163334.err",
+        "id": "a2iq_19800601_fc0_2_CLEAN",
+        "internal_id": "a2iq_19800601_fc0_2_CLEAN",
+        "label": "a2iq_19800601_fc0_2_CLEAN",
+        "member": "fc0",
+        "minutes": 80,
+        "out": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_2_CLEAN.20200226163334.out",
+        "parent_list": [
+          "a2iq_19800601_fc0_2_POST"
+        ],
+        "parents": 1,
+        "platform_name": null,
+        "priority": 5,
+        "processors": "1",
+        "section": "CLEAN",
+        "status": "COMPLETED",
+        "status_code": 5,
+        "status_color": "yellow",
+        "sync": false,
+        "title": "a2iq_19800601_fc0_2_CLEAN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] + 80 min.",
+        "tree_parents": [
+          "a2iq_19800601_fc0"
+        ],
+        "wallclock": "08:00",
+        "wrapper": null,
+        "wrapper_code": null
+      },
+      {
+        "children": 1,
+        "children_list": [
+          "a2iq_19800601_fc0_6_TRANSFER"
+        ],
+        "chunk": 3,
+        "custom_directives": [],
+        "date": "19800601",
+        "date_plus": "19800901",
+        "err": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_3_CLEAN.20200226192051.err",
+        "id": "a2iq_19800601_fc0_3_CLEAN",
+        "internal_id": "a2iq_19800601_fc0_3_CLEAN",
+        "label": "a2iq_19800601_fc0_3_CLEAN",
+        "member": "fc0",
+        "minutes": 95,
+        "out": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_3_CLEAN.20200226192051.out",
+        "parent_list": [
+          "a2iq_19800601_fc0_3_POST"
+        ],
+        "parents": 1,
+        "platform_name": null,
+        "priority": 5,
+        "processors": "1",
+        "section": "CLEAN",
+        "status": "COMPLETED",
+        "status_code": 5,
+        "status_color": "yellow",
+        "sync": false,
+        "title": "a2iq_19800601_fc0_3_CLEAN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] + 95 min.",
+        "tree_parents": [
+          "a2iq_19800601_fc0"
+        ],
+        "wallclock": "08:00",
+        "wrapper": null,
+        "wrapper_code": null
+      },
+      {
+        "children": 1,
+        "children_list": [
+          "a2iq_19800601_fc0_6_TRANSFER"
+        ],
+        "chunk": 4,
+        "custom_directives": [],
+        "date": "19800601",
+        "date_plus": "19801001",
+        "err": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_4_CLEAN.20200226210114.err",
+        "id": "a2iq_19800601_fc0_4_CLEAN",
+        "internal_id": "a2iq_19800601_fc0_4_CLEAN",
+        "label": "a2iq_19800601_fc0_4_CLEAN",
+        "member": "fc0",
+        "minutes": 87,
+        "out": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_4_CLEAN.20200226210114.out",
+        "parent_list": [
+          "a2iq_19800601_fc0_4_POST"
+        ],
+        "parents": 1,
+        "platform_name": null,
+        "priority": 5,
+        "processors": "1",
+        "section": "CLEAN",
+        "status": "COMPLETED",
+        "status_code": 5,
+        "status_color": "yellow",
+        "sync": false,
+        "title": "a2iq_19800601_fc0_4_CLEAN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] + 87 min.",
+        "tree_parents": [
+          "a2iq_19800601_fc0"
+        ],
+        "wallclock": "08:00",
+        "wrapper": null,
+        "wrapper_code": null
+      },
+      {
+        "children": 1,
+        "children_list": [
+          "a2iq_19800601_fc0_6_TRANSFER"
+        ],
+        "chunk": 5,
+        "custom_directives": [],
+        "date": "19800601",
+        "date_plus": "19801101",
+        "err": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_5_CLEAN.20200226235457.err",
+        "id": "a2iq_19800601_fc0_5_CLEAN",
+        "internal_id": "a2iq_19800601_fc0_5_CLEAN",
+        "label": "a2iq_19800601_fc0_5_CLEAN",
+        "member": "fc0",
+        "minutes": 91,
+        "out": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_5_CLEAN.20200226235457.out",
+        "parent_list": [
+          "a2iq_19800601_fc0_5_POST"
+        ],
+        "parents": 1,
+        "platform_name": null,
+        "priority": 5,
+        "processors": "1",
+        "section": "CLEAN",
+        "status": "COMPLETED",
+        "status_code": 5,
+        "status_color": "yellow",
+        "sync": false,
+        "title": "a2iq_19800601_fc0_5_CLEAN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 145 ] + 91 min.",
+        "tree_parents": [
+          "a2iq_19800601_fc0"
+        ],
+        "wallclock": "08:00",
+        "wrapper": null,
+        "wrapper_code": null
+      },
+      {
+        "children": 1,
+        "children_list": [
+          "a2iq_19800601_fc0_6_TRANSFER"
+        ],
+        "chunk": 6,
+        "custom_directives": [],
+        "date": "19800601",
+        "date_plus": "19801201",
+        "err": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_6_CLEAN.20200227044600.err",
+        "id": "a2iq_19800601_fc0_6_CLEAN",
+        "internal_id": "a2iq_19800601_fc0_6_CLEAN",
+        "label": "a2iq_19800601_fc0_6_CLEAN",
+        "member": "fc0",
+        "minutes": 78,
+        "out": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_6_CLEAN.20200227044600.out",
+        "parent_list": [
+          "a2iq_19800601_fc0_6_POST"
+        ],
+        "parents": 1,
+        "platform_name": null,
+        "priority": 5,
+        "processors": "1",
+        "section": "CLEAN",
+        "status": "COMPLETED",
+        "status_code": 5,
+        "status_color": "yellow",
+        "sync": false,
+        "title": "a2iq_19800601_fc0_6_CLEAN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] + 78 min.",
+        "tree_parents": [
+          "a2iq_19800601_fc0"
+        ],
+        "wallclock": "08:00",
+        "wrapper": null,
+        "wrapper_code": null
+      },
+      {
+        "children": 1,
+        "children_list": [
+          "a2iq_19800601_fc0_10_TRANSFER"
+        ],
+        "chunk": 7,
+        "custom_directives": [],
+        "date": "19800601",
+        "date_plus": "19810101",
+        "err": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_7_CLEAN.20200227070202.err",
+        "id": "a2iq_19800601_fc0_7_CLEAN",
+        "internal_id": "a2iq_19800601_fc0_7_CLEAN",
+        "label": "a2iq_19800601_fc0_7_CLEAN",
+        "member": "fc0",
+        "minutes": 77,
+        "out": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_7_CLEAN.20200227070202.out",
+        "parent_list": [
+          "a2iq_19800601_fc0_7_POST"
+        ],
+        "parents": 1,
+        "platform_name": null,
+        "priority": 5,
+        "processors": "1",
+        "section": "CLEAN",
+        "status": "COMPLETED",
+        "status_code": 5,
+        "status_color": "yellow",
+        "sync": false,
+        "title": "a2iq_19800601_fc0_7_CLEAN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] + 77 min.",
+        "tree_parents": [
+          "a2iq_19800601_fc0"
+        ],
+        "wallclock": "08:00",
+        "wrapper": null,
+        "wrapper_code": null
+      },
+      {
+        "children": 1,
+        "children_list": [
+          "a2iq_19800601_fc0_10_TRANSFER"
+        ],
+        "chunk": 8,
+        "custom_directives": [],
+        "date": "19800601",
+        "date_plus": "19810201",
+        "err": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_8_CLEAN.20200227104629.err",
+        "id": "a2iq_19800601_fc0_8_CLEAN",
+        "internal_id": "a2iq_19800601_fc0_8_CLEAN",
+        "label": "a2iq_19800601_fc0_8_CLEAN",
+        "member": "fc0",
+        "minutes": 78,
+        "out": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_8_CLEAN.20200227104629.out",
+        "parent_list": [
+          "a2iq_19800601_fc0_8_POST"
+        ],
+        "parents": 1,
+        "platform_name": null,
+        "priority": 5,
+        "processors": "1",
+        "section": "CLEAN",
+        "status": "COMPLETED",
+        "status_code": 5,
+        "status_color": "yellow",
+        "sync": false,
+        "title": "a2iq_19800601_fc0_8_CLEAN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] + 78 min.",
+        "tree_parents": [
+          "a2iq_19800601_fc0"
+        ],
+        "wallclock": "08:00",
+        "wrapper": null,
+        "wrapper_code": null
+      },
+      {
+        "children": 1,
+        "children_list": [
+          "a2iq_19800601_fc0_10_TRANSFER"
+        ],
+        "chunk": 9,
+        "custom_directives": [],
+        "date": "19800601",
+        "date_plus": "19810301",
+        "err": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_9_CLEAN.20200226163334.err",
+        "id": "a2iq_19800601_fc0_9_CLEAN",
+        "internal_id": "a2iq_19800601_fc0_9_CLEAN",
+        "label": "a2iq_19800601_fc0_9_CLEAN",
+        "member": "fc0",
+        "minutes": -1,
+        "out": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_9_CLEAN.20200226163334.out",
+        "parent_list": [
+          "a2iq_19800601_fc0_9_POST"
+        ],
+        "parents": 1,
+        "platform_name": null,
+        "priority": 5,
+        "processors": "1",
+        "section": "CLEAN",
+        "status": "WAITING",
+        "status_code": 0,
+        "status_color": "gray",
+        "sync": false,
+        "title": "a2iq_19800601_fc0_9_CLEAN <span class='badge' style='background-color: gray'>#WAITING</span>",
+        "tree_parents": [
+          "a2iq_19800601_fc0"
+        ],
+        "wallclock": "08:00",
+        "wrapper": null,
+        "wrapper_code": null
+      },
+      {
+        "children": 1,
+        "children_list": [
+          "a2iq_19800601_fc0_10_TRANSFER"
+        ],
+        "chunk": 10,
+        "custom_directives": [],
+        "date": "19800601",
+        "date_plus": "19810401",
+        "err": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_10_CLEAN.20200226163334.err",
+        "id": "a2iq_19800601_fc0_10_CLEAN",
+        "internal_id": "a2iq_19800601_fc0_10_CLEAN",
+        "label": "a2iq_19800601_fc0_10_CLEAN",
+        "member": "fc0",
+        "minutes": -1,
+        "out": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_10_CLEAN.20200226163334.out",
+        "parent_list": [
+          "a2iq_19800601_fc0_10_POST"
+        ],
+        "parents": 1,
+        "platform_name": null,
+        "priority": 5,
+        "processors": "1",
+        "section": "CLEAN",
+        "status": "WAITING",
+        "status_code": 0,
+        "status_color": "gray",
+        "sync": false,
+        "title": "a2iq_19800601_fc0_10_CLEAN <span class='badge' style='background-color: gray'>#WAITING</span>",
+        "tree_parents": [
+          "a2iq_19800601_fc0"
+        ],
+        "wallclock": "08:00",
+        "wrapper": null,
+        "wrapper_code": null
+      },
+      {
+        "children": 0,
+        "children_list": [],
+        "chunk": 6,
+        "custom_directives": [],
+        "date": "19800601",
+        "date_plus": "19801201",
+        "err": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_6_TRANSFER.20200227060503.err",
+        "id": "a2iq_19800601_fc0_6_TRANSFER",
+        "internal_id": "a2iq_19800601_fc0_6_TRANSFER",
+        "label": "a2iq_19800601_fc0_6_TRANSFER",
+        "member": "fc0",
+        "minutes": 97,
+        "out": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_6_TRANSFER.20200227060503.out",
+        "parent_list": [
+          "a2iq_19800601_fc0_4_CLEAN",
+          "a2iq_19800601_fc0_5_CLEAN",
+          "a2iq_19800601_fc0_6_CLEAN",
+          "a2iq_19800601_fc0_1_CLEAN",
+          "a2iq_19800601_fc0_2_CLEAN",
+          "a2iq_19800601_fc0_3_CLEAN"
+        ],
+        "parents": 6,
+        "platform_name": "LOCAL",
+        "priority": 6,
+        "processors": "1",
+        "section": "TRANSFER",
+        "status": "COMPLETED",
+        "status_code": 5,
+        "status_color": "yellow",
+        "sync": false,
+        "title": "a2iq_19800601_fc0_6_TRANSFER <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] + 97 min. <span class='badge' style='background-color:#99ff66'>TARGET</span>",
+        "tree_parents": [
+          "a2iq_19800601_fc0"
+        ],
+        "wallclock": "",
+        "wrapper": null,
+        "wrapper_code": null
+      },
+      {
+        "children": 0,
+        "children_list": [],
+        "chunk": 10,
+        "custom_directives": [],
+        "date": "19800601",
+        "date_plus": "19810401",
+        "err": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_10_TRANSFER.20200226163334.err",
+        "id": "a2iq_19800601_fc0_10_TRANSFER",
+        "internal_id": "a2iq_19800601_fc0_10_TRANSFER",
+        "label": "a2iq_19800601_fc0_10_TRANSFER",
+        "member": "fc0",
+        "minutes": -1,
+        "out": "/esarchive/autosubmit/a2iq/tmp/LOG_a2iq/a2iq_19800601_fc0_10_TRANSFER.20200226163334.out",
+        "parent_list": [
+          "a2iq_19800601_fc0_10_CLEAN",
+          "a2iq_19800601_fc0_7_CLEAN",
+          "a2iq_19800601_fc0_8_CLEAN",
+          "a2iq_19800601_fc0_9_CLEAN"
+        ],
+        "parents": 4,
+        "platform_name": "LOCAL",
+        "priority": 6,
+        "processors": "1",
+        "section": "TRANSFER",
+        "status": "WAITING",
+        "status_code": 0,
+        "status_color": "gray",
+        "sync": false,
+        "title": "a2iq_19800601_fc0_10_TRANSFER <span class='badge' style='background-color: gray'>#WAITING</span> <span class='badge' style='background-color:#99ff66'>TARGET</span>",
+        "tree_parents": [
+          "a2iq_19800601_fc0"
+        ],
+        "wallclock": "",
+        "wrapper": null,
+        "wrapper_code": null
+      }
+    ],
+    "pkl_timestamp": 10000000,
+    "reference": {
+      "a2iq_19800601_fc0": {
+        "completed": 26,
+        "failed": 0,
+        "queuing": 0,
+        "running": 1,
+        "total": 33
+      },
+      "check_mark": " <span class='badge' style='background-color:#4dffa6'>&#10004;</span>",
+      "chunk_unit": "month",
+      "completed_tag": " <span class='badge' style='background-color:yellow'> %C / %T COMPLETED</span>",
+      "failed_tag": " <span class='badge' style='background-color:red'>%F FAILED</span>",
+      "packages": [],
+      "queuing_tag": " <span class='badge' style='background-color:pink'>%Q QUEUING</span>",
+      "running_tag": " <span class='badge' style='background-color:green; color:white'>%R RUNNING</span>"
+    },
+    "total": 35,
+    "tree": [
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "children": [],
+                "data": "Empty",
+                "refKey": "a2iq_19800601_fc0_INI",
+                "title": "a2iq_19800601_fc0_INI <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] +  < 1 min."
+              },
+              {
+                "children": [],
+                "data": "Empty",
+                "refKey": "a2iq_19800601_fc0_1_SIM",
+                "title": "a2iq_19800601_fc0_1_SIM <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 11 ] + 219 min."
+              },
+              {
+                "children": [],
+                "data": "Empty",
+                "refKey": "a2iq_19800601_fc0_2_SIM",
+                "title": "a2iq_19800601_fc0_2_SIM <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] + 252 min."
+              },
+              {
+                "children": [],
+                "data": "Empty",
+                "refKey": "a2iq_19800601_fc0_3_SIM",
+                "title": "a2iq_19800601_fc0_3_SIM <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] + 210 min."
+              },
+              {
+                "children": [],
+                "data": "Empty",
+                "refKey": "a2iq_19800601_fc0_4_SIM",
+                "title": "a2iq_19800601_fc0_4_SIM <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 2 ] + 268 min."
+              },
+              {
+                "children": [],
+                "data": "Empty",
+                "refKey": "a2iq_19800601_fc0_5_SIM",
+                "title": "a2iq_19800601_fc0_5_SIM <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] + 210 min."
+              },
+              {
+                "children": [],
+                "data": "Empty",
+                "refKey": "a2iq_19800601_fc0_6_SIM",
+                "title": "a2iq_19800601_fc0_6_SIM <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 6 ] + 211 min."
+              },
+              {
+                "children": [],
+                "data": "Empty",
+                "refKey": "a2iq_19800601_fc0_7_SIM",
+                "title": "a2iq_19800601_fc0_7_SIM <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 3 ] + 211 min."
+              },
+              {
+                "children": [],
+                "data": "Empty",
+                "refKey": "a2iq_19800601_fc0_8_SIM",
+                "title": "a2iq_19800601_fc0_8_SIM <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 11 ] + 212 min."
+              },
+              {
+                "children": [],
+                "data": "Empty",
+                "refKey": "a2iq_19800601_fc0_9_SIM",
+                "title": "a2iq_19800601_fc0_9_SIM <span class='badge' style='background-color: green'>#RUNNING</span> ~ [ 0 ] + 294 min."
+              },
+              {
+                "children": [],
+                "data": "Empty",
+                "refKey": "a2iq_19800601_fc0_10_SIM",
+                "title": "a2iq_19800601_fc0_10_SIM <span class='badge' style='background-color: gray'>#WAITING</span>"
+              },
+              {
+                "children": [],
+                "data": "Empty",
+                "refKey": "a2iq_19800601_fc0_1_POST",
+                "title": "a2iq_19800601_fc0_1_POST <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] + 125 min."
+              },
+              {
+                "children": [],
+                "data": "Empty",
+                "refKey": "a2iq_19800601_fc0_2_POST",
+                "title": "a2iq_19800601_fc0_2_POST <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] + 124 min."
+              },
+              {
+                "children": [],
+                "data": "Empty",
+                "refKey": "a2iq_19800601_fc0_3_POST",
+                "title": "a2iq_19800601_fc0_3_POST <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] + 167 min."
+              },
+              {
+                "children": [],
+                "data": "Empty",
+                "refKey": "a2iq_19800601_fc0_4_POST",
+                "title": "a2iq_19800601_fc0_4_POST <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] + 172 min."
+              },
+              {
+                "children": [],
+                "data": "Empty",
+                "refKey": "a2iq_19800601_fc0_5_POST",
+                "title": "a2iq_19800601_fc0_5_POST <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] + 134 min."
+              },
+              {
+                "children": [],
+                "data": "Empty",
+                "refKey": "a2iq_19800601_fc0_6_POST",
+                "title": "a2iq_19800601_fc0_6_POST <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 63 ] + 145 min."
+              },
+              {
+                "children": [],
+                "data": "Empty",
+                "refKey": "a2iq_19800601_fc0_7_POST",
+                "title": "a2iq_19800601_fc0_7_POST <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] + 128 min."
+              },
+              {
+                "children": [],
+                "data": "Empty",
+                "refKey": "a2iq_19800601_fc0_8_POST",
+                "title": "a2iq_19800601_fc0_8_POST <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] + 128 min."
+              },
+              {
+                "children": [],
+                "data": "Empty",
+                "refKey": "a2iq_19800601_fc0_9_POST",
+                "title": "a2iq_19800601_fc0_9_POST <span class='badge' style='background-color: gray'>#WAITING</span>"
+              },
+              {
+                "children": [],
+                "data": "Empty",
+                "refKey": "a2iq_19800601_fc0_10_POST",
+                "title": "a2iq_19800601_fc0_10_POST <span class='badge' style='background-color: gray'>#WAITING</span>"
+              },
+              {
+                "children": [],
+                "data": "Empty",
+                "refKey": "a2iq_19800601_fc0_1_CLEAN",
+                "title": "a2iq_19800601_fc0_1_CLEAN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] + 77 min."
+              },
+              {
+                "children": [],
+                "data": "Empty",
+                "refKey": "a2iq_19800601_fc0_2_CLEAN",
+                "title": "a2iq_19800601_fc0_2_CLEAN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] + 80 min."
+              },
+              {
+                "children": [],
+                "data": "Empty",
+                "refKey": "a2iq_19800601_fc0_3_CLEAN",
+                "title": "a2iq_19800601_fc0_3_CLEAN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] + 95 min."
+              },
+              {
+                "children": [],
+                "data": "Empty",
+                "refKey": "a2iq_19800601_fc0_4_CLEAN",
+                "title": "a2iq_19800601_fc0_4_CLEAN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] + 87 min."
+              },
+              {
+                "children": [],
+                "data": "Empty",
+                "refKey": "a2iq_19800601_fc0_5_CLEAN",
+                "title": "a2iq_19800601_fc0_5_CLEAN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 145 ] + 91 min."
+              },
+              {
+                "children": [],
+                "data": "Empty",
+                "refKey": "a2iq_19800601_fc0_6_CLEAN",
+                "title": "a2iq_19800601_fc0_6_CLEAN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] + 78 min."
+              },
+              {
+                "children": [],
+                "data": "Empty",
+                "refKey": "a2iq_19800601_fc0_7_CLEAN",
+                "title": "a2iq_19800601_fc0_7_CLEAN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] + 77 min."
+              },
+              {
+                "children": [],
+                "data": "Empty",
+                "refKey": "a2iq_19800601_fc0_8_CLEAN",
+                "title": "a2iq_19800601_fc0_8_CLEAN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] + 78 min."
+              },
+              {
+                "children": [],
+                "data": "Empty",
+                "refKey": "a2iq_19800601_fc0_9_CLEAN",
+                "title": "a2iq_19800601_fc0_9_CLEAN <span class='badge' style='background-color: gray'>#WAITING</span>"
+              },
+              {
+                "children": [],
+                "data": "Empty",
+                "refKey": "a2iq_19800601_fc0_10_CLEAN",
+                "title": "a2iq_19800601_fc0_10_CLEAN <span class='badge' style='background-color: gray'>#WAITING</span>"
+              },
+              {
+                "children": [],
+                "data": "Empty",
+                "refKey": "a2iq_19800601_fc0_6_TRANSFER",
+                "title": "a2iq_19800601_fc0_6_TRANSFER <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] + 97 min. <span class='badge' style='background-color:#99ff66'>TARGET</span>"
+              },
+              {
+                "children": [],
+                "data": "Empty",
+                "refKey": "a2iq_19800601_fc0_10_TRANSFER",
+                "title": "a2iq_19800601_fc0_10_TRANSFER <span class='badge' style='background-color: gray'>#WAITING</span> <span class='badge' style='background-color:#99ff66'>TARGET</span>"
+              }
+            ],
+            "data": "Empty",
+            "expanded": false,
+            "folder": true,
+            "refKey": "a2iq_19800601_fc0",
+            "title": "a2iq_19800601_fc0 <span class='badge' style='background-color:yellow'>26 / 33 COMPLETED</span> <span class='badge' style='background-color:green; color:white'>1 RUNNING</span>"
+          }
+        ],
+        "data": "Empty",
+        "expanded": true,
+        "folder": true,
+        "refKey": "a2iq_19800601",
+        "title": "a2iq_19800601"
+      },
+      {
+        "children": [
+          {
+            "children": [],
+            "data": "Empty",
+            "refKey": "a2iq_LOCAL_SETUP",
+            "title": "a2iq_LOCAL_SETUP <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 0 ] + 2 min. <span class='badge' style='background-color:#80d4ff'>SOURCE</span>"
+          },
+          {
+            "children": [],
+            "data": "Empty",
+            "refKey": "a2iq_REMOTE_SETUP",
+            "title": "a2iq_REMOTE_SETUP <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ [ 3 ] + 1 min."
+          }
+        ],
+        "data": "Empty",
+        "expanded": true,
+        "folder": true,
+        "refKey": "Keys",
+        "title": "Keys"
+      }
+    ]
+  }

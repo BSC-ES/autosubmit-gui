@@ -26,9 +26,9 @@ class App extends Component {
                 <div className='container'>
                   <Alert/>
                   <Switch>
-                    <Route exact path='/autosubmitapp/' component={Home}/>
-                    <Route exact path='/autosubmitapp/about' component={About} />
-                    <Route exact path='/autosubmitapp/experiment/:expid' component={ExperimentCentral}/>
+                    <Route exact path='/projects/earthscience/autosubmitapp/' component={Home}/>
+                    <Route exact path='/projects/earthscience/autosubmitapp/about' component={About} />
+                    <Route exact path='/projects/earthscience/autosubmitapp/experiment/:expid' component={ExperimentCentral}/>
                     <Route component={NotFound} />
                   </Switch>
                   <Footer />

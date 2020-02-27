@@ -1,0 +1,32 @@
+{
+    "branch": "3.3.1_trunk_week_2019_35",
+    "contents": [
+      "conf",
+      "tmp",
+      "plot",
+      "status",
+      "pkl",
+      "proj",
+      ".idea"
+    ],
+    "contents_conf": [],
+    "contents_pkl": [],
+    "contents_plot": [],
+    "contents_status": [],
+    "contents_tmp": [],
+    "description": "T511L91-ORCA1L75 restart HR tunning rn_cdsn = 0.27 rn_alb_smlt = 0.80 rn_alb_sdry = 0.85  https://earth.bsc.es/gitlab/es/auto-ecearth3/issues/964#note_62175",
+    "error": false,
+    "error_message": "None",
+    "expid": "t0a3",
+    "hpc": "marenostrum4",
+    "model": "https://earth.bsc.es/gitlab/es/auto-ecearth3.git",
+    "owner": "pechevar",
+    "owner_id": 1684,
+    "path": "/esarchive/autosubmit/t0a3",
+    "pkl_timestamp": 1582738185,
+    "running": false,
+    "time_last_access": "2019-12-28 23:19:16",
+    "time_last_mod": "2020-02-25 10:07:38",
+    "updateTime": 10,
+    "version": "3.12.0b0"
+  }

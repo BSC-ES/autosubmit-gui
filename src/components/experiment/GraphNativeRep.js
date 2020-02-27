@@ -16,7 +16,7 @@ class GraphNativeRep extends Component {
             //console.log("Render because changed loading")
             return true;    
           }else{
-            //console.log("NO RERENDER")
+            console.log("NO RERENDER")
             return false;
           }
     }
@@ -40,7 +40,7 @@ class GraphNativeRep extends Component {
     //   this.props.navToLatest(statusCode); // Completed
     // };
 
-    render () {
+    render () {        
         if (this.props.loadingGraph) return <Spinner></Spinner>;
         if (!this.props.data){
             return (
@@ -187,6 +187,7 @@ class GraphNativeRep extends Component {
     
             componentDidMount() {
                 var network = new vis.Network(this.refs.myRef, this.props.graph, this.props.options);
+                //console.log(this.props.groups_data);
                 const groups_data  = this.props.groups_data;
                 const current_grouped = this.props.current_grouped;
                 // const clusterOptions = {                  
@@ -196,7 +197,7 @@ class GraphNativeRep extends Component {
                 //     return result;
                 //   }
                 // }
-                //console.log(this.props.groups_data);
+                
                 this.props.setVisNetwork(network);
                 network.on("select", (params) => {
                     //console.log(network);                    
@@ -312,7 +313,7 @@ class GraphNativeRep extends Component {
         this.updateVisNodes(nodes);
     
         return (
-
+          
           <VisNetwork 
             graph={graph} 
             options={options} 
