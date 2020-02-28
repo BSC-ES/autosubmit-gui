@@ -10,6 +10,7 @@ const LogControl = () => {
     const onSubmitRun = e => {
         e.preventDefault();
         setAutoUpdateRun(true);
+        
         };
     
         const onStopSubmitRun = e => {

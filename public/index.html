@@ -35,7 +35,7 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React App</title>
+    <title>Autosubmit GUI</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -67,6 +67,7 @@
     function showStatsTab(){
       $('#myTab a[href="#stats"]').tab('show')
     }
+
     function copyToClip(inputname) {
       console.log(inputname)
       var copyText = document.getElementById(inputname);
@@ -78,6 +79,15 @@
       } else {
         console.log('No selection')
       }
+    }
+
+    function scrollToBottom() {
+      //console.log(id)
+      var div = document.getElementById("log_scroll");
+      //console.log(div)
+      if (div){
+        div.scrollTop = div.scrollHeight - div.clientHeight;
+      }      
     }
     // }  
     // var network;

@@ -66,7 +66,7 @@ class JobMonitor extends Component {
 }
 
 const experimentStyle = {
-    height: 460
+    height: 338
   };
 const monitorStyle = {
     height: 310

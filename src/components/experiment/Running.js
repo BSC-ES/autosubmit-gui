@@ -1,28 +1,23 @@
 import React, { Component, Fragment } from 'react'
 
 class Running extends Component {
+    
     constructor(props) {
         super(props);
         this.rundata = null;
+        //this.messagesEnd = null;
+        //this.messagesEndRef = React.createRef()
     }
-    // componentDidUpdate() {
-    //     //console.log(this.props.experiment.updateTime)
-    //     // if(this.props.autoUpdateLog) {
-    //     //     console.log(this.props.autoUpdateLog)
-    //     //     this.interval = setInterval(() => this.props.getExperimentRun(this.props.experiment.expid) , this.props.experiment.updateTime);
-    //     // }        
-    // }
 
+    
     componentDidMount(){
         //console.log(this.props.experimentRunning)
         this.props.getExperimentRun(this.props.experiment.expid);
         if (this.props.experimentRunning) {
             this.interval = setInterval(() => this.props.getExperimentRun(this.props.experiment.expid) , this.props.experiment.updateTime * 1000);
-        }
-        
-        // if (this.props.rundata){
-        //     console.log('DidMount Running.')
-        // }
+        }     
+        //console.log(this.messagesEndRef);
+        //this.scrollTo();   
     }
 
     componentWillUnmount() {
@@ -33,14 +28,9 @@ class Running extends Component {
         }        
     }
 
-    // onSubmit = e => {
-    //     e.preventDefault();
-    //     if (this.props.experiment.running && this.interval) {
-    //         clearInterval(this.interval);
-    //         this.props.setAutoUpdateRun(false);
-    //     }
-    // }
-    
+    componentDidUpdate() {
+        window.scrollToBottom();
+    }
     
     render() {
 
@@ -93,11 +83,17 @@ class Running extends Component {
                     </div>
 
                     {/* <p><strong>Showing last 50 lines of the log file:</strong></p> */}
-                    <pre className="bash mb-0">
-                        <ul style={pStyle} className='p-1 mb-0'>{logitems}</ul>                    
+                    <pre className="bash mb-0 scroll" id="log_scroll">
+                        <ul style={pStyle} className='p-1 mb-0 ul-2'>{logitems}                        
+                        </ul>         
+                        {/* <div style={{ float:"left", clear: "both" }}
+                            ref={this.messagesEndRef}>
+                        </div>            */}
+                                                     
                     </pre>
+                    
                     <div className='text-muted text-center'>
-                        <small>Showing last 50 lines.</small>
+                        <small>Showing last 150 lines.</small>
                     </div>
                     
 

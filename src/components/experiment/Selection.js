@@ -159,8 +159,9 @@ const Selection = () => {
                                                 </div>                                            
                                             </div>
                                         }
+                                        
                                         {selectedNode.err &&
-                                            <div className="row">
+                                            <div className="row mt-1">
                                                 <div className="col-12 px-0">
                                                     <form onSubmit={copyContent("g_err")} className="form">
                                                         <div className="input-group input-group-sm">  

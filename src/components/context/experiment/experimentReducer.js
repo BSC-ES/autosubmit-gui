@@ -39,6 +39,7 @@ import {
     SET_LOADING_JOB_MONITOR,
     SET_LOADING_TREE_REFRESH,
     PKL_TREE_LOADED,
+    CLEAN_ONLY_GRAH_DATA,
 } from '../types';
 
 export default (state, action) => {
@@ -60,6 +61,18 @@ export default (state, action) => {
                 current_layout: 'standard',
                 allowJobMonitor: false,
                 //startAutoUpdatePkl: false,
+            };
+        case CLEAN_ONLY_GRAH_DATA:
+            return {
+                ...state,
+                data: null,
+                selection: null,
+                enabledGraphSearch: true,
+                visNodes: null,
+                visNetwork: null,
+                foundNodes: null,
+                current_grouped: 'none',
+                current_layout: 'standard',                
             };
         case CLEAN_TREE_DATA:
             return {

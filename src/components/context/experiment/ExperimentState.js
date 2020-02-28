@@ -35,6 +35,7 @@ import {
   SET_LOADING_STATE,
   GET_RUNNING_STATE,
   CLEAN_TREE_DATA,  
+  CLEAN_ONLY_GRAH_DATA,
   FILTER_TREEVIEW_FAILED,
   SET_LOADING_FILTER,
   UPDATE_SELECTION_TREE,
@@ -111,7 +112,7 @@ const ExperimentState = props => {
         setLoading();
         //cleanGraphData();
         const res = await axios.get(`${localserver}/expinfo/${expid}`); 
-        //console.log(res.data);
+        console.log(res.data);
         dispatch({
             type: GET_EXPERIMENT,
             payload: res.data,
@@ -132,17 +133,16 @@ const ExperimentState = props => {
 
     // Get Experiment Graph
     const getExperimentGraph = async (expid, grouped = 'none', layout = 'standard') => {
-        setLoadingGraph();
-        
-        const res = await axios.get(`${localserver}/graph/${expid}/${layout}/${grouped}`);
-        console.log(res.data);
-        const resdata = res.data;
-        dispatch({
-            type: GET_GRAPH,
-            payload: { resdata, grouped, layout } ,
-        });
-        //this.setState({ data: res.data, loading: false, showGraph: !res.data.error });
-      };
+      cleanOnlyGraphData();  
+      setLoadingGraph();        
+      const res = await axios.get(`${localserver}/graph/${expid}/${layout}/${grouped}`);
+      console.log(res.data);
+      const resdata = res.data;
+      dispatch({
+          type: GET_GRAPH,
+          payload: { resdata, grouped, layout } ,
+      });        
+    };
     
     const getExperimentTree = async expid => {
       setLoadingTree();
@@ -159,7 +159,7 @@ const ExperimentState = props => {
     const getExperimentRun = async expid => {
         setLoadingRun();
         const res = await axios.get(`${localserver}/exprun/${expid}`);
-        //console.log(res.data);
+        console.log(res.data);
         dispatch({
             type: GET_EXPERIMENT_RUN,
             payload: res.data,
@@ -170,7 +170,7 @@ const ExperimentState = props => {
     const getRunningState = async expid => {
       setLoadingState();
       const res = await axios.get(`${localserver}/ifrun/${expid}`);
-      //console.log(res.data);      
+      console.log(res.data);      
       dispatch({
         type: GET_RUNNING_STATE,
         payload: res.data.running,
@@ -404,9 +404,6 @@ const ExperimentState = props => {
             }
           }
 
-
-
-
           let requireUpdate = false;
           console.log('Current ts: '+ state.experiment.pkl_timestamp);        
           
@@ -500,17 +497,7 @@ const ExperimentState = props => {
 
     // Graph manipulation
     const updateGraphColor = (idChange, newColor) => {
-      
-      //console.log("Updateing graph color")
-      // var node = state.visNetwork.selectNodes([idChange]);
-      // if (node){
-      //   node.color = newColor;
-      // }
-      // var node = state.visNodes.get(idChange);
-      // node.color = {background: newColor}
-
-      // //console.log(node)
-      
+            
       //state.visNetwork.unselectAll();
       state.visNetwork.body.nodes[idChange].options.color.background = newColor;
       state.visNetwork.selectNodes([idChange]);
@@ -697,6 +684,7 @@ const ExperimentState = props => {
     const clearExperiments = () => dispatch({ type: CLEAR_EXPERIMENTS });
     const cleanGraphData = () => dispatch({ type: CLEAN_GRAPH_DATA });
     const cleanTreeData = () => dispatch({ type: CLEAN_TREE_DATA });
+    const cleanOnlyGraphData = () => dispatch({ type: CLEAN_ONLY_GRAH_DATA });
     const cleanRunData = () => dispatch({ type: CLEAN_RUN_DATA });
     const cleanPklData = () => dispatch({ type: CLEAN_PKL_DATA });
     const cleanNavData = () => dispatch({ type: CLEAN_NAV_DATA });
