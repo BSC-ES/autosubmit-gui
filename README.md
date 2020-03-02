@@ -5,7 +5,7 @@ We begin by emphasizing the fact the application is written using Javascript wit
 You can find more information about **React** in the following link: [https://reactjs.org/docs/getting-started.html](https://reactjs.org/docs/getting-started.html)
 
 ### Main development platform
-The main development framework is **npm**, we are currently using version `6.9.0`. You can find the main **npm** dependencies in the file: [package.json]{package.json}.
+The main development framework is **npm**, we are currently using version `6.9.0`. You can find the main **npm** dependencies in the file: [package.json](package.json).
 Refer to: [npm documentation](https://docs.npmjs.com/) for more information about installation and first steps on this platform.
 
 ### Dependencies:
@@ -15,7 +15,7 @@ Apart from that, there are other dependencies included mainly related to the Gra
 * Font-awesome
 * Vis-Network main css library
 
-You can check the URL of these libraries in the file: [file].
+You can check the URL of these libraries in the file: [index.html](/public/index.html).
 
 It might be useful to mention that this software was developed using Visual Studio Code. I guess any other IDE should do it.
 
