@@ -53,6 +53,7 @@ const ExperimentCentral = ({ match }) => {
         navigateGraph,
         navToLatest,
         experimentRunning,
+        navigateAfterLoadGraph,
         current_grouped } = experimentContext;
     const { clearStats } = statsContext;
     
@@ -108,6 +109,8 @@ const ExperimentCentral = ({ match }) => {
                                         clearStats={clearStats}
                                         cleanNavData={cleanNavData}
                                         current_grouped={current_grouped}
+                                        experimentRunning={experimentRunning}
+                                        navigateAfterLoadGraph={navigateAfterLoadGraph}
                                     />                     
                                 </div>
                                 <div className='col-3 pl-0'>

@@ -290,6 +290,11 @@ class GraphNativeRep extends Component {
                     }
                   }                                    
                 }
+                if (network){
+                  console.log("Call auto zoom")                  
+                  this.props.navigateAfterLoadGraph(this.props.experimentRunning, network);
+                }
+                
                 
             }
     
@@ -324,6 +329,8 @@ class GraphNativeRep extends Component {
             clusterGroups={groups}
             groups_data={groups_data}
             current_grouped={current_grouped}
+            experimentRunning={this.props.experimentRunning}
+            navigateAfterLoadGraph={this.props.navigateAfterLoadGraph}
           />
         );
 

@@ -82,9 +82,14 @@ const ExperimentState = props => {
         returnFilter: 0,
     }
 
+    const WaitingCode = 0;    
+    const FailedCode = -1;    
+    const CompletedCode = 5;    
+    const RunningCode = 4;
+
     const [state, dispatch] = useReducer(ExperimentReducer, initialState);
-    //const localserver = 'http://192.168.11.91:8081'
-    const localserver= 'http://84.88.185.94:8081'
+    const localserver = 'http://192.168.11.91:8081'
+    //const localserver= 'http://84.88.185.94:8081'
 
     // Search Experiments
     const searchExperiments = async text => {
@@ -534,23 +539,60 @@ const ExperimentState = props => {
     }
 
 
-    const navigateGraph = (posx, posy, cScale = 0.9) => {
+    const navigateGraph = (posx, posy, cScale = 0.9, network = null) => {
       // console.log(posx);
       // console.log(posy);
       // console.log(state.visNetwork);
       // console.log(state.visNodes);
       if (cScale <= 0.05)  cScale = 0.05;
-      state.visNetwork.moveTo(
-        {
-          position: {x: posx, y: posy },
-          scale: cScale,
-          //offset: {x: 30, y: 30},
-          animation: false,
-        }
-      );      
+      if (state.visNetwork) {
+        //console.log(cScale);
+        //console.log("Into vis")
+        state.visNetwork.moveTo(
+          {
+            position: {x: posx, y: posy },
+            scale: cScale,
+            //offset: {x: 30, y: 30},
+            animation: false,
+          }
+        );      
+      } else if (network) {
+        //console.log("into var")
+        network.moveTo(
+          {
+            position: {x: posx, y: posy },
+            scale: cScale,
+            //offset: {x: 30, y: 30},
+            animation: false,
+          }
+        );      
+      }
     };
 
-    const navToLatest = (statusCode, latest = true) => {
+    const navigateAfterLoadGraph = (running = false, network = null) => {                  
+      if(network){
+        var found = false;
+        const cScale = 0.5;
+        if (running === true){
+          //console.log("Search Running")
+          found = navToLatest(RunningCode, true, cScale, network);
+          if (!(found)){
+            found = navToLatest(CompletedCode, true, cScale, network);
+          }
+        } else {
+          found = navToLatest(FailedCode, true, cScale, network);
+          if (!(found)){
+            found = navToLatest(CompletedCode, true, cScale, network);
+          }
+        }
+        if (!(found)){
+          navToLatest(WaitingCode, false, cScale, network);
+        }
+      }      
+    }
+
+    const navToLatest = (statusCode, latest = true, cScale = 0.9, network = null) => {
+      //if (network === null) network = state.visNetwork;
       //const statusCode = 5; // Completed
       var currentLevel = 0;
       //var currentNode = null;
@@ -583,18 +625,36 @@ const ExperimentState = props => {
         
       }      
       console.log(latestId);
-      var currentPosition = state.visNetwork.getPositions([latestId]);
-      //console.log(currentPosition);
+      var currentPosition;
+      if (network){
+        currentPosition = network.getPositions([latestId]);
+        if (currentPosition[latestId]){
+          //console.log("So good so far")
+          navigateGraph(currentPosition[latestId].x, currentPosition[latestId].y, cScale, network);
+          network.selectNodes([latestId]);
+          updateSelection([latestId]);
+        } else {
+          updateSelection(null)
+        }
+      }else{
+        currentPosition = state.visNetwork.getPositions([latestId]);
+        //console.log(currentPosition);
+        if (currentPosition[latestId]){
+          navigateGraph(currentPosition[latestId].x, currentPosition[latestId].y);
+          // setMessageNavigator(latestId, true);
+          state.visNetwork.selectNodes([latestId]);
+          updateSelection([latestId]);
+          //updateSelection(currentNode);
+        } else {
+          updateSelection(null);
+          //setMessageNavigator("There are no nodes with that status.", false)
+        }      
+      }
       if (currentPosition[latestId]){
-        navigateGraph(currentPosition[latestId].x, currentPosition[latestId].y);
-        // setMessageNavigator(latestId, true);
-        state.visNetwork.selectNodes([latestId]);
-        updateSelection([latestId]);
-        //updateSelection(currentNode);
+        return true;
       } else {
-        updateSelection(null);
-        //setMessageNavigator("There are no nodes with that status.", false)
-      }      
+        return false;
+      }
     }
 
     const navigateTo = Id => {
@@ -805,6 +865,7 @@ const ExperimentState = props => {
             navToLatest,
             searchJobInGraph,
             navigateTo,
+            navigateAfterLoadGraph,
             getRunningState,     
             getExperimentGraphGrouped,    
             filterTreeView,
