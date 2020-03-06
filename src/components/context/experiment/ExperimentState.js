@@ -86,8 +86,11 @@ const ExperimentState = props => {
     const FailedCode = -1;    
     const CompletedCode = 5;    
     const RunningCode = 4;
+    const QueueCode = 3;
+    const SubmittedCode = 2;
 
     const [state, dispatch] = useReducer(ExperimentReducer, initialState);
+    
     const localserver = 'http://192.168.11.91:8081'
     //const localserver= 'http://84.88.185.94:8081'
 
@@ -540,14 +543,8 @@ const ExperimentState = props => {
 
 
     const navigateGraph = (posx, posy, cScale = 0.9, network = null) => {
-      // console.log(posx);
-      // console.log(posy);
-      // console.log(state.visNetwork);
-      // console.log(state.visNodes);
       if (cScale <= 0.05)  cScale = 0.05;
       if (state.visNetwork) {
-        //console.log(cScale);
-        //console.log("Into vis")
         state.visNetwork.moveTo(
           {
             position: {x: posx, y: posy },
@@ -577,7 +574,13 @@ const ExperimentState = props => {
           //console.log("Search Running")
           found = navToLatest(RunningCode, true, cScale, network);
           if (!(found)){
-            found = navToLatest(CompletedCode, true, cScale, network);
+            found = navToLatest(QueueCode, true, cScale, network);
+            if (!(found)){
+              found = navToLatest(SubmittedCode, true, cScale, network);
+              if (!(found)){
+                found = navToLatest(CompletedCode, true, cScale, network);
+              }
+            }
           }
         } else {
           found = navToLatest(FailedCode, true, cScale, network);

@@ -39,7 +39,7 @@ const SelectionTreeNode = () => {
                                 </div>
                                 <div className='card-body py-0'>
                                     <div className='text-left'>
-                                        <small><strong>Date:</strong> {selectedNode.date}</small>
+                                        <small><strong>Initial Date:</strong> {selectedNode.date}</small>
                                     </div>
                                     <div className='text-left'>
                                         <small><strong>Real date:</strong> {selectedNode.date_plus}</small>
@@ -163,7 +163,6 @@ const SelectionTreeNode = () => {
                                             </div>
                                         </div>
                                     }
-                                    <br></br>
                                     <div>
                                         {selectedNode.out && 
                                             <div className="row">

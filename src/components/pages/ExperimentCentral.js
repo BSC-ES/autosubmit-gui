@@ -71,11 +71,11 @@ const ExperimentCentral = ({ match }) => {
             <div className="col-10">
                 <ul className="nav nav-tabs" id="myTab" role="tablist">
                     <li className="nav-item">
-                        <a className="nav-link" id="graph-tab" data-toggle="tab" href="#graph" role="tab" aria-controls="graph" aria-selected="true">Graph</a>
-                    </li>
-                    <li className="nav-item">
                         <a className="nav-link active" id="treeview-tab" data-toggle="tab" href="#treeview" role="tab" aria-controls="treeview" aria-selected="false">Tree View</a>
                     </li>
+                    <li className="nav-item">
+                        <a className="nav-link" id="graph-tab" data-toggle="tab" href="#graph" role="tab" aria-controls="graph" aria-selected="true">Graph</a>
+                    </li>                    
                     <li className="nav-item">
                         <a className="nav-link" id="log-tab" data-toggle="tab" href="#log" role="tab" aria-controls="log" aria-selected="false">Log</a>
                     </li>

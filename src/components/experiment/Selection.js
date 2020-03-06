@@ -45,32 +45,10 @@ const Selection = () => {
                                         <small><strong>{selectedNode.id}</strong></small>
                                     </div>                                    
                                 </div>
-                                <div className='card-body py-0'>
-                                    <div className="row">
-                                        <div className='col-6 text-left'>
-                                            <small><strong>Date:</strong> {selectedNode.date}</small>
-                                        </div>            
-                                        <div className='col-3 px-1 pt-1'>
-                                            {selectedNode.children_list && selectedNode.children_list.length > 0 &&
-                                                <button className="btn btn-dark btn-sm btn-block" data-toggle="modal" data-target="#childrenList">
-                                                    <small><strong>Out:</strong> {selectedNode.children}</small>
-                                                </button>
-                                            }
-                                            {selectedNode.children_list && selectedNode.children_list.length === 0 &&
-                                                <small><strong>Out:</strong> {selectedNode.children}</small>
-                                            }  
-                                        </div> 
-                                        <div className='col-3 px-1 pt-1'>
-                                            {selectedNode.parent_list && selectedNode.parent_list.length > 0 &&
-                                                <button className="btn btn-darkgit pul btn-sm btn-block" data-toggle="modal" data-target="#parentList">
-                                                    <small><strong>In:</strong> {selectedNode.parents}</small>
-                                                </button>
-                                            }
-                                            {selectedNode.parent_list && selectedNode.parent_list.length === 0 &&
-                                                <small><strong>In:</strong> {selectedNode.parents}</small>
-                                            }   
-                                        </div>                    
-                                    </div>
+                                <div className='card-body py-0'>                                    
+                                    <div className='text-left'>
+                                        <small><strong>Initial Date:</strong> {selectedNode.date}</small>
+                                    </div>                                                                        
                                     <div className="text-left">
                                         <small><strong>Real date:</strong> {selectedNode.date_plus}</small>
                                     </div>   
@@ -126,7 +104,32 @@ const Selection = () => {
                                                 <small><strong>Wallclock:</strong> {selectedNode.wallclock}</small>
                                             </div>
                                         </div>                                        
-                                    </div>                                                               
+                                    </div>
+                                    <div>
+                                        <div className="row">
+                                            <div className="col-6"></div>
+                                            <div className='col-3 px-1 pt-1'>
+                                                {selectedNode.children_list && selectedNode.children_list.length > 0 &&
+                                                    <button className="btn btn-dark btn-sm btn-block" data-toggle="modal" data-target="#childrenList">
+                                                        <small><strong>Out:</strong> {selectedNode.children}</small>
+                                                    </button>
+                                                }
+                                                {selectedNode.children_list && selectedNode.children_list.length === 0 &&
+                                                    <small><strong>Out:</strong> {selectedNode.children}</small>
+                                                }  
+                                            </div> 
+                                            <div className='col-3 px-1 pt-1'>
+                                                {selectedNode.parent_list && selectedNode.parent_list.length > 0 &&
+                                                    <button className="btn btn-darkgit pul btn-sm btn-block" data-toggle="modal" data-target="#parentList">
+                                                        <small><strong>In:</strong> {selectedNode.parents}</small>
+                                                    </button>
+                                                }
+                                                {selectedNode.parent_list && selectedNode.parent_list.length === 0 &&
+                                                    <small><strong>In:</strong> {selectedNode.parents}</small>
+                                                }   
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div>
                                         <div className='row'>
                                             <div className='col-12'>
@@ -137,7 +140,6 @@ const Selection = () => {
                                             </div> */}
                                         </div>                                               
                                     </div>
-                                    <br></br>
                                     <div>
                                         {selectedNode.out && 
                                             <div className="row">
