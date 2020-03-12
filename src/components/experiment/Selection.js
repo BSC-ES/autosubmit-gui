@@ -107,8 +107,11 @@ const Selection = () => {
                                     </div>
                                     <div>
                                         <div className="row">
-                                            <div className="col-6"></div>
-                                            <div className='col-3 px-1 pt-1'>
+                                            <div className="col-md-6">
+                                                {selectedNode.minutes_queue >= 0 && <span className="badge text-center" style={{width: "50px", backgroundColor:'lightpink'}}>{selectedNode.minutes_queue}</span> }
+                                                {selectedNode.minutes > 0 && <span className="badge badge-success text-center ml-1" style={{width: "50px"}}>{selectedNode.minutes}</span>} 
+                                            </div>
+                                            <div className='col-md-3 px-1 pt-1'>
                                                 {selectedNode.children_list && selectedNode.children_list.length > 0 &&
                                                     <button className="btn btn-dark btn-sm btn-block" data-toggle="modal" data-target="#childrenList">
                                                         <small><strong>Out:</strong> {selectedNode.children}</small>
@@ -118,7 +121,7 @@ const Selection = () => {
                                                     <small><strong>Out:</strong> {selectedNode.children}</small>
                                                 }  
                                             </div> 
-                                            <div className='col-3 px-1 pt-1'>
+                                            <div className='col-md-3 px-1 pt-1'>
                                                 {selectedNode.parent_list && selectedNode.parent_list.length > 0 &&
                                                     <button className="btn btn-darkgit pul btn-sm btn-block" data-toggle="modal" data-target="#parentList">
                                                         <small><strong>In:</strong> {selectedNode.parents}</small>
@@ -132,7 +135,7 @@ const Selection = () => {
                                     </div>
                                     <div>
                                         <div className='row'>
-                                            <div className='col-12'>
+                                            <div className='col-md-12'>
                                                 <small><strong>Status:</strong></small> {selectedNode.status}
                                             </div>
                                             {/* <div className='col-4 text-right'>

@@ -72,9 +72,6 @@ const SelectionTreeNode = () => {
                                             </div>
                                         </div>                                         
                                     </div>                                                                
-                                    {/* <div>
-                                        <small><strong>Priority:</strong> {selectedNode.priority}</small>
-                                    </div> */}
                                     <div>
                                         <div className='row'>
                                             <div className='col-6'>
@@ -87,10 +84,12 @@ const SelectionTreeNode = () => {
                                     </div> 
                                     <div>
                                         <div className='row'>
-                                            <div className='col-6'>
+                                            <div className='col-md-6'>
                                                 {/* <small><strong>Priority:</strong> {selectedNode.priority}</small> */}
+                                                {selectedNode.minutes_queue >= 0 && <span className="badge text-center" style={{width: "50px", backgroundColor:'lightpink'}}>{selectedNode.minutes_queue}</span> }
+                                                {selectedNode.minutes > 0 && <span className="badge badge-success text-center ml-1" style={{width: "50px"}}>{selectedNode.minutes}</span>}        
                                             </div>
-                                            <div className='col-3 px-1'>
+                                            <div className='col-md-3 px-1'>
                                                 {selectedNode.children_list && selectedNode.children_list.length > 0 &&
                                                     <button className="btn btn-dark btn-sm btn-block" data-toggle="modal" data-target="#childrenList-tree">
                                                         <small><strong>Out:</strong> {selectedNode.children}</small>
@@ -100,7 +99,7 @@ const SelectionTreeNode = () => {
                                                     <small><strong>Out:</strong> {selectedNode.children}</small>
                                                 }                                                
                                             </div>
-                                            <div className='col-3 px-1'>
+                                            <div className='col-md-3 px-1'>
                                                 {selectedNode.parent_list && selectedNode.parent_list.length > 0 &&
                                                     <button className="btn btn-darkgit pul btn-sm btn-block" data-toggle="modal" data-target="#parentList-tree">
                                                         <small><strong>In:</strong> {selectedNode.parents}</small>
@@ -117,11 +116,8 @@ const SelectionTreeNode = () => {
                                         <div className='row'>
                                             <div className='col-12'>
                                                 <small><strong>Status:</strong></small> {selectedNode.status}
-                                            </div>
-                                            {/* <div className='col-4 text-right'>
-                                                <small><strong>c:{data.max_children}/p:{data.max_parents}</strong></small>
-                                            </div> */}
-                                        </div>                                               
+                                            </div>                                                
+                                        </div>                                        
                                     </div>
                                     {selectedNode.custom_directives && selectedNode.custom_directives.length > 0 &&
                                         <div>
@@ -205,29 +201,6 @@ const SelectionTreeNode = () => {
                                             </div>
                                         }
                                     </div>
-                                    
-                                    {/* <div>
-                                        <div className='row'>
-                                            <div className='col-md-4 text-left'>
-                                                <small>{data.max_children}/{data.max_parents} </small>
-                                            </div>
-                                         
-                                            <div className='col-md-4 offset-md-4 text-right'>
-                                                <small>{data.total_jobs}</small>
-                                            </div>
-                                        </div>
-                                    </div> */}
-                                    {/* <div>
-                                        <div className="row">
-                                            <form onSubmit={navigateTo(10,10)} className='form'>
-                                                <input
-                                                type='submit'
-                                                value='Go to 10,10'
-                                                className='btn btn-danger btn-block btn-sm'                              
-                                                />
-                                            </form>
-                                        </div>
-                                    </div> */}
                                 </div>                            
                             </div>
                          </div>

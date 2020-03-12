@@ -39,19 +39,20 @@ class JobMonitor extends Component {
         return (
             <div className='row'>
                 <div className='col-12'>
-                    <div className='card' style={experimentStyle}>
+                    <div className='card'>
                         <div className='card-header text-center py-0'>
                             <small>Monitoring jobs...</small>
                         </div>
                         <div className='card-body p-0'>
                             {pklchanges && 
 
-                                <textarea 
-                                    value={pklchanges} 
+                                <pre className="scroll-y">
+                                    {pklchanges} 
+                                    {/* value={pklchanges} 
                                     className='monitorArea'
                                     style={monitorStyle}
-                                    readOnly>                                        
-                                </textarea>                                
+                                    readOnly>                                         */}
+                                </pre>                                
                             }
                             {loadingPkl &&
                             <small>Loading...</small>}
@@ -65,11 +66,11 @@ class JobMonitor extends Component {
    
 }
 
-const experimentStyle = {
-    height: 338
-  };
-const monitorStyle = {
-    height: 310
-}
+// const experimentStyle = {
+//     height: 338
+//   };
+// const monitorStyle = {
+//     height: 310
+// }
 
 export default JobMonitor

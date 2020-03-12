@@ -269,7 +269,7 @@ class GraphNativeRep extends Component {
                         // eslint-disable-next-line no-loop-func
                         joinCondition: function(options){
                           // console.log(options);
-                          return options.status === statusName;
+                          return options.status === statusName && options.shape === 'dot';
                         },
                         processProperties: function (clusterOptions, childNodes, childEdges) {
                           var totalMass = 0;
@@ -341,7 +341,7 @@ class GraphNativeRep extends Component {
 
 
 const experimentStyle = {
-    height: 700
+    height: 800
   };
 
 

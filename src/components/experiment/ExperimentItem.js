@@ -5,12 +5,6 @@ import { Link } from 'react-router-dom';
 const ExperimentItem = ({ experiment: { name, description, user, hpc, status, completed, total } }) => {
   return (
     <div className='card'>
-      {/* <img
-        src={avatar_url}
-        alt=''
-        className='round-img'
-        style={{ width: '60px' }}
-      /> */}
       <div className="card-header text-center">
         <div className="row">
           <div className="col-4 text-left">
@@ -35,15 +29,6 @@ const ExperimentItem = ({ experiment: { name, description, user, hpc, status, co
         </Link>
         <p className="card-text text-center"><small className="text-muted">HPC: {hpc}</small></p>
       </div>
-      {/* <h3>{name}</h3>
-      <p>{description}</p>
-      <p><strong>{user}</strong></p>
-      <small>{hpc}</small> */}
-      {/* <div>
-        <Link to={`/experiment/${name}`} className='btn btn-dark btn-sm my-1'>
-          More
-        </Link>
-      </div> */}
     </div>
   );
 };

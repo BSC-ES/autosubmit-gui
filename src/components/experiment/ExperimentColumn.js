@@ -17,13 +17,8 @@ const ExperimentColumn = ({ expidToken, refTree }) => {
     path,
     time_last_access,
     time_last_mod,
-    // description,
     version,
     updateTime,
-    // error,
-    // error_message,
-    // pkl_timestamp,
-    // model, 
     branch, 
     hpc,
     //isGrouped,
@@ -51,14 +46,6 @@ const ExperimentColumn = ({ expidToken, refTree }) => {
                     <div><small className='font-weight-bold'>Last Access:</small></div>
                     <div>{time_last_access}</div>
                 </div>
-                {/* <div><small>{description}</small></div> */}
-                
-                
-                  {/* {pkl_timestamp && <Fragment>
-                    <div><small className='font-weight-bold'>Pkl:</small> {pkl_timestamp}</div>
-                  </Fragment>
-                    
-                  }  */}
                 
               </div>
             </div>
@@ -66,7 +53,6 @@ const ExperimentColumn = ({ expidToken, refTree }) => {
           <div className="card-footer p-1 text-center scroll-x">
             <div className="row">
                 <div className="col-md-12">
-                    {/* <small><strong>Model:</strong> {model}</small>                 */}
                     <div>
                         <small>Branch:</small>                                 
                     </div>

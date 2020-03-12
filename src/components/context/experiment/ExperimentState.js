@@ -212,7 +212,7 @@ const ExperimentState = props => {
           cjob = currentJobs[i];  
           // Name is id in treedata
           ijob = jobs[ cjob.id ];          
-          if (cjob.status_code !== ijob.status_code || cjob.minutes !== ijob.minutes){
+          if (cjob.status_code !== ijob.status_code || cjob.minutes !== ijob.minutes || cjob.minutes_queue !== ijob.minutes_queue){
             var is_change_status = false;
             var new_status = cjob.status;
             var old_status = ijob.status;
@@ -225,6 +225,7 @@ const ExperimentState = props => {
             cjob.status = ijob.status;
             cjob.status_color = ijob.status_color;
             cjob.minutes = ijob.minutes;
+            cjob.minutes_queue = ijob.minutes_queue;
             cjob.wrapper = ijob.wrapper;
             cjob.out = ijob.out;
             cjob.err = ijob.err;
@@ -352,6 +353,7 @@ const ExperimentState = props => {
     // Get Experiment Pkl Data for Graph changes update
     const getExperimentPkl = async (expid, timeStamp) => {
       // if (state.isGrouped === false){
+        if (state.experimentRunning === false) return;
         setLoadingPkl();
         setLoadingJobMonitor();
         //timeStamp = 1000;
@@ -421,9 +423,16 @@ const ExperimentState = props => {
               //console.log(newData.nodes[i]);
               // console.log(jobs[ newNodes[i].id ]);
 
-              if (newData.nodes[i].status_code !== jobs[ newData.nodes[i].id ].status_code || newData.nodes[i].package !== jobs[ newData.nodes[i].id ].package){
+              if (newData.nodes[i].status_code !== jobs[ newData.nodes[i].id ].status_code || newData.nodes[i].package !== jobs[ newData.nodes[i].id ].package ||
+                newData.nodes[i].minutes !== jobs[ newData.nodes[i].id ].minutes || newData.nodes[i].minutes_queue !== jobs[ newData.nodes[i].id ].minutes_queue){
                 // changes += newData.nodes[i].id + " from " + newData.nodes[i].status + " to " + jobs[ newData.nodes[i].id ].status + " || ";
-                changes += timeStampToDate(retrievedPkl.pkl_timestamp) + ": "+ newData.nodes[i].id + " to " + jobs[ newData.nodes[i].id ].status + "\n";
+                if (newData.nodes[i].status_code !== jobs[ newData.nodes[i].id ].status_code){
+                  changes += timeStampToDate(retrievedPkl.pkl_timestamp) + ": "+ newData.nodes[i].id + " to " + jobs[ newData.nodes[i].id ].status + "\n";
+                } else {
+                  // Not decided.
+                }
+                
+                
                 if (newData.nodes[i].package !== jobs[ newData.nodes[i].id ].package){
                   changes += timeStampToDate(retrievedPkl.pkl_timestamp) + ": "+ newData.nodes[i].id + " added to " + jobs[ newData.nodes[i].id ].package + "\n";
                   var current_job = current_jobs[newData.nodes[i].id];
@@ -442,6 +451,8 @@ const ExperimentState = props => {
                 newData.nodes[i].shape = jobs[ newData.nodes[i].id ].shape;
                 newData.nodes[i].out = jobs[ newData.nodes[i].id ].out;
                 newData.nodes[i].err = jobs[ newData.nodes[i].id ].err;
+                newData.nodes[i].minutes = jobs[ newData.nodes[i].id ].minutes;
+                newData.nodes[i].minutes_queue = jobs[ newData.nodes[i].id ].minutes_queue;
                 //console.log(newData.nodes[i].status_color)
                 colorChanges[ newData.nodes[i].id  ] = jobs[ newData.nodes[i].id ].status_color;
                 requireUpdate = true;
@@ -799,7 +810,10 @@ const ExperimentState = props => {
       var hours = date.getHours();
       var minutes = "0" + date.getMinutes();
       var seconds = "0" + date.getSeconds();
-      formattedDate = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+      var month = date.getMonth() + 1;
+      var day = date.getDate();
+      //console.log(date)
+      formattedDate = "[" + day + "/" + month + "] " + hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
       // formattedDate = date.toISOString();
       return formattedDate;
     }
