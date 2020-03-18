@@ -192,7 +192,7 @@ const Selection = () => {
                       {selectedNode.parent_list &&
                         selectedNode.parent_list.length > 0 && (
                           <button
-                            className='btn btn-darkgit pul btn-sm btn-block'
+                            className='btn btn-dark btn-sm btn-block'
                             data-toggle='modal'
                             data-target='#parentList'
                           >
@@ -228,7 +228,7 @@ const Selection = () => {
                               <div className='input-group-append'>
                                 <input
                                   type='submit'
-                                  className='btn btn-alert btn-sm py-0'
+                                  className='btn btn-light btn-sm py-0'
                                   value='Copy out'
                                 />
                               </div>
@@ -256,7 +256,7 @@ const Selection = () => {
                               <div className='input-group-append'>
                                 <input
                                   type='submit'
-                                  className='btn btn-alert btn-sm py-0'
+                                  className='btn btn-light btn-sm py-0'
                                   value='Copy err'
                                 />
                               </div>

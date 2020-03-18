@@ -43,12 +43,14 @@ import {
   CURRENT_RUNNING,
   SET_LOADING_JOB_MONITOR,
   SET_LOADING_TREE_REFRESH,
-  PKL_TREE_LOADED
+  PKL_TREE_LOADED,
+  GET_EXPERIMENT_SUMMARY
 } from "../types";
 
 const ExperimentState = props => {
   const initialState = {
     experiments: [],
+    summaries: [],
     experiment: {},
     loading: false,
     experimentRunning: false,
@@ -102,6 +104,20 @@ const ExperimentState = props => {
     dispatch({
       type: SEARCH_EXPERIMENTS,
       payload: res.data.experiment
+    });
+  };
+
+  // Get Summary for Search item
+  const getExperimentSummary = async expid => {
+    const res = await axios.get(`${localserver}/summary/${expid}`);
+    const summary = res.data;
+    console.log(summary);
+    console.log(state.summaries);
+    //state.summaries.push({ key: expid, value: summary });
+    state.summaries[expid] = summary;
+    dispatch({
+      type: GET_EXPERIMENT_SUMMARY
+      //payload: { currentSummaries, summary, expid }
     });
   };
 
@@ -962,6 +978,7 @@ const ExperimentState = props => {
       value={{
         experiments: state.experiments,
         experiment: state.experiment,
+        summaries: state.summaries,
         loading: state.loading,
         loadingGraph: state.loadingGraph,
         loadingTree: state.loadingTree,
@@ -1027,7 +1044,8 @@ const ExperimentState = props => {
         filterTreeView,
         clearFilterTreeView,
         navigateToGroup,
-        getExperimentTreePkl
+        getExperimentTreePkl,
+        getExperimentSummary
       }}
     >
       {props.children}

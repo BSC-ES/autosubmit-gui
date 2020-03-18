@@ -11,7 +11,7 @@ const Experiments = () => {
   } else {
     return (
       <div className='container'>
-        <div className='card-columns'>
+        <div className='row row-cols-1 row-cols-md-3'>
           {experiments &&
             experiments
               .sort((a, b) => (a.status > b.status ? -1 : 1))
