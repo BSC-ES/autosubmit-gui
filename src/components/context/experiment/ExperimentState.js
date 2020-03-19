@@ -44,7 +44,8 @@ import {
   SET_LOADING_JOB_MONITOR,
   SET_LOADING_TREE_REFRESH,
   PKL_TREE_LOADED,
-  GET_EXPERIMENT_SUMMARY
+  GET_EXPERIMENT_SUMMARY,
+  CLEAR_SUMMARY_EXP
 } from "../types";
 
 const ExperimentState = props => {
@@ -107,17 +108,35 @@ const ExperimentState = props => {
     });
   };
 
+  const getSummaries = () => {
+    const experiments = state.experiments;
+    for (var exp in experiments) {
+      var exp_name = experiments[exp].name;
+      getExperimentSummary(exp_name);
+    }
+  };
+
   // Get Summary for Search item
   const getExperimentSummary = async expid => {
+    clearSummary(expid);
     const res = await axios.get(`${localserver}/summary/${expid}`);
     const summary = res.data;
-    console.log(summary);
-    console.log(state.summaries);
+    // console.log(summary);
+    // console.log(state.summaries);
     //state.summaries.push({ key: expid, value: summary });
     state.summaries[expid] = summary;
     dispatch({
       type: GET_EXPERIMENT_SUMMARY
       //payload: { currentSummaries, summary, expid }
+    });
+  };
+
+  const clearSummary = expid => {
+    if (state.summaries[expid]) {
+      state.summaries[expid] = null;
+    }
+    dispatch({
+      type: CLEAR_SUMMARY_EXP
     });
   };
 
@@ -1045,7 +1064,9 @@ const ExperimentState = props => {
         clearFilterTreeView,
         navigateToGroup,
         getExperimentTreePkl,
-        getExperimentSummary
+        getExperimentSummary,
+        clearSummary,
+        getSummaries
       }}
     >
       {props.children}

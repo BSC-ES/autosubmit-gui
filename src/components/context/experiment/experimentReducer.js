@@ -40,7 +40,8 @@ import {
   SET_LOADING_TREE_REFRESH,
   PKL_TREE_LOADED,
   CLEAN_ONLY_GRAH_DATA,
-  GET_EXPERIMENT_SUMMARY
+  GET_EXPERIMENT_SUMMARY,
+  CLEAR_SUMMARY_EXP
 } from "../types";
 
 export default (state, action) => {
@@ -187,6 +188,7 @@ export default (state, action) => {
       return {
         ...state,
         experiments: [],
+        summaries: [],
         loading: false
       };
     case GET_EXPERIMENT:
@@ -209,6 +211,10 @@ export default (state, action) => {
     case GET_EXPERIMENT_SUMMARY:
       // const { summaries, summary, expid } = action.payload;
       // summaries.push({ key: expid, value: summary });
+      return {
+        ...state
+      };
+    case CLEAR_SUMMARY_EXP:
       return {
         ...state
       };

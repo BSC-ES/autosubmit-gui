@@ -21,7 +21,8 @@ const Experiment = ({ expidToken, refTree }) => {
     getExperiment(expidToken);
     getRunningState(expidToken);
     getExperimentTree(expidToken);
-    setInterval(() => getRunningState(expidToken), 300000);
+    const interval = setInterval(() => getRunningState(expidToken), 300000);
+    return () => clearInterval(interval);
     // eslint-disable-next-line
   }, []);
 

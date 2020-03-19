@@ -30,7 +30,11 @@ const ExperimentItem = ({
                     completed === total
                       ? "progress-bar bg-warning"
                       : status === "RUNNING"
-                      ? "progress-bar progress-bar-striped progress-bar-animated bg-success"
+                      ? summaries[name] && summaries[name].n_failed > 0
+                        ? "progress-bar progress-bar-striped progress-bar-animated bg-danger"
+                        : "progress-bar progress-bar-striped progress-bar-animated bg-success"
+                      : summaries[name] && summaries[name].n_failed > 0
+                      ? "progress-bar bg-danger"
                       : "progress-bar bg-info"
                   }
                   role='progressbar'
@@ -67,9 +71,11 @@ const ExperimentItem = ({
             <div className='col-3'>
               <form onSubmit={onGetSummary} className='form'>
                 <input
-                  className='btn btn-outline-info'
+                  className={
+                    summaries[name] ? "btn btn-info" : "btn btn-outline-info"
+                  }
                   type='submit'
-                  value='Summary'
+                  value={summaries[name] ? "Refresh" : "Summary"}
                   aria-controls={name}
                 />
               </form>
