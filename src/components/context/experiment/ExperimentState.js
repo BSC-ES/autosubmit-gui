@@ -21,11 +21,15 @@ import {
   SET_AUTOUPDATE_RUN,
   GET_PKL_DATA,
   SET_LOADING_PKL,
+  SET_LOADING_TREE_PKL,
   UPDATE_NODES,
   SHOULD_UPDATE_GRAPH,
   SET_AUTOUPDATE_PKL,
+  SET_AUTOUPDATE_TREE_PKL,
   CLEAN_PKL_DATA,
+  CLEAN_TREE_PKL_DATA,
   SET_PKL_CHANGES,
+  SET_PKLTREE_CHANGES,
   UPDATE_EXPERIMENT_TS,
   SET_VIS_DATA,
   SET_VIS_NETWORK,
@@ -60,11 +64,13 @@ const ExperimentState = props => {
     rundata: null,
     pkldata: null,
     pklchanges: null,
+    pkltreechanges: null,
     loadingTree: false,
     loadingGraph: false,
     loadingRun: false,
     loadingState: false,
     loadingPkl: false,
+    loadingTreePkl: false,
     loadingSearchJob: false,
     loadingFilterTree: false,
     loadingJobMonitor: false,
@@ -74,6 +80,7 @@ const ExperimentState = props => {
     enabledGraphSearch: true,
     startAutoUpdateRun: false,
     startAutoUpdatePkl: false,
+    startAutoUpdateTreePkl: false,
     shouldUpdateGraph: false,
     visNodes: null,
     visNetwork: null,
@@ -94,8 +101,8 @@ const ExperimentState = props => {
 
   const [state, dispatch] = useReducer(ExperimentReducer, initialState);
 
-  const localserver = "http://192.168.11.91:8081";
-  //const localserver = "http://84.88.185.94:8081";
+  //const localserver = "http://192.168.11.91:8081";
+  const localserver = "http://84.88.185.94:8081";
 
   // Search Experiments
   const searchExperiments = async text => {
@@ -227,6 +234,7 @@ const ExperimentState = props => {
 
   // Get experiment pkl data for tree
   const getExperimentTreePkl = async (expid, timeStamp) => {
+    setLoadingTreePkl();
     setLoadingTreeRefresh();
     const res = await axios.get(
       `${localserver}/pkltreeinfo/${expid}/${timeStamp}`
@@ -239,6 +247,8 @@ const ExperimentState = props => {
       retrievedPklTree.has_changed === true &&
       retrievedPklTree.pkl_content.length > 0
     ) {
+      // Jobs currently on state
+      var changes = "";
       var currentJobs = state.treedata.jobs;
       var referenceHeaders = state.treedata.reference;
       var currentPackages = referenceHeaders["packages"];
@@ -248,6 +258,7 @@ const ExperimentState = props => {
       const failed_tag = referenceHeaders["failed_tag"];
       const check_mark = referenceHeaders["check_mark"];
 
+      // Building dictionary of retrieved jobs
       for (var j = 0, job; j < retrievedPklTree.pkl_content.length; j++) {
         job = retrievedPklTree.pkl_content[j];
         jobs[job.name] = job;
@@ -265,10 +276,18 @@ const ExperimentState = props => {
           var is_change_status = false;
           var new_status = cjob.status;
           var old_status = ijob.status;
+          // Detecting status change
           if (cjob.status_code !== ijob.status_code) {
             is_change_status = true;
             new_status = ijob.status;
             old_status = cjob.status;
+            changes +=
+              timeStampToDate(retrievedPklTree.pkl_timestamp) +
+              ": " +
+              cjob.id +
+              " to " +
+              new_status +
+              "\n";
           }
           cjob.status_code = ijob.status_code;
           cjob.status = ijob.status;
@@ -278,11 +297,13 @@ const ExperimentState = props => {
           cjob.wrapper = ijob.wrapper;
           cjob.out = ijob.out;
           cjob.err = ijob.err;
+          // Parents are those groups to which a job belongs in the tree
           var tree_parent_wrapper = "Wrapper: " + ijob.wrapper;
           if (!cjob.tree_parents.includes(tree_parent_wrapper)) {
             cjob.tree_parents.push(tree_parent_wrapper);
           }
           cjob.wrapper_code = ijob.wrapper_id;
+          // Building title according to retrieved data
           var newTitle =
             ijob.title +
             " " +
@@ -291,21 +312,15 @@ const ExperimentState = props => {
             (cjob.sync === true ? retrievedPklTree.sync_tag : "") +
             (ijob.wrapper_id !== 0 ? ijob.wrapper_tag : "");
           cjob.title = newTitle;
+          // Find the corresponding node in the existing tree
           var thenode = state.fancyTree.getNodesByRef(cjob.id);
           if (thenode) {
             for (var thenode_i in thenode) {
               thenode[thenode_i].setTitle(newTitle);
             }
             const parents = cjob.tree_parents;
-            //console.log(parents)
-
-            //console.log(check_mark)
-            //console.log(check_mark);
-            //console.log(referenceHeaders);
             for (var parent in parents) {
-              // console.log(parents[parent])
               var header_data = referenceHeaders[parents[parent]];
-              // console.log(header_data)
               if (header_data) {
                 if (is_change_status === true) {
                   if (new_status === "COMPLETED") {
@@ -367,13 +382,14 @@ const ExperimentState = props => {
         }
       }
       const packages_from_pkl = retrievedPklTree["packages"];
-      //console.log(packages_from_pkl);
-      //console.log(currentPackages);
       for (var package_pkl of packages_from_pkl) {
-        //console.log(package_pkl);
-        //console.log(packages_from_pkl[package_pkl]);
-        //console.log(currentPackages);
         if (!currentPackages.includes(package_pkl)) {
+          changes +=
+            timeStampToDate(retrievedPklTree.pkl_timestamp) +
+            ": " +
+            package_pkl +
+            " has been added.";
+          // If a new wrapper has been found in the pkl
           console.log("New wrapper found: " + package_pkl);
           currentPackages.push(package_pkl);
           //console.log(currentPackages);
@@ -435,8 +451,6 @@ const ExperimentState = props => {
             new_queuing_tag +
             new_check_mark;
           var rootNode = state.fancyTree.getRootNode();
-          //console.log(children_list);
-          //console.log()
           // eslint-disable-next-line no-unused-vars
           var wrapper_branch_root = rootNode.addChildren({
             title: wrapper_title,
@@ -445,6 +459,14 @@ const ExperimentState = props => {
             expanded: false,
             children: children_list
           });
+        }
+      }
+      // if require update
+      if (retrievedPklTree.has_changed === true) {
+        if (state.pkltreechanges) {
+          setPklTreeChanges(changes + state.pkltreechanges);
+        } else {
+          setPklTreeChanges(changes);
         }
       }
     }
@@ -466,6 +488,7 @@ const ExperimentState = props => {
     // const actualPkl = res.data;
 
     let retrievedPkl = null;
+    // Current state jobs
     var current_jobs = {};
     var jobs = {};
     var colorChanges = {};
@@ -473,6 +496,7 @@ const ExperimentState = props => {
     var edgeUpdates = {};
     var new_fakeEdges = {};
     var changes = "";
+    // Retrieved jobs
     var newData = state.data;
     var expData = state.experiment;
     retrievedPkl = res.data;
@@ -485,12 +509,12 @@ const ExperimentState = props => {
       let pkl_packages = retrievedPkl["packages"];
       let current_packages = state.data["packages"];
 
-      //console.log(retrievedPkl.pkl_content.length);
+      // Saving current state data into a dictionary
       for (var k = 0, kjob; k < newData.nodes.length; k++) {
         kjob = newData.nodes[k];
         current_jobs[kjob.id] = kjob;
       }
-
+      // Saving retrieved jobs into a dictionary
       for (var j = 0, job; j < retrievedPkl.pkl_content.length; j++) {
         job = retrievedPkl.pkl_content[j];
         jobs[job.name] = job;
@@ -913,6 +937,7 @@ const ExperimentState = props => {
   const cleanOnlyGraphData = () => dispatch({ type: CLEAN_ONLY_GRAH_DATA });
   const cleanRunData = () => dispatch({ type: CLEAN_RUN_DATA });
   const cleanPklData = () => dispatch({ type: CLEAN_PKL_DATA });
+  const cleanPklTreeData = () => dispatch({ type: CLEAN_TREE_PKL_DATA });
   const cleanNavData = () => dispatch({ type: CLEAN_NAV_DATA });
 
   // Set Loading
@@ -921,6 +946,7 @@ const ExperimentState = props => {
   const setLoadingTree = () => dispatch({ type: SET_LOADING_TREE });
   const setLoadingRun = () => dispatch({ type: SET_LOADING_RUN });
   const setLoadingPkl = () => dispatch({ type: SET_LOADING_PKL });
+  const setLoadingTreePkl = () => dispatch({ type: SET_LOADING_TREE_PKL });
   const setLoadingSearchJob = () => dispatch({ type: SET_LOADING_SEARCH_JOB });
   const setLoadingState = () => dispatch({ type: SET_LOADING_STATE });
   const setLoadingFilter = () => dispatch({ type: SET_LOADING_FILTER });
@@ -942,10 +968,14 @@ const ExperimentState = props => {
     dispatch({ type: SET_AUTOUPDATE_RUN, payload: value });
   const setAutoUpdatePkl = value =>
     dispatch({ type: SET_AUTOUPDATE_PKL, payload: value });
+  const setAutoUpdateTreePkl = value =>
+    dispatch({ type: SET_AUTOUPDATE_TREE_PKL, payload: value });
   const setUpdateGraph = value =>
     dispatch({ type: SHOULD_UPDATE_GRAPH, payload: value });
   const setPklChanges = value =>
     dispatch({ type: SET_PKL_CHANGES, payload: value });
+  const setPklTreeChanges = value =>
+    dispatch({ type: SET_PKLTREE_CHANGES, payload: value });
   const setVisData = value => dispatch({ type: SET_VIS_DATA, payload: value });
   const setVisNetwork = value =>
     dispatch({ type: SET_VIS_NETWORK, payload: value });
@@ -1003,6 +1033,7 @@ const ExperimentState = props => {
         loadingTree: state.loadingTree,
         loadingRun: state.loadingRun,
         loadingPkl: state.loadingPkl,
+        loadingTreePkl: state.loadingTreePkl,
         loadingSearchJob: state.loadingSearchJob,
         loadingFilterTree: state.loadingFilterTree,
         loadingState: state.loadingState,
@@ -1013,11 +1044,13 @@ const ExperimentState = props => {
         treedata: state.treedata,
         rundata: state.rundata,
         pklchanges: state.pklchanges,
+        pkltreechanges: state.pkltreechanges,
         selection: state.selection,
         selectedTreeNode: state.selectedTreeNode,
         enabledGraphSearch: state.enabledGraphSearch,
         startAutoUpdateRun: state.startAutoUpdateRun,
         startAutoUpdatePkl: state.startAutoUpdatePkl,
+        startAutoUpdateTreePkl: state.startAutoUpdateTreePkl,
         shouldUpdateGraph: state.shouldUpdateGraph,
         visNodes: state.visNodes,
         visNetwork: state.visNetwork,
@@ -1028,6 +1061,7 @@ const ExperimentState = props => {
         allowJobMonitor: state.allowJobMonitor,
         setAutoUpdateRun,
         setAutoUpdatePkl,
+        setAutoUpdateTreePkl,
         searchExperiments,
         getCurrentRunning,
         clearExperiments,
@@ -1038,8 +1072,10 @@ const ExperimentState = props => {
         cleanTreeData,
         cleanRunData,
         cleanPklData,
+        cleanPklTreeData,
         cleanNavData,
         setPklChanges,
+        setPklTreeChanges,
         updateSelection,
         updateSelectionTree,
         getExperimentRun,

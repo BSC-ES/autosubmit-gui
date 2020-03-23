@@ -1,0 +1,50 @@
+import React, { Component } from "react";
+
+class JobMonitorTree extends Component {
+  componentDidMount() {
+    if (this.props.experiment) {
+      this.props.getExperimentTreePkl(
+        this.props.experiment.expid,
+        this.props.experiment.pkl_timestamp
+      );
+      if (this.props.experimentRunning) {
+        this.interval = setInterval(
+          () =>
+            this.props.getExperimentTreePkl(
+              this.props.experiment.expid,
+              this.props.experiment.pkl_timestamp
+            ),
+          this.props.experiment.updateTime * 2000
+        );
+      }
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.cleanPklTreeData();
+    if (this.props.experimentRunning) {
+      clearInterval(this.interval);
+    }
+  }
+
+  render() {
+    const { loadingTreePkl, pklchanges } = this.props;
+    return (
+      <div className='row'>
+        <div className='col-12'>
+          <div className='card'>
+            <div className='card-header text-center py-0'>
+              <small>Monitoring jobs...</small>
+            </div>
+            <div className='card-body p-0'>
+              {pklchanges && <pre className='scroll-y'>{pklchanges}</pre>}
+              {loadingTreePkl && <small>Loading...</small>}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+
+export default JobMonitorTree;

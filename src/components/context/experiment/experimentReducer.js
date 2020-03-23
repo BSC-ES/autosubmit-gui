@@ -17,10 +17,13 @@ import {
   SET_AUTOUPDATE_RUN,
   GET_PKL_DATA,
   SET_LOADING_PKL,
+  SET_LOADING_TREE_PKL,
   UPDATE_NODES,
   SHOULD_UPDATE_GRAPH,
   SET_AUTOUPDATE_PKL,
+  SET_AUTOUPDATE_TREE_PKL,
   CLEAN_PKL_DATA,
+  CLEAN_TREE_PKL_DATA,
   SET_PKL_CHANGES,
   UPDATE_EXPERIMENT_TS,
   SET_VIS_DATA,
@@ -41,7 +44,8 @@ import {
   PKL_TREE_LOADED,
   CLEAN_ONLY_GRAH_DATA,
   GET_EXPERIMENT_SUMMARY,
-  CLEAR_SUMMARY_EXP
+  CLEAR_SUMMARY_EXP,
+  SET_PKLTREE_CHANGES
 } from "../types";
 
 export default (state, action) => {
@@ -82,6 +86,7 @@ export default (state, action) => {
         treedata: null,
         enabledGraphSearch: true,
         loadingTree: false,
+        loadingTreePkl: false,
         fancyTree: null,
         returnFiler: 0
       };
@@ -97,6 +102,12 @@ export default (state, action) => {
         shouldUpdateGraph: false,
         startAutoUpdatePkl: false,
         pklchanges: null
+      };
+    case CLEAN_TREE_PKL_DATA:
+      return {
+        ...state,
+        startAutoUpdateTreePkl: false,
+        pkltreechanges: null
       };
     case CLEAN_NAV_DATA:
       return {
@@ -137,6 +148,11 @@ export default (state, action) => {
         ...state,
         startAutoUpdatePkl: action.payload
       };
+    case SET_AUTOUPDATE_TREE_PKL:
+      return {
+        ...state,
+        startAutoUpdateTreePkl: action.payload
+      };
     case SET_LOADING:
       return {
         ...state,
@@ -151,6 +167,11 @@ export default (state, action) => {
       return {
         ...state,
         loadingPkl: true
+      };
+    case SET_LOADING_TREE_PKL:
+      return {
+        ...state,
+        loadingTreePkl: true
       };
     case SET_LOADING_GRAPH:
       return {
@@ -249,7 +270,8 @@ export default (state, action) => {
     case PKL_TREE_LOADED:
       return {
         ...state,
-        loadingTreeRefresh: false
+        loadingTreeRefresh: false,
+        loadingTreePkl: false
       };
     case GET_RUNNING_STATE:
       return {
@@ -271,6 +293,11 @@ export default (state, action) => {
       return {
         ...state,
         pklchanges: action.payload
+      };
+    case SET_PKLTREE_CHANGES:
+      return {
+        ...state,
+        pkltreechanges: action.payload
       };
     case SET_VIS_DATA:
       return {

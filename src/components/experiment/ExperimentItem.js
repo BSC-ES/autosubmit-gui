@@ -1,4 +1,4 @@
-import React, { useContext, Fragment } from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import ExperimentContext from "../context/experiment/experimentContext";
@@ -65,14 +65,20 @@ const ExperimentItem = ({
         </div>
         <div className='card-body py-1'>
           {/* <h4 className="card-title"></h4> */}
-          <h6 className='card-subtitle text-muted pt-2'>Owner: {user}</h6>
-          <p className='card-text'>{description}</p>
+          <h6 className='card-subtitle text-muted pt-2'>
+            <small>Owner:</small> {user}
+          </h6>
+          <p className='card-text py-1 mb-1'>
+            <small>{description}</small>
+          </p>
           <div className='row'>
-            <div className='col-3'>
+            <div className='col-3 px-1'>
               <form onSubmit={onGetSummary} className='form'>
                 <input
                   className={
-                    summaries[name] ? "btn btn-info" : "btn btn-outline-info"
+                    summaries[name]
+                      ? "btn btn-info btn-block btn-sm"
+                      : "btn btn-outline-info btn-block btn-sm"
                   }
                   type='submit'
                   value={summaries[name] ? "Refresh" : "Summary"}
@@ -80,86 +86,84 @@ const ExperimentItem = ({
                 />
               </form>
             </div>
-            <div className='col-9'>
+            <div className='col-9 px-1'>
               <Link
                 to={`/autosubmitapp/experiment/${name}`}
-                className='btn btn-outline-primary btn-block'
+                className='btn btn-outline-primary btn-block btn-sm'
               >
                 More
               </Link>
             </div>
             {summaries[name] && summaries[name].error === false && (
               <div className='col-12 pt-2' id={name}>
-                <div className='card card-body'>
-                  <Fragment>
-                    <div className='row'>
-                      <div className='col-md-6'>
+                <div className='card card-body p-0'>
+                  <div className='row text-center'>
+                    <div className='col-md-6'>
+                      <small>
                         Avg. Queue {summaries[name].avg_queue_time} min.
-                      </div>
-                      <div className='col-md-6'>
+                      </small>
+                    </div>
+                    <div className='col-md-6'>
+                      <small>
                         Avg. Run {summaries[name].avg_run_time} min.
-                      </div>
+                      </small>
                     </div>
-                    <div className='row '>
+                  </div>
+                  <div className='row px-2 pb-2'>
+                    <div className='col-12'>
                       {summaries[name].n_running > 0 && (
-                        <div className='col-md-3 text-left pl-1'>
-                          <span className='badge badge-success'>
-                            Running: {summaries[name].n_running}
-                          </span>
-                        </div>
-                      )}
+                        <span className='badge badge-success'>
+                          Running: {summaries[name].n_running}
+                        </span>
+                      )}{" "}
                       {summaries[name].n_queuing > 0 && (
-                        <div className='col-md-3 text-left pl-1'>
-                          <span
-                            className='badge'
-                            style={{ backgroundColor: "pink" }}
-                          >
-                            Queuing: {summaries[name].n_queuing}
-                          </span>
-                        </div>
-                      )}
+                        <span
+                          className='badge'
+                          style={{ backgroundColor: "pink" }}
+                        >
+                          Queuing: {summaries[name].n_queuing}
+                        </span>
+                      )}{" "}
                       {summaries[name].n_submitted > 0 && (
-                        <div className='col-md-3 text-left pl-1'>
-                          <span
-                            className='badge'
-                            style={{ backgroundColor: "cyan" }}
-                          >
-                            Submitted: {summaries[name].n_submitted}
-                          </span>
-                        </div>
-                      )}
+                        <span
+                          className='badge'
+                          style={{ backgroundColor: "cyan" }}
+                        >
+                          Submitted: {summaries[name].n_submitted}
+                        </span>
+                      )}{" "}
                       {summaries[name].n_suspended > 0 && (
-                        <div className='col-md-3 text-left pl-1'>
-                          <span
-                            className='badge'
-                            style={{ backgroundColor: "orange" }}
-                          >
-                            Suspended: {summaries[name].n_suspended}
-                          </span>
-                        </div>
+                        <span
+                          className='badge'
+                          style={{ backgroundColor: "orange" }}
+                        >
+                          Suspended: {summaries[name].n_suspended}
+                        </span>
                       )}
                     </div>
+                  </div>
 
-                    {summaries[name].n_failed > 0 && (
-                      <div className='row'>
-                        <div className='col-md-3 text-left pl-1'>
-                          <span className='badge badge-danger'>
-                            Failed: {summaries[name].n_failed}
-                          </span>
-                        </div>
-                        <div className='col-md-9 text-left'>
-                          <div
-                            className=''
-                            style={{ overflow: "auto", maxHeight: "200px" }}
-                          >
-                            {summaries[name].failed_jobs.map(item => (
-                              <li key={item}>{item}</li>
-                            ))}
-                          </div>
+                  {summaries[name].n_failed > 0 && (
+                    <div className='row px-1'>
+                      <div className='col-md-3 text-center px-2'>
+                        <span className='badge badge-danger'>
+                          Failed: {summaries[name].n_failed}
+                        </span>
+                      </div>
+                      <div className='col-md-9 text-left'>
+                        <div
+                          className=''
+                          style={{ overflow: "auto", maxHeight: "200px" }}
+                        >
+                          {summaries[name].failed_jobs.map(item => (
+                            <li key={item}>
+                              <small>{item}</small>
+                            </li>
+                          ))}
                         </div>
                       </div>
-                    )}
-                  </Fragment>
+                    </div>
+                  )}
                 </div>
               </div>
             )}

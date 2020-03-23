@@ -421,7 +421,7 @@ const SelectionTreeNode = () => {
 };
 
 const experimentStyle = {
-  height: 800
+  height: 400
 };
 
 const headerCard = {
