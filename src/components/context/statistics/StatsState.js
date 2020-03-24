@@ -19,14 +19,14 @@ const StatsState = props => {
     errorMessage: ""
   };
 
-  //const localserver = "http://192.168.11.91:8081";
-  const localserver = "http://84.88.185.94:8081";
-
+  const localserver = "http://192.168.11.91:8081";
+  //const localserver = "http://84.88.185.94:8081";
+  const debug = false;
   const [state, dispatch] = useReducer(StatsReducer, initialState);
 
   // Get Experiment Stats
   const getExperimentStats = async (expid, hours, type) => {
-    console.log("Getting...");
+    debug && console.log("Getting...");
     if (hours.length === 0) {
       hours = 0;
     }
@@ -42,7 +42,7 @@ const StatsState = props => {
     let result = [];
     var requestResult = null;
     let ticks = [];
-    console.log(res.data);
+    debug && console.log(res.data);
     if (res.data) {
       if (res.data.error === true) {
         setIsError(true, res.data.error_message);

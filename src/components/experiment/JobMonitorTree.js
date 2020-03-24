@@ -28,7 +28,7 @@ class JobMonitorTree extends Component {
   }
 
   render() {
-    const { loadingTreePkl, pklchanges } = this.props;
+    const { loadingTreePkl, pkltreechanges } = this.props;
     return (
       <div className='row'>
         <div className='col-12'>
@@ -37,7 +37,9 @@ class JobMonitorTree extends Component {
               <small>Monitoring jobs...</small>
             </div>
             <div className='card-body p-0'>
-              {pklchanges && <pre className='scroll-y'>{pklchanges}</pre>}
+              {pkltreechanges && (
+                <pre className='scroll-y-tree'>{pkltreechanges}</pre>
+              )}
               {loadingTreePkl && <small>Loading...</small>}
             </div>
           </div>

@@ -58,7 +58,7 @@ const TreeControl = () => {
               />
             </form>
           )}
-          {experiment && treedata && (
+          {experiment && treedata && !startAutoUpdateTreePkl && (
             <form onSubmit={onClearTree} className='form'>
               <input
                 type='submit'
@@ -69,18 +69,21 @@ const TreeControl = () => {
             </form>
           )}
         </div>
-        {experiment && treedata && experimentRunning && (
-          <div className='col-md-2'>
-            <form onSubmit={onRequestUpdate} className='form'>
-              <input
-                type='submit'
-                value='Refresh'
-                className='btn btn-success btn-block btn-sm'
-                disabled={!enabledGraphSearch}
-              />
-            </form>
-          </div>
-        )}
+        {experiment &&
+          treedata &&
+          experimentRunning &&
+          !startAutoUpdateTreePkl && (
+            <div className='col-md-2'>
+              <form onSubmit={onRequestUpdate} className='form'>
+                <input
+                  type='submit'
+                  value='Refresh'
+                  className='btn btn-success btn-block btn-sm'
+                  disabled={!enabledGraphSearch}
+                />
+              </form>
+            </div>
+          )}
         {experimentRunning && treedata && !startAutoUpdateTreePkl && (
           <div className='col-md-2'>
             <form onSubmit={onJobMonitor} className='form'>

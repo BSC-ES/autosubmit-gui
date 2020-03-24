@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url("https://fonts.googleapis.com/css?family=Roboto");
 
 /* Global Styles */
 /* :root {
@@ -32,8 +32,9 @@
 pre.bash {
   background-color: black;
   color: white;
-  font-size: medium ; 
-  font-family: Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
+  font-size: medium;
+  font-family: Consolas, Monaco, Lucida Console, Liberation Mono,
+    DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
   width: 100%;
   display: inline-block;
   line-height: 1 !important;
@@ -45,7 +46,7 @@ pre.bash {
   color: #999;
   text-align: center;
   background-color: #f9f9f9;
-  border-top: .05rem solid #e5e5e5;
+  border-top: 0.05rem solid #e5e5e5;
 }
 
 .container {
@@ -76,6 +77,13 @@ pre.bash {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.scroll-y-tree {
+  overflow-y: auto;
+  height: 358px;
+  font-size: 0.7rem;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 .scroll-x {
   overflow-x: auto;
 }
@@ -97,7 +105,8 @@ ul.fancytree-container {
 } */
 span.fancytree-node.fancytree-clone span.fancytree-title:after {
   content: "";
-  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAMAAAC67D+PAAAAFVBMVEVmmcwzmcyZzP8AZswAZv////////9E6giVAAAAB3RSTlP///////8AGksDRgAAADhJREFUGFcly0ESAEAEA0Ei6/9P3sEcVB8kmrwFyni0bOeyyDpy9JTLEaOhQq7Ongf5FeMhHS/4AVnsAZubxDVmAAAAAElFTkSuQmCC") 100% 50% no-repeat;
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAMAAAC67D+PAAAAFVBMVEVmmcwzmcyZzP8AZswAZv////////9E6giVAAAAB3RSTlP///////8AGksDRgAAADhJREFUGFcly0ESAEAEA0Ei6/9P3sEcVB8kmrwFyni0bOeyyDpy9JTLEaOhQq7Ongf5FeMhHS/4AVnsAZubxDVmAAAAAElFTkSuQmCC")
+    100% 50% no-repeat;
   padding-right: 13px;
 }
 
@@ -108,11 +117,16 @@ span.fancytree-node.fancytree-active-clone {
 }
 
 @keyframes flash {
-  0% { background-color:none;}
-  50% { background-color:#fbf8b2;}
-  100% {background-color:none;}
+  0% {
+    background-color: none;
+  }
+  50% {
+    background-color: #fbf8b2;
+  }
+  100% {
+    background-color: none;
+  }
 }
-
 
 /* 
 body {
@@ -489,7 +503,7 @@ table th {
   }
 
   /* Text Styles */
-  /* .x-large {
+/* .x-large {
     font-size: 3rem;
   }
 
@@ -501,8 +515,8 @@ table th {
     font-size: 1rem;
   }  */
 
-  /* Navbar */
-  /* .navbar {
+/* Navbar */
+/* .navbar {
     display: block;
     text-align: center;
   }

@@ -101,14 +101,15 @@ const ExperimentState = props => {
 
   const [state, dispatch] = useReducer(ExperimentReducer, initialState);
 
-  //const localserver = "http://192.168.11.91:8081";
-  const localserver = "http://84.88.185.94:8081";
+  const localserver = "http://192.168.11.91:8081";
+  //const localserver = "http://84.88.185.94:8081";
+  const debug = false;
 
   // Search Experiments
   const searchExperiments = async text => {
     setLoading();
     const res = await axios.get(`${localserver}/search/${text}`);
-    console.log(res.data);
+    debug && console.log(res.data);
     dispatch({
       type: SEARCH_EXPERIMENTS,
       payload: res.data.experiment
@@ -150,7 +151,7 @@ const ExperimentState = props => {
   const getCurrentRunning = async () => {
     setLoading();
     const res = await axios.get(`${localserver}/running/`);
-    console.log(res.data);
+    debug && console.log(res.data);
     dispatch({
       type: CURRENT_RUNNING,
       payload: res.data.experiment
@@ -162,7 +163,7 @@ const ExperimentState = props => {
     setLoading();
     //cleanGraphData();
     const res = await axios.get(`${localserver}/expinfo/${expid}`);
-    console.log(res.data);
+    debug && console.log(res.data);
     dispatch({
       type: GET_EXPERIMENT,
       payload: res.data
@@ -173,7 +174,7 @@ const ExperimentState = props => {
   const getExperimentGraphGrouped = async (expid, group) => {
     setLoadingGraph();
     const res = await axios.get(`${localserver}/group/${expid}/${group}`);
-    console.log(res.data);
+    debug && console.log(res.data);
     dispatch({
       type: GET_GRAPH_GROUPED,
       payload: res.data
@@ -191,7 +192,7 @@ const ExperimentState = props => {
     const res = await axios.get(
       `${localserver}/graph/${expid}/${layout}/${grouped}`
     );
-    console.log(res.data);
+    debug && console.log(res.data);
     const resdata = res.data;
     dispatch({
       type: GET_GRAPH,
@@ -203,7 +204,7 @@ const ExperimentState = props => {
     setLoadingTree();
 
     const res = await axios.get(`${localserver}/tree/${expid}`);
-    console.log(res.data);
+    debug && console.log(res.data);
     dispatch({
       type: GET_TREE,
       payload: res.data
@@ -214,7 +215,7 @@ const ExperimentState = props => {
   const getExperimentRun = async expid => {
     setLoadingRun();
     const res = await axios.get(`${localserver}/exprun/${expid}`);
-    console.log(res.data);
+    debug && console.log(res.data);
     dispatch({
       type: GET_EXPERIMENT_RUN,
       payload: res.data
@@ -225,7 +226,7 @@ const ExperimentState = props => {
   const getRunningState = async expid => {
     setLoadingState();
     const res = await axios.get(`${localserver}/ifrun/${expid}`);
-    console.log(res.data);
+    debug && console.log(res.data);
     dispatch({
       type: GET_RUNNING_STATE,
       payload: res.data.running
@@ -240,7 +241,7 @@ const ExperimentState = props => {
       `${localserver}/pkltreeinfo/${expid}/${timeStamp}`
     );
     const retrievedPklTree = res.data;
-    console.log(retrievedPklTree);
+    debug && console.log(retrievedPklTree);
     var jobs = {};
     if (
       state.treedata !== null &&
@@ -390,7 +391,7 @@ const ExperimentState = props => {
             package_pkl +
             " has been added.";
           // If a new wrapper has been found in the pkl
-          console.log("New wrapper found: " + package_pkl);
+          debug && console.log("New wrapper found: " + package_pkl);
           currentPackages.push(package_pkl);
           //console.log(currentPackages);
           var wrapper_pre_title = "Wrapper: " + package_pkl;
@@ -484,7 +485,7 @@ const ExperimentState = props => {
     setLoadingJobMonitor();
     //timeStamp = 1000;
     const res = await axios.get(`${localserver}/pklinfo/${expid}/${timeStamp}`);
-    console.log(res.data);
+    debug && console.log(res.data);
     // const actualPkl = res.data;
 
     let retrievedPkl = null;
@@ -551,7 +552,7 @@ const ExperimentState = props => {
       }
 
       let requireUpdate = false;
-      console.log("Current ts: " + state.experiment.pkl_timestamp);
+      debug && console.log("Current ts: " + state.experiment.pkl_timestamp);
 
       if (newData.nodes) {
         for (var i = 0; i < newData.nodes.length; i++) {
@@ -627,7 +628,7 @@ const ExperimentState = props => {
         if (requireUpdate) {
           // console.log(newData.pkl_timestamp);
           // console.log(expData.pkl_timestamp);
-          console.log("New ts: " + retrievedPkl.pkl_timestamp);
+          debug && console.log("New ts: " + retrievedPkl.pkl_timestamp);
           newData.pkl_timestamp = retrievedPkl.pkl_timestamp;
           expData.pkl_timestamp = retrievedPkl.pkl_timestamp;
           // console.log(newData.pkl_timestamp);
@@ -662,7 +663,7 @@ const ExperimentState = props => {
             addFakeEdge(key_added, new_fakeEdges[key_added]);
           }
         } else {
-          console.log("No changes but updating pkl anyway.");
+          debug && console.log("No changes but updating pkl anyway.");
           expData.pkl_timestamp = retrievedPkl.pkl_timestamp;
           updateExperimentTimeStamp(expData);
         }
@@ -908,7 +909,7 @@ const ExperimentState = props => {
     setLoadingFilter();
     if (state.treedata && state.fancyTree) {
       const count = await state.fancyTree.filterBranches(string);
-      console.log(count);
+      debug && console.log(count);
       dispatch({
         type: FILTER_TREEVIEW_FAILED,
         payload: count
