@@ -908,7 +908,34 @@ const ExperimentState = props => {
   const filterTreeView = async string => {
     setLoadingFilter();
     if (state.treedata && state.fancyTree) {
-      const count = await state.fancyTree.filterBranches(string);
+      var count = 0;
+      if (string.indexOf("*") > -1) {
+        const fields = string.split("*");
+        var result = false;
+        count = await state.fancyTree.filterNodes(function(node) {
+          var string_test = node.title;
+          for (var i = 0; i < fields.length; i++) {
+            if (fields[i].length > 0) {
+              if (string_test.indexOf(fields[i]) > -1) {
+                debug && console.log(fields[i] + " found in " + string_test);
+                var found_index =
+                  string_test.indexOf(fields[i]) + fields[i].length;
+                string_test = string_test.substring(found_index);
+                debug && console.log(found_index + " in " + string_test);
+                result = true;
+              } else {
+                debug &&
+                  console.log(fields[i] + " Not found in " + string_test);
+                result = false;
+                break;
+              }
+            }
+          }
+          return result;
+        });
+      } else {
+        count = await state.fancyTree.filterNodes(string);
+      }
       debug && console.log(count);
       dispatch({
         type: FILTER_TREEVIEW_FAILED,
