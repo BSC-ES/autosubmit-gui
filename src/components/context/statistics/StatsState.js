@@ -6,17 +6,17 @@ import {
   SET_LOADING,
   GET_EXPERIMENT_STATS,
   CLEAR_STATS,
-  SET_ERROR_STATS
+  SET_ERROR_STATS,
 } from "../types";
 
-const StatsState = props => {
+const StatsState = (props) => {
   const initialState = {
     loading: false,
     statdata: null,
     ticksdata: null,
     isError: false,
     totaldata: null,
-    errorMessage: ""
+    errorMessage: "",
   };
 
   const localserver = "http://192.168.11.91:8081";
@@ -56,7 +56,7 @@ const StatsState = props => {
         "Run",
         "Failed Jobs",
         "Failed Queued",
-        "Fail Run"
+        "Fail Run",
       ]);
 
       for (var i = 0; i < res.data.jobs.length; i++) {
@@ -66,7 +66,7 @@ const StatsState = props => {
           res.data.stats.run[i],
           res.data.stats.failed_jobs[i],
           res.data.stats.fail_queued[i],
-          res.data.stats.fail_run[i]
+          res.data.stats.fail_run[i],
         ]);
         ticks.push({ v: i + 1, f: res.data.jobs[i] });
       }
@@ -75,7 +75,7 @@ const StatsState = props => {
     //console.log(ticks);
     dispatch({
       type: GET_EXPERIMENT_STATS,
-      payload: { result, requestResult, ticks }
+      payload: { result, requestResult, ticks },
     });
   };
 
@@ -87,7 +87,7 @@ const StatsState = props => {
   const setIsError = (error, msg) => {
     dispatch({
       type: SET_ERROR_STATS,
-      payload: { error, msg }
+      payload: { error, msg },
     });
   };
 
@@ -101,7 +101,7 @@ const StatsState = props => {
         totaldata: state.totaldata,
         ticksdata: state.ticksdata,
         getExperimentStats,
-        clearStats
+        clearStats,
       }}
     >
       {props.children}

@@ -14,7 +14,7 @@ const SelectionTreeNode = () => {
   ) {
     currentNode = selectedTreeNode.node.refKey;
     if (treedata && treedata.jobs) {
-      selectedNode = treedata.jobs.find(job => job.id === currentNode);
+      selectedNode = treedata.jobs.find((job) => job.id === currentNode);
       //console.log(selectedNode);
     } else {
       selectedNode = null;
@@ -23,7 +23,7 @@ const SelectionTreeNode = () => {
     selectedNode = null;
   }
 
-  const copyContent = inputname => e => {
+  const copyContent = (inputname) => (e) => {
     e.preventDefault();
     console.log("Sending " + inputname);
     window.copyToClip(inputname);
@@ -53,7 +53,7 @@ const SelectionTreeNode = () => {
                   </div>
                   <div className='col-md-6'>
                     <small>
-                      <strong>Real:</strong>
+                      <strong>End:</strong>
                     </small>{" "}
                     {selectedNode.date_plus}
                   </div>
@@ -119,7 +119,7 @@ const SelectionTreeNode = () => {
                             selectedNode.status === "SUBMITTED"
                               ? "cyan"
                               : "pink",
-                          color: "black"
+                          color: "black",
                         }}
                       >
                         <small>
@@ -153,7 +153,7 @@ const SelectionTreeNode = () => {
                         width: "100%",
                         backgroundColor: selectedNode.status_color,
                         color:
-                          selectedNode.status === "RUNNING" ? "white" : "black"
+                          selectedNode.status === "RUNNING" ? "white" : "black",
                       }}
                     >
                       Status:
@@ -421,11 +421,11 @@ const SelectionTreeNode = () => {
 };
 
 const experimentStyle = {
-  height: 400
+  height: 400,
 };
 
 const headerCard = {
-  height: 30
+  height: 30,
 };
 
 export default SelectionTreeNode;

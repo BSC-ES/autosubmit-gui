@@ -49,10 +49,10 @@ import {
   SET_LOADING_TREE_REFRESH,
   PKL_TREE_LOADED,
   GET_EXPERIMENT_SUMMARY,
-  CLEAR_SUMMARY_EXP
+  CLEAR_SUMMARY_EXP,
 } from "../types";
 
-const ExperimentState = props => {
+const ExperimentState = (props) => {
   const initialState = {
     experiments: [],
     summaries: [],
@@ -89,7 +89,7 @@ const ExperimentState = props => {
     current_grouped: "none",
     current_layout: "standard",
     allowJobMonitor: false,
-    returnFilter: 0
+    returnFilter: 0,
   };
 
   const WaitingCode = 0;
@@ -106,13 +106,13 @@ const ExperimentState = props => {
   const debug = false;
 
   // Search Experiments
-  const searchExperiments = async text => {
+  const searchExperiments = async (text) => {
     setLoading();
     const res = await axios.get(`${localserver}/search/${text}`);
     debug && console.log(res.data);
     dispatch({
       type: SEARCH_EXPERIMENTS,
-      payload: res.data.experiment
+      payload: res.data.experiment,
     });
   };
 
@@ -125,7 +125,7 @@ const ExperimentState = props => {
   };
 
   // Get Summary for Search item
-  const getExperimentSummary = async expid => {
+  const getExperimentSummary = async (expid) => {
     clearSummary(expid);
     const res = await axios.get(`${localserver}/summary/${expid}`);
     const summary = res.data;
@@ -134,17 +134,17 @@ const ExperimentState = props => {
     //state.summaries.push({ key: expid, value: summary });
     state.summaries[expid] = summary;
     dispatch({
-      type: GET_EXPERIMENT_SUMMARY
+      type: GET_EXPERIMENT_SUMMARY,
       //payload: { currentSummaries, summary, expid }
     });
   };
 
-  const clearSummary = expid => {
+  const clearSummary = (expid) => {
     if (state.summaries[expid]) {
       state.summaries[expid] = null;
     }
     dispatch({
-      type: CLEAR_SUMMARY_EXP
+      type: CLEAR_SUMMARY_EXP,
     });
   };
 
@@ -154,19 +154,19 @@ const ExperimentState = props => {
     debug && console.log(res.data);
     dispatch({
       type: CURRENT_RUNNING,
-      payload: res.data.experiment
+      payload: res.data.experiment,
     });
   };
 
   // Get Experiment
-  const getExperiment = async expid => {
+  const getExperiment = async (expid) => {
     setLoading();
     //cleanGraphData();
     const res = await axios.get(`${localserver}/expinfo/${expid}`);
     debug && console.log(res.data);
     dispatch({
       type: GET_EXPERIMENT,
-      payload: res.data
+      payload: res.data,
     });
   };
 
@@ -177,7 +177,7 @@ const ExperimentState = props => {
     debug && console.log(res.data);
     dispatch({
       type: GET_GRAPH_GROUPED,
-      payload: res.data
+      payload: res.data,
     });
   };
 
@@ -196,40 +196,40 @@ const ExperimentState = props => {
     const resdata = res.data;
     dispatch({
       type: GET_GRAPH,
-      payload: { resdata, grouped, layout }
+      payload: { resdata, grouped, layout },
     });
   };
 
-  const getExperimentTree = async expid => {
+  const getExperimentTree = async (expid) => {
     setLoadingTree();
 
     const res = await axios.get(`${localserver}/tree/${expid}`);
     debug && console.log(res.data);
     dispatch({
       type: GET_TREE,
-      payload: res.data
+      payload: res.data,
     });
   };
 
   // Get Experiment Run
-  const getExperimentRun = async expid => {
+  const getExperimentRun = async (expid) => {
     setLoadingRun();
     const res = await axios.get(`${localserver}/exprun/${expid}`);
     debug && console.log(res.data);
     dispatch({
       type: GET_EXPERIMENT_RUN,
-      payload: res.data
+      payload: res.data,
     });
   };
 
   // Get Running State
-  const getRunningState = async expid => {
+  const getRunningState = async (expid) => {
     setLoadingState();
     const res = await axios.get(`${localserver}/ifrun/${expid}`);
     debug && console.log(res.data);
     dispatch({
       type: GET_RUNNING_STATE,
-      payload: res.data.running
+      payload: res.data.running,
     });
   };
 
@@ -400,11 +400,11 @@ const ExperimentState = props => {
             failed: 0,
             queuing: 0,
             running: 0,
-            total: 0
+            total: 0,
           };
           var header_wrapper = referenceHeaders[wrapper_pre_title];
           // eslint-disable-next-line no-loop-func
-          var children_jobs = currentJobs.filter(function(x) {
+          var children_jobs = currentJobs.filter(function (x) {
             return x.wrapper === package_pkl;
           });
           var children_list = [];
@@ -422,7 +422,7 @@ const ExperimentState = props => {
               title: children_jobs[k].title,
               refKey: children_jobs[k].id,
               data: "Empty",
-              children: []
+              children: [],
             });
           }
           header_wrapper.total = children_jobs.length;
@@ -458,7 +458,7 @@ const ExperimentState = props => {
             folder: true,
             refKey: wrapper_pre_title,
             expanded: false,
-            children: children_list
+            children: children_list,
           });
         }
       }
@@ -472,7 +472,7 @@ const ExperimentState = props => {
       }
     }
     dispatch({
-      type: PKL_TREE_LOADED
+      type: PKL_TREE_LOADED,
     });
     //console.log(res.data);
   };
@@ -671,7 +671,7 @@ const ExperimentState = props => {
     }
     dispatch({
       type: GET_PKL_DATA,
-      payload: res.data
+      payload: res.data,
     });
   };
 
@@ -685,7 +685,7 @@ const ExperimentState = props => {
     //state.visNodes.update({id:idChange, color: { background: newColor }});
   };
 
-  const updateGraphBorder = idChange => {
+  const updateGraphBorder = (idChange) => {
     //console.log("Upate graph border of " + idChange);
     state.visNetwork.body.nodes[
       idChange
@@ -699,7 +699,7 @@ const ExperimentState = props => {
     state.visNetwork.selectNodes([idChange]);
   };
 
-  const updateEdgeStyle = idEdge => {
+  const updateEdgeStyle = (idEdge) => {
     if (Object.keys(state.visNetwork.body.edges).includes(idEdge)) {
       //console.log("Update style of edge " + idEdge);
       state.visNetwork.body.edges[idEdge].options.dashes = false;
@@ -719,8 +719,8 @@ const ExperimentState = props => {
         to: target,
         dashes: true,
         background: { enabled: true, color: "rgba(63, 191, 63, 0.5)" },
-        arrows: { to: { enabled: false } }
-      }
+        arrows: { to: { enabled: false } },
+      },
     ]);
   };
 
@@ -731,7 +731,7 @@ const ExperimentState = props => {
         position: { x: posx, y: posy },
         scale: cScale,
         //offset: {x: 30, y: 30},
-        animation: false
+        animation: false,
       });
     } else if (network) {
       //console.log("into var")
@@ -739,7 +739,7 @@ const ExperimentState = props => {
         position: { x: posx, y: posy },
         scale: cScale,
         //offset: {x: 30, y: 30},
-        animation: false
+        animation: false,
       });
     }
   };
@@ -847,7 +847,7 @@ const ExperimentState = props => {
     }
   };
 
-  const navigateTo = Id => {
+  const navigateTo = (Id) => {
     if (state.visNetwork) {
       var currentPosition = state.visNetwork.getPositions([Id]);
       if (currentPosition[Id]) {
@@ -858,7 +858,7 @@ const ExperimentState = props => {
     }
   };
 
-  const navigateToGroup = IdList => {
+  const navigateToGroup = (IdList) => {
     if (state.visNetwork) {
       state.visNetwork.unselectAll();
       const currentLength = IdList.length;
@@ -876,18 +876,18 @@ const ExperimentState = props => {
     }
   };
 
-  const searchJobInGraph = async string => {
+  const searchJobInGraph = async (string) => {
     setLoadingSearchJob();
     if (state.data.nodes) {
       const foundNodes = await state.data.nodes.filter(
-        node => node.id.toUpperCase().indexOf(string.toUpperCase()) >= 0
+        (node) => node.id.toUpperCase().indexOf(string.toUpperCase()) >= 0
       );
       // console.log(foundNodes);
       // console.log(foundNodes.length);
       if (foundNodes && foundNodes.length > 0) {
         dispatch({
           type: SET_FOUND_NODES,
-          payload: foundNodes
+          payload: foundNodes,
         });
 
         //console.log(foundNodes[0].id);
@@ -901,18 +901,18 @@ const ExperimentState = props => {
 
     dispatch({
       type: SET_FOUND_NODES,
-      payload: null
+      payload: null,
     });
   };
 
-  const filterTreeView = async string => {
+  const filterTreeView = async (string) => {
     setLoadingFilter();
     if (state.treedata && state.fancyTree) {
       var count = 0;
       if (string.indexOf("*") > -1) {
         const fields = string.split("*");
         var result = false;
-        count = await state.fancyTree.filterNodes(function(node) {
+        count = await state.fancyTree.filterNodes(function (node) {
           var string_test = node.title;
           for (var i = 0; i < fields.length; i++) {
             if (fields[i].length > 0) {
@@ -939,12 +939,12 @@ const ExperimentState = props => {
       debug && console.log(count);
       dispatch({
         type: FILTER_TREEVIEW_FAILED,
-        payload: count
+        payload: count,
       });
     } else {
       dispatch({
         type: FILTER_TREEVIEW_FAILED,
-        payload: 0
+        payload: 0,
       });
     }
   };
@@ -953,7 +953,7 @@ const ExperimentState = props => {
     if (state.treedata && state.fancyTree) {
       state.fancyTree.clearFilter();
       dispatch({
-        type: CLEAR_FILTER_TREE
+        type: CLEAR_FILTER_TREE,
       });
     }
   };
@@ -984,34 +984,35 @@ const ExperimentState = props => {
     dispatch({ type: SET_LOADING_TREE_REFRESH });
 
   // Action Things
-  const updateSelection = currentSelection =>
+  const updateSelection = (currentSelection) =>
     dispatch({ type: UPDATE_SELECTION, payload: currentSelection });
-  const updateSelectionTree = currentSelected =>
+  const updateSelectionTree = (currentSelected) =>
     dispatch({ type: UPDATE_SELECTION_TREE, payload: currentSelected });
-  const updateNodes = newdata =>
+  const updateNodes = (newdata) =>
     dispatch({ type: UPDATE_NODES, payload: newdata });
-  const updateExperimentTimeStamp = newExperiment =>
+  const updateExperimentTimeStamp = (newExperiment) =>
     dispatch({ type: UPDATE_EXPERIMENT_TS, payload: newExperiment });
-  const setAutoUpdateRun = value =>
+  const setAutoUpdateRun = (value) =>
     dispatch({ type: SET_AUTOUPDATE_RUN, payload: value });
-  const setAutoUpdatePkl = value =>
+  const setAutoUpdatePkl = (value) =>
     dispatch({ type: SET_AUTOUPDATE_PKL, payload: value });
-  const setAutoUpdateTreePkl = value =>
+  const setAutoUpdateTreePkl = (value) =>
     dispatch({ type: SET_AUTOUPDATE_TREE_PKL, payload: value });
-  const setUpdateGraph = value =>
+  const setUpdateGraph = (value) =>
     dispatch({ type: SHOULD_UPDATE_GRAPH, payload: value });
-  const setPklChanges = value =>
+  const setPklChanges = (value) =>
     dispatch({ type: SET_PKL_CHANGES, payload: value });
-  const setPklTreeChanges = value =>
+  const setPklTreeChanges = (value) =>
     dispatch({ type: SET_PKLTREE_CHANGES, payload: value });
-  const setVisData = value => dispatch({ type: SET_VIS_DATA, payload: value });
-  const setVisNetwork = value =>
+  const setVisData = (value) =>
+    dispatch({ type: SET_VIS_DATA, payload: value });
+  const setVisNetwork = (value) =>
     dispatch({ type: SET_VIS_NETWORK, payload: value });
-  const setFancyTree = value =>
+  const setFancyTree = (value) =>
     dispatch({ type: SET_FANCYTREE, payload: value });
 
   // Other Utils
-  const hashCode = value => {
+  const hashCode = (value) => {
     var hash = 0,
       i,
       chr;
@@ -1025,7 +1026,7 @@ const ExperimentState = props => {
     return hash;
   };
 
-  const timeStampToDate = value => {
+  const timeStampToDate = (value) => {
     //console.log('Setting new format: ' + value);
     let formattedDate = "";
     var date = new Date(value * 1000);
@@ -1130,7 +1131,7 @@ const ExperimentState = props => {
         getExperimentTreePkl,
         getExperimentSummary,
         clearSummary,
-        getSummaries
+        getSummaries,
       }}
     >
       {props.children}

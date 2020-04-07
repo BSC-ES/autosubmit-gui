@@ -15,7 +15,7 @@ const Selection = () => {
   var currentNode = "";
   var selectedNode = null;
 
-  const copyContent = inputname => e => {
+  const copyContent = (inputname) => (e) => {
     e.preventDefault();
     console.log("Sending " + inputname);
     window.copyToClip(inputname);
@@ -23,9 +23,9 @@ const Selection = () => {
 
   if (selection) {
     console.log("Current selection " + selection);
-    selection.map(node => (currentNode = node));
+    selection.map((node) => (currentNode = node));
 
-    selectedNode = data.nodes.find(node => node.id === currentNode);
+    selectedNode = data.nodes.find((node) => node.id === currentNode);
     //console.log("Selected node")
     //console.log("Data: " + selectedNode.id + " " + selectedNode.platform_name)
   }
@@ -53,7 +53,7 @@ const Selection = () => {
                     </div>
                     <div className='col-md-6'>
                       <small>
-                        <strong>Real:</strong>
+                        <strong>End:</strong>
                       </small>{" "}
                       {selectedNode.date_plus}
                     </div>
@@ -125,7 +125,7 @@ const Selection = () => {
                               selectedNode.status === "SUBMITTED"
                                 ? "cyan"
                                 : "pink",
-                            color: "black"
+                            color: "black",
                           }}
                         >
                           <small>
@@ -161,7 +161,7 @@ const Selection = () => {
                           color:
                             selectedNode.status === "RUNNING"
                               ? "white"
-                              : "black"
+                              : "black",
                         }}
                       >
                         Status:
@@ -385,11 +385,11 @@ const Selection = () => {
 };
 
 const experimentStyle = {
-  height: 320
+  height: 320,
 };
 
 const headerCard = {
-  height: 30
+  height: 30,
 };
 
 export default Selection;
