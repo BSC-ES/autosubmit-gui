@@ -37,7 +37,7 @@ not IE_Mob 11
 maintained node versions
 ```
 
-Developers set their version lists using queries like `last 2 version`
+Developers set their version lists using queries like `last 2 versions`
 to be free from updating versions manually.
 Browserslist will use [`caniuse-lite`] with [Can I Use] data for this queries.
 
@@ -91,12 +91,14 @@ Browserslist will take queries from tool option,
   by user agent string to match Browserslist.
 * [`browserslist-browserstack`] runs BrowserStack tests for all browsers
   in Browserslist config.
+* [`browserslist-adobe-analytics`] use Adobe Analytics data to target browsers.
 * [`caniuse-api`] returns browsers which support some specific feature.
 * Run `npx browserslist` in your project directory to see project’s
   target browsers. This CLI tool is built-in and available in any project
   with Autoprefixer.
 
 [`browserslist-useragent-regexp`]: https://github.com/browserslist/browserslist-useragent-regexp
+[`browserslist-adobe-analytics`]:  https://github.com/xeroxinteractive/browserslist-adobe-analytics
 [`browserslist-useragent-ruby`]:   https://github.com/browserslist/browserslist-useragent-ruby
 [`browserslist-browserstack`]:     https://github.com/xeroxinteractive/browserslist-browserstack
 [`browserslist-ga-export`]:        https://github.com/browserslist/browserslist-ga-export

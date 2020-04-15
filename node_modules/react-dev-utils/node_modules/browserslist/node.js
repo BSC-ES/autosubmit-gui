@@ -137,6 +137,20 @@ function normalizeStats (data, stats) {
   return normalized
 }
 
+function normalizeUsageData (usageData, data) {
+  for (var browser in usageData) {
+    var browserUsage = usageData[browser]
+    // eslint-disable-next-line max-len
+    // https://github.com/browserslist/browserslist/issues/431#issuecomment-565230615
+    // caniuse-db returns { 0: "percentage" } for `and_*` regional stats
+    if ('0' in browserUsage) {
+      var versions = data[browser].versions
+      browserUsage[versions[versions.length - 1]] = browserUsage[0]
+      delete browserUsage[0]
+    }
+  }
+}
+
 module.exports = {
   loadQueries: function loadQueries (context, name) {
     if (!context.dangerousExtend) checkExtend(name)
@@ -201,16 +215,17 @@ module.exports = {
     }
   },
 
-  loadCountry: function loadCountry (usage, country) {
+  loadCountry: function loadCountry (usage, country, data) {
     var code = country.replace(/[^\w-]/g, '')
     if (!usage[code]) {
       // eslint-disable-next-line security/detect-non-literal-require
       var compressed = require('caniuse-lite/data/regions/' + code + '.js')
-      var data = region(compressed)
+      var usageData = region(compressed)
+      normalizeUsageData(usageData, data)
       usage[country] = { }
-      for (var i in data) {
-        for (var j in data[i]) {
-          usage[country][i + ' ' + j] = data[i][j]
+      for (var i in usageData) {
+        for (var j in usageData[i]) {
+          usage[country][i + ' ' + j] = usageData[i][j]
         }
       }
     }
@@ -327,14 +342,7 @@ module.exports = {
     var halfYearAgo = Date.now() - TIME_TO_UPDATE_CANIUSE
 
     if (latest !== 0 && latest < halfYearAgo) {
-      var command = 'npm update'
-      eachParent(__filename, function (dir) {
-        var pckg = path.join(dir, 'package.json')
-        var yarnLock = path.join(dir, 'yarn.lock')
-        if (isFile(pckg) && isFile(yarnLock)) {
-          command = 'yarn upgrade'
-        }
-      })
+      var command = 'npx browserslist --update-db'
       console.warn(
         'Browserslist: caniuse-lite is outdated. ' +
         'Please run the following command: `' + command + '`'
