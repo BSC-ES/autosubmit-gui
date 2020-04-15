@@ -10,7 +10,7 @@ const Navbar = ({ icon, title }) => {
 
   const [text, setText] = useState("");
 
-  const submitSearch = e => {
+  const submitSearch = (e) => {
     e.preventDefault();
     if (text !== "") {
       searchExperiments(text);
@@ -18,7 +18,7 @@ const Navbar = ({ icon, title }) => {
     }
   };
 
-  const onChange = e => setText(e.target.value);
+  const onChange = (e) => setText(e.target.value);
 
   return (
     <nav className='navbar navbar-expand-sm navbar-dark bg-dark mb-3'>
@@ -38,24 +38,26 @@ const Navbar = ({ icon, title }) => {
             </Link>
           </li>
         </ul>
-        {history && history.location.pathname !== "/autosubmitapp/" && (
-          <form className='form-inline my-2 my-lg-0' onSubmit={submitSearch}>
-            <input
-              type='search'
-              className='form-control mr-sm-2'
-              placeholder='Search Experiments'
-              aria-label='Search'
-              value={text}
-              onChange={onChange}
-            />
-            <button
-              className='btn btn-outline-light my-2 my-sm-0'
-              type='submit'
-            >
-              Search
-            </button>
-          </form>
-        )}
+        {history &&
+          history.location.pathname !== "/autosubmitapp/" &&
+          history.location.pathname !== "/autosubmitapp" && (
+            <form className='form-inline my-2 my-lg-0' onSubmit={submitSearch}>
+              <input
+                type='search'
+                className='form-control mr-sm-2'
+                placeholder='Search Experiments'
+                aria-label='Search'
+                value={text}
+                onChange={onChange}
+              />
+              <button
+                className='btn btn-outline-light my-2 my-sm-0'
+                type='submit'
+              >
+                Search
+              </button>
+            </form>
+          )}
       </div>
     </nav>
 
@@ -77,12 +79,12 @@ const Navbar = ({ icon, title }) => {
 
 Navbar.defaultProps = {
   title: "Autosubmit Searcher",
-  icon: "fas fa-home"
+  icon: "fas fa-home",
 };
 
 Navbar.propTypes = {
   title: PropTypes.string.isRequired,
-  icon: PropTypes.string.isRequired
+  icon: PropTypes.string.isRequired,
 };
 
 export default Navbar;

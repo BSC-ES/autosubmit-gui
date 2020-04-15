@@ -47,15 +47,13 @@ const Selection = () => {
                   <div className='row'>
                     <div className='col-md-6'>
                       <small>
-                        <strong>Initial:</strong>
-                      </small>{" "}
-                      {selectedNode.date}
+                        <strong>Start:</strong> {selectedNode.date}
+                      </small>
                     </div>
                     <div className='col-md-6'>
                       <small>
-                        <strong>End:</strong>
-                      </small>{" "}
-                      {selectedNode.date_plus}
+                        <strong>End:</strong> {selectedNode.date_plus}
+                      </small>
                     </div>
                   </div>
                   <div>
