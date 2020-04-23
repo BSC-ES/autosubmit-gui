@@ -1,28 +1,31 @@
 import React, { useEffect, useContext } from "react";
 import Spinner from "../layout/Spinner";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import ExperimentContext from "../context/experiment/experimentContext";
 
-const Experiment = ({ expidToken, refTree }) => {
+const Experiment = ({ expidToken }) => {
   //console.log(expidToken);
   const experimentContext = useContext(ExperimentContext);
   const {
-    getExperiment,
+    // getExperiment,
     getExperimentTree,
     loading,
     loadingState,
     experiment,
     experimentRunning,
-    getRunningState
+    // getRunningState,
   } = experimentContext;
   //var interval;
 
   useEffect(() => {
-    getExperiment(expidToken);
-    getRunningState(expidToken);
-    getExperimentTree(expidToken);
-    const interval = setInterval(() => getRunningState(expidToken), 300000);
-    return () => clearInterval(interval);
+    if (expidToken) {
+      // getExperiment(expidToken);
+      // getRunningState(expidToken);
+      getExperimentTree(expidToken);
+      // const interval = setInterval(() => getRunningState(expidToken), 300000);
+      // return () => clearInterval(interval);
+    }
+
     // eslint-disable-next-line
   }, []);
 
@@ -35,11 +38,11 @@ const Experiment = ({ expidToken, refTree }) => {
     // path,
     // time_last_access,
     // time_last_mod,
-    description,
+    //description,
     // version,
     // updateTime,
     error,
-    error_message
+    error_message,
     // pkl_timestamp,
     // model,
     // branch,
@@ -47,48 +50,40 @@ const Experiment = ({ expidToken, refTree }) => {
     //isGrouped,
   } = experiment;
 
-  if (loading) return <Spinner />;
-
+  if (loading) return <span>Loading...</span>;
+  if (!expidToken) return <span></span>;
   return (
-    <div>
-      <div className='row'>
-        <div className='col-md-1 pr-0'>
-          <Link to='/autosubmitapp/' className='btn btn-light'>
-            <small>Back To Search</small>
-          </Link>
-        </div>
-        <div className='col-md-11'>
-          <div className='card'>
-            <div className='card-header pt-1 pb-0'>
-              <div className='row'>
-                <div className='col-10 text-left'>
-                  <strong className='h3 font-weight-bold'>{expid}</strong>{" "}
-                  {description}{" "}
-                  {error && <pre className='text-danger'>{error_message}</pre>}
-                </div>
-                <div className='col-2 text-right'>
-                  {loadingState && (
-                    <span className='badge badge-dark text-right'>
-                      LOADING...
-                    </span>
-                  )}
-                  {experimentRunning && !loadingState && (
-                    <span className='badge badge-success text-right'>
-                      RUNNING
-                    </span>
-                  )}
-                  {!experimentRunning && !loadingState && (
-                    <span className='badge badge-secondary text-right'>
-                      NOT RUNNING
-                    </span>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <span className='navbar-brand ml-4'>
+      <strong>{expid}</strong> {/* {description}{" "} */}
+      {error && <pre className='text-danger'>{error_message}</pre>}{" "}
+      {loadingState && (
+        <span className='badge badge-dark text-right'>LOADING...</span>
+      )}
+      {experimentRunning && !loadingState && (
+        <span className='badge badge-success text-right'>RUNNING</span>
+      )}
+      {!experimentRunning && !loadingState && (
+        <span className='badge badge-secondary text-right'>NOT RUNNING</span>
+      )}
+    </span>
+    // <div>
+    //   <div className='row'>
+    //     <div className='col-md-12'>
+    //       <div className='card'>
+    //         <div className='card-header pt-1 pb-0'>
+    //           <div className='row'>
+    //             <div className='col-10 text-left'>
+
+    //             </div>
+    //             <div className='col-2 text-right'>
+
+    //             </div>
+    //           </div>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </div>
   );
 };
 

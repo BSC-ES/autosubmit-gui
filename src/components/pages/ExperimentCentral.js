@@ -1,5 +1,5 @@
-import React, { Fragment, useContext } from "react";
-import Experiment from "../experiment/Experiment";
+import React, { Fragment, useContext, useEffect } from "react";
+//import Experiment from "../experiment/Experiment";
 import ExperimentColumn from "../experiment/ExperimentColumn";
 // import GraphRepresentation from '../experiment/GraphRepresentation';
 import GraphNativeRep from "../experiment/GraphNativeRep";
@@ -38,10 +38,12 @@ const ExperimentCentral = ({ match }) => {
     cleanTreeData,
     cleanRunData,
     cleanNavData,
+    getExperiment,
+    getRunningState,
     getExperimentRun,
     getExperimentPkl,
     getExperimentTreePkl,
-    getExperimentTree,
+    //getExperimentTree,
     cleanPklData,
     cleanPklTreeData,
     startAutoUpdateRun,
@@ -60,18 +62,27 @@ const ExperimentCentral = ({ match }) => {
     navToLatest,
     experimentRunning,
     navigateAfterLoadGraph,
-    current_grouped
+    current_grouped,
   } = experimentContext;
   const { clearStats } = statsContext;
 
+  useEffect(() => {
+    getExperiment(expid);
+    getRunningState(expid);
+    // getExperimentTree(expid);
+    const interval = setInterval(() => getRunningState(expid), 300000);
+    return () => clearInterval(interval);
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <Fragment>
-      <Experiment expidToken={expid} getExperimentTree={getExperimentTree} />
+      {/* <Experiment expidToken={expid} getExperimentTree={getExperimentTree} /> */}
       <div className='row mt-2'>
-        <div className='col-2 pr-1'>
+        {/* <div className='col-2 pr-1'>
           <ExperimentColumn expidToken={expid} />
-        </div>
-        <div className='col-10'>
+        </div> */}
+        <div className='col-12'>
           <ul className='nav nav-tabs' id='myTab' role='tablist'>
             <li className='nav-item'>
               <a
@@ -319,13 +330,17 @@ const ExperimentCentral = ({ match }) => {
         </div>
       </div>
 
-      {/* <OpenRun/> */}
+      <div className='row'>
+        <div className='col-12'>
+          <ExperimentColumn expidToken={expid} />
+        </div>
+      </div>
     </Fragment>
   );
 };
 
 const experimentStyle = {
-  height: 600
+  height: 600,
 };
 
 export default ExperimentCentral;
