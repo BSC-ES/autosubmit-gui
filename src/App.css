@@ -65,8 +65,16 @@ pre.bash {
   min-height: 100%;
 } */
 
+.footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 30px;
+}
+
 .scroll {
-  max-height: 660px;
+  max-height: 750px;
   overflow-y: auto;
 }
 

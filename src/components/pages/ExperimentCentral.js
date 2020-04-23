@@ -329,12 +329,8 @@ const ExperimentCentral = ({ match }) => {
           </div>
         </div>
       </div>
-
-      <div className='row'>
-        <div className='col-12'>
-          <ExperimentColumn expidToken={expid} />
-        </div>
-      </div>
+      {/* <div className='row' style={experimentBuffer}></div> */}
+      <ExperimentColumn expidToken={expid} />
     </Fragment>
   );
 };
@@ -342,5 +338,9 @@ const ExperimentCentral = ({ match }) => {
 const experimentStyle = {
   height: 600,
 };
+
+// const experimentBuffer = {
+//   height: 200,
+// };
 
 export default ExperimentCentral;

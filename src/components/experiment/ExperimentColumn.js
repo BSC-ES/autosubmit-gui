@@ -1,5 +1,5 @@
-import React, { useContext, Fragment } from "react";
-import Spinner from "../layout/Spinner";
+import React, { useContext } from "react";
+//import Spinner from "../layout/Spinner";
 import ExperimentContext from "../context/experiment/experimentContext";
 
 const ExperimentColumn = ({ expidToken, refTree }) => {
@@ -7,35 +7,81 @@ const ExperimentColumn = ({ expidToken, refTree }) => {
   const experimentContext = useContext(ExperimentContext);
   const { loading, experiment } = experimentContext;
 
-  if (experiment === null) return <Spinner />;
+  if (experiment === null)
+    return (
+      <div className='footer bg-dark text-white '>
+        <div className='card-footer p-0 px-2 scroll-x'>
+          <div className='row text-right'>
+            <div className='col'>No data...</div>
+          </div>
+        </div>
+      </div>
+    );
 
   const {
     // expid,
     owner,
     owner_id,
-    path,
+    //path,
     //time_last_access,
     time_last_mod,
     version,
-    updateTime,
+    //updateTime,
     branch,
     hpc,
     description,
     //isGrouped,
   } = experiment;
 
-  if (loading) return <Spinner />;
-
-  return (
-    <Fragment>
-      <div className='card-footer p-1 scroll-x'>
-        <div className='row'>
-          <div className='col-md-12 text-center'>
-            <small>{description}</small>
+  if (loading)
+    return (
+      <div className='footer bg-dark text-white '>
+        <div className='card-footer p-0 px-2 scroll-x'>
+          <div className='row text-right'>
+            <div className='col'>Loading...</div>
           </div>
         </div>
       </div>
-      <div className='card-footer p-1 scroll-x'>
+    );
+
+  return (
+    <div className='footer bg-dark text-white '>
+      <div className='card-footer p-0 px-2 scroll-x'>
+        <div className='row text-right'>
+          <div className='col'>
+            <small className='mr-2'>{description}</small>|
+            <small className='mx-2'>
+              <strong>Branch:</strong> {branch}
+            </small>
+            |
+            <small className='mx-2'>
+              <strong>Hpc:</strong> {hpc}
+            </small>
+            |
+            <small className='mx-2'>
+              <strong>Owner:</strong> {owner_id} {owner}{" "}
+            </small>
+            |
+            <small className='mx-2'>
+              <strong>Version:</strong> {version}
+            </small>
+            |
+            <small className='mx-2'>
+              <strong>Modified:</strong> {time_last_mod}
+            </small>
+          </div>
+          {/* <div className='col-md-6 text-left'>
+            <small>{description}</small>
+          </div>
+          <div className='col-md-2'>
+            <small className='font-weight-bold'>Version: {version}</small>
+          </div>
+          <div className='col-md-2'>
+            <small className='font-weight-bold'>Owner: {owner_id} {owner}</small>
+          </div> */}
+        </div>
+      </div>
+      {/* <div className='card-footer p-1 scroll-x'>
         <div className='row'>
           <div className='col-md-3'>
             <div>
@@ -73,8 +119,8 @@ const ExperimentColumn = ({ expidToken, refTree }) => {
             <div className='lead'>{hpc}</div>
           </div>
         </div>
-      </div>
-    </Fragment>
+      </div> */}
+    </div>
 
     // <div className='col-12 pr-0'>
     //   <div className='card'>
