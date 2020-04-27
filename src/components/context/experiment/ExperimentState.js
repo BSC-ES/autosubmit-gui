@@ -129,6 +129,7 @@ const ExperimentState = (props) => {
     clearSummary(expid);
     const res = await axios.get(`${localserver}/summary/${expid}`);
     const summary = res.data;
+    debug && console.log(summary);
     // console.log(summary);
     // console.log(state.summaries);
     //state.summaries.push({ key: expid, value: summary });

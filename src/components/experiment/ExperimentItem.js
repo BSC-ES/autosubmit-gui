@@ -105,24 +105,23 @@ const ExperimentItem = ({
                       </small>
                     </div>
                   </div>
-                  {summaries[name].sim_queue_considered &&
-                    summaries[name].sim_queue_considered > 0 && (
-                      <div className='row text-left'>
-                        <div className='col-md-12'>
-                          <small>
-                            SIM {" ("}
-                            {summaries[name].n_sim}
-                            {") "} : avg. queue{" "}
-                            {summaries[name].avg_sim_queue_time} min. {" ("}
-                            {summaries[name].sim_queue_considered}
-                            {") "}| run {summaries[name].avg_sim_run_time} min.{" "}
-                            {" ("}
-                            {summaries[name].sim_run_considered}
-                            {")"}
-                          </small>
-                        </div>
+                  {summaries[name].sim_queue_considered > 0 && (
+                    <div className='row text-left'>
+                      <div className='col-md-12'>
+                        <small>
+                          SIM {" ("}
+                          {summaries[name].n_sim}
+                          {") "} : avg. queue{" "}
+                          {summaries[name].avg_sim_queue_time} min. {" ("}
+                          {summaries[name].sim_queue_considered}
+                          {") "}| run {summaries[name].avg_sim_run_time} min.{" "}
+                          {" ("}
+                          {summaries[name].sim_run_considered}
+                          {")"}
+                        </small>
                       </div>
-                    )}
+                    </div>
+                  )}
                   <div className='row pb-2'>
                     <div className='col-12'>
                       {summaries[name].n_running > 0 && (
