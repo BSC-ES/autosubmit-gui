@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 import ExperimentContext from "../context/experiment/experimentContext";
 
 const ExperimentItem = ({
-  experiment: { name, description, user, hpc, status, completed, total }
+  experiment: { name, description, user, hpc, status, completed, total },
 }) => {
   const experimentContext = useContext(ExperimentContext);
   const { getExperimentSummary, summaries } = experimentContext;
-  const onGetSummary = e => {
+  const onGetSummary = (e) => {
     e.preventDefault();
     console.log(name);
     getExperimentSummary(name);
@@ -39,7 +39,7 @@ const ExperimentItem = ({
                   }
                   role='progressbar'
                   style={{
-                    width: total > 0 ? (completed / total) * 100 + "%" : "0%"
+                    width: total > 0 ? (completed / total) * 100 + "%" : "0%",
                   }}
                   aria-valuenow={completed}
                   aria-valuemin='0'
@@ -96,20 +96,34 @@ const ExperimentItem = ({
             </div>
             {summaries[name] && summaries[name].error === false && (
               <div className='col-12 pt-2' id={name}>
-                <div className='card card-body p-0'>
-                  <div className='row text-center'>
-                    <div className='col-md-6'>
+                <div className='card card-body py-0 scroll-x'>
+                  <div className='row text-left'>
+                    <div className='col-md-12'>
                       <small>
-                        Avg. Queue {summaries[name].avg_queue_time} min.
-                      </small>
-                    </div>
-                    <div className='col-md-6'>
-                      <small>
-                        Avg. Run {summaries[name].avg_run_time} min.
+                        All : avg. queue {summaries[name].avg_queue_time} min. |
+                        run {summaries[name].avg_run_time} min.
                       </small>
                     </div>
                   </div>
-                  <div className='row px-2 pb-2'>
+                  {summaries[name].sim_queue_considered &&
+                    summaries[name].sim_queue_considered > 0 && (
+                      <div className='row text-left'>
+                        <div className='col-md-12'>
+                          <small>
+                            SIM {" ("}
+                            {summaries[name].n_sim}
+                            {") "} : avg. queue{" "}
+                            {summaries[name].avg_sim_queue_time} min. {" ("}
+                            {summaries[name].sim_queue_considered}
+                            {") "}| run {summaries[name].avg_sim_run_time} min.{" "}
+                            {" ("}
+                            {summaries[name].sim_run_considered}
+                            {")"}
+                          </small>
+                        </div>
+                      </div>
+                    )}
+                  <div className='row pb-2'>
                     <div className='col-12'>
                       {summaries[name].n_running > 0 && (
                         <span className='badge badge-success'>
@@ -155,7 +169,7 @@ const ExperimentItem = ({
                           className=''
                           style={{ overflow: "auto", maxHeight: "200px" }}
                         >
-                          {summaries[name].failed_jobs.map(item => (
+                          {summaries[name].failed_jobs.map((item) => (
                             <li key={item}>
                               <small>{item}</small>
                             </li>
@@ -178,7 +192,7 @@ const ExperimentItem = ({
 };
 
 ExperimentItem.propTypes = {
-  experiment: PropTypes.object.isRequired
+  experiment: PropTypes.object.isRequired,
 };
 
 export default ExperimentItem;

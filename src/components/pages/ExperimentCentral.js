@@ -339,8 +339,4 @@ const experimentStyle = {
   height: 600,
 };
 
-// const experimentBuffer = {
-//   height: 200,
-// };
-
 export default ExperimentCentral;
