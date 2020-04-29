@@ -94,14 +94,28 @@ const ExperimentItem = ({
                 More
               </Link>
             </div>
+            {summaries[name] && summaries[name].error === true && (
+              <div className='col-12 pt-2' id={name}>
+                <div className='card card-body py-0 scroll-x'>
+                  <div className='row text-left'>
+                    <div className='col-md-12'>
+                      <div className='small'>
+                        <strong>ERROR: {summaries[name].error_message}</strong>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
             {summaries[name] && summaries[name].error === false && (
               <div className='col-12 pt-2' id={name}>
                 <div className='card card-body py-0 scroll-x'>
                   <div className='row text-left'>
                     <div className='col-md-12'>
                       <small>
-                        All : avg. queue {summaries[name].avg_queue_time} min. |
-                        run {summaries[name].avg_run_time} min.
+                        All : avg. queue{" "}
+                        <strong>{summaries[name].avg_queue_time}</strong> | run{" "}
+                        <strong>{summaries[name].avg_run_time}</strong>
                       </small>
                     </div>
                   </div>
@@ -112,9 +126,11 @@ const ExperimentItem = ({
                           SIM {" ("}
                           {summaries[name].n_sim}
                           {") "} : avg. queue{" "}
-                          {summaries[name].avg_sim_queue_time} min. {" ("}
+                          <strong>{summaries[name].avg_sim_queue_time}</strong>{" "}
+                          {" ("}
                           {summaries[name].sim_queue_considered}
-                          {") "}| run {summaries[name].avg_sim_run_time} min.{" "}
+                          {") "}| run{" "}
+                          <strong>{summaries[name].avg_sim_run_time}</strong>
                           {" ("}
                           {summaries[name].sim_run_considered}
                           {")"}
@@ -158,21 +174,23 @@ const ExperimentItem = ({
 
                   {summaries[name].n_failed > 0 && (
                     <div className='row px-1'>
-                      <div className='col-md-3 text-center px-2'>
+                      <div className='col-md-2 text-center px-2'>
                         <span className='badge badge-danger'>
                           Failed: {summaries[name].n_failed}
                         </span>
                       </div>
-                      <div className='col-md-9 text-left'>
+                      <div className='col-md-10 text-left'>
                         <div
                           className=''
                           style={{ overflow: "auto", maxHeight: "200px" }}
                         >
-                          {summaries[name].failed_jobs.map((item) => (
-                            <li key={item}>
-                              <small>{item}</small>
-                            </li>
-                          ))}
+                          <small>
+                            <ol>
+                              {summaries[name].failed_jobs.map((item) => (
+                                <li key={item}>{item}</li>
+                              ))}
+                            </ol>
+                          </small>
                         </div>
                       </div>
                     </div>
