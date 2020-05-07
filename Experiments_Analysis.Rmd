@@ -1,0 +1,374 @@
+---
+title: "Jobs Analysis"
+author: "Wilmer"
+date: "5/5/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+library(scales)
+library(ggplot2)
+library(lubridate)
+library(dplyr)
+library(stringr)
+library(gridExtra)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r}
+experiments = read.table("/Users/BleuDChan/ReposBSC/jobs_analysis/07052020experiment_data.txt", header = TRUE, sep="|")
+#jobs = read.table("/Users/BleuDChan/ReposBSC/jobs_analysis/job_data1.txt", header = TRUE, sep="|")
+#head(experiments)
+summary(experiments)
+```
+```{r}
+unique(experiments$model)
+unique(experiments$wrapper)
+
+```
+
+
+Getting only relevant dimensions
+
+```{r}
+cat(paste("Number of experiments",nrow(experiments),"\n"))
+#experiments$yearmonth = paste(substring(experiments$created,0,4), substring(experiments$created,6,7), sep="")
+experiments$yearmonth = as.Date(format(as.Date(experiments$created), "%Y-%m-1"))
+experiments$devtype = substring(experiments$name,0,2)
+#experiments$month = format(as.Date(experiments$created, format="%d/%m/%Y"), "%m")
+# FILTER ONLY THOSE IN marenostrum4
+experiments_mn4 <- experiments %>% filter(hpc=="marenostrum3" | hpc=="marenostrum4")
+# APPLYING FILTER
+experiments_filtered <- experiments %>% filter(total > 0 & completed >= total*0.1 & devtype != "t0" & !is.na(model) & yearmonth < as.Date('2020-05-01'))
+cat(paste("Number of experiments after filter", nrow(experiments_filtered), "\n")) 
+exp_subset = subset(experiments_filtered, select = -c(user,as_version,devtype,maxwrap))
+
+complex_experiments <- exp_subset %>% filter(total>=3000)
+cat(paste("Number of complex experiments after filter", nrow(complex_experiments), "\n")) 
+
+head(exp_subset)
+#boxplot(experiments_filtered$total, data=experiments_filtered)
+```
+```{r}
+summary(exp_subset)
+```
+
+
+Grouping by month and year, summarising for number of jobs in timeline
+```{r}
+experiment_job_total <- group_by(exp_subset, yearmonth)
+experiment_job_total_count <- summarise(experiment_job_total, n_exps=sum(total))
+
+experiment_job_total_count_s <- arrange(experiment_job_total_count, desc(n_exps))
+experiment_job_total_count_s
+```
+
+Grouping by wrapper_type
+```{r}
+experiment_by_wrapper <- group_by(exp_subset, wrapper)
+experiment_by_wrapper_count <- summarise(experiment_by_wrapper, n_exps=n())
+experiment_by_wrapper_count
+sorted_view_cw <- arrange(experiment_by_wrapper_count, desc(n_exps))
+sorted_view_cw
+```
+
+
+Plotting results:
+
+```{r}
+ggplot(data = experiment_job_total_count, aes(x = yearmonth, y=n_exps)) +
+  geom_line() +
+  geom_point() +
+  ggtitle("Number of total jobs accumulated by year-month of experiment creation") +
+  labs(x = 'Created', color="Legend") +
+  labs(y = 'Number of Jobs', color="Legend") 
+  #scale_y_continuous(breaks=c(0,1000,3000,10000,20000,30000,40000,50000))
+#+
+#  scale_x_date(labels = date_format("%m-%Y"))
+```
+
+Grouping by month and year, summarising for number of experiemnts in timeline
+```{r}
+experiment_number <- group_by(exp_subset, yearmonth)
+experiment_number_count <- summarise(experiment_number, n_exps=n())
+experiment_number_count_s <- arrange(experiment_number_count, desc(n_exps))
+experiment_number_count_s
+```
+
+Plotting results:
+
+```{r}
+ggplot(data = experiment_number_count, aes(x = yearmonth, y=n_exps)) +
+  geom_line() +
+  geom_point() +
+  ggtitle("Number of experiments accumulated by year-month") +
+  labs(x = 'Created in', color="Legend") +
+  labs(y = 'Number of Experiments', color="Legend")
+#+
+#  scale_x_date(labels = date_format("%m-%Y"))
+```
+
+## COMPLEX EXPERIMENTS total > 3000
+Grouping by month and year, summarising for number of experiemnts in timeline
+```{r}
+complex_experiment_number <- group_by(complex_experiments, yearmonth)
+complex_experiment_number_count <- summarise(complex_experiment_number, n_exps=n())
+complex_experiment_number_count$n_exps = as.numeric(complex_experiment_number_count$n_exps)
+complex_experiment_number_count
+complex_experiment_number_count_s <- arrange(complex_experiment_number_count, desc(n_exps))
+complex_experiment_number_count_s
+
+complex_per_year <- summarise(group_by(complex_experiments,year = format(as.Date(yearmonth), "%Y")), big_exps=n())
+complex_per_year
+```
+
+Plotting results:
+
+```{r}
+ggplot(data = complex_experiment_number_count, aes(x = yearmonth, y=n_exps)) +
+  geom_line() +
+  geom_point() +
+  ggtitle("Number of complex experiments accumulated by year-month") +
+  labs(x = 'Created', color="Legend") +
+  labs(y = 'Number of Experiments', color="Legend") +
+  scale_y_continuous(breaks=c(0,1,2,3,4,5,6,7,9,11,12))
+#+
+#  scale_x_date(labels = date_format("%m-%Y"))
+```
+
+Unique models:
+
+```{r}
+unique(exp_subset$model)
+```
+
+```{r}
+number_model <- group_by(exp_subset, model)
+number_model_count <-  summarise(number_model, n_exps=n())
+number_model_count
+number_model_count_s <- arrange(number_model_count, desc(n_exps))
+number_model_count_s
+```
+
+
+
+
+```{r}
+#head(exp_subset)
+exp_subset_ecearth3 <- exp_subset %>% filter(model=='auto-ecearth3')
+exp_subset_monarch <- exp_subset %>% filter(model=='auto-monarch')
+exp_subset_nemo <- exp_subset %>% filter(model=='auto-nemo')
+exp_subset_caliope <- exp_subset %>% filter(model=='auto-caliope')
+exp_subset_ecearth3
+```
+
+## Model ecearth3
+
+```{r}
+exp_subset_ecearth3_number <- summarise(group_by(exp_subset_ecearth3,yearmonth), n_exps=n())
+ggplot(data = exp_subset_ecearth3_number, aes(x = yearmonth, y=n_exps)) +
+  geom_line() +
+  geom_point() +
+  ggtitle("Number of experiments using auto-ecearth3 accumulated by year-month") +
+  labs(x = 'Created', color="Legend") +
+  labs(y = 'Number of Experiments', color="Legend")
+
+```
+
+## Model monarch
+
+```{r}
+exp_subset_monarch_number <- summarise(group_by(exp_subset_monarch,yearmonth), n_exps=n())
+ggplot(data = exp_subset_monarch_number, aes(x = yearmonth, y=n_exps)) +
+  geom_line() +
+  geom_point() +
+  ggtitle("Number of experiments using auto-monarch accumulated by year-month") +
+  labs(x = 'Created', color="Legend") +
+  labs(y = 'Number of Experiments', color="Legend")
+
+```
+
+## Model nemo
+
+```{r}
+exp_subset_nemo_number <- summarise(group_by(exp_subset_nemo,yearmonth), n_exps=n())
+exp_subset_nemo_number
+ggplot(data = exp_subset_nemo_number, aes(x = yearmonth, y=n_exps)) +
+  geom_line() +
+  geom_point() +
+  labs(x = 'Created', color="Legend") +
+  labs(y = 'Number of Experiments', color="Legend")
+
+```
+
+## Model caliope
+
+```{r}
+exp_subset_caliope_number <- summarise(group_by(exp_subset_caliope,yearmonth), n_exps=n())
+exp_subset_caliope_number
+ggplot(data = exp_subset_caliope_number, aes(x = yearmonth, y=n_exps)) +
+  geom_line() +
+  geom_point() +
+  ggtitle("Number of experiments using auto-caliope accumulated by year-month") +
+  labs(x = 'Created', color="Legend") +
+  labs(y = 'Number of Experiments', color="Legend")
+
+```
+
+# Working with JOB data
+
+```{r}
+jobs = read.table("/Users/BleuDChan/ReposBSC/jobs_analysis/07052020job_data.txt", header = TRUE, sep="|")
+```
+
+```{r}
+# summary(jobs)
+nowall <- jobs %>% filter(wallclock == "" & status == "COMPLETED")
+nowall$run <- ceiling((nowall$finish - nowall$start)/60)
+#summary(nowall)
+walltemp <- ifelse(jobs$wallclock == "", "00:10", as.character(jobs$wallclock))
+jobs$wallclock <- as.character(walltemp)
+# jobs$wallclock <- 
+summary(jobs)
+```
+
+Data transformation and filter:
+```{r}
+#head(jobs)
+#nrow(jobs)
+cat(paste("Number of jobs",nrow(jobs),"\n"))
+jobs$yearmonth = as.Date(format(as.Date(as.POSIXct(jobs$submit, origin="1970-01-01")), "%Y-%m-1"))
+jobs_filtered <- jobs %>% filter(submit > 0 & wallclock != "" & (status == "COMPLETED" | status == "RUNNING" | status == "SUBMITTED" | status == "QUEUING" | status == "FAILED" | status == "HELD") & yearmonth < as.Date('2020-05-01'))
+jobs_filtered$nprocs <- strtoi(jobs_filtered$procs)
+jobs_filtered$nnodes <- ifelse(jobs_filtered$nprocs < 48, 1, ceiling(jobs_filtered$nprocs/48))
+
+cat(paste("Number of jobs after filter", nrow(jobs_filtered), "\n")) 
+jobs_subset = subset(jobs_filtered, select = -c(exp_id,start,finish,threads,tasks))
+# as.Date(format(as.Date(experiments$created), "%Y-%m-1"))
+# jobs_subset$yearmonth = as.Date(format(as.Date(as.POSIXct(jobs_subset$submit, origin="1970-01-01")), "%Y-%m-1"))
+# jobs_subset <- jobs_subset
+res <- hm(jobs_subset$wallclock)
+jobs_subset$minutes = hour(res)*60 + minute(res)
+head(jobs_subset)
+jobs_subset_mn4 <- jobs_subset %>% filter(exp_name %in% experiments_mn4$name)
+cat(paste("Number of jobs in mn4", nrow(jobs_subset_mn4), "\n")) 
+
+```
+
+```{r}
+summary(jobs_subset_mn4)
+```
+
+
+## More data
+
+```{r}
+#unique(jobs_subset$status)
+#unique(jobs_subset_mn4$procs)
+jobs_subset_restricted <- subset(jobs_subset, select = c(job_name,nprocs,minutes,nnodes))
+summary(jobs_subset_restricted)
+#unique(jobs_subset_mn4$wallclock)
+#odd <- jobs_subset %>% filter(procs=='1:1:288:144')
+#odd
+
+```
+
+Grouping by year month and number of jobs
+```{r}
+job_grouped_number <- summarise(group_by(jobs_subset_mn4,yearmonth), n_jobs=n())
+job_grouped_number_s <- arrange(job_grouped_number, desc(n_jobs))
+job_grouped_number_s
+ggplot(data = job_grouped_number, aes(x = yearmonth, y=n_jobs)) +
+  geom_line() +
+  geom_point() +
+  ggtitle("Number of jobs accumulated by year-month") +
+  labs(x = 'Submitted in', color="Legend") +
+  labs(y = 'Number of jobs', color="Legend")
+```
+
+Grouping by procs
+```{r}
+jobs_subset_mn4$node_consum <- jobs_subset_mn4$nnodes * jobs_subset_mn4$minutes
+jobs_subset_mn4$proc_consum <- jobs_subset_mn4$nprocs * jobs_subset_mn4$minutes
+# job_grouped_procs <- summarise(group_by(jobs_subset_mn4,nprocs), n_exps=n())
+# job_grouped_procs
+head(jobs_subset_mn4)
+# jobs_subset_mn4_bynodes <- summarise(group_by(jobs_subset_mn4,nnodes), n_exps=n())
+# jobs_subset_mn4_bynodes
+
+ggplot(jobs_subset_mn4 %>% filter(nnodes > 1), aes(x=nprocs)) +
+  geom_histogram(binwidth = 100) +
+  ggtitle("Number of jobs per number of processors requested") +
+  labs(x = 'Processors', color="Legend") + scale_color_manual(values=c("#F8766D", "#00BFC4"))+
+    theme(legend.position = "none")
+
+# ggplot(data = job_grouped_procs %>% filter(nprocs > 1), aes(x = nprocs, y=n_exps)) +
+#   geom_line() +
+#   geom_point() +
+#   labs(x = 'Processors', color="Legend") +
+#   labs(y = 'Number of jobs', color="Legend")
+```
+
+```{r}
+summary(jobs_subset_mn4)
+```
+
+
+Consumption by yearmonth and nodes
+```{r}
+job_grouped_nodes <- summarise(group_by(jobs_subset_mn4,yearmonth), consumed=sum(node_consum))
+summary(job_grouped_nodes)
+ggplot(data = job_grouped_nodes, aes(x = yearmonth, y=consumed)) +
+  geom_line() +
+  geom_point() +
+  ggtitle("Resource consumption if taking nodes * minutes") +
+  labs(x = 'Date', color="Legend") +
+  labs(y = 'Consumed', color="Legend")
+```
+
+```{r}
+job_grouped_nodes_s <- arrange(job_grouped_nodes, desc(consumed))
+job_grouped_nodes_s
+```
+
+
+Consumption by yearmonth and processors
+```{r}
+job_grouped_procs <- summarise(group_by(jobs_subset_mn4,yearmonth), consumed=sum(proc_consum))
+summary(job_grouped_procs)
+ggplot(data = job_grouped_procs, aes(x = yearmonth, y=consumed)) +
+  geom_line() +
+  geom_point() +
+  ggtitle("Resource consumption if taking processors * minutes") +
+  labs(x = 'Date', color="Legend") +
+  labs(y = 'Consumed', color="Legend")
+```
+
+
+
+```{r}
+job_grouped_procs_s <- arrange(job_grouped_procs, desc(consumed))
+job_grouped_procs_s
+```
+
+
+
+
+
+
+
+
+
