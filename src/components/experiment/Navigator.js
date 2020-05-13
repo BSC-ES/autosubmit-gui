@@ -15,40 +15,60 @@ const Navigator = () => {
   const SubmittedCode = 2;
   const RunningCode = 4;
   const ReadyCode = 1;
+  const PreparedCode = 7;
 
   const queueColor = {
-    background: "lightpink"
+    background: "lightpink",
+    fontWeight: "bold",
   };
   const failedColor = {
-    background: "red"
+    background: "red",
+    fontWeight: "bold",
+    color: "white",
   };
   const completedColor = {
-    background: "yellow"
+    background: "yellow",
+    fontWeight: "bold",
   };
   const submittedColor = {
-    background: "cyan"
+    background: "cyan",
+    fontWeight: "bold",
   };
   const runningColor = {
-    background: "green"
+    background: "green",
+    fontWeight: "bold",
+    color: "white",
   };
   const readyColor = {
-    background: "lightblue"
+    background: "lightblue",
+    fontWeight: "bold",
   };
   const waitingColor = {
-    background: "gray"
+    background: "gray",
+    fontWeight: "bold",
+    color: "white",
   };
   const unknownColor = {
     background: "white",
-    color: "black"
+    color: "black",
+    fontWeight: "bold",
   };
   const suspendedColor = {
-    background: "orange"
+    background: "orange",
+    fontWeight: "bold",
+    color: "white",
   };
   const holdColor = {
-    background: "salmon"
+    background: "salmon",
+    fontWeight: "bold",
+    color: "white",
+  };
+  const preparedColor = {
+    background: "lightsalmon",
+    fontWeight: "bold",
   };
 
-  const onLatest = (statusCode, latest = true) => e => {
+  const onLatest = (statusCode, latest = true) => (e) => {
     e.preventDefault();
     navToLatest(statusCode, latest); // Completed
   };
@@ -72,6 +92,16 @@ const Navigator = () => {
             value='Ready'
             className='btn btn-block btn-sm'
             style={readyColor}
+          />
+        </form>
+      </div>
+      <div className='col-1 px-1'>
+        <form onSubmit={onLatest(PreparedCode)} className='form'>
+          <input
+            type='submit'
+            value='Prepared'
+            className='btn btn-block btn-sm'
+            style={preparedColor}
           />
         </form>
       </div>
