@@ -8,7 +8,7 @@ const Search = ({ setAlert }) => {
 
   const [text, setText] = useState("");
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     if (text === "") {
       alertContext.setAlert("Please enter something", "light");
@@ -18,7 +18,7 @@ const Search = ({ setAlert }) => {
     }
   };
 
-  const onSubmitRunning = e => {
+  const onSubmitRunning = (e) => {
     e.preventDefault();
     experimentContext.getCurrentRunning();
   };
@@ -28,7 +28,7 @@ const Search = ({ setAlert }) => {
   //   experimentContext.getSummaries();
   // };
 
-  const onChange = e => setText(e.target.value);
+  const onChange = (e) => setText(e.target.value);
 
   return (
     <div className='container'>
@@ -40,7 +40,7 @@ const Search = ({ setAlert }) => {
                 className='form-control'
                 type='text'
                 name='text'
-                placeholder='Search Experiments by Expid or Description...'
+                placeholder='If it uses Autosubmit, you will find it. Search by expid, description, or owner.'
                 value={text}
                 onChange={onChange}
               />
