@@ -13,30 +13,30 @@ const TreeControl = () => {
     loadingTreeRefresh,
     experimentRunning,
     setAutoUpdateTreePkl,
-    startAutoUpdateTreePkl
+    startAutoUpdateTreePkl,
   } = experimentContext;
 
-  const onSubmitTree = e => {
+  const onSubmitTree = (e) => {
     e.preventDefault();
     getExperimentTree(experiment.expid);
   };
 
-  const onClearTree = e => {
+  const onClearTree = (e) => {
     e.preventDefault();
     cleanTreeData();
   };
 
-  const onRequestUpdate = e => {
+  const onRequestUpdate = (e) => {
     e.preventDefault();
     getExperimentTreePkl(experiment.expid, experiment.pkl_timestamp);
   };
 
-  const onJobMonitor = e => {
+  const onJobMonitor = (e) => {
     e.preventDefault();
     setAutoUpdateTreePkl(true);
   };
 
-  const onNotJobMonitor = e => {
+  const onNotJobMonitor = (e) => {
     e.preventDefault();
     setAutoUpdateTreePkl(false);
   };
