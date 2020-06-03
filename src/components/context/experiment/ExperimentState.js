@@ -50,6 +50,8 @@ import {
   PKL_TREE_LOADED,
   GET_EXPERIMENT_SUMMARY,
   CLEAR_SUMMARY_EXP,
+  GET_EXPERIMENT_PERFORMANCE,
+  CLEAN_PERFORMANCE_METRICS,
 } from "../types";
 
 const ExperimentState = (props) => {
@@ -62,6 +64,7 @@ const ExperimentState = (props) => {
     data: null,
     treedata: null,
     rundata: null,
+    performancedata: null,
     pkldata: null,
     pklchanges: null,
     pkltreechanges: null,
@@ -137,6 +140,17 @@ const ExperimentState = (props) => {
     dispatch({
       type: GET_EXPERIMENT_SUMMARY,
       //payload: { currentSummaries, summary, expid }
+    });
+  };
+
+  const getExperimentPerformanceMetrics = async (expid) => {
+    cleanPerformanceMetrics();
+    const res = await axios.get(`${localserver}/performance/${expid}`);
+    const metrics = res.data;
+    debug && console.log(metrics);
+    dispatch({
+      type: GET_EXPERIMENT_PERFORMANCE,
+      payload: metrics,
     });
   };
 
@@ -968,6 +982,8 @@ const ExperimentState = (props) => {
   const cleanPklData = () => dispatch({ type: CLEAN_PKL_DATA });
   const cleanPklTreeData = () => dispatch({ type: CLEAN_TREE_PKL_DATA });
   const cleanNavData = () => dispatch({ type: CLEAN_NAV_DATA });
+  const cleanPerformanceMetrics = () =>
+    dispatch({ type: CLEAN_PERFORMANCE_METRICS });
 
   // Set Loading
   const setLoading = () => dispatch({ type: SET_LOADING });
@@ -1070,6 +1086,7 @@ const ExperimentState = (props) => {
         returnFilter: state.returnFilter,
         loadingJobMonitor: state.loadingJobMonitor,
         loadingTreeRefresh: state.loadingTreeRefresh,
+        performancedata: state.performancedata,
         data: state.data,
         treedata: state.treedata,
         rundata: state.rundata,
@@ -1098,6 +1115,7 @@ const ExperimentState = (props) => {
         getExperiment,
         getExperimentGraph,
         getExperimentTree,
+        cleanPerformanceMetrics,
         cleanGraphData,
         cleanTreeData,
         cleanRunData,
@@ -1126,6 +1144,7 @@ const ExperimentState = (props) => {
         navigateAfterLoadGraph,
         getRunningState,
         getExperimentGraphGrouped,
+        getExperimentPerformanceMetrics,
         filterTreeView,
         clearFilterTreeView,
         navigateToGroup,

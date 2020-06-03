@@ -45,7 +45,9 @@ import {
   CLEAN_ONLY_GRAH_DATA,
   GET_EXPERIMENT_SUMMARY,
   CLEAR_SUMMARY_EXP,
-  SET_PKLTREE_CHANGES
+  SET_PKLTREE_CHANGES,
+  GET_EXPERIMENT_PERFORMANCE,
+  CLEAN_PERFORMANCE_METRICS,
 } from "../types";
 
 export default (state, action) => {
@@ -65,7 +67,8 @@ export default (state, action) => {
         experiment: null,
         current_grouped: "none",
         current_layout: "standard",
-        allowJobMonitor: false
+        allowJobMonitor: false,
+        performancedata: null,
         //startAutoUpdatePkl: false,
       };
     case CLEAN_ONLY_GRAH_DATA:
@@ -78,7 +81,7 @@ export default (state, action) => {
         visNetwork: null,
         foundNodes: null,
         current_grouped: "none",
-        current_layout: "standard"
+        current_layout: "standard",
       };
     case CLEAN_TREE_DATA:
       return {
@@ -88,136 +91,136 @@ export default (state, action) => {
         loadingTree: false,
         loadingTreePkl: false,
         fancyTree: null,
-        returnFiler: 0
+        returnFiler: 0,
       };
     case CLEAN_RUN_DATA:
       return {
         ...state,
         rundata: null,
-        startAutoUpdateRun: false
+        startAutoUpdateRun: false,
       };
     case CLEAN_PKL_DATA:
       return {
         ...state,
         shouldUpdateGraph: false,
         startAutoUpdatePkl: false,
-        pklchanges: null
+        pklchanges: null,
       };
     case CLEAN_TREE_PKL_DATA:
       return {
         ...state,
         startAutoUpdateTreePkl: false,
-        pkltreechanges: null
+        pkltreechanges: null,
       };
     case CLEAN_NAV_DATA:
       return {
         ...state,
         foundNodes: null,
         startAutoUpdatePkl: false,
-        selection: null
+        selection: null,
       };
     case UPDATE_SELECTION:
       return {
         ...state,
-        selection: action.payload
+        selection: action.payload,
       };
     case UPDATE_SELECTION_TREE:
       return {
         ...state,
-        selectedTreeNode: action.payload
+        selectedTreeNode: action.payload,
       };
     case SEARCH_EXPERIMENTS:
       return {
         ...state,
         experiments: action.payload,
-        loading: false
+        loading: false,
       };
     case CURRENT_RUNNING:
       return {
         ...state,
         experiments: action.payload,
-        loading: false
+        loading: false,
       };
     case SET_AUTOUPDATE_RUN:
       return {
         ...state,
-        startAutoUpdateRun: action.payload
+        startAutoUpdateRun: action.payload,
       };
     case SET_AUTOUPDATE_PKL:
       return {
         ...state,
-        startAutoUpdatePkl: action.payload
+        startAutoUpdatePkl: action.payload,
       };
     case SET_AUTOUPDATE_TREE_PKL:
       return {
         ...state,
-        startAutoUpdateTreePkl: action.payload
+        startAutoUpdateTreePkl: action.payload,
       };
     case SET_LOADING:
       return {
         ...state,
-        loading: true
+        loading: true,
       };
     case SET_LOADING_STATE:
       return {
         ...state,
-        loadingState: true
+        loadingState: true,
       };
     case SET_LOADING_PKL:
       return {
         ...state,
-        loadingPkl: true
+        loadingPkl: true,
       };
     case SET_LOADING_TREE_PKL:
       return {
         ...state,
-        loadingTreePkl: true
+        loadingTreePkl: true,
       };
     case SET_LOADING_GRAPH:
       return {
         ...state,
         loadingGraph: true,
-        enabledGraphSearch: false
+        enabledGraphSearch: false,
       };
     case SET_LOADING_TREE:
       return {
         ...state,
         loadingTree: true,
-        enabledGraphSearch: false
+        enabledGraphSearch: false,
       };
     case SET_LOADING_RUN:
       return {
         ...state,
-        loadingRun: true
+        loadingRun: true,
       };
     case SET_LOADING_JOB_MONITOR:
       return {
         ...state,
-        loadingJobMonitor: true
+        loadingJobMonitor: true,
       };
     case SET_LOADING_TREE_REFRESH:
       return {
         ...state,
-        loadingTreeRefresh: true
+        loadingTreeRefresh: true,
       };
     case SHOULD_UPDATE_GRAPH:
       return {
         ...state,
-        shouldUpdateGraph: action.payload
+        shouldUpdateGraph: action.payload,
       };
     case CLEAR_EXPERIMENTS:
       return {
         ...state,
         experiments: [],
         summaries: [],
-        loading: false
+        loading: false,
       };
     case GET_EXPERIMENT:
       return {
         ...state,
         experiment: action.payload,
         loading: false,
-        data: null
+        data: null,
       };
     case GET_GRAPH:
       const { resdata, grouped, layout } = action.payload;
@@ -227,24 +230,34 @@ export default (state, action) => {
         current_grouped: grouped,
         current_layout: layout,
         loadingGraph: false,
-        enabledGraphSearch: true
+        enabledGraphSearch: true,
       };
     case GET_EXPERIMENT_SUMMARY:
       // const { summaries, summary, expid } = action.payload;
       // summaries.push({ key: expid, value: summary });
       return {
-        ...state
+        ...state,
       };
     case CLEAR_SUMMARY_EXP:
       return {
-        ...state
+        ...state,
+      };
+    case GET_EXPERIMENT_PERFORMANCE:
+      return {
+        ...state,
+        performancedata: action.payload,
+      };
+    case CLEAN_PERFORMANCE_METRICS:
+      return {
+        ...state,
+        performancedata: null,
       };
     case GET_TREE:
       return {
         ...state,
         treedata: action.payload,
         loadingTree: false,
-        enabledGraphSearch: true
+        enabledGraphSearch: true,
       };
     case GET_GRAPH_GROUPED:
       return {
@@ -252,94 +265,94 @@ export default (state, action) => {
         data: action.payload,
         loadingGraph: false,
         enabledGraphSearch: true,
-        isGrouped: true
+        isGrouped: true,
       };
     case GET_EXPERIMENT_RUN:
       return {
         ...state,
         rundata: action.payload,
-        loadingRun: false
+        loadingRun: false,
       };
     case GET_PKL_DATA:
       return {
         ...state,
         pkldata: action.payload,
         loadingPkl: false,
-        loadingJobMonitor: false
+        loadingJobMonitor: false,
       };
     case PKL_TREE_LOADED:
       return {
         ...state,
         loadingTreeRefresh: false,
-        loadingTreePkl: false
+        loadingTreePkl: false,
       };
     case GET_RUNNING_STATE:
       return {
         ...state,
         experimentRunning: action.payload,
-        loadingState: false
+        loadingState: false,
       };
     case UPDATE_NODES:
       return {
         ...state,
-        data: action.payload
+        data: action.payload,
       };
     case UPDATE_EXPERIMENT_TS:
       return {
         ...state,
-        experiment: action.payload
+        experiment: action.payload,
       };
     case SET_PKL_CHANGES:
       return {
         ...state,
-        pklchanges: action.payload
+        pklchanges: action.payload,
       };
     case SET_PKLTREE_CHANGES:
       return {
         ...state,
-        pkltreechanges: action.payload
+        pkltreechanges: action.payload,
       };
     case SET_VIS_DATA:
       return {
         ...state,
-        visNodes: action.payload
+        visNodes: action.payload,
       };
     case SET_VIS_NETWORK:
       return {
         ...state,
-        visNetwork: action.payload
+        visNetwork: action.payload,
       };
     case SET_FANCYTREE:
       return {
         ...state,
-        fancyTree: action.payload
+        fancyTree: action.payload,
       };
     case SET_FOUND_NODES:
       return {
         ...state,
         loadingSearchJob: false,
-        foundNodes: action.payload
+        foundNodes: action.payload,
       };
     case SET_LOADING_SEARCH_JOB:
       return {
         ...state,
-        loadingSearchJob: true
+        loadingSearchJob: true,
       };
     case SET_LOADING_FILTER:
       return {
         ...state,
-        loadingFilterTree: true
+        loadingFilterTree: true,
       };
     case FILTER_TREEVIEW_FAILED:
       return {
         ...state,
         loadingFilterTree: false,
-        returnFilter: action.payload
+        returnFilter: action.payload,
       };
     case CLEAR_FILTER_TREE:
       return {
         ...state,
-        returnFilter: 0
+        returnFilter: 0,
       };
     default:
       return null;

@@ -9,6 +9,7 @@ const Experiment = ({ expidToken }) => {
   const {
     // getExperiment,
     getExperimentTree,
+    getExperimentPerformanceMetrics,
     loading,
     loadingState,
     experiment,
@@ -22,6 +23,7 @@ const Experiment = ({ expidToken }) => {
       // getExperiment(expidToken);
       // getRunningState(expidToken);
       getExperimentTree(expidToken);
+      getExperimentPerformanceMetrics(expidToken);
       // const interval = setInterval(() => getRunningState(expidToken), 300000);
       // return () => clearInterval(interval);
     }

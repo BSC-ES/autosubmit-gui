@@ -20,6 +20,8 @@ import WrapperList from "../experiment/WrapperList";
 import GraphControl from "../experiment/GraphControl";
 import LogControl from "../experiment/LogControl";
 import TreeControl from "../experiment/TreeControl";
+import PerformanceControl from "../experiment/PerformanceControl";
+import Performance from "../experiment/Performance";
 
 const ExperimentCentral = ({ match }) => {
   const expid = match.params.expid;
@@ -134,6 +136,19 @@ const ExperimentCentral = ({ match }) => {
                 aria-selected='false'
               >
                 Statistics
+              </a>
+            </li>
+            <li className='nav-item'>
+              <a
+                className='nav-link'
+                id='performance-tab'
+                data-toggle='tab'
+                href='#performance'
+                role='tab'
+                aria-controls='performance'
+                aria-selected='false'
+              >
+                Performance
               </a>
             </li>
           </ul>
@@ -323,6 +338,19 @@ const ExperimentCentral = ({ match }) => {
                   <div className='col-12'>
                     <StatsSearch />
                   </div>
+                </div>
+              </div>
+            </div>
+            <div
+              className='tab-pane fade'
+              id='performance'
+              role='tabpanel'
+              aria-labelledby='performance-tab'
+            >
+              <div className='card mt-2'>
+                {experiment && <PerformanceControl />}
+                <div className='card-body p-1'>
+                  {experiment && <Performance />}
                 </div>
               </div>
             </div>
