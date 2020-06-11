@@ -26,6 +26,7 @@ const Selection = () => {
     selection.map((node) => (currentNode = node));
 
     selectedNode = data.nodes.find((node) => node.id === currentNode);
+    // If selection mode is activated
     //console.log("Selected node")
     //console.log("Data: " + selectedNode.id + " " + selectedNode.platform_name)
   }

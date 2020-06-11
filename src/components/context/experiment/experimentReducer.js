@@ -48,6 +48,11 @@ import {
   SET_PKLTREE_CHANGES,
   GET_EXPERIMENT_PERFORMANCE,
   CLEAN_PERFORMANCE_METRICS,
+  ACTIVATE_SELECTION_MODE,
+  DEACTIVATE_SELECTION_MODE,
+  UPDATE_SELECTED_JOBS,
+  REMOVE_SELECTED_JOB,
+  SET_CURRENT_COMMAND,
 } from "../types";
 
 export default (state, action) => {
@@ -69,7 +74,24 @@ export default (state, action) => {
         current_layout: "standard",
         allowJobMonitor: false,
         performancedata: null,
+        canSelect: false,
+        currentSelected: [],
+        currentCommand: null,
         //startAutoUpdatePkl: false,
+      };
+    case ACTIVATE_SELECTION_MODE:
+      return {
+        ...state,
+        canSelect: true,
+        currentSelected: [],
+        currentCommand: null,
+      };
+    case DEACTIVATE_SELECTION_MODE:
+      return {
+        ...state,
+        canSelect: false,
+        currentSelected: [],
+        currentCommand: null,
       };
     case CLEAN_ONLY_GRAH_DATA:
       return {
@@ -92,6 +114,7 @@ export default (state, action) => {
         loadingTreePkl: false,
         fancyTree: null,
         returnFiler: 0,
+        canSelect: false,
       };
     case CLEAN_RUN_DATA:
       return {
@@ -221,6 +244,7 @@ export default (state, action) => {
         experiment: action.payload,
         loading: false,
         data: null,
+        canSelect: false,
       };
     case GET_GRAPH:
       const { resdata, grouped, layout } = action.payload;
@@ -338,6 +362,43 @@ export default (state, action) => {
         ...state,
         loadingSearchJob: true,
       };
+    case UPDATE_SELECTED_JOBS:
+      if (state.canSelect === false) {
+        return {
+          ...state,
+        };
+      }
+      let selectedNode = null;
+      let selectedJob = action.payload;
+      //console.log(state.currentSelected);
+      const existingJob = state.currentSelected.find(
+        (job) => job.name === selectedJob.name
+      );
+      if (!existingJob) {
+        // look into data
+        if (selectedJob.source === "Tree") {
+          // From treedata
+          selectedNode = state.treedata.jobs.find(
+            (job) => job.id === selectedJob.name
+          );
+          selectedJob.color = selectedNode.status_color;
+        } else {
+          // From data
+          selectedNode = state.data.nodes.find(
+            (node) => node.id === selectedJob.name
+          );
+          selectedJob.color = selectedNode.status_color;
+        }
+        return {
+          ...state,
+          currentSelected: [...state.currentSelected, selectedJob],
+          currentCommand: null,
+        };
+      } else {
+        return {
+          ...state,
+        };
+      }
     case SET_LOADING_FILTER:
       return {
         ...state,
@@ -353,6 +414,25 @@ export default (state, action) => {
       return {
         ...state,
         returnFilter: 0,
+      };
+    case SET_CURRENT_COMMAND:
+      return {
+        ...state,
+        currentCommand: action.payload,
+      };
+    case REMOVE_SELECTED_JOB:
+      const name = action.payload;
+      let current = [];
+      for (var i = 0; i < state.currentSelected.length; i++) {
+        if (state.currentSelected[i].name !== name) {
+          current.push(state.currentSelected[i]);
+        }
+      }
+      state.currentSelected.find((job) => job.name === name);
+      return {
+        ...state,
+        currentSelected: current,
+        currentCommand: null,
       };
     default:
       return null;

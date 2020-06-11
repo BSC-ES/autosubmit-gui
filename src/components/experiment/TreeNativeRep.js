@@ -4,6 +4,7 @@ import "jquery.fancytree/dist/modules/jquery.fancytree.clones";
 import "jquery.fancytree/dist/modules/jquery.fancytree.filter";
 import "jquery.fancytree/dist/modules/jquery.fancytree.childcounter";
 import "jquery.fancytree/dist/modules/jquery.fancytree.edit";
+import "jquery.fancytree/dist/modules/jquery.fancytree.multi";
 // import 'jquery.fancytree/dist/skin-lion/ui.fancytree.less';  // CSS or LESS
 import { createTree } from "jquery.fancytree";
 
@@ -35,7 +36,7 @@ export class TreeNativeRep extends Component {
     console.log("In after mount");
     createTree("#tree", {
       extensions: ["edit", "filter"],
-      source: this.props.treedata
+      source: this.props.treedata,
     });
   }
 
@@ -94,7 +95,7 @@ export class TreeNativeRep extends Component {
             //console.log(event)
             //console.log(data)
             //console.log(tree)
-            console.log(data);
+            //console.log(data);
             if (data) {
               // var thenode = tree.getNodesByRef("a2a7_20170427_1")
               // console.log(thenode)
@@ -110,12 +111,20 @@ export class TreeNativeRep extends Component {
               //console.log(data);
               //console.log(this);
               this.props.updateSelectionTree(data);
+              //console.log(this.props.canSelect);
+              //if (this.props.canSelect === true) {
+              if (data && data.node && data.node.folder === undefined) {
+                this.props.updateCurrentSelected(data.node.refKey, "Tree");
+              }
+
+              //}
+
               //this.updateSelection(data);
             }
           },
           // extensions: ['edit', 'filter'],
           // extensions: ["clones","filter", "childcounter"],
-          extensions: ["filter", "childcounter", "clones", "edit"],
+          extensions: ["filter", "childcounter", "clones"],
           filter: {
             autoApply: true, // Re-apply last filter if lazy data is loaded
             autoExpand: true, // Expand all branches that contain matches while filtered
@@ -126,13 +135,13 @@ export class TreeNativeRep extends Component {
             highlight: false, // Highlight matches by wrapping inside <mark> tags
             leavesOnly: true, // Match end nodes only
             nodata: true, // Display a 'no data' status node if result is empty
-            mode: "hide" // Grayout unmatched nodes (pass "hide" to remove unmatched node instead)
+            mode: "hide", // Grayout unmatched nodes (pass "hide" to remove unmatched node instead)
           },
           // clones: {
           //     highlightClones: true,
           //     highlightActiveClones: true,
           //   },
-          source: this.props.treedata
+          source: this.props.treedata,
         });
 
         //console.log(tree.activeNode);
@@ -174,6 +183,8 @@ export class TreeNativeRep extends Component {
         treedata={this.props.treedata.tree}
         setFancyTree={this.props.setFancyTree}
         updateSelectionTree={this.props.updateSelectionTree}
+        updateCurrentSelected={this.props.updateCurrentSelected}
+        canSelect={this.props.canSelect}
       />
     );
 
@@ -193,7 +204,7 @@ export class TreeNativeRep extends Component {
 //   };
 
 const experimentStyle = {
-  height: 600
+  height: 600,
 };
 
 export default TreeNativeRep;

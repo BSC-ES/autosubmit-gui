@@ -52,6 +52,11 @@ import {
   CLEAR_SUMMARY_EXP,
   GET_EXPERIMENT_PERFORMANCE,
   CLEAN_PERFORMANCE_METRICS,
+  ACTIVATE_SELECTION_MODE,
+  DEACTIVATE_SELECTION_MODE,
+  UPDATE_SELECTED_JOBS,
+  REMOVE_SELECTED_JOB,
+  SET_CURRENT_COMMAND,
 } from "../types";
 
 const ExperimentState = (props) => {
@@ -79,7 +84,9 @@ const ExperimentState = (props) => {
     loadingJobMonitor: false,
     loadingTreeRefresh: false,
     selection: null,
+    currentCommand: null,
     selectedTreeNode: null,
+    currentSelected: [],
     enabledGraphSearch: true,
     startAutoUpdateRun: false,
     startAutoUpdatePkl: false,
@@ -93,6 +100,7 @@ const ExperimentState = (props) => {
     current_layout: "standard",
     allowJobMonitor: false,
     returnFilter: 0,
+    canSelect: false,
   };
 
   const WaitingCode = 0;
@@ -172,6 +180,8 @@ const ExperimentState = (props) => {
       payload: res.data.experiment,
     });
   };
+
+  //const updateSelection = async () => {};
 
   // Get Experiment
   const getExperiment = async (expid) => {
@@ -920,6 +930,25 @@ const ExperimentState = (props) => {
     });
   };
 
+  const setCurrentCommand = async (status, jobs, expid) => {
+    // for change status
+    let arrayNames = [];
+    jobs.map((job) => arrayNames.push(job.name));
+    let command =
+      "autosubmit setstatus " +
+      expid +
+      ' -fl "' +
+      arrayNames.join(" ") +
+      '" -t ' +
+      status +
+      " -s -nt";
+    console.log(command);
+    dispatch({
+      type: SET_CURRENT_COMMAND,
+      payload: command,
+    });
+  };
+
   const filterTreeView = async (string) => {
     setLoadingFilter();
     if (state.treedata && state.fancyTree) {
@@ -1003,8 +1032,25 @@ const ExperimentState = (props) => {
   // Action Things
   const updateSelection = (currentSelection) =>
     dispatch({ type: UPDATE_SELECTION, payload: currentSelection });
-  const updateSelectionTree = (currentSelected) =>
+  const updateSelectionTree = (currentSelected) => {
+    //console.log("Selection Mode " + state.selectionMode);
+    // if (state.selectionMode === true) {
+    //   console.log("Active " + currentSelected);
+    //   updateCurrentSelected(currentSelected);
+    // }
+
     dispatch({ type: UPDATE_SELECTION_TREE, payload: currentSelected });
+  };
+  // Updates for the Selection Tool
+  // source: Tree, Graph
+  const updateCurrentSelected = (selectedJob, source = "Tree") => {
+    //if (state.selectionMode === true) {
+    //console.log(selectedJob);
+    const node = { name: selectedJob, color: "yellow", source: source };
+    dispatch({ type: UPDATE_SELECTED_JOBS, payload: node });
+
+    //}
+  };
   const updateNodes = (newdata) =>
     dispatch({ type: UPDATE_NODES, payload: newdata });
   const updateExperimentTimeStamp = (newExperiment) =>
@@ -1027,6 +1073,12 @@ const ExperimentState = (props) => {
     dispatch({ type: SET_VIS_NETWORK, payload: value });
   const setFancyTree = (value) =>
     dispatch({ type: SET_FANCYTREE, payload: value });
+  const activateSelectionMode = () =>
+    dispatch({ type: ACTIVATE_SELECTION_MODE });
+  const deactivateSelectionMode = () =>
+    dispatch({ type: DEACTIVATE_SELECTION_MODE });
+  const removeSelectedJob = (name) =>
+    dispatch({ type: REMOVE_SELECTED_JOB, payload: name });
 
   // Other Utils
   const hashCode = (value) => {
@@ -1092,8 +1144,10 @@ const ExperimentState = (props) => {
         rundata: state.rundata,
         pklchanges: state.pklchanges,
         pkltreechanges: state.pkltreechanges,
+        canSelect: state.canSelect,
         selection: state.selection,
         selectedTreeNode: state.selectedTreeNode,
+        currentSelected: state.currentSelected,
         enabledGraphSearch: state.enabledGraphSearch,
         startAutoUpdateRun: state.startAutoUpdateRun,
         startAutoUpdatePkl: state.startAutoUpdatePkl,
@@ -1103,6 +1157,7 @@ const ExperimentState = (props) => {
         visNetwork: state.visNetwork,
         foundNodes: state.foundNodes,
         experimentRunning: state.experimentRunning,
+        currentCommand: state.currentCommand,
         current_grouped: state.current_grouped,
         current_layout: state.current_layout,
         allowJobMonitor: state.allowJobMonitor,
@@ -1152,6 +1207,11 @@ const ExperimentState = (props) => {
         getExperimentSummary,
         clearSummary,
         getSummaries,
+        activateSelectionMode,
+        deactivateSelectionMode,
+        updateCurrentSelected,
+        removeSelectedJob,
+        setCurrentCommand,
       }}
     >
       {props.children}

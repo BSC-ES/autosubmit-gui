@@ -14,7 +14,7 @@ const Performance = () => {
       </div>
     );
   }
-  console.log(performancedata);
+  // console.log(performancedata);
   const { ASYPD, SYPD, Parallelization, CHSY, considered } = performancedata;
   return (
     <Fragment>

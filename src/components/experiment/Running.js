@@ -108,19 +108,6 @@ class Running extends Component {
           </div>
           <div className='row' style={experimentBuffer}></div>
         </div>
-
-        {/* {this.props.startAutoUpdateRun && this.interval &&
-                    <div>
-                        <form onSubmit={this.onSubmit} className='form'>
-                        <input
-                        type='submit'
-                        value='Stop Live Update'
-                        className='btn btn-dark btn-block'
-                        // disabled={!enabledGraphSearch}
-                        />
-                        </form>
-                    </div>
-                } */}
       </div>
     );
   }

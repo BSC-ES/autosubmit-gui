@@ -3,6 +3,7 @@ import React, { Fragment, useContext, useEffect } from "react";
 import ExperimentColumn from "../experiment/ExperimentColumn";
 // import GraphRepresentation from '../experiment/GraphRepresentation';
 import GraphNativeRep from "../experiment/GraphNativeRep";
+import JobSelection from "../experiment/JobSelection";
 import TreeNativeRep from "../experiment/TreeNativeRep";
 import ExperimentContext from "../context/experiment/experimentContext";
 import StatsContext from "../context/statistics/statsContext";
@@ -32,8 +33,10 @@ const ExperimentCentral = ({ match }) => {
     treedata,
     updateSelection,
     updateSelectionTree,
+    updateCurrentSelected,
     loadingGraph,
     loadingTree,
+    canSelect,
     loadingRun,
     shouldUpdateGraph,
     cleanGraphData,
@@ -183,6 +186,8 @@ const ExperimentCentral = ({ match }) => {
                       current_grouped={current_grouped}
                       experimentRunning={experimentRunning}
                       navigateAfterLoadGraph={navigateAfterLoadGraph}
+                      updateCurrentSelected={updateCurrentSelected}
+                      canSelect={canSelect}
                     />
                   </div>
                   <div className='col-3 pl-0'>
@@ -271,6 +276,8 @@ const ExperimentCentral = ({ match }) => {
                       cleanTreeData={cleanTreeData}
                       setFancyTree={setFancyTree}
                       updateSelectionTree={updateSelectionTree}
+                      updateCurrentSelected={updateCurrentSelected}
+                      canSelect={canSelect}
                       // getExperimentTree={getExperimentTree}
                       // expid={expid}
                     />
@@ -355,6 +362,11 @@ const ExperimentCentral = ({ match }) => {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+      <div className='row'>
+        <div className='col-12'>
+          <JobSelection />
         </div>
       </div>
       {/* <div className='row' style={experimentBuffer}></div> */}
