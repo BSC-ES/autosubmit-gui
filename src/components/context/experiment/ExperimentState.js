@@ -941,7 +941,7 @@ const ExperimentState = (props) => {
       arrayNames.join(" ") +
       '" -t ' +
       status +
-      " -s -nt";
+      " -s -nt -np";
     console.log(command);
     dispatch({
       type: SET_CURRENT_COMMAND,

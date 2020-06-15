@@ -72,13 +72,6 @@ const JobSelection = () => {
         <div className='card-footer p-0'>
           <div className='row'>
             <div className='col-2'>
-              <form className='form' onSubmit={offSelectionMode}>
-                <input
-                  type='submit'
-                  value='Deactivate Selection Mode'
-                  className='btn btn-danger btn-sm m-2'
-                />
-              </form>
               <button
                 className='btn btn-info btn-sm m-2'
                 data-toggle='modal'
@@ -86,6 +79,13 @@ const JobSelection = () => {
               >
                 <strong>Generate Command</strong>
               </button>
+              <form className='form' onSubmit={offSelectionMode}>
+                <input
+                  type='submit'
+                  value='Deactivate Selection Mode'
+                  className='btn btn-danger btn-sm m-2'
+                />
+              </form>
             </div>
             <div className='col-10'>
               {currentSelected &&
@@ -115,7 +115,7 @@ const JobSelection = () => {
           aria-hidden='true'
         >
           <div className='modal-dialog' role='document'>
-            <div className='modal-content'>
+            <div className='modal-content' style={{ width: "600px" }}>
               {/* <div className='modal-header'>
                 <h5 className='modal-title' id='commandTitle'>
                   Children List
@@ -129,50 +129,64 @@ const JobSelection = () => {
                   <span aria-hidden='true'>&times;</span>
                 </button>
               </div> */}
-              <div className='modal-body'>
+              <div className='modal-body pb-1'>
                 <div className='row'>
                   <div className='col-12'>
                     To:{" "}
                     <div className='btn-group' role='group' aria-label='Status'>
                       <button
-                        className='btn btn-sm btn-primary'
+                        className='btn btn-sm'
+                        style={{ background: "lightblue" }}
                         onClick={setStatusCommand("READY")}
                       >
-                        READY
+                        Ready
                       </button>
                       <button
                         className='btn btn-sm btn-secondary'
                         onClick={setStatusCommand("WAITING")}
                       >
-                        WAITING
+                        Waiting
                       </button>
                       <button
-                        className='btn btn-sm btn-info'
+                        className='btn btn-sm'
+                        style={{ background: "yellow" }}
                         onClick={setStatusCommand("COMPLETED")}
                       >
-                        COMPLETED
+                        Completed
                       </button>
                       <button
-                        className='btn btn-sm btn-info'
+                        className='btn btn-sm'
+                        style={{ background: "orange" }}
                         onClick={setStatusCommand("SUSPENDED")}
                       >
-                        SUSPENDED
+                        Suspended
                       </button>
                       <button
                         className='btn btn-sm btn-danger'
                         onClick={setStatusCommand("FAILED")}
                       >
-                        FAILED
+                        Failed
                       </button>
                     </div>
                   </div>
                 </div>
-                <div className='row my-2'>
-                  <div className='col-12'>{}</div>
+                <div className='row mt-2 mx-1'>
+                  <div
+                    className='col-12'
+                    style={{
+                      fontFamily: "Courier",
+                      background: "black",
+                      color: "white",
+                    }}
+                  >
+                    {currentCommand && (
+                      <div className='p-2'>
+                        {JSON.parse(JSON.stringify(currentCommand))}
+                      </div>
+                    )}
+                  </div>
                 </div>
-                {currentCommand && (
-                  <div>{JSON.parse(JSON.stringify(currentCommand))}</div>
-                )}
+
                 {/* <ul>
                     {selectedNode.children_list.map((item, index) => (
                       <li key={index}>{item}</li>
@@ -180,10 +194,10 @@ const JobSelection = () => {
                   </ul> */}
               </div>
               {currentCommand && currentCommand.length > 0 && (
-                <div className='row mx-2 mb-1'>
+                <div className='row mx-1'>
                   <div className='col-12'>
                     <button
-                      className='btn btn-sm btn-success'
+                      className='btn btn-sm btn-light'
                       onClick={copyContent(
                         JSON.parse(JSON.stringify(currentCommand))
                       )}
@@ -196,7 +210,7 @@ const JobSelection = () => {
               <div className='modal-footer'>
                 <button
                   type='button'
-                  className='btn btn-secondary'
+                  className='btn btn-sm btn-dark'
                   data-dismiss='modal'
                 >
                   Close
