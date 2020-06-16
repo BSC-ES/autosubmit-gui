@@ -303,32 +303,37 @@ const ExperimentCentral = ({ match }) => {
               role='tabpanel'
               aria-labelledby='log-tab'
             >
-              <div className='card' style={experimentStyle}>
+              <div className='card'>
                 {experiment && <LogControl />}
-                {startAutoUpdateRun && (
-                  <Running
-                    rundata={rundata}
-                    loadingRun={loadingRun}
-                    cleanRunData={cleanRunData}
-                    getExperimentRun={getExperimentRun}
-                    experiment={experiment}
-                    startAutoUpdateRun={startAutoUpdateRun}
-                    setAutoUpdateRun={setAutoUpdateRun}
-                    experimentRunning={experimentRunning}
-                  />
-                )}
-                {!startAutoUpdateRun && (
-                  <div className='row'>
-                    <div className='col-12 text-center'>
-                      <p className='lead'>
-                        Press <span className='badge badge-dark'>Show Log</span>{" "}
-                        to see the last 50 lines of the running log of this
-                        experiment. If the experiment is running, the log will
-                        update automatically.
-                      </p>
-                    </div>
+                <div className='card-body p-0' style={experimentMinStyle}>
+                  <div className='col-12 p-0'>
+                    {startAutoUpdateRun && (
+                      <Running
+                        rundata={rundata}
+                        loadingRun={loadingRun}
+                        cleanRunData={cleanRunData}
+                        getExperimentRun={getExperimentRun}
+                        experiment={experiment}
+                        startAutoUpdateRun={startAutoUpdateRun}
+                        setAutoUpdateRun={setAutoUpdateRun}
+                        experimentRunning={experimentRunning}
+                      />
+                    )}
+                    {!startAutoUpdateRun && (
+                      <div className='row'>
+                        <div className='col-12 text-center'>
+                          <p className='lead'>
+                            Press{" "}
+                            <span className='badge badge-dark'>Show Log</span>{" "}
+                            to see the last 50 lines of the running log of this
+                            experiment. If the experiment is running, the log
+                            will update automatically.
+                          </p>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                )}
+                </div>
               </div>
             </div>
             <div
@@ -337,7 +342,7 @@ const ExperimentCentral = ({ match }) => {
               role='tabpanel'
               aria-labelledby='stats-tab'
             >
-              <div className='card mt-2' style={experimentStyle}>
+              <div className='card mt-2' style={experimentMinStyle}>
                 <div className='card-header py-0 text-muted'>
                   <small>Statistics</small>
                 </div>
@@ -375,8 +380,12 @@ const ExperimentCentral = ({ match }) => {
   );
 };
 
-const experimentStyle = {
-  height: 600,
+// const experimentStyle = {
+//   height: 600,
+// };
+
+const experimentMinStyle = {
+  minHeight: 500,
 };
 
 export default ExperimentCentral;

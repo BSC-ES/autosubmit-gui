@@ -106,7 +106,6 @@ class Running extends Component {
           <div className='text-muted text-center'>
             <small>Showing last 150 lines.</small>
           </div>
-          <div className='row' style={experimentBuffer}></div>
         </div>
       </div>
     );
@@ -117,8 +116,8 @@ const pStyle = {
   listStyleType: "none",
 };
 
-const experimentBuffer = {
-  height: 100,
-};
+// const experimentBuffer = {
+//   height: 100,
+// };
 
 export default Running;
