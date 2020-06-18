@@ -26,6 +26,17 @@ import Performance from "../experiment/Performance";
 
 const ExperimentCentral = ({ match }) => {
   const expid = match.params.expid;
+  const resolve_action = match.params.action;
+  const focus_graph =
+    resolve_action && resolve_action === "graph" ? true : false;
+  console.log("Focus: " + focus_graph);
+  const classTree = focus_graph === true ? "nav-link" : "nav-link active";
+  const classGraph = focus_graph === true ? "nav-link active" : "nav-link";
+  const classTabTree =
+    focus_graph === true ? "tab-pane fade" : "tab-pane fade show active";
+  const classTabGraph =
+    focus_graph === true ? "tab-pane fade show active" : "tab-pane fade";
+  //const isGraph = this.props.isGraph;
   const experimentContext = useContext(ExperimentContext);
   const statsContext = useContext(StatsContext);
   const {
@@ -48,7 +59,9 @@ const ExperimentCentral = ({ match }) => {
     getExperimentRun,
     getExperimentPkl,
     getExperimentTreePkl,
-    //getExperimentTree,
+    getExperimentTree,
+    getExperimentGraph,
+    getExperimentPerformanceMetrics,
     cleanPklData,
     cleanPklTreeData,
     startAutoUpdateRun,
@@ -74,6 +87,15 @@ const ExperimentCentral = ({ match }) => {
   useEffect(() => {
     getExperiment(expid);
     getRunningState(expid);
+    if (expid && expid.length > 0) {
+      if (resolve_action && resolve_action === "graph") {
+        getExperimentGraph(expid);
+      } else {
+        getExperimentTree(expid);
+      }
+
+      getExperimentPerformanceMetrics(expid);
+    }
     // getExperimentTree(expid);
     const interval = setInterval(() => getRunningState(expid), 300000);
     return () => clearInterval(interval);
@@ -91,7 +113,7 @@ const ExperimentCentral = ({ match }) => {
           <ul className='nav nav-tabs' id='myTab' role='tablist'>
             <li className='nav-item'>
               <a
-                className='nav-link active'
+                className={classTree}
                 id='treeview-tab'
                 data-toggle='tab'
                 href='#treeview'
@@ -104,7 +126,7 @@ const ExperimentCentral = ({ match }) => {
             </li>
             <li className='nav-item'>
               <a
-                className='nav-link'
+                className={classGraph}
                 id='graph-tab'
                 data-toggle='tab'
                 href='#graph'
@@ -157,7 +179,7 @@ const ExperimentCentral = ({ match }) => {
           </ul>
           <div className='tab-content' id='myTabContent'>
             <div
-              className='tab-pane fade'
+              className={classTabGraph}
               id='graph'
               role='tabpanel'
               aria-labelledby='graph-tab'
@@ -256,7 +278,7 @@ const ExperimentCentral = ({ match }) => {
               </div>
             </div>
             <div
-              className='tab-pane fade show active'
+              className={classTabTree}
               id='treeview'
               role='tabpanel'
               aria-labelledby='treeview-tab'

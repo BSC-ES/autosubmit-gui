@@ -8,8 +8,8 @@ const Experiment = ({ expidToken }) => {
   const experimentContext = useContext(ExperimentContext);
   const {
     // getExperiment,
-    getExperimentTree,
-    getExperimentPerformanceMetrics,
+    // getExperimentTree,
+    // getExperimentPerformanceMetrics,
     loading,
     loadingState,
     experiment,
@@ -22,8 +22,8 @@ const Experiment = ({ expidToken }) => {
     if (expidToken) {
       // getExperiment(expidToken);
       // getRunningState(expidToken);
-      getExperimentTree(expidToken);
-      getExperimentPerformanceMetrics(expidToken);
+      // getExperimentTree(expidToken);
+      // getExperimentPerformanceMetrics(expidToken);
       // const interval = setInterval(() => getRunningState(expidToken), 300000);
       // return () => clearInterval(interval);
     }
