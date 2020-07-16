@@ -204,7 +204,7 @@ export class TreeNativeRep extends Component {
 //   };
 
 const experimentStyle = {
-  height: 600,
+  height: 750,
 };
 
 export default TreeNativeRep;

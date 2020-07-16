@@ -25,7 +25,7 @@ const Navbar = ({ icon, title }) => {
   const onChange = (e) => setText(e.target.value);
 
   return (
-    <nav className='navbar navbar-expand-sm navbar-dark bg-dark mb-3'>
+    <nav className='navbar navbar-expand-sm navbar-dark bg-dark mb-1 p-1'>
       <div className='container'>
         <Link className='navbar-brand' to='/autosubmitapp/'>
           <i className={icon} /> {title}

@@ -105,7 +105,7 @@ const ExperimentCentral = ({ match }) => {
   return (
     <Fragment>
       {/* <Experiment expidToken={expid} getExperimentTree={getExperimentTree} /> */}
-      <div className='row mt-2'>
+      <div className='row'>
         {/* <div className='col-2 pr-1'>
           <ExperimentColumn expidToken={expid} />
         </div> */}
@@ -192,7 +192,7 @@ const ExperimentCentral = ({ match }) => {
                   </div>
                 )}
                 <div className='row'>
-                  <div className='col-9 pr-0'>
+                  <div className='col pr-0'>
                     <GraphNativeRep
                       data={data}
                       updateSelection={updateSelection}
@@ -212,7 +212,9 @@ const ExperimentCentral = ({ match }) => {
                       canSelect={canSelect}
                     />
                   </div>
-                  <div className='col-3 pl-0'>
+                  <div
+                    className={canSelect === true ? "col-3 px-0" : "col-3 pl-0"}
+                  >
                     <ul className='nav nav-tabs' id='myTabSide' role='tablist'>
                       <li className='nav-item'>
                         <a
@@ -271,6 +273,11 @@ const ExperimentCentral = ({ match }) => {
                       </div>
                     </div>
                   </div>
+                  {experiment && data && canSelect && (
+                    <div className='col-2 pl-0'>
+                      <JobSelection target={"graph"} />
+                    </div>
+                  )}
                 </div>
                 <div className='card-footer p-0'>
                   {data && visNetwork && <Navigator />}
@@ -291,7 +298,7 @@ const ExperimentCentral = ({ match }) => {
                   </div>
                 )}
                 <div className='row'>
-                  <div className='col-9 pr-0'>
+                  <div className='col pr-0'>
                     <TreeNativeRep
                       treedata={treedata}
                       loadingTree={loadingTree}
@@ -304,7 +311,9 @@ const ExperimentCentral = ({ match }) => {
                       // expid={expid}
                     />
                   </div>
-                  <div className='col-3 pl-0'>
+                  <div
+                    className={canSelect === true ? "col-3 px-0" : "col-3 pl-0"}
+                  >
                     <SelectionTreeNode />
                     {startAutoUpdateTreePkl && (
                       <JobMonitorTree
@@ -316,6 +325,11 @@ const ExperimentCentral = ({ match }) => {
                       />
                     )}
                   </div>
+                  {experiment && treedata && canSelect && (
+                    <div className='col-2 pl-0'>
+                      <JobSelection target={"tree"} />
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -391,11 +405,11 @@ const ExperimentCentral = ({ match }) => {
           </div>
         </div>
       </div>
-      <div className='row'>
+      {/* <div className='row'>
         <div className='col-12'>
           <JobSelection />
         </div>
-      </div>
+      </div> */}
       {/* <div className='row' style={experimentBuffer}></div> */}
       <ExperimentColumn expidToken={expid} />
     </Fragment>
@@ -407,7 +421,7 @@ const ExperimentCentral = ({ match }) => {
 // };
 
 const experimentMinStyle = {
-  minHeight: 500,
+  minHeight: "100%",
 };
 
 export default ExperimentCentral;

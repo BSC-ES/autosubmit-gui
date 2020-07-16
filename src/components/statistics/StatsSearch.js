@@ -177,13 +177,13 @@ const StatsSearch = () => {
           )}
         </div>
       </div>
-      <div className='row' style={experimentBuffer}></div>
+      {/* <div className='row' style={experimentBuffer}></div> */}
     </Fragment>
   );
 };
 
-const experimentBuffer = {
-  height: 100,
-};
+// const experimentBuffer = {
+//   minHeight: "100%",
+// };
 
 export default StatsSearch;

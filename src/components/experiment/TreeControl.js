@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
+import SelectionControl from "./SelectionControl";
 
 const TreeControl = () => {
   const experimentContext = useContext(ExperimentContext);
@@ -50,33 +51,40 @@ const TreeControl = () => {
         {loadingTreeRefresh && !startAutoUpdateTreePkl && (
           <div className='col-md-6 text-left'>Querying...</div>
         )}
-        <div className='col-md-2'>
-          {experiment && !treedata && (
+        {experiment && treedata && (
+          <div className='col-md-2'>
+            <SelectionControl />
+          </div>
+        )}
+        {experiment && !treedata && (
+          <div className='col-md-1'>
             <form onSubmit={onSubmitTree} className='form'>
               <input
                 type='submit'
-                value='Show Tree View'
+                value='Show'
                 className='btn btn-info btn-block btn-sm'
                 disabled={!enabledGraphSearch}
               />
             </form>
-          )}
-          {experiment && treedata && !startAutoUpdateTreePkl && (
+          </div>
+        )}
+        {experiment && treedata && !startAutoUpdateTreePkl && (
+          <div className='col-md-1'>
             <form onSubmit={onClearTree} className='form'>
               <input
                 type='submit'
-                value='Clear Tree View'
+                value='Clear Tree'
                 className='btn btn-secondary btn-block btn-sm'
                 disabled={!enabledGraphSearch}
               />
             </form>
-          )}
-        </div>
+          </div>
+        )}
         {experiment &&
           treedata &&
           experimentRunning &&
           !startAutoUpdateTreePkl && (
-            <div className='col-md-2'>
+            <div className='col-md-1'>
               <form onSubmit={onRequestUpdate} className='form'>
                 <input
                   type='submit'

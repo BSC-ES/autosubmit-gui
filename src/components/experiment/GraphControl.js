@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
+import SelectionControl from "./SelectionControl";
 
 const GraphControl = () => {
   const experimentContext = useContext(ExperimentContext);
@@ -44,6 +45,12 @@ const GraphControl = () => {
         </div>
         <div className='col-md-10'>
           <div className='row justify-content-end'>
+            {experiment && data && (
+              <div className='col-md-2'>
+                <SelectionControl />
+              </div>
+            )}
+
             <div className='col-md-2'>
               <form onSubmit={onSubmitGraph()} className='form'>
                 <input
@@ -54,7 +61,7 @@ const GraphControl = () => {
                 />
               </form>
             </div>
-            <div className='col-md-2'>
+            <div className='col-md-1'>
               <form
                 onSubmit={onSubmitGraph("none", "laplacian")}
                 className='form'
@@ -88,7 +95,7 @@ const GraphControl = () => {
               </form>
             </div>
             {experiment && data && experimentRunning && !startAutoUpdatePkl && (
-              <div className='col-md-2'>
+              <div className='col-md-1'>
                 <form onSubmit={onRequestUpdate} className='form'>
                   <input
                     type='submit'

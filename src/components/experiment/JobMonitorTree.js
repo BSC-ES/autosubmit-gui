@@ -38,7 +38,7 @@ class JobMonitorTree extends Component {
             </div>
             <div className='card-body p-0'>
               {pkltreechanges && (
-                <pre className='scroll-y-tree'>{pkltreechanges}</pre>
+                <pre className='scroll-y-tree mb-0'>{pkltreechanges}</pre>
               )}
               {loadingTreePkl && <small>Loading...</small>}
             </div>

@@ -1,10 +1,10 @@
-import React, { Fragment } from 'react';
+import React, { Fragment } from "react";
 
 function Footer() {
-    return (
-        <Fragment>            
-            <div className='row' style={footerStyle}></div>
-            {/* <div className='row'>            
+  return (
+    <Fragment>
+      <div className='row' style={footerStyle}></div>
+      {/* <div className='row'>            
                 <div className='col-12'>            
                     <footer className='page-footer'>
                         <p>Autosubmit Experiment Monitor</p>
@@ -12,13 +12,12 @@ function Footer() {
                     </footer>
                 </div>
             </div>         */}
-        </Fragment>
-        
-    )
+    </Fragment>
+  );
 }
 
 const footerStyle = {
-    height: 200
-  };
+  height: 10,
+};
 
-export default Footer
+export default Footer;

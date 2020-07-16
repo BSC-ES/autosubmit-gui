@@ -414,7 +414,7 @@ class GraphNativeRep extends Component {
 }
 
 const experimentStyle = {
-  height: 800,
+  height: 755,
 };
 
 export default GraphNativeRep;

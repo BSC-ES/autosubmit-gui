@@ -1,13 +1,11 @@
 import React, { useContext, Fragment } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
 
-const JobSelection = () => {
+const JobSelection = ({ target }) => {
   //const util = require("util");
   const experimentContext = useContext(ExperimentContext);
   const {
     currentSelected,
-    activateSelectionMode,
-    deactivateSelectionMode,
     removeSelectedJob,
     canSelect,
     setCurrentCommand,
@@ -19,11 +17,11 @@ const JobSelection = () => {
     expid = experiment.expid;
   }
 
-  const onSelectionMode = (e) => {
-    e.preventDefault();
-    activateSelectionMode();
-    //console.log("Sending " + boolValue);
-  };
+  // const onSelectionMode = (e) => {
+  //   e.preventDefault();
+  //   activateSelectionMode();
+  //   //console.log("Sending " + boolValue);
+  // };
 
   const copyContent = (inputname) => (e) => {
     e.preventDefault();
@@ -31,11 +29,11 @@ const JobSelection = () => {
     window.copyTextToClipboard(inputname);
   };
 
-  const offSelectionMode = (e) => {
-    e.preventDefault();
-    deactivateSelectionMode();
-    //console.log("Sending " + boolValue);
-  };
+  // const offSelectionMode = (e) => {
+  //   e.preventDefault();
+  //   deactivateSelectionMode();
+  //   //console.log("Sending " + boolValue);
+  // };
 
   const removeSelected = (name) => (e) => {
     e.preventDefault();
@@ -48,70 +46,43 @@ const JobSelection = () => {
     setCurrentCommand(status, currentSelected, expid);
   };
 
-  if (canSelect === false) {
-    return (
-      <div className='card-footer p-0'>
-        <div className='row'>
-          <div className='col-3'>
-            <form className='form' onSubmit={onSelectionMode}>
-              <input
-                type='submit'
-                value='Activate Selection Mode'
-                className='btn btn-info btn-sm m-2'
-              />
-            </form>
-          </div>
-          <div className='col-9'></div>
-        </div>
-      </div>
-    );
-  } else if (canSelect === true) {
-    //console.log(currentSelected);
+  if (canSelect === true) {
     return (
       <Fragment>
-        <div className='card-footer p-0'>
-          <div className='row'>
-            <div className='col-2'>
-              <button
-                className='btn btn-info btn-sm m-2'
-                data-toggle='modal'
-                data-target='#command'
-              >
-                <strong>Generate Command</strong>
-              </button>
-              <form className='form' onSubmit={offSelectionMode}>
-                <input
-                  type='submit'
-                  value='Deactivate Selection Mode'
-                  className='btn btn-danger btn-sm m-2'
-                />
-              </form>
-            </div>
-            <div className='col-10'>
-              {currentSelected &&
-                currentSelected
-                  .sort((a, b) => (a.name > b.name ? -1 : 1))
-                  .map((job) => (
-                    <button
-                      key={job.name}
-                      type='button'
-                      className='btn btn-sm m-1 p-1'
-                      style={{ background: job.color }}
-                      onClick={removeSelected(job.name)}
-                    >
-                      <small>{job.name}</small>
-                    </button>
-                  ))}
-            </div>
+        <div className='card p-0 m-0'>
+          <div className='card-header text-center p-0 m-0'>
+            <button
+              className='btn btn-info btn-sm my-0 py-0'
+              data-toggle='modal'
+              data-target={"#command" + target}
+            >
+              <strong>Generate Command</strong>
+            </button>
+          </div>
+          <div className='card-body'>
+            {currentSelected &&
+              currentSelected
+                .sort((a, b) => (a.name > b.name ? -1 : 1))
+                .map((job) => (
+                  <button
+                    key={job.name}
+                    type='button'
+                    className='btn btn-sm m-1 p-1'
+                    style={{ background: job.color }}
+                    onClick={removeSelected(job.name)}
+                  >
+                    <small>{job.name}</small>
+                  </button>
+                ))}
           </div>
         </div>
 
         <div
           className='modal fade'
-          id='command'
+          id={"command" + target}
           tabIndex='-1'
           role='dialog'
-          aria-labelledby='commandTitle'
+          aria-labelledby={"commandTitle" + target}
           aria-hidden='true'
         >
           <div className='modal-dialog' role='document'>
@@ -222,7 +193,7 @@ const JobSelection = () => {
       </Fragment>
     );
   }
-  return <div className='card-footer'></div>;
+  return <div className='card'></div>;
 };
 
 export default JobSelection;

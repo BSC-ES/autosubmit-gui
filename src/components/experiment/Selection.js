@@ -138,20 +138,23 @@ const Selection = () => {
                       )}
                     </div>
                     <div className='col-md-6'>
-                      {selectedNode.minutes > 0 && (
-                        <span
-                          className='badge badge-success text-center ml-1'
-                          style={{ width: "100%" }}
-                        >
-                          <small>Run:</small> {selectedNode.minutes}{" "}
-                          <small>min.</small>
-                        </span>
-                      )}
+                      {selectedNode.minutes >= 0 &&
+                        ["RUNNING", "COMPLETED", "FAILED"].includes(
+                          selectedNode.status
+                        ) && (
+                          <span
+                            className='badge badge-success text-center ml-1'
+                            style={{ width: "100%" }}
+                          >
+                            <small>Run:</small> {selectedNode.minutes}{" "}
+                            <small>min.</small>
+                          </span>
+                        )}
                     </div>
                   </div>
 
                   <div className='row py-1'>
-                    <div className='col-md-6 p-0'>
+                    <div className='col-md-6'>
                       <span
                         className='badge text-center'
                         style={{

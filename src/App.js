@@ -22,7 +22,7 @@ class App extends Component {
             <Router>
               <div className='App'>
                 <Navbar />
-                <div className='container'>
+                <div className='container' style={{ height: "100%" }}>
                   <Alert />
                   <Switch>
                     <Route exact path='/autosubmitapp/' component={Home} />

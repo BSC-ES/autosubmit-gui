@@ -53,7 +53,7 @@ class JobMonitor extends Component {
             </div>
             <div className='card-body p-0'>
               {pklchanges && (
-                <pre className='scroll-y'>
+                <pre className='scroll-y mb-0'>
                   {pklchanges}
                   {/* value={pklchanges} 
                                     className='monitorArea'
