@@ -17,7 +17,7 @@ function Footer() {
 }
 
 const footerStyle = {
-  height: 10,
+  height: 40,
 };
 
 export default Footer;
