@@ -3,7 +3,12 @@ import ExperimentContext from "../context/experiment/experimentContext";
 
 const SelectionTreeNode = () => {
   const experimentContext = useContext(ExperimentContext);
-  const { selectedTreeNode, treedata, experiment } = experimentContext;
+  const {
+    selectedTreeNode,
+    treedata,
+    experiment,
+    secondsToDelta,
+  } = experimentContext;
 
   var selectedNode = null;
   var currentNode = "";
@@ -126,7 +131,8 @@ const SelectionTreeNode = () => {
                             : "Queue"}
                           :
                         </small>{" "}
-                        {selectedNode.minutes_queue} <small>min.</small>
+                        {secondsToDelta(selectedNode.minutes_queue)}
+                        {/* <small>min.</small> */}
                       </span>
                     )}
                   </div>
@@ -139,8 +145,9 @@ const SelectionTreeNode = () => {
                           className='badge badge-success text-center ml-1'
                           style={{ width: "100%" }}
                         >
-                          <small>Run:</small> {selectedNode.minutes}{" "}
-                          <small>min.</small>
+                          <small>Run:</small>{" "}
+                          {secondsToDelta(selectedNode.minutes)}{" "}
+                          {/* <small>min.</small> */}
                         </span>
                       )}
                   </div>
@@ -219,7 +226,7 @@ const SelectionTreeNode = () => {
                       </div>
                     </div>
                   )}
-                {selectedNode.wrapper && (
+                {selectedNode.wrapper && selectedNode.wrapper.length > 0 && (
                   <div>
                     <div className='row'>
                       <div className='col-12'>
@@ -235,20 +242,21 @@ const SelectionTreeNode = () => {
                     </div>
                   </div>
                 )}
-                {selectedNode.wrapper_code && (
-                  <div>
-                    <div className='row'>
-                      <div className='col-6'>
-                        <small>
-                          <strong>Code:</strong>
-                        </small>
-                      </div>
-                      <div className='col-6'>
-                        <small>{selectedNode.wrapper_code}</small>
+                {selectedNode.wrapper_code &&
+                  selectedNode.wrapper_code.length > 0 && (
+                    <div>
+                      <div className='row'>
+                        <div className='col-6'>
+                          <small>
+                            <strong>Code:</strong>
+                          </small>
+                        </div>
+                        <div className='col-6'>
+                          <small>{selectedNode.wrapper_code}</small>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                )}
+                  )}
                 <div>
                   {selectedNode.out && (
                     <div className='row'>
@@ -308,7 +316,6 @@ const SelectionTreeNode = () => {
               </div>
             </div>
           </div>
-          {/* </div>                     */}
         </Fragment>
       )}
       {!selectedNode && treedata && treedata.jobs && (

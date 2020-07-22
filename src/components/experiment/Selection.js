@@ -3,7 +3,7 @@ import ExperimentContext from "../context/experiment/experimentContext";
 
 const Selection = () => {
   const experimentContext = useContext(ExperimentContext);
-  const { selection, data, experiment } = experimentContext;
+  const { selection, data, experiment, secondsToDelta } = experimentContext;
   // const { model, branch, hpc } = experiment;
   //var currentSelection = "Node: "
 
@@ -133,7 +133,8 @@ const Selection = () => {
                               : "Queue"}
                             :
                           </small>{" "}
-                          {selectedNode.minutes_queue} <small>min.</small>
+                          {secondsToDelta(selectedNode.minutes_queue)}
+                          {/* <small>min.</small> */}
                         </span>
                       )}
                     </div>
@@ -146,8 +147,9 @@ const Selection = () => {
                             className='badge badge-success text-center ml-1'
                             style={{ width: "100%" }}
                           >
-                            <small>Run:</small> {selectedNode.minutes}{" "}
-                            <small>min.</small>
+                            <small>Run:</small>{" "}
+                            {secondsToDelta(selectedNode.minutes)}{" "}
+                            {/* <small>min.</small> */}
                           </span>
                         )}
                     </div>

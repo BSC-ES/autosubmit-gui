@@ -384,9 +384,9 @@ export default (state, action) => {
           selectedJob.color = selectedNode.status_color;
         } else {
           // From data
-          selectedNode = state.data.nodes.find(
-            (node) => node.id === selectedJob.name
-          );
+          selectedNode = state.data.nodes.find((node) => {
+            return node.id === selectedJob.name;
+          });
           selectedJob.color = selectedNode.status_color;
         }
         return {
