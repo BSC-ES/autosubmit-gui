@@ -114,7 +114,7 @@ const ExperimentState = (props) => {
 
   const localserver = "https://earth.bsc.es/autosubmitapi/";
   //const localserver = "http://84.88.185.94:8081";
-  const debug = false;
+  const debug = true;
 
   // Search Experiments
   const searchExperiments = async (text) => {
@@ -960,16 +960,18 @@ const ExperimentState = (props) => {
   const setCurrentCommand = async (status, jobs, expid) => {
     // for change status
     let arrayNames = [];
+    let command = "Invalid Command: You have to select at least one job.";
     jobs.map((job) => arrayNames.push(job.name));
-    let command =
-      "autosubmit setstatus " +
-      expid +
-      ' -fl "' +
-      arrayNames.join(" ") +
-      '" -t ' +
-      status +
-      " -s -nt -np";
-    console.log(command);
+    if (arrayNames.length > 0) {
+      command =
+        "autosubmit setstatus " +
+        expid +
+        ' -fl "' +
+        arrayNames.join(" ") +
+        '" -t ' +
+        status +
+        " -s -nt -np";
+    }
     dispatch({
       type: SET_CURRENT_COMMAND,
       payload: command,

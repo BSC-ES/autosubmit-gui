@@ -103,7 +103,7 @@ const JobSelection = ({ target }) => {
               <div className='modal-body pb-1'>
                 <div className='row'>
                   <div className='col-12'>
-                    To:{" "}
+                    Set status to:{" "}
                     <div className='btn-group' role='group' aria-label='Status'>
                       <button
                         className='btn btn-sm'
@@ -165,10 +165,10 @@ const JobSelection = ({ target }) => {
                   </ul> */}
               </div>
               {currentCommand && currentCommand.length > 0 && (
-                <div className='row mx-1'>
+                <div className='row mx-1 mb-2'>
                   <div className='col-12'>
                     <button
-                      className='btn btn-sm btn-light'
+                      className='btn btn-sm btn-info'
                       onClick={copyContent(
                         JSON.parse(JSON.stringify(currentCommand))
                       )}

@@ -80,6 +80,7 @@ export default (state, action) => {
         //startAutoUpdatePkl: false,
       };
     case ACTIVATE_SELECTION_MODE:
+      state.fancyTree.activeNode = state.fancyTree.rootNode;
       return {
         ...state,
         canSelect: true,
