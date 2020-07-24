@@ -114,7 +114,7 @@ const ExperimentState = (props) => {
 
   const localserver = "https://earth.bsc.es/autosubmitapi/";
   //const localserver = "http://84.88.185.94:8081";
-  const debug = true;
+  const debug = false;
 
   // Search Experiments
   const searchExperiments = async (text) => {
@@ -289,11 +289,13 @@ const ExperimentState = (props) => {
         job = retrievedPklTree.pkl_content[j];
         jobs[job.name] = job;
       }
-
+      // Updating current jobs
       for (var i = 0, cjob, ijob; i < currentJobs.length; i++) {
+        // Job from current jobs
         cjob = currentJobs[i];
-        // Name is id in treedata
+        // Job from pkl. Name is id in treedata.
         ijob = jobs[cjob.id];
+        // If there is a difference
         if (
           cjob.status_code !== ijob.status_code ||
           cjob.minutes !== ijob.minutes ||
@@ -328,6 +330,7 @@ const ExperimentState = (props) => {
           if (!cjob.tree_parents.includes(tree_parent_wrapper)) {
             cjob.tree_parents.push(tree_parent_wrapper);
           }
+          // Assign wrapper code to current job
           cjob.wrapper_code = ijob.wrapper_id;
           // Building title according to retrieved data
           var newTitle =
@@ -341,10 +344,39 @@ const ExperimentState = (props) => {
           // Find the corresponding node in the existing tree
           var thenode = state.fancyTree.getNodesByRef(cjob.id);
           if (thenode) {
+            // Update title of all node ocurrences
             for (var thenode_i in thenode) {
               thenode[thenode_i].setTitle(newTitle);
             }
+            // Find all parents of node
             const parents = cjob.tree_parents;
+            // Make sure parents contain the children
+            let wrapper_parent = state.fancyTree.getNodesByRef(
+              tree_parent_wrapper
+            );
+            //console.log(wrapper_parent);
+            if (wrapper_parent && wrapper_parent.length > 0) {
+              let children = wrapper_parent[0].children;
+              //console.log(children);
+              let found_child = false;
+              for (var index_j in children) {
+                let current_name = children[index_j].refKey;
+                //console.log(current_name);
+                if (current_name === cjob.id) {
+                  found_child = true;
+                }
+              }
+              // If the job is not present in the wrapper folder, add it.
+              if (found_child === false) {
+                wrapper_parent[0].children.push({
+                  title: cjob.title,
+                  refKey: cjob.id,
+                  data: "Empty",
+                  children: [],
+                });
+              }
+            }
+            // Traverse parents to update title
             for (var parent in parents) {
               var header_data = referenceHeaders[parents[parent]];
               if (header_data) {
@@ -374,7 +406,13 @@ const ExperimentState = (props) => {
                 // Setting new title
                 const new_completed_tag = completed_tag
                   .replace("%C", header_data.completed)
-                  .replace("%T", header_data.total);
+                  .replace("%T", header_data.total)
+                  .replace(
+                    "%B",
+                    header_data.completed === header_data.total
+                      ? "yellow"
+                      : "#ffffb3"
+                  );
                 const new_check_mark =
                   header_data.completed === header_data.total ? check_mark : "";
                 const new_running_tag =
@@ -454,7 +492,13 @@ const ExperimentState = (props) => {
 
           const new_completed_tag = completed_tag
             .replace("%C", header_wrapper.completed)
-            .replace("%T", header_wrapper.total);
+            .replace("%T", header_wrapper.total)
+            .replace(
+              "%B",
+              header_wrapper.completed === header_wrapper.total
+                ? "yellow"
+                : "#ffffb3"
+            );
           const new_check_mark =
             header_wrapper.completed === header_wrapper.total ? check_mark : "";
           const new_running_tag =

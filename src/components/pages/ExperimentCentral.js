@@ -29,7 +29,7 @@ const ExperimentCentral = ({ match }) => {
   const resolve_action = match.params.action;
   const focus_graph =
     resolve_action && resolve_action === "graph" ? true : false;
-  console.log("Focus: " + focus_graph);
+  //console.log("Focus: " + focus_graph);
   const classTree = focus_graph === true ? "nav-link" : "nav-link active";
   const classGraph = focus_graph === true ? "nav-link active" : "nav-link";
   const classTabTree =

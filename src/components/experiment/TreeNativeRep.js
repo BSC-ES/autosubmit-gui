@@ -146,22 +146,8 @@ export class TreeNativeRep extends Component {
 
         //console.log(tree.activeNode);
 
-        // console.log(tree);
+        console.log(tree);
         this.props.setFancyTree(tree);
-        // console.log(this.props.expid);
-        // this.props.getExperimentTree(this.props.expid);
-        //tree.filterBranches("FORMAT");
-
-        // tree.addClass("fancytree-connectors");
-        // this.props.setVisNetwork(network);
-        // network.on("select", (params) => {
-        //     console.log(params);
-        //     if (params.nodes){
-        //         //console.log(params.nodes);
-        //         this.props.updateSelection(params.nodes);
-        //     }
-
-        // });
       }
 
       componentWillUnmount() {
