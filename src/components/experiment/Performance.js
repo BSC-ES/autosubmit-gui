@@ -3,7 +3,7 @@ import ExperimentContext from "../context/experiment/experimentContext";
 
 const Performance = () => {
   const experimentContext = useContext(ExperimentContext);
-  const { performancedata, experiment } = experimentContext;
+  const { performancedata, experiment, secondsToDelta } = experimentContext;
 
   if (!experiment || !performancedata) {
     return (
@@ -15,14 +15,24 @@ const Performance = () => {
     );
   }
   // console.log(performancedata);
-  const { ASYPD, SYPD, Parallelization, CHSY, considered } = performancedata;
+  const {
+    ASYPD,
+    SYPD,
+    JPSY,
+    Parallelization,
+    CHSY,
+    considered,
+  } = performancedata;
   return (
     <Fragment>
       <div className='row px-3'>
-        <div className='col-6 p-4'>
+        <div className='col-4 p-4'>
           <h5>
             Parallelization:{" "}
             <span className='badge badge-secondary'>{Parallelization}</span>
+          </h5>
+          <h5>
+            JPSY: <span className='badge badge-secondary'>{JPSY}</span>
           </h5>
           <h5>
             SYPD: <span className='badge badge-secondary'>{SYPD}</span>
@@ -35,20 +45,46 @@ const Performance = () => {
           </h5>
           {/* <strong>considered: </strong> {considered} */}
         </div>
-        <div className='col-6 p-3 scroll-y-jobs'>
+        <div className='col-8 p-3 scroll-y-jobs'>
           <p className='lead'>Considered: ({considered.length})</p>
-          <ol>
-            {considered
-              .sort((a, b) => (a.name > b.name ? 1 : -1))
-              .map((item) => (
-                <li key={item.name}>
-                  {" "}
-                  {item.name} | QUEUE: <strong>{item.queue}</strong> | RUNNING:{" "}
-                  <strong>{item.running}</strong> | CHSY:{" "}
-                  <strong>{item.CHSY}</strong>{" "}
-                </li>
-              ))}
-          </ol>
+          <table className='table'>
+            <thead>
+              <tr>
+                <th scope='col'>#</th>
+                <th scope='col'>Job Name</th>
+                <th scope='col'>Queue</th>
+                <th scope='col'>Run</th>
+                <th scope='col'>CHSY</th>
+                <th scope='col'>JPSY</th>
+                <th scope='col'>Energy</th>
+              </tr>
+            </thead>
+            <tbody>
+              {considered
+                .sort((a, b) => (a.name > b.name ? 1 : -1))
+                .map((item, index) => (
+                  <tr key={item.name}>
+                    <th scope='row'>{index + 1}</th>
+                    <td>{item.name}</td>
+                    <td>
+                      <strong> {secondsToDelta(item.queue)}</strong>
+                    </td>
+                    <td>
+                      <strong>{secondsToDelta(item.running)}</strong>
+                    </td>
+                    <td>
+                      <strong>{item.CHSY}</strong>
+                    </td>
+                    <td>
+                      <strong>{item.JPSY}</strong>
+                    </td>
+                    <td>
+                      <strong>{item.energy}</strong>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
         </div>
       </div>
       <div className='row px-3'>
@@ -59,11 +95,15 @@ const Performance = () => {
             for the run, per SIM.
           </p>
           <p>
+            <strong>JPSY</strong>: Energy cost of a simulation, measured in
+            Joules per simulated year.
+          </p>
+          <p>
             <strong>SYPD</strong>: Simulated years per day for the model in a 24
             h period.
           </p>
           <p>
-            <strong>ASYPD</strong>: Actual SYPD: This number should be lower
+            <strong>ASYPD</strong>: Actual SYPD, this number should be lower
             than SYPD due to interruptions, queue wait time, data transfer or
             issues with the model workflow. This is collected by measuring the
             time between first submission and the date of arrival of the last
@@ -76,13 +116,24 @@ const Performance = () => {
           </p>
           <p>
             <strong>Considered</strong>: Scrollable list where each item in the
-            list is a job that shows <i>job name</i>, <i>QUEUE time</i> in
-            seconds, <i>RUNNING time</i> in seconds, and <i>CHSY</i> for that
-            job.
+            list represents job information showing <strong>Job Name</strong>,{" "}
+            <strong>QUEUE</strong> and <strong>RUNNING</strong> time in{" "}
+            <i>HH:mm:ss</i> format, <strong>CHSY</strong>, <strong>JPSY</strong>
+            , and raw <strong>Energy</strong> consumption for that job.{" "}
+            <i>
+              Note: Energy values are only collected for those jobs running on
+              MareNostrum4 and using the latest version of Autosubmit.
+              Subsequent development will expand this feature for other
+              platforms.
+            </i>
           </p>
           <p>
             Visit{" "}
-            <a href='https://earth.bsc.es/gitlab/wuruchi/autosubmitreact/-/wikis/Performance-Metrics'>
+            <a
+              href='https://earth.bsc.es/gitlab/wuruchi/autosubmitreact/-/wikis/Performance-Metrics'
+              target='_blank'
+              rel='noopener noreferrer'
+            >
               Performance Metrics Documentation
             </a>{" "}
             for more details.
