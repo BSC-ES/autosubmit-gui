@@ -1,13 +1,16 @@
 import React, { useContext } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
+import TreeContext from "../context/tree/treeContext";
 
 const SelectionControl = () => {
   const experimentContext = useContext(ExperimentContext);
+  const treeContext = useContext(TreeContext);
   const {
     canSelect,
     activateSelectionMode,
     deactivateSelectionMode,
   } = experimentContext;
+  const { setStartSelection } = treeContext;
   // var expid = null;
   // if (experiment) {
   //   expid = experiment.expid;
@@ -16,6 +19,7 @@ const SelectionControl = () => {
   const onSelectionMode = (e) => {
     e.preventDefault();
     activateSelectionMode();
+    setStartSelection();
     //console.log("Sending " + boolValue);
   };
 

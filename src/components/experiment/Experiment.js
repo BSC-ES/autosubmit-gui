@@ -7,9 +7,6 @@ const Experiment = ({ expidToken }) => {
   //console.log(expidToken);
   const experimentContext = useContext(ExperimentContext);
   const {
-    // getExperiment,
-    // getExperimentTree,
-    // getExperimentPerformanceMetrics,
     loading,
     loadingState,
     experiment,
@@ -33,24 +30,7 @@ const Experiment = ({ expidToken }) => {
 
   if (experiment === null) return <Spinner />;
 
-  const {
-    expid,
-    // owner,
-    // owner_id,
-    // path,
-    // time_last_access,
-    // time_last_mod,
-    //description,
-    // version,
-    // updateTime,
-    error,
-    error_message,
-    // pkl_timestamp,
-    // model,
-    // branch,
-    // hpc,
-    //isGrouped,
-  } = experiment;
+  const { expid, error, error_message } = experiment;
 
   if (loading) return <span>Loading...</span>;
   if (!expidToken) return <span></span>;
@@ -68,24 +48,6 @@ const Experiment = ({ expidToken }) => {
         <span className='badge badge-secondary text-right'>NOT RUNNING</span>
       )}
     </span>
-    // <div>
-    //   <div className='row'>
-    //     <div className='col-md-12'>
-    //       <div className='card'>
-    //         <div className='card-header pt-1 pb-0'>
-    //           <div className='row'>
-    //             <div className='col-10 text-left'>
-
-    //             </div>
-    //             <div className='col-2 text-right'>
-
-    //             </div>
-    //           </div>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
   );
 };
 

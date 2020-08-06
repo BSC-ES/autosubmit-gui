@@ -1,21 +1,23 @@
 import React, { useContext } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
+import TreeContext from "../context/tree/treeContext";
 import SelectionControl from "./SelectionControl";
 
 const TreeControl = () => {
   const experimentContext = useContext(ExperimentContext);
+  const treeContext = useContext(TreeContext);
+  const { experiment, experimentRunning } = experimentContext;
+
   const {
-    experiment,
     treedata,
     getExperimentTree,
     cleanTreeData,
-    enabledGraphSearch,
+    enabledTreeSearch,
     getExperimentTreePkl,
     loadingTreeRefresh,
-    experimentRunning,
     setAutoUpdateTreePkl,
     startAutoUpdateTreePkl,
-  } = experimentContext;
+  } = treeContext;
 
   const onSubmitTree = (e) => {
     e.preventDefault();
@@ -63,7 +65,7 @@ const TreeControl = () => {
                 type='submit'
                 value='Show'
                 className='btn btn-info btn-block btn-sm'
-                disabled={!enabledGraphSearch}
+                disabled={!enabledTreeSearch}
               />
             </form>
           </div>
@@ -75,7 +77,7 @@ const TreeControl = () => {
                 type='submit'
                 value='Clear Tree'
                 className='btn btn-secondary btn-block btn-sm'
-                disabled={!enabledGraphSearch}
+                disabled={!enabledTreeSearch}
               />
             </form>
           </div>
@@ -90,7 +92,7 @@ const TreeControl = () => {
                   type='submit'
                   value='Refresh'
                   className='btn btn-success btn-block btn-sm'
-                  disabled={!enabledGraphSearch}
+                  disabled={!enabledTreeSearch}
                 />
               </form>
             </div>
@@ -102,7 +104,7 @@ const TreeControl = () => {
                 type='submit'
                 value='Start Job Monitor'
                 className='btn btn-success btn-block btn-sm'
-                disabled={!enabledGraphSearch}
+                disabled={!enabledTreeSearch}
               />
             </form>
           </div>
@@ -114,7 +116,7 @@ const TreeControl = () => {
                 type='submit'
                 value='Stop Job Monitor'
                 className='btn btn-danger btn-block btn-sm'
-                disabled={!enabledGraphSearch}
+                disabled={!enabledTreeSearch}
               />
             </form>
           </div>

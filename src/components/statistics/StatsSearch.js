@@ -3,6 +3,7 @@ import StatsContext from "../context/statistics/statsContext";
 import ExperimentContext from "../context/experiment/experimentContext";
 import Chart from "react-google-charts";
 import Spinner from "../layout/Spinner";
+import { DEBUG } from "../context/vars";
 
 const StatsSearch = () => {
   const statsContext = useContext(StatsContext);
@@ -71,9 +72,9 @@ const StatsSearch = () => {
 
   const onSubmitStats = (e) => {
     e.preventDefault();
-    console.log(experiment.expid);
-    console.log("Hours : " + hour);
-    console.log("Type : " + section);
+    DEBUG && console.log(experiment.expid);
+    DEBUG && console.log("Hours : " + hour);
+    DEBUG && console.log("Type : " + section);
     getExperimentStats(experiment.expid, hour, section);
   };
 

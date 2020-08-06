@@ -1,5 +1,6 @@
 import React, { useContext, Fragment } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
+import { DEBUG } from "../context/vars";
 
 const JobSelection = ({ target }) => {
   //const util = require("util");
@@ -25,7 +26,7 @@ const JobSelection = ({ target }) => {
 
   const copyContent = (inputname) => (e) => {
     e.preventDefault();
-    console.log("Sending " + inputname);
+    DEBUG && console.log("Sending " + inputname);
     window.copyTextToClipboard(inputname);
   };
 
@@ -87,19 +88,6 @@ const JobSelection = ({ target }) => {
         >
           <div className='modal-dialog' role='document'>
             <div className='modal-content' style={{ width: "600px" }}>
-              {/* <div className='modal-header'>
-                <h5 className='modal-title' id='commandTitle'>
-                  Children List
-                </h5>
-                <button
-                  className='close'
-                  type='button'
-                  data-dismiss='modal'
-                  aria-label='Close'
-                >
-                  <span aria-hidden='true'>&times;</span>
-                </button>
-              </div> */}
               <div className='modal-body pb-1'>
                 <div className='row'>
                   <div className='col-12'>

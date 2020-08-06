@@ -7,6 +7,8 @@ import JobSelection from "../experiment/JobSelection";
 import TreeNativeRep from "../experiment/TreeNativeRep";
 import ExperimentContext from "../context/experiment/experimentContext";
 import StatsContext from "../context/statistics/statsContext";
+import GraphContext from "../context/graph/graphContext";
+import TreeContext from "../context/tree/treeContext";
 import Selection from "../experiment/Selection";
 import SelectionTreeNode from "../experiment/SelectionTreeNode";
 // import OpenRun from '../experiment/OpenRun';
@@ -38,50 +40,58 @@ const ExperimentCentral = ({ match }) => {
     focus_graph === true ? "tab-pane fade show active" : "tab-pane fade";
   //const isGraph = this.props.isGraph;
   const experimentContext = useContext(ExperimentContext);
+  const graphContext = useContext(GraphContext);
+  const treeContext = useContext(TreeContext);
   const statsContext = useContext(StatsContext);
   const {
-    data,
-    treedata,
-    updateSelection,
-    updateSelectionTree,
-    updateCurrentSelected,
-    loadingGraph,
-    loadingTree,
-    canSelect,
     loadingRun,
-    shouldUpdateGraph,
-    cleanGraphData,
-    cleanTreeData,
     cleanRunData,
-    cleanNavData,
     getExperiment,
     getRunningState,
     getExperimentRun,
-    getExperimentPkl,
-    getExperimentTreePkl,
-    getExperimentTree,
-    getExperimentGraph,
     getExperimentPerformanceMetrics,
-    cleanPklData,
-    cleanPklTreeData,
     startAutoUpdateRun,
-    startAutoUpdatePkl,
-    startAutoUpdateTreePkl,
     setAutoUpdateRun,
     rundata,
-    pklchanges,
-    pkltreechanges,
     experiment,
-    setVisData,
-    setVisNetwork,
-    setFancyTree,
-    visNetwork,
-    navigateGraph,
-    navToLatest,
+    canSelect,
     experimentRunning,
-    navigateAfterLoadGraph,
-    current_grouped,
+    updateCurrentSelectedGraph,
+    updateCurrentSelectedTree,
   } = experimentContext;
+
+  const {
+    treedata,
+    updateSelectionTree,
+    loadingTree,
+    getExperimentTreePkl,
+    getExperimentTree,
+    cleanPklTreeData,
+    startAutoUpdateTreePkl,
+    pkltreechanges,
+    setFancyTree,
+    cleanTreeData,
+  } = treeContext;
+
+  const {
+    cleanPklData,
+    cleanNavData,
+    getExperimentGraph,
+    setVisData,
+    getExperimentPkl,
+    updateSelection,
+    setVisNetwork,
+    data,
+    visNetwork,
+    navToLatest,
+    navigateAfterLoadGraph,
+    pklchanges,
+    loadingGraph,
+    shouldUpdateGraph,
+    startAutoUpdatePkl,
+    cleanGraphData,
+    current_grouped,
+  } = graphContext;
   const { clearStats } = statsContext;
 
   useEffect(() => {
@@ -104,7 +114,6 @@ const ExperimentCentral = ({ match }) => {
 
   return (
     <Fragment>
-      {/* <Experiment expidToken={expid} getExperimentTree={getExperimentTree} /> */}
       <div className='row'>
         {/* <div className='col-2 pr-1'>
           <ExperimentColumn expidToken={expid} />
@@ -201,14 +210,13 @@ const ExperimentCentral = ({ match }) => {
                       shouldUpdateGraph={shouldUpdateGraph}
                       setVisData={setVisData}
                       setVisNetwork={setVisNetwork}
-                      navigateGraph={navigateGraph}
                       navToLatest={navToLatest}
                       clearStats={clearStats}
                       cleanNavData={cleanNavData}
                       current_grouped={current_grouped}
                       experimentRunning={experimentRunning}
                       navigateAfterLoadGraph={navigateAfterLoadGraph}
-                      updateCurrentSelected={updateCurrentSelected}
+                      updateCurrentSelected={updateCurrentSelectedGraph}
                       canSelect={canSelect}
                     />
                   </div>
@@ -305,7 +313,7 @@ const ExperimentCentral = ({ match }) => {
                       cleanTreeData={cleanTreeData}
                       setFancyTree={setFancyTree}
                       updateSelectionTree={updateSelectionTree}
-                      updateCurrentSelected={updateCurrentSelected}
+                      updateCurrentSelected={updateCurrentSelectedTree}
                       canSelect={canSelect}
                       // getExperimentTree={getExperimentTree}
                       // expid={expid}
