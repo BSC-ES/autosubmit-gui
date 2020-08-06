@@ -179,6 +179,7 @@ const ExperimentState = (props) => {
       type: SET_CURRENT_COMMAND,
       payload: command,
     });
+    //return command;
   };
 
   // Cleaning
@@ -206,7 +207,7 @@ const ExperimentState = (props) => {
   // Updates for the Selection Tool
   // source: Tree, Graph
   const updateCurrentSelectedTree = (selectedJob, treedata) => {
-    console.log(treedata);
+    debug && console.log(treedata);
     if (treedata) {
       let currentNode = { name: selectedJob, color: "yellow", source: "Tree" };
       const selectedNode = treedata.jobs.find(

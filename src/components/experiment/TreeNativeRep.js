@@ -18,7 +18,7 @@ export class TreeNativeRep extends Component {
     //     return true
     //   }else
     if (nextProps.treedata !== this.props.treedata) {
-      console.log("Rerendering Tree");
+      DEBUG && console.log("Rerendering Tree");
       return true;
     } else if (nextProps.loadingTree !== this.props.loadingTree) {
       return true;

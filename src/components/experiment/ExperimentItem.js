@@ -21,10 +21,10 @@ const ExperimentItem = ({
             <div className='col-md-3 text-left'>
               <h3 className='font-weight-bold'>{name}</h3>
             </div>
-            <div className='col-md-6 text-right'>
+            <div className='col-md-6 text-center'>
               {" "}
               {completed} / {total}{" "}
-              <div className='progress'>
+              <div className='progress border'>
                 <div
                   className={
                     completed === total
