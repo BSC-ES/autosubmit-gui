@@ -1,14 +1,14 @@
 import React, { useContext, Fragment } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
+import TreeContext from "../context/tree/treeContext";
+import { secondsToDelta } from "../context/utils";
+import { DEBUG } from "../context/vars";
 
 const SelectionTreeNode = () => {
   const experimentContext = useContext(ExperimentContext);
-  const {
-    selectedTreeNode,
-    treedata,
-    experiment,
-    secondsToDelta,
-  } = experimentContext;
+  const treeContext = useContext(TreeContext);
+  const { experiment } = experimentContext;
+  const { selectedTreeNode, treedata } = treeContext;
 
   var selectedNode = null;
   var currentNode = "";
@@ -30,7 +30,7 @@ const SelectionTreeNode = () => {
 
   const copyContent = (inputname) => (e) => {
     e.preventDefault();
-    console.log("Sending " + inputname);
+    DEBUG && console.log("Sending " + inputname);
     window.copyToClip(inputname);
   };
 

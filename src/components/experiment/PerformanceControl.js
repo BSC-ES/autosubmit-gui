@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
+import TreeContext from "../context/tree/treeContext";
 
 const PerformanceControl = () => {
   const experimentContext = useContext(ExperimentContext);
-  const {
-    getExperimentPerformanceMetrics,
-    experiment,
-    enabledGraphSearch,
-  } = experimentContext;
+  const treeContext = useContext(TreeContext);
+  const { getExperimentPerformanceMetrics, experiment } = experimentContext;
+
+  const { enabledTreeSearch } = treeContext;
 
   const onSubmitRequest = (e) => {
     e.preventDefault();
@@ -24,7 +24,7 @@ const PerformanceControl = () => {
                 type='submit'
                 value='Refresh'
                 className='btn btn-success btn-block btn-sm'
-                disabled={!enabledGraphSearch}
+                disabled={!enabledTreeSearch}
               />
             </form>
           )}

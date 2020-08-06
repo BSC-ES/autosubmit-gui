@@ -1,9 +1,14 @@
 import React, { useContext, Fragment } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
+import GraphContext from "../context/graph/graphContext";
+import { secondsToDelta } from "../context/utils";
+import { DEBUG } from "../context/vars";
 
 const Selection = () => {
   const experimentContext = useContext(ExperimentContext);
-  const { selection, data, experiment, secondsToDelta } = experimentContext;
+  const graphContext = useContext(GraphContext);
+  const { experiment } = experimentContext;
+  const { data, selection } = graphContext;
   // const { model, branch, hpc } = experiment;
   //var currentSelection = "Node: "
 
@@ -12,17 +17,17 @@ const Selection = () => {
   //     navToLatestCompleted();
   // };
 
-  var currentNode = "";
-  var selectedNode = null;
+  let currentNode = "";
+  let selectedNode = null;
 
   const copyContent = (inputname) => (e) => {
     e.preventDefault();
-    console.log("Sending " + inputname);
+    DEBUG && console.log("Sending " + inputname);
     window.copyToClip(inputname);
   };
 
   if (selection) {
-    console.log("Current selection " + selection);
+    //console.log("Current selection " + selection);
     selection.map((node) => (currentNode = node));
 
     selectedNode = data.nodes.find((node) => node.id === currentNode);

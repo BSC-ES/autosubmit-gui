@@ -1,9 +1,10 @@
 import React, { useContext, Fragment } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
+import { secondsToDelta } from "../context/utils";
 
 const Performance = () => {
   const experimentContext = useContext(ExperimentContext);
-  const { performancedata, experiment, secondsToDelta } = experimentContext;
+  const { performancedata, experiment } = experimentContext;
 
   if (!experiment || !performancedata) {
     return (

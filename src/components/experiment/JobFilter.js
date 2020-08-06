@@ -1,15 +1,17 @@
 import React, { useContext, useState } from "react";
-import ExperimentContext from "../context/experiment/experimentContext";
+//import ExperimentContext from "../context/experiment/experimentContext";
+import TreeContext from "../context/tree/treeContext";
 
 const JobFilter = () => {
-  const experimentContext = useContext(ExperimentContext);
+  //const experimentContext = useContext(ExperimentContext);
+  const treeContext = useContext(TreeContext);
   const {
     filterTreeView,
     treedata,
     loadingFilterTree,
     clearFilterTreeView,
     returnFilter,
-  } = experimentContext;
+  } = treeContext;
 
   const [filterString, setFilterString] = useState("");
   const onSubmit = (e) => {

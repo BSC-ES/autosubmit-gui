@@ -1,15 +1,17 @@
 import React, { useContext, useState } from "react";
-import ExperimentContext from "../context/experiment/experimentContext";
+//import ExperimentContext from "../context/experiment/experimentContext";
+import GraphContext from "../context/graph/graphContext";
 
 const JobSearcher = () => {
-  const experimentContext = useContext(ExperimentContext);
+  //const experimentContext = useContext(ExperimentContext);
+  const graphContext = useContext(GraphContext);
   const {
     searchJobInGraph,
     foundNodes,
     loadingSearchJob,
     data,
     navigateTo,
-  } = experimentContext;
+  } = graphContext;
 
   const [jobId, setJobId] = useState("");
   const [currentIndex, setCurrentIndex] = useState("");

@@ -10,7 +10,7 @@ const ExperimentItem = ({
   const { getExperimentSummary, summaries } = experimentContext;
   const onGetSummary = (e) => {
     e.preventDefault();
-    console.log(name);
+    //console.log(name);
     getExperimentSummary(name);
   };
   return (

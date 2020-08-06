@@ -1,20 +1,25 @@
 import React, { useContext } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
+import GraphContext from "../context/graph/graphContext";
 import SelectionControl from "./SelectionControl";
 
 const GraphControl = () => {
   const experimentContext = useContext(ExperimentContext);
+  const graphContext = useContext(GraphContext);
+  const {
+    experiment,
+    experimentRunning,
+    loadingJobMonitor,
+  } = experimentContext;
+
   const {
     getExperimentGraph,
-    experiment,
-    enabledGraphSearch,
-    experimentRunning,
     data,
-    loadingJobMonitor,
     getExperimentPkl,
     setAutoUpdatePkl,
     startAutoUpdatePkl,
-  } = experimentContext;
+    enabledGraphSearch,
+  } = graphContext;
 
   const onSubmitGraph = (grouped = "none", layout = "standard") => (e) => {
     e.preventDefault();

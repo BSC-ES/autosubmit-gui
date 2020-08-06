@@ -9,6 +9,8 @@ import {
   SET_ERROR_STATS,
 } from "../types";
 
+import { AUTOSUBMIT_API_SOURCE, DEBUG } from "../vars";
+
 const StatsState = (props) => {
   const initialState = {
     loading: false,
@@ -19,9 +21,10 @@ const StatsState = (props) => {
     errorMessage: "",
   };
 
-  const localserver = "https://earth.bsc.es/autosubmitapi/";
+  const localserver = AUTOSUBMIT_API_SOURCE;
+  //const localserver = "https://earth.bsc.es/autosubmitapi/";
   //const localserver = "http://84.88.185.94:8081";
-  const debug = false;
+  const debug = DEBUG;
   const [state, dispatch] = useReducer(StatsReducer, initialState);
 
   // Get Experiment Stats

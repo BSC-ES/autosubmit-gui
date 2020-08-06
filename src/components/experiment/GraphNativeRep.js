@@ -2,7 +2,7 @@ import React, { Component } from "react";
 // import vis from "vis-network";
 import Spinner from "../layout/Spinner";
 import vis from "vis-network";
-
+import { DEBUG } from "../context/vars";
 class GraphNativeRep extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     if (this.props.shouldUpdateGraph === true) {
@@ -24,14 +24,14 @@ class GraphNativeRep extends Component {
     }
   }
   componentWillUnmount() {
-    console.log("Unmounting Nav Rep");
+    DEBUG && console.log("Unmounting Nav Rep");
     this.props.cleanGraphData();
     this.props.clearStats();
   }
 
-  updateVisNodes = (nodes) => {
-    this.props.setVisData(nodes);
-  };
+  // updateVisNodes = (nodes) => {
+  //   this.props.setVisData(nodes);
+  // };
 
   // onSubmit = (x,y) => e => {
   //   e.preventDefault();
@@ -239,7 +239,7 @@ class GraphNativeRep extends Component {
       }
 
       componentDidMount() {
-        var network = new vis.Network(
+        let network = new vis.Network(
           this.refs.myRef,
           this.props.graph,
           this.props.options
@@ -263,7 +263,10 @@ class GraphNativeRep extends Component {
               } else {
                 //console.log(params.nodes[0]);
                 this.props.updateSelection(params.nodes);
-                this.props.updateCurrentSelected(params.nodes[0], "Graph");
+                this.props.updateCurrentSelected(
+                  params.nodes[0],
+                  this.props.data
+                );
               }
             }
             // } else {
@@ -271,6 +274,10 @@ class GraphNativeRep extends Component {
             // }
           }
         });
+
+        // network.on("stabilized", () => {
+        //   this.props.navigateAfterLoadGraph(this.props.experimentRunning);
+        // });
 
         network.on("doubleClick", (params) => {
           if (params.nodes) {
@@ -368,17 +375,20 @@ class GraphNativeRep extends Component {
             }
           }
         }
-        if (network) {
-          console.log("Call auto zoom");
-          this.props.navigateAfterLoadGraph(
-            this.props.experimentRunning,
-            network
-          );
-        }
+
+        this.props.navigateAfterLoadGraph(this.props.experimentRunning);
+
+        // if (network) {
+        //   console.log("Call auto zoom");
+        //   this.props.navigateAfterLoadGraph(
+        //     this.props.experimentRunning,
+        //     network
+        //   );
+        // }
       }
 
       componentWillUnmount() {
-        console.log("Unmounting VisNetwork");
+        DEBUG && console.log("Unmounting VisNetwork");
         this.props.cleanNavData();
       }
 
@@ -391,10 +401,11 @@ class GraphNativeRep extends Component {
       }
     }
 
-    this.updateVisNodes(nodes);
+    //this.updateVisNodes(nodes);
 
     return (
       <VisNetwork
+        data={this.props.data}
         graph={graph}
         options={options}
         updateSelection={this.props.updateSelection}

@@ -7,6 +7,7 @@ import "jquery.fancytree/dist/modules/jquery.fancytree.edit";
 import "jquery.fancytree/dist/modules/jquery.fancytree.multi";
 // import 'jquery.fancytree/dist/skin-lion/ui.fancytree.less';  // CSS or LESS
 import { createTree } from "jquery.fancytree";
+import { DEBUG } from "../context/vars";
 
 // import 'jquery.fancytree/dist/modules/jquery.fancytree.edit';
 // import 'jquery.fancytree/dist/modules/jquery.fancytree.filter';
@@ -27,13 +28,13 @@ export class TreeNativeRep extends Component {
   }
 
   componentWillUnmount() {
-    console.log("Unmounting Tree Rep");
+    DEBUG && console.log("Unmounting Tree Rep");
     this.props.cleanTreeData();
     // this.props.clearStats();
   }
 
   componenteDidMount() {
-    console.log("In after mount");
+    DEBUG && console.log("In after mount");
     createTree("#tree", {
       extensions: ["edit", "filter"],
       source: this.props.treedata,
@@ -90,7 +91,7 @@ export class TreeNativeRep extends Component {
       // }
 
       componentDidMount() {
-        var tree = new createTree("#tree", {
+        let tree = new createTree("#tree", {
           activate: (event, data) => {
             //console.log(event)
             //console.log(data)
@@ -114,7 +115,10 @@ export class TreeNativeRep extends Component {
               //console.log(this.props.canSelect);
               //if (this.props.canSelect === true) {
               if (data && data.node && data.node.folder === undefined) {
-                this.props.updateCurrentSelected(data.node.refKey, "Tree");
+                this.props.updateCurrentSelected(
+                  data.node.refKey,
+                  this.props.originaldata
+                );
               }
 
               //}
@@ -146,12 +150,12 @@ export class TreeNativeRep extends Component {
 
         //console.log(tree.activeNode);
 
-        console.log(tree);
+        DEBUG && console.log(tree);
         this.props.setFancyTree(tree);
       }
 
       componentWillUnmount() {
-        console.log("Unmounting Tree");
+        DEBUG && console.log("Unmounting Tree");
         //this.props.cleanNavData();
       }
 
@@ -167,6 +171,7 @@ export class TreeNativeRep extends Component {
     return (
       <FancyTree
         treedata={this.props.treedata.tree}
+        originaldata={this.props.treedata}
         setFancyTree={this.props.setFancyTree}
         updateSelectionTree={this.props.updateSelectionTree}
         updateCurrentSelected={this.props.updateCurrentSelected}

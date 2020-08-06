@@ -1,72 +1,35 @@
 import React, { useContext } from "react";
-import ExperimentContext from "../context/experiment/experimentContext";
+//import ExperimentContext from "../context/experiment/experimentContext";
+import GraphContext from "../context/graph/graphContext";
+import {
+  WaitingCode,
+  waitingColor,
+  UnknownCode,
+  unknownColor,
+  SuspendedCode,
+  suspendedColor,
+  QueueCode,
+  queueColor,
+  FailedCode,
+  failedColor,
+  HoldCode,
+  holdColor,
+  CompletedCode,
+  completedColor,
+  SubmittedCode,
+  submittedColor,
+  RunningCode,
+  runningColor,
+  ReadyCode,
+  readyColor,
+  PreparedCode,
+  preparedColor,
+} from "../context/vars";
 
 const Navigator = () => {
-  const experimentContext = useContext(ExperimentContext);
-  const { navToLatest } = experimentContext;
-
-  const WaitingCode = 0;
-  const UnknownCode = -2;
-  const SuspendedCode = -3;
-  const QueueCode = 3;
-  const FailedCode = -1;
-  const HoldCode = 6;
-  const CompletedCode = 5;
-  const SubmittedCode = 2;
-  const RunningCode = 4;
-  const ReadyCode = 1;
-  const PreparedCode = 7;
-
-  const queueColor = {
-    background: "lightpink",
-    fontWeight: "bold",
-  };
-  const failedColor = {
-    background: "red",
-    fontWeight: "bold",
-    color: "white",
-  };
-  const completedColor = {
-    background: "yellow",
-    fontWeight: "bold",
-  };
-  const submittedColor = {
-    background: "cyan",
-    fontWeight: "bold",
-  };
-  const runningColor = {
-    background: "green",
-    fontWeight: "bold",
-    color: "white",
-  };
-  const readyColor = {
-    background: "lightblue",
-    fontWeight: "bold",
-  };
-  const waitingColor = {
-    background: "gray",
-    fontWeight: "bold",
-    color: "white",
-  };
-  const unknownColor = {
-    background: "white",
-    color: "black",
-    fontWeight: "bold",
-  };
-  const suspendedColor = {
-    background: "orange",
-    fontWeight: "bold",
-    color: "white",
-  };
-  const holdColor = {
-    background: "salmon",
-    fontWeight: "bold",
-    color: "white",
-  };
-  const preparedColor = {
-    background: "lightsalmon",
-    fontWeight: "bold",
-  };
+  //const experimentContext = useContext(ExperimentContext);
+  const graphContext = useContext(GraphContext);
+  const { navToLatest } = graphContext;
 
   const onLatest = (statusCode, latest = true) => (e) => {
     e.preventDefault();
