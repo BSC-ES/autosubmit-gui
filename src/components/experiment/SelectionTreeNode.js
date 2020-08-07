@@ -10,14 +10,14 @@ const SelectionTreeNode = () => {
   const { experiment } = experimentContext;
   const { selectedTreeNode, treedata } = treeContext;
 
-  var selectedNode = null;
-  var currentNode = "";
+  let selectedNode = null;
+  //var currentNode = "";
   if (
     selectedTreeNode &&
     selectedTreeNode.node &&
     selectedTreeNode.node.refKey
   ) {
-    currentNode = selectedTreeNode.node.refKey;
+    const currentNode = selectedTreeNode.node.refKey;
     if (treedata && treedata.jobs) {
       selectedNode = treedata.jobs.find((job) => job.id === currentNode);
       //console.log(selectedNode);
@@ -34,6 +34,7 @@ const SelectionTreeNode = () => {
     window.copyToClip(inputname);
   };
 
+  //console.log(selectedNode);
   return (
     <Fragment>
       {selectedNode && (
@@ -189,8 +190,8 @@ const SelectionTreeNode = () => {
                       )}
                   </div>
                   <div className='col-md-3 px-1'>
-                    {selectedNode.parent_list &&
-                      selectedNode.parent_list.length > 0 && (
+                    {selectedNode.parent_list !== null &&
+                      selectedNode.parents > 0 && (
                         <button
                           className='btn btn-dark btn-sm btn-block'
                           data-toggle='modal'
@@ -201,62 +202,14 @@ const SelectionTreeNode = () => {
                           </small>
                         </button>
                       )}
-                    {selectedNode.parent_list &&
-                      selectedNode.parent_list.length === 0 && (
+                    {selectedNode.parent_list !== null &&
+                      selectedNode.parents === 0 && (
                         <small>
                           <strong>In:</strong> {selectedNode.parents}
                         </small>
                       )}
                   </div>
                 </div>
-                {selectedNode.custom_directives &&
-                  selectedNode.custom_directives.length > 0 && (
-                    <div>
-                      <div className='row'>
-                        <div className='col-12'>
-                          <small>
-                            <strong>Custom Directives:</strong>
-                          </small>
-                        </div>
-                      </div>
-                      <div className='row'>
-                        <div className='col-12'>
-                          <small>{selectedNode.custom_directives}</small>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                {selectedNode.wrapper && selectedNode.wrapper.length > 0 && (
-                  <div>
-                    <div className='row'>
-                      <div className='col-12'>
-                        <small>
-                          <strong>Wrapper:</strong>
-                        </small>
-                      </div>
-                    </div>
-                    <div className='row'>
-                      <div className='col-12'>
-                        <small>{selectedNode.wrapper}</small>
-                      </div>
-                    </div>
-                  </div>
-                )}
-                {selectedNode.wrapper_code &&
-                  selectedNode.wrapper_code.length > 0 && (
-                    <div>
-                      <div className='row'>
-                        <div className='col-6'>
-                          <small>
-                            <strong>Code:</strong>
-                          </small>
-                        </div>
-                        <div className='col-6'>
-                          <small>{selectedNode.wrapper_code}</small>
-                        </div>
-                      </div>
-                    </div>
-                  )}
                 <div>
                   {selectedNode.out && (
                     <div className='row'>
@@ -313,6 +266,59 @@ const SelectionTreeNode = () => {
                     </div>
                   )}
                 </div>
+                {selectedNode.submit !== null && (
+                  <div className='row'>
+                    <div className='col-12'>
+                      <small>Submit: {selectedNode.submit}</small>
+                    </div>
+                  </div>
+                )}
+                {selectedNode.start !== null && (
+                  <div className='row'>
+                    <div className='col-12'>
+                      <small>Start: {selectedNode.start}</small>
+                    </div>
+                  </div>
+                )}
+                {selectedNode.finish !== null && (
+                  <div className='row'>
+                    <div className='col-12'>
+                      <small>Finish: {selectedNode.finish}</small>
+                    </div>
+                  </div>
+                )}
+                {selectedNode.wrapper !== null &&
+                  selectedNode.wrapper.length > 0 && (
+                    <div>
+                      <div className='row'>
+                        <div className='col-12'>
+                          <small>
+                            <strong>Wrapper:</strong>
+                          </small>
+                        </div>
+                      </div>
+                      <div className='row'>
+                        <div className='col-12'>
+                          <small>{selectedNode.wrapper}</small>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                {selectedNode.wrapper_code !== null &&
+                  selectedNode.wrapper_code.length > 0 && (
+                    <div>
+                      <div className='row'>
+                        <div className='col-6'>
+                          <small>
+                            <strong>Code:</strong>
+                          </small>
+                        </div>
+                        <div className='col-6'>
+                          <small>{selectedNode.wrapper_code}</small>
+                        </div>
+                      </div>
+                    </div>
+                  )}
               </div>
             </div>
           </div>
@@ -429,7 +435,7 @@ const SelectionTreeNode = () => {
 };
 
 const experimentStyle = {
-  height: 360,
+  height: 425,
 };
 
 const headerCard = {

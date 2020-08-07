@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.19.2",
+    "dateformat": "^3.0.3",
     "jquery": "^3.5.0",
     "jquery.fancytree": "^2.35.0",
     "react": "^16.13.1",

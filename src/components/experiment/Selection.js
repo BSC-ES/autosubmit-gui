@@ -275,6 +275,27 @@ const Selection = () => {
                       </div>
                     )}
                   </div>
+                  {selectedNode.submit != null && (
+                    <div className='row'>
+                      <div className='col-12'>
+                        <small>Submit: {selectedNode.submit}</small>
+                      </div>
+                    </div>
+                  )}
+                  {selectedNode.start != null && (
+                    <div className='row'>
+                      <div className='col-12'>
+                        <small>Start: {selectedNode.start}</small>
+                      </div>
+                    </div>
+                  )}
+                  {selectedNode.finish != null && (
+                    <div className='row'>
+                      <div className='col-12'>
+                        <small>Finish: {selectedNode.finish}</small>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -394,7 +415,7 @@ const Selection = () => {
 };
 
 const experimentStyle = {
-  height: 320,
+  height: 360,
 };
 
 const headerCard = {
