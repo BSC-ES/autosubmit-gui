@@ -107,6 +107,9 @@ export default (state, action) => {
             cjob.wrapper = ijob.wrapper;
             cjob.out = ijob.out;
             cjob.err = ijob.err;
+            cjob.submit = ijob.submit;
+            cjob.start = ijob.start;
+            cjob.finish = ijob.finish;
             // Parents are those groups to which a job belongs in the tree
             let tree_parent_wrapper = "Wrapper: " + ijob.wrapper;
             if (!cjob.tree_parents.includes(tree_parent_wrapper)) {

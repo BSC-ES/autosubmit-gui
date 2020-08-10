@@ -190,6 +190,9 @@ export default (state, action) => {
                 jobs[state.data.nodes[i].id].minutes;
               state.data.nodes[i].minutes_queue =
                 jobs[state.data.nodes[i].id].minutes_queue;
+              state.data.nodes[i].submit = jobs[state.data.nodes[i].id].submit;
+              state.data.nodes[i].start = jobs[state.data.nodes[i].id].start;
+              state.data.nodes[i].finish = jobs[state.data.nodes[i].id].finish;
               //console.log(state.data.nodes[i].status_color)
               colorChanges[state.data.nodes[i].id] =
                 jobs[state.data.nodes[i].id].status_color;
@@ -198,25 +201,13 @@ export default (state, action) => {
           }
 
           if (requireUpdate) {
-            // console.log(state.data.pkl_timestamp);
-            // console.log(expData.pkl_timestamp);
             DEBUG && console.log("New ts: " + retrievedPkl.pkl_timestamp);
             state.data.pkl_timestamp = retrievedPkl.pkl_timestamp;
-            //expData.pkl_timestamp = retrievedPkl.pkl_timestamp;
-            // console.log(state.data.pkl_timestamp);
-            // console.log(expData.pkl_timestamp);
 
-            //updateNodes(state.data);
-            //updateExperimentTimeStamp(retrievedPkl.pkl_timestamp);
-            //updateExperimentTimeStamp(expData);
-            // setUpdateGraph(true);
-            // setUpdateGraph(false);
             if (state.pklchanges) {
               state.pklchanges = changes + state.pklchanges;
-              //setPklChanges(changes + state.pklchanges);
             } else {
               state.pklchanges = changes;
-              //setPklChanges(changes);
             }
 
             for (var key in colorChanges) {
@@ -238,9 +229,6 @@ export default (state, action) => {
             }
           } else {
             DEBUG && console.log("No changes but updating pkl anyway.");
-            //expData.pkl_timestamp = retrievedPkl.pkl_timestamp;
-            //updateExperimentTimeStamp(expData);
-            //updateExperimentTimeStamp(retrievedPkl.pkl_timestamp);
           }
         }
       }
