@@ -19,7 +19,10 @@ const GraphControl = () => {
     setAutoUpdatePkl,
     startAutoUpdatePkl,
     enabledGraphSearch,
+    loadingPkl,
   } = graphContext;
+
+  const disableQuery = !enabledGraphSearch || loadingPkl;
 
   const onSubmitGraph = (grouped = "none", layout = "standard") => (e) => {
     e.preventDefault();
@@ -46,7 +49,7 @@ const GraphControl = () => {
     <div className='card-header p-1'>
       <div className='row'>
         <div className='col-md-2'>
-          {loadingJobMonitor && <div>Querying...</div>}
+          {(loadingJobMonitor || loadingPkl) && <div>Querying...</div>}
         </div>
         <div className='col-md-10'>
           <div className='row justify-content-end'>
@@ -62,7 +65,7 @@ const GraphControl = () => {
                   type='submit'
                   value='Classic'
                   className='btn btn-info btn-block btn-sm'
-                  disabled={!enabledGraphSearch}
+                  disabled={disableQuery}
                 />
               </form>
             </div>
@@ -75,7 +78,7 @@ const GraphControl = () => {
                   type='submit'
                   value='Laplacian'
                   className='btn btn-info btn-block btn-sm'
-                  disabled={!enabledGraphSearch}
+                  disabled={disableQuery}
                 />
               </form>
             </div>
@@ -85,7 +88,7 @@ const GraphControl = () => {
                   type='submit'
                   value='Grouped by D-M'
                   className='btn btn-info btn-block btn-sm'
-                  disabled={!enabledGraphSearch}
+                  disabled={disableQuery}
                 />
               </form>
             </div>
@@ -95,7 +98,7 @@ const GraphControl = () => {
                   type='submit'
                   value='Grouped by Status'
                   className='btn btn-info btn-block btn-sm'
-                  disabled={!enabledGraphSearch}
+                  disabled={disableQuery}
                 />
               </form>
             </div>
@@ -106,7 +109,7 @@ const GraphControl = () => {
                     type='submit'
                     value='Refresh'
                     className='btn btn-success btn-block btn-sm'
-                    disabled={!enabledGraphSearch}
+                    disabled={disableQuery}
                   />
                 </form>
               </div>
@@ -118,7 +121,7 @@ const GraphControl = () => {
                     type='submit'
                     value='Start Job Monitor'
                     className='btn btn-success btn-block btn-sm'
-                    disabled={!enabledGraphSearch}
+                    disabled={disableQuery}
                   />
                 </form>
               </div>
@@ -130,7 +133,7 @@ const GraphControl = () => {
                     type='submit'
                     value='Stop Job Monitor'
                     className='btn btn-danger btn-block btn-sm'
-                    disabled={!enabledGraphSearch}
+                    disabled={disableQuery}
                   />
                 </form>
               </div>

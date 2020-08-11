@@ -106,6 +106,7 @@ const TreeState = (props) => {
       value={{
         treedata: state.treedata,
         loadingTree: state.loadingTree,
+        loadingTreePkl: state.loadingTreePkl,
         loadingFilterTree: state.loadingFilterTree,
         enabledTreeSearch: state.enabledTreeSearch,
         returnFilter: state.returnFilter,

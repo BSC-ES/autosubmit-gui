@@ -17,6 +17,7 @@ const TreeControl = () => {
     loadingTreeRefresh,
     setAutoUpdateTreePkl,
     startAutoUpdateTreePkl,
+    loadingTreePkl,
   } = treeContext;
 
   const onSubmitTree = (e) => {
@@ -44,14 +45,13 @@ const TreeControl = () => {
     setAutoUpdateTreePkl(false);
   };
 
+  const disabledQuery = !enabledTreeSearch || loadingTreePkl;
+
   return (
     <div className='card-header p-1'>
       <div className='row justify-content-end'>
-        {loadingTreeRefresh && startAutoUpdateTreePkl && (
-          <div className='col-md-8 text-left'>Querying...</div>
-        )}
-        {loadingTreeRefresh && !startAutoUpdateTreePkl && (
-          <div className='col-md-6 text-left'>Querying...</div>
+        {(loadingTreeRefresh || loadingTreePkl) && (
+          <div className='col text-left'>Querying...</div>
         )}
         {experiment && treedata && (
           <div className='col-md-2'>
@@ -65,7 +65,7 @@ const TreeControl = () => {
                 type='submit'
                 value='Show'
                 className='btn btn-info btn-block btn-sm'
-                disabled={!enabledTreeSearch}
+                disabled={disabledQuery}
               />
             </form>
           </div>
@@ -77,7 +77,7 @@ const TreeControl = () => {
                 type='submit'
                 value='Clear Tree'
                 className='btn btn-secondary btn-block btn-sm'
-                disabled={!enabledTreeSearch}
+                disabled={disabledQuery}
               />
             </form>
           </div>
@@ -92,7 +92,7 @@ const TreeControl = () => {
                   type='submit'
                   value='Refresh'
                   className='btn btn-success btn-block btn-sm'
-                  disabled={!enabledTreeSearch}
+                  disabled={disabledQuery}
                 />
               </form>
             </div>
@@ -104,7 +104,7 @@ const TreeControl = () => {
                 type='submit'
                 value='Start Job Monitor'
                 className='btn btn-success btn-block btn-sm'
-                disabled={!enabledTreeSearch}
+                disabled={disabledQuery}
               />
             </form>
           </div>
@@ -116,7 +116,7 @@ const TreeControl = () => {
                 type='submit'
                 value='Stop Job Monitor'
                 className='btn btn-danger btn-block btn-sm'
-                disabled={!enabledTreeSearch}
+                disabled={disabledQuery}
               />
             </form>
           </div>

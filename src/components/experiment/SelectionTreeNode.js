@@ -266,27 +266,50 @@ const SelectionTreeNode = () => {
                     </div>
                   )}
                 </div>
-                {selectedNode.submit !== null && (
-                  <div className='row'>
-                    <div className='col-12'>
-                      <small>Submit: {selectedNode.submit}</small>
-                    </div>
+                <div className='row'>
+                  <div className='col'>
+                    <table>
+                      <tbody>
+                        {selectedNode.submit !== null && (
+                          <tr>
+                            <td>
+                              <small>Submit:</small>
+                            </td>
+                            <td>
+                              <span className='badge badge-dark'>
+                                {selectedNode.submit}
+                              </span>
+                            </td>
+                          </tr>
+                        )}
+                        {selectedNode.start !== null && (
+                          <tr>
+                            <td>
+                              <small>Start:</small>
+                            </td>
+                            <td>
+                              <span className='badge badge-dark'>
+                                {selectedNode.start}
+                              </span>
+                            </td>
+                          </tr>
+                        )}
+                        {selectedNode.finish !== null && (
+                          <tr>
+                            <td>
+                              <small>Finish:</small>
+                            </td>
+                            <td>
+                              <span className='badge badge-dark'>
+                                {selectedNode.finish}
+                              </span>
+                            </td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
                   </div>
-                )}
-                {selectedNode.start !== null && (
-                  <div className='row'>
-                    <div className='col-12'>
-                      <small>Start: {selectedNode.start}</small>
-                    </div>
-                  </div>
-                )}
-                {selectedNode.finish !== null && (
-                  <div className='row'>
-                    <div className='col-12'>
-                      <small>Finish: {selectedNode.finish}</small>
-                    </div>
-                  </div>
-                )}
+                </div>
                 {selectedNode.wrapper !== null &&
                   selectedNode.wrapper.length > 0 && (
                     <div>
@@ -435,7 +458,7 @@ const SelectionTreeNode = () => {
 };
 
 const experimentStyle = {
-  height: 425,
+  height: 430,
 };
 
 const headerCard = {
