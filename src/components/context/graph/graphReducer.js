@@ -23,6 +23,7 @@ import {
   NAVIGATE_TO_LATEST,
   UPDATE_GRAPH_SELECTED_NODES,
   SET_CURRENT_COMMAND,
+  //DEACTIVATE_COPY_TO,
 } from "../types";
 
 import { DEBUG } from "../vars";
@@ -514,7 +515,13 @@ export default (state, action) => {
       return {
         ...state,
         currentCommandGraph: action.payload,
+        canCopyToClipboard: true,
       };
+    // case DEACTIVATE_COPY_TO:
+    //   return {
+    //     ...state,
+    //     canCopyToClipboard: false,
+    //   };
     default:
       return null;
   }

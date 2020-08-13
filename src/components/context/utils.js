@@ -37,6 +37,39 @@ export const hashCode = (value) => {
   return hash;
 };
 
+export const commandGeneratorGraph = (expid, jobs, status) => {
+  let command = "Invalid Command: You have to select at least one job.";
+  //jobs.map((job) => arrayNames.push(job.name));
+  if (jobs.length > 0) {
+    command =
+      "autosubmit setstatus " +
+      expid +
+      ' -fl "' +
+      jobs.join(" ") +
+      '" -t ' +
+      status +
+      " -s -nt -np";
+  }
+  return command;
+};
+
+export const commandGenerator = (expid, jobs, status) => {
+  let arrayNames = [];
+  let command = "Invalid Command: You have to select at least one job.";
+  jobs.map((job) => arrayNames.push(job.name));
+  if (arrayNames.length > 0) {
+    command =
+      "autosubmit setstatus " +
+      expid +
+      ' -fl "' +
+      arrayNames.join(" ") +
+      '" -t ' +
+      status +
+      " -s -nt -np";
+  }
+  return command;
+};
+
 export const secondsToDelta = (SECONDS) => {
   if (SECONDS > 0) {
     var sec_num = SECONDS; // don't forget the second param

@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import GraphContext from "../context/graph/graphContext";
 import ExperimentContext from "../context/experiment/experimentContext";
 import { DEBUG } from "../context/vars";
+import { commandGenerator, commandGeneratorGraph } from "../context/utils";
 
 const CommandModal = ({ source, target }) => {
   const graphContext = useContext(GraphContext);
@@ -37,10 +38,16 @@ const CommandModal = ({ source, target }) => {
 
   const setStatusCommand = (status) => (e) => {
     e.preventDefault();
+    let command = "";
     if (source === "graph-only") {
-      setCurrentCommandGraph(status, sourceSelection, expid);
+      command = commandGeneratorGraph(status, sourceSelection, expid);
+      copyContent(command);
+      setCurrentCommandGraph(command);
+    } else {
+      command = commandGenerator(status, sourceSelection, expid);
+      copyContent(command);
+      setCurrentCommand(command);
     }
-    setCurrentCommand(status, sourceSelection, expid);
   };
 
   const copyContent = (inputname) => {
@@ -50,10 +57,12 @@ const CommandModal = ({ source, target }) => {
   };
 
   //copying to Clipboard
-  if (sourceCommand && sourceCommand.length > 0) {
-    DEBUG && console.log(sourceCommand);
-    copyContent(JSON.parse(JSON.stringify(sourceCommand)));
-  }
+  // if (sourceCommand && sourceCommand.length > 0) {
+  //   if (canCopyToClipboard === true) {
+  //     DEBUG && console.log(sourceCommand);
+  //     copyContent(JSON.parse(JSON.stringify(sourceCommand)));
+  //   }
+  // }
 
   let modalHeader = <div className='col-12'>{invalidMessage}</div>;
 

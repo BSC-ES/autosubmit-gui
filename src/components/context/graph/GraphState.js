@@ -27,6 +27,7 @@ import {
   NAVIGATE_TO_GROUP_GRAPH,
   NAVIGATE_TO_LATEST,
   UPDATE_GRAPH_SELECTED_NODES,
+  //DEACTIVATE_COPY_TO,
 } from "../types";
 
 import { AUTOSUBMIT_API_SOURCE, DEBUG } from "../vars";
@@ -106,14 +107,17 @@ const GraphState = (props) => {
   };
 
   const navigateAfterLoadGraph = (running = false) => {
+    debug && console.log("Nav. After Loading");
     dispatch({ type: NAVIGATE_AFTER_LOADING_GRAPH, payload: running });
   };
 
   const navigateTo = (Id) => {
+    debug && console.log("Nav. To");
     dispatch({ type: NAVIGATE_GRAPH_TO, payload: Id });
   };
 
   const navToLatest = (statusCode, latest) => {
+    debug && console.log("Nav. To Latest");
     dispatch({
       type: NAVIGATE_TO_LATEST,
       payload: { status: statusCode, latest: latest },
@@ -121,6 +125,7 @@ const GraphState = (props) => {
   };
 
   const navigateToGroup = (IdList) => {
+    debug && console.log("Nav. To Group.");
     dispatch({
       type: NAVIGATE_TO_GROUP_GRAPH,
       payload: IdList,
@@ -135,27 +140,15 @@ const GraphState = (props) => {
     });
   };
 
-  const setCurrentCommandGraph = async (status, jobs, expid) => {
+  const setCurrentCommandGraph = async (command) => {
     // for change status
     //let arrayNames = [];
-    let command = "Invalid Command: You have to select at least one job.";
-    //jobs.map((job) => arrayNames.push(job.name));
-    if (jobs.length > 0) {
-      command =
-        "autosubmit setstatus " +
-        expid +
-        ' -fl "' +
-        jobs.join(" ") +
-        '" -t ' +
-        status +
-        " -s -nt -np";
-    }
+
     //console.log(command);
     dispatch({
       type: SET_CURRENT_COMMAND,
       payload: command,
     });
-    //return command;
   };
 
   // Clean state data
@@ -183,6 +176,7 @@ const GraphState = (props) => {
     dispatch({ type: UPDATE_SELECTION, payload: currentSelection });
   const updateGraphSelectedNodes = () =>
     dispatch({ type: UPDATE_GRAPH_SELECTED_NODES });
+  //const deactivateCanCopyTo = () => dispatch({ type: DEACTIVATE_COPY_TO });
 
   return (
     <GraphContext.Provider
@@ -222,6 +216,7 @@ const GraphState = (props) => {
         navigateAfterLoadGraph,
         updateGraphSelectedNodes,
         setCurrentCommandGraph,
+        //deactivateCanCopyTo,
       }}
     >
       {props.children}

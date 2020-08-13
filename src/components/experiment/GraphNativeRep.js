@@ -246,14 +246,7 @@ class GraphNativeRep extends Component {
         );
         const groups_data = this.props.groups_data;
         const current_grouped = this.props.current_grouped;
-        // const clusterOptions = {
-        //   joinCondition:function(options) {
-        //     const result = options.shape === "square";
-        //     // console.log(result)
-        //     return result;
-        //   }
-        // }
-        //console.log(this.props.groups_data);
+
         this.props.setVisNetwork(network);
         network.on("select", (params) => {
           //console.log(network);
@@ -378,14 +371,6 @@ class GraphNativeRep extends Component {
         }
 
         this.props.navigateAfterLoadGraph(this.props.experimentRunning);
-
-        // if (network) {
-        //   console.log("Call auto zoom");
-        //   this.props.navigateAfterLoadGraph(
-        //     this.props.experimentRunning,
-        //     network
-        //   );
-        // }
       }
 
       componentWillUnmount() {
@@ -401,8 +386,6 @@ class GraphNativeRep extends Component {
         );
       }
     }
-
-    //this.updateVisNodes(nodes);
 
     return (
       <VisNetwork

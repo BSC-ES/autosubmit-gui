@@ -160,21 +160,8 @@ const ExperimentState = (props) => {
     });
   };
 
-  const setCurrentCommand = async (status, jobs, expid) => {
+  const setCurrentCommand = async (command) => {
     // for change status
-    let arrayNames = [];
-    let command = "Invalid Command: You have to select at least one job.";
-    jobs.map((job) => arrayNames.push(job.name));
-    if (arrayNames.length > 0) {
-      command =
-        "autosubmit setstatus " +
-        expid +
-        ' -fl "' +
-        arrayNames.join(" ") +
-        '" -t ' +
-        status +
-        " -s -nt -np";
-    }
     dispatch({
       type: SET_CURRENT_COMMAND,
       payload: command,
