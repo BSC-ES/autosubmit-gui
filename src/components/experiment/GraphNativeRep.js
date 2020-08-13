@@ -261,8 +261,9 @@ class GraphNativeRep extends Component {
             if (params.nodes.length === 1) {
               if (network.isCluster(params.nodes[0])) {
               } else {
-                //console.log(params.nodes[0]);
+                //console.log(params.nodes);
                 this.props.updateSelection(params.nodes);
+                // this.props.updateGraphSelectedNodes(params.nodes);
                 this.props.updateCurrentSelected(
                   params.nodes[0],
                   this.props.data
@@ -419,6 +420,7 @@ class GraphNativeRep extends Component {
         experimentRunning={this.props.experimentRunning}
         navigateAfterLoadGraph={this.props.navigateAfterLoadGraph}
         updateCurrentSelected={this.props.updateCurrentSelected}
+        updateGraphSelectedNodes={this.props.updateGraphSelectedNodes}
       />
     );
   }

@@ -19,13 +19,14 @@ import {
   SET_LOADING_PKL,
   SHOULD_UPDATE_GRAPH,
   SET_LOADING_JOB_MONITOR,
-  // UPDATE_NODES,
+  SET_CURRENT_COMMAND,
   NAVIGATE_GRAPH_TO,
   CLEAN_PKL_DATA,
   CLEAN_NAV_DATA,
   NAVIGATE_AFTER_LOADING_GRAPH,
   NAVIGATE_TO_GROUP_GRAPH,
   NAVIGATE_TO_LATEST,
+  UPDATE_GRAPH_SELECTED_NODES,
 } from "../types";
 
 import { AUTOSUBMIT_API_SOURCE, DEBUG } from "../vars";
@@ -46,10 +47,12 @@ const GraphState = (props) => {
     shouldUpdateGraph: false,
     pklchanges: null,
     //currentSelected: [],
+    currentCommandGraph: null,
     current_grouped: "none",
     current_layout: "standard",
     selection: null,
     foundNodes: null,
+    graphSelectedNodes: null,
     pkldata: null,
   };
 
@@ -132,6 +135,29 @@ const GraphState = (props) => {
     });
   };
 
+  const setCurrentCommandGraph = async (status, jobs, expid) => {
+    // for change status
+    //let arrayNames = [];
+    let command = "Invalid Command: You have to select at least one job.";
+    //jobs.map((job) => arrayNames.push(job.name));
+    if (jobs.length > 0) {
+      command =
+        "autosubmit setstatus " +
+        expid +
+        ' -fl "' +
+        jobs.join(" ") +
+        '" -t ' +
+        status +
+        " -s -nt -np";
+    }
+    //console.log(command);
+    dispatch({
+      type: SET_CURRENT_COMMAND,
+      payload: command,
+    });
+    //return command;
+  };
+
   // Clean state data
   const cleanOnlyGraphData = () => dispatch({ type: CLEAN_ONLY_GRAH_DATA });
   const cleanGraphData = () => dispatch({ type: CLEAN_GRAPH_DATA });
@@ -155,6 +181,8 @@ const GraphState = (props) => {
     dispatch({ type: SHOULD_UPDATE_GRAPH, payload: value });
   const updateSelection = (currentSelection) =>
     dispatch({ type: UPDATE_SELECTION, payload: currentSelection });
+  const updateGraphSelectedNodes = () =>
+    dispatch({ type: UPDATE_GRAPH_SELECTED_NODES });
 
   return (
     <GraphContext.Provider
@@ -173,6 +201,8 @@ const GraphState = (props) => {
         pkldata: state.pkldata,
         startAutoUpdatePkl: state.startAutoUpdatePkl,
         shouldUpdateGraph: state.shouldUpdateGraph,
+        graphSelectedNodes: state.graphSelectedNodes,
+        currentCommandGraph: state.currentCommandGraph,
         getExperimentGraph,
         getExperimentPkl,
         cleanOnlyGraphData,
@@ -190,6 +220,8 @@ const GraphState = (props) => {
         navigateTo,
         navToLatest,
         navigateAfterLoadGraph,
+        updateGraphSelectedNodes,
+        setCurrentCommandGraph,
       }}
     >
       {props.children}

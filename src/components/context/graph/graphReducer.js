@@ -21,6 +21,8 @@ import {
   NAVIGATE_GRAPH_TO,
   NAVIGATE_TO_GROUP_GRAPH,
   NAVIGATE_TO_LATEST,
+  UPDATE_GRAPH_SELECTED_NODES,
+  SET_CURRENT_COMMAND,
 } from "../types";
 
 import { DEBUG } from "../vars";
@@ -58,6 +60,7 @@ export default (state, action) => {
         current_layout: layout,
         loadingGraph: false,
         enabledGraphSearch: true,
+        graphSelectedNodes: null,
       };
     case GET_PKL_DATA:
       let retrievedPkl = action.payload;
@@ -446,6 +449,7 @@ export default (state, action) => {
         foundNodes: null,
         current_grouped: "none",
         current_layout: "standard",
+        graphSelectedNodes: null,
       };
     case SHOULD_UPDATE_GRAPH:
       return {
@@ -472,6 +476,7 @@ export default (state, action) => {
         canSelect: false,
         currentSelected: [],
         currentCommand: null,
+        graphSelectedNodes: null,
         //startAutoUpdatePkl: false,
       };
     case CLEAN_PKL_DATA:
@@ -492,6 +497,23 @@ export default (state, action) => {
       return {
         ...state,
         selection: action.payload,
+      };
+    case UPDATE_GRAPH_SELECTED_NODES:
+      //const selectedNodes = action.payload;
+      state.graphSelectedNodes = null;
+      state.currentCommandGraph = null;
+      if (state.selection) {
+        const currentSelectedNodes = state.visNetwork.getSelectedNodes();
+        DEBUG && console.log(currentSelectedNodes);
+        state.graphSelectedNodes = currentSelectedNodes;
+      }
+      return {
+        ...state,
+      };
+    case SET_CURRENT_COMMAND:
+      return {
+        ...state,
+        currentCommandGraph: action.payload,
       };
     default:
       return null;

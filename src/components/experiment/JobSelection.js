@@ -1,34 +1,17 @@
 import React, { useContext, Fragment } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
-import { DEBUG } from "../context/vars";
+import CommandModal from "./CommandModal";
 
-const JobSelection = ({ target }) => {
+const JobSelection = ({ source, target }) => {
   //const util = require("util");
   const experimentContext = useContext(ExperimentContext);
-  const {
-    currentSelected,
-    removeSelectedJob,
-    canSelect,
-    setCurrentCommand,
-    experiment,
-    currentCommand,
-  } = experimentContext;
-  var expid = null;
-  if (experiment) {
-    expid = experiment.expid;
-  }
+  const { currentSelected, removeSelectedJob, canSelect } = experimentContext;
 
   // const onSelectionMode = (e) => {
   //   e.preventDefault();
   //   activateSelectionMode();
   //   //console.log("Sending " + boolValue);
   // };
-
-  const copyContent = (inputname) => {
-    //e.preventDefault();
-    DEBUG && console.log("Sending " + inputname);
-    window.copyTextToClipboard(inputname);
-  };
 
   // const offSelectionMode = (e) => {
   //   e.preventDefault();
@@ -41,64 +24,6 @@ const JobSelection = ({ target }) => {
     //console.log("Sending " + inputname);
     removeSelectedJob(name);
   };
-
-  const setStatusCommand = (status) => (e) => {
-    e.preventDefault();
-    setCurrentCommand(status, currentSelected, expid);
-  };
-
-  let modalHeader = (
-    <div className='col-12'>
-      Invalid Selection: You have to select at least one job.
-    </div>
-  );
-  if (currentSelected && currentSelected.length > 0) {
-    modalHeader = (
-      <div className='col-12'>
-        Set status to:{" "}
-        <div className='btn-group' role='group' aria-label='Status'>
-          <button
-            className='btn btn-sm'
-            style={{ background: "lightblue" }}
-            onClick={setStatusCommand("READY")}
-          >
-            Ready
-          </button>
-          <button
-            className='btn btn-sm btn-secondary'
-            onClick={setStatusCommand("WAITING")}
-          >
-            Waiting
-          </button>
-          <button
-            className='btn btn-sm'
-            style={{ background: "yellow" }}
-            onClick={setStatusCommand("COMPLETED")}
-          >
-            Completed
-          </button>
-          <button
-            className='btn btn-sm'
-            style={{ background: "orange" }}
-            onClick={setStatusCommand("SUSPENDED")}
-          >
-            Suspended
-          </button>
-          <button
-            className='btn btn-sm btn-danger'
-            onClick={setStatusCommand("FAILED")}
-          >
-            Failed
-          </button>
-        </div>
-      </div>
-    );
-  }
-  //copying to Clipboard
-  if (currentCommand && currentCommand.length > 0) {
-    DEBUG && console.log(currentCommand);
-    copyContent(JSON.parse(JSON.stringify(currentCommand)));
-  }
 
   if (canSelect === true) {
     return (
@@ -130,77 +55,7 @@ const JobSelection = ({ target }) => {
                 ))}
           </div>
         </div>
-
-        <div
-          className='modal fade'
-          id={"command" + target}
-          tabIndex='-1'
-          role='dialog'
-          aria-labelledby={"commandTitle" + target}
-          aria-hidden='true'
-        >
-          <div className='modal-dialog' role='document'>
-            <div className='modal-content' style={{ width: "600px" }}>
-              <div className='modal-body pb-1'>
-                <div className='row'>{modalHeader}</div>
-                <div className='row mt-2 mx-1'>
-                  <div
-                    className='col-12'
-                    style={{
-                      fontFamily: "Courier",
-                      background: "black",
-                      color: "white",
-                    }}
-                  >
-                    {currentCommand && (
-                      <div className='p-2'>
-                        {JSON.parse(JSON.stringify(currentCommand))}
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                {/* <ul>
-                    {selectedNode.children_list.map((item, index) => (
-                      <li key={index}>{item}</li>
-                    ))}
-                  </ul> */}
-              </div>
-              {/* {currentCommand && currentCommand.length > 0 && (
-                
-                <div className='row mx-1 mb-2'>
-                  <div className='col-12'>
-                    <button
-                      className='btn btn-sm btn-info'
-                      onClick={copyContent(
-                        JSON.parse(JSON.stringify(currentCommand))
-                      )}
-                    >
-                      Copy to Clipboard
-                    </button>
-                  </div>
-                </div>
-              )} */}
-              {currentCommand && currentCommand.length > 0 && (
-                <div className='row mx-1 mb-2 float-left'>
-                  <div className='col-12'>
-                    The command has been copied to the clipboard. Paste it in
-                    your terminal.
-                  </div>
-                </div>
-              )}
-              <div className='modal-footer'>
-                <button
-                  type='button'
-                  className='btn btn-sm btn-dark'
-                  data-dismiss='modal'
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <CommandModal source={source} target={target} />
       </Fragment>
     );
   }

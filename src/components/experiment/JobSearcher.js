@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 //import ExperimentContext from "../context/experiment/experimentContext";
 import GraphContext from "../context/graph/graphContext";
+import GraphNodeSelection from "./GraphNodeSelection";
 
 const JobSearcher = () => {
   //const experimentContext = useContext(ExperimentContext);
@@ -78,7 +79,7 @@ const JobSearcher = () => {
           </div>
         </form>
       </div>
-      <div className='col-md-3 text-center'>
+      <div className='col-md-2 text-center'>
         {foundNodes && foundNodes.length > 1 && (
           <div>
             <button
@@ -116,7 +117,11 @@ const JobSearcher = () => {
           </div>
         )}
       </div>
-      <div className='col-md-5 text-right text-muted pr-4'>
+      <div className='col-md-2'>
+        <GraphNodeSelection />
+      </div>
+
+      <div className='col-md-4 text-right text-muted pr-4'>
         {data && (
           <small>
             Max out: {data.max_children} | Max in: {data.max_parents} | Total

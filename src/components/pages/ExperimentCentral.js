@@ -91,6 +91,7 @@ const ExperimentCentral = ({ match }) => {
     startAutoUpdatePkl,
     cleanGraphData,
     current_grouped,
+    updateGraphSelectedNodes,
   } = graphContext;
   const { clearStats } = statsContext;
 
@@ -218,6 +219,7 @@ const ExperimentCentral = ({ match }) => {
                       navigateAfterLoadGraph={navigateAfterLoadGraph}
                       updateCurrentSelected={updateCurrentSelectedGraph}
                       canSelect={canSelect}
+                      updateGraphSelectedNodes={updateGraphSelectedNodes}
                     />
                   </div>
                   <div
@@ -283,7 +285,7 @@ const ExperimentCentral = ({ match }) => {
                   </div>
                   {experiment && data && canSelect && (
                     <div className='col-2 pl-0'>
-                      <JobSelection target={"graph"} />
+                      <JobSelection target={"graph"} source={"experiment"} />
                     </div>
                   )}
                 </div>
@@ -335,7 +337,7 @@ const ExperimentCentral = ({ match }) => {
                   </div>
                   {experiment && treedata && canSelect && (
                     <div className='col-2 pl-0'>
-                      <JobSelection target={"tree"} />
+                      <JobSelection target={"tree"} source={"experiment"} />
                     </div>
                   )}
                 </div>
