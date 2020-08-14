@@ -179,11 +179,21 @@ export default (state, action) => {
                   }
                 }
               }
-              state.data.nodes[i].status_code =
-                jobs[state.data.nodes[i].id].status_code;
-              state.data.nodes[i].status_color =
-                jobs[state.data.nodes[i].id].status_color;
-              state.data.nodes[i].status = jobs[state.data.nodes[i].id].status;
+              // If status change, add to change colors. Set to new status color.
+              if (
+                state.data.nodes[i].status_code !==
+                jobs[state.data.nodes[i].id].status_code
+              ) {
+                colorChanges[state.data.nodes[i].id] =
+                  jobs[state.data.nodes[i].id].status_color;
+                state.data.nodes[i].status_code =
+                  jobs[state.data.nodes[i].id].status_code;
+                state.data.nodes[i].status_color =
+                  jobs[state.data.nodes[i].id].status_color;
+                state.data.nodes[i].status =
+                  jobs[state.data.nodes[i].id].status;
+              }
+
               state.data.nodes[i].package =
                 jobs[state.data.nodes[i].id].package;
               state.data.nodes[i].dashed = jobs[state.data.nodes[i].id].dashed;
@@ -198,8 +208,7 @@ export default (state, action) => {
               state.data.nodes[i].start = jobs[state.data.nodes[i].id].start;
               state.data.nodes[i].finish = jobs[state.data.nodes[i].id].finish;
               //console.log(state.data.nodes[i].status_color)
-              colorChanges[state.data.nodes[i].id] =
-                jobs[state.data.nodes[i].id].status_color;
+
               requireUpdate = true;
             }
           }
@@ -385,8 +394,7 @@ export default (state, action) => {
         const foundNodes = state.data.nodes.filter(
           (node) => node.id.toUpperCase().indexOf(string) >= 0
         );
-        // console.log(foundNodes);
-        // console.log(foundNodes.length);
+
         if (foundNodes && foundNodes.length > 0) {
           state.foundNodes = foundNodes;
           const position = findIdinGraph(foundNodes[0].id, state);

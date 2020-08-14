@@ -29,20 +29,6 @@ class GraphNativeRep extends Component {
     this.props.clearStats();
   }
 
-  // updateVisNodes = (nodes) => {
-  //   this.props.setVisData(nodes);
-  // };
-
-  // onSubmit = (x,y) => e => {
-  //   e.preventDefault();
-  //   this.props.navigateGraph(x,y);
-  // };
-
-  // onLatest = (statusCode) => e => {
-  //   e.preventDefault();
-  //   this.props.navToLatest(statusCode); // Completed
-  // };
-
   render() {
     if (this.props.loadingGraph) return <Spinner></Spinner>;
     if (!this.props.data) {
@@ -230,10 +216,11 @@ class GraphNativeRep extends Component {
     class VisNetwork extends Component {
       shouldComponentUpdate(nextProps, nextState) {
         if (this.props.shouldUpdateGraph === true) {
-          //console.log("Should rerender form inside")
+          DEBUG && console.log("Should rerender form inside");
           return true;
         } else {
           //console.log("No RERENDER")
+          DEBUG && console.log("No rerender");
           return false;
         }
       }
@@ -249,7 +236,6 @@ class GraphNativeRep extends Component {
 
         this.props.setVisNetwork(network);
         network.on("select", (params) => {
-          //console.log(network);
           if (params.nodes) {
             if (params.nodes.length === 1) {
               if (network.isCluster(params.nodes[0])) {

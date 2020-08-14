@@ -1,5 +1,6 @@
+import { DEBUG } from "./vars";
 export const navigateGraph = (Id, posx, posy, cScale = 0.9, visNetwork) => {
-  //console.log(posx + " " + posy);
+  DEBUG && console.log(posx + " " + posy);
   if (cScale <= 0.05) cScale = 0.05;
   if (visNetwork) {
     visNetwork.moveTo({
@@ -16,7 +17,7 @@ export const navigateGraph = (Id, posx, posy, cScale = 0.9, visNetwork) => {
 
 export const addFakeEdge = (source, target, state) => {
   let id_edge = source + "-" + target;
-  //console.log("Adding fake edge from " + source + " to " + target);
+  DEBUG && console.log("Adding fake edge from " + source + " to " + target);
   if (state.visNetwork) {
     state.visNetwork.body.data.edges.add([
       {
@@ -34,7 +35,7 @@ export const addFakeEdge = (source, target, state) => {
 export const updateEdgeStyle = (idEdge, state) => {
   if (state.visNetwork) {
     if (Object.keys(state.visNetwork.body.edges).includes(idEdge)) {
-      //console.log("Update style of edge " + idEdge);
+      DEBUG && console.log("Update style of edge " + idEdge);
       state.visNetwork.body.edges[idEdge].options.dashes = false;
       state.visNetwork.body.edges[idEdge].options.background.enabled = true;
       state.visNetwork.body.edges[idEdge].options.background.color =
@@ -44,7 +45,7 @@ export const updateEdgeStyle = (idEdge, state) => {
 };
 
 export const updateGraphBorder = (idChange, state) => {
-  //console.log("Upate graph border of " + idChange);
+  DEBUG && console.log("Upate graph border of " + idChange);
   if (state.visNetwork) {
     state.visNetwork.body.nodes[
       idChange
@@ -54,7 +55,7 @@ export const updateGraphBorder = (idChange, state) => {
 };
 
 export const updateGraphColor = (idChange, newColor, state) => {
-  //state.visNetwork.unselectAll();
+  DEBUG && console.log("Upate graph color of " + idChange);
   if (state.visNetwork) {
     state.visNetwork.body.nodes[idChange].options.color.background = newColor;
     state.visNetwork.selectNodes([idChange]);
@@ -62,6 +63,7 @@ export const updateGraphColor = (idChange, newColor, state) => {
 };
 
 export const updateGraphShape = (idChange, shape, state) => {
+  DEBUG && console.log("Upate graph shape of " + idChange);
   if (state.visNetwork) {
     state.visNetwork.body.nodes[idChange].options.shape = shape;
     state.visNetwork.selectNodes([idChange]);
@@ -77,6 +79,7 @@ export const navToLatest = (
   state = null
 ) => {
   var currentLevel = 0;
+  DEBUG && console.log("Nav to Latest.");
   //var currentNode = null;
   var latestId = "not found";
   //console.log(state.data.nodes);
