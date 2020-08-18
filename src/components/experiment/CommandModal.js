@@ -40,11 +40,11 @@ const CommandModal = ({ source, target }) => {
     e.preventDefault();
     let command = "";
     if (source === "graph-only") {
-      command = commandGeneratorGraph(status, sourceSelection, expid);
+      command = commandGeneratorGraph(expid, sourceSelection, status);
       copyContent(command);
       setCurrentCommandGraph(command);
     } else {
-      command = commandGenerator(status, sourceSelection, expid);
+      command = commandGenerator(expid, sourceSelection, status);
       copyContent(command);
       setCurrentCommand(command);
     }

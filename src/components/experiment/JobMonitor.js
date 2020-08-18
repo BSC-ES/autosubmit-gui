@@ -20,10 +20,6 @@ class JobMonitor extends Component {
         );
       }
     }
-
-    // if (this.props.rundata){
-    //     console.log('DidMount Running.')
-    // }
   }
 
   componentWillUnmount() {
@@ -31,6 +27,11 @@ class JobMonitor extends Component {
     if (this.props.experimentRunning) {
       clearInterval(this.interval);
     }
+  }
+
+  showNotification() {
+    console.log("Showing Notification.");
+    new Notification("Hey");
   }
 
   render() {

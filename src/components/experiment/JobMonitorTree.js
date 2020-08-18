@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+// import Notification from "react-web-notification";
 
 class JobMonitorTree extends Component {
   componentDidMount() {
@@ -44,6 +45,7 @@ class JobMonitorTree extends Component {
             </div>
           </div>
         </div>
+        {/* <Notification title={"Honk"} /> */}
       </div>
     );
   }
