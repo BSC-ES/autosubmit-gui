@@ -29,11 +29,6 @@ class JobMonitor extends Component {
     }
   }
 
-  showNotification() {
-    console.log("Showing Notification.");
-    new Notification("Hey");
-  }
-
   render() {
     const { loadingPkl, pklchanges } = this.props;
     // if (loadingPkl) return <div>Loading...</div>
