@@ -207,6 +207,7 @@ export default (state, action) => {
               state.data.nodes[i].submit = jobs[state.data.nodes[i].id].submit;
               state.data.nodes[i].start = jobs[state.data.nodes[i].id].start;
               state.data.nodes[i].finish = jobs[state.data.nodes[i].id].finish;
+              state.data.nodes[i].rm_id = jobs[state.data.nodes[i].id].rm_id;
               //console.log(state.data.nodes[i].status_color)
 
               requireUpdate = true;

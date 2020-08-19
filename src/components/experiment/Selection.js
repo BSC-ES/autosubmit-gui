@@ -93,11 +93,14 @@ const Selection = () => {
                           {selectedNode.platform_name &&
                             selectedNode.platform_name}{" "}
                           {!selectedNode.platform_name && experiment.hpc}
+                          {selectedNode.rm_id && (
+                            <span>
+                              <strong> &nbsp; Id: </strong>
+                              {selectedNode.rm_id}
+                            </span>
+                          )}
                         </small>
                       </div>
-                      {/* <div className="col-4">
-                                                <small><strong>Chunk:</strong> {selectedNode.chunk}</small>
-                                            </div> */}
                     </div>
                   </div>
                   {/* <div>

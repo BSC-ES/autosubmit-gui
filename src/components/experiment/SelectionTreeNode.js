@@ -93,6 +93,12 @@ const SelectionTreeNode = () => {
                         {selectedNode.platform_name &&
                           selectedNode.platform_name}{" "}
                         {!selectedNode.platform_name && experiment.hpc}
+                        {selectedNode.rm_id && (
+                          <span>
+                            <strong> &nbsp; Id: </strong>
+                            {selectedNode.rm_id}
+                          </span>
+                        )}
                       </small>
                     </div>
                   </div>
