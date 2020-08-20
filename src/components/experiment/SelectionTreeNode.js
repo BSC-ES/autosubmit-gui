@@ -333,7 +333,7 @@ const SelectionTreeNode = () => {
                       </div>
                     </div>
                   )}
-                {selectedNode.wrapper_code !== null &&
+                {/* {selectedNode.wrapper_code !== null &&
                   selectedNode.wrapper_code.length > 0 && (
                     <div>
                       <div className='row'>
@@ -347,7 +347,7 @@ const SelectionTreeNode = () => {
                         </div>
                       </div>
                     </div>
-                  )}
+                  )} */}
               </div>
             </div>
           </div>
