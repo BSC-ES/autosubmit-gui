@@ -13,6 +13,7 @@ import {
   UPDATE_SELECTION_TREE,
   CLEAR_FILTER_TREE,
   SET_START_TREE_SELECTION,
+  SET_NOTIFICATION_TITLE_TREE,
 } from "../types";
 
 import { timeStampToDate } from "../utils";
@@ -57,6 +58,7 @@ export default (state, action) => {
       ) {
         // Jobs currently on state
         let changes = "";
+        let changesSummarized = "";
         let currentJobs = state.treedata.jobs;
         let referenceHeaders = state.treedata.reference;
         let currentPackages = referenceHeaders["packages"];
@@ -98,6 +100,7 @@ export default (state, action) => {
                 " to " +
                 new_status +
                 "\n";
+              changesSummarized += new_status + " : " + cjob.id + "\n";
             }
             cjob.status_code = ijob.status_code;
             cjob.status = ijob.status;
@@ -242,7 +245,9 @@ export default (state, action) => {
               timeStampToDate(retrievedPklTree.pkl_timestamp) +
               ": " +
               package_pkl +
-              " has been added.";
+              " has been added." +
+              "\n";
+            changesSummarized += "Wrapper " + package_pkl + " added.\n";
             // If a new wrapper has been found in the pkl
             // debug && console.log("New wrapper found: " + package_pkl);
             currentPackages.push(package_pkl);
@@ -327,6 +332,7 @@ export default (state, action) => {
         if (retrievedPklTree.has_changed === true) {
           if (state.pkltreechanges) {
             state.pkltreechanges = changes + state.pkltreechanges;
+            state.notificationTitleTree = changesSummarized;
             //setPklTreeChanges(changes + state.pkltreechanges);
           } else {
             state.pkltreechanges = changes;
@@ -426,6 +432,11 @@ export default (state, action) => {
       }
       return {
         ...state,
+      };
+    case SET_NOTIFICATION_TITLE_TREE:
+      return {
+        ...state,
+        notificationTitleTree: action.payload,
       };
     default:
       return null;

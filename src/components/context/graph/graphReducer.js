@@ -23,6 +23,7 @@ import {
   NAVIGATE_TO_LATEST,
   UPDATE_GRAPH_SELECTED_NODES,
   SET_CURRENT_COMMAND,
+  SET_NOTIFICATION_TITLE_GRAPH,
   //DEACTIVATE_COPY_TO,
 } from "../types";
 
@@ -77,6 +78,7 @@ export default (state, action) => {
         let edgeUpdates = {};
         let new_fakeEdges = {};
         let changes = "";
+        let changesSummarized = "";
         let pkl_packages = retrievedPkl["packages"];
         let current_packages = state.data["packages"];
 
@@ -152,6 +154,11 @@ export default (state, action) => {
                   " to " +
                   jobs[state.data.nodes[i].id].status +
                   "\n";
+                changesSummarized +=
+                  jobs[state.data.nodes[i].id].status +
+                  " : " +
+                  state.data.nodes[i].id +
+                  "\n";
               } else {
                 // Not decided.
               }
@@ -167,6 +174,10 @@ export default (state, action) => {
                   " added to " +
                   jobs[state.data.nodes[i].id].package +
                   "\n";
+                changesSummarized +=
+                  "Wrapper " +
+                  jobs[state.data.nodes[i].id].package +
+                  " added.\n";
                 let current_job = current_jobs[state.data.nodes[i].id];
                 let children_current = current_job.children_list;
                 for (let child in children_current) {
@@ -217,7 +228,7 @@ export default (state, action) => {
           if (requireUpdate) {
             DEBUG && console.log("New ts: " + retrievedPkl.pkl_timestamp);
             state.data.pkl_timestamp = retrievedPkl.pkl_timestamp;
-
+            state.notificationTitleGraph = changesSummarized;
             if (state.pklchanges) {
               state.pklchanges = changes + state.pklchanges;
             } else {
@@ -525,6 +536,11 @@ export default (state, action) => {
         ...state,
         currentCommandGraph: action.payload,
         canCopyToClipboard: true,
+      };
+    case SET_NOTIFICATION_TITLE_GRAPH:
+      return {
+        ...state,
+        notificationTitleGraph: action.payload,
       };
     // case DEACTIVATE_COPY_TO:
     //   return {

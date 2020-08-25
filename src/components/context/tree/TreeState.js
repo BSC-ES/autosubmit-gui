@@ -18,6 +18,7 @@ import {
   FILTER_TREEVIEW,
   SET_LOADING_TREE,
   SET_START_TREE_SELECTION,
+  SET_NOTIFICATION_TITLE_TREE,
 } from "../types";
 
 // import { timeStampToDate } from "../utils";
@@ -37,6 +38,7 @@ const TreeState = (props) => {
     startAutoUpdateTreePkl: false,
     pkltreechanges: null,
     selectedTreeNode: null,
+    notificationTitleTree: null,
   };
 
   const [state, dispatch] = useReducer(TreeReducer, initialState);
@@ -100,6 +102,8 @@ const TreeState = (props) => {
     dispatch({ type: SET_AUTOUPDATE_TREE_PKL, payload: value });
 
   const setStartSelection = () => dispatch({ type: SET_START_TREE_SELECTION });
+  const setNotificationTitleTree = (notification) =>
+    dispatch({ type: SET_NOTIFICATION_TITLE_TREE, payload: notification });
 
   return (
     <TreeContext.Provider
@@ -111,6 +115,7 @@ const TreeState = (props) => {
         enabledTreeSearch: state.enabledTreeSearch,
         returnFilter: state.returnFilter,
         fancyTree: state.fancyTree,
+        notificationTitleTree: state.notificationTitleTree,
         //canSelect: state.canSelect,
         startAutoUpdateTreePkl: state.startAutoUpdateTreePkl,
         pkltreechanges: state.pkltreechanges,
@@ -125,6 +130,7 @@ const TreeState = (props) => {
         setAutoUpdateTreePkl,
         clearFilterTreeView,
         setStartSelection,
+        setNotificationTitleTree,
       }}
     >
       {props.children}

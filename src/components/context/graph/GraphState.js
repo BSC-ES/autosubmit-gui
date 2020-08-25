@@ -27,6 +27,7 @@ import {
   NAVIGATE_TO_GROUP_GRAPH,
   NAVIGATE_TO_LATEST,
   UPDATE_GRAPH_SELECTED_NODES,
+  SET_NOTIFICATION_TITLE_GRAPH,
   //DEACTIVATE_COPY_TO,
 } from "../types";
 
@@ -47,6 +48,7 @@ const GraphState = (props) => {
     startAutoUpdatePkl: false,
     shouldUpdateGraph: false,
     pklchanges: null,
+    notificationTitleGraph: null,
     //currentSelected: [],
     currentCommandGraph: null,
     current_grouped: "none",
@@ -176,6 +178,8 @@ const GraphState = (props) => {
     dispatch({ type: UPDATE_SELECTION, payload: currentSelection });
   const updateGraphSelectedNodes = () =>
     dispatch({ type: UPDATE_GRAPH_SELECTED_NODES });
+  const setNotificationTitleGraph = (notification) =>
+    dispatch({ type: SET_NOTIFICATION_TITLE_GRAPH, payload: notification });
   //const deactivateCanCopyTo = () => dispatch({ type: DEACTIVATE_COPY_TO });
 
   return (
@@ -197,6 +201,7 @@ const GraphState = (props) => {
         shouldUpdateGraph: state.shouldUpdateGraph,
         graphSelectedNodes: state.graphSelectedNodes,
         currentCommandGraph: state.currentCommandGraph,
+        notificationTitleGraph: state.notificationTitleGraph,
         getExperimentGraph,
         getExperimentPkl,
         cleanOnlyGraphData,
@@ -216,7 +221,7 @@ const GraphState = (props) => {
         navigateAfterLoadGraph,
         updateGraphSelectedNodes,
         setCurrentCommandGraph,
-        //deactivateCanCopyTo,
+        setNotificationTitleGraph,
       }}
     >
       {props.children}

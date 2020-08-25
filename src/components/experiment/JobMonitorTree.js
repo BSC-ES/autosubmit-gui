@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-// import Notification from "react-web-notification";
+import Notification from "react-web-notification";
 
 class JobMonitorTree extends Component {
   componentDidMount() {
@@ -29,7 +29,12 @@ class JobMonitorTree extends Component {
   }
 
   render() {
-    const { loadingTreePkl, pkltreechanges } = this.props;
+    const {
+      loadingTreePkl,
+      pkltreechanges,
+      notificationTitleTree,
+      setNotificationTitleTree,
+    } = this.props;
     return (
       <div className='row'>
         <div className='col-12'>
@@ -45,7 +50,13 @@ class JobMonitorTree extends Component {
             </div>
           </div>
         </div>
-        {/* <Notification title={"Honk"} /> */}
+        {notificationTitleTree && (
+          <Notification
+            title={notificationTitleTree}
+            onClose={() => setNotificationTitleTree(null)}
+            onPermissionDenied={() => console.log("Permission Denied.")}
+          />
+        )}
       </div>
     );
   }

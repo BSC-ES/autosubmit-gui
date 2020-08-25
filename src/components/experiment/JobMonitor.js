@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Notification from "react-web-notification";
 
 class JobMonitor extends Component {
   // const experimentContext = useContext(ExperimentContext);
@@ -30,16 +31,12 @@ class JobMonitor extends Component {
   }
 
   render() {
-    const { loadingPkl, pklchanges } = this.props;
-    // if (loadingPkl) return <div>Loading...</div>
-    // const currentDate = new Date();
-    // const datetime = currentDate.getHours() + ":"
-    //                 + currentDate.getMinutes() + ":"
-    //                 + currentDate.getSeconds();
-
-    // if (pklchanges) {
-    //     return <div><small>{pklchanges}</small></div>
-    // }
+    const {
+      loadingPkl,
+      pklchanges,
+      notificationTitleGraph,
+      setNotificationTitleGraph,
+    } = this.props;
     return (
       <div className='row'>
         <div className='col-12'>
@@ -48,19 +45,18 @@ class JobMonitor extends Component {
               <small>Monitoring jobs...</small>
             </div>
             <div className='card-body p-0'>
-              {pklchanges && (
-                <pre className='scroll-y mb-0'>
-                  {pklchanges}
-                  {/* value={pklchanges} 
-                                    className='monitorArea'
-                                    style={monitorStyle}
-                                    readOnly>                                         */}
-                </pre>
-              )}
+              {pklchanges && <pre className='scroll-y mb-0'>{pklchanges}</pre>}
               {loadingPkl && <small>Loading...</small>}
             </div>
           </div>
         </div>
+        {notificationTitleGraph && (
+          <Notification
+            title={notificationTitleGraph}
+            onClose={() => setNotificationTitleGraph(null)}
+            onPermissionDenied={() => console.log("Permission Denied.")}
+          />
+        )}
       </div>
     );
   }

@@ -71,6 +71,8 @@ const ExperimentCentral = ({ match }) => {
     pkltreechanges,
     setFancyTree,
     cleanTreeData,
+    notificationTitleTree,
+    setNotificationTitleTree,
   } = treeContext;
 
   const {
@@ -92,6 +94,8 @@ const ExperimentCentral = ({ match }) => {
     cleanGraphData,
     current_grouped,
     updateGraphSelectedNodes,
+    notificationTitleGraph,
+    setNotificationTitleGraph,
   } = graphContext;
   const { clearStats } = statsContext;
 
@@ -268,6 +272,10 @@ const ExperimentCentral = ({ match }) => {
                             cleanPklData={cleanPklData}
                             pklchanges={pklchanges}
                             experimentRunning={experimentRunning}
+                            notificationTitleGraph={notificationTitleGraph}
+                            setNotificationTitleGraph={
+                              setNotificationTitleGraph
+                            }
                           />
                         )}
                       </div>
@@ -317,8 +325,6 @@ const ExperimentCentral = ({ match }) => {
                       updateSelectionTree={updateSelectionTree}
                       updateCurrentSelected={updateCurrentSelectedTree}
                       canSelect={canSelect}
-                      // getExperimentTree={getExperimentTree}
-                      // expid={expid}
                     />
                   </div>
                   <div
@@ -332,6 +338,8 @@ const ExperimentCentral = ({ match }) => {
                         cleanPklTreeData={cleanPklTreeData}
                         pkltreechanges={pkltreechanges}
                         experimentRunning={experimentRunning}
+                        notificationTitleTree={notificationTitleTree}
+                        setNotificationTitleTree={setNotificationTitleTree}
                       />
                     )}
                   </div>
@@ -415,12 +423,6 @@ const ExperimentCentral = ({ match }) => {
           </div>
         </div>
       </div>
-      {/* <div className='row'>
-        <div className='col-12'>
-          <JobSelection />
-        </div>
-      </div> */}
-      {/* <div className='row' style={experimentBuffer}></div> */}
       <ExperimentColumn expidToken={expid} />
     </Fragment>
   );
