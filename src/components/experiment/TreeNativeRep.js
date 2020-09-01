@@ -35,10 +35,10 @@ export class TreeNativeRep extends Component {
 
   componenteDidMount() {
     DEBUG && console.log("In after mount");
-    createTree("#tree", {
-      extensions: ["edit", "filter"],
-      source: this.props.treedata,
-    });
+    // createTree("#tree", {
+    //   extensions: ["edit", "filter"],
+    //   source: this.props.treedata,
+    // });
   }
 
   render() {
@@ -70,26 +70,7 @@ export class TreeNativeRep extends Component {
       );
     }
 
-    // if (!this.props.treedata){
-    //     return (
-    //         <div className="card-body text-left">
-    //             <p className='lead'>Press <span className='badge badge-info'>Show Tree</span> to see the tree representation of the experiment.</p>
-    //             <p className='lead'>If the experiment is <span className='badge badge-success'>RUNNING</span> and the Tree has been rendered, press <span className='badge badge-dark'>Start Job Monitor</span> to start a live tracker of the changes on the experiment's jobs.
-    //                 This process will automatically update the tree's nodes colors and show a log of the detected changes.
-    //             </p>
-    //         </div>
-    //     );
-    // }
-
     class FancyTree extends Component {
-      // shouldComponentUpdate(nextProps, nextState){
-      //    if (this.props.shouldUpdateGraph === true){
-      //         return true;
-      //     } else {
-      //         return false;
-      //     }
-      // }
-
       componentDidMount() {
         let tree = new createTree("#tree", {
           activate: (event, data) => {
@@ -178,14 +159,6 @@ export class TreeNativeRep extends Component {
         canSelect={this.props.canSelect}
       />
     );
-
-    // if(this.props.treedata){
-    //     return (
-    //         <div className="card-body p-0">
-    //             <div className="" id="tree" style={experimentStyle}></div>
-    //         </div>
-    //     );
-    // }
   }
 }
 

@@ -5,10 +5,12 @@ import ExperimentColumn from "../experiment/ExperimentColumn";
 import GraphNativeRep from "../experiment/GraphNativeRep";
 import JobSelection from "../experiment/JobSelection";
 import TreeNativeRep from "../experiment/TreeNativeRep";
+import LighterNativeRep from "../experiment/LighterNativeRep";
 import ExperimentContext from "../context/experiment/experimentContext";
 import StatsContext from "../context/statistics/statsContext";
 import GraphContext from "../context/graph/graphContext";
 import TreeContext from "../context/tree/treeContext";
+import LighterContext from "../context/lighter/lighterContext";
 import Selection from "../experiment/Selection";
 import SelectionTreeNode from "../experiment/SelectionTreeNode";
 // import OpenRun from '../experiment/OpenRun';
@@ -23,26 +25,39 @@ import WrapperList from "../experiment/WrapperList";
 import GraphControl from "../experiment/GraphControl";
 import LogControl from "../experiment/LogControl";
 import TreeControl from "../experiment/TreeControl";
+import LighterControl from "../experiment/LighterControl";
 import PerformanceControl from "../experiment/PerformanceControl";
 import Performance from "../experiment/Performance";
 
 const ExperimentCentral = ({ match }) => {
+  // Focus Logic
   const expid = match.params.expid;
   const resolve_action = match.params.action;
   const focus_graph =
     resolve_action && resolve_action === "graph" ? true : false;
+  const focus_lighter =
+    resolve_action && resolve_action === "light" ? true : false;
   //console.log("Focus: " + focus_graph);
-  const classTree = focus_graph === true ? "nav-link" : "nav-link active";
+  const classTree =
+    focus_graph === true || focus_lighter === true
+      ? "nav-link"
+      : "nav-link active";
   const classGraph = focus_graph === true ? "nav-link active" : "nav-link";
+  const classLighter = focus_lighter === true ? "nav-link active" : "nav-link";
   const classTabTree =
-    focus_graph === true ? "tab-pane fade" : "tab-pane fade show active";
+    focus_graph === true || focus_lighter === true
+      ? "tab-pane fade"
+      : "tab-pane fade show active";
   const classTabGraph =
     focus_graph === true ? "tab-pane fade show active" : "tab-pane fade";
+  const classTabLighter =
+    focus_lighter === true ? "tab-pane fade show active" : "tab-pane fade";
   //const isGraph = this.props.isGraph;
   const experimentContext = useContext(ExperimentContext);
   const graphContext = useContext(GraphContext);
   const treeContext = useContext(TreeContext);
   const statsContext = useContext(StatsContext);
+  const lighterContext = useContext(LighterContext);
   const {
     loadingRun,
     cleanRunData,
@@ -97,14 +112,27 @@ const ExperimentCentral = ({ match }) => {
     notificationTitleGraph,
     setNotificationTitleGraph,
   } = graphContext;
+
   const { clearStats } = statsContext;
+
+  const {
+    loadingView,
+    setLighterFancyTree,
+    lightData,
+    cleanLoadingLighterView,
+    getLighterView,
+  } = lighterContext;
 
   useEffect(() => {
     getExperiment(expid);
     getRunningState(expid);
     if (expid && expid.length > 0) {
-      if (resolve_action && resolve_action === "graph") {
-        getExperimentGraph(expid);
+      if (resolve_action) {
+        if (resolve_action === "graph") {
+          getExperimentGraph(expid);
+        } else if (resolve_action === "light") {
+          getLighterView(expid);
+        }
       } else {
         getExperimentTree(expid);
       }
@@ -120,9 +148,6 @@ const ExperimentCentral = ({ match }) => {
   return (
     <Fragment>
       <div className='row'>
-        {/* <div className='col-2 pr-1'>
-          <ExperimentColumn expidToken={expid} />
-        </div> */}
         <div className='col-12'>
           <ul className='nav nav-tabs' id='myTab' role='tablist'>
             <li className='nav-item'>
@@ -188,6 +213,19 @@ const ExperimentCentral = ({ match }) => {
                 aria-selected='false'
               >
                 Performance
+              </a>
+            </li>
+            <li className='nav-item'>
+              <a
+                className={classLighter}
+                id='lightview-tab'
+                data-toggle='tab'
+                href='#lightview'
+                role='tab'
+                aria-controls='lightview'
+                aria-selected='false'
+              >
+                Quick View
               </a>
             </li>
           </ul>
@@ -417,6 +455,26 @@ const ExperimentCentral = ({ match }) => {
                 {experiment && <PerformanceControl />}
                 <div className='card-body p-1'>
                   {experiment && <Performance />}
+                </div>
+              </div>
+            </div>
+            <div
+              className={classTabLighter}
+              id='lightview'
+              role='tabpanel'
+              aria-labelledby='lightview-tab'
+            >
+              <div className='card mt-2'>
+                {experiment && <LighterControl />}
+                <div className='card-body p-1'>
+                  {experiment && (
+                    <LighterNativeRep
+                      data={lightData}
+                      loadingView={loadingView}
+                      setLighterFancyTree={setLighterFancyTree}
+                      cleanLoadingLighterView={cleanLoadingLighterView}
+                    />
+                  )}
                 </div>
               </div>
             </div>

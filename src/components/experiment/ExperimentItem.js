@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import ExperimentContext from "../context/experiment/experimentContext";
+import { quickThreshold } from "../context/vars";
 
 const ExperimentItem = ({
   experiment: { name, description, user, hpc, status, completed, total },
@@ -13,6 +14,9 @@ const ExperimentItem = ({
     //console.log(name);
     getExperimentSummary(name);
   };
+
+  const disabledMore = total >= quickThreshold ? true : false;
+
   return (
     <div className='col mb-4'>
       <div className='card'>
@@ -86,12 +90,27 @@ const ExperimentItem = ({
                 />
               </form>
             </div>
-            <div className='col-9 px-1'>
+            <div className='col-6 px-1'>
+              {disabledMore === true && (
+                <button className='btn-sm btn-block' disabled='True'>
+                  More &#8594;
+                </button>
+              )}
+              {disabledMore === false && (
+                <Link
+                  to={`/autosubmitapp/experiment/${name}`}
+                  className='btn btn-outline-primary btn-block btn-sm'
+                >
+                  More
+                </Link>
+              )}
+            </div>
+            <div className='col-3 px-1'>
               <Link
-                to={`/autosubmitapp/experiment/${name}`}
-                className='btn btn-outline-primary btn-block btn-sm'
+                to={`/autosubmitapp/experiment/${name}/light`}
+                className='btn btn-outline-success btn-block btn-sm'
               >
-                More
+                Quick
               </Link>
             </div>
             {summaries[name] && summaries[name].error === true && (

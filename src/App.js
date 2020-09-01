@@ -12,6 +12,7 @@ import GraphState from "./components/context/graph/GraphState";
 import TreeState from "./components/context/tree/TreeState";
 import AlertState from "./components/context/alert/AlertState";
 import StatsState from "./components/context/statistics/StatsState";
+import LightState from "./components/context/lighter/LighterState";
 
 import "./App.css";
 
@@ -21,38 +22,44 @@ class App extends Component {
       <ExperimentState>
         <GraphState>
           <TreeState>
-            <AlertState>
-              <StatsState>
-                <Router>
-                  <div className='App'>
-                    <Navbar />
-                    <div className='container' style={{ height: "100%" }}>
-                      <Alert />
-                      <Switch>
-                        <Route exact path='/autosubmitapp/' component={Home} />
-                        <Route
-                          exact
-                          path='/autosubmitapp/about'
-                          component={About}
-                        />
-                        <Route
-                          exact
-                          path='/autosubmitapp/experiment/:expid'
-                          component={ExperimentCentral}
-                        />
-                        <Route
-                          exact
-                          path='/autosubmitapp/experiment/:expid/:action'
-                          component={ExperimentCentral}
-                        />
-                        <Route component={NotFound} />
-                      </Switch>
-                      <Footer />
+            <LightState>
+              <AlertState>
+                <StatsState>
+                  <Router>
+                    <div className='App'>
+                      <Navbar />
+                      <div className='container' style={{ height: "100%" }}>
+                        <Alert />
+                        <Switch>
+                          <Route
+                            exact
+                            path='/autosubmitapp/'
+                            component={Home}
+                          />
+                          <Route
+                            exact
+                            path='/autosubmitapp/about'
+                            component={About}
+                          />
+                          <Route
+                            exact
+                            path='/autosubmitapp/experiment/:expid'
+                            component={ExperimentCentral}
+                          />
+                          <Route
+                            exact
+                            path='/autosubmitapp/experiment/:expid/:action'
+                            component={ExperimentCentral}
+                          />
+                          <Route component={NotFound} />
+                        </Switch>
+                        <Footer />
+                      </div>
                     </div>
-                  </div>
-                </Router>
-              </StatsState>
-            </AlertState>
+                  </Router>
+                </StatsState>
+              </AlertState>
+            </LightState>
           </TreeState>
         </GraphState>
       </ExperimentState>

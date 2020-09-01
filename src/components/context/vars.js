@@ -13,6 +13,8 @@ export const HoldCode = 6;
 export const ReadyCode = 1;
 export const PreparedCode = 7;
 
+export const quickThreshold = 12000;
+
 export const queueColor = {
   background: "lightpink",
   fontWeight: "bold",
