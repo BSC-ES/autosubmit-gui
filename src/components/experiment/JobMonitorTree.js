@@ -19,7 +19,7 @@ class JobMonitorTree extends Component {
         );
       }
     }
-    Notification.requestPermission();
+    //Notification.requestPermission();
   }
 
   componentWillUnmount() {
