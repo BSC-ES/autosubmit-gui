@@ -20,6 +20,7 @@ import {
   UPDATE_SELECTED_JOBS,
   REMOVE_SELECTED_JOB,
   SET_CURRENT_COMMAND,
+  SET_LOADING_SUMMARY,
 } from "../types";
 
 export default (state, action) => {
@@ -99,17 +100,32 @@ export default (state, action) => {
         data: null,
         canSelect: false,
       };
-
-    case GET_EXPERIMENT_SUMMARY:
+    case SET_LOADING_SUMMARY: {
+      const expid = action.payload;
+      state.loadingSummary.set(expid, { loading: true });
+      return {
+        ...state,
+      };
+    }
+    case GET_EXPERIMENT_SUMMARY: {
       // const { summaries, summary, expid } = action.payload;
       // summaries.push({ key: expid, value: summary });
+      const { expid, summary } = action.payload;
+      state.summaries[expid] = summary;
+      state.loadingSummary.delete(expid);
       return {
         ...state,
       };
-    case CLEAR_SUMMARY_EXP:
+    }
+    case CLEAR_SUMMARY_EXP: {
+      const expid = action.payload;
+      if (state.summaries[expid]) {
+        state.summaries[expid] = null;
+      }
       return {
         ...state,
       };
+    }
     case GET_EXPERIMENT_PERFORMANCE:
       return {
         ...state,

@@ -57,9 +57,9 @@ const LighterControl = () => {
       <div className='row justify-content-end'>
         {lightData && (
           <div className='col'>
-            <span>
-              {lightData.total} {" total jobs | "}
-            </span>
+            <button className='btn-sm btn-secondary' onClick={onClearFilter}>
+              {lightData.total} total jobs
+            </button>
             {lightData.completed > 0 && (
               <button
                 className='btn-sm'

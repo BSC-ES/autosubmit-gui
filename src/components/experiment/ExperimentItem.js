@@ -8,7 +8,7 @@ const ExperimentItem = ({
   experiment: { name, description, user, hpc, status, completed, total },
 }) => {
   const experimentContext = useContext(ExperimentContext);
-  const { getExperimentSummary, summaries } = experimentContext;
+  const { getExperimentSummary, summaries, loadingSummary } = experimentContext;
   const onGetSummary = (e) => {
     e.preventDefault();
     //console.log(name);
@@ -77,18 +77,28 @@ const ExperimentItem = ({
           </p>
           <div className='row'>
             <div className='col-3 px-1'>
-              <form onSubmit={onGetSummary} className='form'>
-                <input
-                  className={
-                    summaries[name]
-                      ? "btn btn-info btn-block btn-sm"
-                      : "btn btn-outline-info btn-block btn-sm"
-                  }
-                  type='submit'
-                  value={summaries[name] ? "Refresh" : "Summary"}
-                  aria-controls={name}
-                />
-              </form>
+              {!loadingSummary.has(name) && (
+                <form onSubmit={onGetSummary} className='form'>
+                  <input
+                    className={
+                      summaries[name]
+                        ? "btn btn-info btn-block btn-sm"
+                        : "btn btn-outline-info btn-block btn-sm"
+                    }
+                    type='submit'
+                    value={summaries[name] ? "Refresh" : "Summary"}
+                    aria-controls={name}
+                  />
+                </form>
+              )}
+              {loadingSummary.has(name) && (
+                <button
+                  className='btn-sm btn-secondary btn-block disabled'
+                  disabled='True'
+                >
+                  Loading...
+                </button>
+              )}
             </div>
             <div className='col-6 px-1'>
               {disabledMore === true && (

@@ -26,6 +26,7 @@ import {
   REMOVE_SELECTED_JOB,
   SET_CURRENT_COMMAND,
   UPDATE_SELECTED_JOBS,
+  SET_LOADING_SUMMARY,
 } from "../types";
 
 import { AUTOSUBMIT_API_SOURCE, DEBUG } from "../vars";
@@ -37,6 +38,7 @@ const ExperimentState = (props) => {
     experiments: [],
     summaries: [],
     experiment: {},
+    loadingSummary: new Map(),
     loading: false,
     experimentRunning: false,
     rundata: null,
@@ -81,15 +83,16 @@ const ExperimentState = (props) => {
   // Get Summary for Search item
   const getExperimentSummary = async (expid) => {
     clearSummary(expid);
+    setLoadingSummary(expid);
     const res = await axios.get(`${localserver}/summary/${expid}`);
     const summary = res.data;
     debug && console.log(summary);
     // console.log(summary);
     // console.log(state.summaries);
     //state.summaries.push({ key: expid, value: summary });
-    state.summaries[expid] = summary;
     dispatch({
       type: GET_EXPERIMENT_SUMMARY,
+      payload: { expid: expid, summary: summary },
       //payload: { currentSummaries, summary, expid }
     });
   };
@@ -106,11 +109,9 @@ const ExperimentState = (props) => {
   };
 
   const clearSummary = (expid) => {
-    if (state.summaries[expid]) {
-      state.summaries[expid] = null;
-    }
     dispatch({
       type: CLEAR_SUMMARY_EXP,
+      payload: expid,
     });
   };
 
@@ -185,6 +186,9 @@ const ExperimentState = (props) => {
 
   const setLoadingState = () => dispatch({ type: SET_LOADING_STATE });
 
+  const setLoadingSummary = (summExpid) =>
+    dispatch({ type: SET_LOADING_SUMMARY, payload: summExpid });
+
   // Action Things
   const updateExperimentTimeStamp = (timeStamp) => {
     //console.log(timeStamp);
@@ -237,6 +241,7 @@ const ExperimentState = (props) => {
         experiments: state.experiments,
         experiment: state.experiment,
         summaries: state.summaries,
+        loadingSummary: state.loadingSummary,
         loading: state.loading,
         loadingRun: state.loadingRun,
         loadingState: state.loadingState,
