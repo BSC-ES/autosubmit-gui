@@ -57,11 +57,11 @@ const ExperimentItem = ({
             </div>
             <div className='col-md-3 text-right'>
               {status && status === "RUNNING" && (
-                <span className='badge badge-success text-right'>{status}</span>
+                <span className='badge badge-success text-right'>ACTIVE</span>
               )}
               {status && status !== "RUNNING" && (
                 <span className='badge badge-secondary text-right'>
-                  {status}
+                  INACTIVE
                 </span>
               )}
             </div>

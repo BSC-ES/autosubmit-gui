@@ -42,10 +42,10 @@ const Experiment = ({ expidToken }) => {
         <span className='badge badge-dark text-right'>LOADING...</span>
       )}
       {experimentRunning && !loadingState && (
-        <span className='badge badge-success text-right'>RUNNING</span>
+        <span className='badge badge-success text-right'>ACTIVE</span>
       )}
       {!experimentRunning && !loadingState && (
-        <span className='badge badge-secondary text-right'>NOT RUNNING</span>
+        <span className='badge badge-secondary text-right'>INACTIVE</span>
       )}
     </span>
   );

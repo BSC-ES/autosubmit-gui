@@ -55,7 +55,7 @@ const Search = ({ setAlert }) => {
             <div className='input-group mb-3'>
               <input
                 type='submit'
-                value='Running'
+                value='Active Exps'
                 className='btn btn-success'
               ></input>
             </div>
