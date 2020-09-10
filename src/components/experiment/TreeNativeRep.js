@@ -134,11 +134,11 @@ export class TreeNativeRep extends Component {
 
         DEBUG && console.log(tree);
         this.props.setFancyTree(tree);
-        if (this.props.total !== this.props.exptotal) {
-          alert(
-            "The number of jobs in the experiment is different than the number of jobs in your current run. This might be due to a change in the config files of your experiment while Autosubmit was already running."
-          );
-        }
+        // if (this.props.total !== this.props.exptotal) {
+        //   alert(
+        //     "The number of jobs in the experiment is different than the number of jobs in your current run. This might be due to a change in the config files of your experiment while Autosubmit was already running."
+        //   );
+        // }
       }
 
       componentWillUnmount() {
@@ -163,8 +163,8 @@ export class TreeNativeRep extends Component {
         updateSelectionTree={this.props.updateSelectionTree}
         updateCurrentSelected={this.props.updateCurrentSelected}
         canSelect={this.props.canSelect}
-        total={this.props.treedata.total}
-        exptotal={this.props.totalJobs}
+        // total={this.props.treedata.total}
+        // exptotal={this.props.totalJobs}
       />
     );
   }
