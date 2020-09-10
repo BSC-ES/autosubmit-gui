@@ -1,11 +1,14 @@
 import React, { useContext } from "react";
 //import Spinner from "../layout/Spinner";
 import ExperimentContext from "../context/experiment/experimentContext";
+//import TreeContext from "../context/tree/treeContext";
 
 const ExperimentColumn = ({ expidToken, refTree }) => {
   //console.log(expidToken);
   const experimentContext = useContext(ExperimentContext);
-  const { loading, experiment } = experimentContext;
+  //const treeContext = useContext(TreeContext);
+  const { loading, experiment, totalJobs } = experimentContext;
+  //const { setExpectedLoadingTreeTime } = treeContext;
 
   if (experiment === null)
     return (
@@ -28,7 +31,8 @@ const ExperimentColumn = ({ expidToken, refTree }) => {
     owner_id,
     //path,
     //time_last_access,
-    time_last_mod,
+    //time_last_mod,
+    db_historic_version,
     version,
     //updateTime,
     branch,
@@ -36,6 +40,9 @@ const ExperimentColumn = ({ expidToken, refTree }) => {
     description,
     //isGrouped,
   } = experiment;
+
+  const db_version = db_historic_version ? db_historic_version : "NA";
+  //setExpectedLoadingTreeTime(totalJobs);
 
   if (loading)
     return (
@@ -71,9 +78,17 @@ const ExperimentColumn = ({ expidToken, refTree }) => {
                 <small className='mx-2'>
                   <strong>Version:</strong> {version}
                 </small>
-                |
+                {/* |
                 <small className='mx-2'>
                   <strong>Modified:</strong> {time_last_mod}
+                </small> */}
+                |
+                <small className='mx-2'>
+                  <strong>DB:</strong> {db_version}
+                </small>
+                |
+                <small className='mx-2'>
+                  <strong>#Jobs:</strong> {totalJobs}
                 </small>
               </div>
             </div>

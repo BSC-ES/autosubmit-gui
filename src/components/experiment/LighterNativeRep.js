@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Spinner from "../layout/Spinner";
+import Loading from "../layout/Loading";
 import "jquery.fancytree/dist/modules/jquery.fancytree.filter";
 import "jquery.fancytree/dist/modules/jquery.fancytree.childcounter";
 import "jquery.fancytree/dist/modules/jquery.fancytree.edit";
@@ -30,7 +30,7 @@ export class LighterNativeRep extends Component {
   }
 
   render() {
-    if (this.props.loadingView) return <Spinner></Spinner>;
+    if (this.props.loadingView) return <Loading source={"lighter"} />;
     if (!this.props.data) {
       return (
         <div className='card-body text-left' style={experimentStyle}>

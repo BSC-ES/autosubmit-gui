@@ -6,6 +6,7 @@ import {
   FILTER_LIGHTER_TREE_VIEW,
   SET_LOADING_FILTER_LIGHTER_TREE_VIEW,
   CLEAR_LIGHTER_FILTER,
+  INCREASE_LOADING_QUICK_VIEW,
 } from "../types";
 
 //import { DEBUG } from "../vars";
@@ -17,6 +18,7 @@ export default (state, action) => {
       return {
         ...state,
         lightData: action.payload,
+        elapsedLoadingQuickView: 1,
         loadingView: false,
       };
     case CLEAN_LIGHTER_VIEW_DATA:
@@ -41,6 +43,11 @@ export default (state, action) => {
       return {
         ...state,
         loadingFilterTreeView: true,
+      };
+    case INCREASE_LOADING_QUICK_VIEW:
+      return {
+        ...state,
+        elapsedLoadingQuickView: state.elapsedLoadingQuickView + 1,
       };
     case FILTER_LIGHTER_TREE_VIEW:
       const string = action.payload;

@@ -91,3 +91,32 @@ export const secondsToDelta = (SECONDS) => {
     return "0:00:00";
   }
 };
+
+var startTime, endTime;
+
+export const start = () => {
+  startTime = new Date();
+};
+
+export const end = () => {
+  endTime = new Date();
+  var timeDiff = endTime - startTime; //in ms
+  // strip the ms
+  timeDiff /= 1000;
+
+  // get seconds
+  var seconds = Math.round(timeDiff);
+  console.log(seconds + " seconds");
+};
+
+export const approximateLoadingTreeTime = (x) => {
+  if (x <= 1000) return 1;
+  let y = Math.round(0.02 * x - 30);
+  return y;
+};
+
+export const approximateLoadingQuickView = (x) => {
+  if (x <= 2000) return 1;
+  let y = Math.round(0.005 * x - 37);
+  return y;
+};

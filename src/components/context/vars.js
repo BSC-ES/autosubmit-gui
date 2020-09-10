@@ -1,6 +1,7 @@
 export const AUTOSUBMIT_API_SOURCE = "https://earth.bsc.es/autosubmitapi/";
 //export const AUTOSUBMIT_API_SOURCE = "http://84.88.185.94:8081";
 export const DEBUG = false;
+
 export const WaitingCode = 0;
 export const FailedCode = -1;
 export const CompletedCode = 5;
@@ -13,6 +14,7 @@ export const HoldCode = 6;
 export const ReadyCode = 1;
 export const PreparedCode = 7;
 
+export const maxReponseTimeThreshold = 240; // 4 minutes
 export const quickThreshold = 12000;
 
 export const queueColor = {

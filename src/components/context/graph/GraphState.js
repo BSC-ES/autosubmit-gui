@@ -28,6 +28,7 @@ import {
   NAVIGATE_TO_LATEST,
   UPDATE_GRAPH_SELECTED_NODES,
   SET_NOTIFICATION_TITLE_GRAPH,
+  SET_OFF_LOADING_GRAPH,
   //DEACTIVATE_COPY_TO,
 } from "../types";
 
@@ -75,15 +76,20 @@ const GraphState = (props) => {
   ) => {
     cleanOnlyGraphData();
     setLoadingGraph();
-    const res = await axios.get(
-      `${localserver}/graph/${expid}/${layout}/${grouped}`
-    );
-    debug && console.log(res.data);
-    const resdata = res.data;
-    dispatch({
-      type: GET_GRAPH,
-      payload: { resdata, grouped, layout },
-    });
+    const res = await axios
+      .get(`${localserver}/graph/${expid}/${layout}/${grouped}`)
+      .catch((error) => {
+        alert(error.message);
+        setOffLoadingGraph();
+      });
+    if (res) {
+      debug && console.log(res.data);
+      const resdata = res.data;
+      dispatch({
+        type: GET_GRAPH,
+        payload: { resdata, grouped, layout },
+      });
+    }
   };
 
   // Get Experiment Pkl Data for Graph changes update
@@ -160,6 +166,7 @@ const GraphState = (props) => {
   const cleanNavData = () => dispatch({ type: CLEAN_NAV_DATA });
   // Loading
   const setLoadingGraph = () => dispatch({ type: SET_LOADING_GRAPH });
+  const setOffLoadingGraph = () => dispatch({ type: SET_OFF_LOADING_GRAPH });
   const setLoadingSearchJob = () => dispatch({ type: SET_LOADING_SEARCH_JOB });
   const setLoadingPkl = () => dispatch({ type: SET_LOADING_PKL });
   const setLoadingJobMonitor = () =>

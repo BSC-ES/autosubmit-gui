@@ -2,6 +2,7 @@ import {
   GET_GRAPH,
   GET_PKL_DATA,
   SET_LOADING_GRAPH,
+  SET_OFF_LOADING_GRAPH,
   CLEAN_ONLY_GRAH_DATA,
   SET_VIS_DATA,
   SET_VIS_NETWORK,
@@ -131,16 +132,13 @@ export default (state, action) => {
             // console.log(newNodes[i].id);
             //console.log(state.data.nodes[i]);
             // console.log(jobs[ newNodes[i].id ]);
-
+            let jobPkl = jobs[state.data.nodes[i].id];
             if (
-              state.data.nodes[i].status_code !==
-                jobs[state.data.nodes[i].id].status_code ||
-              state.data.nodes[i].package !==
-                jobs[state.data.nodes[i].id].package ||
-              state.data.nodes[i].minutes !==
-                jobs[state.data.nodes[i].id].minutes ||
-              state.data.nodes[i].minutes_queue !==
-                jobs[state.data.nodes[i].id].minutes_queue
+              jobPkl &&
+              (state.data.nodes[i].status_code !== jobPkl.status_code ||
+                state.data.nodes[i].package !== jobPkl.package ||
+                state.data.nodes[i].minutes !== jobPkl.minutes ||
+                state.data.nodes[i].minutes_queue !== jobPkl.minutes_queue)
             ) {
               // changes += state.data.nodes[i].id + " from " + state.data.nodes[i].status + " to " + jobs[ state.data.nodes[i].id ].status + " || ";
               if (
@@ -389,6 +387,12 @@ export default (state, action) => {
         ...state,
         loadingGraph: true,
         enabledGraphSearch: false,
+      };
+    case SET_OFF_LOADING_GRAPH:
+      return {
+        ...state,
+        loadingGraph: false,
+        enabledGraphSearch: true,
       };
     case SET_VIS_DATA:
       return {

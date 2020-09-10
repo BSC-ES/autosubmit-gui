@@ -11,6 +11,7 @@ import {
   FILTER_LIGHTER_TREE_VIEW,
   SET_LOADING_FILTER_LIGHTER_TREE_VIEW,
   CLEAR_LIGHTER_FILTER,
+  INCREASE_LOADING_QUICK_VIEW,
 } from "../types";
 
 import { AUTOSUBMIT_API_SOURCE, DEBUG } from "../vars";
@@ -22,6 +23,7 @@ const LighterState = (props) => {
     loadingView: false,
     loadingFilterTreeView: false,
     filterCount: 0,
+    elapsedLoadingQuickView: 1,
   };
 
   const [state, dispatch] = useReducer(LighterReducer, initialState);
@@ -46,6 +48,10 @@ const LighterState = (props) => {
       type: FILTER_LIGHTER_TREE_VIEW,
       payload: string,
     });
+  };
+
+  const increaseElapsedLoadingQuickView = () => {
+    dispatch({ type: INCREASE_LOADING_QUICK_VIEW });
   };
 
   const setLoadingLighterView = () =>
@@ -73,12 +79,14 @@ const LighterState = (props) => {
         loadingView: state.loadingView,
         loadingFilterTreeView: state.loadingFilterTreeView,
         filterCount: state.filterCount,
+        elapsedLoadingQuickView: state.elapsedLoadingQuickView,
         getLighterView,
         cleanLoadingLighterView,
         setLighterFancyTree,
         filterLighterTreeView,
         setLoadingFilterLighterTreeView,
         clearLighterFilterTreeView,
+        increaseElapsedLoadingQuickView,
       }}
     >
       {props.children}

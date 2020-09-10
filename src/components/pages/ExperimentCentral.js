@@ -73,6 +73,8 @@ const ExperimentCentral = ({ match }) => {
     experimentRunning,
     updateCurrentSelectedGraph,
     updateCurrentSelectedTree,
+    cleanExperimentData,
+    totalJobs,
   } = experimentContext;
 
   const {
@@ -141,7 +143,10 @@ const ExperimentCentral = ({ match }) => {
     }
     // getExperimentTree(expid);
     const interval = setInterval(() => getRunningState(expid), 300000);
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      cleanExperimentData();
+    };
     // eslint-disable-next-line
   }, []);
 
@@ -354,7 +359,7 @@ const ExperimentCentral = ({ match }) => {
                   </div>
                 )}
                 <div className='row'>
-                  <div className='col pr-0'>
+                  <div className={loadingTree === true ? "col" : "col pr-0"}>
                     <TreeNativeRep
                       treedata={treedata}
                       loadingTree={loadingTree}
@@ -363,24 +368,30 @@ const ExperimentCentral = ({ match }) => {
                       updateSelectionTree={updateSelectionTree}
                       updateCurrentSelected={updateCurrentSelectedTree}
                       canSelect={canSelect}
+                      totalJobs={totalJobs}
                     />
                   </div>
-                  <div
-                    className={canSelect === true ? "col-3 px-0" : "col-3 pl-0"}
-                  >
-                    <SelectionTreeNode />
-                    {startAutoUpdateTreePkl && (
-                      <JobMonitorTree
-                        experiment={experiment}
-                        getExperimentTreePkl={getExperimentTreePkl}
-                        cleanPklTreeData={cleanPklTreeData}
-                        pkltreechanges={pkltreechanges}
-                        experimentRunning={experimentRunning}
-                        notificationTitleTree={notificationTitleTree}
-                        setNotificationTitleTree={setNotificationTitleTree}
-                      />
-                    )}
-                  </div>
+                  {treedata && (
+                    <div
+                      className={
+                        canSelect === true ? "col-3 px-0" : "col-3 pl-0"
+                      }
+                    >
+                      <SelectionTreeNode />
+                      {startAutoUpdateTreePkl && (
+                        <JobMonitorTree
+                          experiment={experiment}
+                          getExperimentTreePkl={getExperimentTreePkl}
+                          cleanPklTreeData={cleanPklTreeData}
+                          pkltreechanges={pkltreechanges}
+                          experimentRunning={experimentRunning}
+                          notificationTitleTree={notificationTitleTree}
+                          setNotificationTitleTree={setNotificationTitleTree}
+                        />
+                      )}
+                    </div>
+                  )}
+
                   {experiment && treedata && canSelect && (
                     <div className='col-2 pl-0'>
                       <JobSelection target={"tree"} source={"experiment"} />

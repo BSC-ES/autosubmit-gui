@@ -13,6 +13,7 @@ const JobFilter = () => {
     clearFilterTreeView,
     returnFilter,
   } = treeContext;
+  // const { totalJobs } = experimentContext;
 
   const [filterString, setFilterString] = useState("");
   const onSubmit = (e) => {
@@ -30,6 +31,14 @@ const JobFilter = () => {
   if (returnFilter && returnFilter >= 0) {
     clearText = "Clear Result";
   }
+
+  // if (treedata) {
+  //   if (totalJobs !== treedata.total) {
+  //     alert(
+  //       "The number of jobs in the experiment is different than the number of jobs in your current run. This might be due to a change in the config files of your experiment while Autosubmit was already running."
+  //     );
+  //   }
+  // }
 
   return (
     <div className='row'>

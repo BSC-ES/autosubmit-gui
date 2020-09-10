@@ -19,9 +19,11 @@ import {
   SET_LOADING_TREE,
   SET_START_TREE_SELECTION,
   SET_NOTIFICATION_TITLE_TREE,
+  SET_OFF_LOADING_TREE,
+  INCREASE_LOADING_TREE,
 } from "../types";
 
-// import { timeStampToDate } from "../utils";
+// import { start, end } from "../utils";
 
 import { AUTOSUBMIT_API_SOURCE, DEBUG } from "../vars";
 
@@ -35,6 +37,7 @@ const TreeState = (props) => {
     loadingFilterTree: false,
     fancyTree: null,
     //canSelect: false,
+    elapsedLoadingTree: 1,
     startAutoUpdateTreePkl: false,
     pkltreechanges: null,
     selectedTreeNode: null,
@@ -47,13 +50,22 @@ const TreeState = (props) => {
 
   const getExperimentTree = async (expid) => {
     setLoadingTree();
+    //start();
+    const res = await axios
+      .get(`${localserver}/tree/${expid}`)
+      .catch((error) => {
+        alert(error.message);
+        setOffLoadingTree();
+      });
+    if (res) {
+      debug && console.log(res.data);
+      dispatch({
+        type: GET_TREE,
+        payload: res.data,
+      });
+    }
 
-    const res = await axios.get(`${localserver}/tree/${expid}`);
-    debug && console.log(res.data);
-    dispatch({
-      type: GET_TREE,
-      payload: res.data,
-    });
+    //end();
   };
 
   // Get experiment pkl data for tree
@@ -93,7 +105,12 @@ const TreeState = (props) => {
     dispatch({
       type: CLEAR_FILTER_TREE,
     });
+  const increaseElapsedLoadingTree = () => {
+    dispatch({ type: INCREASE_LOADING_TREE });
+  };
+
   const setLoadingTree = () => dispatch({ type: SET_LOADING_TREE }); //here
+  const setOffLoadingTree = () => dispatch({ type: SET_OFF_LOADING_TREE });
   const setLoadingFilter = () => dispatch({ type: SET_LOADING_FILTER });
   const setLoadingTreeRefresh = () =>
     dispatch({ type: SET_LOADING_TREE_REFRESH });
@@ -120,6 +137,8 @@ const TreeState = (props) => {
         startAutoUpdateTreePkl: state.startAutoUpdateTreePkl,
         pkltreechanges: state.pkltreechanges,
         selectedTreeNode: state.selectedTreeNode,
+        expectedLoadingTreeTime: state.expectedLoadingTreeTime,
+        elapsedLoadingTree: state.elapsedLoadingTree,
         getExperimentTree,
         getExperimentTreePkl,
         filterTreeView,
@@ -131,6 +150,7 @@ const TreeState = (props) => {
         clearFilterTreeView,
         setStartSelection,
         setNotificationTitleTree,
+        increaseElapsedLoadingTree,
       }}
     >
       {props.children}

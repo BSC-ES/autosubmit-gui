@@ -27,6 +27,7 @@ import {
   SET_CURRENT_COMMAND,
   UPDATE_SELECTED_JOBS,
   SET_LOADING_SUMMARY,
+  CLEAN_EXPERIMENT_DATA,
 } from "../types";
 
 import { AUTOSUBMIT_API_SOURCE, DEBUG } from "../vars";
@@ -38,6 +39,9 @@ const ExperimentState = (props) => {
     experiments: [],
     summaries: [],
     experiment: {},
+    totalJobs: 0,
+    expectedLoadingTreeTime: 0,
+    expectedLoadingQuickView: 0,
     loadingSummary: new Map(),
     loading: false,
     experimentRunning: false,
@@ -179,6 +183,8 @@ const ExperimentState = (props) => {
   const cleanPerformanceMetrics = () =>
     dispatch({ type: CLEAN_PERFORMANCE_METRICS });
 
+  const cleanExperimentData = () => dispatch({ type: CLEAN_EXPERIMENT_DATA });
+
   // Set Loading
   const setLoading = () => dispatch({ type: SET_LOADING });
 
@@ -252,6 +258,9 @@ const ExperimentState = (props) => {
         experimentRunning: state.experimentRunning,
         currentCommand: state.currentCommand,
         canSelect: state.canSelect,
+        totalJobs: state.totalJobs,
+        expectedLoadingTreeTime: state.expectedLoadingTreeTime,
+        expectedLoadingQuickView: state.expectedLoadingQuickView,
         setAutoUpdateRun,
         searchExperiments,
         getCurrentRunning,
@@ -273,6 +282,7 @@ const ExperimentState = (props) => {
         updateCurrentSelectedGraph,
         updateCurrentSelectedTree,
         updateExperimentTimeStamp,
+        cleanExperimentData,
       }}
     >
       {props.children}

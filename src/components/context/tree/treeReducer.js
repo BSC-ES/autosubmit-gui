@@ -14,6 +14,8 @@ import {
   CLEAR_FILTER_TREE,
   SET_START_TREE_SELECTION,
   SET_NOTIFICATION_TITLE_TREE,
+  SET_OFF_LOADING_TREE,
+  INCREASE_LOADING_TREE,
 } from "../types";
 
 import { timeStampToDate } from "../utils";
@@ -26,6 +28,7 @@ export default (state, action) => {
         treedata: action.payload,
         loadingTree: false,
         enabledTreeSearch: true,
+        elapsedLoadingTree: 1,
       };
     case SET_LOADING_TREE_PKL:
       return {
@@ -38,6 +41,19 @@ export default (state, action) => {
         loadingTree: true,
         enabledTreeSearch: false,
       };
+    case SET_OFF_LOADING_TREE:
+      return {
+        ...state,
+        loadingTree: false,
+        enabledTreeSearch: false,
+        elapsedLoadingTree: 1,
+        treedata: null,
+      };
+    case INCREASE_LOADING_TREE:
+      return {
+        ...state,
+        elapsedLoadingTree: state.elapsedLoadingTree + 1,
+      };
     case SET_LOADING_TREE_REFRESH:
       return {
         ...state,
@@ -48,8 +64,10 @@ export default (state, action) => {
         ...state,
         loadingFilterTree: true,
       };
-    case PKL_TREE_LOADED:
+    case PKL_TREE_LOADED: {
       const retrievedPklTree = action.payload;
+      //console.log(retrievedPklTree);
+      //console.log(state.treedata);
       let jobs = {};
       if (
         state.treedata !== null &&
@@ -60,6 +78,7 @@ export default (state, action) => {
         let changes = "";
         let changesSummarized = "";
         let currentJobs = state.treedata.jobs;
+        //console.log(currentJobs);
         let referenceHeaders = state.treedata.reference;
         let currentPackages = referenceHeaders["packages"];
         const completed_tag = referenceHeaders["completed_tag"];
@@ -72,6 +91,7 @@ export default (state, action) => {
         for (let j = 0, job; j < retrievedPklTree.pkl_content.length; j++) {
           job = retrievedPklTree.pkl_content[j];
           jobs[job.name] = job;
+          //console.log(job.name);
         }
         // Updating current jobs
         for (let i = 0, cjob, ijob; i < currentJobs.length; i++) {
@@ -79,11 +99,13 @@ export default (state, action) => {
           cjob = currentJobs[i];
           // Job from pkl. Name is id in treedata.
           ijob = jobs[cjob.id];
+          //console.log(ijob);
           // If there is a difference
           if (
-            cjob.status_code !== ijob.status_code ||
-            cjob.minutes !== ijob.minutes ||
-            cjob.minutes_queue !== ijob.minutes_queue
+            ijob &&
+            (cjob.status_code !== ijob.status_code ||
+              cjob.minutes !== ijob.minutes ||
+              cjob.minutes_queue !== ijob.minutes_queue)
           ) {
             let is_change_status = false;
             let new_status = cjob.status;
@@ -345,6 +367,7 @@ export default (state, action) => {
         loadingTreeRefresh: false,
         loadingTreePkl: false,
       };
+    }
     case FILTER_TREEVIEW:
       const string = action.payload;
       if (state.treedata && state.fancyTree) {
@@ -405,6 +428,7 @@ export default (state, action) => {
         loadingTreePkl: false,
         fancyTree: null,
         returnFiler: 0,
+        elapsedLoadingTree: 1,
         //canSelect: false,
       };
     case CLEAN_TREE_PKL_DATA:

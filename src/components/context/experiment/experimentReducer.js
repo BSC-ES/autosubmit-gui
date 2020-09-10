@@ -21,7 +21,13 @@ import {
   REMOVE_SELECTED_JOB,
   SET_CURRENT_COMMAND,
   SET_LOADING_SUMMARY,
+  CLEAN_EXPERIMENT_DATA,
 } from "../types";
+
+import {
+  approximateLoadingTreeTime,
+  approximateLoadingQuickView,
+} from "../utils";
 
 export default (state, action) => {
   switch (action.type) {
@@ -46,6 +52,18 @@ export default (state, action) => {
         rundata: null,
         startAutoUpdateRun: false,
       };
+    case CLEAN_EXPERIMENT_DATA: {
+      return {
+        ...state,
+        experiment: null,
+        loading: false,
+        totalJobs: 0,
+        expectedLoadingTreeTime: 0,
+        expectedLoadingQuickView: 0,
+        data: null,
+        canSelect: false,
+      };
+    }
     case UPDATE_EXPERIMENT_TS:
       //const { experiment } = state;
       const pkl_timestamp = action.payload;
@@ -92,14 +110,20 @@ export default (state, action) => {
         summaries: [],
         loading: false,
       };
+
     case GET_EXPERIMENT:
+      const { total_jobs } = action.payload;
       return {
         ...state,
         experiment: action.payload,
         loading: false,
+        totalJobs: total_jobs,
+        expectedLoadingTreeTime: approximateLoadingTreeTime(total_jobs),
+        expectedLoadingQuickView: approximateLoadingQuickView(total_jobs),
         data: null,
         canSelect: false,
       };
+
     case SET_LOADING_SUMMARY: {
       const expid = action.payload;
       state.loadingSummary.set(expid, { loading: true });

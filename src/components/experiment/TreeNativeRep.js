@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import Spinner from "../layout/Spinner";
+//import Spinner from "../layout/Spinner";
+import Loading from "../layout/Loading";
 import "jquery.fancytree/dist/modules/jquery.fancytree.clones";
 import "jquery.fancytree/dist/modules/jquery.fancytree.filter";
 import "jquery.fancytree/dist/modules/jquery.fancytree.childcounter";
@@ -43,13 +44,13 @@ export class TreeNativeRep extends Component {
 
   render() {
     //console.log(this.props.treedata)
-    if (this.props.loadingTree) return <Spinner></Spinner>;
+    if (this.props.loadingTree) return <Loading source={"tree"} />;
     if (!this.props.treedata) {
       return (
         <div className='card-body text-left' style={experimentStyle}>
           <p className='lead'>
-            Press <span className='badge badge-info'>Show Tree View</span> to
-            see the tree view representation of the experiment.
+            Press <span className='badge badge-info'>Show</span> to see the tree
+            view representation of the experiment.
           </p>
           <p className='lead'>
             Repeating subtrees in the tree view are only shown once, use the
@@ -133,6 +134,11 @@ export class TreeNativeRep extends Component {
 
         DEBUG && console.log(tree);
         this.props.setFancyTree(tree);
+        if (this.props.total !== this.props.exptotal) {
+          alert(
+            "The number of jobs in the experiment is different than the number of jobs in your current run. This might be due to a change in the config files of your experiment while Autosubmit was already running."
+          );
+        }
       }
 
       componentWillUnmount() {
@@ -157,6 +163,8 @@ export class TreeNativeRep extends Component {
         updateSelectionTree={this.props.updateSelectionTree}
         updateCurrentSelected={this.props.updateCurrentSelected}
         canSelect={this.props.canSelect}
+        total={this.props.treedata.total}
+        exptotal={this.props.totalJobs}
       />
     );
   }
