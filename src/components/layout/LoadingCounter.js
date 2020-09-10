@@ -50,7 +50,7 @@ const LoadingCounter = ({ loadsource }) => {
     <div className='pb-4 text-center'>
       {approximatedTime > maxReponseTimeThreshold && (
         <p>
-          This experiment might be to heavy to fetch in due time. If an error
+          This experiment might be too heavy to fetch in due time. If an error
           message is prompted, try the <b>Quick View</b>.
         </p>
       )}
