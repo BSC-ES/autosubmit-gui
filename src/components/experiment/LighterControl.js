@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import LighterContext from "../context/lighter/lighterContext";
 import ExperimentContext from "../context/experiment/experimentContext";
+import AlertTotal from "./AlertTotal";
 import {
   completedColor,
   runningColor,
@@ -106,6 +107,7 @@ const LighterControl = () => {
             )}
           </div>
         )}
+        {lightData && <AlertTotal source={"lighter"} />}
         {lightData && (
           <div className='col-md'>
             <form onSubmit={onSubmit} className='form' autoComplete='off'>

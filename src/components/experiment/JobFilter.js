@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 //import ExperimentContext from "../context/experiment/experimentContext";
 import TreeContext from "../context/tree/treeContext";
+import AlertTotal from "./AlertTotal";
 //import GraphNodeSelection from "./GraphNodeSelection";
 
 const JobFilter = () => {
@@ -77,8 +78,8 @@ const JobFilter = () => {
       <div className='col-md-4 text-right text-muted pr-4'>
         {treedata && treedata.jobs && (
           <small>
-            Total #Jobs: {treedata.total} | Chunk unit:{" "}
-            <strong>{treedata.reference.chunk_unit}</strong> | Chunk size:{" "}
+            Total #Jobs: {treedata.total} <AlertTotal source={"tree"} /> | Chunk
+            unit: <strong>{treedata.reference.chunk_unit}</strong> | Chunk size:{" "}
             <strong>{treedata.reference.chunk_size}</strong>{" "}
           </small>
         )}

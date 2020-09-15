@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 //import ExperimentContext from "../context/experiment/experimentContext";
 import GraphContext from "../context/graph/graphContext";
 import GraphNodeSelection from "./GraphNodeSelection";
+import AlertTotal from "./AlertTotal";
 
 const JobSearcher = () => {
   //const experimentContext = useContext(ExperimentContext);
@@ -125,8 +126,8 @@ const JobSearcher = () => {
         {data && (
           <small>
             Max out: {data.max_children} | Max in: {data.max_parents} | Total
-            #Jobs: {data.total_jobs} | Chunk unit:{" "}
-            <strong>{data.chunk_unit}</strong> | Chunk size{" "}
+            #Jobs: {data.total_jobs} <AlertTotal source={"graph"} /> | Chunk
+            unit: <strong>{data.chunk_unit}</strong> | Chunk size{" "}
             <strong>{data.chunk_size}</strong>{" "}
           </small>
         )}
