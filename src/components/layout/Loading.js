@@ -26,7 +26,7 @@ const Loading = ({ source }) => {
   const gifload = source === "tree" ? dogload : catload;
 
   //console.log(expectedLoadingTreeTime);
-  if (expectedTime > 1) {
+  if (expectedTime >= 1) {
     return (
       <div className='row'>
         <div className='col'>
