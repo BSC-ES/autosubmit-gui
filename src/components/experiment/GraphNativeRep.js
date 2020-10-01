@@ -23,6 +23,7 @@ class GraphNativeRep extends Component {
       return false;
     }
   }
+
   componentWillUnmount() {
     DEBUG && console.log("Unmounting Nav Rep");
     this.props.cleanGraphData();

@@ -1,10 +1,15 @@
 import React, { useContext, Fragment } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
+import Spinner from "../layout/Spinner";
 import { secondsToDelta } from "../context/utils";
 
 const Performance = () => {
   const experimentContext = useContext(ExperimentContext);
-  const { performancedata, experiment } = experimentContext;
+  const { performancedata, experiment, loadingPerformance } = experimentContext;
+
+  if (loadingPerformance === true) {
+    return <Spinner />;
+  }
 
   if (!experiment || !performancedata) {
     return (
@@ -88,6 +93,43 @@ const Performance = () => {
           </table>
         </div>
       </div>
+
+      {performancedata &&
+        performancedata.warnings_job_data &&
+        performancedata.warnings_job_data.length > 0 && (
+          <div className='row px-3'>
+            <div className='col-12 px-4'>
+              <p>
+                {" "}
+                There are some warnings about the calculations of performance
+                metrics:{" "}
+                <button
+                  data-target='#warningsCollapse'
+                  type='button'
+                  aria-expanded='false'
+                  aria-controls='warningsCollapse'
+                  className='btn-sm btn-warning'
+                  data-toggle='collapse'
+                >
+                  Show warnings
+                </button>
+              </p>
+            </div>
+
+            <div className='collapse px-4' id='warningsCollapse'>
+              <div className='card card-body'>
+                <small>
+                  <ol>
+                    {performancedata.warnings_job_data.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ol>
+                </small>
+              </div>
+            </div>
+          </div>
+        )}
+
       <div className='row px-3'>
         <div className='col-12 px-4'>
           <p className='lead'>Metrics description:</p>

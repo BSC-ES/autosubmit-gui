@@ -28,6 +28,7 @@ import {
   UPDATE_SELECTED_JOBS,
   SET_LOADING_SUMMARY,
   CLEAN_EXPERIMENT_DATA,
+  LOADING_PERFORMANCE_METRICS,
 } from "../types";
 
 import { AUTOSUBMIT_API_SOURCE, DEBUG } from "../vars";
@@ -44,6 +45,7 @@ const ExperimentState = (props) => {
     expectedLoadingQuickView: 0,
     loadingSummary: new Map(),
     loading: false,
+    loadingPerformance: false,
     experimentRunning: false,
     rundata: null,
     performancedata: null,
@@ -103,6 +105,7 @@ const ExperimentState = (props) => {
 
   const getExperimentPerformanceMetrics = async (expid) => {
     cleanPerformanceMetrics();
+    setLoadingPerformanceMetrics();
     const res = await axios.get(`${localserver}/performance/${expid}`);
     const metrics = res.data;
     debug && console.log(metrics);
@@ -187,13 +190,12 @@ const ExperimentState = (props) => {
 
   // Set Loading
   const setLoading = () => dispatch({ type: SET_LOADING });
-
   const setLoadingRun = () => dispatch({ type: SET_LOADING_RUN });
-
   const setLoadingState = () => dispatch({ type: SET_LOADING_STATE });
-
   const setLoadingSummary = (summExpid) =>
     dispatch({ type: SET_LOADING_SUMMARY, payload: summExpid });
+  const setLoadingPerformanceMetrics = () =>
+    dispatch({ type: LOADING_PERFORMANCE_METRICS });
 
   // Action Things
   const updateExperimentTimeStamp = (timeStamp) => {
@@ -251,6 +253,7 @@ const ExperimentState = (props) => {
         loading: state.loading,
         loadingRun: state.loadingRun,
         loadingState: state.loadingState,
+        loadingPerformance: state.loadingPerformance,
         performancedata: state.performancedata,
         rundata: state.rundata,
         currentSelected: state.currentSelected,

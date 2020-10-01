@@ -22,6 +22,7 @@ import {
   SET_CURRENT_COMMAND,
   SET_LOADING_SUMMARY,
   CLEAN_EXPERIMENT_DATA,
+  LOADING_PERFORMANCE_METRICS,
 } from "../types";
 
 import {
@@ -154,6 +155,7 @@ export default (state, action) => {
       return {
         ...state,
         performancedata: action.payload,
+        loadingPerformance: false,
       };
     case CLEAN_PERFORMANCE_METRICS:
       return {
@@ -193,6 +195,11 @@ export default (state, action) => {
       return {
         ...state,
         currentCommand: action.payload,
+      };
+    case LOADING_PERFORMANCE_METRICS:
+      return {
+        ...state,
+        loadingPerformance: true,
       };
     case REMOVE_SELECTED_JOB:
       const name = action.payload;

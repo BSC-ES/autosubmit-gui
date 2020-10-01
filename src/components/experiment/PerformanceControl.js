@@ -5,7 +5,11 @@ import TreeContext from "../context/tree/treeContext";
 const PerformanceControl = () => {
   const experimentContext = useContext(ExperimentContext);
   const treeContext = useContext(TreeContext);
-  const { getExperimentPerformanceMetrics, experiment } = experimentContext;
+  const {
+    getExperimentPerformanceMetrics,
+    experiment,
+    loadingPerformance,
+  } = experimentContext;
 
   const { enabledTreeSearch } = treeContext;
 
@@ -24,7 +28,7 @@ const PerformanceControl = () => {
                 type='submit'
                 value='Refresh'
                 className='btn btn-success btn-block btn-sm'
-                disabled={!enabledTreeSearch}
+                disabled={!enabledTreeSearch || loadingPerformance}
               />
             </form>
           )}
