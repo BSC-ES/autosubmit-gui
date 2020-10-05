@@ -181,9 +181,10 @@ const SelectionTreeNode = () => {
                     {selectedNode.children_list &&
                       selectedNode.children_list.length > 0 && (
                         <button
-                          className='btn btn-dark btn-sm btn-block'
+                          className='btn-sm btn-dark btn-block'
                           data-toggle='modal'
                           data-target='#childrenList-tree'
+                          type='button'
                         >
                           <small>
                             <strong>Out:</strong> {selectedNode.children}
@@ -192,18 +193,25 @@ const SelectionTreeNode = () => {
                       )}
                     {selectedNode.children_list &&
                       selectedNode.children_list.length === 0 && (
-                        <small>
-                          <strong>Out:</strong> {selectedNode.children}
-                        </small>
+                        <button
+                          className='btn-sm btn-dark btn-block'
+                          type='button'
+                          disabled
+                        >
+                          <small>
+                            <strong>Out:</strong> {selectedNode.children}
+                          </small>
+                        </button>
                       )}
                   </div>
                   <div className='col-md-3 px-1'>
                     {selectedNode.parent_list !== null &&
                       selectedNode.parents > 0 && (
                         <button
-                          className='btn btn-dark btn-sm btn-block'
+                          className='btn-sm btn-dark btn-block'
                           data-toggle='modal'
                           data-target='#parentList-tree'
+                          type='button'
                         >
                           <small>
                             <strong>In:</strong> {selectedNode.parents}
@@ -212,9 +220,15 @@ const SelectionTreeNode = () => {
                       )}
                     {selectedNode.parent_list !== null &&
                       selectedNode.parents === 0 && (
-                        <small>
-                          <strong>In:</strong> {selectedNode.parents}
-                        </small>
+                        <button
+                          className='btn-sm btn-dark btn-block'
+                          type='button'
+                          disabled
+                        >
+                          <small>
+                            <strong>In:</strong> {selectedNode.parents}
+                          </small>
+                        </button>
                       )}
                   </div>
                 </div>
@@ -380,7 +394,7 @@ const SelectionTreeNode = () => {
             aria-labelledby='childrenListTitle-tree'
             aria-hidden='true'
           >
-            <div className='modal-dialog' role='document'>
+            <div className='modal-dialog modal-dialog-list' role='document'>
               <div className='modal-content'>
                 <div className='modal-header'>
                   <h5 className='modal-title' id='childrenListTitle-tree'>
@@ -426,7 +440,7 @@ const SelectionTreeNode = () => {
             aria-labelledby='parentListTitle-tree'
             aria-hidden='true'
           >
-            <div className='modal-dialog' role='document'>
+            <div className='modal-dialog modal-dialog-list' role='document'>
               <div className='modal-content'>
                 <div className='modal-header'>
                   <h5 className='modal-title' id='parentListTitle-tree'>

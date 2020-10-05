@@ -24,14 +24,6 @@ const JobHistory = ({ source }) => {
 
   const onGetJobHistory = (e) => {
     e.preventDefault();
-    // let selectedJob = "";
-    // if (source === "tree") {
-    //   selectedJob = selectedTreeNode;
-    // } else if (source === "graph") {
-    //   selectedJob = selection;
-    // }
-    console.log(expid);
-    console.log(selectedJob);
     getJobHistory(expid, selectedJob);
   };
 

@@ -61,12 +61,20 @@ pre.bash {
 }
 
 .modal-dialog-historic {
-  width: 75% !important;
-  margin: 0 auto !important;
+  width: 75%;
+  margin: 0 auto;
 }
 
 .modal-dialog {
   max-width: 75%;
+}
+
+.modal-dialog-status {
+  max-width: 600px !important;
+}
+
+.modal-dialog-list {
+  max-width: 600px !important;
 }
 
 /* .wrapper-card {

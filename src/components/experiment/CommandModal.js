@@ -117,8 +117,8 @@ const CommandModal = ({ source, target }) => {
       aria-labelledby={"commandTitle" + target}
       aria-hidden='true'
     >
-      <div className='modal-dialog' role='document'>
-        <div className='modal-content' style={{ width: "600px" }}>
+      <div className='modal-dialog modal-dialog-status' role='document'>
+        <div className='modal-content'>
           <div className='modal-body pb-1'>
             <div className='row'>{modalHeader}</div>
             <div className='row mt-2 mx-1'>
