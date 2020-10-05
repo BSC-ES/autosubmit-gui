@@ -29,6 +29,8 @@ import {
   SET_LOADING_SUMMARY,
   CLEAN_EXPERIMENT_DATA,
   LOADING_PERFORMANCE_METRICS,
+  GET_JOB_HISTORY,
+  LOADING_JOB_HISTORY,
 } from "../types";
 
 import { AUTOSUBMIT_API_SOURCE, DEBUG } from "../vars";
@@ -41,6 +43,7 @@ const ExperimentState = (props) => {
     summaries: [],
     experiment: {},
     totalJobs: 0,
+    jobHistory: null,
     expectedLoadingTreeTime: 0,
     expectedLoadingQuickView: 0,
     loadingSummary: new Map(),
@@ -84,6 +87,21 @@ const ExperimentState = (props) => {
       var exp_name = experiments[exp].name;
       getExperimentSummary(exp_name);
     }
+  };
+
+  const getJobHistory = async (expid, job_name) => {
+    setLoadingJobHistory();
+    const res = await axios
+      .get(`${localserver}/history/${expid}/${job_name}`)
+      .catch((error) => {
+        alert(error.message);
+      });
+    debug && console.log(res.data);
+    const result = res ? res.data : null;
+    dispatch({
+      type: GET_JOB_HISTORY,
+      payload: result,
+    });
   };
 
   // Get Summary for Search item
@@ -196,7 +214,7 @@ const ExperimentState = (props) => {
     dispatch({ type: SET_LOADING_SUMMARY, payload: summExpid });
   const setLoadingPerformanceMetrics = () =>
     dispatch({ type: LOADING_PERFORMANCE_METRICS });
-
+  const setLoadingJobHistory = () => dispatch({ type: LOADING_JOB_HISTORY });
   // Action Things
   const updateExperimentTimeStamp = (timeStamp) => {
     //console.log(timeStamp);
@@ -254,6 +272,7 @@ const ExperimentState = (props) => {
         loadingRun: state.loadingRun,
         loadingState: state.loadingState,
         loadingPerformance: state.loadingPerformance,
+        jobHistory: state.jobHistory,
         performancedata: state.performancedata,
         rundata: state.rundata,
         currentSelected: state.currentSelected,
@@ -286,6 +305,7 @@ const ExperimentState = (props) => {
         updateCurrentSelectedTree,
         updateExperimentTimeStamp,
         cleanExperimentData,
+        getJobHistory,
       }}
     >
       {props.children}

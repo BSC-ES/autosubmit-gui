@@ -23,6 +23,8 @@ import {
   SET_LOADING_SUMMARY,
   CLEAN_EXPERIMENT_DATA,
   LOADING_PERFORMANCE_METRICS,
+  GET_JOB_HISTORY,
+  LOADING_JOB_HISTORY,
 } from "../types";
 
 import {
@@ -65,6 +67,16 @@ export default (state, action) => {
         canSelect: false,
       };
     }
+    case LOADING_JOB_HISTORY:
+      return {
+        ...state,
+        jobHistory: null,
+      };
+    case GET_JOB_HISTORY:
+      return {
+        ...state,
+        jobHistory: action.payload,
+      };
     case UPDATE_EXPERIMENT_TS:
       //const { experiment } = state;
       const pkl_timestamp = action.payload;

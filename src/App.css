@@ -60,6 +60,15 @@ pre.bash {
   font-size: 10px;
 }
 
+.modal-dialog-historic {
+  width: 75% !important;
+  margin: 0 auto !important;
+}
+
+.modal-dialog {
+  max-width: 75%;
+}
+
 /* .wrapper-card {
   height: ;
   min-height: 100%;

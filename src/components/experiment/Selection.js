@@ -1,6 +1,7 @@
 import React, { useContext, Fragment } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
 import GraphContext from "../context/graph/graphContext";
+import JobHistory from "./JobHistory";
 import { secondsToDelta } from "../context/utils";
 import { DEBUG } from "../context/vars";
 
@@ -45,7 +46,8 @@ const Selection = () => {
                 <div className='card-header text-center p-0' style={headerCard}>
                   <div className='mh-100 px-0 mx-0'>
                     <small>
-                      <strong>{selectedNode.id}</strong>
+                      <strong>{selectedNode.id}</strong>{" "}
+                      <JobHistory source='graph' />
                     </small>
                   </div>
                 </div>
