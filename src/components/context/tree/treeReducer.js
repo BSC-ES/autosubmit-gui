@@ -213,6 +213,9 @@ export default (state, action) => {
                     if (old_status === "FAILED") {
                       header_data.failed -= 1;
                     }
+                    if (old_status === "COMPLETED"){
+                      header_data.completed -= 1;
+                    }
                   }
                   // Setting new title
                   const new_completed_tag = completed_tag
