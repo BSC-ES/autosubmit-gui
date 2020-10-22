@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
 import GraphContext from "../context/graph/graphContext";
 import TreeContext from "../context/tree/treeContext";
+import { exportHistoryToCSV } from "../context/utils";
 
 const JobHistory = ({ source }) => {
   const experimentContext = useContext(ExperimentContext);
@@ -26,6 +27,12 @@ const JobHistory = ({ source }) => {
     e.preventDefault();
     getJobHistory(expid, selectedJob);
   };
+
+  const onExport = (jobName) => (e) => {
+    e.preventDefault();    
+    const columnNames = ["Counter","JobId","Submit","Start","Finish","Queue","Run","Status","Energy","Wallclock","NCpus","Nnodes"];    
+    exportHistoryToCSV(jobHistory.history,columnNames,jobName+"_history.csv");        
+  }
 
   const dataTarget = "history-" + source;
 
@@ -60,6 +67,10 @@ const JobHistory = ({ source }) => {
                 <h5 className='modal-title' id={dataTarget + "Title"}>
                   Historical data for <strong>{selectedJob}</strong>
                 </h5>
+                &nbsp;
+                {jobHistory && jobHistory.history && jobHistory.history.length > 0 &&                
+                <button type="button" className="btn-sm btn-primary" onClick={onExport(selectedJob)}><i className="fas fa-file-export"></i></button>
+                }                
                 <button
                   className='close'
                   type='button'

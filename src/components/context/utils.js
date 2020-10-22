@@ -120,3 +120,22 @@ export const approximateLoadingQuickView = (x) => {
   let y = Math.round(0.005 * x - 37);
   return y;
 };
+
+export const exportHistoryToCSV = (data, columnNames, title) => {
+  
+  let date = new Date();  
+  title =  date.getFullYear().toString() + date.getMonth() + date.getDate() + date.getHours() + date.getMinutes() + "_" + title;
+  let csvContent = "data:text/csv;charset=utf-8,";
+  csvContent += columnNames.join(",") + "\n";
+  if (data){
+    let mapped = []
+    data.map((item) => mapped.push([item.counter,item.job_id,item.submit,item.start,item.finish,item.queue_time,item.run_time, item.status, item.energy, item.wallclock, item.ncpus, item.nodes]));
+    csvContent += mapped.map((item) => item.join(",")).join("\n");
+  }
+  var encodedUri = encodeURI(csvContent);
+  var link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", title);
+  document.body.appendChild(link); // Required for FF
+  link.click();
+}

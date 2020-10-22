@@ -47,8 +47,9 @@ const Selection = () => {
                   <div className='mh-100 px-0 mx-0'>
                     <small>
                       <strong>{selectedNode.id}</strong>{" "}
+                      </small>
                       <JobHistory source='graph' />
-                    </small>
+                    
                   </div>
                 </div>
                 <div className='card-body py-0'>
