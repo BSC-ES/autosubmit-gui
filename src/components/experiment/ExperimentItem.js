@@ -5,7 +5,7 @@ import ExperimentContext from "../context/experiment/experimentContext";
 import { quickThreshold } from "../context/vars";
 
 const ExperimentItem = ({
-  experiment: { name, description, user, hpc, status, completed, total },
+  experiment: { name, description, user, hpc, status, completed, total, version },
 }) => {
   const experimentContext = useContext(ExperimentContext);
   const { getExperimentSummary, summaries, loadingSummary } = experimentContext;
@@ -69,9 +69,16 @@ const ExperimentItem = ({
         </div>
         <div className='card-body py-1'>
           {/* <h4 className="card-title"></h4> */}
-          <h6 className='card-subtitle text-muted pt-2'>
-            <small>Owner:</small> {user}
-          </h6>
+          <div className="d-flex justify-content-between">
+            <div>
+              <h6 className='card-subtitle text-muted pt-2'>
+                <small>Owner:</small> {user}
+              </h6>
+            </div>
+            <div>
+              <small className='text-muted'>HPC: {hpc}</small>
+            </div>
+          </div>          
           <p className='card-text py-1 mb-1'>
             <small>{description}</small>
           </p>
@@ -229,7 +236,7 @@ const ExperimentItem = ({
             )}
           </div>
           <p className='card-text text-center'>
-            <small className='text-muted'>HPC: {hpc}</small>
+            <small className='text-muted'>{version}</small>
           </p>
         </div>
       </div>
