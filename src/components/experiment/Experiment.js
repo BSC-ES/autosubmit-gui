@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from "react";
 import Spinner from "../layout/Spinner";
 // import { Link } from "react-router-dom";
 import ExperimentContext from "../context/experiment/experimentContext";
+import ExperimentRuns from "./ExperimentRuns";
 
 const Experiment = ({ expidToken }) => {
   //console.log(expidToken);
@@ -47,6 +48,8 @@ const Experiment = ({ expidToken }) => {
       {!experimentRunning && !loadingState && (
         <span className='badge badge-secondary text-right'>INACTIVE</span>
       )}
+      &nbsp;
+        <ExperimentRuns />
     </span>
   );
 };

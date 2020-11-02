@@ -31,6 +31,8 @@ import {
   LOADING_PERFORMANCE_METRICS,
   GET_JOB_HISTORY,
   LOADING_JOB_HISTORY,
+  LOADING_EXPERIMENT_RUNS,
+  GET_EXPERIMENT_RUNS,
 } from "../types";
 
 import { AUTOSUBMIT_API_SOURCE, DEBUG } from "../vars";
@@ -44,6 +46,7 @@ const ExperimentState = (props) => {
     experiment: {},
     totalJobs: 0,
     jobHistory: null,
+    experimentRuns: null,
     expectedLoadingTreeTime: 0,
     expectedLoadingQuickView: 0,
     loadingSummary: new Map(),
@@ -55,6 +58,7 @@ const ExperimentState = (props) => {
     loadingRun: false,
     loadingState: false,
     loadingFilterTree: false,
+    loadingExperimentRuns: false,
     currentCommand: null,
     currentSelected: [],
     startAutoUpdateRun: false,
@@ -103,6 +107,18 @@ const ExperimentState = (props) => {
       payload: result,
     });
   };
+
+  const getExperimentRuns = async (expid) => {
+    setLoadingExperimentRuns();
+    const res = await axios.get(`${localserver}/runs/${expid}`).catch((error) => {alert(error.message);});
+    debug && console.log(res.data);
+    const result = res ? res.data : null;
+    // console.log(result);
+    dispatch({
+      type: GET_EXPERIMENT_RUNS,
+      payload: result,
+    })
+  }
 
   // Get Summary for Search item
   const getExperimentSummary = async (expid) => {
@@ -215,6 +231,7 @@ const ExperimentState = (props) => {
   const setLoadingPerformanceMetrics = () =>
     dispatch({ type: LOADING_PERFORMANCE_METRICS });
   const setLoadingJobHistory = () => dispatch({ type: LOADING_JOB_HISTORY });
+  const setLoadingExperimentRuns = () => dispatch({ type: LOADING_EXPERIMENT_RUNS });
   // Action Things
   const updateExperimentTimeStamp = (timeStamp) => {
     //console.log(timeStamp);
@@ -274,6 +291,7 @@ const ExperimentState = (props) => {
         loadingPerformance: state.loadingPerformance,
         jobHistory: state.jobHistory,
         performancedata: state.performancedata,
+        experimentRuns: state.experimentRuns,
         rundata: state.rundata,
         currentSelected: state.currentSelected,
         startAutoUpdateRun: state.startAutoUpdateRun,
@@ -306,6 +324,7 @@ const ExperimentState = (props) => {
         updateExperimentTimeStamp,
         cleanExperimentData,
         getJobHistory,
+        getExperimentRuns,
       }}
     >
       {props.children}

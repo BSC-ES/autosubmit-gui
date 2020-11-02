@@ -25,6 +25,8 @@ import {
   LOADING_PERFORMANCE_METRICS,
   GET_JOB_HISTORY,
   LOADING_JOB_HISTORY,
+  LOADING_EXPERIMENT_RUNS,
+  GET_EXPERIMENT_RUNS,
 } from "../types";
 
 import {
@@ -77,6 +79,18 @@ export default (state, action) => {
         ...state,
         jobHistory: action.payload,
       };
+    case LOADING_EXPERIMENT_RUNS:
+      return {
+        ...state,
+        experimentRuns: null,
+        loadingExperimentRuns: true,
+      }
+    case GET_EXPERIMENT_RUNS:
+      return {
+        ...state,
+        experimentRuns: action.payload,
+        loadingExperimentRuns: false,
+      }
     case UPDATE_EXPERIMENT_TS:
       //const { experiment } = state;
       const pkl_timestamp = action.payload;
