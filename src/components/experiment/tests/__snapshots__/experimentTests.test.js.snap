@@ -1,0 +1,206 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExperimentItem renders correctly 1`] = `
+<div
+  className="col mb-4"
+>
+  <div
+    className="card"
+  >
+    <div
+      className="card-header text-center py-1"
+    >
+      <div
+        className="row"
+      >
+        <div
+          className="col-md-3 text-left"
+        >
+          <h3
+            className="font-weight-bold"
+          >
+            a2h6
+          </h3>
+        </div>
+        <div
+          className="col-md-6 text-center"
+        >
+           
+          10
+           / 
+          100
+           
+          <div
+            className="progress border"
+          >
+            <div
+              aria-valuemax={100}
+              aria-valuemin="0"
+              aria-valuenow={10}
+              className="progress-bar progress-bar-striped progress-bar-animated bg-success"
+              role="progressbar"
+              style={
+                Object {
+                  "width": "10%",
+                }
+              }
+            />
+          </div>
+        </div>
+        <div
+          className="col-md-3 text-right"
+        >
+          <span
+            className="badge badge-success text-right"
+          >
+            ACTIVE
+          </span>
+        </div>
+      </div>
+    </div>
+    <div
+      className="card-body py-1"
+    >
+      <div
+        className="d-flex justify-content-between"
+      >
+        <div>
+          <h6
+            className="card-subtitle text-muted pt-2"
+          >
+            <small>
+              Owner:
+            </small>
+             
+            wuruchi
+          </h6>
+        </div>
+        <div>
+          <small
+            className="text-muted"
+          >
+            HPC: 
+            LOCAL
+          </small>
+        </div>
+      </div>
+      <p
+        className="card-text py-1 mb-1"
+      >
+        <small>
+          Test
+        </small>
+      </p>
+      <div
+        className="row"
+      >
+        <div
+          className="col-3 px-1"
+        >
+          <form
+            className="form"
+            onSubmit={[Function]}
+          >
+            <input
+              aria-controls="a2h6"
+              className="btn btn-outline-info btn-block btn-sm"
+              type="submit"
+              value="Summary"
+            />
+          </form>
+        </div>
+        <div
+          className="col-6 px-1"
+        >
+          <a
+            className="btn btn-outline-primary btn-block btn-sm"
+            href="/autosubmitapp/experiment/a2h6"
+            onClick={[Function]}
+          >
+            More
+          </a>
+        </div>
+        <div
+          className="col-3 px-1"
+        >
+          <a
+            className="btn btn-outline-success btn-block btn-sm"
+            href="/autosubmitapp/experiment/a2h6/light"
+            onClick={[Function]}
+          >
+            Quick
+          </a>
+        </div>
+      </div>
+      <p
+        className="card-text text-center"
+      >
+        <small
+          className="text-muted"
+        >
+          3.11.0
+        </small>
+      </p>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Search renders correctly 1`] = `
+<div
+  className="container"
+>
+  <div
+    className="row"
+  >
+    <div
+      className="col-11"
+    >
+      <form
+        className="form"
+        onSubmit={[Function]}
+      >
+        <div
+          className="input-group mb-3"
+        >
+          <input
+            className="form-control"
+            name="text"
+            onChange={[Function]}
+            placeholder="If it uses Autosubmit, you will find it. Search by expid, description, or owner."
+            type="text"
+            value=""
+          />
+          <div
+            className="input-group-append"
+          >
+            <input
+              className="btn btn-dark"
+              type="submit"
+              value="Search"
+            />
+          </div>
+        </div>
+      </form>
+    </div>
+    <div
+      className="col-1"
+    >
+      <form
+        className="form"
+        onSubmit={[Function]}
+      >
+        <div
+          className="input-group mb-3"
+        >
+          <input
+            className="btn btn-success"
+            type="submit"
+            value="Active Exps"
+          />
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+`;

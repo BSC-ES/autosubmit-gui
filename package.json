@@ -23,7 +23,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -44,12 +44,36 @@
   "description": "Autosubmit GUI is a software made up of two separate components. A web ppplication based on ReactJS, and a web service API written on Python. This documentation is about the former: The ReactJS App. We begin by emphasizing the fact the application is written using Javascript with some ReactJS flavored syntax, e.g. JSX. However, the developer familiar with Javascript should not have problems understanding the main code of this application.  You can find more information about **React** in the following link: [https://reactjs.org/docs/getting-started.html](https://reactjs.org/docs/getting-started.html)",
   "main": "index.js",
   "devDependencies": {
-    "react-dev-utils": "^10.2.1"
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/plugin-transform-modules-commonjs": "^7.12.1",
+    "canvas": "^2.6.1",
+    "identity-obj-proxy": "^3.0.0",
+    "jest-canvas-mock": "^2.3.0",
+    "react-dev-utils": "^10.2.1",
+    "react-test-renderer": "^17.0.1"
   },
   "repository": {
     "type": "git",
     "url": "https://earth.bsc.es/gitlab/wuruchi/autosubmitreact"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/mocks/fileMock.js",
+      "\\.(css|sass)$": "<rootDir>/mocks/styleMock.js"
+    },
+    "setupFiles": ["jest-canvas-mock"]
+  },
+  "babel": {
+    "env": {
+      "test": {
+        "plugins": [
+          "@babel/plugin-transform-modules-commonjs",
+          "@babel/plugin-proposal-class-properties",
+          "@babel/plugin-transform-react-jsx"
+        ]
+      }
+    }
+  }
 }

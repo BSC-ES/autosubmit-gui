@@ -2,5 +2,6 @@
   "python.formatting.autopep8Args": [
     "--ignore",
     "E402"
-  ]
+  ],
+  "git.ignoreLimitWarning": true
 }

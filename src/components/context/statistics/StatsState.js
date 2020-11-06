@@ -76,6 +76,9 @@ const StatsState = (props) => {
       requestResult = res.data;
     }
     //console.log(ticks);
+    // console.log(result);
+    // console.log(requestResult);
+    // console.log(ticks);
     dispatch({
       type: GET_EXPERIMENT_STATS,
       payload: { result, requestResult, ticks },

@@ -34,7 +34,7 @@ const Experiment = ({ expidToken }) => {
   const { expid, error, error_message } = experiment;
 
   if (loading) return <span>Loading...</span>;
-  if (!expidToken) return <span></span>;
+  if (!experiment) return null;
   return (
     <span className='navbar-brand ml-4'>
       <strong>{expid}</strong> {/* {description}{" "} */}

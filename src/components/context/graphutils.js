@@ -19,16 +19,19 @@ export const addFakeEdge = (source, target, state) => {
   let id_edge = source + "-" + target;
   DEBUG && console.log("Adding fake edge from " + source + " to " + target);
   if (state.visNetwork) {
-    state.visNetwork.body.data.edges.add([
-      {
-        id: id_edge,
-        from: source,
-        to: target,
-        dashes: true,
-        background: { enabled: true, color: "rgba(63, 191, 63, 0.5)" },
-        arrows: { to: { enabled: false } },
-      },
-    ]);
+    const nodesIn = Object.keys(state.visNetwork.body.data.nodes._data);
+    if (nodesIn.includes(source) && nodesIn.includes(target)){
+      state.visNetwork.body.data.edges.add([
+        {
+          id: id_edge,
+          from: source,
+          to: target,
+          dashes: true,
+          background: { enabled: true, color: "rgba(63, 191, 63, 0.5)" },
+          arrows: { to: { enabled: false } },
+        },
+      ]);
+    }    
   }
 };
 

@@ -16,6 +16,7 @@ So we solved following issues that are not resolved in original hammer.js
   - [Hammer.js fails in node since window is undefined](https://github.com/hammerjs/hammer.js/issues/930)
 * [Support ES Module for Tree Shaking](https://github.com/naver/hammer.js/issues/12)
 * [Change the priority of define and exports for umd](https://github.com/naver/hammer.js/issues/11)
+* [Polymer/shadow-dom compatibility](https://github.com/naver/hammer.js/issues/21)
 
 We would maintain this repository to fix remain bugs and enhance it until original repository activates.
 

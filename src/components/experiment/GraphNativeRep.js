@@ -215,6 +215,12 @@ class GraphNativeRep extends Component {
     };
 
     class VisNetwork extends Component {
+
+      // constructor() {
+      //   super();
+        
+      // }
+
       shouldComponentUpdate(nextProps, nextState) {
         if (this.props.shouldUpdateGraph === true) {
           DEBUG && console.log("Should rerender form inside");
@@ -368,7 +374,7 @@ class GraphNativeRep extends Component {
       render() {
         return (
           <div className='card-body p-0'>
-            <div ref='myRef' style={experimentStyle}></div>
+            <div id="graphrep" ref='myRef' style={experimentStyle}></div>
           </div>
         );
       }

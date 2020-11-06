@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExperimentItem renders with content 1`] = `
+<div
+  className="row"
+>
+  <div
+    className="col-md-4 offset-md-4 text-center"
+  >
+    <form
+      className="form"
+      onSubmit={[Function]}
+    >
+      <div
+        className=""
+      >
+        <input
+          className="btn btn-dark btn-sm"
+          type="submit"
+          value="Clear Statistics"
+        />
+      </div>
+    </form>
+  </div>
+  <div
+    className="col-md-12"
+  >
+    <div>
+      Loading Chart
+    </div>
+    <div
+      className="col-md-8 offset-md-4 mt-2"
+    >
+      <ul
+        style={
+          Object {
+            "listStyleType": "none",
+          }
+        }
+      >
+        <li>
+          Period: 2020-11-03 16:49:00 ~ 2020-11-03 18:49:00
+        </li>
+        <li>
+          Submitted (#): 14
+        </li>
+        <li>
+          Run  (#): 14
+        </li>
+        <li>
+          Failed  (#): 0
+        </li>
+        <li>
+          Completed (#): 14
+        </li>
+        <li>
+          Queueing time (h): 7.49
+        </li>
+        <li>
+          Expected consumption real (h): 13.33
+        </li>
+        <li>
+          Expected consumption CPU time (h): 366.33
+        </li>
+        <li>
+          Consumption real (h): 0.24
+        </li>
+        <li>
+          Consumption CPU time (h): 35.07
+        </li>
+        <li>
+          Consumption (%): 9.57
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+`;

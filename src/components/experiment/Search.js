@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
 import AlertContext from "../context/alert/alertContext";
 
-const Search = ({ setAlert }) => {
+const Search = () => {
   const experimentContext = useContext(ExperimentContext);
   const alertContext = useContext(AlertContext);
 
