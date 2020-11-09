@@ -1,7 +1,7 @@
 import React, { useContext, Fragment } from 'react';
 import ExperimentContext from '../context/experiment/experimentContext';
 
-
+// deprecated
 const OpenRun = () => {
     const experimentContext = useContext(ExperimentContext); 
     const { setAutoUpdateRun, startAutoUpdateRun, experiment } = experimentContext;

@@ -1,4 +1,7 @@
 import { DEBUG } from "./vars";
+
+// graphutils.js tests are provided in GraphNativeRep.test.js
+
 export const navigateGraph = (Id, posx, posy, cScale = 0.9, visNetwork) => {
   DEBUG && console.log(posx + " " + posy);
   if (cScale <= 0.05) cScale = 0.05;

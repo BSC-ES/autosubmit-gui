@@ -26,6 +26,7 @@ afterEach(() => {
   container = null;
 });
 
+// --- ExperimentItem.js ---
 
 it("ExperimentItem renders with content", () => {
   const experiment = {name: "a2h6", description: "Test", user:"wuruchi", hpc:"LOCAL", status:"RUNNING", completed:10, total:100, version:"3.11.0"};
@@ -36,16 +37,16 @@ it("ExperimentItem renders with content", () => {
   expect(container.textContent).toContain("wuruchi");
 });
 
+
 it('ExperimentItem renders correctly', () => {
   const experiment = {name: "a2h6", description: "Test", user:"wuruchi", hpc:"LOCAL", status:"RUNNING", completed:10, total:100, version:"3.11.0"};
   const tree = renderer.create(<Router><ExperimentContext.Provider value={{ experiment: {}, summaries: new Map(), loadingSummary: new Map()}}><ExperimentItem key="a2h6" experiment={experiment}/></ExperimentContext.Provider></Router>).toJSON();
   expect(tree).toMatchSnapshot();
 });
 
-it("Search renders correctly", () => {
-  const tree = renderer.create(<Router><ExperimentContext.Provider value={{ experiment: {}, experiments: [], summaries: new Map(), loadingSummary: new Map()}}><AlertContext.Provider value={{}}><Search/></AlertContext.Provider></ExperimentContext.Provider></Router>).toJSON();
-  expect(tree).toMatchSnapshot();
-})
+
+
+// --- ExperimentColumns.js --- 
 
 it('ExperimentColumn renders with content', () => {
   const experiment = {branch: "master", description: "Test", owner:"wuruchi", owner_id: 1226, hpc:"LOCAL", db_historic_version: 14, version:"3.11.0"};
@@ -57,6 +58,8 @@ it('ExperimentColumn renders with content', () => {
   expect(container.textContent).toContain("100");
   expect(container.textContent).toContain("14");
 });
+
+// --- Experiment.js --- 
 
 it('Experiment renders with content', () => {
 
@@ -75,129 +78,7 @@ it('Experiment renders with content', () => {
   expect(container.textContent).toContain("INACTIVE");
 });
 
-it('Performance renders with content and content is listed', () => {
-    const experiment = {expid: "a2h6", branch: "master", description: "Test", owner:"wuruchi", owner_id: 1226, hpc:"LOCAL", db_historic_version: 14, version:"3.11.0"};
-    const performancedata = {
-      ASYPD: 1.8483,
-      CHSY: 92.88,
-      JPSY: 1521053.0,
-      Parallelization: 1,
-      SYPD: 1.8604,
-      considered: [
-          {
-              CHSY: 878.84,
-              JPSY: 6320340.0,
-              energy: 17316.0,
-              name: "a2h6_20150527_001_4_SIM",
-              queue: 60,
-              running: 8668
-          },
-          {
-              CHSY: 5.68,
-              JPSY: 1731545.4,
-              energy: 4743.96,
-              name: "a2h6_20150527_003_3_SIM",
-              queue: 0,
-              running: 56
-          },
-          {
-              CHSY: 6.49,
-              JPSY: 825385.45,
-              energy: 2261.33,
-              name: "a2h6_20150527_001_2_SIM",
-              queue: 0,
-              running: 64
-          },
-          {
-              CHSY: 6.29,
-              JPSY: 920526.35,
-              energy: 2521.99,
-              name: "a2h6_20150527_003_1_SIM",
-              queue: 0,
-              running: 62
-          },
-          {
-              CHSY: 6.39,
-              JPSY: 935374.55,
-              energy: 2562.67,
-              name: "a2h6_20141128_003_1_SIM",
-              queue: 0,
-              running: 63
-          },
-          {
-              CHSY: 6.39,
-              JPSY: 935374.55,
-              energy: 2562.67,
-              name: "a2h6_20141128_001_1_SIM",
-              queue: 0,
-              running: 63
-          },
-          {
-              CHSY: 6.39,
-              JPSY: 935374.55,
-              energy: 2562.67,
-              name: "a2h6_20150527_001_1_SIM",
-              queue: 0,
-              running: 63
-          },
-          {
-              CHSY: 5.88,
-              JPSY: 1793387.35,
-              energy: 4913.39,
-              name: "a2h6_20150527_001_3_SIM",
-              queue: 0,
-              running: 58
-          },
-          {
-              CHSY: 6.39,
-              JPSY: 812490.0,
-              energy: 2226.0,
-              name: "a2h6_20150527_003_2_SIM",
-              queue: 0,
-              running: 63
-          },
-          {
-              CHSY: 0.1,
-              JPSY: 730.0,
-              energy: 2.0,
-              name: "a2h6_20150527_003_4_SIM",
-              queue: 0,
-              running: 1
-          }
-      ],
-      error: false,
-      error_message: "",
-      warnings_job_data: [
-          "Wrapper | Wrapper 16043275053587 does not have complete sacct data available.",
-          "Approximation | The energy results in wrapper 16043275053587 are an approximation. Total energy detected: 17320.0.",
-          "Completion | Job a2h6_20150527_001_3_REDUCE (Package 16043275053587) has no reliable information available and has been excluded from the calculation.",
-          "Completion | Job a2h6_20150527_001_4_SIM (Package 16043275053587) data has been corrected with data from worker database.",
-          "Wrapper | Wrapper 16043271293004 does not have complete sacct data available.",
-          "Approximation | The energy results in wrapper 16043271293004 are an approximation. Total energy detected: 9010.0.",
-          "Wrapper | Wrapper 16043266984965 does not have complete sacct data available.",
-          "Approximation | The energy results in wrapper 16043266984965 are an approximation. Total energy detected: 10210.0.",
-          "Wrapper | Wrapper 16043272999254 does not have complete sacct data available.",
-          "Approximation | The energy results in wrapper 16043272999254 are an approximation. Total energy detected: 19230.0."
-      ]
-  }
-
-  act(() => {
-    render(<Router><ExperimentContext.Provider value={{ experiment: experiment, totalJobs: 100, loading: false, loadingState: false, loadingPerformance: false, performancedata: performancedata}}><Performance /></ExperimentContext.Provider></Router>, container);
-  });
-
-  expect(container.textContent).toContain("a2h6_20150527_001_4_SIM");
-  expect(container.textContent).toContain("a2h6_20150527_003_3_SIM");
-  expect(container.textContent).toContain("a2h6_20150527_001_2_SIM");
-  expect(container.textContent).toContain("a2h6_20150527_003_1_SIM");
-  expect(container.textContent).toContain("a2h6_20141128_003_1_SIM");
-  expect(container.textContent).toContain("a2h6_20141128_001_1_SIM");
-  expect(container.textContent).toContain("a2h6_20150527_001_1_SIM");
-  expect(container.textContent).toContain("a2h6_20150527_001_3_SIM");
-  expect(container.textContent).toContain("a2h6_20150527_003_2_SIM");
-  expect(container.textContent).toContain("a2h6_20150527_003_4_SIM");
-  expect(container.textContent).toContain("Wrapper | Wrapper 16043275053587 does not have complete sacct data available.");
-
-});
+// --- Running.js ---
 
 it('Log Running renders with no rundata', () => {
   const experiment = {expid: "a2h6"};

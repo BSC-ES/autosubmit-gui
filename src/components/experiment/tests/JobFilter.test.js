@@ -1,14 +1,9 @@
 import React from "react";
 import { unmountComponentAtNode, render } from "react-dom";
-import { BrowserRouter as Router } from "react-router-dom";
 import { act } from "react-dom/test-utils";
-import renderer from 'react-test-renderer';
-import TreeNativeRep from "../TreeNativeRep";
 import ExperimentContext from "../../context/experiment/experimentContext";
 import TreeContext from "../../context/tree/treeContext";
 import TreeState from "../../context/tree/TreeState";
-import GraphContext from "../../context/graph/graphContext";
-import SelectionTreeNode from "../SelectionTreeNode";
 import JobFilter from "../JobFilter";
 
 const treedata = {
@@ -623,7 +618,7 @@ const treedata = {
 }
 
 const experiment = {expid: "a2tl", db_historic_version: 14, owner: "wuruchi", totalJobs: 12};
-var treeRep = null;
+
 
 let container = null;
 beforeEach(() => {
@@ -639,55 +634,11 @@ afterEach(() => {
   container = null;
 });
 
-it("Tree Representation renders with content", () => {
-   
+// Testing JobFilter
+it("Testing JobFilter with existing FancyTree", () => {
   act(() => {
-    render(<TreeNativeRep treedata={treedata} loadingTree={false} cleanTreeData={() => null} setFancyTree={(tree) => treeRep = tree} updateSelectionTree={() => null} updateCurrentSelected={() => null} canSelect={false} totalJobs={null} />, container);
+      render(<ExperimentContext.Provider value={{ experiment: experiment, totalJobs:12 }}><TreeContext.Provider value={{fancyTree: {}, treedata: treedata, filterTreeView: TreeState.filterTreeView, loadingFilterTree: false, clearFilterTreeView: () => null, returnFilter: 1}}><JobFilter/></TreeContext.Provider></ExperimentContext.Provider> , container);
   });
-
-  //console.log(treeRep);
-  //console.log(container.textContent)
-  expect(container.textContent).toContain("a2tl_LOCAL_SETUP");
-  expect(container.textContent).toContain("a2tl_20200511_000_1_LOCAL_SEND_INITIAL");
-  expect(container.textContent).toContain("a2tl_20200511_000_LOCAL_SEND_SPINUP");
-  expect(container.textContent).toContain("a2tl_LOCAL_SEND_SOURCE");
-  expect(container.textContent).toContain("a2tl_LOCAL_SEND_STATIC");
-  expect(container.textContent).toContain("a2tl_REMOTE_COMPILE");
-  expect(container.textContent).toContain("a2tl_PREPROCFIX");
-  expect(container.textContent).toContain("a2tl_20200511_000_1_PREPROCVAR");
-  expect(container.textContent).toContain("a2tl_20200511_000_1_SIM");
-  // const tree = renderer.create(<TreeNativeRep/>).toJSON();
-  // expect(tree).toMatchSnapshot();
-
+  expect(container.innerHTML).toContain("Clear Result");
+  
 });
-
-it("Tree Representation loading matches snapshot", () => {
-
-
-  const tree = renderer.create(<ExperimentContext.Provider value={{expectedLoadingTreeTime:() => 10}}><TreeNativeRep treedata={treedata} loadingTree={true} cleanTreeData={() => null} setFancyTree={(tree) => treeRep = tree} updateSelectionTree={() => null} updateCurrentSelected={() => null} canSelect={false} totalJobs={null} /></ExperimentContext.Provider> ).toJSON();
-
-  expect(tree).toMatchSnapshot();
-
-});
-
-// --- SelectionTreeNode.js ---
-
-it("SelectionTreeNode renders from treedata", () => {
-    const selectedTreeNode = { node: { refKey: "a2tl_20200511_000_1_REDUCE" }};
-    act(() => {
-        render(<ExperimentContext.Provider value={{ experiment: experiment }}>
-            <TreeContext.Provider value={{ selectedTreeNode: selectedTreeNode, treedata: treedata }}>
-                <GraphContext.Provider value={{selection: ["a2tl_20200511_000_1_REDUCE"]}}>
-                    <SelectionTreeNode />
-                </GraphContext.Provider>                
-            </TreeContext.Provider>
-            </ExperimentContext.Provider>, container);
-      });
-    
-    expect(container.textContent).toContain("a2tl_20200511_000_1_REDUCE");
-    expect(container.textContent).toContain("a2tl_20200511_000_1_SIM");
-    expect(container.textContent).toContain("2020 05 11");
-    expect(container.textContent).toContain("nord3");
-});
-
-

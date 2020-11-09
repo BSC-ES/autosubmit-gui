@@ -4,8 +4,10 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { act } from "react-dom/test-utils";
 import renderer from 'react-test-renderer';
 import GraphNativeRep from "../GraphNativeRep";
+import Selection from "../Selection";
 import ExperimentContext from "../../context/experiment/experimentContext";
 import GraphContext from "../../context/graph/graphContext";
+import TreeContext from "../../context/tree/treeContext";
 import { navigateGraph, addFakeEdge, updateEdgeStyle, updateGraphBorder, updateGraphColor, updateGraphShape, navToLatest, findIdinGraph } from "../../context/graphutils";
 
 const data = {
@@ -6860,7 +6862,7 @@ it("Graph Representation renders with content, generates visNetwork object and v
 
 });
 
-// Test Graph object behavior
+// --- Test Graph object behavior ---
 test("navigateGraph selects the right node", () => {
     const selectedNodeId = "a34f_19600101_fc0001_6_SIM";
     navigateGraph(selectedNodeId, 100, 100, 0.9, state.visNetwork);
@@ -6946,4 +6948,25 @@ test("Find non-existing nodeId in graph", () => {
     const position = findIdinGraph(target, state);
     expect(position.x).toBeFalsy();
     expect(position.y).toBeFalsy();
+});
+
+// --- SelectionNode.js --- 
+
+it("SelectionNode renders from graph data", () => {
+    const selectedNode = ['a34f_19600101_fc0000_1_SIM'];//{ node: { refKey: "a2tl_20200511_000_1_REDUCE" }};
+    const selectedTreeNode = { node: { refKey: "a34f_19600101_fc0000_1_SIM" }};
+    act(() => {
+        render(<ExperimentContext.Provider value={{ experiment: {expid: 'a34f'} }}>
+            <TreeContext.Provider value={{ selectedTreeNode: selectedTreeNode}}>
+                <GraphContext.Provider value={{selection: selectedNode, data: data}}>
+                    <Selection />
+                </GraphContext.Provider>    
+            </TreeContext.Provider>                            
+            </ExperimentContext.Provider>, container);
+      });
+    
+    expect(container.textContent).toContain("a34f_19600101_fc0000_1_SIM");
+    expect(container.textContent).toContain("a34f_19600101_fc0000_POST");
+    expect(container.textContent).toContain("1960 01 01");
+    expect(container.textContent).toContain("COMPLETED");
 });
