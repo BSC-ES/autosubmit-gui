@@ -27,7 +27,6 @@ const GraphControl = () => {
   const onSubmitGraph = (grouped = "none", layout = "standard") => (e) => {
     e.preventDefault();
     getExperimentGraph(experiment.expid, grouped, layout);
-    //window.showGraphTab();
   };
 
   const onJobMonitor = (e) => {

@@ -9,8 +9,10 @@ const Experiments = () => {
   if (loading) {
     return <Spinner />;
   } else {
+    // Render one Experiment Item for each item in experiments.
+    // Order them by status so the ACTIVE ones are shown first.
     return (
-      <div className='container'>
+      <div className='container'>        
         <div className='row row-cols-1 row-cols-md-3'>
           {experiments &&
             experiments

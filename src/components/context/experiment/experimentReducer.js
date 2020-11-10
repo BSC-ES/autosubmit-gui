@@ -50,7 +50,6 @@ export default (state, action) => {
         currentSelected: [],
         currentCommand: null,
       };
-
     case CLEAN_RUN_DATA:
       return {
         ...state,

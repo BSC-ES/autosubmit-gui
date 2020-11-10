@@ -13,7 +13,6 @@ import TreeContext from "../context/tree/treeContext";
 import LighterContext from "../context/lighter/lighterContext";
 import Selection from "../experiment/Selection";
 import SelectionTreeNode from "../experiment/SelectionTreeNode";
-// import OpenRun from '../experiment/OpenRun';
 import Running from "../experiment/Running";
 import JobMonitor from "../experiment/JobMonitor";
 import JobMonitorTree from "../experiment/JobMonitorTree";
@@ -29,9 +28,11 @@ import LighterControl from "../experiment/LighterControl";
 import PerformanceControl from "../experiment/PerformanceControl";
 import Performance from "../experiment/Performance";
 
+// Main render component. Calls other component and supplies props if necessary.
 const ExperimentCentral = ({ match }) => {
   // Focus Logic
   const expid = match.params.expid;
+  // From custom URL
   const resolve_action = match.params.action;
   const focus_graph =
     resolve_action && resolve_action === "graph" ? true : false;
@@ -126,9 +127,13 @@ const ExperimentCentral = ({ match }) => {
   } = lighterContext;
 
   useEffect(() => {
+    // Get experiment header data
     getExperiment(expid);
+    // Get experiment running status 
     getRunningState(expid);
     if (expid && expid.length > 0) {
+      // resolve_action depends on the URL call
+      // Some type of switch might be useful here but more views are unlikely
       if (resolve_action) {
         if (resolve_action === "graph") {
           getExperimentGraph(expid);
@@ -138,7 +143,7 @@ const ExperimentCentral = ({ match }) => {
       } else {
         getExperimentTree(expid);
       }
-
+      // Get performance metrics 
       getExperimentPerformanceMetrics(expid);
     }
     // getExperimentTree(expid);
@@ -496,10 +501,6 @@ const ExperimentCentral = ({ match }) => {
     </Fragment>
   );
 };
-
-// const experimentStyle = {
-//   height: 600,
-// };
 
 const experimentMinStyle = {
   minHeight: "100%",

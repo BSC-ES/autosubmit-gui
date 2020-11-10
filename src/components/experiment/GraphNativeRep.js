@@ -216,11 +216,6 @@ class GraphNativeRep extends Component {
 
     class VisNetwork extends Component {
 
-      // constructor() {
-      //   super();
-        
-      // }
-
       shouldComponentUpdate(nextProps, nextState) {
         if (this.props.shouldUpdateGraph === true) {
           DEBUG && console.log("Should rerender form inside");

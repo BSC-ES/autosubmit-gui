@@ -28,14 +28,6 @@ const GraphNodeSelection = ({ target = "manual-graph" }) => {
         </button>
         <CommandModal source={"graph-only"} target={target} />
       </Fragment>
-
-      // <button
-      //   className='btn-sm btn-info'
-      //   type='button'
-      //   onClick={onChangeStatus}
-      // >
-      //   Change Status
-      // </button>
     );
   }
 
