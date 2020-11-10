@@ -1,0 +1,10 @@
+{
+  "presets": [
+    ["@babel/env",{
+        "useBuiltIns": "entry",
+        "corejs": 3
+      }
+    ],
+    "@babel/react"
+  ],
+}
