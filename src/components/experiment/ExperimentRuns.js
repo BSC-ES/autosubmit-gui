@@ -1,16 +1,34 @@
 import React, { useContext } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
+import TreeContext from "../context/tree/treeContext";
 // import { exportHistoryToCSV } from "../context/utils";
 
 const  ExperimentRuns = () => {
   const experimentContext = useContext(ExperimentContext);
+  const treeContext = useContext(TreeContext);
   const { experiment, experimentRuns, getExperimentRuns } = experimentContext;
+  const { getExperimentRunJobData, fancyTree, startAutoUpdateTreePkl, loadingPreviousRun, currentRunIdOnTree } = treeContext;
   const { db_historic_version, expid } = experiment;
 
   const onGetExperimentRuns = (e) => {
     e.preventDefault();
     getExperimentRuns(expid);
   };
+
+  const onGetExperimentRunDetail = (run_id, created, finished, completed, total) => (e) => {
+    if(!fancyTree) {
+      alert("The TreeView must be loaded before attempting to show previous runs.")
+      return;
+    }
+    if(startAutoUpdateTreePkl === true){
+      alert("Please stop the Job Monitor on the Tree View before querying for a previous run.");
+      return;
+    }
+    // console.log("Querying " + run_id);
+    e.preventDefault();
+    const meta = {"created": created, "finished": finished, "completed": completed, "total": total};
+    getExperimentRunJobData(expid, run_id, meta);
+  }
 
   const dataTarget = "runs-" + expid;
 
@@ -43,12 +61,24 @@ const  ExperimentRuns = () => {
             <div className='modal-content'>
               <div className='modal-header'>
                 <h5 className='modal-title' id={dataTarget + "Title"}>
-                  Runs of <strong>{expid}</strong>
+                  Runs of <strong>{expid}</strong> 
+                  {currentRunIdOnTree && !loadingPreviousRun &&                 
+                <small>
+                  &nbsp;&nbsp; Data from run {currentRunIdOnTree.runId} is displayed in the Tree View.
+                </small>
+                }
+                {loadingPreviousRun && (
+                  <small>
+                    &nbsp;&nbsp; The data from the previous is being retrieved and processed...
+                  </small>
+                )}
                 </h5>
+
+                
                 &nbsp;
                 {/* {experimentRuns && experimentRuns.runs && experimentRuns.runs.length > 0 &&                
                 <button type="button" className="btn-sm btn-primary" onClick={onExport(selectedJob)}><i className="fas fa-file-export"></i></button>
-                }                 */}
+                }                 */}               
                 <button
                   className='close'
                   type='button'
@@ -57,7 +87,7 @@ const  ExperimentRuns = () => {
                 >
                   <span aria-hidden='true'>&times;</span>
                 </button>
-              </div>
+              </div>              
               <div className='modal-body'>
                 {experimentRuns && experimentRuns.runs && (
                   <small>
@@ -111,8 +141,8 @@ const  ExperimentRuns = () => {
                           <td>{item.suspended}</td>
                           <td>{item.completed}</td>
                           <td>{item.total}</td>
-                          <td className="py-1">
-                          <button className='btn-sm btn-primary' type='button' disabled>
+                          <td className="py-1">                          
+                          <button className={currentRunIdOnTree && currentRunIdOnTree.runId === item.run_id ? 'btn-sm btn-success' : 'btn-sm btn-primary'} type='button' onClick={onGetExperimentRunDetail(item.run_id, item.created, item.finished, item.completed, item.total)}>
                           <i className="fas fa-eye"></i>
                           </button>
                           </td>
@@ -128,7 +158,7 @@ const  ExperimentRuns = () => {
                     latest version of Autosubmit that implements the historic
                     database?
                   </p>
-                )}
+                )}                
               </div>
               <div className='modal-footer'>
                 <button

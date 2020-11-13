@@ -28,7 +28,7 @@ const SelectionTreeNode = () => {
   } else {
     selectedNode = null;
   }
-
+  
   const copyContent = (inputname) => (e) => {
     e.preventDefault();
     DEBUG && console.log("Sending " + inputname);

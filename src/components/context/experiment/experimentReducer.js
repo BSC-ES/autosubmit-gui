@@ -149,7 +149,6 @@ export default (state, action) => {
         data: null,
         canSelect: false,
       };
-
     case SET_LOADING_SUMMARY: {
       const expid = action.payload;
       state.loadingSummary.set(expid, { loading: true });

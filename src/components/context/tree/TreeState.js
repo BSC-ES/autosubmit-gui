@@ -21,6 +21,9 @@ import {
   SET_NOTIFICATION_TITLE_TREE,
   SET_OFF_LOADING_TREE,
   INCREASE_LOADING_TREE,
+  UPDATE_RUNDETAIL_ON_TREE,
+  GET_EXPERIMENT_RUN_JOBDATA,  
+  LOADING_PREVIOUS_RUN,
 } from "../types";
 
 // import { start, end } from "../utils";
@@ -35,8 +38,10 @@ const TreeState = (props) => {
     loadingTreePkl: false,
     loadingTreeRefresh: false,
     loadingFilterTree: false,
+    loadingPreviousRun: false,
     fancyTree: null,
-    //canSelect: false,
+    experimentRunDetailForTree: null,
+    currentRunIdOnTree: null,
     elapsedLoadingTree: 1,
     startAutoUpdateTreePkl: false,
     pkltreechanges: null,
@@ -84,6 +89,29 @@ const TreeState = (props) => {
     });
   };
 
+  const getExperimentRunJobData = async (expid, run_id, meta) => {
+    setLoadingPreviousRun();
+    const res = await axios.get(`${localserver}/rundetail/${expid}/${run_id}`).catch((error) => { alert(error.message);});
+    debug && console.log(res.data);
+    // console.log(res.data);
+    const result = res ? res.data.rundata : null;
+    dispatch({
+      type: GET_EXPERIMENT_RUN_JOBDATA,
+      payload: {result: result, runId: run_id, meta: meta},
+    });    
+    // setAutoUpdateTreePkl(false);
+  }
+
+  const updateTreeContent = async (runDetail, run_id) => {
+    // setLoadingTreePkl();
+    // setLoadingTreeRefresh();
+    // setLoadingTree();
+    dispatch({
+      type: UPDATE_RUNDETAIL_ON_TREE,
+      payload: {runDetail: runDetail, runId: run_id},
+    })
+  }
+
   const filterTreeView = (string) => {
     setLoadingFilter();
     dispatch({
@@ -110,6 +138,7 @@ const TreeState = (props) => {
   };
 
   const setLoadingTree = () => dispatch({ type: SET_LOADING_TREE }); //here
+  const setLoadingPreviousRun = () => dispatch({ type: LOADING_PREVIOUS_RUN });
   const setOffLoadingTree = () => dispatch({ type: SET_OFF_LOADING_TREE });
   const setLoadingFilter = () => dispatch({ type: SET_LOADING_FILTER });
   const setLoadingTreeRefresh = () =>
@@ -133,12 +162,13 @@ const TreeState = (props) => {
         returnFilter: state.returnFilter,
         fancyTree: state.fancyTree,
         notificationTitleTree: state.notificationTitleTree,
-        //canSelect: state.canSelect,
+        loadingPreviousRun: state.loadingPreviousRun,
         startAutoUpdateTreePkl: state.startAutoUpdateTreePkl,
         pkltreechanges: state.pkltreechanges,
         selectedTreeNode: state.selectedTreeNode,
         expectedLoadingTreeTime: state.expectedLoadingTreeTime,
         elapsedLoadingTree: state.elapsedLoadingTree,
+        currentRunIdOnTree: state.currentRunIdOnTree,
         getExperimentTree,
         getExperimentTreePkl,
         filterTreeView,
@@ -151,6 +181,8 @@ const TreeState = (props) => {
         setStartSelection,
         setNotificationTitleTree,
         increaseElapsedLoadingTree,
+        updateTreeContent,
+        getExperimentRunJobData,
       }}
     >
       {props.children}

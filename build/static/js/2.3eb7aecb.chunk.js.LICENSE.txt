@@ -1,30 +1,4 @@
 /*
- * vis-network - network
- * http://visjs.org/
- *
- * A dynamic, browser-based visualization library.
- *
- * @version 5.1.0
- * @date    2019-07-28T18:52:54Z
- *
- * @copyright (c) 2011-2017 Almende B.V, http://almende.com
- * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
- *
- * @license 
- * vis.js is dual licensed under both
- *
- *   1. The Apache 2.0 License
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *   and
- *
- *   2. The MIT License
- *      http://opensource.org/licenses/MIT
- *
- * vis.js may be distributed under either license.
- */
-
-/*
 object-assign
 (c) Sindre Sorhus
 @license MIT
@@ -72,12 +46,12 @@ object-assign
  * Released under the MIT license
  * https://github.com/mar10/fancytree/wiki/LicenseInfo
  *
- * @version 2.35.0
- * @date 2020-03-27T22:41:58Z
+ * @version 2.37.0
+ * @date 2020-09-11T18:58:08Z
  */
 
 /*!
- * jQuery JavaScript Library v3.5.0
+ * jQuery JavaScript Library v3.5.1
  * https://jquery.com/
  *
  * Includes Sizzle.js
@@ -87,7 +61,7 @@ object-assign
  * Released under the MIT license
  * https://jquery.org/license
  *
- * Date: 2020-04-10T15:07Z
+ * Date: 2020-05-04T22:49Z
  */
 
 /*!
@@ -101,8 +75,8 @@ object-assign
  * Released under the MIT license
  * https://github.com/mar10/fancytree/wiki/LicenseInfo
  *
- * @version 2.35.0
- * @date 2020-03-27T22:41:58Z
+ * @version 2.37.0
+ * @date 2020-09-11T18:58:08Z
  */
 
 /*!
@@ -116,8 +90,8 @@ object-assign
  * Released under the MIT license
  * https://github.com/mar10/fancytree/wiki/LicenseInfo
  *
- * @version 2.35.0
- * @date 2020-03-27T22:41:58Z
+ * @version 2.37.0
+ * @date 2020-09-11T18:58:08Z
  */
 
 /*!
@@ -131,8 +105,8 @@ object-assign
  * Released under the MIT license
  * https://github.com/mar10/fancytree/wiki/LicenseInfo
  *
- * @version 2.35.0
- * @date 2020-03-27T22:41:58Z
+ * @version 2.37.0
+ * @date 2020-09-11T18:58:08Z
  */
 
 /*!
@@ -144,8 +118,8 @@ object-assign
  * Released under the MIT license
  * https://github.com/mar10/fancytree/wiki/LicenseInfo
  *
- * @version 2.35.0
- * @date 2020-03-27T22:41:58Z
+ * @version 2.37.0
+ * @date 2020-09-11T18:58:08Z
  */
 
 /*!
@@ -159,14 +133,40 @@ object-assign
  * Released under the MIT license
  * https://github.com/mar10/fancytree/wiki/LicenseInfo
  *
- * @version 2.35.0
- * @date 2020-03-27T22:41:58Z
+ * @version 2.37.0
+ * @date 2020-09-11T18:58:08Z
  */
 
 /*! jQuery UI - v1.12.1 - 2018-05-20
 * http://jqueryui.com
 * Includes: widget.js, position.js, keycode.js, scroll-parent.js, unique-id.js
 * Copyright jQuery Foundation and other contributors; Licensed MIT */
+
+/**
+ * vis-network - network
+ * http://visjs.org/
+ *
+ * A dynamic, browser-based visualization library.
+ *
+ * @version 5.4.1
+ * @date    2019-09-06T18:48:22Z
+ *
+ * @copyright (c) 2011-2017 Almende B.V, http://almende.com
+ * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
+ *
+ * @license 
+ * vis.js is dual licensed under both
+ *
+ *   1. The Apache 2.0 License
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   and
+ *
+ *   2. The MIT License
+ *      http://opensource.org/licenses/MIT
+ *
+ * vis.js may be distributed under either license.
+ */
 
 /** @license React v0.19.1
  * scheduler.production.min.js
@@ -178,6 +178,15 @@ object-assign
  */
 
 /** @license React v16.13.1
+ * react-is.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/** @license React v16.14.0
  * react-dom.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -186,17 +195,8 @@ object-assign
  * LICENSE file in the root directory of this source tree.
  */
 
-/** @license React v16.13.1
+/** @license React v16.14.0
  * react.production.min.js
- *
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-/** @license React v16.8.6
- * react-is.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
  *

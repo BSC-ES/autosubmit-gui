@@ -139,3 +139,4 @@ export const exportHistoryToCSV = (data, columnNames, title) => {
   document.body.appendChild(link); // Required for FF
   link.click();
 }
+

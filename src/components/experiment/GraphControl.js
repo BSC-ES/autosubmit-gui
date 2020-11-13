@@ -46,9 +46,9 @@ const GraphControl = () => {
 
   return (
     <div className='card-header p-1'>
-      <div className='row'>
+      <div className='row'>        
         <div className='col-md-2'>
-          {(loadingJobMonitor || loadingPkl) && <div>Querying...</div>}
+          {(loadingJobMonitor || loadingPkl) && <div>Querying...</div>} 
         </div>
         <div className='col-md-10'>
           <div className='row justify-content-end'>

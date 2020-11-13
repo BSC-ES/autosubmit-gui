@@ -18,6 +18,7 @@ const TreeControl = () => {
     setAutoUpdateTreePkl,
     startAutoUpdateTreePkl,
     loadingTreePkl,
+    currentRunIdOnTree,
   } = treeContext;
 
   const onSubmitTree = (e) => {
@@ -50,10 +51,13 @@ const TreeControl = () => {
   return (
     <div className='card-header p-1'>
       <div className='row justify-content-end'>
+        {currentRunIdOnTree && (
+          <div className="col text-left" ><small>{currentRunIdOnTree.message}</small></div>
+        )}
         {(loadingTreeRefresh || loadingTreePkl) && (
           <div className='col text-left'>Querying...</div>
         )}
-        {experiment && treedata && (
+        {experiment && treedata && !currentRunIdOnTree && (
           <div className='col-md-2'>
             <SelectionControl />
           </div>
@@ -85,7 +89,7 @@ const TreeControl = () => {
         {experiment &&
           treedata &&
           experimentRunning &&
-          !startAutoUpdateTreePkl && (
+          !startAutoUpdateTreePkl && !currentRunIdOnTree && (
             <div className='col-md-1'>
               <form onSubmit={onRequestUpdate} className='form'>
                 <input
@@ -97,7 +101,7 @@ const TreeControl = () => {
               </form>
             </div>
           )}
-        {experimentRunning && treedata && !startAutoUpdateTreePkl && (
+        {experimentRunning && treedata && !startAutoUpdateTreePkl && !currentRunIdOnTree && (
           <div className='col-md-2'>
             <form onSubmit={onJobMonitor} className='form'>
               <input
@@ -109,7 +113,7 @@ const TreeControl = () => {
             </form>
           </div>
         )}
-        {experimentRunning && treedata && startAutoUpdateTreePkl && (
+        {experimentRunning && treedata && startAutoUpdateTreePkl && !currentRunIdOnTree && (
           <div className='col-md-2'>
             <form onSubmit={onNotJobMonitor} className='form'>
               <input

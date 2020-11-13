@@ -46,7 +46,7 @@ const ExperimentState = (props) => {
     experiment: {},
     totalJobs: 0,
     jobHistory: null,
-    experimentRuns: null,
+    experimentRuns: null,        
     expectedLoadingTreeTime: 0,
     expectedLoadingQuickView: 0,
     loadingSummary: new Map(),
@@ -107,6 +107,8 @@ const ExperimentState = (props) => {
       payload: result,
     });
   };
+
+
 
   const getExperimentRuns = async (expid) => {
     setLoadingExperimentRuns();
@@ -301,6 +303,7 @@ const ExperimentState = (props) => {
         totalJobs: state.totalJobs,
         expectedLoadingTreeTime: state.expectedLoadingTreeTime,
         expectedLoadingQuickView: state.expectedLoadingQuickView,
+        experimentRunDetailForTree: state.experimentRunDetailForTree,        
         setAutoUpdateRun,
         searchExperiments,
         getCurrentRunning,

@@ -10,6 +10,7 @@ import Experiment from "../Experiment";
 import Performance from "../Performance";
 import Running from "../Running";
 import ExperimentContext from "../../context/experiment/experimentContext";
+import TreeContext from "../../context/tree/treeContext";
 import AlertContext from "../../context/alert/alertContext";
 
 let container = null;
@@ -66,13 +67,21 @@ it('Experiment renders with content', () => {
   const experiment = {expid: "a2h6", branch: "master", description: "Test", owner:"wuruchi", owner_id: 1226, hpc:"LOCAL", db_historic_version: 14, version:"3.11.0"};
 
   act(() => {
-    render(<Router><ExperimentContext.Provider value={{ experiment: experiment, totalJobs: 100, loading: false, loadingState: false, experimentRunning: true}}><Experiment /></ExperimentContext.Provider></Router>, container);
+    render(<Router><ExperimentContext.Provider value={{ experiment: experiment, totalJobs: 100, loading: false, loadingState: false, experimentRunning: true}}><TreeContext.Provider value={{ getExperimentRunJobData: () => null, fancyTree: {}, startAutoUpdateTreePkl: false, loadingPreviousRun: false, currentRunIdOnTree: {runId: 1, message: "None"} }}>
+          <Experiment />
+        </TreeContext.Provider>        
+      </ExperimentContext.Provider>
+      </Router>, container);
   });
   expect(container.textContent).toContain("a2h6");
   expect(container.textContent).toContain("ACTIVE");
 
   act(() => {
-    render(<Router><ExperimentContext.Provider value={{ experiment: experiment, totalJobs: 100, loading: false, loadingState: false, experimentRunning: false}}><Experiment /></ExperimentContext.Provider></Router>, container);
+    render(<Router><ExperimentContext.Provider value={{ experiment: experiment, totalJobs: 100, loading: false, loadingState: false, experimentRunning: false}}>
+    <TreeContext.Provider value={{ getExperimentRunJobData: () => null, fancyTree: null, startAutoUpdateTreePkl: false,  loadingPreviousRun: false, currentRunIdOnTree: {runId: 1, message: "None"} }}>
+    <Experiment />
+    </TreeContext.Provider>      
+    </ExperimentContext.Provider></Router>, container);
   });
   expect(container.textContent).toContain("a2h6");
   expect(container.textContent).toContain("INACTIVE");

@@ -5,6 +5,7 @@ import { act } from "react-dom/test-utils";
 import renderer from 'react-test-renderer';
 import ExperimentRuns from "../ExperimentRuns";
 import ExperimentContext from "../../context/experiment/experimentContext";
+import TreeContext from "../../context/tree/treeContext";
 
 
 let container = null;
@@ -303,7 +304,9 @@ it("ExperimentItem renders with content", () => {
   
   act(() => {
     render(<Router><ExperimentContext.Provider value={{ experiment: experiment, getExperimentRuns: () => null, experimentRuns: runs }}>
-        <ExperimentRuns />
+        <TreeContext.Provider value={{ getExperimentRunJobData: () => null, fancyTree: {}, startAutoUpdateTreePkl: false, loadingPreviousRun: false, currentRunIdOnTree: {runId: 1, message: "None"} }}>
+            <ExperimentRuns />
+        </TreeContext.Provider>        
       </ExperimentContext.Provider></Router>, container);
   });
   //console.log(container.innerHTML);

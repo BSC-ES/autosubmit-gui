@@ -126,6 +126,11 @@ const ExperimentCentral = ({ match }) => {
     getLighterView,
   } = lighterContext;
 
+  // if (experimentRunDetailForTree && currentRunId !== currentRunIdOnTree) {
+  //   // If there is a run detected.        
+  //   updateTreeContent(experimentRunDetailForTree, currentRunId);    
+  // }
+
   useEffect(() => {
     // Get experiment header data
     getExperiment(expid);

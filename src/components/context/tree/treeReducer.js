@@ -16,7 +16,13 @@ import {
   SET_NOTIFICATION_TITLE_TREE,
   SET_OFF_LOADING_TREE,
   INCREASE_LOADING_TREE,
+  //UPDATE_RUNDETAIL_ON_TREE,
+  GET_EXPERIMENT_RUN_JOBDATA,
+  LOADING_PREVIOUS_RUN,
+  //CLEAR_RUNDETAIL_ON_TREE,
 } from "../types";
+
+import { updateTreeData, buildRunTitle } from "../treeutils";
 
 import { timeStampToDate } from "../utils";
 
@@ -29,6 +35,7 @@ export default (state, action) => {
         loadingTree: false,
         enabledTreeSearch: true,
         elapsedLoadingTree: 1,
+        currentRunIdOnTree: null,
       };
     case SET_LOADING_TREE_PKL:
       return {
@@ -371,6 +378,18 @@ export default (state, action) => {
         loadingTreePkl: false,
       };
     }
+    case GET_EXPERIMENT_RUN_JOBDATA:
+      const { result, runId, meta } = action.payload;
+      if (state.treedata && state.fancyTree){
+        updateTreeData(result, state.treedata, state.fancyTree);
+        //updateFancyTree(runDetail, state.fancyTree);
+      }
+      return {
+        ...state,
+        currentRunIdOnTree : {runId: runId, message: buildRunTitle(runId, meta) },
+        startAutoUpdateTreePkl: false,
+        loadingPreviousRun: false,
+      }
     case FILTER_TREEVIEW:
       const string = action.payload;
       if (state.treedata && state.fancyTree) {
@@ -432,6 +451,7 @@ export default (state, action) => {
         fancyTree: null,
         returnFiler: 0,
         elapsedLoadingTree: 1,
+        currentRunIdOnTree: null,
         //canSelect: false,
       };
     case CLEAN_TREE_PKL_DATA:
@@ -464,6 +484,11 @@ export default (state, action) => {
       return {
         ...state,
         notificationTitleTree: action.payload,
+      };
+    case LOADING_PREVIOUS_RUN:
+      return {
+        ...state,
+        loadingPreviousRun: true,
       };
     default:
       return null;
