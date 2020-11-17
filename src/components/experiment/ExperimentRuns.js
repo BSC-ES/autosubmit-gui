@@ -141,10 +141,13 @@ const  ExperimentRuns = () => {
                           <td>{item.suspended}</td>
                           <td>{item.completed}</td>
                           <td>{item.total}</td>
-                          <td className="py-1">                          
-                          <button className={currentRunIdOnTree && currentRunIdOnTree.runId === item.run_id ? 'btn-sm btn-success' : 'btn-sm btn-primary'} type='button' onClick={onGetExperimentRunDetail(item.run_id, item.created, item.finished, item.completed, item.total)}>
-                          <i className="fas fa-eye"></i>
-                          </button>
+                          <td className="py-1"> 
+                          {loadingPreviousRun && <span>...</span>}                         
+                          {!loadingPreviousRun && (
+                              <button className={currentRunIdOnTree && currentRunIdOnTree.runId === item.run_id ? 'btn-sm btn-success' : 'btn-sm btn-primary'} type='button' onClick={onGetExperimentRunDetail(item.run_id, item.created, item.finished, item.completed, item.total)}>
+                              <i className="fas fa-eye"></i>
+                              </button>
+                          )}                          
                           </td>
                         </tr>
                       ))}

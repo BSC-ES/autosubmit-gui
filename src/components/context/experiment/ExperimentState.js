@@ -35,7 +35,7 @@ import {
   GET_EXPERIMENT_RUNS,
 } from "../types";
 
-import { AUTOSUBMIT_API_SOURCE, DEBUG } from "../vars";
+import { AUTOSUBMIT_API_SOURCE, DEBUG, ERROR_MESSAGE } from "../vars";
 
 import { timeStampToDate } from "../utils";
 
@@ -77,11 +77,12 @@ const ExperimentState = (props) => {
   // Search Experiments
   const searchExperiments = async (text) => {
     setLoading();
-    const res = await axios.get(`${localserver}/search/${text}`);
+    const res = await axios.get(`${localserver}/search/${text}`).catch(error => alert(ERROR_MESSAGE + "\n" + error.message));
     debug && console.log(res.data);
+    const result = res ? res.data.experiment : [];
     dispatch({
       type: SEARCH_EXPERIMENTS,
-      payload: res.data.experiment,
+      payload: result,
     });
   };
 
@@ -112,9 +113,9 @@ const ExperimentState = (props) => {
 
   const getExperimentRuns = async (expid) => {
     setLoadingExperimentRuns();
-    const res = await axios.get(`${localserver}/runs/${expid}`).catch((error) => {alert(error.message);});
-    debug && console.log(res.data);
+    const res = await axios.get(`${localserver}/runs/${expid}`).catch((error) => {alert(error.message);});    
     const result = res ? res.data : null;
+    debug && console.log(result);
     // console.log(result);
     dispatch({
       type: GET_EXPERIMENT_RUNS,
@@ -126,8 +127,8 @@ const ExperimentState = (props) => {
   const getExperimentSummary = async (expid) => {
     clearSummary(expid);
     setLoadingSummary(expid);
-    const res = await axios.get(`${localserver}/summary/${expid}`);
-    const summary = res.data;
+    const res = await axios.get(`${localserver}/summary/${expid}`).catch((error) => {alert(ERROR_MESSAGE + "\n" + error.message);});
+    const summary = res ? res.data : null;
     debug && console.log(summary);
     // console.log(summary);
     // console.log(state.summaries);
@@ -142,8 +143,8 @@ const ExperimentState = (props) => {
   const getExperimentPerformanceMetrics = async (expid) => {
     cleanPerformanceMetrics();
     setLoadingPerformanceMetrics();
-    const res = await axios.get(`${localserver}/performance/${expid}`);
-    const metrics = res.data;
+    const res = await axios.get(`${localserver}/performance/${expid}`).catch(error => alert(ERROR_MESSAGE + "\n" + error.message));
+    const metrics = res ? res.data : null ;
     debug && console.log(metrics);
     dispatch({
       type: GET_EXPERIMENT_PERFORMANCE,
@@ -160,11 +161,12 @@ const ExperimentState = (props) => {
 
   const getCurrentRunning = async () => {
     setLoading();
-    const res = await axios.get(`${localserver}/running/`);
-    debug && console.log(res.data);
+    const res = await axios.get(`${localserver}/running/`).catch(error => alert(ERROR_MESSAGE + "\n" + error.message));
+    const result = res ? res.data.experiment : null;
+    debug && console.log(result);
     dispatch({
       type: CURRENT_RUNNING,
-      payload: res.data.experiment,
+      payload: result,
     });
   };
 
@@ -174,33 +176,36 @@ const ExperimentState = (props) => {
   const getExperiment = async (expid) => {
     setLoading();
     //cleanGraphData();
-    const res = await axios.get(`${localserver}/expinfo/${expid}`);
-    debug && console.log(res.data);
+    const res = await axios.get(`${localserver}/expinfo/${expid}`).catch(error => alert(ERROR_MESSAGE + "\n" + error.message));
+    const result = res ? res.data : null;
+    debug && console.log(result);
     dispatch({
       type: GET_EXPERIMENT,
-      payload: res.data,
+      payload: result,
     });
   };
 
   // Get Experiment Log Run
   const getExperimentRun = async (expid) => {
     setLoadingRun();
-    const res = await axios.get(`${localserver}/exprun/${expid}`);
-    debug && console.log(res.data);
+    const res = await axios.get(`${localserver}/exprun/${expid}`).catch(error => alert(ERROR_MESSAGE + "\n" + error.message));
+    const result = res ? res.data : null;
+    debug && console.log(result);
     dispatch({
       type: GET_EXPERIMENT_RUN,
-      payload: res.data,
+      payload: result,
     });
   };
 
   // Get Running State
   const getRunningState = async (expid) => {
     setLoadingState();
-    const res = await axios.get(`${localserver}/ifrun/${expid}`);
-    debug && console.log(res.data);
+    const res = await axios.get(`${localserver}/ifrun/${expid}`).catch(error => alert(ERROR_MESSAGE + "\n" + error.message));
+    const result = res ? res.data : null;
+    debug && console.log(result);
     dispatch({
       type: GET_RUNNING_STATE,
-      payload: res.data.running,
+      payload: result,
     });
   };
 
