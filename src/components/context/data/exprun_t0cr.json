@@ -1,0 +1,610 @@
+{
+  "error": false,
+  "error_message": "",
+  "found": true,
+  "lastModified": "2020-11-24 09:58:56",
+  "logcontent": [
+      {
+          "content": "2020-11-24 10:57:59,627 t0cr_20081231_000_1_CLEAN_STAT file have been transfered",
+          "index": 0
+      },
+      {
+          "content": "2020-11-24 10:57:59,630 Reading config from /etc/autosubmitrc",
+          "index": 1
+      },
+      {
+          "content": "2020-11-24 10:57:59,688 t0cr_20081231_000_1_CLEAN_STAT file have been transfered",
+          "index": 2
+      },
+      {
+          "content": "2020-11-24 10:57:59,691 Reading config from /etc/autosubmitrc",
+          "index": 3
+      },
+      {
+          "content": "2020-11-24 10:57:59,705 Reading config from /etc/autosubmitrc",
+          "index": 4
+      },
+      {
+          "content": "2020-11-24 10:57:59,732 Reading config from /etc/autosubmitrc",
+          "index": 5
+      },
+      {
+          "content": "2020-11-24 10:57:59,745 Reading config from /etc/autosubmitrc",
+          "index": 6
+      },
+      {
+          "content": "2020-11-24 10:57:59,747 Updating FAILED jobs",
+          "index": 7
+      },
+      {
+          "content": "2020-11-24 10:57:59,747 Update finished",
+          "index": 8
+      },
+      {
+          "content": "2020-11-24 10:57:59,747 Updating WAITING jobs",
+          "index": 9
+      },
+      {
+          "content": "2020-11-24 10:57:59,748 Update finished",
+          "index": 10
+      },
+      {
+          "content": "2020-11-24 10:57:59,748 ",
+          "index": 11
+      },
+      {
+          "content": "Job Name                           Job Id         Job Status     Job Platform        Job Queue      ",
+          "index": 12
+      },
+      {
+          "content": "2020-11-24 10:57:59,748 t0cr_20081231_000_2_REDUCE         12730402       COMPLETED      marenostrum4        debug          ",
+          "index": 13
+      },
+      {
+          "content": "2020-11-24 10:57:59,748 t0cr_20081231_000_1_ARCHIVE        2835           COMPLETED      local               no-scheduler   ",
+          "index": 14
+      },
+      {
+          "content": "2020-11-24 10:57:59,748 t0cr_20081231_000_2_ARCHIVE        3156           COMPLETED      local               no-scheduler   ",
+          "index": 15
+      },
+      {
+          "content": "2020-11-24 10:57:59,748 t0cr_20081231_1_ARCHIVE_REDUCE     2807           COMPLETED      local               no-scheduler   ",
+          "index": 16
+      },
+      {
+          "content": "2020-11-24 10:57:59,748 t0cr_20081231_000_1_CLEAN          12730593       COMPLETED      marenostrum4        debug          ",
+          "index": 17
+      },
+      {
+          "content": "2020-11-24 10:57:59,748 t0cr_20081231_2_ARCHIVE_REDUCE     3123           RUNNING        local               no-scheduler   ",
+          "index": 18
+      },
+      {
+          "content": "2020-11-24 10:57:59,754 Saving JobList: /esarchive/autosubmit/t0cr/pkl/job_list_t0cr.pkl",
+          "index": 19
+      },
+      {
+          "content": "2020-11-24 10:57:59,762 Job list saved",
+          "index": 20
+      },
+      {
+          "content": "2020-11-24 10:57:59,764 Updating FAILED jobs",
+          "index": 21
+      },
+      {
+          "content": "2020-11-24 10:57:59,765 Update finished",
+          "index": 22
+      },
+      {
+          "content": "2020-11-24 10:57:59,765 Updating WAITING jobs",
+          "index": 23
+      },
+      {
+          "content": "2020-11-24 10:57:59,765 Update finished",
+          "index": 24
+      },
+      {
+          "content": "2020-11-24 10:57:59,769 Custom directives from platform.conf: None",
+          "index": 25
+      },
+      {
+          "content": "2020-11-24 10:58:08,371 Trace A critical file couldn't be retrieved, File /esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_2_ARCHIVE.20201124105741.out does not exists ",
+          "index": 26
+      },
+      {
+          "content": "Failed to retrieve log file for job A critical file couldn't be retrieved, File /esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_2_ARCHIVE.20201124105741.out does not exists",
+          "index": 27
+      },
+      {
+          "content": "2020-11-24 10:58:09,791 Reloading parameters...",
+          "index": 28
+      },
+      {
+          "content": "2020-11-24 10:58:09,800 Loading parameters...",
+          "index": 29
+      },
+      {
+          "content": "2020-11-24 10:58:09,801 Loading project parameters...",
+          "index": 30
+      },
+      {
+          "content": "2020-11-24 10:58:09,802 ",
+          "index": 31
+      },
+      {
+          "content": "",
+          "index": 32
+      },
+      {
+          "content": "2 of 19 jobs remaining (10:58)",
+          "index": 33
+      },
+      {
+          "content": "2020-11-24 10:58:09,802 Sleep: 10",
+          "index": 34
+      },
+      {
+          "content": "2020-11-24 10:58:09,802 Number of retrials: 0",
+          "index": 35
+      },
+      {
+          "content": "2020-11-24 10:58:09,802 WRAPPER CHECK TIME = 10",
+          "index": 36
+      },
+      {
+          "content": "2020-11-24 10:58:11,302 Trace A critical file couldn't be retrieved, File /gpfs/scratch/pr1eld00/pr1eld08/t0cr/LOG_t0cr does not exists ",
+          "index": 37
+      },
+      {
+          "content": "Failed to retrieve log file for job A critical file couldn't be retrieved, File /gpfs/scratch/pr1eld00/pr1eld08/t0cr/LOG_t0cr does not exists",
+          "index": 38
+      },
+      {
+          "content": "2020-11-24 10:58:11,834 Command 'nohup kill -0 3123 > /dev/null 2>&1; echo $?': 1",
+          "index": 39
+      },
+      {
+          "content": "",
+          "index": 40
+      },
+      {
+          "content": "2020-11-24 10:58:11,834 t0cr_20081231_2_ARCHIVE_REDUCE job seems to have completed: checking...",
+          "index": 41
+      },
+      {
+          "content": "2020-11-24 10:58:11,874 Job t0cr_20081231_2_ARCHIVE_REDUCE is COMPLETED",
+          "index": 42
+      },
+      {
+          "content": "2020-11-24 10:58:11,916 t0cr_20081231_2_ARCHIVE_REDUCE_STAT file have been transfered",
+          "index": 43
+      },
+      {
+          "content": "2020-11-24 10:58:11,920 Reading config from /etc/autosubmitrc",
+          "index": 44
+      },
+      {
+          "content": "2020-11-24 10:58:11,945 Reading config from /etc/autosubmitrc",
+          "index": 45
+      },
+      {
+          "content": "2020-11-24 10:58:11,975 Reading config from /etc/autosubmitrc",
+          "index": 46
+      },
+      {
+          "content": "2020-11-24 10:58:11,986 Reading config from /etc/autosubmitrc",
+          "index": 47
+      },
+      {
+          "content": "2020-11-24 10:58:11,990 Updating FAILED jobs",
+          "index": 48
+      },
+      {
+          "content": "2020-11-24 10:58:11,990 Update finished",
+          "index": 49
+      },
+      {
+          "content": "2020-11-24 10:58:11,990 Updating WAITING jobs",
+          "index": 50
+      },
+      {
+          "content": "2020-11-24 10:58:11,991 Setting job: t0cr_20081231_000_2_CLEAN status to: READY (all parents completed)...",
+          "index": 51
+      },
+      {
+          "content": "2020-11-24 10:58:11,991 Update finished",
+          "index": 52
+      },
+      {
+          "content": "2020-11-24 10:58:11,991 ",
+          "index": 53
+      },
+      {
+          "content": "Job Name                           Job Id         Job Status     Job Platform        Job Queue      ",
+          "index": 54
+      },
+      {
+          "content": "2020-11-24 10:58:11,991 t0cr_20081231_000_1_ARCHIVE        2835           COMPLETED      local               no-scheduler   ",
+          "index": 55
+      },
+      {
+          "content": "2020-11-24 10:58:11,992 t0cr_20081231_000_2_ARCHIVE        3156           COMPLETED      local               no-scheduler   ",
+          "index": 56
+      },
+      {
+          "content": "2020-11-24 10:58:11,992 t0cr_20081231_1_ARCHIVE_REDUCE     2807           COMPLETED      local               no-scheduler   ",
+          "index": 57
+      },
+      {
+          "content": "2020-11-24 10:58:11,993 t0cr_20081231_2_ARCHIVE_REDUCE     3123           COMPLETED      local               no-scheduler   ",
+          "index": 58
+      },
+      {
+          "content": "2020-11-24 10:58:11,993 t0cr_20081231_000_1_CLEAN          12730593       COMPLETED      marenostrum4        debug          ",
+          "index": 59
+      },
+      {
+          "content": "2020-11-24 10:58:11,997 Saving JobList: /esarchive/autosubmit/t0cr/pkl/job_list_t0cr.pkl",
+          "index": 60
+      },
+      {
+          "content": "2020-11-24 10:58:11,998 Job list saved",
+          "index": 61
+      },
+      {
+          "content": "2020-11-24 10:58:12,000 ",
+          "index": 62
+      },
+      {
+          "content": "Jobs ready for local: 0",
+          "index": 63
+      },
+      {
+          "content": "2020-11-24 10:58:12,002 Number of jobs available: 3",
+          "index": 64
+      },
+      {
+          "content": "2020-11-24 10:58:12,003 Number of jobs ready: 0",
+          "index": 65
+      },
+      {
+          "content": "2020-11-24 10:58:12,004 ",
+          "index": 66
+      },
+      {
+          "content": "Jobs ready for marenostrum4: 1",
+          "index": 67
+      },
+      {
+          "content": "2020-11-24 10:58:12,005 Number of jobs available: 3",
+          "index": 68
+      },
+      {
+          "content": "2020-11-24 10:58:12,006 Number of jobs ready: 1",
+          "index": 69
+      },
+      {
+          "content": "2020-11-24 10:58:12,007 Jobs ready for marenostrum4: 1",
+          "index": 70
+      },
+      {
+          "content": "2020-11-24 10:58:12,011 Custom directives from platform.conf: None",
+          "index": 71
+      },
+      {
+          "content": "2020-11-24 10:58:13,384 Reading config from /etc/autosubmitrc",
+          "index": 72
+      },
+      {
+          "content": "2020-11-24 10:58:13,472 Updating FAILED jobs",
+          "index": 73
+      },
+      {
+          "content": "2020-11-24 10:58:13,473 Update finished",
+          "index": 74
+      },
+      {
+          "content": "2020-11-24 10:58:13,473 Updating WAITING jobs",
+          "index": 75
+      },
+      {
+          "content": "2020-11-24 10:58:13,473 Update finished",
+          "index": 76
+      },
+      {
+          "content": "2020-11-24 10:58:22,026 Trace A critical file couldn't be retrieved, File /esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_2_ARCHIVE_REDUCE.20201124105741.out does not exists ",
+          "index": 77
+      },
+      {
+          "content": "Failed to retrieve log file for job A critical file couldn't be retrieved, File /esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_2_ARCHIVE_REDUCE.20201124105741.out does not exists",
+          "index": 78
+      },
+      {
+          "content": "2020-11-24 10:58:23,518 Reloading parameters...",
+          "index": 79
+      },
+      {
+          "content": "2020-11-24 10:58:23,552 Loading parameters...",
+          "index": 80
+      },
+      {
+          "content": "2020-11-24 10:58:23,553 Loading project parameters...",
+          "index": 81
+      },
+      {
+          "content": "2020-11-24 10:58:23,554 ",
+          "index": 82
+      },
+      {
+          "content": "",
+          "index": 83
+      },
+      {
+          "content": "1 of 19 jobs remaining (10:58)",
+          "index": 84
+      },
+      {
+          "content": "2020-11-24 10:58:23,554 Sleep: 10",
+          "index": 85
+      },
+      {
+          "content": "2020-11-24 10:58:23,555 Number of retrials: 0",
+          "index": 86
+      },
+      {
+          "content": "2020-11-24 10:58:23,555 WRAPPER CHECK TIME = 10",
+          "index": 87
+      },
+      {
+          "content": "2020-11-24 10:58:24,879 Successful check job command",
+          "index": 88
+      },
+      {
+          "content": "2020-11-24 10:58:24,879 Job t0cr_20081231_000_2_CLEAN is RUNNING",
+          "index": 89
+      },
+      {
+          "content": "2020-11-24 10:58:24,910 t0cr_20081231_000_2_CLEAN_STAT file have been transfered",
+          "index": 90
+      },
+      {
+          "content": "2020-11-24 10:58:24,913 Reading config from /etc/autosubmitrc",
+          "index": 91
+      },
+      {
+          "content": "2020-11-24 10:58:24,979 Updating FAILED jobs",
+          "index": 92
+      },
+      {
+          "content": "2020-11-24 10:58:24,980 Update finished",
+          "index": 93
+      },
+      {
+          "content": "2020-11-24 10:58:24,980 Updating WAITING jobs",
+          "index": 94
+      },
+      {
+          "content": "2020-11-24 10:58:24,980 Update finished",
+          "index": 95
+      },
+      {
+          "content": "2020-11-24 10:58:24,981 ",
+          "index": 96
+      },
+      {
+          "content": "Job Name                           Job Id         Job Status     Job Platform        Job Queue      ",
+          "index": 97
+      },
+      {
+          "content": "2020-11-24 10:58:24,981 t0cr_20081231_000_1_ARCHIVE        2835           COMPLETED      local               no-scheduler   ",
+          "index": 98
+      },
+      {
+          "content": "2020-11-24 10:58:24,981 t0cr_20081231_000_2_ARCHIVE        3156           COMPLETED      local               no-scheduler   ",
+          "index": 99
+      },
+      {
+          "content": "2020-11-24 10:58:24,982 t0cr_20081231_1_ARCHIVE_REDUCE     2807           COMPLETED      local               no-scheduler   ",
+          "index": 100
+      },
+      {
+          "content": "2020-11-24 10:58:24,982 t0cr_20081231_2_ARCHIVE_REDUCE     3123           COMPLETED      local               no-scheduler   ",
+          "index": 101
+      },
+      {
+          "content": "2020-11-24 10:58:24,982 t0cr_20081231_000_1_CLEAN          12730593       COMPLETED      marenostrum4        debug          ",
+          "index": 102
+      },
+      {
+          "content": "2020-11-24 10:58:24,983 t0cr_20081231_000_2_CLEAN          12730617       RUNNING        marenostrum4        debug          ",
+          "index": 103
+      },
+      {
+          "content": "2020-11-24 10:58:24,987 Saving JobList: /esarchive/autosubmit/t0cr/pkl/job_list_t0cr.pkl",
+          "index": 104
+      },
+      {
+          "content": "2020-11-24 10:58:24,993 Job list saved",
+          "index": 105
+      },
+      {
+          "content": "2020-11-24 10:58:24,996 Updating FAILED jobs",
+          "index": 106
+      },
+      {
+          "content": "2020-11-24 10:58:24,996 Update finished",
+          "index": 107
+      },
+      {
+          "content": "2020-11-24 10:58:24,996 Updating WAITING jobs",
+          "index": 108
+      },
+      {
+          "content": "2020-11-24 10:58:24,996 Update finished",
+          "index": 109
+      },
+      {
+          "content": "2020-11-24 10:58:35,023 Reloading parameters...",
+          "index": 110
+      },
+      {
+          "content": "2020-11-24 10:58:35,036 Loading parameters...",
+          "index": 111
+      },
+      {
+          "content": "2020-11-24 10:58:35,037 Loading project parameters...",
+          "index": 112
+      },
+      {
+          "content": "2020-11-24 10:58:35,037 ",
+          "index": 113
+      },
+      {
+          "content": "",
+          "index": 114
+      },
+      {
+          "content": "1 of 19 jobs remaining (10:58)",
+          "index": 115
+      },
+      {
+          "content": "2020-11-24 10:58:35,038 Sleep: 10",
+          "index": 116
+      },
+      {
+          "content": "2020-11-24 10:58:35,038 Number of retrials: 0",
+          "index": 117
+      },
+      {
+          "content": "2020-11-24 10:58:35,038 WRAPPER CHECK TIME = 10",
+          "index": 118
+      },
+      {
+          "content": "2020-11-24 10:58:36,362 Successful check job command",
+          "index": 119
+      },
+      {
+          "content": "2020-11-24 10:58:36,362 t0cr_20081231_000_2_CLEAN job seems to have completed: checking...",
+          "index": 120
+      },
+      {
+          "content": "2020-11-24 10:58:36,376 Job t0cr_20081231_000_2_CLEAN is COMPLETED",
+          "index": 121
+      },
+      {
+          "content": "2020-11-24 10:58:36,388 t0cr_20081231_000_2_CLEAN_STAT file have been transfered",
+          "index": 122
+      },
+      {
+          "content": "2020-11-24 10:58:36,390 Reading config from /etc/autosubmitrc",
+          "index": 123
+      },
+      {
+          "content": "2020-11-24 10:58:36,406 Reading config from /etc/autosubmitrc",
+          "index": 124
+      },
+      {
+          "content": "2020-11-24 10:58:36,429 Reading config from /etc/autosubmitrc",
+          "index": 125
+      },
+      {
+          "content": "2020-11-24 10:58:36,443 Reading config from /etc/autosubmitrc",
+          "index": 126
+      },
+      {
+          "content": "2020-11-24 10:58:36,445 Updating FAILED jobs",
+          "index": 127
+      },
+      {
+          "content": "2020-11-24 10:58:36,446 Update finished",
+          "index": 128
+      },
+      {
+          "content": "2020-11-24 10:58:36,446 Updating WAITING jobs",
+          "index": 129
+      },
+      {
+          "content": "2020-11-24 10:58:36,446 Update finished",
+          "index": 130
+      },
+      {
+          "content": "2020-11-24 10:58:36,447 ",
+          "index": 131
+      },
+      {
+          "content": "Job Name                           Job Id         Job Status     Job Platform        Job Queue      ",
+          "index": 132
+      },
+      {
+          "content": "2020-11-24 10:58:36,447 t0cr_20081231_000_2_ARCHIVE        3156           COMPLETED      local               no-scheduler   ",
+          "index": 133
+      },
+      {
+          "content": "2020-11-24 10:58:36,447 t0cr_20081231_1_ARCHIVE_REDUCE     2807           COMPLETED      local               no-scheduler   ",
+          "index": 134
+      },
+      {
+          "content": "2020-11-24 10:58:36,448 t0cr_20081231_2_ARCHIVE_REDUCE     3123           COMPLETED      local               no-scheduler   ",
+          "index": 135
+      },
+      {
+          "content": "2020-11-24 10:58:36,448 t0cr_20081231_000_1_CLEAN          12730593       COMPLETED      marenostrum4        debug          ",
+          "index": 136
+      },
+      {
+          "content": "2020-11-24 10:58:36,448 t0cr_20081231_000_2_CLEAN          12730617       COMPLETED      marenostrum4        debug          ",
+          "index": 137
+      },
+      {
+          "content": "2020-11-24 10:58:36,449 Saving JobList: /esarchive/autosubmit/t0cr/pkl/job_list_t0cr.pkl",
+          "index": 138
+      },
+      {
+          "content": "2020-11-24 10:58:36,450 Job list saved",
+          "index": 139
+      },
+      {
+          "content": "2020-11-24 10:58:36,452 Updating FAILED jobs",
+          "index": 140
+      },
+      {
+          "content": "2020-11-24 10:58:36,452 Update finished",
+          "index": 141
+      },
+      {
+          "content": "2020-11-24 10:58:36,453 Updating WAITING jobs",
+          "index": 142
+      },
+      {
+          "content": "2020-11-24 10:58:36,453 Update finished",
+          "index": 143
+      },
+      {
+          "content": "2020-11-24 10:58:36,459 Custom directives from platform.conf: None",
+          "index": 144
+      },
+      {
+          "content": "2020-11-24 10:58:46,473 No more jobs to run.",
+          "index": 145
+      },
+      {
+          "content": "2020-11-24 10:58:46,490 JOB_t0cr_20081231_000_2_CLEAN is still retrieving outputs, time remaining is 180 seconds.",
+          "index": 146
+      },
+      {
+          "content": "2020-11-24 10:58:48,050 Trace A critical file couldn't be retrieved, File /gpfs/scratch/pr1eld00/pr1eld08/t0cr/LOG_t0cr does not exists ",
+          "index": 147
+      },
+      {
+          "content": "Failed to retrieve log file for job A critical file couldn't be retrieved, File /gpfs/scratch/pr1eld00/pr1eld08/t0cr/LOG_t0cr does not exists",
+          "index": 148
+      },
+      {
+          "content": "2020-11-24 10:58:56,504 Run successful",
+          "index": 149
+      }
+  ],
+  "logfile": "20201124_101417_run.log",
+  "timeStamp": 1606211936.6060925
+}

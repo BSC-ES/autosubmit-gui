@@ -10,6 +10,7 @@ import TreeState from "../../context/tree/TreeState";
 import GraphContext from "../../context/graph/graphContext";
 import SelectionTreeNode from "../SelectionTreeNode";
 import JobFilter from "../JobFilter";
+import { updateTreeData, buildRunTitle } from "../../context/treeutils";
 
 const treedata = {
     "error": false,
@@ -690,4 +691,178 @@ it("SelectionTreeNode renders from treedata", () => {
     expect(container.textContent).toContain("nord3");
 });
 
+
+// Testing treeutils.js functions
+// GraphNativeRep provides a fancyTree object
+
+it("Updated fancyTree shows new status of jobs", () => {
+    const runData = [{
+                "chunk": 0,
+                "counter": 47,
+                "created": "2020-11-10-13:33:24",
+                "date": "",
+                "energy": "NA",
+                "finish": "2020-11-10-13:33:42",
+                "job_id": 11584,
+                "job_name": "a2tl_LOCAL_SETUP",
+                "member": "",
+                "ncpus": 1,
+                "nodes": 0,
+                "platform": "LOCAL",
+                "qos": "debug",
+                "queue_time": "0:00:18",
+                "queue_time_s": 18,
+                "run_time": "0:00:00",
+                "running_time_s": 0,
+                "section": "LOCAL_SETUP",
+                "start": "2020-11-10-13:33:42",
+                "status": "COMPLETED",
+                "status_code": 5,
+                "status_color": "yellow",
+                "submit": "2020-11-10-13:33:24",
+                "titletag": "( 0:00:18 ) + 0:00:00",
+                "wallclock": ""
+            },
+            {
+                "chunk": 1,
+                "counter": 47,
+                "created": "2020-11-10-13:33:43",
+                "date": "2012-01-01 00:00:00",
+                "energy": "NA",
+                "finish": "2020-11-10-13:36:50",
+                "job_id": 18668,
+                "job_name": "a2tl_20200511_000_1_LOCAL_SEND_INITIAL",
+                "member": "000",
+                "ncpus": 1,
+                "nodes": 0,
+                "platform": "marenostrum_archive",
+                "qos": "debug",
+                "queue_time": "0:00:27",
+                "queue_time_s": 27,
+                "run_time": "0:02:40",
+                "running_time_s": 160,
+                "section": "LOCAL_SEND_INITIAL",
+                "start": "2020-11-10-13:34:10",
+                "status": "COMPLETED",
+                "status_code": 5,
+                "status_color": "yellow",
+                "submit": "2020-11-10-13:33:43",
+                "titletag": "( 0:00:27 ) + 0:02:40",
+                "wallclock": ""
+            },
+            {
+                "chunk": 0,
+                "counter": 47,
+                "created": "2020-11-10-13:33:44",
+                "date": "",
+                "energy": "NA",
+                "finish": "2020-11-10-13:34:01",
+                "job_id": 19092,
+                "job_name": "a2tl_20200511_000_LOCAL_SEND_SPINUP",
+                "member": "",
+                "ncpus": 1,
+                "nodes": 0,
+                "platform": "marenostrum_archive",
+                "qos": "debug",
+                "queue_time": "0:00:16",
+                "queue_time_s": 16,
+                "run_time": "0:00:01",
+                "running_time_s": 1,
+                "section": "LOCAL_SEND_SPINUP",
+                "start": "2020-11-10-13:34:00",
+                "status": "COMPLETED",
+                "status_code": 5,
+                "status_color": "yellow",
+                "submit": "2020-11-10-13:33:44",
+                "titletag": "( 0:00:16 ) + 0:00:01",
+                "wallclock": ""
+            },
+            {
+                "chunk": 0,
+                "counter": 47,
+                "created": "2020-11-10-13:33:45",
+                "date": "",
+                "energy": "NA",
+                "finish": "2020-11-10-13:37:31",
+                "job_id": 19576,
+                "job_name": "a2tl_LOCAL_SEND_SOURCE",
+                "member": "",
+                "ncpus": 1,
+                "nodes": 0,
+                "platform": "marenostrum_archive",
+                "qos": "debug",
+                "queue_time": "0:00:13",
+                "queue_time_s": 13,
+                "run_time": "0:03:33",
+                "running_time_s": 213,
+                "section": "LOCAL_SEND_SOURCE",
+                "start": "2020-11-10-13:33:58",
+                "status": "FAILED",
+                "status_code": 5,
+                "status_color": "yellow",
+                "submit": "2020-11-10-13:33:45",
+                "titletag": "( 0:00:13 ) + 0:03:33",
+                "wallclock": ""
+            },
+            {
+                "chunk": 2,
+                "counter": 47,
+                "created": "2020-11-10-13:34:10",
+                "date": "2012-01-01 00:00:00",
+                "energy": "NA",
+                "finish": "2020-11-10-13:36:52",
+                "job_id": 21871,
+                "job_name": "a2tl_LOCAL_SEND_STATIC",
+                "member": "000",
+                "ncpus": 1,
+                "nodes": 0,
+                "platform": "marenostrum_archive",
+                "qos": "debug",
+                "queue_time": "0:00:17",
+                "queue_time_s": 17,
+                "run_time": "0:02:25",
+                "running_time_s": 145,
+                "section": "LOCAL_SEND_STATIC",
+                "start": "2020-11-10-13:34:27",
+                "status": "FAILED",
+                "status_code": 5,
+                "status_color": "yellow",
+                "submit": "2020-11-10-13:34:10",
+                "titletag": "( 0:00:17 ) + 0:02:25",
+                "wallclock": ""
+            }];   
+    
+    const verifyData = new Map();
+    runData.forEach((item => {
+        verifyData[item.job_name] = item.status
+    }));
+    
+
+    act(() => {
+        updateTreeData(runData, treedata, treeRep);        
+    });
+
+    const dataObjects = new Map();
+    // console.log(treedata.jobs);
+    treedata.jobs.forEach((item) => {
+        dataObjects[item.label] = item.status;
+        //dataObjects.push({ label: item.label, status: item.status });
+    })
+    // Make sure status changed
+    Object.keys(verifyData).forEach((item) => {
+        expect(verifyData[item]).toBe(dataObjects[item]);
+    });
+    // console.log(Object.keys(treeRep.keyMap));
+    const treeObjects = new Map();
+    Object.keys(treeRep.keyMap).forEach((item) => treeObjects[treeRep.keyMap[item].title.split(/[ ]+/)[0]] = treeRep.keyMap[item].title);
+    // console.log(treeObjects);
+    // console.log(dataObjects);
+    Object.keys(verifyData).forEach((item) => {
+        expect(verifyData[item]).toBe(dataObjects[item]);
+    });
+
+    Object.keys(verifyData).forEach((item) => {
+        expect(treeObjects[item]).toContain(verifyData[item]);
+    });
+});
 

@@ -1,0 +1,48 @@
+{
+    "experiment": [
+        {
+            "completed": 6,
+            "description": "auto-monarch test case: NESTING",
+            "hpc": "marenostrum4",
+            "id": 3819,
+            "name": "t07r",
+            "status": "RUNNING",
+            "total": 17,
+            "user": "gmontane",
+            "version": "3.13.0b0"
+        },
+        {
+            "completed": 18,
+            "description": "non-production S2S wf",
+            "hpc": "dl-machine",
+            "id": 4936,
+            "name": "a2n1",
+            "status": "RUNNING",
+            "total": 21,
+            "user": "lpalma",
+            "version": "3.11.0-hotfix"
+        },
+        {
+            "completed": 8,
+            "description": "auto-monarch test case: MINE cold start",
+            "hpc": "marenostrum4",
+            "id": 4954,
+            "name": "t0cr",
+            "status": "RUNNING",
+            "total": 19,
+            "user": "gmontane",
+            "version": "3.13.0b0"
+        },
+        {
+            "completed": 8,
+            "description": "[aerchemmip] ssp370 exp with 3.3.2.1 sources copy of a2vx",
+            "hpc": "marenostrum4",
+            "id": 6076,
+            "name": "a39t",
+            "status": "RUNNING",
+            "total": 375,
+            "user": "mariag",
+            "version": "3.12.0"
+        }
+    ]
+}

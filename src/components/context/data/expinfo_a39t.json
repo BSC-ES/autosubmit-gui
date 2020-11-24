@@ -1,0 +1,21 @@
+{
+  "branch": "'3.3.3-production-aerchemmip'",
+  "completed_jobs": 8,
+  "db_historic_version": null,
+  "description": "[aerchemmip] ssp370 exp with 3.3.2.1 sources copy of a2vx",
+  "error": false,
+  "error_message": "None",
+  "expid": "a39t",
+  "hpc": "marenostrum4",
+  "model": "https://earth.bsc.es/gitlab/es/auto-ecearth3.git",
+  "owner": "mariag",
+  "owner_id": 7464,
+  "path": "/esarchive/autosubmit/a39t",
+  "pkl_timestamp": 1606213325,
+  "running": false,
+  "time_last_access": "2020-11-23 15:03:17",
+  "time_last_mod": "2020-11-13 14:53:15",
+  "total_jobs": 375,
+  "updateTime": 10,
+  "version": "3.12.0"
+}

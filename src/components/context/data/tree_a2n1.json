@@ -1,0 +1,1460 @@
+{
+  "error": false,
+  "error_message": "None",
+  "jobs": [
+      {
+          "children": 1,
+          "children_list": [
+              "a2n1_20201207_FILTER"
+          ],
+          "chunk": null,
+          "custom_directives": [],
+          "date": "2020 12 07",
+          "date_plus": "2020 12 07",
+          "err": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_DL.20201123220138.err",
+          "finish": "2020-11-23 22:41:27",
+          "id": "a2n1_20201207_DL",
+          "internal_id": "a2n1_20201207_DL",
+          "label": "a2n1_20201207_DL",
+          "member": null,
+          "minutes": 2289,
+          "minutes_queue": 94,
+          "out": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_DL.20201123220138.out",
+          "parent_list": [],
+          "parents": 0,
+          "platform_name": "dl-machine",
+          "priority": 0,
+          "processors": "1",
+          "rm_id": 22287,
+          "section": "DL",
+          "start": "2020-11-23 22:03:18",
+          "status": "COMPLETED",
+          "status_code": 5,
+          "status_color": "yellow",
+          "submit": "2020-11-23 22:01:44",
+          "sync": false,
+          "title": "a2n1_20201207_DL <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:01:34 ) + 0:38:09 <span class='badge' style='background-color:#80d4ff'>SOURCE</span>",
+          "tree_parents": [
+              "a2n1_20201207_chunk"
+          ],
+          "wallclock": "03:00",
+          "wrapper": null,
+          "wrapper_code": null
+      },
+      {
+          "children": 7,
+          "children_list": [
+              "a2n1_20201207_fc4_1_FT",
+              "a2n1_20201207_fc3_1_FT",
+              "a2n1_20201207_fc2_1_FT",
+              "a2n1_20201207_fc0_1_FT",
+              "a2n1_20201207_fc5_1_FT",
+              "a2n1_20201207_fc1_1_FT",
+              "a2n1_20201207_fc6_1_FT"
+          ],
+          "chunk": null,
+          "custom_directives": [],
+          "date": "2020 12 07",
+          "date_plus": "2020 12 07",
+          "err": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_FILTER.20201123224034.err",
+          "finish": "2020-11-23 23:25:49",
+          "id": "a2n1_20201207_FILTER",
+          "internal_id": "a2n1_20201207_FILTER",
+          "label": "a2n1_20201207_FILTER",
+          "member": null,
+          "minutes": 2707,
+          "minutes_queue": 1,
+          "out": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_FILTER.20201123224034.out",
+          "parent_list": [
+              "a2n1_20201207_DL"
+          ],
+          "parents": 1,
+          "platform_name": "power9",
+          "priority": 1,
+          "processors": "1",
+          "rm_id": 4690161,
+          "section": "FILTER",
+          "start": "2020-11-23 22:40:42",
+          "status": "COMPLETED",
+          "status_code": 5,
+          "status_color": "yellow",
+          "submit": "2020-11-23 22:40:41",
+          "sync": true,
+          "title": "a2n1_20201207_FILTER <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:01 ) + 0:45:07 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>",
+          "tree_parents": [
+              "a2n1_20201207_fc0",
+              "a2n1_20201207_fc1",
+              "a2n1_20201207_fc2",
+              "a2n1_20201207_fc3",
+              "a2n1_20201207_fc4",
+              "a2n1_20201207_fc5",
+              "a2n1_20201207_fc6"
+          ],
+          "wallclock": "03:00",
+          "wrapper": null,
+          "wrapper_code": null
+      },
+      {
+          "children": 5,
+          "children_list": [
+              "a2n1_20201207_fc0_1_AN",
+              "a2n1_20201207_cfwnd2AN",
+              "a2n1_20201207_cfwnd3AN",
+              "a2n1_20201207_cfslrAN",
+              "a2n1_20201207_cfwnd1AN"
+          ],
+          "chunk": 1,
+          "custom_directives": [],
+          "date": "2020 12 07",
+          "date_plus": "2021 01 07",
+          "err": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_fc0_1_FT.20201123232601.err",
+          "finish": "2020-11-23 23:50:12",
+          "id": "a2n1_20201207_fc0_1_FT",
+          "internal_id": "a2n1_20201207_fc0_1_FT",
+          "label": "a2n1_20201207_fc0_1_FT",
+          "member": "fc0",
+          "minutes": 1442,
+          "minutes_queue": 2,
+          "out": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_fc0_1_FT.20201123232601.out",
+          "parent_list": [
+              "a2n1_20201207_FILTER"
+          ],
+          "parents": 1,
+          "platform_name": "power9",
+          "priority": 2,
+          "processors": "1",
+          "rm_id": 4690797,
+          "section": "FT",
+          "start": "2020-11-23 23:26:10",
+          "status": "COMPLETED",
+          "status_code": 5,
+          "status_color": "yellow",
+          "submit": "2020-11-23 23:26:12",
+          "sync": false,
+          "title": "a2n1_20201207_fc0_1_FT <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:02 ) + 0:24:02",
+          "tree_parents": [
+              "a2n1_20201207_fc0"
+          ],
+          "wallclock": "06:00",
+          "wrapper": null,
+          "wrapper_code": null
+      },
+      {
+          "children": 5,
+          "children_list": [
+              "a2n1_20201207_fc1_1_AN",
+              "a2n1_20201207_cfwnd2AN",
+              "a2n1_20201207_cfwnd3AN",
+              "a2n1_20201207_cfslrAN",
+              "a2n1_20201207_cfwnd1AN"
+          ],
+          "chunk": 1,
+          "custom_directives": [],
+          "date": "2020 12 07",
+          "date_plus": "2021 01 07",
+          "err": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_fc1_1_FT.20201123232612.err",
+          "finish": "2020-11-24 01:46:05",
+          "id": "a2n1_20201207_fc1_1_FT",
+          "internal_id": "a2n1_20201207_fc1_1_FT",
+          "label": "a2n1_20201207_fc1_1_FT",
+          "member": "fc1",
+          "minutes": 8385,
+          "minutes_queue": 4,
+          "out": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_fc1_1_FT.20201123232612.out",
+          "parent_list": [
+              "a2n1_20201207_FILTER"
+          ],
+          "parents": 1,
+          "platform_name": "power9",
+          "priority": 2,
+          "processors": "1",
+          "rm_id": 4690798,
+          "section": "FT",
+          "start": "2020-11-23 23:26:20",
+          "status": "COMPLETED",
+          "status_code": 5,
+          "status_color": "yellow",
+          "submit": "2020-11-23 23:26:24",
+          "sync": false,
+          "title": "a2n1_20201207_fc1_1_FT <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:04 ) + 2:19:45",
+          "tree_parents": [
+              "a2n1_20201207_fc1"
+          ],
+          "wallclock": "06:00",
+          "wrapper": null,
+          "wrapper_code": null
+      },
+      {
+          "children": 5,
+          "children_list": [
+              "a2n1_20201207_fc2_1_AN",
+              "a2n1_20201207_cfwnd2AN",
+              "a2n1_20201207_cfwnd3AN",
+              "a2n1_20201207_cfslrAN",
+              "a2n1_20201207_cfwnd1AN"
+          ],
+          "chunk": 1,
+          "custom_directives": [],
+          "date": "2020 12 07",
+          "date_plus": "2021 01 07",
+          "err": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_fc2_1_FT.20201123232624.err",
+          "finish": "2020-11-24 01:47:16",
+          "id": "a2n1_20201207_fc2_1_FT",
+          "internal_id": "a2n1_20201207_fc2_1_FT",
+          "label": "a2n1_20201207_fc2_1_FT",
+          "member": "fc2",
+          "minutes": 8444,
+          "minutes_queue": 1,
+          "out": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_fc2_1_FT.20201123232624.out",
+          "parent_list": [
+              "a2n1_20201207_FILTER"
+          ],
+          "parents": 1,
+          "platform_name": "power9",
+          "priority": 2,
+          "processors": "1",
+          "rm_id": 4690799,
+          "section": "FT",
+          "start": "2020-11-23 23:26:32",
+          "status": "COMPLETED",
+          "status_code": 5,
+          "status_color": "yellow",
+          "submit": "2020-11-23 23:26:31",
+          "sync": false,
+          "title": "a2n1_20201207_fc2_1_FT <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:01 ) + 2:20:44",
+          "tree_parents": [
+              "a2n1_20201207_fc2"
+          ],
+          "wallclock": "06:00",
+          "wrapper": null,
+          "wrapper_code": null
+      },
+      {
+          "children": 5,
+          "children_list": [
+              "a2n1_20201207_cfwnd1AN",
+              "a2n1_20201207_cfwnd3AN",
+              "a2n1_20201207_fc3_1_AN",
+              "a2n1_20201207_cfslrAN",
+              "a2n1_20201207_cfwnd2AN"
+          ],
+          "chunk": 1,
+          "custom_directives": [],
+          "date": "2020 12 07",
+          "date_plus": "2021 01 07",
+          "err": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_fc3_1_FT.20201123232631.err",
+          "finish": "2020-11-23 23:51:21",
+          "id": "a2n1_20201207_fc3_1_FT",
+          "internal_id": "a2n1_20201207_fc3_1_FT",
+          "label": "a2n1_20201207_fc3_1_FT",
+          "member": "fc3",
+          "minutes": 1479,
+          "minutes_queue": 1,
+          "out": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_fc3_1_FT.20201123232631.out",
+          "parent_list": [
+              "a2n1_20201207_FILTER"
+          ],
+          "parents": 1,
+          "platform_name": "power9",
+          "priority": 2,
+          "processors": "1",
+          "rm_id": 4690800,
+          "section": "FT",
+          "start": "2020-11-23 23:26:42",
+          "status": "COMPLETED",
+          "status_code": 5,
+          "status_color": "yellow",
+          "submit": "2020-11-23 23:26:41",
+          "sync": false,
+          "title": "a2n1_20201207_fc3_1_FT <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:01 ) + 0:24:39",
+          "tree_parents": [
+              "a2n1_20201207_fc3"
+          ],
+          "wallclock": "06:00",
+          "wrapper": null,
+          "wrapper_code": null
+      },
+      {
+          "children": 5,
+          "children_list": [
+              "a2n1_20201207_fc4_1_AN",
+              "a2n1_20201207_cfwnd2AN",
+              "a2n1_20201207_cfwnd3AN",
+              "a2n1_20201207_cfslrAN",
+              "a2n1_20201207_cfwnd1AN"
+          ],
+          "chunk": 1,
+          "custom_directives": [],
+          "date": "2020 12 07",
+          "date_plus": "2021 01 07",
+          "err": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_fc4_1_FT.20201123232641.err",
+          "finish": "2020-11-23 23:56:45",
+          "id": "a2n1_20201207_fc4_1_FT",
+          "internal_id": "a2n1_20201207_fc4_1_FT",
+          "label": "a2n1_20201207_fc4_1_FT",
+          "member": "fc4",
+          "minutes": 1795,
+          "minutes_queue": 1,
+          "out": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_fc4_1_FT.20201123232641.out",
+          "parent_list": [
+              "a2n1_20201207_FILTER"
+          ],
+          "parents": 1,
+          "platform_name": "power9",
+          "priority": 2,
+          "processors": "1",
+          "rm_id": 4690801,
+          "section": "FT",
+          "start": "2020-11-23 23:26:50",
+          "status": "COMPLETED",
+          "status_code": 5,
+          "status_color": "yellow",
+          "submit": "2020-11-23 23:26:49",
+          "sync": false,
+          "title": "a2n1_20201207_fc4_1_FT <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:01 ) + 0:29:55",
+          "tree_parents": [
+              "a2n1_20201207_fc4"
+          ],
+          "wallclock": "06:00",
+          "wrapper": null,
+          "wrapper_code": null
+      },
+      {
+          "children": 5,
+          "children_list": [
+              "a2n1_20201207_cfwnd1AN",
+              "a2n1_20201207_cfwnd3AN",
+              "a2n1_20201207_fc5_1_AN",
+              "a2n1_20201207_cfslrAN",
+              "a2n1_20201207_cfwnd2AN"
+          ],
+          "chunk": 1,
+          "custom_directives": [],
+          "date": "2020 12 07",
+          "date_plus": "2021 01 07",
+          "err": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_fc5_1_FT.20201123232649.err",
+          "finish": "2020-11-23 23:35:59",
+          "id": "a2n1_20201207_fc5_1_FT",
+          "internal_id": "a2n1_20201207_fc5_1_FT",
+          "label": "a2n1_20201207_fc5_1_FT",
+          "member": "fc5",
+          "minutes": 537,
+          "minutes_queue": 2,
+          "out": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_fc5_1_FT.20201123232649.out",
+          "parent_list": [
+              "a2n1_20201207_FILTER"
+          ],
+          "parents": 1,
+          "platform_name": "power9",
+          "priority": 2,
+          "processors": "1",
+          "rm_id": 4690802,
+          "section": "FT",
+          "start": "2020-11-23 23:27:02",
+          "status": "COMPLETED",
+          "status_code": 5,
+          "status_color": "yellow",
+          "submit": "2020-11-23 23:27:00",
+          "sync": false,
+          "title": "a2n1_20201207_fc5_1_FT <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:02 ) + 0:08:57",
+          "tree_parents": [
+              "a2n1_20201207_fc5"
+          ],
+          "wallclock": "06:00",
+          "wrapper": null,
+          "wrapper_code": null
+      },
+      {
+          "children": 5,
+          "children_list": [
+              "a2n1_20201207_cfwnd1AN",
+              "a2n1_20201207_cfwnd3AN",
+              "a2n1_20201207_fc6_1_AN",
+              "a2n1_20201207_cfslrAN",
+              "a2n1_20201207_cfwnd2AN"
+          ],
+          "chunk": 1,
+          "custom_directives": [],
+          "date": "2020 12 07",
+          "date_plus": "2021 01 07",
+          "err": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_fc6_1_FT.20201123232700.err",
+          "finish": "2020-11-24 00:21:38",
+          "id": "a2n1_20201207_fc6_1_FT",
+          "internal_id": "a2n1_20201207_fc6_1_FT",
+          "label": "a2n1_20201207_fc6_1_FT",
+          "member": "fc6",
+          "minutes": 3269,
+          "minutes_queue": 2,
+          "out": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_fc6_1_FT.20201123232700.out",
+          "parent_list": [
+              "a2n1_20201207_FILTER"
+          ],
+          "parents": 1,
+          "platform_name": "power9",
+          "priority": 2,
+          "processors": "1",
+          "rm_id": 4690803,
+          "section": "FT",
+          "start": "2020-11-23 23:27:09",
+          "status": "COMPLETED",
+          "status_code": 5,
+          "status_color": "yellow",
+          "submit": "2020-11-23 23:27:07",
+          "sync": false,
+          "title": "a2n1_20201207_fc6_1_FT <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:02 ) + 0:54:29",
+          "tree_parents": [
+              "a2n1_20201207_fc6"
+          ],
+          "wallclock": "06:00",
+          "wrapper": null,
+          "wrapper_code": null
+      },
+      {
+          "children": 1,
+          "children_list": [
+              "a2n1_20201207_TRANSFER"
+          ],
+          "chunk": 1,
+          "custom_directives": [],
+          "date": "2020 12 07",
+          "date_plus": "2021 01 07",
+          "err": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_fc0_1_AN.20201123235032.err",
+          "finish": "2020-11-24 09:29:02",
+          "id": "a2n1_20201207_fc0_1_AN",
+          "internal_id": "a2n1_20201207_fc0_1_AN",
+          "label": "a2n1_20201207_fc0_1_AN",
+          "member": "fc0",
+          "minutes": 34703,
+          "minutes_queue": 4,
+          "out": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_fc0_1_AN.20201123235032.out",
+          "parent_list": [
+              "a2n1_20201207_fc0_1_FT"
+          ],
+          "parents": 1,
+          "platform_name": "nord3",
+          "priority": 3,
+          "processors": "32",
+          "rm_id": 2166043,
+          "section": "AN",
+          "start": "2020-11-23 23:50:39",
+          "status": "COMPLETED",
+          "status_code": 5,
+          "status_color": "yellow",
+          "submit": "2020-11-23 23:50:35",
+          "sync": false,
+          "title": "a2n1_20201207_fc0_1_AN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:04 ) + 9:38:23",
+          "tree_parents": [
+              "a2n1_20201207_fc0"
+          ],
+          "wallclock": "24:00",
+          "wrapper": null,
+          "wrapper_code": null
+      },
+      {
+          "children": 1,
+          "children_list": [
+              "a2n1_20201207_TRANSFER"
+          ],
+          "chunk": 1,
+          "custom_directives": [],
+          "date": "2020 12 07",
+          "date_plus": "2021 01 07",
+          "err": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_fc1_1_AN.20201124014630.err",
+          "finish": null,
+          "id": "a2n1_20201207_fc1_1_AN",
+          "internal_id": "a2n1_20201207_fc1_1_AN",
+          "label": "a2n1_20201207_fc1_1_AN",
+          "member": "fc1",
+          "minutes": 35305,
+          "minutes_queue": 3,
+          "out": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_fc1_1_AN.20201124014630.out",
+          "parent_list": [
+              "a2n1_20201207_fc1_1_FT"
+          ],
+          "parents": 1,
+          "platform_name": "nord3",
+          "priority": 3,
+          "processors": "32",
+          "rm_id": 2166065,
+          "section": "AN",
+          "start": "2020-11-24 01:46:36",
+          "status": "RUNNING",
+          "status_code": 4,
+          "status_color": "green",
+          "submit": "2020-11-24 01:46:33",
+          "sync": false,
+          "title": "a2n1_20201207_fc1_1_AN <span class='badge' style='background-color: green'>#RUNNING</span> ~ ( 0:00:03 ) + 9:48:25",
+          "tree_parents": [
+              "a2n1_20201207_fc1"
+          ],
+          "wallclock": "24:00",
+          "wrapper": null,
+          "wrapper_code": null
+      },
+      {
+          "children": 1,
+          "children_list": [
+              "a2n1_20201207_TRANSFER"
+          ],
+          "chunk": 1,
+          "custom_directives": [],
+          "date": "2020 12 07",
+          "date_plus": "2021 01 07",
+          "err": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_fc2_1_AN.20201124033145.err",
+          "finish": null,
+          "id": "a2n1_20201207_fc2_1_AN",
+          "internal_id": "a2n1_20201207_fc2_1_AN",
+          "label": "a2n1_20201207_fc2_1_AN",
+          "member": "fc2",
+          "minutes": 28990,
+          "minutes_queue": 0,
+          "out": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_fc2_1_AN.20201124033145.out",
+          "parent_list": [
+              "a2n1_20201207_fc2_1_FT"
+          ],
+          "parents": 1,
+          "platform_name": "nord3",
+          "priority": 3,
+          "processors": "32",
+          "rm_id": 2166072,
+          "section": "AN",
+          "start": "2020-11-24 03:31:51",
+          "status": "RUNNING",
+          "status_code": 4,
+          "status_color": "green",
+          "submit": "2020-11-24 03:31:51",
+          "sync": false,
+          "title": "a2n1_20201207_fc2_1_AN <span class='badge' style='background-color: green'>#RUNNING</span> ~ ( 0:00:00 ) + 8:03:10",
+          "tree_parents": [
+              "a2n1_20201207_fc2"
+          ],
+          "wallclock": "24:00",
+          "wrapper": null,
+          "wrapper_code": null
+      },
+      {
+          "children": 1,
+          "children_list": [
+              "a2n1_20201207_TRANSFER"
+          ],
+          "chunk": 1,
+          "custom_directives": [],
+          "date": "2020 12 07",
+          "date_plus": "2021 01 07",
+          "err": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_fc3_1_AN.20201123235144.err",
+          "finish": "2020-11-24 09:03:08",
+          "id": "a2n1_20201207_fc3_1_AN",
+          "internal_id": "a2n1_20201207_fc3_1_AN",
+          "label": "a2n1_20201207_fc3_1_AN",
+          "member": "fc3",
+          "minutes": 33078,
+          "minutes_queue": 2,
+          "out": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_fc3_1_AN.20201123235144.out",
+          "parent_list": [
+              "a2n1_20201207_fc3_1_FT"
+          ],
+          "parents": 1,
+          "platform_name": "nord3",
+          "priority": 3,
+          "processors": "32",
+          "rm_id": 2166044,
+          "section": "AN",
+          "start": "2020-11-23 23:51:50",
+          "status": "COMPLETED",
+          "status_code": 5,
+          "status_color": "yellow",
+          "submit": "2020-11-23 23:51:48",
+          "sync": false,
+          "title": "a2n1_20201207_fc3_1_AN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:02 ) + 9:11:18",
+          "tree_parents": [
+              "a2n1_20201207_fc3"
+          ],
+          "wallclock": "24:00",
+          "wrapper": null,
+          "wrapper_code": null
+      },
+      {
+          "children": 1,
+          "children_list": [
+              "a2n1_20201207_TRANSFER"
+          ],
+          "chunk": 1,
+          "custom_directives": [],
+          "date": "2020 12 07",
+          "date_plus": "2021 01 07",
+          "err": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_fc4_1_AN.20201123235712.err",
+          "finish": "2020-11-24 10:04:19",
+          "id": "a2n1_20201207_fc4_1_AN",
+          "internal_id": "a2n1_20201207_fc4_1_AN",
+          "label": "a2n1_20201207_fc4_1_AN",
+          "member": "fc4",
+          "minutes": 36421,
+          "minutes_queue": 2,
+          "out": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_fc4_1_AN.20201123235712.out",
+          "parent_list": [
+              "a2n1_20201207_fc4_1_FT"
+          ],
+          "parents": 1,
+          "platform_name": "nord3",
+          "priority": 3,
+          "processors": "32",
+          "rm_id": 2166049,
+          "section": "AN",
+          "start": "2020-11-23 23:57:18",
+          "status": "COMPLETED",
+          "status_code": 5,
+          "status_color": "yellow",
+          "submit": "2020-11-23 23:57:16",
+          "sync": false,
+          "title": "a2n1_20201207_fc4_1_AN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:02 ) + 10:07:01",
+          "tree_parents": [
+              "a2n1_20201207_fc4"
+          ],
+          "wallclock": "24:00",
+          "wrapper": null,
+          "wrapper_code": null
+      },
+      {
+          "children": 1,
+          "children_list": [
+              "a2n1_20201207_TRANSFER"
+          ],
+          "chunk": 1,
+          "custom_directives": [],
+          "date": "2020 12 07",
+          "date_plus": "2021 01 07",
+          "err": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_fc5_1_AN.20201123233616.err",
+          "finish": "2020-11-24 09:29:24",
+          "id": "a2n1_20201207_fc5_1_AN",
+          "internal_id": "a2n1_20201207_fc5_1_AN",
+          "label": "a2n1_20201207_fc5_1_AN",
+          "member": "fc5",
+          "minutes": 35581,
+          "minutes_queue": 3,
+          "out": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_fc5_1_AN.20201123233616.out",
+          "parent_list": [
+              "a2n1_20201207_fc5_1_FT"
+          ],
+          "parents": 1,
+          "platform_name": "nord3",
+          "priority": 3,
+          "processors": "32",
+          "rm_id": 2166035,
+          "section": "AN",
+          "start": "2020-11-23 23:36:23",
+          "status": "COMPLETED",
+          "status_code": 5,
+          "status_color": "yellow",
+          "submit": "2020-11-23 23:36:20",
+          "sync": false,
+          "title": "a2n1_20201207_fc5_1_AN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:03 ) + 9:53:01",
+          "tree_parents": [
+              "a2n1_20201207_fc5"
+          ],
+          "wallclock": "24:00",
+          "wrapper": null,
+          "wrapper_code": null
+      },
+      {
+          "children": 1,
+          "children_list": [
+              "a2n1_20201207_TRANSFER"
+          ],
+          "chunk": 1,
+          "custom_directives": [],
+          "date": "2020 12 07",
+          "date_plus": "2021 01 07",
+          "err": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_fc6_1_AN.20201124002151.err",
+          "finish": "2020-11-24 09:59:26",
+          "id": "a2n1_20201207_fc6_1_AN",
+          "internal_id": "a2n1_20201207_fc6_1_AN",
+          "label": "a2n1_20201207_fc6_1_AN",
+          "member": "fc6",
+          "minutes": 34649,
+          "minutes_queue": 4,
+          "out": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_fc6_1_AN.20201124002151.out",
+          "parent_list": [
+              "a2n1_20201207_fc6_1_FT"
+          ],
+          "parents": 1,
+          "platform_name": "nord3",
+          "priority": 3,
+          "processors": "32",
+          "rm_id": 2166057,
+          "section": "AN",
+          "start": "2020-11-24 00:21:57",
+          "status": "COMPLETED",
+          "status_code": 5,
+          "status_color": "yellow",
+          "submit": "2020-11-24 00:21:53",
+          "sync": false,
+          "title": "a2n1_20201207_fc6_1_AN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:04 ) + 9:37:29",
+          "tree_parents": [
+              "a2n1_20201207_fc6"
+          ],
+          "wallclock": "24:00",
+          "wrapper": null,
+          "wrapper_code": null
+      },
+      {
+          "children": 1,
+          "children_list": [
+              "a2n1_20201207_TRANSFER"
+          ],
+          "chunk": null,
+          "custom_directives": [],
+          "date": "2020 12 07",
+          "date_plus": "2020 12 07",
+          "err": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_cfwnd1AN.20201124031120.err",
+          "finish": "2020-11-24 03:31:25",
+          "id": "a2n1_20201207_cfwnd1AN",
+          "internal_id": "a2n1_20201207_cfwnd1AN",
+          "label": "a2n1_20201207_cfwnd1AN",
+          "member": null,
+          "minutes": 1196,
+          "minutes_queue": 3,
+          "out": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_cfwnd1AN.20201124031120.out",
+          "parent_list": [
+              "a2n1_20201207_fc4_1_FT",
+              "a2n1_20201207_fc3_1_FT",
+              "a2n1_20201207_fc2_1_FT",
+              "a2n1_20201207_fc0_1_FT",
+              "a2n1_20201207_fc5_1_FT",
+              "a2n1_20201207_fc1_1_FT",
+              "a2n1_20201207_fc6_1_FT"
+          ],
+          "parents": 7,
+          "platform_name": "nord3",
+          "priority": 4,
+          "processors": "32",
+          "rm_id": 2166070,
+          "section": "cfwnd1AN",
+          "start": "2020-11-24 03:11:29",
+          "status": "COMPLETED",
+          "status_code": 5,
+          "status_color": "yellow",
+          "submit": "2020-11-24 03:11:26",
+          "sync": true,
+          "title": "a2n1_20201207_cfwnd1AN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:03 ) + 0:19:56 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>",
+          "tree_parents": [
+              "a2n1_20201207_fc0",
+              "a2n1_20201207_fc1",
+              "a2n1_20201207_fc2",
+              "a2n1_20201207_fc3",
+              "a2n1_20201207_fc4",
+              "a2n1_20201207_fc5",
+              "a2n1_20201207_fc6"
+          ],
+          "wallclock": "30:00",
+          "wrapper": null,
+          "wrapper_code": null
+      },
+      {
+          "children": 1,
+          "children_list": [
+              "a2n1_20201207_TRANSFER"
+          ],
+          "chunk": null,
+          "custom_directives": [],
+          "date": "2020 12 07",
+          "date_plus": "2020 12 07",
+          "err": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_cfwnd2AN.20201124023223.err",
+          "finish": "2020-11-24 03:11:05",
+          "id": "a2n1_20201207_cfwnd2AN",
+          "internal_id": "a2n1_20201207_cfwnd2AN",
+          "label": "a2n1_20201207_cfwnd2AN",
+          "member": null,
+          "minutes": 2316,
+          "minutes_queue": 3,
+          "out": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_cfwnd2AN.20201124023223.out",
+          "parent_list": [
+              "a2n1_20201207_fc4_1_FT",
+              "a2n1_20201207_fc3_1_FT",
+              "a2n1_20201207_fc2_1_FT",
+              "a2n1_20201207_fc0_1_FT",
+              "a2n1_20201207_fc5_1_FT",
+              "a2n1_20201207_fc1_1_FT",
+              "a2n1_20201207_fc6_1_FT"
+          ],
+          "parents": 7,
+          "platform_name": "nord3",
+          "priority": 5,
+          "processors": "32",
+          "rm_id": 2166068,
+          "section": "cfwnd2AN",
+          "start": "2020-11-24 02:32:29",
+          "status": "COMPLETED",
+          "status_code": 5,
+          "status_color": "yellow",
+          "submit": "2020-11-24 02:32:26",
+          "sync": true,
+          "title": "a2n1_20201207_cfwnd2AN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:03 ) + 0:38:36 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>",
+          "tree_parents": [
+              "a2n1_20201207_fc0",
+              "a2n1_20201207_fc1",
+              "a2n1_20201207_fc2",
+              "a2n1_20201207_fc3",
+              "a2n1_20201207_fc4",
+              "a2n1_20201207_fc5",
+              "a2n1_20201207_fc6"
+          ],
+          "wallclock": "30:00",
+          "wrapper": null,
+          "wrapper_code": null
+      },
+      {
+          "children": 1,
+          "children_list": [
+              "a2n1_20201207_TRANSFER"
+          ],
+          "chunk": null,
+          "custom_directives": [],
+          "date": "2020 12 07",
+          "date_plus": "2020 12 07",
+          "err": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_cfwnd3AN.20201124021012.err",
+          "finish": "2020-11-24 02:32:08",
+          "id": "a2n1_20201207_cfwnd3AN",
+          "internal_id": "a2n1_20201207_cfwnd3AN",
+          "label": "a2n1_20201207_cfwnd3AN",
+          "member": null,
+          "minutes": 1307,
+          "minutes_queue": 2,
+          "out": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_cfwnd3AN.20201124021012.out",
+          "parent_list": [
+              "a2n1_20201207_fc4_1_FT",
+              "a2n1_20201207_fc3_1_FT",
+              "a2n1_20201207_fc2_1_FT",
+              "a2n1_20201207_fc0_1_FT",
+              "a2n1_20201207_fc5_1_FT",
+              "a2n1_20201207_fc1_1_FT",
+              "a2n1_20201207_fc6_1_FT"
+          ],
+          "parents": 7,
+          "platform_name": "nord3",
+          "priority": 6,
+          "processors": "32",
+          "rm_id": 2166067,
+          "section": "cfwnd3AN",
+          "start": "2020-11-24 02:10:21",
+          "status": "COMPLETED",
+          "status_code": 5,
+          "status_color": "yellow",
+          "submit": "2020-11-24 02:10:19",
+          "sync": true,
+          "title": "a2n1_20201207_cfwnd3AN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:02 ) + 0:21:47 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>",
+          "tree_parents": [
+              "a2n1_20201207_fc0",
+              "a2n1_20201207_fc1",
+              "a2n1_20201207_fc2",
+              "a2n1_20201207_fc3",
+              "a2n1_20201207_fc4",
+              "a2n1_20201207_fc5",
+              "a2n1_20201207_fc6"
+          ],
+          "wallclock": "30:00",
+          "wrapper": null,
+          "wrapper_code": null
+      },
+      {
+          "children": 1,
+          "children_list": [
+              "a2n1_20201207_TRANSFER"
+          ],
+          "chunk": null,
+          "custom_directives": [],
+          "date": "2020 12 07",
+          "date_plus": "2020 12 07",
+          "err": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_cfslrAN.20201124014727.err",
+          "finish": "2020-11-24 02:09:55",
+          "id": "a2n1_20201207_cfslrAN",
+          "internal_id": "a2n1_20201207_cfslrAN",
+          "label": "a2n1_20201207_cfslrAN",
+          "member": null,
+          "minutes": 1339,
+          "minutes_queue": 3,
+          "out": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_cfslrAN.20201124014727.out",
+          "parent_list": [
+              "a2n1_20201207_fc4_1_FT",
+              "a2n1_20201207_fc3_1_FT",
+              "a2n1_20201207_fc2_1_FT",
+              "a2n1_20201207_fc0_1_FT",
+              "a2n1_20201207_fc5_1_FT",
+              "a2n1_20201207_fc1_1_FT",
+              "a2n1_20201207_fc6_1_FT"
+          ],
+          "parents": 7,
+          "platform_name": "nord3",
+          "priority": 7,
+          "processors": "32",
+          "rm_id": 2166066,
+          "section": "cfslrAN",
+          "start": "2020-11-24 01:47:36",
+          "status": "COMPLETED",
+          "status_code": 5,
+          "status_color": "yellow",
+          "submit": "2020-11-24 01:47:33",
+          "sync": true,
+          "title": "a2n1_20201207_cfslrAN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:03 ) + 0:22:19 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>",
+          "tree_parents": [
+              "a2n1_20201207_fc0",
+              "a2n1_20201207_fc1",
+              "a2n1_20201207_fc2",
+              "a2n1_20201207_fc3",
+              "a2n1_20201207_fc4",
+              "a2n1_20201207_fc5",
+              "a2n1_20201207_fc6"
+          ],
+          "wallclock": "30:00",
+          "wrapper": null,
+          "wrapper_code": null
+      },
+      {
+          "children": 0,
+          "children_list": [],
+          "chunk": null,
+          "custom_directives": [],
+          "date": "2020 12 07",
+          "date_plus": "2020 12 07",
+          "err": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_TRANSFER.20201123220138.err",
+          "finish": null,
+          "id": "a2n1_20201207_TRANSFER",
+          "internal_id": "a2n1_20201207_TRANSFER",
+          "label": "a2n1_20201207_TRANSFER",
+          "member": null,
+          "minutes": 0,
+          "minutes_queue": 0,
+          "out": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1/a2n1_20201207_TRANSFER.20201123220138.out",
+          "parent_list": [
+              "a2n1_20201207_fc1_1_AN",
+              "a2n1_20201207_cfwnd3AN",
+              "a2n1_20201207_fc5_1_AN",
+              "a2n1_20201207_cfwnd1AN",
+              "a2n1_20201207_fc4_1_AN",
+              "a2n1_20201207_cfwnd2AN",
+              "a2n1_20201207_fc3_1_AN",
+              "a2n1_20201207_cfslrAN",
+              "a2n1_20201207_fc2_1_AN",
+              "a2n1_20201207_fc0_1_AN",
+              "a2n1_20201207_fc6_1_AN"
+          ],
+          "parents": 11,
+          "platform_name": "dl-machine",
+          "priority": 8,
+          "processors": "1",
+          "rm_id": null,
+          "section": "TRANSFER",
+          "start": null,
+          "status": "WAITING",
+          "status_code": 0,
+          "status_color": "gray",
+          "submit": null,
+          "sync": true,
+          "title": "a2n1_20201207_TRANSFER <span class='badge' style='background-color: gray'>#WAITING</span> <span class='badge' style='background-color:#99ff66'>TARGET</span> <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>",
+          "tree_parents": [
+              "a2n1_20201207_fc0",
+              "a2n1_20201207_fc1",
+              "a2n1_20201207_fc2",
+              "a2n1_20201207_fc3",
+              "a2n1_20201207_fc4",
+              "a2n1_20201207_fc5",
+              "a2n1_20201207_fc6"
+          ],
+          "wallclock": "30:00",
+          "wrapper": null,
+          "wrapper_code": null
+      }
+  ],
+  "pkl_timestamp": 10000000,
+  "reference": {
+      "a2n1_20201207_chunk": {
+          "completed": 1,
+          "failed": 0,
+          "queuing": 0,
+          "running": 0,
+          "total": 1
+      },
+      "a2n1_20201207_fc0": {
+          "completed": 7,
+          "failed": 0,
+          "queuing": 0,
+          "running": 0,
+          "total": 8
+      },
+      "a2n1_20201207_fc1": {
+          "completed": 6,
+          "failed": 0,
+          "queuing": 0,
+          "running": 1,
+          "total": 8
+      },
+      "a2n1_20201207_fc2": {
+          "completed": 6,
+          "failed": 0,
+          "queuing": 0,
+          "running": 1,
+          "total": 8
+      },
+      "a2n1_20201207_fc3": {
+          "completed": 7,
+          "failed": 0,
+          "queuing": 0,
+          "running": 0,
+          "total": 8
+      },
+      "a2n1_20201207_fc4": {
+          "completed": 7,
+          "failed": 0,
+          "queuing": 0,
+          "running": 0,
+          "total": 8
+      },
+      "a2n1_20201207_fc5": {
+          "completed": 7,
+          "failed": 0,
+          "queuing": 0,
+          "running": 0,
+          "total": 8
+      },
+      "a2n1_20201207_fc6": {
+          "completed": 7,
+          "failed": 0,
+          "queuing": 0,
+          "running": 0,
+          "total": 8
+      },
+      "check_mark": " <span class='badge' style='background-color:#4dffa6'>&#10004;</span>",
+      "chunk_size": 1,
+      "chunk_unit": "month",
+      "completed_tag": " <span class='badge' style='background-color:%B'> %C / %T COMPLETED</span>",
+      "failed_tag": " <span class='badge' style='background-color:red'>%F FAILED</span>",
+      "packages": [],
+      "queuing_tag": " <span class='badge' style='background-color:pink'>%Q QUEUING</span>",
+      "running_tag": " <span class='badge' style='background-color:green; color:white'>%R RUNNING</span>"
+  },
+  "total": 21,
+  "tree": [
+      {
+          "children": [
+              {
+                  "children": [
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_FILTER",
+                          "title": "a2n1_20201207_FILTER <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:01 ) + 0:45:07 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_cfwnd1AN",
+                          "title": "a2n1_20201207_cfwnd1AN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:03 ) + 0:19:56 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_cfwnd2AN",
+                          "title": "a2n1_20201207_cfwnd2AN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:03 ) + 0:38:36 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_cfwnd3AN",
+                          "title": "a2n1_20201207_cfwnd3AN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:02 ) + 0:21:47 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_cfslrAN",
+                          "title": "a2n1_20201207_cfslrAN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:03 ) + 0:22:19 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_TRANSFER",
+                          "title": "a2n1_20201207_TRANSFER <span class='badge' style='background-color: gray'>#WAITING</span> <span class='badge' style='background-color:#99ff66'>TARGET</span> <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_fc0_1_FT",
+                          "title": "a2n1_20201207_fc0_1_FT <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:02 ) + 0:24:02"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_fc0_1_AN",
+                          "title": "a2n1_20201207_fc0_1_AN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:04 ) + 9:38:23"
+                      }
+                  ],
+                  "data": "Empty",
+                  "expanded": false,
+                  "folder": true,
+                  "refKey": "a2n1_20201207_fc0",
+                  "title": "a2n1_20201207_fc0 <span class='badge' style='background-color:#ffffb3'>7 / 8 COMPLETED</span>"
+              },
+              {
+                  "children": [
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_FILTER",
+                          "title": "a2n1_20201207_FILTER <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:01 ) + 0:45:07 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_cfwnd1AN",
+                          "title": "a2n1_20201207_cfwnd1AN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:03 ) + 0:19:56 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_cfwnd2AN",
+                          "title": "a2n1_20201207_cfwnd2AN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:03 ) + 0:38:36 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_cfwnd3AN",
+                          "title": "a2n1_20201207_cfwnd3AN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:02 ) + 0:21:47 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_cfslrAN",
+                          "title": "a2n1_20201207_cfslrAN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:03 ) + 0:22:19 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_TRANSFER",
+                          "title": "a2n1_20201207_TRANSFER <span class='badge' style='background-color: gray'>#WAITING</span> <span class='badge' style='background-color:#99ff66'>TARGET</span> <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_fc1_1_FT",
+                          "title": "a2n1_20201207_fc1_1_FT <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:04 ) + 2:19:45"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_fc1_1_AN",
+                          "title": "a2n1_20201207_fc1_1_AN <span class='badge' style='background-color: green'>#RUNNING</span> ~ ( 0:00:03 ) + 9:48:25"
+                      }
+                  ],
+                  "data": "Empty",
+                  "expanded": false,
+                  "folder": true,
+                  "refKey": "a2n1_20201207_fc1",
+                  "title": "a2n1_20201207_fc1 <span class='badge' style='background-color:#ffffb3'>6 / 8 COMPLETED</span> <span class='badge' style='background-color:green; color:white'>1 RUNNING</span>"
+              },
+              {
+                  "children": [
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_FILTER",
+                          "title": "a2n1_20201207_FILTER <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:01 ) + 0:45:07 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_cfwnd1AN",
+                          "title": "a2n1_20201207_cfwnd1AN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:03 ) + 0:19:56 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_cfwnd2AN",
+                          "title": "a2n1_20201207_cfwnd2AN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:03 ) + 0:38:36 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_cfwnd3AN",
+                          "title": "a2n1_20201207_cfwnd3AN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:02 ) + 0:21:47 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_cfslrAN",
+                          "title": "a2n1_20201207_cfslrAN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:03 ) + 0:22:19 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_TRANSFER",
+                          "title": "a2n1_20201207_TRANSFER <span class='badge' style='background-color: gray'>#WAITING</span> <span class='badge' style='background-color:#99ff66'>TARGET</span> <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_fc2_1_FT",
+                          "title": "a2n1_20201207_fc2_1_FT <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:01 ) + 2:20:44"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_fc2_1_AN",
+                          "title": "a2n1_20201207_fc2_1_AN <span class='badge' style='background-color: green'>#RUNNING</span> ~ ( 0:00:00 ) + 8:03:10"
+                      }
+                  ],
+                  "data": "Empty",
+                  "expanded": false,
+                  "folder": true,
+                  "refKey": "a2n1_20201207_fc2",
+                  "title": "a2n1_20201207_fc2 <span class='badge' style='background-color:#ffffb3'>6 / 8 COMPLETED</span> <span class='badge' style='background-color:green; color:white'>1 RUNNING</span>"
+              },
+              {
+                  "children": [
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_FILTER",
+                          "title": "a2n1_20201207_FILTER <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:01 ) + 0:45:07 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_cfwnd1AN",
+                          "title": "a2n1_20201207_cfwnd1AN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:03 ) + 0:19:56 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_cfwnd2AN",
+                          "title": "a2n1_20201207_cfwnd2AN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:03 ) + 0:38:36 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_cfwnd3AN",
+                          "title": "a2n1_20201207_cfwnd3AN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:02 ) + 0:21:47 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_cfslrAN",
+                          "title": "a2n1_20201207_cfslrAN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:03 ) + 0:22:19 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_TRANSFER",
+                          "title": "a2n1_20201207_TRANSFER <span class='badge' style='background-color: gray'>#WAITING</span> <span class='badge' style='background-color:#99ff66'>TARGET</span> <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_fc3_1_FT",
+                          "title": "a2n1_20201207_fc3_1_FT <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:01 ) + 0:24:39"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_fc3_1_AN",
+                          "title": "a2n1_20201207_fc3_1_AN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:02 ) + 9:11:18"
+                      }
+                  ],
+                  "data": "Empty",
+                  "expanded": false,
+                  "folder": true,
+                  "refKey": "a2n1_20201207_fc3",
+                  "title": "a2n1_20201207_fc3 <span class='badge' style='background-color:#ffffb3'>7 / 8 COMPLETED</span>"
+              },
+              {
+                  "children": [
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_FILTER",
+                          "title": "a2n1_20201207_FILTER <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:01 ) + 0:45:07 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_cfwnd1AN",
+                          "title": "a2n1_20201207_cfwnd1AN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:03 ) + 0:19:56 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_cfwnd2AN",
+                          "title": "a2n1_20201207_cfwnd2AN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:03 ) + 0:38:36 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_cfwnd3AN",
+                          "title": "a2n1_20201207_cfwnd3AN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:02 ) + 0:21:47 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_cfslrAN",
+                          "title": "a2n1_20201207_cfslrAN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:03 ) + 0:22:19 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_TRANSFER",
+                          "title": "a2n1_20201207_TRANSFER <span class='badge' style='background-color: gray'>#WAITING</span> <span class='badge' style='background-color:#99ff66'>TARGET</span> <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_fc4_1_FT",
+                          "title": "a2n1_20201207_fc4_1_FT <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:01 ) + 0:29:55"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_fc4_1_AN",
+                          "title": "a2n1_20201207_fc4_1_AN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:02 ) + 10:07:01"
+                      }
+                  ],
+                  "data": "Empty",
+                  "expanded": false,
+                  "folder": true,
+                  "refKey": "a2n1_20201207_fc4",
+                  "title": "a2n1_20201207_fc4 <span class='badge' style='background-color:#ffffb3'>7 / 8 COMPLETED</span>"
+              },
+              {
+                  "children": [
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_FILTER",
+                          "title": "a2n1_20201207_FILTER <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:01 ) + 0:45:07 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_cfwnd1AN",
+                          "title": "a2n1_20201207_cfwnd1AN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:03 ) + 0:19:56 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_cfwnd2AN",
+                          "title": "a2n1_20201207_cfwnd2AN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:03 ) + 0:38:36 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_cfwnd3AN",
+                          "title": "a2n1_20201207_cfwnd3AN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:02 ) + 0:21:47 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_cfslrAN",
+                          "title": "a2n1_20201207_cfslrAN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:03 ) + 0:22:19 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_TRANSFER",
+                          "title": "a2n1_20201207_TRANSFER <span class='badge' style='background-color: gray'>#WAITING</span> <span class='badge' style='background-color:#99ff66'>TARGET</span> <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_fc5_1_FT",
+                          "title": "a2n1_20201207_fc5_1_FT <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:02 ) + 0:08:57"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_fc5_1_AN",
+                          "title": "a2n1_20201207_fc5_1_AN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:03 ) + 9:53:01"
+                      }
+                  ],
+                  "data": "Empty",
+                  "expanded": false,
+                  "folder": true,
+                  "refKey": "a2n1_20201207_fc5",
+                  "title": "a2n1_20201207_fc5 <span class='badge' style='background-color:#ffffb3'>7 / 8 COMPLETED</span>"
+              },
+              {
+                  "children": [
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_FILTER",
+                          "title": "a2n1_20201207_FILTER <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:01 ) + 0:45:07 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_cfwnd1AN",
+                          "title": "a2n1_20201207_cfwnd1AN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:03 ) + 0:19:56 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_cfwnd2AN",
+                          "title": "a2n1_20201207_cfwnd2AN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:03 ) + 0:38:36 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_cfwnd3AN",
+                          "title": "a2n1_20201207_cfwnd3AN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:02 ) + 0:21:47 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_cfslrAN",
+                          "title": "a2n1_20201207_cfslrAN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:03 ) + 0:22:19 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_TRANSFER",
+                          "title": "a2n1_20201207_TRANSFER <span class='badge' style='background-color: gray'>#WAITING</span> <span class='badge' style='background-color:#99ff66'>TARGET</span> <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_fc6_1_FT",
+                          "title": "a2n1_20201207_fc6_1_FT <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:02 ) + 0:54:29"
+                      },
+                      {
+                          "children": [],
+                          "data": "Empty",
+                          "refKey": "a2n1_20201207_fc6_1_AN",
+                          "title": "a2n1_20201207_fc6_1_AN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:04 ) + 9:37:29"
+                      }
+                  ],
+                  "data": "Empty",
+                  "expanded": false,
+                  "folder": true,
+                  "refKey": "a2n1_20201207_fc6",
+                  "title": "a2n1_20201207_fc6 <span class='badge' style='background-color:#ffffb3'>7 / 8 COMPLETED</span>"
+              }
+          ],
+          "data": "Empty",
+          "expanded": true,
+          "folder": true,
+          "refKey": "a2n1_20201207",
+          "title": "a2n1_20201207"
+      },
+      {
+          "children": [
+              {
+                  "children": [],
+                  "data": "Empty",
+                  "refKey": "a2n1_20201207_DL",
+                  "title": "a2n1_20201207_DL <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:01:34 ) + 0:38:09 <span class='badge' style='background-color:#80d4ff'>SOURCE</span>"
+              }
+          ],
+          "data": "Empty",
+          "expanded": true,
+          "folder": true,
+          "refKey": "a2n1_20201207_chunk",
+          "title": "a2n1_20201207_chunk <span class='badge' style='background-color:yellow'>1 / 1 COMPLETED</span> <span class='badge' style='background-color:#4dffa6'>&#10004;</span>"
+      }
+  ]
+}

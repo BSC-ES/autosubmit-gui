@@ -8,8 +8,9 @@ import {
   CLEAR_STATS,
   SET_ERROR_STATS,
 } from "../types";
+import { sleep } from "../utils";
 
-import { AUTOSUBMIT_API_SOURCE, DEBUG } from "../vars";
+import { AUTOSUBMIT_API_SOURCE, DEBUG, NOAPI } from "../vars";
 
 const StatsState = (props) => {
   const initialState = {
@@ -39,9 +40,17 @@ const StatsState = (props) => {
 
     setLoading();
     //cleanGraphData();
-    const res = await axios.get(
-      `${localserver}/stats/${expid}/${hours}/${type}`
-    );
+    let res = null;
+    if (NOAPI) {
+      res = {data:null};
+      res.data = require("../data/stats_"+String(expid)+".json")
+      sleep(1000);
+    } else {
+      res = await axios.get(
+        `${localserver}/stats/${expid}/${hours}/${type}`
+      );
+    }
+    
     let result = [];
     var requestResult = null;
     let ticks = [];

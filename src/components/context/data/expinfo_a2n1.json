@@ -1,0 +1,21 @@
+{
+  "branch": "master",
+  "completed_jobs": 18,
+  "db_historic_version": null,
+  "description": "non-production S2S wf",
+  "error": false,
+  "error_message": "None",
+  "expid": "a2n1",
+  "hpc": "dl-machine",
+  "model": "https://earth.bsc.es/gitlab/es/S2S4E-backend-BSC.git",
+  "owner": "lpalma",
+  "owner_id": 2413,
+  "path": "/esarchive/autosubmit/a2n1",
+  "pkl_timestamp": 1606208678,
+  "running": false,
+  "time_last_access": "2020-11-24 01:21:32",
+  "time_last_mod": "2020-10-26 14:19:23",
+  "total_jobs": 21,
+  "updateTime": 10,
+  "version": "3.11.0-hotfix"
+}

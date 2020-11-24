@@ -1,0 +1,23 @@
+{
+  "ASYPD": 67.3747,
+  "CHSY": 2383.0,
+  "JPSY": 0.0,
+  "Parallelization": 187,
+  "SYPD": 94.1669,
+  "considered": [
+      {
+          "CHSY": 2383.0,
+          "JPSY": 0.0,
+          "energy": 0,
+          "name": "a39t_20150101_fc00_1_SIM",
+          "queue": 18243,
+          "running": 45876
+      }
+  ],
+  "error": false,
+  "error_message": "",
+  "warnings_job_data": [
+      "Energy | There is not enough information to compute a reliable result.",
+      "Considered | Job a39t_20150101_fc00_1_SIM (Package a39t_ASThread_16061446272634_187_5) has no energy information and is not going to be considered for energy calculations."
+  ]
+}

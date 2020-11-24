@@ -1,0 +1,610 @@
+{
+  "error": false,
+  "error_message": "",
+  "found": true,
+  "lastModified": "2020-11-24 10:24:45",
+  "logcontent": [
+      {
+          "content": "2020-11-24 11:24:02,765 Number of jobs available: 7",
+          "index": 0
+      },
+      {
+          "content": "2020-11-24 11:24:02,765 ",
+          "index": 1
+      },
+      {
+          "content": "Jobs ready for dl-machine: 0",
+          "index": 2
+      },
+      {
+          "content": "2020-11-24 11:24:02,766 Number of jobs ready: 0",
+          "index": 3
+      },
+      {
+          "content": "2020-11-24 11:24:02,766 Number of jobs available: 7",
+          "index": 4
+      },
+      {
+          "content": "2020-11-24 11:24:02,766 ",
+          "index": 5
+      },
+      {
+          "content": "Jobs ready for power9: 0",
+          "index": 6
+      },
+      {
+          "content": "2020-11-24 11:24:02,766 Number of jobs ready: 0",
+          "index": 7
+      },
+      {
+          "content": "2020-11-24 11:24:02,766 Number of jobs available: 7",
+          "index": 8
+      },
+      {
+          "content": "2020-11-24 11:24:12,774 Reloading parameters...",
+          "index": 9
+      },
+      {
+          "content": "2020-11-24 11:24:12,782 Loading parameters...",
+          "index": 10
+      },
+      {
+          "content": "2020-11-24 11:24:12,783 Loading project parameters...",
+          "index": 11
+      },
+      {
+          "content": "2020-11-24 11:24:12,784 ",
+          "index": 12
+      },
+      {
+          "content": "",
+          "index": 13
+      },
+      {
+          "content": "3 of 21 jobs remaining (11:24)",
+          "index": 14
+      },
+      {
+          "content": "2020-11-24 11:24:12,784 Sleep: 10",
+          "index": 15
+      },
+      {
+          "content": "2020-11-24 11:24:12,784 Number of retrials: 0",
+          "index": 16
+      },
+      {
+          "content": "2020-11-24 11:24:12,784 WRAPPER CHECK TIME = 10",
+          "index": 17
+      },
+      {
+          "content": "2020-11-24 11:24:13,302 Command bjobs 2166072 in nord3 successful with out message: JOBID   USER    STAT  QUEUE      FROM_HOST   EXEC_HOST   JOB_NAME   SUBMIT_TIME",
+          "index": 18
+      },
+      {
+          "content": "2166072 bsc3203 RUN   bsc_es     login3      32*s01      *_fc2_1_AN Nov 24 03:31",
+          "index": 19
+      },
+      {
+          "content": "",
+          "index": 20
+      },
+      {
+          "content": "2020-11-24 11:24:13,302 Output JOBID   USER    STAT  QUEUE      FROM_HOST   EXEC_HOST   JOB_NAME   SUBMIT_TIME",
+          "index": 21
+      },
+      {
+          "content": "2166072 bsc3203 RUN   bsc_es     login3      32*s01      *_fc2_1_AN Nov 24 03:31",
+          "index": 22
+      },
+      {
+          "content": "",
+          "index": 23
+      },
+      {
+          "content": "2020-11-24 11:24:13,302 Successful check job command: bjobs 2166072",
+          "index": 24
+      },
+      {
+          "content": "2020-11-24 11:24:13,302 Output JOBID   USER    STAT  QUEUE      FROM_HOST   EXEC_HOST   JOB_NAME   SUBMIT_TIME",
+          "index": 25
+      },
+      {
+          "content": "2166072 bsc3203 RUN   bsc_es     login3      32*s01      *_fc2_1_AN Nov 24 03:31",
+          "index": 26
+      },
+      {
+          "content": "",
+          "index": 27
+      },
+      {
+          "content": "2020-11-24 11:24:13,302 Job a2n1_20201207_fc2_1_AN is RUNNING",
+          "index": 28
+      },
+      {
+          "content": "2020-11-24 11:24:13,819 Command bjobs 2166065 in nord3 successful with out message: JOBID   USER    STAT  QUEUE      FROM_HOST   EXEC_HOST   JOB_NAME   SUBMIT_TIME",
+          "index": 29
+      },
+      {
+          "content": "2166065 bsc3203 RUN   bsc_es     login3      32*s01      *_fc1_1_AN Nov 24 01:46",
+          "index": 30
+      },
+      {
+          "content": "",
+          "index": 31
+      },
+      {
+          "content": "2020-11-24 11:24:13,820 Output JOBID   USER    STAT  QUEUE      FROM_HOST   EXEC_HOST   JOB_NAME   SUBMIT_TIME",
+          "index": 32
+      },
+      {
+          "content": "2166065 bsc3203 RUN   bsc_es     login3      32*s01      *_fc1_1_AN Nov 24 01:46",
+          "index": 33
+      },
+      {
+          "content": "",
+          "index": 34
+      },
+      {
+          "content": "2020-11-24 11:24:13,820 Successful check job command: bjobs 2166065",
+          "index": 35
+      },
+      {
+          "content": "2020-11-24 11:24:13,820 Output JOBID   USER    STAT  QUEUE      FROM_HOST   EXEC_HOST   JOB_NAME   SUBMIT_TIME",
+          "index": 36
+      },
+      {
+          "content": "2166065 bsc3203 RUN   bsc_es     login3      32*s01      *_fc1_1_AN Nov 24 01:46",
+          "index": 37
+      },
+      {
+          "content": "",
+          "index": 38
+      },
+      {
+          "content": "2020-11-24 11:24:13,820 Job a2n1_20201207_fc1_1_AN is RUNNING",
+          "index": 39
+      },
+      {
+          "content": "2020-11-24 11:24:13,822 Updating FAILED jobs",
+          "index": 40
+      },
+      {
+          "content": "2020-11-24 11:24:13,822 Update finished",
+          "index": 41
+      },
+      {
+          "content": "2020-11-24 11:24:13,822 Updating WAITING jobs",
+          "index": 42
+      },
+      {
+          "content": "2020-11-24 11:24:13,822 Update finished",
+          "index": 43
+      },
+      {
+          "content": "2020-11-24 11:24:13,823 ",
+          "index": 44
+      },
+      {
+          "content": "Jobs ready for nord3: 0",
+          "index": 45
+      },
+      {
+          "content": "2020-11-24 11:24:13,823 Number of jobs ready: 0",
+          "index": 46
+      },
+      {
+          "content": "2020-11-24 11:24:13,823 Number of jobs available: 7",
+          "index": 47
+      },
+      {
+          "content": "2020-11-24 11:24:13,823 ",
+          "index": 48
+      },
+      {
+          "content": "Jobs ready for dl-machine: 0",
+          "index": 49
+      },
+      {
+          "content": "2020-11-24 11:24:13,824 Number of jobs ready: 0",
+          "index": 50
+      },
+      {
+          "content": "2020-11-24 11:24:13,824 Number of jobs available: 7",
+          "index": 51
+      },
+      {
+          "content": "2020-11-24 11:24:13,824 ",
+          "index": 52
+      },
+      {
+          "content": "Jobs ready for power9: 0",
+          "index": 53
+      },
+      {
+          "content": "2020-11-24 11:24:13,825 Number of jobs ready: 0",
+          "index": 54
+      },
+      {
+          "content": "2020-11-24 11:24:13,825 Number of jobs available: 7",
+          "index": 55
+      },
+      {
+          "content": "2020-11-24 11:24:23,831 Reloading parameters...",
+          "index": 56
+      },
+      {
+          "content": "2020-11-24 11:24:23,840 Loading parameters...",
+          "index": 57
+      },
+      {
+          "content": "2020-11-24 11:24:23,841 Loading project parameters...",
+          "index": 58
+      },
+      {
+          "content": "2020-11-24 11:24:23,841 ",
+          "index": 59
+      },
+      {
+          "content": "",
+          "index": 60
+      },
+      {
+          "content": "3 of 21 jobs remaining (11:24)",
+          "index": 61
+      },
+      {
+          "content": "2020-11-24 11:24:23,842 Sleep: 10",
+          "index": 62
+      },
+      {
+          "content": "2020-11-24 11:24:23,842 Number of retrials: 0",
+          "index": 63
+      },
+      {
+          "content": "2020-11-24 11:24:23,842 WRAPPER CHECK TIME = 10",
+          "index": 64
+      },
+      {
+          "content": "2020-11-24 11:24:24,310 Command bjobs 2166072 in nord3 successful with out message: JOBID   USER    STAT  QUEUE      FROM_HOST   EXEC_HOST   JOB_NAME   SUBMIT_TIME",
+          "index": 65
+      },
+      {
+          "content": "2166072 bsc3203 RUN   bsc_es     login3      32*s01      *_fc2_1_AN Nov 24 03:31",
+          "index": 66
+      },
+      {
+          "content": "",
+          "index": 67
+      },
+      {
+          "content": "2020-11-24 11:24:24,310 Output JOBID   USER    STAT  QUEUE      FROM_HOST   EXEC_HOST   JOB_NAME   SUBMIT_TIME",
+          "index": 68
+      },
+      {
+          "content": "2166072 bsc3203 RUN   bsc_es     login3      32*s01      *_fc2_1_AN Nov 24 03:31",
+          "index": 69
+      },
+      {
+          "content": "",
+          "index": 70
+      },
+      {
+          "content": "2020-11-24 11:24:24,310 Successful check job command: bjobs 2166072",
+          "index": 71
+      },
+      {
+          "content": "2020-11-24 11:24:24,310 Output JOBID   USER    STAT  QUEUE      FROM_HOST   EXEC_HOST   JOB_NAME   SUBMIT_TIME",
+          "index": 72
+      },
+      {
+          "content": "2166072 bsc3203 RUN   bsc_es     login3      32*s01      *_fc2_1_AN Nov 24 03:31",
+          "index": 73
+      },
+      {
+          "content": "",
+          "index": 74
+      },
+      {
+          "content": "2020-11-24 11:24:24,310 Job a2n1_20201207_fc2_1_AN is RUNNING",
+          "index": 75
+      },
+      {
+          "content": "2020-11-24 11:24:24,777 Command bjobs 2166065 in nord3 successful with out message: JOBID   USER    STAT  QUEUE      FROM_HOST   EXEC_HOST   JOB_NAME   SUBMIT_TIME",
+          "index": 76
+      },
+      {
+          "content": "2166065 bsc3203 RUN   bsc_es     login3      32*s01      *_fc1_1_AN Nov 24 01:46",
+          "index": 77
+      },
+      {
+          "content": "",
+          "index": 78
+      },
+      {
+          "content": "2020-11-24 11:24:24,778 Output JOBID   USER    STAT  QUEUE      FROM_HOST   EXEC_HOST   JOB_NAME   SUBMIT_TIME",
+          "index": 79
+      },
+      {
+          "content": "2166065 bsc3203 RUN   bsc_es     login3      32*s01      *_fc1_1_AN Nov 24 01:46",
+          "index": 80
+      },
+      {
+          "content": "",
+          "index": 81
+      },
+      {
+          "content": "2020-11-24 11:24:24,778 Successful check job command: bjobs 2166065",
+          "index": 82
+      },
+      {
+          "content": "2020-11-24 11:24:24,778 Output JOBID   USER    STAT  QUEUE      FROM_HOST   EXEC_HOST   JOB_NAME   SUBMIT_TIME",
+          "index": 83
+      },
+      {
+          "content": "2166065 bsc3203 RUN   bsc_es     login3      32*s01      *_fc1_1_AN Nov 24 01:46",
+          "index": 84
+      },
+      {
+          "content": "",
+          "index": 85
+      },
+      {
+          "content": "2020-11-24 11:24:24,778 Job a2n1_20201207_fc1_1_AN is RUNNING",
+          "index": 86
+      },
+      {
+          "content": "2020-11-24 11:24:24,779 Updating FAILED jobs",
+          "index": 87
+      },
+      {
+          "content": "2020-11-24 11:24:24,779 Update finished",
+          "index": 88
+      },
+      {
+          "content": "2020-11-24 11:24:24,779 Updating WAITING jobs",
+          "index": 89
+      },
+      {
+          "content": "2020-11-24 11:24:24,779 Update finished",
+          "index": 90
+      },
+      {
+          "content": "2020-11-24 11:24:24,780 ",
+          "index": 91
+      },
+      {
+          "content": "Jobs ready for nord3: 0",
+          "index": 92
+      },
+      {
+          "content": "2020-11-24 11:24:24,780 Number of jobs ready: 0",
+          "index": 93
+      },
+      {
+          "content": "2020-11-24 11:24:24,780 Number of jobs available: 7",
+          "index": 94
+      },
+      {
+          "content": "2020-11-24 11:24:24,780 ",
+          "index": 95
+      },
+      {
+          "content": "Jobs ready for dl-machine: 0",
+          "index": 96
+      },
+      {
+          "content": "2020-11-24 11:24:24,781 Number of jobs ready: 0",
+          "index": 97
+      },
+      {
+          "content": "2020-11-24 11:24:24,781 Number of jobs available: 7",
+          "index": 98
+      },
+      {
+          "content": "2020-11-24 11:24:24,781 ",
+          "index": 99
+      },
+      {
+          "content": "Jobs ready for power9: 0",
+          "index": 100
+      },
+      {
+          "content": "2020-11-24 11:24:24,782 Number of jobs ready: 0",
+          "index": 101
+      },
+      {
+          "content": "2020-11-24 11:24:24,782 Number of jobs available: 7",
+          "index": 102
+      },
+      {
+          "content": "2020-11-24 11:24:34,790 Reloading parameters...",
+          "index": 103
+      },
+      {
+          "content": "2020-11-24 11:24:34,800 Loading parameters...",
+          "index": 104
+      },
+      {
+          "content": "2020-11-24 11:24:34,801 Loading project parameters...",
+          "index": 105
+      },
+      {
+          "content": "2020-11-24 11:24:34,802 ",
+          "index": 106
+      },
+      {
+          "content": "",
+          "index": 107
+      },
+      {
+          "content": "3 of 21 jobs remaining (11:24)",
+          "index": 108
+      },
+      {
+          "content": "2020-11-24 11:24:34,802 Sleep: 10",
+          "index": 109
+      },
+      {
+          "content": "2020-11-24 11:24:34,802 Number of retrials: 0",
+          "index": 110
+      },
+      {
+          "content": "2020-11-24 11:24:34,802 WRAPPER CHECK TIME = 10",
+          "index": 111
+      },
+      {
+          "content": "2020-11-24 11:24:35,320 Command bjobs 2166072 in nord3 successful with out message: JOBID   USER    STAT  QUEUE      FROM_HOST   EXEC_HOST   JOB_NAME   SUBMIT_TIME",
+          "index": 112
+      },
+      {
+          "content": "2166072 bsc3203 RUN   bsc_es     login3      32*s01      *_fc2_1_AN Nov 24 03:31",
+          "index": 113
+      },
+      {
+          "content": "",
+          "index": 114
+      },
+      {
+          "content": "2020-11-24 11:24:35,320 Output JOBID   USER    STAT  QUEUE      FROM_HOST   EXEC_HOST   JOB_NAME   SUBMIT_TIME",
+          "index": 115
+      },
+      {
+          "content": "2166072 bsc3203 RUN   bsc_es     login3      32*s01      *_fc2_1_AN Nov 24 03:31",
+          "index": 116
+      },
+      {
+          "content": "",
+          "index": 117
+      },
+      {
+          "content": "2020-11-24 11:24:35,320 Successful check job command: bjobs 2166072",
+          "index": 118
+      },
+      {
+          "content": "2020-11-24 11:24:35,320 Output JOBID   USER    STAT  QUEUE      FROM_HOST   EXEC_HOST   JOB_NAME   SUBMIT_TIME",
+          "index": 119
+      },
+      {
+          "content": "2166072 bsc3203 RUN   bsc_es     login3      32*s01      *_fc2_1_AN Nov 24 03:31",
+          "index": 120
+      },
+      {
+          "content": "",
+          "index": 121
+      },
+      {
+          "content": "2020-11-24 11:24:35,320 Job a2n1_20201207_fc2_1_AN is RUNNING",
+          "index": 122
+      },
+      {
+          "content": "2020-11-24 11:24:35,838 Command bjobs 2166065 in nord3 successful with out message: JOBID   USER    STAT  QUEUE      FROM_HOST   EXEC_HOST   JOB_NAME   SUBMIT_TIME",
+          "index": 123
+      },
+      {
+          "content": "2166065 bsc3203 RUN   bsc_es     login3      32*s01      *_fc1_1_AN Nov 24 01:46",
+          "index": 124
+      },
+      {
+          "content": "",
+          "index": 125
+      },
+      {
+          "content": "2020-11-24 11:24:35,839 Output JOBID   USER    STAT  QUEUE      FROM_HOST   EXEC_HOST   JOB_NAME   SUBMIT_TIME",
+          "index": 126
+      },
+      {
+          "content": "2166065 bsc3203 RUN   bsc_es     login3      32*s01      *_fc1_1_AN Nov 24 01:46",
+          "index": 127
+      },
+      {
+          "content": "",
+          "index": 128
+      },
+      {
+          "content": "2020-11-24 11:24:35,839 Successful check job command: bjobs 2166065",
+          "index": 129
+      },
+      {
+          "content": "2020-11-24 11:24:35,839 Output JOBID   USER    STAT  QUEUE      FROM_HOST   EXEC_HOST   JOB_NAME   SUBMIT_TIME",
+          "index": 130
+      },
+      {
+          "content": "2166065 bsc3203 RUN   bsc_es     login3      32*s01      *_fc1_1_AN Nov 24 01:46",
+          "index": 131
+      },
+      {
+          "content": "",
+          "index": 132
+      },
+      {
+          "content": "2020-11-24 11:24:35,839 Job a2n1_20201207_fc1_1_AN is RUNNING",
+          "index": 133
+      },
+      {
+          "content": "2020-11-24 11:24:35,840 Updating FAILED jobs",
+          "index": 134
+      },
+      {
+          "content": "2020-11-24 11:24:35,840 Update finished",
+          "index": 135
+      },
+      {
+          "content": "2020-11-24 11:24:35,840 Updating WAITING jobs",
+          "index": 136
+      },
+      {
+          "content": "2020-11-24 11:24:35,840 Update finished",
+          "index": 137
+      },
+      {
+          "content": "2020-11-24 11:24:35,841 ",
+          "index": 138
+      },
+      {
+          "content": "Jobs ready for nord3: 0",
+          "index": 139
+      },
+      {
+          "content": "2020-11-24 11:24:35,841 Number of jobs ready: 0",
+          "index": 140
+      },
+      {
+          "content": "2020-11-24 11:24:35,841 Number of jobs available: 7",
+          "index": 141
+      },
+      {
+          "content": "2020-11-24 11:24:35,841 ",
+          "index": 142
+      },
+      {
+          "content": "Jobs ready for dl-machine: 0",
+          "index": 143
+      },
+      {
+          "content": "2020-11-24 11:24:35,842 Number of jobs ready: 0",
+          "index": 144
+      },
+      {
+          "content": "2020-11-24 11:24:35,842 Number of jobs available: 7",
+          "index": 145
+      },
+      {
+          "content": "2020-11-24 11:24:35,842 ",
+          "index": 146
+      },
+      {
+          "content": "Jobs ready for power9: 0",
+          "index": 147
+      },
+      {
+          "content": "2020-11-24 11:24:35,843 Number of jobs ready: 0",
+          "index": 148
+      },
+      {
+          "content": "2020-11-24 11:24:35,843 Number of jobs available: 7",
+          "index": 149
+      }
+  ],
+  "logfile": "20201123_220138_run.log",
+  "timeStamp": 1606213485.824098
+}

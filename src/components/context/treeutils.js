@@ -1,3 +1,6 @@
+// runData: array of jobs from previous run
+// treedata: current experiment data (visualized in tree view)
+// fancyTree: fancyTree object from states
 export const updateTreeData = (runData, treedata, fancyTree) => {
   //const updatedData = {};
   // console.log(fancyTree);

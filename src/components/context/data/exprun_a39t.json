@@ -1,0 +1,610 @@
+{
+  "error": false,
+  "error_message": "",
+  "found": true,
+  "lastModified": "2020-11-24 10:25:40",
+  "logcontent": [
+      {
+          "content": "2020-11-24 11:24:53,496 Sleep: 10",
+          "index": 0
+      },
+      {
+          "content": "2020-11-24 11:24:53,496 Number of retrials: 0",
+          "index": 1
+      },
+      {
+          "content": "2020-11-24 11:24:53,496 WRAPPER CHECK TIME = 10",
+          "index": 2
+      },
+      {
+          "content": "2020-11-24 11:24:53,501 Checking wrapper job with id 12712661",
+          "index": 3
+      },
+      {
+          "content": "2020-11-24 11:24:54,319 Command sacct -n -j 12712661 -o \"State\" in mn4prace successful with out message:    RUNNING ",
+          "index": 4
+      },
+      {
+          "content": "   RUNNING ",
+          "index": 5
+      },
+      {
+          "content": " COMPLETED ",
+          "index": 6
+      },
+      {
+          "content": "   RUNNING ",
+          "index": 7
+      },
+      {
+          "content": "",
+          "index": 8
+      },
+      {
+          "content": "2020-11-24 11:24:54,319 Output    RUNNING ",
+          "index": 9
+      },
+      {
+          "content": "   RUNNING ",
+          "index": 10
+      },
+      {
+          "content": " COMPLETED ",
+          "index": 11
+      },
+      {
+          "content": "   RUNNING ",
+          "index": 12
+      },
+      {
+          "content": "",
+          "index": 13
+      },
+      {
+          "content": "2020-11-24 11:24:54,319 Successful check job command: sacct -n -j 12712661 -o \"State\"",
+          "index": 14
+      },
+      {
+          "content": "2020-11-24 11:24:54,319 Output    RUNNING ",
+          "index": 15
+      },
+      {
+          "content": "   RUNNING ",
+          "index": 16
+      },
+      {
+          "content": " COMPLETED ",
+          "index": 17
+      },
+      {
+          "content": "   RUNNING ",
+          "index": 18
+      },
+      {
+          "content": "",
+          "index": 19
+      },
+      {
+          "content": "2020-11-24 11:24:54,319 Wrapper job a39t_ASThread_16061446272634_187_5 is RUNNING",
+          "index": 20
+      },
+      {
+          "content": "2020-11-24 11:25:04,330 Checking inner jobs status",
+          "index": 21
+      },
+      {
+          "content": "2020-11-24 11:25:05,099 Command cd /gpfs/scratch/pr1eld00/pr1eld06/a39t/LOG_a39t; for job in a39t_20150101_fc00_2_SIM a39t_20150101_fc00_3_SIM a39t_20150101_fc00_4_SIM a39t_20150101_fc00_5_SIM; do echo ${job} $(head ${job}_STAT); done in mn4prace warning: head: cannot open 'a39t_20150101_fc00_3_SIM_STAT' for reading: No such file or directory",
+          "index": 22
+      },
+      {
+          "content": "head: cannot open 'a39t_20150101_fc00_4_SIM_STAT' for reading: No such file or directory",
+          "index": 23
+      },
+      {
+          "content": "head: cannot open 'a39t_20150101_fc00_5_SIM_STAT' for reading: No such file or directory",
+          "index": 24
+      },
+      {
+          "content": "",
+          "index": 25
+      },
+      {
+          "content": "2020-11-24 11:25:05,099 Command cd /gpfs/scratch/pr1eld00/pr1eld06/a39t/LOG_a39t; for job in a39t_20150101_fc00_2_SIM a39t_20150101_fc00_3_SIM a39t_20150101_fc00_4_SIM a39t_20150101_fc00_5_SIM; do echo ${job} $(head ${job}_STAT); done in mn4prace successful with out message: a39t_20150101_fc00_2_SIM 1606208756",
+          "index": 26
+      },
+      {
+          "content": "a39t_20150101_fc00_3_SIM",
+          "index": 27
+      },
+      {
+          "content": "a39t_20150101_fc00_4_SIM",
+          "index": 28
+      },
+      {
+          "content": "a39t_20150101_fc00_5_SIM",
+          "index": 29
+      },
+      {
+          "content": "",
+          "index": 30
+      },
+      {
+          "content": "2020-11-24 11:25:05,100 Job a39t_20150101_fc00_2_SIM is RUNNING",
+          "index": 31
+      },
+      {
+          "content": "2020-11-24 11:25:05,101 Job a39t_20150101_fc00_3_SIM is SUBMITTED and waiting for dependencies",
+          "index": 32
+      },
+      {
+          "content": "2020-11-24 11:25:05,101 Job a39t_20150101_fc00_4_SIM is SUBMITTED and waiting for dependencies",
+          "index": 33
+      },
+      {
+          "content": "2020-11-24 11:25:05,101 Job a39t_20150101_fc00_5_SIM is SUBMITTED and waiting for dependencies",
+          "index": 34
+      },
+      {
+          "content": "2020-11-24 11:25:05,919 Command find /gpfs/scratch/pr1eld00/pr1eld06/a39t/LOG_a39t  -name \\*a39t_20150101_fc00_2_SIM_COMPLETED in mn4prace successful with out message: ",
+          "index": 35
+      },
+      {
+          "content": "2020-11-24 11:25:05,933 Updating FAILED jobs",
+          "index": 36
+      },
+      {
+          "content": "2020-11-24 11:25:05,934 Update finished",
+          "index": 37
+      },
+      {
+          "content": "2020-11-24 11:25:05,934 Updating WAITING jobs",
+          "index": 38
+      },
+      {
+          "content": "2020-11-24 11:25:05,935 Update finished",
+          "index": 39
+      },
+      {
+          "content": "2020-11-24 11:25:05,938 Saving JobList: /esarchive/autosubmit/a39t/pkl/job_list_a39t.pkl",
+          "index": 40
+      },
+      {
+          "content": "2020-11-24 11:25:05,966 Job list saved",
+          "index": 41
+      },
+      {
+          "content": "2020-11-24 11:25:05,996 ",
+          "index": 42
+      },
+      {
+          "content": "Jobs ready for marenostrum4: 0",
+          "index": 43
+      },
+      {
+          "content": "2020-11-24 11:25:06,004 Number of jobs ready: 0",
+          "index": 44
+      },
+      {
+          "content": "2020-11-24 11:25:06,004 Number of jobs available: 27",
+          "index": 45
+      },
+      {
+          "content": "2020-11-24 11:25:06,007 ",
+          "index": 46
+      },
+      {
+          "content": "Jobs ready for cte-power: 0",
+          "index": 47
+      },
+      {
+          "content": "2020-11-24 11:25:06,014 Number of jobs ready: 0",
+          "index": 48
+      },
+      {
+          "content": "2020-11-24 11:25:06,014 Number of jobs available: 30",
+          "index": 49
+      },
+      {
+          "content": "2020-11-24 11:25:06,018 ",
+          "index": 50
+      },
+      {
+          "content": "Jobs ready for local: 0",
+          "index": 51
+      },
+      {
+          "content": "2020-11-24 11:25:06,024 Number of jobs ready: 0",
+          "index": 52
+      },
+      {
+          "content": "2020-11-24 11:25:06,025 Number of jobs available: 30",
+          "index": 53
+      },
+      {
+          "content": "2020-11-24 11:25:06,028 ",
+          "index": 54
+      },
+      {
+          "content": "Jobs ready for transfer_node: 0",
+          "index": 55
+      },
+      {
+          "content": "2020-11-24 11:25:06,035 Number of jobs ready: 0",
+          "index": 56
+      },
+      {
+          "content": "2020-11-24 11:25:06,035 Number of jobs available: 30",
+          "index": 57
+      },
+      {
+          "content": "2020-11-24 11:25:16,041 Reloading parameters...",
+          "index": 58
+      },
+      {
+          "content": "2020-11-24 11:25:16,057 Loading parameters...",
+          "index": 59
+      },
+      {
+          "content": "2020-11-24 11:25:16,058 Loading project parameters...",
+          "index": 60
+      },
+      {
+          "content": "2020-11-24 11:25:16,060 ",
+          "index": 61
+      },
+      {
+          "content": "",
+          "index": 62
+      },
+      {
+          "content": "367 of 375 jobs remaining (11:25)",
+          "index": 63
+      },
+      {
+          "content": "2020-11-24 11:25:16,061 Sleep: 10",
+          "index": 64
+      },
+      {
+          "content": "2020-11-24 11:25:16,061 Number of retrials: 0",
+          "index": 65
+      },
+      {
+          "content": "2020-11-24 11:25:16,061 WRAPPER CHECK TIME = 10",
+          "index": 66
+      },
+      {
+          "content": "2020-11-24 11:25:16,065 Checking wrapper job with id 12712661",
+          "index": 67
+      },
+      {
+          "content": "2020-11-24 11:25:16,884 Command sacct -n -j 12712661 -o \"State\" in mn4prace successful with out message:    RUNNING ",
+          "index": 68
+      },
+      {
+          "content": "   RUNNING ",
+          "index": 69
+      },
+      {
+          "content": " COMPLETED ",
+          "index": 70
+      },
+      {
+          "content": "   RUNNING ",
+          "index": 71
+      },
+      {
+          "content": "",
+          "index": 72
+      },
+      {
+          "content": "2020-11-24 11:25:16,884 Output    RUNNING ",
+          "index": 73
+      },
+      {
+          "content": "   RUNNING ",
+          "index": 74
+      },
+      {
+          "content": " COMPLETED ",
+          "index": 75
+      },
+      {
+          "content": "   RUNNING ",
+          "index": 76
+      },
+      {
+          "content": "",
+          "index": 77
+      },
+      {
+          "content": "2020-11-24 11:25:16,884 Successful check job command: sacct -n -j 12712661 -o \"State\"",
+          "index": 78
+      },
+      {
+          "content": "2020-11-24 11:25:16,884 Output    RUNNING ",
+          "index": 79
+      },
+      {
+          "content": "   RUNNING ",
+          "index": 80
+      },
+      {
+          "content": " COMPLETED ",
+          "index": 81
+      },
+      {
+          "content": "   RUNNING ",
+          "index": 82
+      },
+      {
+          "content": "",
+          "index": 83
+      },
+      {
+          "content": "2020-11-24 11:25:16,884 Wrapper job a39t_ASThread_16061446272634_187_5 is RUNNING",
+          "index": 84
+      },
+      {
+          "content": "2020-11-24 11:25:26,895 Checking inner jobs status",
+          "index": 85
+      },
+      {
+          "content": "2020-11-24 11:25:27,669 Command cd /gpfs/scratch/pr1eld00/pr1eld06/a39t/LOG_a39t; for job in a39t_20150101_fc00_2_SIM a39t_20150101_fc00_3_SIM a39t_20150101_fc00_4_SIM a39t_20150101_fc00_5_SIM; do echo ${job} $(head ${job}_STAT); done in mn4prace warning: head: cannot open 'a39t_20150101_fc00_3_SIM_STAT' for reading: No such file or directory",
+          "index": 86
+      },
+      {
+          "content": "head: cannot open 'a39t_20150101_fc00_4_SIM_STAT' for reading: No such file or directory",
+          "index": 87
+      },
+      {
+          "content": "",
+          "index": 88
+      },
+      {
+          "content": "head: cannot open 'a39t_20150101_fc00_5_SIM_STAT' for reading: No such file or directory",
+          "index": 89
+      },
+      {
+          "content": "",
+          "index": 90
+      },
+      {
+          "content": "2020-11-24 11:25:27,670 Command cd /gpfs/scratch/pr1eld00/pr1eld06/a39t/LOG_a39t; for job in a39t_20150101_fc00_2_SIM a39t_20150101_fc00_3_SIM a39t_20150101_fc00_4_SIM a39t_20150101_fc00_5_SIM; do echo ${job} $(head ${job}_STAT); done in mn4prace successful with out message: a39t_20150101_fc00_2_SIM 1606208756",
+          "index": 91
+      },
+      {
+          "content": "a39t_20150101_fc00_3_SIM",
+          "index": 92
+      },
+      {
+          "content": "a39t_20150101_fc00_4_SIM",
+          "index": 93
+      },
+      {
+          "content": "a39t_20150101_fc00_5_SIM",
+          "index": 94
+      },
+      {
+          "content": "",
+          "index": 95
+      },
+      {
+          "content": "2020-11-24 11:25:27,670 Job a39t_20150101_fc00_2_SIM is RUNNING",
+          "index": 96
+      },
+      {
+          "content": "2020-11-24 11:25:27,670 Job a39t_20150101_fc00_3_SIM is SUBMITTED and waiting for dependencies",
+          "index": 97
+      },
+      {
+          "content": "2020-11-24 11:25:27,670 Job a39t_20150101_fc00_4_SIM is SUBMITTED and waiting for dependencies",
+          "index": 98
+      },
+      {
+          "content": "2020-11-24 11:25:27,670 Job a39t_20150101_fc00_5_SIM is SUBMITTED and waiting for dependencies",
+          "index": 99
+      },
+      {
+          "content": "2020-11-24 11:25:28,438 Command find /gpfs/scratch/pr1eld00/pr1eld06/a39t/LOG_a39t  -name \\*a39t_20150101_fc00_2_SIM_COMPLETED in mn4prace successful with out message: ",
+          "index": 100
+      },
+      {
+          "content": "2020-11-24 11:25:28,451 Updating FAILED jobs",
+          "index": 101
+      },
+      {
+          "content": "2020-11-24 11:25:28,452 Update finished",
+          "index": 102
+      },
+      {
+          "content": "2020-11-24 11:25:28,452 Updating WAITING jobs",
+          "index": 103
+      },
+      {
+          "content": "2020-11-24 11:25:28,453 Update finished",
+          "index": 104
+      },
+      {
+          "content": "2020-11-24 11:25:28,455 Saving JobList: /esarchive/autosubmit/a39t/pkl/job_list_a39t.pkl",
+          "index": 105
+      },
+      {
+          "content": "2020-11-24 11:25:28,483 Job list saved",
+          "index": 106
+      },
+      {
+          "content": "2020-11-24 11:25:28,487 ",
+          "index": 107
+      },
+      {
+          "content": "Jobs ready for marenostrum4: 0",
+          "index": 108
+      },
+      {
+          "content": "2020-11-24 11:25:28,496 Number of jobs ready: 0",
+          "index": 109
+      },
+      {
+          "content": "2020-11-24 11:25:28,496 Number of jobs available: 27",
+          "index": 110
+      },
+      {
+          "content": "2020-11-24 11:25:28,499 ",
+          "index": 111
+      },
+      {
+          "content": "Jobs ready for cte-power: 0",
+          "index": 112
+      },
+      {
+          "content": "2020-11-24 11:25:28,506 Number of jobs ready: 0",
+          "index": 113
+      },
+      {
+          "content": "2020-11-24 11:25:28,506 Number of jobs available: 30",
+          "index": 114
+      },
+      {
+          "content": "2020-11-24 11:25:28,509 ",
+          "index": 115
+      },
+      {
+          "content": "Jobs ready for local: 0",
+          "index": 116
+      },
+      {
+          "content": "2020-11-24 11:25:28,517 Number of jobs ready: 0",
+          "index": 117
+      },
+      {
+          "content": "2020-11-24 11:25:28,517 Number of jobs available: 30",
+          "index": 118
+      },
+      {
+          "content": "2020-11-24 11:25:28,520 ",
+          "index": 119
+      },
+      {
+          "content": "Jobs ready for transfer_node: 0",
+          "index": 120
+      },
+      {
+          "content": "2020-11-24 11:25:28,527 Number of jobs ready: 0",
+          "index": 121
+      },
+      {
+          "content": "2020-11-24 11:25:28,527 Number of jobs available: 30",
+          "index": 122
+      },
+      {
+          "content": "2020-11-24 11:25:38,537 Reloading parameters...",
+          "index": 123
+      },
+      {
+          "content": "2020-11-24 11:25:38,553 Loading parameters...",
+          "index": 124
+      },
+      {
+          "content": "2020-11-24 11:25:38,554 Loading project parameters...",
+          "index": 125
+      },
+      {
+          "content": "2020-11-24 11:25:38,556 ",
+          "index": 126
+      },
+      {
+          "content": "",
+          "index": 127
+      },
+      {
+          "content": "367 of 375 jobs remaining (11:25)",
+          "index": 128
+      },
+      {
+          "content": "2020-11-24 11:25:38,556 Sleep: 10",
+          "index": 129
+      },
+      {
+          "content": "2020-11-24 11:25:38,556 Number of retrials: 0",
+          "index": 130
+      },
+      {
+          "content": "2020-11-24 11:25:38,556 WRAPPER CHECK TIME = 10",
+          "index": 131
+      },
+      {
+          "content": "2020-11-24 11:25:38,561 Checking wrapper job with id 12712661",
+          "index": 132
+      },
+      {
+          "content": "2020-11-24 11:25:39,379 Command sacct -n -j 12712661 -o \"State\" in mn4prace successful with out message:    RUNNING ",
+          "index": 133
+      },
+      {
+          "content": "   RUNNING ",
+          "index": 134
+      },
+      {
+          "content": " COMPLETED ",
+          "index": 135
+      },
+      {
+          "content": "   RUNNING ",
+          "index": 136
+      },
+      {
+          "content": "",
+          "index": 137
+      },
+      {
+          "content": "2020-11-24 11:25:39,380 Output    RUNNING ",
+          "index": 138
+      },
+      {
+          "content": "   RUNNING ",
+          "index": 139
+      },
+      {
+          "content": " COMPLETED ",
+          "index": 140
+      },
+      {
+          "content": "   RUNNING ",
+          "index": 141
+      },
+      {
+          "content": "",
+          "index": 142
+      },
+      {
+          "content": "2020-11-24 11:25:39,380 Successful check job command: sacct -n -j 12712661 -o \"State\"",
+          "index": 143
+      },
+      {
+          "content": "2020-11-24 11:25:39,380 Output    RUNNING ",
+          "index": 144
+      },
+      {
+          "content": "   RUNNING ",
+          "index": 145
+      },
+      {
+          "content": " COMPLETED ",
+          "index": 146
+      },
+      {
+          "content": "   RUNNING ",
+          "index": 147
+      },
+      {
+          "content": "",
+          "index": 148
+      },
+      {
+          "content": "2020-11-24 11:25:39,380 Wrapper job a39t_ASThread_16061446272634_187_5 is RUNNING",
+          "index": 149
+      }
+  ],
+  "logfile": "20201123_161657_run.log",
+  "timeStamp": 1606213540.9110284
+}

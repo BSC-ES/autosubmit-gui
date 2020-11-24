@@ -1,0 +1,265 @@
+{
+  "completed": 20,
+  "error": false,
+  "error_message": "",
+  "failed": 0,
+  "queuing": 0,
+  "running": 1,
+  "total": 21,
+  "tree_view": [
+      {
+          "children": [],
+          "data": "Empty",
+          "refKey": "a2n1_20201207_fc0_1_FT",
+          "title": "a2n1_20201207_fc0_1_FT <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+      },
+      {
+          "children": [],
+          "data": "Empty",
+          "refKey": "a2n1_20201207_fc2_1_AN",
+          "title": "a2n1_20201207_fc2_1_AN <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+      },
+      {
+          "children": [],
+          "data": "Empty",
+          "refKey": "a2n1_20201207_DL",
+          "title": "a2n1_20201207_DL <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+      },
+      {
+          "children": [],
+          "data": "Empty",
+          "refKey": "a2n1_20201207_fc5_1_AN",
+          "title": "a2n1_20201207_fc5_1_AN <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+      },
+      {
+          "children": [],
+          "data": "Empty",
+          "refKey": "a2n1_20201207_fc1_1_FT",
+          "title": "a2n1_20201207_fc1_1_FT <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+      },
+      {
+          "children": [],
+          "data": "Empty",
+          "refKey": "a2n1_20201207_fc1_1_AN",
+          "title": "a2n1_20201207_fc1_1_AN <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+      },
+      {
+          "children": [],
+          "data": "Empty",
+          "refKey": "a2n1_20201207_fc0_1_AN",
+          "title": "a2n1_20201207_fc0_1_AN <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+      },
+      {
+          "children": [],
+          "data": "Empty",
+          "refKey": "a2n1_20201207_cfslrAN",
+          "title": "a2n1_20201207_cfslrAN <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+      },
+      {
+          "children": [],
+          "data": "Empty",
+          "refKey": "a2n1_20201207_cfwnd3AN",
+          "title": "a2n1_20201207_cfwnd3AN <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+      },
+      {
+          "children": [],
+          "data": "Empty",
+          "refKey": "a2n1_20201207_fc3_1_AN",
+          "title": "a2n1_20201207_fc3_1_AN <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+      },
+      {
+          "children": [],
+          "data": "Empty",
+          "refKey": "a2n1_20201207_fc6_1_AN",
+          "title": "a2n1_20201207_fc6_1_AN <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+      },
+      {
+          "children": [],
+          "data": "Empty",
+          "refKey": "a2n1_20201207_fc6_1_FT",
+          "title": "a2n1_20201207_fc6_1_FT <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+      },
+      {
+          "children": [],
+          "data": "Empty",
+          "refKey": "a2n1_20201207_fc4_1_FT",
+          "title": "a2n1_20201207_fc4_1_FT <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+      },
+      {
+          "children": [],
+          "data": "Empty",
+          "refKey": "a2n1_20201207_TRANSFER",
+          "title": "a2n1_20201207_TRANSFER <span class='badge' style='background-color: green'>#RUNNING</span>"
+      },
+      {
+          "children": [],
+          "data": "Empty",
+          "refKey": "a2n1_20201207_fc4_1_AN",
+          "title": "a2n1_20201207_fc4_1_AN <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+      },
+      {
+          "children": [],
+          "data": "Empty",
+          "refKey": "a2n1_20201207_cfwnd1AN",
+          "title": "a2n1_20201207_cfwnd1AN <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+      },
+      {
+          "children": [],
+          "data": "Empty",
+          "refKey": "a2n1_20201207_fc5_1_FT",
+          "title": "a2n1_20201207_fc5_1_FT <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+      },
+      {
+          "children": [],
+          "data": "Empty",
+          "refKey": "a2n1_20201207_FILTER",
+          "title": "a2n1_20201207_FILTER <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+      },
+      {
+          "children": [],
+          "data": "Empty",
+          "refKey": "a2n1_20201207_fc3_1_FT",
+          "title": "a2n1_20201207_fc3_1_FT <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+      },
+      {
+          "children": [],
+          "data": "Empty",
+          "refKey": "a2n1_20201207_fc2_1_FT",
+          "title": "a2n1_20201207_fc2_1_FT <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+      },
+      {
+          "children": [],
+          "data": "Empty",
+          "refKey": "a2n1_20201207_cfwnd2AN",
+          "title": "a2n1_20201207_cfwnd2AN <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+      }
+  ],
+  "view_data": [
+      {
+          "err": "/a2n1_20201207_fc0_1_FT.20201123232601.err",
+          "name": "a2n1_20201207_fc0_1_FT",
+          "out": "/a2n1_20201207_fc0_1_FT.20201123232601.out",
+          "path_log": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1"
+      },
+      {
+          "err": "/a2n1_20201207_fc2_1_AN.20201124033145.err",
+          "name": "a2n1_20201207_fc2_1_AN",
+          "out": "/a2n1_20201207_fc2_1_AN.20201124033145.out",
+          "path_log": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1"
+      },
+      {
+          "err": "/a2n1_20201207_DL.20201123220138.err",
+          "name": "a2n1_20201207_DL",
+          "out": "/a2n1_20201207_DL.20201123220138.out",
+          "path_log": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1"
+      },
+      {
+          "err": "/a2n1_20201207_fc5_1_AN.20201123233616.err",
+          "name": "a2n1_20201207_fc5_1_AN",
+          "out": "/a2n1_20201207_fc5_1_AN.20201123233616.out",
+          "path_log": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1"
+      },
+      {
+          "err": "/a2n1_20201207_fc1_1_FT.20201123232612.err",
+          "name": "a2n1_20201207_fc1_1_FT",
+          "out": "/a2n1_20201207_fc1_1_FT.20201123232612.out",
+          "path_log": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1"
+      },
+      {
+          "err": "/a2n1_20201207_fc1_1_AN.20201124014630.err",
+          "name": "a2n1_20201207_fc1_1_AN",
+          "out": "/a2n1_20201207_fc1_1_AN.20201124014630.out",
+          "path_log": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1"
+      },
+      {
+          "err": "/a2n1_20201207_fc0_1_AN.20201123235032.err",
+          "name": "a2n1_20201207_fc0_1_AN",
+          "out": "/a2n1_20201207_fc0_1_AN.20201123235032.out",
+          "path_log": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1"
+      },
+      {
+          "err": "/a2n1_20201207_cfslrAN.20201124014727.err",
+          "name": "a2n1_20201207_cfslrAN",
+          "out": "/a2n1_20201207_cfslrAN.20201124014727.out",
+          "path_log": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1"
+      },
+      {
+          "err": "/a2n1_20201207_cfwnd3AN.20201124021012.err",
+          "name": "a2n1_20201207_cfwnd3AN",
+          "out": "/a2n1_20201207_cfwnd3AN.20201124021012.out",
+          "path_log": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1"
+      },
+      {
+          "err": "/a2n1_20201207_fc3_1_AN.20201123235144.err",
+          "name": "a2n1_20201207_fc3_1_AN",
+          "out": "/a2n1_20201207_fc3_1_AN.20201123235144.out",
+          "path_log": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1"
+      },
+      {
+          "err": "/a2n1_20201207_fc6_1_AN.20201124002151.err",
+          "name": "a2n1_20201207_fc6_1_AN",
+          "out": "/a2n1_20201207_fc6_1_AN.20201124002151.out",
+          "path_log": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1"
+      },
+      {
+          "err": "/a2n1_20201207_fc6_1_FT.20201123232700.err",
+          "name": "a2n1_20201207_fc6_1_FT",
+          "out": "/a2n1_20201207_fc6_1_FT.20201123232700.out",
+          "path_log": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1"
+      },
+      {
+          "err": "/a2n1_20201207_fc4_1_FT.20201123232641.err",
+          "name": "a2n1_20201207_fc4_1_FT",
+          "out": "/a2n1_20201207_fc4_1_FT.20201123232641.out",
+          "path_log": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1"
+      },
+      {
+          "err": "/a2n1_20201207_TRANSFER.20201124123715.err",
+          "name": "a2n1_20201207_TRANSFER",
+          "out": "/a2n1_20201207_TRANSFER.20201124123715.out",
+          "path_log": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1"
+      },
+      {
+          "err": "/a2n1_20201207_fc4_1_AN.20201123235712.err",
+          "name": "a2n1_20201207_fc4_1_AN",
+          "out": "/a2n1_20201207_fc4_1_AN.20201123235712.out",
+          "path_log": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1"
+      },
+      {
+          "err": "/a2n1_20201207_cfwnd1AN.20201124031120.err",
+          "name": "a2n1_20201207_cfwnd1AN",
+          "out": "/a2n1_20201207_cfwnd1AN.20201124031120.out",
+          "path_log": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1"
+      },
+      {
+          "err": "/a2n1_20201207_fc5_1_FT.20201123232649.err",
+          "name": "a2n1_20201207_fc5_1_FT",
+          "out": "/a2n1_20201207_fc5_1_FT.20201123232649.out",
+          "path_log": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1"
+      },
+      {
+          "err": "/a2n1_20201207_FILTER.20201123224034.err",
+          "name": "a2n1_20201207_FILTER",
+          "out": "/a2n1_20201207_FILTER.20201123224034.out",
+          "path_log": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1"
+      },
+      {
+          "err": "/a2n1_20201207_fc3_1_FT.20201123232631.err",
+          "name": "a2n1_20201207_fc3_1_FT",
+          "out": "/a2n1_20201207_fc3_1_FT.20201123232631.out",
+          "path_log": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1"
+      },
+      {
+          "err": "/a2n1_20201207_fc2_1_FT.20201123232624.err",
+          "name": "a2n1_20201207_fc2_1_FT",
+          "out": "/a2n1_20201207_fc2_1_FT.20201123232624.out",
+          "path_log": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1"
+      },
+      {
+          "err": "/a2n1_20201207_cfwnd2AN.20201124023223.err",
+          "name": "a2n1_20201207_cfwnd2AN",
+          "out": "/a2n1_20201207_cfwnd2AN.20201124023223.out",
+          "path_log": "/esarchive/autosubmit/a2n1/tmp/LOG_a2n1"
+      }
+  ]
+}

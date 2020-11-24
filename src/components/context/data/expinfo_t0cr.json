@@ -1,0 +1,21 @@
+{
+  "branch": "306-run-hermes-per-member",
+  "completed_jobs": 19,
+  "db_historic_version": 14,
+  "description": "auto-monarch test case: MINE cold start",
+  "error": false,
+  "error_message": "None",
+  "expid": "t0cr",
+  "hpc": "marenostrum4",
+  "model": "https://earth.bsc.es/gitlab/es/auto-monarch.git",
+  "owner": "gmontane",
+  "owner_id": 2359,
+  "path": "/esarchive/autosubmit/t0cr",
+  "pkl_timestamp": 1606211916,
+  "running": false,
+  "time_last_access": "2020-11-24 09:13:25",
+  "time_last_mod": "2020-11-24 09:13:25",
+  "total_jobs": 19,
+  "updateTime": 10,
+  "version": "3.13.0b0"
+}

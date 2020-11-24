@@ -1,0 +1,21 @@
+{
+  "branch": "306-run-hermes-per-member",
+  "completed_jobs": 17,
+  "db_historic_version": 14,
+  "description": "auto-monarch test case: NESTING",
+  "error": false,
+  "error_message": "None",
+  "expid": "t07r",
+  "hpc": "marenostrum4",
+  "model": "https://earth.bsc.es/gitlab/es/auto-monarch.git",
+  "owner": "gmontane",
+  "owner_id": 2359,
+  "path": "/esarchive/autosubmit/t07r",
+  "pkl_timestamp": 1606212095,
+  "running": false,
+  "time_last_access": "2020-11-24 09:13:24",
+  "time_last_mod": "2020-11-24 09:13:24",
+  "total_jobs": 17,
+  "updateTime": 10,
+  "version": "3.13.0b0"
+}

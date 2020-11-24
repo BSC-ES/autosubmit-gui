@@ -14,7 +14,7 @@ import {
   INCREASE_LOADING_QUICK_VIEW,
 } from "../types";
 
-import { AUTOSUBMIT_API_SOURCE, DEBUG } from "../vars";
+import { AUTOSUBMIT_API_SOURCE, DEBUG, NOAPI } from "../vars";
 
 const LighterState = (props) => {
   const initialState = {
@@ -33,13 +33,21 @@ const LighterState = (props) => {
   const getLighterView = async (expid) => {
     cleanLoadingLighterView();
     setLoadingLighterView();
-    const res = await axios.get(`${localserver}/quick/${expid}`);
-    debug && console.log(res.data);
-    const result = res.data;
-    dispatch({
-      type: GET_LIGHTER_VIEW,
-      payload: result,
-    });
+    let result = null;
+    if (NOAPI) {
+      result = require("../data/quick_"+String(expid)+".json"); 
+    } else {
+      const res = await axios.get(`${localserver}/quick/${expid}`);
+      debug && console.log(res.data);
+      result = res ? res.data : null;
+    }
+    
+    if (result){
+      dispatch({
+        type: GET_LIGHTER_VIEW,
+        payload: result,
+      });
+    }
   };
 
   const filterLighterTreeView = (string) => {

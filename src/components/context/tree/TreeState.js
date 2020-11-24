@@ -28,7 +28,7 @@ import {
 
 // import { start, end } from "../utils";
 
-import { AUTOSUBMIT_API_SOURCE, DEBUG } from "../vars";
+import { AUTOSUBMIT_API_SOURCE, DEBUG, NOAPI } from "../vars";
 
 const TreeState = (props) => {
   const initialState = {
@@ -52,21 +52,28 @@ const TreeState = (props) => {
   const [state, dispatch] = useReducer(TreeReducer, initialState);
   const localserver = AUTOSUBMIT_API_SOURCE;
   const debug = DEBUG;
-
+  
   const getExperimentTree = async (expid) => {
     setLoadingTree();
+    let result = null;
     //start();
-    const res = await axios
+    if (NOAPI) {
+      result = require("../data/tree_"+String(expid)+".json");
+    } else {
+      const res = await axios
       .get(`${localserver}/tree/${expid}`)
       .catch((error) => {
         alert(error.message);
         setOffLoadingTree();
       });
-    if (res) {
-      debug && console.log(res.data);
+      result = res ? res.data : null;
+    }
+  
+    if (result) {
+      debug && console.log(result);
       dispatch({
         type: GET_TREE,
-        payload: res.data,
+        payload: result,
       });
     }
 
@@ -78,11 +85,17 @@ const TreeState = (props) => {
     //console.log(expid, timeStamp);
     setLoadingTreePkl();
     setLoadingTreeRefresh();
-    const res = await axios.get(
-      `${localserver}/pkltreeinfo/${expid}/${timeStamp}`
-    );
-    const retrievedPklTree = res.data;
-    debug && console.log(retrievedPklTree);
+    let retrievedPklTree = null;
+    if (NOAPI) {
+      retrievedPklTree = require("../data/pkltreeinfo_"+String(expid)+".json");
+    } else {
+      const res = await axios.get(
+        `${localserver}/pkltreeinfo/${expid}/${timeStamp}`
+      );
+      retrievedPklTree = res.data;
+      debug && console.log(retrievedPklTree);
+    }
+    
     dispatch({
       type: PKL_TREE_LOADED,
       payload: retrievedPklTree,
@@ -91,10 +104,16 @@ const TreeState = (props) => {
 
   const getExperimentRunJobData = async (expid, run_id, meta) => {
     setLoadingPreviousRun();
-    const res = await axios.get(`${localserver}/rundetail/${expid}/${run_id}`).catch((error) => { alert(error.message);});
-    debug && console.log(res.data);
-    // console.log(res.data);
-    const result = res ? res.data.rundata : null;
+    let result = null;
+    if (NOAPI) {
+      result = require("../data/rundetail_"+String(expid)+"_"+String(run_id)+".json").rundata;
+    } else {
+      const res = await axios.get(`${localserver}/rundetail/${expid}/${run_id}`).catch((error) => { alert(error.message);});
+      debug && console.log(res.data);
+      // console.log(res.data);
+      result = res ? res.data.rundata : null;
+    }
+    
     dispatch({
       type: GET_EXPERIMENT_RUN_JOBDATA,
       payload: {result: result, runId: run_id, meta: meta},

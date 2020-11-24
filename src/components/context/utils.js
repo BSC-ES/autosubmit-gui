@@ -140,3 +140,7 @@ export const exportHistoryToCSV = (data, columnNames, title) => {
   link.click();
 }
 
+export const sleep = (ms) => {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+

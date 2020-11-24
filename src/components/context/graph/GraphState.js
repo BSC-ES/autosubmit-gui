@@ -3,6 +3,7 @@ import axios from "axios";
 import GraphContext from "./graphContext";
 import GraphReducer from "./graphReducer";
 import ExperimentContext from "../experiment/experimentContext";
+import { sleep } from "../utils";
 
 import {
   GET_GRAPH,
@@ -32,7 +33,7 @@ import {
   //DEACTIVATE_COPY_TO,
 } from "../types";
 
-import { AUTOSUBMIT_API_SOURCE, DEBUG } from "../vars";
+import { AUTOSUBMIT_API_SOURCE, DEBUG, NOAPI } from "../vars";
 
 //import { timeStampToDate } from "../utils";
 
@@ -76,18 +77,28 @@ const GraphState = (props) => {
   ) => {
     cleanOnlyGraphData();
     setLoadingGraph();
-    const res = await axios
+    let result = null;
+    if (NOAPI) {
+      //res = {data: null};
+      result = require("../data/graph_"+String(expid)+"_standard_"+String(grouped)+".json");
+      //console.log(res.data);
+      await sleep(1000);
+    } else {
+      const res = await axios
       .get(`${localserver}/graph/${expid}/${layout}/${grouped}`)
       .catch((error) => {
         alert(error.message);
         setOffLoadingGraph();
       });
-    if (res) {
-      debug && console.log(res.data);
-      const resdata = res.data;
+      result = res ? res.data : null;
+    }
+    
+    if (result) {
+      debug && console.log(result);
+      //const resdata = res.data;
       dispatch({
         type: GET_GRAPH,
-        payload: { resdata, grouped, layout },
+        payload: { resdata: result, grouped, layout },
       });
     }
   };
@@ -103,9 +114,15 @@ const GraphState = (props) => {
       console.log(
         "Exp: " + expid + "\t" + timeStamp + "\t" + experimentRunning
       );
-    const res = await axios.get(`${localserver}/pklinfo/${expid}/${timeStamp}`);
-    debug && console.log(res.data);
-    let retrievedPkl = res.data;
+    let retrievedPkl = null;
+    if (NOAPI){
+      retrievedPkl = require("../data/pklinfo_"+String(expid)+".json");
+    } else {
+      const res = await axios.get(`${localserver}/pklinfo/${expid}/${timeStamp}`);
+      debug && console.log(res.data);
+      retrievedPkl = res.data;
+    } 
+    
     dispatch({
       type: GET_PKL_DATA,
       payload: retrievedPkl,

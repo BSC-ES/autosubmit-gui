@@ -1,0 +1,67 @@
+{
+  "error": false,
+  "error_message": "",
+  "jobs": [
+      "a39t_20150101_fc00_1_SIM",
+      "a39t_20150101_fc00_2_SIM",
+      "a39t_20150101_fc00_1_CMOROCE",
+      "a39t_20150101_fc00_1_CMORTM5",
+      "a39t_20150101_fc00_1_SAVEIC"
+  ],
+  "otherstats": [],
+  "periodo_fin": "Tue, 24 Nov 2020 15:26:00 GMT",
+  "periodo_ini": "Tue, 24 Nov 2020 03:26:00 GMT",
+  "stats": {
+      "fail_queued": [
+          0.11222222222222222,
+          17.985833333333332,
+          0.0,
+          0.0,
+          0.0
+      ],
+      "fail_run": [
+          0.0475,
+          0.003611111111111111,
+          0.0,
+          0.0,
+          0.0
+      ],
+      "failed_jobs": [
+          10,
+          11,
+          0,
+          0,
+          0
+      ],
+      "max_fail": 11,
+      "max_time": 17.985833333333332,
+      "queued": [
+          5.0675,
+          0.0,
+          0.009166666666666667,
+          0.010555555555555556,
+          0.0011111111111111111
+      ],
+      "run": [
+          12.743333333333334,
+          0.0,
+          0.10972222222222222,
+          0.05527777777777778,
+          0.05444444444444444
+      ],
+      "threshold": 14.0,
+      "totals": [
+          "Period: 2020-11-24 03:26:00 ~ 2020-11-24 15:26:00",
+          "Submitted (#): 25",
+          "Run  (#): 25",
+          "Failed  (#): 21",
+          "Completed (#): 4",
+          "Queueing time (h): 5.09",
+          "Expected consumption real (h): 32.5",
+          "Expected consumption CPU time (h): 5240.5",
+          "Consumption real (h): 13.2",
+          "Consumption CPU time (h): 2427.22",
+          "Consumption (%): 46.32"
+      ]
+  }
+}
