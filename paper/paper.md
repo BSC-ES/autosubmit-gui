@@ -1,28 +1,26 @@
 ---
-title: "Gala: A Python package for galactic dynamics"
+title: "A React based visual interface to monitor experiments in a High Performance Computing environment"
 tags:
   - Python
-  - astronomy
-  - dynamics
-  - galactic dynamics
-  - milky way
+  - High Performance Computing
+  - Workflow Manager
 authors:
-  - name: Adrian M. Price-Whelan^[Custom footnotes for e.g. denoting who the corresponding author is can be included like this.]
-    orcid: 0000-0003-0872-7098
-    affiliation: "1, 2" # (Multiple affiliations must be quoted)
-  - name: Author Without ORCID
-    affiliation: 2
-  - name: Author with no affiliation
-    affiliation: 3
+  - name: Wilmer V. Uruchi Ticona^[Custom footnotes for e.g. denoting who the corresponding author is can be included like this.]
+    ## orcid: 0000-0003-0872-7098
+    affiliation: 1 ##"1, 2" # (Multiple affiliations must be quoted)
+  - name: Miguel Castrillo
+    affiliation: 1
+  - name: Daniel Beltrán
+    affiliation: 1
 affiliations:
-  - name: Lyman Spitzer, Jr. Fellow, Princeton University
+  - name: Barcelona Supercomputing Center # Lyman Spitzer, Jr. Fellow, Princeton University
     index: 1
   - name: Institution Name
     index: 2
   - name: Independent Researcher
     index: 3
-date: 13 August 2017
-bibliography: paper.bib
+date: 26 November 2020
+# bibliography: paper.bib
 
 # Optional fields if submitting to a AAS journal too, see this blog post:
 # https://blog.joss.theoj.org/2018/12/a-new-collaboration-with-aas-publishing
@@ -32,15 +30,13 @@ aas-journal: Astrophysical Journal <- The name of the AAS journal.
 
 # Summary
 
-The forces on stars, galaxies, and dark matter under external gravitational
-fields lead to the dynamical evolution of structures in the universe. The orbits
-of these bodies are therefore key to understanding the formation, history, and
-future state of galaxies. The field of "galactic dynamics," which aims to model
-the gravitating components of galaxies to study their structure and evolution,
-is now well-established, commonly taught, and frequently used in astronomy.
-Aside from toy problems and demonstrations, the majority of problems require
-efficient numerical tools, many of which require the same base code (e.g., for
-performing numerical orbit integration).
+A project can involve the execution of many tasks that have dependencies between them.
+This usually happens in the High Performance Computing environment, where scientist are interested in performing sequence of tasks
+that have linear dependency. These tasks usually belong to a group or project that encompasses these tasks.
+Since these tasks can have dependencies between them, a group of tasks can be modeled as an acyclic directed graph. 
+A visual representation of the group of tasks and their dependencies is needed to properly monitor their status and also to visualize 
+their meta-data. Autosubmit Graphical User Interface offers a way to visualize these projects by rendering them as a Tree View, or a Graph. 
+
 
 # Statement of need
 
