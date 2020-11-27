@@ -27,6 +27,8 @@ import {
   LOADING_JOB_HISTORY,
   LOADING_EXPERIMENT_RUNS,
   GET_EXPERIMENT_RUNS,
+  GET_FILE_STATUS,
+  CLEAN_FILE_STATUS_DATA,
 } from "../types";
 
 import {
@@ -68,6 +70,11 @@ export default (state, action) => {
         canSelect: false,
       };
     }
+    case CLEAN_FILE_STATUS_DATA:
+      return {
+        ...state,
+        esarchiveStatus: null,
+      };
     case LOADING_JOB_HISTORY:
       return {
         ...state,
@@ -77,6 +84,11 @@ export default (state, action) => {
       return {
         ...state,
         jobHistory: action.payload,
+      };
+    case GET_FILE_STATUS:
+      return {
+        ...state,
+        esarchiveStatus: action.payload,
       };
     case LOADING_EXPERIMENT_RUNS:
       return {

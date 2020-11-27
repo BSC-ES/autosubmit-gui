@@ -33,6 +33,8 @@ import {
   LOADING_JOB_HISTORY,
   LOADING_EXPERIMENT_RUNS,
   GET_EXPERIMENT_RUNS,
+  GET_FILE_STATUS,
+  CLEAN_FILE_STATUS_DATA
 } from "../types";
 
 import { AUTOSUBMIT_API_SOURCE, DEBUG, ERROR_MESSAGE, NOAPI } from "../vars";
@@ -66,6 +68,7 @@ const ExperimentState = (props) => {
     fancyTree: null,
     allowJobMonitor: false,
     canSelect: false,
+    esarchiveStatus: null,
   };
 
   const [state, dispatch] = useReducer(ExperimentReducer, initialState);
@@ -238,6 +241,22 @@ const ExperimentState = (props) => {
     });
   };
 
+  // Get current esarchive status
+  const getFileStatus = async () => {
+    let result = null;
+    if (NOAPI) {
+      result = require("../data/filestatus.json");
+    } else {
+      const res = await axios.get(`${localserver}/filestatus/`).catch(error => alert(ERROR_MESSAGE + "\n" + error.message));
+      result = res ? res.data : null;
+      debug && console.log(result);
+    }
+    dispatch({
+      type: GET_FILE_STATUS,
+      payload: result,
+    });
+  }
+
   // Get Running State
   const getRunningState = async (expid) => {
     setLoadingState();
@@ -268,6 +287,8 @@ const ExperimentState = (props) => {
   // Cleaning
   const clearExperiments = () => dispatch({ type: CLEAR_EXPERIMENTS });
   //const cleanGraphData = () => dispatch({ type: CLEAN_GRAPH_DATA });
+
+  const cleanFileStatusData = () => dispatch({ type: CLEAN_FILE_STATUS_DATA })
 
   const cleanRunData = () => dispatch({ type: CLEAN_RUN_DATA });
 
@@ -355,7 +376,8 @@ const ExperimentState = (props) => {
         totalJobs: state.totalJobs,
         expectedLoadingTreeTime: state.expectedLoadingTreeTime,
         expectedLoadingQuickView: state.expectedLoadingQuickView,
-        experimentRunDetailForTree: state.experimentRunDetailForTree,        
+        experimentRunDetailForTree: state.experimentRunDetailForTree,   
+        esarchiveStatus: state.esarchiveStatus,     
         setAutoUpdateRun,
         searchExperiments,
         getCurrentRunning,
@@ -380,6 +402,8 @@ const ExperimentState = (props) => {
         cleanExperimentData,
         getJobHistory,
         getExperimentRuns,
+        getFileStatus,
+        cleanFileStatusData,
       }}
     >
       {props.children}

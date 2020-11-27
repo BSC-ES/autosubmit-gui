@@ -3,11 +3,13 @@ import PropTypes from "prop-types";
 import { Link, useHistory } from "react-router-dom";
 import ExperimentContext from "../context/experiment/experimentContext";
 import Experiment from "../experiment/Experiment";
+import FileStatus from "../experiment/FileStatus";
 
 const Navbar = ({ icon, title }) => {
   const history = useHistory();
   const experimentContext = useContext(ExperimentContext);
-  const { searchExperiments, experiment } = experimentContext;
+  const { searchExperiments, experiment, cleanFileStatusData, getFileStatus, esarchiveStatus } = experimentContext;
+
   const [text, setText] = useState("");
   //const expid = match.params.expid;
   const submitSearch = (e) => {
@@ -44,6 +46,9 @@ const Navbar = ({ icon, title }) => {
           <li className='nav-item'>
             {expid && <Experiment expidToken={expid} />}
           </li>
+          <li>
+          <FileStatus getFileStatus={getFileStatus} cleanFileStatusData={cleanFileStatusData} esarchiveStatus={esarchiveStatus} />
+          </li>
         </ul>
 
         {history &&
@@ -66,6 +71,7 @@ const Navbar = ({ icon, title }) => {
               </button>
             </form>
           )}
+        
       </div>
     </nav>
 
