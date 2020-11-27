@@ -24,8 +24,8 @@ date: 26 November 2020
 
 # Optional fields if submitting to a AAS journal too, see this blog post:
 # https://blog.joss.theoj.org/2018/12/a-new-collaboration-with-aas-publishing
-aas-doi: 10.3847/xxxxx <- update this with the DOI from AAS once you know it.
-aas-journal: Astrophysical Journal <- The name of the AAS journal.
+# aas-doi: 10.3847/xxxxx <- update this with the DOI from AAS once you know it.
+# aas-journal: Astrophysical Journal <- The name of the AAS journal.
 ---
 
 # Summary
@@ -47,9 +47,9 @@ their meta-data. Autosubmit Graphical User Interface offers a way to visualize t
 
 `Autosubmit GUI` consumes information from `Autosubmit API`, and ad-hoc API designed to extract information from the results of `Autosubmit`. The list of calls and messages can be found in our repository documentation. We believe that, although API specific, the methods of `Autosubmit GUI` can be ported and adapted to a similar API.
 
-# Mathematics
+# Main features
 
-Single dollars ($) are required for inline mathematics e.g. $f(x) = e^{\pi/x}$
+<!-- Single dollars ($) are required for inline mathematics e.g. $f(x) = e^{\pi/x}$
 
 Double dollars make self-standing equations:
 
@@ -64,9 +64,11 @@ You can also use plain \LaTeX for equations
 \begin{equation}\label{eq:fourier}
 \hat f(\omega) = \int\_{-\infty}^{\infty} f(x) e^{i\omega x} dx
 \end{equation}
-and refer to \autoref{eq:fourier} from text.
+and refer to \autoref{eq:fourier} from text. -->
 
 # Citations
+
+<!-- Work in progress -->
 
 Citations to entries in paper.bib should be in
 [rMarkdown](http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html)
@@ -83,13 +85,14 @@ For a quick reference, the following citation commands can be used:
 
 # Figures
 
+<!-- Work in progress -->
+
 Figures can be included like this:
 ![Caption for example figure.\label{fig:example}](figure.png)
 and referenced from text using \autoref{fig:example}.
 
 # Acknowledgements
 
-We acknowledge contributions from Brigitta Sipocz, Syrtis Major, and Semyeong
-Oh, and support from Kathryn Johnston during the genesis of this project.
+We acknowledge contributions from Francisco Doblas-Reyes, Kim Serradell and all our Earth Science users.
 
 # References
