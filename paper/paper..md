@@ -33,32 +33,19 @@ aas-journal: Astrophysical Journal <- The name of the AAS journal.
 A project can involve the execution of many tasks that have dependencies between them.
 This usually happens in the High Performance Computing environment, where scientist are interested in performing sequence of tasks
 that have linear dependency. These tasks usually belong to a group or project that encompasses these tasks.
-Since these tasks can have dependencies between them, a group of tasks can be modeled as an acyclic directed graph. 
-A visual representation of the group of tasks and their dependencies is needed to properly monitor their status and also to visualize 
-their meta-data. Autosubmit Graphical User Interface offers a way to visualize these projects by rendering them as a Tree View, or a Graph. 
-
+Since these tasks can have dependencies between them, a group of tasks can be modeled as an acyclic directed graph.
+A visual representation of the group of tasks and their dependencies is needed to properly monitor their status and also to visualize
+their meta-data. Autosubmit Graphical User Interface offers a way to visualize these projects by rendering them as a Tree View, or a Graph.
 
 # Statement of need
 
-`Gala` is an Astropy-affiliated Python package for galactic dynamics. Python
-enables wrapping low-level languages (e.g., C) for speed without losing
-flexibility or ease-of-use in the user-interface. The API for `Gala` was
-designed to provide a class-based and user-friendly interface to fast (C or
-Cython-optimized) implementations of common operations such as gravitational
-potential and force evaluation, orbit integration, dynamical transformations,
-and chaos indicators for nonlinear dynamics. `Gala` also relies heavily on and
-interfaces well with the implementations of physical units and astronomical
-coordinate systems in the `Astropy` package [@astropy] (`astropy.units` and
-`astropy.coordinates`).
+`Autosubmit GUI` is a React based web application that shows data in an intuitive way. A web application enables us to deploy this service easily and with minimum requirements for our users. `Autosubmit GUI` was designed and developed with efficiency in mind.
 
-`Gala` was designed to be used by both astronomical researchers and by
-students in courses on gravitational dynamics or astronomy. It has already been
-used in a number of scientific publications [@Pearson:2017] and has also been
-used in graduate courses on Galactic dynamics to, e.g., provide interactive
-visualizations of textbook material [@Binney:2008]. The combination of speed,
-design, and support for Astropy functionality in `Gala` will enable exciting
-scientific explorations of forthcoming data releases from the _Gaia_ mission
-[@gaia] by students and experts alike.
+`Autosubmit` (reference) is a workflow manager for experiments run by scientists in the Earth Science Deparment of the Barcelona Supercomputing Center. It is a terminal program that launches jobs on a variety of High Performance Computers to which our users have access, it also retrieves important information that users need in order to properly track the progress of their work. Monitoring these experiments has been a long standing issue that has been tried to be addressed in several. At some point it was decided that a Graphical Interface was needed in order to provide an intuitive access to users that also could be not very familiar with the terminal commands. It was decided take a web based approach, and then ReactJS was chosen as the main tool.
+
+`ReactJS` enables us to access a wide array of web tools and more importantly a design phisolophy that we thought was approriate for this problem. The component based development of React applications allows us the provide a easy to modify interface with different sections that can be updated in real time and independently of each other. Also, there are several appropriate and more importantly free libraries that we can use to show the information in an easy to understand way. `FancyTree` is the library that we used as our main representation tool, because it provides a linear an easy to navigate presentation. `Vis.js` with its graph component is the other main library we use to represent data, this library provides a rich API that can be used to personalize its inner working, this fact was extremely benefitial for our purposes.
+
+`Autosubmit GUI` consumes information from `Autosubmit API`, and ad-hoc API designed to extract information from the results of `Autosubmit`. The list of calls and messages can be found in our repository documentation. We believe that, although API specific, the methods of `Autosubmit GUI` can be ported and adapted to a similar API.
 
 # Mathematics
 
