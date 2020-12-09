@@ -1,7 +1,7 @@
 ## Autosubmit GUI
 ### Overview: 
 Autosubmit GUI is a front-end software developed using [ReactJS](https://reactjs.org/docs/getting-started.html) as the main framework, and JavaScript in general.
-This front-end software consumes most of its information from [Autosubmit API](Autosubmit-API), an API that retrieves information from an internal file system that 
+This front-end software consumes most of the information it needs from [Autosubmit API](Autosubmit-API), an API that retrieves information from an internal file system that 
 results from the execution of [Autosubmit](https://earth.bsc.es/gitlab/es/autosubmit) to execute experiments on a High Performance Computing environment.
 
 These two systems, the API and the GUI, are tightly coupled. However, it is possible to adapt the API calls to other sources of information you might prefer, and for 
@@ -9,8 +9,9 @@ that purpose we provide with response examples (more details in the installation
 the components of the GUI.
 
 Autosubmit GUI uses [FancyTree](https://github.com/mar10/fancytree/) and [vis.js](https://visjs.org/), two popular and very useful libraries, to show the experiment 
-information in a graphical and comprehensive way. The GUI implements creative ways to use these libraries to display information dynamically without losing performance. 
-Some of the expermients in our environment can include more than `10000` items.
+information in a graphical and comprehensive way. The GUI implements creative ways to use these libraries to dynamically display information without losing performance. 
+Some of the expermients in our environment can include more than `10000` items, and showing this information in a web format without significant loss of performance is 
+by itself and achievement. 
 
 
 ### General Knowledge Requirements:
@@ -71,10 +72,12 @@ Although a little outdated, we are constantly working on updating it considering
 
 ### Contributing
 
-Currently, the development of this software is under the `Autosubmit team`, af team of the `Earth Science Department` of the `Barcelona Supercomputing Center`. 
+Currently, the development of this software is under the `Autosubmit team` that belongs to the `Earth Science Department` of the `Barcelona Supercomputing Center`. 
 
 You can open issues in this repository using the `Email a new issue to this project` function, since user creation is currently restricted to only `BSC` members. 
 Most issues have been centralized in the [Autosubmit repository](https://earth.bsc.es/gitlab/es/autosubmit/-/issues), and you can check them there.
+
+As per license, you are free (and encouraged) to clone this software and modify it to fit your needs.
 
 
 
