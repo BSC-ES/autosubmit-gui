@@ -64,5 +64,20 @@ To execute it, go to your main folder (`/autosubmitreact/`) and execute:
 
 Almost all tests can be found at `/autosubmitreact/src/components/experiment/tests/`.
 
+### User Guide
+
+A user guide has been developed and published at [https://autosubmit.readthedocs.io/en/latest/autosubmit-gui.html](https://autosubmit.readthedocs.io/en/latest/autosubmit-gui.html). 
+Although a little outdated, we are constantly working on updating it considering the latest features.
+
+### Contributing
+
+Currently, the development of this software is under the `Autosubmit team`, af team of the `Earth Science Department` of the `Barcelona Supercomputing Center`. 
+
+You can open issues in this repository using the `Email a new issue to this project` function, since user creation is currently restricted to only `BSC` members. 
+Most issues have been centralized in the [Autosubmit repository](https://earth.bsc.es/gitlab/es/autosubmit/-/issues), and you can check them there.
+
+
+
+
 
 
