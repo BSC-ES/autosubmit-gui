@@ -1,5 +1,5 @@
 ---
-title: "A React based visual interface to monitor experiments in a High Performance Computing environment"
+title: "Autosumit GUI: A ReactJS based visual interface to monitor experiments in a High Performance Computing environment"
 tags:
   - Python
   - High Performance Computing
@@ -13,7 +13,7 @@ authors:
   - name: Daniel Beltrán
     affiliation: 1
 affiliations:
-  - name: Barcelona Supercomputing Center # Lyman Spitzer, Jr. Fellow, Princeton University
+  - name: Barcelona Supercomputing Center 
     index: 1
   - name: Institution Name
     index: 2
