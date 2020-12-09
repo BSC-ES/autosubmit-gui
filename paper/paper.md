@@ -59,7 +59,29 @@ It is also a good example on how to use the tools provided by this library.
 
 # Main features
 
+<<<<<<< HEAD
 Main features.
+=======
+<!--![Graph Representation of experiment.\label{fig:graph_rep}](graph_rep.png)
+\autoref{fig:example}. -->
+
+<!-- Single dollars ($) are required for inline mathematics e.g. $f(x) = e^{\pi/x}$
+
+Double dollars make self-standing equations:
+
+$$
+\Theta(x) = \left\{\begin{array}{l}
+0\textrm{ if } x < 0\cr
+1\textrm{ else}
+\end{array}\right.
+$$
+
+You can also use plain \LaTeX for equations
+\begin{equation}\label{eq:fourier}
+\hat f(\omega) = \int\_{-\infty}^{\infty} f(x) e^{i\omega x} dx
+\end{equation}
+and refer to \autoref{eq:fourier} from text. -->
+>>>>>>> e62010e82082d60ed500fc70068217babe3449dd
 
 # Citations
 
@@ -68,11 +90,28 @@ Main features.
 If you want to cite a software repository URL (e.g. something on GitHub without a preferred
 citation) then you can do it with the example BibTeX entry below for @fidgit.
 
+<<<<<<< HEAD
 For a quick reference, the following citation commands can be used.
+=======
+For a quick reference, the following citation commands can be used:
+<!--
+- `@author:2001` -> "Author et al. (2001)"
+- `[@author:2001]` -> "(Author et al., 2001)"
+- `[@author1:2001; @author2:2001]` -> "(Author1 et al., 2001; Author2 et al., 2002)"
+>>>>>>> e62010e82082d60ed500fc70068217babe3449dd
 
+-->
 # Figures
 
+<<<<<<< HEAD
 Work in progress.
+=======
+<!-- Work in progress -->
+
+<!-- Figures can be included like this:
+![Caption for example figure.\label{fig:example}](figure.png)
+and referenced from text using \autoref{fig:example}. -->
+>>>>>>> e62010e82082d60ed500fc70068217babe3449dd
 
 # Acknowledgements
 
