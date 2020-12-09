@@ -16,7 +16,7 @@ by itself and achievement.
 
 ### General Knowledge Requirements:
 
-* NPM
+* npm
 * Javascript: asynchronous functions, promises, event handling, etc.
 * Bootstrap 4 and CSS
 * DOM manipulation
