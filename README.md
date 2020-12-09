@@ -52,4 +52,17 @@ Go to the cloned folder and execute:
 
 `npm start`
 
+Then, the GUI should open in your default browser.
+
+### Testing
+
+The testing suite has been developed using [JEST](https://jestjs.io/en/).
+
+To execute it, go to your main folder (`/autosubmitreact/`) and execute:
+
+`npm test`
+
+Almost all tests can be found at `/autosubmitreact/src/components/experiment/tests/`.
+
+
 
