@@ -1,31 +1,55 @@
-## Autosubmit GUI: React App Documentation
-### Introduction: 
-Autosubmit GUI is a software made up of two separate components. A web ppplication based on ReactJS, and a web service API written on Python. This documentation is about the former: The ReactJS App.
-We begin by emphasizing the fact the application is written using Javascript with some ReactJS flavored syntax, e.g. JSX. However, the developer familiar with Javascript should not have problems understanding the main code of this application. 
-You can find more information about **React** in the following link: [https://reactjs.org/docs/getting-started.html](https://reactjs.org/docs/getting-started.html)
+## Autosubmit GUI
+### Overview: 
+Autosubmit GUI is a front-end software developed using [ReactJS](https://reactjs.org/docs/getting-started.html) as the main framework, and JavaScript in general.
+This front-end software consumes most of its information from [Autosubmit API](Autosubmit-API), an API that retrieves information from an internal file system that 
+results from the execution of [Autosubmit](https://earth.bsc.es/gitlab/es/autosubmit) to execute experiments on a High Performance Computing environment.
 
-### Main development platform
-The main development framework is **npm**, we are currently using version `6.9.0`. You can find the main **npm** dependencies in the file: [package.json](package.json).
-Refer to: [npm documentation](https://docs.npmjs.com/) for more information about installation and first steps on this platform.
+These two systems, the API and the GUI, are tightly coupled. However, it is possible to adapt the API calls to other sources of information you might prefer, and for 
+that purpose we provide with response examples (more details in the installation section) that can help the developer understand how the information is used in 
+the components of the GUI.
 
-### Dependencies:
+Autosubmit GUI uses [FancyTree](https://github.com/mar10/fancytree/) and [vis.js](https://visjs.org/), two popular and very useful libraries, to show the experiment 
+information in a graphical and comprehensive way. The GUI implements creative ways to use these libraries to display information dynamically without losing performance. 
+Some of the expermients in our environment can include more than `10000` items.
 
-Apart from that, there are other dependencies included mainly related to the Graphical Interface, these are:
-* Bootstrap 4
-* Font-awesome
-* Vis-Network main css library
 
-You can check the URL of these libraries in the file: [index.html](/public/index.html).
+### General Knowledge Requirements:
 
-It might be useful to mention that this software was developed using Visual Studio Code. I guess any other IDE should do it.
-
-### Requirements:
-As mentioned before, this project includes some technology that might be unfamiliar. So, let me just mention some things that you should have some knowledge about to ease your period of adaptation:
+* NPM
 * Javascript: asynchronous functions, promises, event handling, etc.
-* Bootstrap 4 and CSS in general
+* Bootstrap 4 and CSS
 * DOM manipulation
 * JSON
 * ReactJS
 
-### Project Description:
-Each folder includes a README file with the description of the main files and folders inside it, some of them might not include it because their content is trivially described or just plain obvious. 
+
+### Installation
+The main development framework is **npm**, we are currently using version `6.9.0`. You can find the main **npm** dependencies in the file: [package.json](package.json).
+Refer to: [npm documentation](https://docs.npmjs.com/) for more information about installation and first steps on this platform.
+
+Make sure to have npm installed in your local environment.
+
+Execute:
+
+`git clone https://earth.bsc.es/gitlab/wuruchi/autosubmitreact/`
+
+As default, the GUI will request data from the `Autosubmit API`, which is inacessible from outside the Barcelona Supercomputing Center internal network. 
+So, we should open the file:
+
+`/autosubmitreact/src/components/context/vars.js`
+
+And change the line:
+
+`export const NOAPI = false;`
+
+to: 
+
+`export const NOAPI = true;`
+
+This will effectively set the API calls to be redirected towards an internal data samples folder `/autosubmitreact/src/components/context/data/` implemented for testing purposes.
+
+Go to the cloned folder and execute:
+
+`npm start`
+
+
