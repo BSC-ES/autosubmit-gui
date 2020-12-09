@@ -53,7 +53,7 @@ Go to the cloned folder and execute:
 
 `npm start`
 
-Then, the GUI should open in your default browser.
+Then, the GUI should open in your default browser, and the information displayed should correspond to that of the data samples folder.
 
 ### Testing
 
