@@ -77,7 +77,7 @@ Currently, the development of this software is under the `Autosubmit team` that 
 You can open issues in this repository using the `Email a new issue to this project` function, since user creation is currently restricted to only `BSC` members. 
 Most issues have been centralized in the [Autosubmit repository](https://earth.bsc.es/gitlab/es/autosubmit/-/issues), and you can check them there.
 
-As per license, you are free (and encouraged) to clone this software and modify it to fit your needs.
+You are free (and encouraged) to clone this software and modify it to fit your needs.
 
 
 
