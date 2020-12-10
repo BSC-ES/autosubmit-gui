@@ -49,7 +49,11 @@ to:
 
 This will effectively set the API calls to be redirected towards an internal data samples folder `/autosubmitreact/src/components/context/data/` implemented for testing purposes.
 
-Go to the cloned folder and execute:
+Now you have to install all the npm dependencies the project needs, go to the main repository folder `/autosubmitreact/` and run:
+
+`npm install`
+
+After tha installation process is completed, you will be able to run:
 
 `npm start`
 
