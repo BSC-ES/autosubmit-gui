@@ -76,7 +76,7 @@ it("FileStatus renders with content and warnings", () => {
   expect(container.innerHTML).toContain("warning bandwidth");
   expect(container.innerHTML).toContain("warning latency");
   expect(container.innerHTML).toContain("response warning");
-  expect(container.textContent).toContain("esarchive WARNING!");
+  expect(container.textContent).toContain("esarchive");
 
 });
 

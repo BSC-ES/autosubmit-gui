@@ -13,6 +13,7 @@ class FileStatus extends Component {
   }
 
   render() {
+    
     if (this.props.esarchiveStatus){
       const {
         avg_bandwidth,
@@ -50,7 +51,7 @@ class FileStatus extends Component {
   
   
           const tootltip_title = title_bandwidth_warn + title_latency_warn + title_response_warn;
-          span_alert = <span className="badge badge-warning" data-toggle='tooltip' data-placement='bottom' title={tootltip_title}>esarchive <b>WARNING!</b> {metrics_text}</span>
+          span_alert = <span className="badge badge-warning" data-toggle='tooltip' data-placement='bottom' title={tootltip_title}>esarchive <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {metrics_text}</span>
         }
       }
       
