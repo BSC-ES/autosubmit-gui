@@ -11,7 +11,7 @@ the components of the GUI.
 Autosubmit GUI uses [FancyTree](https://github.com/mar10/fancytree/) and [vis.js](https://visjs.org/), two popular and very useful libraries, to show the experiment 
 information in a graphical and comprehensive way. The GUI implements creative ways to use these libraries to dynamically display information without losing performance. 
 Some of the expermients in our environment can include more than `10000` items, and showing this information in a web format without significant loss of performance is 
-by itself and achievement. 
+by itself an achievement. 
 
 
 ### General Knowledge Requirements:
@@ -49,7 +49,11 @@ to:
 
 This will effectively set the API calls to be redirected towards an internal data samples folder `/autosubmitreact/src/components/context/data/` implemented for testing purposes.
 
-Go to the cloned folder and execute:
+Now you have to install all the npm dependencies the project needs, go to the main repository folder `/autosubmitreact/` and run:
+
+`npm install`
+
+After tha installation process is completed, you will be able to run:
 
 `npm start`
 
@@ -77,7 +81,7 @@ Currently, the development of this software is under the `Autosubmit team` that 
 You can open issues in this repository using the `Email a new issue to this project` function, since user creation is currently restricted to only `BSC` members. 
 Most issues have been centralized in the [Autosubmit repository](https://earth.bsc.es/gitlab/es/autosubmit/-/issues), and you can check them there.
 
-As per license, you are free (and encouraged) to clone this software and modify it to fit your needs.
+You are free (and encouraged) to clone this software and modify it to fit your needs.
 
 
 
