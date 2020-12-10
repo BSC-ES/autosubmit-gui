@@ -11,7 +11,7 @@ the components of the GUI.
 Autosubmit GUI uses [FancyTree](https://github.com/mar10/fancytree/) and [vis.js](https://visjs.org/), two popular and very useful libraries, to show the experiment 
 information in a graphical and comprehensive way. The GUI implements creative ways to use these libraries to dynamically display information without losing performance. 
 Some of the expermients in our environment can include more than `10000` items, and showing this information in a web format without significant loss of performance is 
-by itself and achievement. 
+by itself an achievement. 
 
 
 ### General Knowledge Requirements:
