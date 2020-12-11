@@ -3,7 +3,7 @@ import ExperimentContext from "../context/experiment/experimentContext";
 import TreeContext from "../context/tree/treeContext";
 import JobHistory from "./JobHistory";
 import { secondsToDelta } from "../context/utils";
-import { DEBUG } from "../context/vars";
+import { DEBUG, statusCodeToStyle } from "../context/vars";
 
 const SelectionTreeNode = () => {
   const experimentContext = useContext(ExperimentContext);
@@ -12,6 +12,8 @@ const SelectionTreeNode = () => {
   const { selectedTreeNode, treedata } = treeContext;
 
   let selectedNode = null;
+  let parentList = null;
+  let childrenList = null;
   //var currentNode = "";
   if (
     selectedTreeNode &&
@@ -21,6 +23,16 @@ const SelectionTreeNode = () => {
     const currentNode = selectedTreeNode.node.refKey;
     if (treedata && treedata.jobs) {
       selectedNode = treedata.jobs.find((job) => job.id === currentNode);
+      if (selectedNode && selectedNode.parent_list && selectedNode.parent_list.length > 0){
+        parentList = treedata.jobs.filter((job) => selectedNode.parent_list.indexOf(job.id) >= 0);
+        //console.log(selectedNode.parent_list);
+        //console.log(parentList);
+      }
+      if (selectedNode && selectedNode.children_list && selectedNode.children_list.length > 0){
+        childrenList = treedata.jobs.filter((job) => selectedNode.children_list.indexOf(job.id) >= 0);
+        //console.log(selectedNode.children_list);
+        //console.log(childrenList);
+      }
       //console.log(selectedNode);
     } else {
       selectedNode = null;
@@ -384,8 +396,8 @@ const SelectionTreeNode = () => {
         </div>
       )}
       {selectedNode &&
-        selectedNode.children_list &&
-        selectedNode.children_list.length > 0 && (
+        childrenList &&
+        childrenList.length > 0 && (
           <div
             className='modal fade'
             id='childrenList-tree'
@@ -411,8 +423,8 @@ const SelectionTreeNode = () => {
                 </div>
                 <div className='modal-body'>
                   <ul>
-                    {selectedNode.children_list.map((item, index) => (
-                      <li key={index}>{item}</li>
+                    {childrenList.map((item, index) => (
+                      <li key={index}>{item.id} <span className="badge" style={statusCodeToStyle(item.status_code)}>{item.status}</span></li>
                     ))}
                   </ul>
                 </div>
@@ -430,8 +442,8 @@ const SelectionTreeNode = () => {
           </div>
         )}
       {selectedNode &&
-        selectedNode.parent_list &&
-        selectedNode.parent_list.length > 0 && (
+        parentList &&
+        parentList.length > 0 && (
           <div
             className='modal fade'
             id='parentList-tree'
@@ -457,8 +469,8 @@ const SelectionTreeNode = () => {
                 </div>
                 <div className='modal-body'>
                   <ul>
-                    {selectedNode.parent_list.map((item, index) => (
-                      <li key={index}>{item}</li>
+                    {parentList.map((item, index) => (
+                      <li key={index}>{item.id} <span className="badge" style={statusCodeToStyle(item.status_code)}>{item.status}</span></li>
                     ))}
                   </ul>
                 </div>

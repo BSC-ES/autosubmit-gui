@@ -58,7 +58,7 @@ export const unknownColor = {
 export const suspendedColor = {
   background: "orange",
   fontWeight: "bold",
-  color: "white",
+  color: "black",
 };
 export const holdColor = {
   background: "salmon",
@@ -68,4 +68,32 @@ export const holdColor = {
 export const preparedColor = {
   background: "lightsalmon",
   fontWeight: "bold",
+};
+
+
+
+export const statusCodeToStyle = (code) => {
+  if (code === WaitingCode)
+    return waitingColor;
+  if (code === FailedCode)
+    return failedColor;
+  if (code === CompletedCode)
+    return completedColor;
+  if (code === RunningCode)
+    return runningColor;
+  if (code === QueueCode)
+    return queueColor;
+  if (code === SubmittedCode)
+    return submittedColor;
+  if (code === UnknownCode)
+    return unknownColor;
+  if (code === SuspendedCode)
+    return suspendedColor;
+  if (code === HoldCode)
+    return holdColor;
+  if (code === ReadyCode)
+    return readyColor;
+  if (code === PreparedCode)
+    return preparedColor;
+  return unknownColor;
 };

@@ -3,7 +3,7 @@ import ExperimentContext from "../context/experiment/experimentContext";
 import GraphContext from "../context/graph/graphContext";
 import JobHistory from "./JobHistory";
 import { secondsToDelta } from "../context/utils";
-import { DEBUG } from "../context/vars";
+import { DEBUG, statusCodeToStyle } from "../context/vars";
 
 const Selection = () => {
   const experimentContext = useContext(ExperimentContext);
@@ -20,6 +20,9 @@ const Selection = () => {
 
   let currentNode = "";
   let selectedNode = null;
+  let parentList = [];
+  let childrenList = [];
+
 
   const copyContent = (inputname) => (e) => {
     e.preventDefault();
@@ -27,11 +30,21 @@ const Selection = () => {
     window.copyToClip(inputname);
   };
 
-  if (selection) {
+  if (selection && data && data.nodes) {
     //console.log("Current selection " + selection);
     selection.map((node) => (currentNode = node));
 
     selectedNode = data.nodes.find((node) => node.id === currentNode);
+    if (selectedNode && selectedNode.parent_list && selectedNode.parent_list.length > 0){
+      parentList = data.nodes.filter((node) => selectedNode.parent_list.indexOf(node.id) >= 0);
+      //console.log(parentList);
+    }
+    if (selectedNode && selectedNode.children_list && selectedNode.children_list.length > 0){
+      childrenList = data.nodes.filter((node) => selectedNode.children_list.indexOf(node.id) >= 0);
+      //console.log(childrenList);
+    }
+
+    
     // If selection mode is activated
     //console.log("Selected node")
     //console.log("Data: " + selectedNode.id + " " + selectedNode.platform_name)
@@ -362,8 +375,8 @@ const Selection = () => {
         </div>
       )}
       {selectedNode &&
-        selectedNode.children_list &&
-        selectedNode.children_list.length > 0 && (
+        childrenList &&
+        childrenList.length > 0 && (
           <div
             className='modal fade'
             id='childrenList'
@@ -389,8 +402,8 @@ const Selection = () => {
                 </div>
                 <div className='modal-body'>
                   <ul>
-                    {selectedNode.children_list.map((item, index) => (
-                      <li key={index}>{item}</li>
+                    {childrenList.map((item, index) => (
+                      <li key={index}>{item.id} <span className="badge" style={statusCodeToStyle(item.status_code)}>{item.status}</span></li>
                     ))}
                   </ul>
                 </div>
@@ -408,8 +421,8 @@ const Selection = () => {
           </div>
         )}
       {selectedNode &&
-        selectedNode.parent_list &&
-        selectedNode.parent_list.length > 0 && (
+        parentList &&
+        parentList.length > 0 && (
           <div
             className='modal fade'
             id='parentList'
@@ -435,8 +448,8 @@ const Selection = () => {
                 </div>
                 <div className='modal-body'>
                   <ul>
-                    {selectedNode.parent_list.map((item, index) => (
-                      <li key={index}>{item}</li>
+                    {parentList.map((item, index) => (
+                      <li key={index}>{item.id} <span className="badge" style={statusCodeToStyle(item.status_code)}>{item.status}</span></li>
                     ))}
                   </ul>
                 </div>
