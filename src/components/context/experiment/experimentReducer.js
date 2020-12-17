@@ -229,11 +229,12 @@ export default (state, action) => {
         ...state,
         currentSelected: [...state.currentSelected, currentNode],
         currentCommand: null,
+        currentTextCommand: null,
       };
     case SET_CURRENT_COMMAND:
       return {
         ...state,
-        currentCommand: action.payload,
+        currentCommand: action.payload,        
       };
     case SET_CURRENT_TEXT_COMMAND:
       return {
@@ -258,6 +259,7 @@ export default (state, action) => {
         ...state,
         currentSelected: current,
         currentCommand: null,
+        currentTextCommand: null,
       };
     default:
       return null;

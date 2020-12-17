@@ -220,7 +220,10 @@ const CommandModal = ({ source, target }) => {
               >
                 {sourceTextCommand && (
                   <div className='p-2'>
-                    {JSON.parse(JSON.stringify(sourceTextCommand))}
+                    {/* {JSON.parse(JSON.stringify(sourceTextCommand))} */}
+                    {sourceTextCommand.split("\n").map((item, index) => (
+                      <p>{item}</p>)
+                    )}
                   </div>
                 )}
               </div>

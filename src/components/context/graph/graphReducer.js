@@ -502,6 +502,7 @@ export default (state, action) => {
         canSelect: false,
         currentSelected: [],
         currentCommand: null,
+        currentTextCommandGraph: null,
         graphSelectedNodes: null,
         //startAutoUpdatePkl: false,
       };
@@ -545,7 +546,8 @@ export default (state, action) => {
       };
     case SET_CURRENT_TEXT_COMMAND:
       return {
-        ...state, currentTextCommandGraph: action.payload,
+        ...state, 
+        currentTextCommandGraph: action.payload,
         canCopyToClipboard: true,
       }
     case SET_NOTIFICATION_TITLE_GRAPH:

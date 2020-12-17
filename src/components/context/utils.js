@@ -65,7 +65,7 @@ export const statusChangeTextGeneratorGraph = (jobs, status) => {
   let command = "You have to select at least one job.";
   //jobs.map((job) => arrayNames.push(job.name));
   if (jobs.length > 0) {
-    command = jobs.join(" "+ String(status)+ "\n");
+    command = jobs.join(" " + String(status)+ "\n");
     command = command + " " + String(status);
   }
   return command;
