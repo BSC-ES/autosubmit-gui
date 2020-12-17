@@ -29,6 +29,7 @@ import {
   GET_EXPERIMENT_RUNS,
   GET_FILE_STATUS,
   CLEAN_FILE_STATUS_DATA,
+  SET_CURRENT_TEXT_COMMAND,
 } from "../types";
 
 import {
@@ -231,6 +232,11 @@ export default (state, action) => {
       return {
         ...state,
         currentCommand: action.payload,
+      };
+    case SET_CURRENT_TEXT_COMMAND:
+      return {
+        ...state,
+        currentTextCommand: action.payload,
       };
     case LOADING_PERFORMANCE_METRICS:
       return {

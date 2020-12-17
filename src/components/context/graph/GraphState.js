@@ -21,6 +21,7 @@ import {
   SHOULD_UPDATE_GRAPH,
   SET_LOADING_JOB_MONITOR,
   SET_CURRENT_COMMAND,
+  SET_CURRENT_TEXT_COMMAND,
   NAVIGATE_GRAPH_TO,
   CLEAN_PKL_DATA,
   CLEAN_NAV_DATA,
@@ -53,6 +54,7 @@ const GraphState = (props) => {
     notificationTitleGraph: null,
     //currentSelected: [],
     currentCommandGraph: null,
+    currentTextCommandGraph: null,
     current_grouped: "none",
     current_layout: "standard",
     selection: null,
@@ -176,6 +178,13 @@ const GraphState = (props) => {
     });
   };
 
+  const setCurrentTextCommandGraph = async (command) => {
+    dispatch({
+      type: SET_CURRENT_TEXT_COMMAND,
+      payload: command,
+    });
+  }
+
   // Clean state data
   const cleanOnlyGraphData = () => dispatch({ type: CLEAN_ONLY_GRAH_DATA });
   const cleanGraphData = () => dispatch({ type: CLEAN_GRAPH_DATA });
@@ -225,6 +234,7 @@ const GraphState = (props) => {
         shouldUpdateGraph: state.shouldUpdateGraph,
         graphSelectedNodes: state.graphSelectedNodes,
         currentCommandGraph: state.currentCommandGraph,
+        currentTextCommandGraph: state.currentTextCommandGraph,
         notificationTitleGraph: state.notificationTitleGraph,
         getExperimentGraph,
         getExperimentPkl,
@@ -245,6 +255,7 @@ const GraphState = (props) => {
         navigateAfterLoadGraph,
         updateGraphSelectedNodes,
         setCurrentCommandGraph,
+        setCurrentTextCommandGraph,
         setNotificationTitleGraph,
       }}
     >

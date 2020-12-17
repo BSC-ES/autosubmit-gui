@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import GraphContext from "../context/graph/graphContext";
 import ExperimentContext from "../context/experiment/experimentContext";
 import { DEBUG } from "../context/vars";
-import { commandGenerator, commandGeneratorGraph } from "../context/utils";
+import { commandGenerator, commandGeneratorGraph, statusChangeTextGeneratorGraph, statusChangeTextGenerator } from "../context/utils";
 
 const CommandModal = ({ source, target }) => {
   const graphContext = useContext(GraphContext);
@@ -11,12 +11,16 @@ const CommandModal = ({ source, target }) => {
   const {
     currentSelected,
     setCurrentCommand,
+    setCurrentTextCommand,
     experiment,
     currentCommand,
+    currentTextCommand,
   } = experimentContext;
   const {
     graphSelectedNodes,
     setCurrentCommandGraph,
+    setCurrentTextCommandGraph,
+    currentTextCommandGraph,
     currentCommandGraph,
   } = graphContext;
   let expid = null;
@@ -27,6 +31,7 @@ const CommandModal = ({ source, target }) => {
     source === "graph-only" ? graphSelectedNodes : currentSelected;
   const sourceCommand =
     source === "graph-only" ? currentCommandGraph : currentCommand;
+  const sourceTextCommand = source === "graph-only" ? currentTextCommandGraph : currentTextCommand;
 
   const invalidMessage =
     source === "graph-only"
@@ -35,6 +40,20 @@ const CommandModal = ({ source, target }) => {
 
   // console.log(sourceSelection);
   // console.log(sourceCommand);
+
+  const setStatusTextCommand = (status) => (e) => {
+    e.preventDefault();
+    let command = "";
+    if (source === "graph-only") {
+      command = statusChangeTextGeneratorGraph(sourceSelection, status);
+      copyContent(command);
+      setCurrentTextCommandGraph(command);
+    } else {
+      command = statusChangeTextGenerator(sourceSelection, status);
+      copyContent(command);
+      setCurrentTextCommand(command);
+    }
+  };
 
   const setStatusCommand = (status) => (e) => {
     e.preventDefault();
@@ -65,6 +84,7 @@ const CommandModal = ({ source, target }) => {
   // }
 
   let modalHeader = <div className='col-12'>{invalidMessage}</div>;
+  let modalHeader2 = <div className='col-12'>{invalidMessage}</div>;
 
   if (sourceSelection && sourceSelection.length > 0) {
     modalHeader = (
@@ -107,6 +127,47 @@ const CommandModal = ({ source, target }) => {
         </div>
       </div>
     );
+
+    modalHeader2 = (
+      <div className="col-12">
+      Generate file text:{" "}
+      <div className='btn-group' role='group' aria-label='Status'>
+        <button
+          className='btn btn-sm'
+          style={{ background: "lightblue" }}
+          onClick={setStatusTextCommand("READY")}
+        >
+          Ready
+        </button>
+        <button
+          className='btn btn-sm btn-secondary'
+          onClick={setStatusTextCommand("WAITING")}
+        >
+          Waiting
+        </button>
+        <button
+          className='btn btn-sm'
+          style={{ background: "yellow" }}
+          onClick={setStatusTextCommand("COMPLETED")}
+        >
+          Completed
+        </button>
+        <button
+          className='btn btn-sm'
+          style={{ background: "orange" }}
+          onClick={setStatusTextCommand("SUSPENDED")}
+        >
+          Suspended
+        </button>
+        <button
+          className='btn btn-sm btn-danger'
+          onClick={setStatusTextCommand("FAILED")}
+        >
+          Failed
+        </button>
+      </div>
+    </div>
+    );
   }
   return (
     <div
@@ -143,6 +204,32 @@ const CommandModal = ({ source, target }) => {
               <div className='col-12'>
                 The command has been copied to the clipboard. Paste it in your
                 terminal.
+              </div>
+            </div>
+          )}
+          <div className='modal-body pb-1'>
+            <div className='row'>{modalHeader2}</div>
+            <div className='row mt-2 mx-1'>
+              <div
+                className='col-12'
+                style={{
+                  fontFamily: "Courier",
+                  background: "black",
+                  color: "white",
+                }}
+              >
+                {sourceTextCommand && (
+                  <div className='p-2'>
+                    {JSON.parse(JSON.stringify(sourceTextCommand))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+          {sourceTextCommand && sourceTextCommand.length > 0 && (
+            <div className='row mx-1 mb-2 float-left'>
+              <div className='col-12'>
+                The text has been copied to the clipboard. Paste it in your status change file.
               </div>
             </div>
           )}

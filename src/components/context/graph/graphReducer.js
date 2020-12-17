@@ -25,6 +25,7 @@ import {
   UPDATE_GRAPH_SELECTED_NODES,
   SET_CURRENT_COMMAND,
   SET_NOTIFICATION_TITLE_GRAPH,
+  SET_CURRENT_TEXT_COMMAND,
   //DEACTIVATE_COPY_TO,
 } from "../types";
 
@@ -541,6 +542,11 @@ export default (state, action) => {
         currentCommandGraph: action.payload,
         canCopyToClipboard: true,
       };
+    case SET_CURRENT_TEXT_COMMAND:
+      return {
+        ...state, currentTextCommandGraph: action.payload,
+        canCopyToClipboard: true,
+      }
     case SET_NOTIFICATION_TITLE_GRAPH:
       return {
         ...state,

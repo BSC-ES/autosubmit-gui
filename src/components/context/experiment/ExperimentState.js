@@ -25,6 +25,7 @@ import {
   DEACTIVATE_SELECTION_MODE,
   REMOVE_SELECTED_JOB,
   SET_CURRENT_COMMAND,
+  SET_CURRENT_TEXT_COMMAND,
   UPDATE_SELECTED_JOBS,
   SET_LOADING_SUMMARY,
   CLEAN_EXPERIMENT_DATA,
@@ -62,6 +63,7 @@ const ExperimentState = (props) => {
     loadingFilterTree: false,
     loadingExperimentRuns: false,
     currentCommand: null,
+    currentTextCommand: null,
     currentSelected: [],
     startAutoUpdateRun: false,
     startAutoUpdateTreePkl: false,
@@ -284,6 +286,13 @@ const ExperimentState = (props) => {
     //return command;
   };
 
+  const setCurrentTextCommand = async (command) => {
+    dispatch({
+      type: SET_CURRENT_TEXT_COMMAND,
+      payload: command,
+    });
+  }
+
   // Cleaning
   const clearExperiments = () => dispatch({ type: CLEAR_EXPERIMENTS });
   //const cleanGraphData = () => dispatch({ type: CLEAN_GRAPH_DATA });
@@ -372,6 +381,7 @@ const ExperimentState = (props) => {
         startAutoUpdateRun: state.startAutoUpdateRun,
         experimentRunning: state.experimentRunning,
         currentCommand: state.currentCommand,
+        currentTextCommand: state.currentTextCommand,
         canSelect: state.canSelect,
         totalJobs: state.totalJobs,
         expectedLoadingTreeTime: state.expectedLoadingTreeTime,
@@ -396,6 +406,7 @@ const ExperimentState = (props) => {
         deactivateSelectionMode,
         removeSelectedJob,
         setCurrentCommand,
+        setCurrentTextCommand,
         updateCurrentSelectedGraph,
         updateCurrentSelectedTree,
         updateExperimentTimeStamp,

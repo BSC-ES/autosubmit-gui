@@ -55,20 +55,27 @@ export const commandGeneratorGraph = (expid, jobs, status) => {
 
 export const commandGenerator = (expid, jobs, status) => {
   let arrayNames = [];
-  let command = "Invalid Command: You have to select at least one job.";
+  //let command = "Invalid Command: You have to select at least one job.";
   jobs.map((job) => arrayNames.push(job.name));
-  if (arrayNames.length > 0) {
-    command =
-      "autosubmit setstatus " +
-      expid +
-      ' -fl "' +
-      arrayNames.join(" ") +
-      '" -t ' +
-      status +
-      " -s -nt -np";
+
+  return commandGeneratorGraph(expid, arrayNames, status);
+};
+
+export const statusChangeTextGeneratorGraph = (jobs, status) => {
+  let command = "You have to select at least one job.";
+  //jobs.map((job) => arrayNames.push(job.name));
+  if (jobs.length > 0) {
+    command = jobs.join(" "+ String(status)+ "\n");
+    command = command + " " + String(status);
   }
   return command;
-};
+}
+
+export const statusChangeTextGenerator = (jobs, status) => {
+  let arrayNames = [];
+  jobs.map((job) => arrayNames.push(job.name));
+  return statusChangeTextGeneratorGraph(arrayNames, status);
+}
 
 export const secondsToDelta = (SECONDS) => {
   if (SECONDS > 0) {
