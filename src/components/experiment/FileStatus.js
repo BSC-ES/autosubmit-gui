@@ -45,7 +45,7 @@ class FileStatus extends Component {
           String(bandwidth_warning) + ". Current bandwidth: " + String(current_bandwidth.toFixed(2)) + " MB/s. Average over last day: " + String(avg_bandwidth.toFixed(2)) + " MB/s." 
           : "";
           const title_latency_warn  =  latency_warning ? 
-          "\n" + String(latency_warning) + ". Current latency: " + String(current_latency.toFixed(2)) + " s. Average over last day: " + String(avg_latency.toFixed(2)) + " s." 
+          "\n" + String(latency_warning) + ". Current latency: " + String(current_latency.toFixed(2)) + "s Average over last day: " + String(avg_latency.toFixed(2)) + "s." 
           : "";
           const title_response_warn = response_warning ? "\n" + String(response_warning) + ". Current response time: " + String(reponse_time.toFixed(2)) + " s." : "";
   
