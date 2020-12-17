@@ -45,6 +45,7 @@ export default (state, action) => {
         canSelect: true,
         currentSelected: [],
         currentCommand: null,
+        currentTextCommand: null,
       };
     case DEACTIVATE_SELECTION_MODE:
       return {
@@ -52,6 +53,7 @@ export default (state, action) => {
         canSelect: false,
         currentSelected: [],
         currentCommand: null,
+        currentTextCommand: null,
       };
     case CLEAN_RUN_DATA:
       return {

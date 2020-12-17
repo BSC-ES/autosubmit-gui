@@ -528,6 +528,7 @@ export default (state, action) => {
       //const selectedNodes = action.payload;
       state.graphSelectedNodes = null;
       state.currentCommandGraph = null;
+      state.currentTextCommandGraph = null;
       if (state.selection) {
         const currentSelectedNodes = state.visNetwork.getSelectedNodes();
         DEBUG && console.log(currentSelectedNodes);
@@ -539,7 +540,7 @@ export default (state, action) => {
     case SET_CURRENT_COMMAND:
       return {
         ...state,
-        currentCommandGraph: action.payload,
+        currentCommandGraph: action.payload,        
         canCopyToClipboard: true,
       };
     case SET_CURRENT_TEXT_COMMAND:
