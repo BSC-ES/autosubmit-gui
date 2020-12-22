@@ -6,7 +6,7 @@ tags:
   - Workflow Manager
 authors:
   - name: Wilmer Uruchi ##^[Custom footnotes for e.g. denoting who the corresponding author is can be included like this.]
-    ## orcid: 0000-0003-0872-7098
+    orcid: 0000-0003-0842-0459
     affiliation: 1 ##"1, 2" # (Multiple affiliations must be quoted)
   - name: Miguel Castrillo
     affiliation: 1
