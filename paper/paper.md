@@ -1,5 +1,5 @@
 ---
-title: "Autosumit GUI: A Javascript-based Graphical User Interface to Monitor Experiments Workflow Execution"
+title: "Autosubmit GUI: A Javascript-based Graphical User Interface to Monitor Experiments Workflow Execution"
 tags:
   - Python
   - High Performance Computing
