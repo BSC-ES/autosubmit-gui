@@ -8,17 +8,19 @@
     "dateformat": "^3.0.3",
     "jquery": "^3.5.0",
     "jquery.fancytree": "^2.35.0",
-    "react": "^16.13.1",
+    "react": "^17.0.1",
     "react-copy-to-clipboard": "^5.0.2",
     "react-desktop-notification": "^1.0.9",
-    "react-dom": "^16.13.1",
+    "react-dom": "^16.14.0",
     "react-google-charts": "^3.0.15",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.4.3",
     "react-scroll": "^1.7.16",
     "react-web-notification": "^0.8.0",
+    "uuid": "^7.0.3",
     "vis": "^4.21.0",
-    "vis-network": "^5.1.0"
+    "vis-network": "^5.1.0",
+    "vis-util": "^1.1.10"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -57,13 +59,15 @@
     "url": "https://earth.bsc.es/gitlab/wuruchi/autosubmitreact"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "jest": {
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/mocks/fileMock.js",
       "\\.(css|sass)$": "<rootDir>/mocks/styleMock.js"
     },
-    "setupFiles": ["jest-canvas-mock"]
+    "setupFiles": [
+      "jest-canvas-mock"
+    ]
   },
   "babel": {
     "env": {
