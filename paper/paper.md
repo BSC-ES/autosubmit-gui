@@ -68,19 +68,6 @@ Finally, we discuss a little about our programming language and framework choice
 - The interface provides performance metrics of the experiment in the `Performance` tab. The metrics that the interface shows in this section, and their calculation, are based on [@performance].
 - The interface displays historical data for the experiment and its indiviual jobs.
 
-<!-- # Citations -->
-
-<!-- Work in progress -->
-
-<!-- If you want to cite a software repository URL (e.g. something on GitHub without a preferred
-citation) then you can do it with the example BibTeX entry below for @fidgit.
-
-For a quick reference, the following citation commands can be used. -->
-
-<!-- # Figures
-
-Work in progress. -->
-
 # Acknowledgements
 
 We acknowledge contributions from Francisco Doblas-Reyes, Kim Serradell, and all our **Earth Science Department** users.
