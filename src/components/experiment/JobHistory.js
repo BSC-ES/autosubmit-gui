@@ -95,6 +95,7 @@ const JobHistory = ({ source }) => {
                         <th scope='col'>Run</th>
                         <th scope='col'>Status</th>
                         <th scope='col'>Energy</th>
+                        <th scope='col'>SYPD</th>
                         <th scope='col'>Wallclock</th>
                         <th scope='col'>NCpus</th>
                         <th scope='col'>NNodes</th>
@@ -125,6 +126,7 @@ const JobHistory = ({ source }) => {
                           </td>
                           <td>{item.status}</td>
                           <td>{item.energy}</td>
+                          <td>{item.SYPD}</td>
                           <td>{item.wallclock}</td>
                           <td>{item.ncpus}</td>
                           <td>{item.nodes}</td>

@@ -1,6 +1,6 @@
 {
-  "homepage": "https://earth.bsc.es/gitlab/wuruchi/autosubmitreact",
-  "name": "Autosubmit GUI",
+  "homepage": "https://earth.bsc.es/autosubmitapp/",
+  "name": "autosubmitgui",
   "version": "1.0.0",
   "private": true,
   "dependencies": {

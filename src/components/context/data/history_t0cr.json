@@ -17,7 +17,8 @@
           "start": "2020-11-24-10:57:59",
           "status": "COMPLETED",
           "submit": "2020-11-24-10:57:43",
-          "wallclock": "00:10"
+          "wallclock": "00:10",
+          "SYPD": 1.5
       },
       {
           "counter": 8,
@@ -34,7 +35,8 @@
           "start": "2020-11-23-09:57:18",
           "status": "COMPLETED",
           "submit": "2020-11-23-09:57:18",
-          "wallclock": "00:10"
+          "wallclock": "00:10",
+          "SYPD": 1.5
       },
       {
           "counter": 5,
@@ -51,7 +53,8 @@
           "start": "2020-07-29-18:52:42",
           "status": "COMPLETED",
           "submit": "2020-07-29-18:29:53",
-          "wallclock": "00:10"
+          "wallclock": "00:10",
+          "SYPD": 1.5
       },
       {
           "counter": 4,
@@ -68,7 +71,8 @@
           "start": "2020-07-29-12:02:44",
           "status": "FAILED",
           "submit": "2020-07-29-12:02:26",
-          "wallclock": "00:10"
+          "wallclock": "00:10",
+          "SYPD": 1.5
       }
   ]
 }

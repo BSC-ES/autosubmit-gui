@@ -17,7 +17,8 @@
           "start": "2020-11-24-10:53:20",
           "status": "COMPLETED",
           "submit": "2020-11-24-10:53:02",
-          "wallclock": "00:30"
+          "wallclock": "00:30",
+          "SYPD": 1.5
       },
       {
           "counter": 8,
@@ -34,7 +35,8 @@
           "start": "2020-11-23-10:09:04",
           "status": "COMPLETED",
           "submit": "2020-11-23-10:09:00",
-          "wallclock": "00:30"
+          "wallclock": "00:30",
+          "SYPD": 1.5
       },
       {
           "counter": 7,
@@ -51,7 +53,8 @@
           "start": "2020-11-20-15:32:30",
           "status": "COMPLETED",
           "submit": "2020-11-20-15:01:05",
-          "wallclock": "00:30"
+          "wallclock": "00:30",
+          "SYPD": 1.5
       },
       {
           "counter": 5,
@@ -68,7 +71,8 @@
           "start": "2020-07-29-19:06:54",
           "status": "COMPLETED",
           "submit": "2020-07-29-18:39:25",
-          "wallclock": "00:30"
+          "wallclock": "00:30",
+          "SYPD": 1.5
       },
       {
           "counter": 4,
@@ -85,7 +89,8 @@
           "start": "2020-07-29-13:08:55",
           "status": "COMPLETED",
           "submit": "2020-07-29-12:55:34",
-          "wallclock": "00:30"
+          "wallclock": "00:30",
+          "SYPD": 1.5
       },
       {
           "counter": 3,
@@ -102,7 +107,8 @@
           "start": "2020-07-28-16:06:29",
           "status": "COMPLETED",
           "submit": "2020-07-28-16:05:39",
-          "wallclock": "00:30"
+          "wallclock": "00:30",
+          "SYPD": 1.5
       },
       {
           "counter": 2,
@@ -119,7 +125,8 @@
           "start": "2020-07-28-10:36:25",
           "status": "COMPLETED",
           "submit": "2020-07-28-10:29:41",
-          "wallclock": "00:30"
+          "wallclock": "00:30",
+          "SYPD": 1.5
       }
   ]
 }
