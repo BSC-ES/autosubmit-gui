@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 //import ExperimentContext from "../context/experiment/experimentContext";
 import TreeContext from "../context/tree/treeContext";
 import AlertTotal from "./AlertTotal";
+import TreeNodeSelection from "./TreeNodeSelection";
 //import GraphNodeSelection from "./GraphNodeSelection";
 
 const JobFilter = () => {
@@ -66,7 +67,7 @@ const JobFilter = () => {
           </div>
         </form>
       </div>
-      <div className='col-md-4 text-left pl-1'>
+      <div className='col-md-2 text-left pl-1'>
         <form onSubmit={onClearFilter} className='form'>
           <input
             type='submit'
@@ -74,6 +75,9 @@ const JobFilter = () => {
             className='btn btn-info btn-sm'
           />
         </form>
+      </div>
+      <div className='col-md-2'>
+        <TreeNodeSelection />
       </div>
       <div className='col-md-4 text-right text-muted pr-4'>
         {treedata && treedata.jobs && (

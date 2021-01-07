@@ -1,12 +1,15 @@
 import React, { useContext } from "react";
 import GraphContext from "../context/graph/graphContext";
+import TreeContext from "../context/tree/treeContext";
 import ExperimentContext from "../context/experiment/experimentContext";
 import { DEBUG } from "../context/vars";
 import { commandGenerator, commandGeneratorGraph, statusChangeTextGeneratorGraph, statusChangeTextGenerator } from "../context/utils";
+//import treeContext from "../context/tree/treeContext";
 
 const CommandModal = ({ source, target }) => {
   const graphContext = useContext(GraphContext);
   const experimentContext = useContext(ExperimentContext);
+  const treeContext = useContext(TreeContext);
 
   const {
     currentSelected,
@@ -16,6 +19,9 @@ const CommandModal = ({ source, target }) => {
     currentCommand,
     currentTextCommand,
   } = experimentContext;
+
+  const { treeSelectedNodes, currentCommandTree, currentTextCommandTree, setCurrentTextCommandTree, setCurrentCommandTree } = treeContext;
+
   const {
     graphSelectedNodes,
     setCurrentCommandGraph,
@@ -28,10 +34,10 @@ const CommandModal = ({ source, target }) => {
     expid = experiment.expid;
   }
   const sourceSelection =
-    source === "graph-only" ? graphSelectedNodes : currentSelected;
+    source === "graph-only" ? graphSelectedNodes : (source === "tree-only" ? treeSelectedNodes : currentSelected);
   const sourceCommand =
-    source === "graph-only" ? currentCommandGraph : currentCommand;
-  const sourceTextCommand = source === "graph-only" ? currentTextCommandGraph : currentTextCommand;
+    source === "graph-only" ? currentCommandGraph : (source === "tree-only" ? currentCommandTree : currentCommand);
+  const sourceTextCommand = source === "graph-only" ? currentTextCommandGraph : (source === "tree-only" ? currentTextCommandTree : currentTextCommand);
 
   const invalidMessage =
     source === "graph-only"
@@ -48,6 +54,10 @@ const CommandModal = ({ source, target }) => {
       command = statusChangeTextGeneratorGraph(sourceSelection, status);
       copyContent(command);
       setCurrentTextCommandGraph(command);
+    } else if (source === "tree-only"){
+      command = statusChangeTextGeneratorGraph(sourceSelection, status);
+      copyContent(command);
+      setCurrentTextCommandTree(command);
     } else {
       command = statusChangeTextGenerator(sourceSelection, status);
       copyContent(command);
@@ -62,6 +72,10 @@ const CommandModal = ({ source, target }) => {
       command = commandGeneratorGraph(expid, sourceSelection, status);
       copyContent(command);
       setCurrentCommandGraph(command);
+    } if (source === "tree-only"){
+      command = commandGeneratorGraph(expid, sourceSelection, status);
+      copyContent(command);
+      setCurrentCommandTree(command);
     } else {
       command = commandGenerator(expid, sourceSelection, status);
       copyContent(command);
@@ -222,7 +236,7 @@ const CommandModal = ({ source, target }) => {
                   <div className='p-2'>
                     {/* {JSON.parse(JSON.stringify(sourceTextCommand))} */}
                     {sourceTextCommand.split("\n").map((item, index) => (
-                      <p>{item}</p>)
+                      <p key={index}>{item}</p>)
                     )}
                   </div>
                 )}

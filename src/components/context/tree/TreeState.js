@@ -24,6 +24,9 @@ import {
   UPDATE_RUNDETAIL_ON_TREE,
   GET_EXPERIMENT_RUN_JOBDATA,  
   LOADING_PREVIOUS_RUN,
+  UPDATE_TREE_SELECTED_NODES,
+  SET_CURRENT_COMMAND,
+  SET_CURRENT_TEXT_COMMAND,
 } from "../types";
 
 // import { start, end } from "../utils";
@@ -44,9 +47,13 @@ const TreeState = (props) => {
     currentRunIdOnTree: null,
     elapsedLoadingTree: 1,
     startAutoUpdateTreePkl: false,
+    currentCommandTree: null,
+    currentTextCommandTree: null,
     pkltreechanges: null,
     selectedTreeNode: null,
+    //selection: null,
     notificationTitleTree: null,
+    treeSelectedNodes: null,
   };
 
   const [state, dispatch] = useReducer(TreeReducer, initialState);
@@ -139,6 +146,24 @@ const TreeState = (props) => {
     });
   };
 
+  const setCurrentCommandTree = async (command) => {
+    // for change status
+    //let arrayNames = [];
+
+    //console.log(command);
+    dispatch({
+      type: SET_CURRENT_COMMAND,
+      payload: command,
+    });
+  };
+
+  const setCurrentTextCommandTree = async (command) => {
+    dispatch({
+      type: SET_CURRENT_TEXT_COMMAND,
+      payload: command,
+    });
+  }
+
   const setFancyTree = (value) =>
     dispatch({ type: SET_FANCYTREE, payload: value });
 
@@ -169,6 +194,8 @@ const TreeState = (props) => {
   const setStartSelection = () => dispatch({ type: SET_START_TREE_SELECTION });
   const setNotificationTitleTree = (notification) =>
     dispatch({ type: SET_NOTIFICATION_TITLE_TREE, payload: notification });
+  const updateTreeSelectedNodes = () =>
+    dispatch({ type: UPDATE_TREE_SELECTED_NODES });
 
   return (
     <TreeContext.Provider
@@ -188,6 +215,10 @@ const TreeState = (props) => {
         expectedLoadingTreeTime: state.expectedLoadingTreeTime,
         elapsedLoadingTree: state.elapsedLoadingTree,
         currentRunIdOnTree: state.currentRunIdOnTree,
+        //selection: state.selection,
+        treeSelectedNodes: state.treeSelectedNodes,
+        currentCommandTree: state.currentCommandTree,
+        currentTextCommandTree: state.currentTextCommandTree,
         getExperimentTree,
         getExperimentTreePkl,
         filterTreeView,
@@ -202,6 +233,9 @@ const TreeState = (props) => {
         increaseElapsedLoadingTree,
         updateTreeContent,
         getExperimentRunJobData,
+        updateTreeSelectedNodes,
+        setCurrentCommandTree,
+        setCurrentTextCommandTree,
       }}
     >
       {props.children}

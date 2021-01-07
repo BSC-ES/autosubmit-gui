@@ -91,7 +91,8 @@ export class TreeNativeRep extends Component {
               // console.log(tree.activeNode.getParent())
               // console.log(tree.activeNode)
               //data.node.title = "Honk";
-              //console.log(data);
+              // console.log("Node data");
+              // console.log(data);
               //console.log(this);
               this.props.updateSelectionTree(data);
               //console.log(this.props.canSelect);
@@ -110,7 +111,7 @@ export class TreeNativeRep extends Component {
           },
           // extensions: ['edit', 'filter'],
           // extensions: ["clones","filter", "childcounter"],
-          extensions: ["filter", "childcounter", "clones"],
+          extensions: ["filter", "childcounter", "clones", "multi"],
           filter: {
             autoApply: true, // Re-apply last filter if lazy data is loaded
             autoExpand: true, // Expand all branches that contain matches while filtered

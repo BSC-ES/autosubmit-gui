@@ -17,14 +17,19 @@ import {
   SET_OFF_LOADING_TREE,
   INCREASE_LOADING_TREE,
   //UPDATE_RUNDETAIL_ON_TREE,
+  UPDATE_TREE_SELECTED_NODES,
   GET_EXPERIMENT_RUN_JOBDATA,
   LOADING_PREVIOUS_RUN,
+  SET_CURRENT_COMMAND,
+  SET_CURRENT_TEXT_COMMAND,
   //CLEAR_RUNDETAIL_ON_TREE,
 } from "../types";
 
 import { updateTreeData, buildRunTitle } from "../treeutils";
 
 import { timeStampToDate } from "../utils";
+
+import { DEBUG } from "../vars";
 
 export default (state, action) => {
   switch (action.type) {
@@ -469,9 +474,42 @@ export default (state, action) => {
         returnFilter: 0,
       };
     case UPDATE_SELECTION_TREE:
+      DEBUG && console.log("Node");
+      DEBUG && console.log(action.payload.node);
+      if (action.payload && action.payload.node && action.payload.node.folder){        
+        DEBUG && console.log("Folder")
+        return {
+          ...state,
+          selectedTreeNode: null,
+          currentCommandTree: null,
+          currentTextCommandTree: null,
+        }
+      } else {
+        DEBUG && console.log("Node Child")
+        return {
+          ...state,
+          selectedTreeNode: action.payload,
+          currentCommandTree: null,
+          currentTextCommandTree: null,
+        };
+      }      
+    case UPDATE_TREE_SELECTED_NODES:
+      //const selectedNodes = action.payload;
+      state.treeSelectedNodes = null;
+      state.currentCommandTree = null;
+      state.currentTextCommandTree = null;
+      if (state.selectedTreeNode) {
+        const currentSelectedNodes = state.fancyTree.getSelectedNodes();
+        DEBUG && console.log(currentSelectedNodes);
+        let arrayNames = [];
+        if (currentSelectedNodes.length > 0){
+          currentSelectedNodes.map((job) => arrayNames.push(job.refKey));
+        }
+        state.treeSelectedNodes = arrayNames;
+        DEBUG && console.log(arrayNames);
+      }
       return {
         ...state,
-        selectedTreeNode: action.payload,
       };
     case SET_START_TREE_SELECTION:
       if (state.fancyTree) {
@@ -489,6 +527,18 @@ export default (state, action) => {
       return {
         ...state,
         loadingPreviousRun: true,
+      };
+    case SET_CURRENT_COMMAND:
+      return {
+        ...state,
+        currentCommandTree: action.payload,        
+        //canCopyToClipboard: true,
+      };
+    case SET_CURRENT_TEXT_COMMAND:
+      return {
+        ...state, 
+        currentTextCommandTree: action.payload,
+        //canCopyToClipboard: true,
       };
     default:
       return null;
