@@ -108,6 +108,7 @@ const  ExperimentRuns = () => {
                         <th scope='col'>Suspended</th>
                         <th scope='col'>Completed</th>
                         <th scope='col'>Total</th>
+                        <th scope='col'>SYPD</th>
                         <th scope='col'></th>
                       </tr>
                     </thead>
@@ -141,6 +142,7 @@ const  ExperimentRuns = () => {
                           <td>{item.suspended}</td>
                           <td>{item.completed}</td>
                           <td>{item.total}</td>
+                          <td>{item.SYPD}</td>
                           <td className="py-1"> 
                           {loadingPreviousRun && <span>...</span>}                         
                           {!loadingPreviousRun && (
