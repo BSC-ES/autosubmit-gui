@@ -22,6 +22,7 @@ const Performance = () => {
   }
   // console.log(performancedata);
   const {
+    RSYPD,
     ASYPD,
     SYPD,
     JPSY,
@@ -42,6 +43,9 @@ const Performance = () => {
           </h5>
           <h5>
             SYPD: <span className='badge badge-secondary'>{SYPD}</span>
+          </h5>
+          <h5>
+            RSYPD: <span className='badge badge-secondary'>{RSYPD}</span>
           </h5>
           <h5>
             ASYPD: <span className='badge badge-secondary'>{ASYPD}</span>
