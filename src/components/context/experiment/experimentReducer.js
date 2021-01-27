@@ -30,6 +30,7 @@ import {
   GET_FILE_STATUS,
   CLEAN_FILE_STATUS_DATA,
   SET_CURRENT_TEXT_COMMAND,
+  GET_JOB_LOG,
 } from "../types";
 
 import {
@@ -71,6 +72,7 @@ export default (state, action) => {
         expectedLoadingQuickView: 0,
         data: null,
         canSelect: false,
+        joblog: null,
       };
     }
     case CLEAN_FILE_STATUS_DATA:
@@ -230,6 +232,7 @@ export default (state, action) => {
         currentSelected: [...state.currentSelected, currentNode],
         currentCommand: null,
         currentTextCommand: null,
+        joblog: null,
       };
     case SET_CURRENT_COMMAND:
       return {
@@ -261,6 +264,11 @@ export default (state, action) => {
         currentCommand: null,
         currentTextCommand: null,
       };
+    case GET_JOB_LOG:
+      return {
+        ...state,
+        joblog: action.payload,
+      }
     default:
       return null;
   }

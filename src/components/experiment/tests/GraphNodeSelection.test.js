@@ -6,7 +6,6 @@ import GraphNodeSelection from "../GraphNodeSelection";
 import ExperimentContext from "../../context/experiment/experimentContext";
 import GraphContext from "../../context/graph/graphContext";
 import TreeContext from "../../context/tree/treeContext";
-import experimentContext from "../../context/experiment/experimentContext";
 
 let container = null;
 const experiment = {branch: "master", description: "Test", owner:"wuruchi", owner_id: 1226, hpc:"LOCAL", db_historic_version: 14, version:"3.11.0"};
@@ -40,7 +39,14 @@ it("GraphNodeSelection renders with content", () => {
 
   act(() => {
     render(<Router><ExperimentContext.Provider value={{ experiment: experiment, summaries: new Map(), loadingSummary: new Map(), experimentRunning:true, canSelect: false, setCurrentCommand: () => null, currentSelected: currentSelected}}>
-          <GraphContext.Provider 
+      <TreeContext.Provider value={{
+        treeSelectedNodes: null,
+        currentCommandTree: null,
+        currentTextCommandTree: null,
+        setCurrentTextCommandTree: () => null,
+        setCurrentCommandTree: () => null,
+      }}>
+      <GraphContext.Provider 
           value={{data: {}, 
                 selection: {},
                 updateGraphSelectedNodes: () => null,
@@ -49,6 +55,7 @@ it("GraphNodeSelection renders with content", () => {
                 currentCommandGraph: "" }}>
             <GraphNodeSelection />
           </GraphContext.Provider>
+      </TreeContext.Provider>          
       </ExperimentContext.Provider></Router>, container);
   });
   // console.log(container.innerHTML);
@@ -76,7 +83,14 @@ it("GraphNodeSelection renders null when selection is still enabled", () => {
 
   act(() => {
     render(<Router><ExperimentContext.Provider value={{ experiment: experiment, summaries: new Map(), loadingSummary: new Map(), experimentRunning:true, canSelect: true, setCurrentCommand: () => null, currentSelected: currentSelected}}>
-          <GraphContext.Provider 
+      <TreeContext.Provider value={{
+        treeSelectedNodes: null,
+        currentCommandTree: null,
+        currentTextCommandTree: null,
+        setCurrentTextCommandTree: () => null,
+        setCurrentCommandTree: () => null,
+      }}>
+        <GraphContext.Provider 
           value={{data: {}, 
                 selection: {},
                 updateGraphSelectedNodes: () => null,
@@ -84,7 +98,8 @@ it("GraphNodeSelection renders null when selection is still enabled", () => {
                 setCurrentCommandGraph: () => null,
                 currentCommandGraph: "" }}>
             <GraphNodeSelection />
-          </GraphContext.Provider>
+        </GraphContext.Provider>
+      </TreeContext.Provider>
       </ExperimentContext.Provider></Router>, container);
   });
   expect(container.textContent).toBeFalsy();

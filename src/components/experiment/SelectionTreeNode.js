@@ -2,6 +2,7 @@ import React, { useContext, Fragment } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
 import TreeContext from "../context/tree/treeContext";
 import JobHistory from "./JobHistory";
+import JobLog from "./JobLog";
 import { secondsToDelta } from "../context/utils";
 import { DEBUG, statusCodeToStyle } from "../context/vars";
 
@@ -245,6 +246,7 @@ const SelectionTreeNode = () => {
                   </div>
                 </div>
                 <div>
+                  {/* .out log viewer */}
                   {selectedNode.out && (
                     <div className='row'>
                       <div className='col-12 px-0'>
@@ -267,6 +269,7 @@ const SelectionTreeNode = () => {
                                 value='Copy out'
                               />
                             </div>
+                            <JobLog source={selectedNode.out}/>                            
                           </div>
                         </form>
                       </div>
@@ -294,6 +297,7 @@ const SelectionTreeNode = () => {
                                 value='Copy err'
                               />
                             </div>
+                            <JobLog source={selectedNode.err}/>
                           </div>
                         </form>
                       </div>

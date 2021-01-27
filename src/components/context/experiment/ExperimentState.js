@@ -35,7 +35,8 @@ import {
   LOADING_EXPERIMENT_RUNS,
   GET_EXPERIMENT_RUNS,
   GET_FILE_STATUS,
-  CLEAN_FILE_STATUS_DATA
+  CLEAN_FILE_STATUS_DATA,
+  GET_JOB_LOG,
 } from "../types";
 
 import { AUTOSUBMIT_API_SOURCE, DEBUG, ERROR_MESSAGE, NOAPI } from "../vars";
@@ -56,6 +57,7 @@ const ExperimentState = (props) => {
     loading: false,
     loadingPerformance: false,
     experimentRunning: false,
+    joblog: null,
     rundata: null,
     performancedata: null,
     loadingRun: false,
@@ -138,6 +140,23 @@ const ExperimentState = (props) => {
     // console.log(result);
     dispatch({
       type: GET_EXPERIMENT_RUNS,
+      payload: result,
+    })
+  }
+
+  const getJobLog = async (logfile) => {
+    let result = null;
+    const logcontent = logfile && logfile.length > 0 ? logfile.split('/') : [''];
+    const last = logcontent.pop()
+    if (NOAPI) {
+      result = require("../data/joblog.json");
+    } else {
+      const res = await axios.get(`${localserver}/joblog/${last}`).catch((error) => {alert(error.message);});    
+      result = res ? res.data : null;
+      debug && console.log(result);
+    }
+    dispatch({
+      type: GET_JOB_LOG,
       payload: result,
     })
   }
@@ -374,6 +393,7 @@ const ExperimentState = (props) => {
         loadingState: state.loadingState,
         loadingPerformance: state.loadingPerformance,
         jobHistory: state.jobHistory,
+        joblog: state.joblog,
         performancedata: state.performancedata,
         experimentRuns: state.experimentRuns,
         rundata: state.rundata,
@@ -414,6 +434,7 @@ const ExperimentState = (props) => {
         getJobHistory,
         getExperimentRuns,
         getFileStatus,
+        getJobLog,
         cleanFileStatusData,
       }}
     >

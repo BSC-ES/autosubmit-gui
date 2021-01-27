@@ -643,7 +643,7 @@ afterEach(() => {
 it("Tree Representation renders with content", () => {
    
   act(() => {
-    render(<TreeNativeRep treedata={treedata} loadingTree={false} cleanTreeData={() => null} setFancyTree={(tree) => treeRep = tree} updateSelectionTree={() => null} updateCurrentSelected={() => null} canSelect={false} totalJobs={null} />, container);
+    render(<TreeNativeRep treedata={treedata} treeSelectedNodes={null} loadingTree={false} cleanTreeData={() => null} setFancyTree={(tree) => treeRep = tree} updateSelectionTree={() => null} updateCurrentSelected={() => null} canSelect={false} totalJobs={null} />, container);
   });
 
   //console.log(treeRep);

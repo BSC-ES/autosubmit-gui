@@ -2,6 +2,7 @@ import React, { useContext, Fragment } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
 import GraphContext from "../context/graph/graphContext";
 import JobHistory from "./JobHistory";
+import JobLog from "./JobLog";
 import { secondsToDelta } from "../context/utils";
 import { DEBUG, statusCodeToStyle } from "../context/vars";
 
@@ -262,7 +263,7 @@ const Selection = () => {
                             <div className='input-group input-group-sm'>
                               <input
                                 className='form-control py-0'
-                                type='text'
+                                type='button'
                                 value={selectedNode.out}
                                 id='g_out'
                                 readOnly
@@ -274,6 +275,7 @@ const Selection = () => {
                                   value='Copy out'
                                 />
                               </div>
+                              <JobLog source={selectedNode.out}/>  
                             </div>
                           </form>
                         </div>
@@ -302,6 +304,7 @@ const Selection = () => {
                                   value='Copy err'
                                 />
                               </div>
+                              <JobLog source={selectedNode.err}/>
                             </div>
                           </form>
                         </div>
