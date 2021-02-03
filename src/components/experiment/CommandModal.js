@@ -44,35 +44,33 @@ const CommandModal = ({ source, target }) => {
       ? "Invalid Selection: You have to select at least one job from the Graph. You can select multiple jobs."
       : "Invalid Selection: You have to select at least one job.";
 
-  // console.log(sourceSelection);
-  // console.log(sourceCommand);
-
   const setStatusTextCommand = (status) => (e) => {
     e.preventDefault();
     let command = "";
     if (source === "graph-only") {
-      command = statusChangeTextGeneratorGraph(sourceSelection, status);
+      command = statusChangeTextGeneratorGraph(sourceSelection, status);      
       copyContent(command);
       setCurrentTextCommandGraph(command);
-    } else if (source === "tree-only"){
+    } else if (source === "tree-only"){      
       command = statusChangeTextGeneratorGraph(sourceSelection, status);
       copyContent(command);
       setCurrentTextCommandTree(command);
-    } else {
+    } else {      
       command = statusChangeTextGenerator(sourceSelection, status);
       copyContent(command);
       setCurrentTextCommand(command);
     }
   };
 
+
   const setStatusCommand = (status) => (e) => {
     e.preventDefault();
     let command = "";
-    if (source === "graph-only") {
+    if (source === "graph-only") {      
       command = commandGeneratorGraph(expid, sourceSelection, status);
       copyContent(command);
       setCurrentCommandGraph(command);
-    } if (source === "tree-only"){
+    } else if (source === "tree-only"){      
       command = commandGeneratorGraph(expid, sourceSelection, status);
       copyContent(command);
       setCurrentCommandTree(command);
@@ -88,14 +86,6 @@ const CommandModal = ({ source, target }) => {
     DEBUG && console.log("Sending " + inputname);
     window.copyTextToClipboard(inputname);
   };
-
-  //copying to Clipboard
-  // if (sourceCommand && sourceCommand.length > 0) {
-  //   if (canCopyToClipboard === true) {
-  //     DEBUG && console.log(sourceCommand);
-  //     copyContent(JSON.parse(JSON.stringify(sourceCommand)));
-  //   }
-  // }
 
   let modalHeader = <div className='col-12'>{invalidMessage}</div>;
   let modalHeader2 = <div className='col-12'>{invalidMessage}</div>;
