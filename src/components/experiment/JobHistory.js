@@ -48,10 +48,10 @@ const JobHistory = ({ source }) => {
           className='btn-sm btn-info my-0 py-0'
           type='button'
           onClick={onGetJobHistory}
-          data-toggle='modal'
+          data-toggle='modal'                    
           data-target={"#" + dataTarget}
         >
-          <i className='fas fa-history'></i>
+          <i className='fas fa-history' data-toggle='tooltip' data-placement='bottom' title="Shows information from previous runs of the job." ></i>
         </button>
         <div
           className='modal fade text-dark'

@@ -44,10 +44,10 @@ const  ExperimentRuns = () => {
           className='btn-sm btn-info my-0 py-0'
           type='button'
           onClick={onGetExperimentRuns}
-          data-toggle='modal'
-          data-target={"#" + dataTarget}
+          data-toggle='modal'          
+          data-target={"#" + dataTarget}          
         >
-          <i className='fas fa-history'></i>
+          <i className='fas fa-history' data-toggle='tooltip' data-placement='bottom' title='Shows information from previous runs of the experiment.'></i>
         </button>
         <div
           className='modal fade text-dark'
