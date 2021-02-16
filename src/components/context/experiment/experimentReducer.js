@@ -212,9 +212,11 @@ export default (state, action) => {
       };
 
     case GET_RUNNING_STATE:
+      //console.log(action.payload);
+      const { running } = action.payload;
       return {
         ...state,
-        experimentRunning: action.payload,
+        experimentRunning: running,
         loadingState: false,
       };
     case UPDATE_SELECTED_JOBS:
