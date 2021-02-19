@@ -68,6 +68,7 @@ const Performance = () => {
                 <th scope='col'>JPSY</th>
                 <th scope='col'>Energy</th>
                 <th scope='col'>SYPD</th>
+                <th scope='col'>ASYPD</th>
               </tr>
             </thead>
             <tbody>
@@ -94,6 +95,9 @@ const Performance = () => {
                     </td>
                     <td>
                       <strong>{item.SYPD}</strong>
+                    </td>
+                    <td>
+                      {item.ASYPD}
                     </td>
                   </tr>
                 ))}
