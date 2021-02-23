@@ -1,4 +1,5 @@
 ## Autosubmit GUI
+[![status](https://joss.theoj.org/papers/a8ac17f6c02fdf76098ac97ed3e09b22/status.svg)](https://joss.theoj.org/papers/a8ac17f6c02fdf76098ac97ed3e09b22)
 ### Overview: 
 Autosubmit GUI is a front-end software developed using [ReactJS](https://reactjs.org/docs/getting-started.html) as the main framework, and JavaScript in general.
 This front-end software consumes most of the information it needs from [Autosubmit API](https://earth.bsc.es/gitlab/wuruchi/autosubmitreact/-/wikis/Autosubmit-API), an API that retrieves information from an internal file system that 
