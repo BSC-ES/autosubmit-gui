@@ -91,13 +91,25 @@ pre.bash {
 }
 
 .scroll {
-  max-height: 765px;
+  max-height: 780px;
+  overflow-y: auto;
+}
+
+.scroll-ready-tree {
+  max-height: 308px;
+  height: 308px;
+  overflow-y: auto;
+}
+
+.scroll-ready-graph {
+  max-height: 317px;
+  height: 317px;
   overflow-y: auto;
 }
 
 .scroll-y {
   overflow-y: auto;
-  height: 323px;
+  height: 290px;
   font-size: 0.7rem;
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -113,7 +125,7 @@ pre.bash {
 
 .scroll-y-tree {
   overflow-y: auto;
-  height: 323px;
+  height: 281px;
   font-size: 0.7rem;
   font-family: Arial, Helvetica, sans-serif;
 }

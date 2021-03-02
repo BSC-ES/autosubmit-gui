@@ -61,6 +61,7 @@ const GraphState = (props) => {
     foundNodes: null,
     graphSelectedNodes: null,
     pkldata: null,
+    graphReady: null,
   };
 
   const [state, dispatch] = useReducer(GraphReducer, initialState);
@@ -236,6 +237,7 @@ const GraphState = (props) => {
         currentCommandGraph: state.currentCommandGraph,
         currentTextCommandGraph: state.currentTextCommandGraph,
         notificationTitleGraph: state.notificationTitleGraph,
+        graphReady: state.graphReady,
         getExperimentGraph,
         getExperimentPkl,
         cleanOnlyGraphData,

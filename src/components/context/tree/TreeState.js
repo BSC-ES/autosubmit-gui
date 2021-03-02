@@ -54,6 +54,7 @@ const TreeState = (props) => {
     //selection: null,
     notificationTitleTree: null,
     treeSelectedNodes: null,
+    treeReady: null,
   };
 
   const [state, dispatch] = useReducer(TreeReducer, initialState);
@@ -147,10 +148,6 @@ const TreeState = (props) => {
   };
 
   const setCurrentCommandTree = async (command) => {
-    // for change status
-    //let arrayNames = [];
-
-    //console.log(command);
     dispatch({
       type: SET_CURRENT_COMMAND,
       payload: command,
@@ -219,6 +216,7 @@ const TreeState = (props) => {
         treeSelectedNodes: state.treeSelectedNodes,
         currentCommandTree: state.currentCommandTree,
         currentTextCommandTree: state.currentTextCommandTree,
+        treeReady: state.treeReady,
         getExperimentTree,
         getExperimentTreePkl,
         filterTreeView,

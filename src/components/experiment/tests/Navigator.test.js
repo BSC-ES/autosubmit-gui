@@ -37,7 +37,7 @@ it("Navigator renders with content", () => {
   expect(container.innerHTML).toContain("Ready");
   expect(container.innerHTML).toContain("Prepared");
   expect(container.innerHTML).toContain("Submitted");
-  expect(container.innerHTML).toContain("Queue");
+  expect(container.innerHTML).toContain("Queuing");
   expect(container.innerHTML).toContain("Running");
   expect(container.innerHTML).toContain("Completed");
   expect(container.innerHTML).toContain("Failed");

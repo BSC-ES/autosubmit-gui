@@ -27,13 +27,14 @@ import {
 
 import { updateTreeData, buildRunTitle } from "../treeutils";
 
-import { timeStampToDate } from "../utils";
+import { timeStampToDate, getReadyJobs } from "../utils";
 
 import { DEBUG } from "../vars";
 
 export default (state, action) => {
   switch (action.type) {
-    case GET_TREE:
+    case GET_TREE:      
+      const { jobs } = action.payload;
       return {
         ...state,
         treedata: action.payload,
@@ -41,6 +42,7 @@ export default (state, action) => {
         enabledTreeSearch: true,
         elapsedLoadingTree: 1,
         currentRunIdOnTree: null,
+        treeReady: getReadyJobs(jobs),
       };
     case SET_LOADING_TREE_PKL:
       return {
@@ -370,6 +372,7 @@ export default (state, action) => {
           if (state.pkltreechanges) {
             state.pkltreechanges = changes + state.pkltreechanges;
             state.notificationTitleTree = changesSummarized;
+            state.treeReady = getReadyJobs(currentJobs);
             //setPklTreeChanges(changes + state.pkltreechanges);
           } else {
             state.pkltreechanges = changes;
@@ -457,6 +460,7 @@ export default (state, action) => {
         returnFiler: 0,
         elapsedLoadingTree: 1,
         currentRunIdOnTree: null,
+        treeReady: null,
         //canSelect: false,
       };
     case CLEAN_TREE_PKL_DATA:

@@ -151,5 +151,18 @@ export const sleep = (ms) => {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-
+export const getReadyJobs = (jobs) => {
+  if (jobs) {
+    const readyJobs = jobs.filter(x => x.status === 'READY');
+    const jobArray = [];
+    readyJobs.map((item) => jobArray.push({ name: item.id, status: item.status }));
+    if (jobArray.length > 0){
+      return jobArray;
+    } else {
+      return null;
+    }
+    
+  }
+  return null;
+}
 

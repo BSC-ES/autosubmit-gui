@@ -51,12 +51,12 @@ import {
   findIdinGraph,
 } from "../graphutils";
 
-import { timeStampToDate } from "../utils";
+import { timeStampToDate, getReadyJobs } from "../utils";
 
 export default (state, action) => {
   switch (action.type) {
     case GET_GRAPH:
-      const { resdata, grouped, layout } = action.payload;
+      const { resdata, grouped, layout } = action.payload;            
       return {
         ...state,
         data: resdata,
@@ -65,6 +65,7 @@ export default (state, action) => {
         loadingGraph: false,
         enabledGraphSearch: true,
         graphSelectedNodes: null,
+        graphReady: getReadyJobs(resdata.nodes),
       };
     case GET_PKL_DATA:
       let retrievedPkl = action.payload;
@@ -227,6 +228,7 @@ export default (state, action) => {
           if (requireUpdate) {
             DEBUG && console.log("New ts: " + retrievedPkl.pkl_timestamp);
             state.data.pkl_timestamp = retrievedPkl.pkl_timestamp;
+            state.graphReady = getReadyJobs(state.data.nodes);
             state.notificationTitleGraph = changesSummarized;
             if (state.pklchanges) {
               state.pklchanges = changes + state.pklchanges;
@@ -473,6 +475,7 @@ export default (state, action) => {
         visNodes: null,
         visNetwork: null,
         foundNodes: null,
+        graphReady: null,
         current_grouped: "none",
         current_layout: "standard",
         graphSelectedNodes: null,
@@ -493,6 +496,7 @@ export default (state, action) => {
         visNodes: null,
         visNetwork: null,
         foundNodes: null,
+        graphReady: null,
         experimentRunning: false,
         experiment: null,
         current_grouped: "none",

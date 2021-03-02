@@ -97,13 +97,13 @@
     }
 
     function copyToClip(inputname) {
-      console.log(inputname);
+      // console.log(inputname);
       var copyText = document.getElementById(inputname);
       if (copyText) {
         copyText.select();
         copyText.setSelectionRange(0, 99999);
         document.execCommand("copy");
-        console.log("Copied the text: " + copyText.value);
+        // console.log("Copied the text: " + copyText.value);
       } else {
         console.log("No selection");
       }

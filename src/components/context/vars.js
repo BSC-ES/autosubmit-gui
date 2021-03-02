@@ -15,6 +15,7 @@ export const SuspendedCode = -3;
 export const HoldCode = 6;
 export const ReadyCode = 1;
 export const PreparedCode = 7;
+export const SkippedCode = 8;
 
 export const maxReponseTimeThreshold = 240; // 4 minutes
 export const quickThreshold = 12000;
@@ -69,7 +70,10 @@ export const preparedColor = {
   background: "lightsalmon",
   fontWeight: "bold",
 };
-
+export const skippedColor = {
+  background: "lightyellow",
+  fontWeight: "bold",
+};
 
 
 export const statusCodeToStyle = (code) => {
@@ -95,5 +99,7 @@ export const statusCodeToStyle = (code) => {
     return readyColor;
   if (code === PreparedCode)
     return preparedColor;
+  if (code === SkippedCode)
+    return skippedColor;
   return unknownColor;
 };

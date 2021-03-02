@@ -77,7 +77,7 @@ const WrapperList = () => {
 };
 
 const experimentStyle = {
-  height: 660,
+  height: 713,
 };
 
 const headerCard = {

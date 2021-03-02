@@ -27,6 +27,7 @@ import TreeControl from "../experiment/TreeControl";
 import LighterControl from "../experiment/LighterControl";
 import PerformanceControl from "../experiment/PerformanceControl";
 import Performance from "../experiment/Performance";
+import ReadyJobs from "../experiment/ReadyJobs";
 
 // Main render component. Calls other component and supplies props if necessary.
 const ExperimentCentral = ({ match }) => {
@@ -91,6 +92,7 @@ const ExperimentCentral = ({ match }) => {
     cleanTreeData,
     notificationTitleTree,
     setNotificationTitleTree,
+    treeReady,
   } = treeContext;
 
   const {
@@ -114,6 +116,7 @@ const ExperimentCentral = ({ match }) => {
     updateGraphSelectedNodes,
     notificationTitleGraph,
     setNotificationTitleGraph,
+    graphReady,
   } = graphContext;
 
   const { clearStats } = statsContext;
@@ -130,7 +133,8 @@ const ExperimentCentral = ({ match }) => {
   //   // If there is a run detected.        
   //   updateTreeContent(experimentRunDetailForTree, currentRunId);    
   // }
-
+  // console.log(treeReady);
+  // console.log(treeReady);
   useEffect(() => {
     // Get experiment header data
     getExperiment(expid);
@@ -279,71 +283,128 @@ const ExperimentCentral = ({ match }) => {
                       updateGraphSelectedNodes={updateGraphSelectedNodes}
                     />
                   </div>
-                  <div
-                    className={canSelect === true ? "col-3 px-0" : "col-3 pl-0"}
-                  >
-                    <ul className='nav nav-tabs' id='myTabSide' role='tablist'>
-                      <li className='nav-item'>
-                        <a
-                          className='nav-link active'
-                          id='selection-tab'
-                          data-toggle='tab'
-                          href='#selection'
-                          role='tab'
-                          aria-controls='selection'
-                          aria-selected='true'
+                  {data && (
+                    <div
+                      className={canSelect === true ? "col-3 px-0" : "col-3 pl-0"}
+                    >
+                      <ul className='nav nav-tabs' id='myTabSide' role='tablist'>
+                        <li className='nav-item'>
+                          <a
+                            className='nav-link active'
+                            id='selection-tab'
+                            data-toggle='tab'
+                            href='#selection'
+                            role='tab'
+                            aria-controls='selection'
+                            aria-selected='true'
+                          >
+                            Selection
+                          </a>
+                        </li>
+                        <li className='nav-item'>
+                          <a
+                            className='nav-link'
+                            id='wrapper-tab'
+                            data-toggle='tab'
+                            href='#wrapper'
+                            role='tab'
+                            aria-controls='treeview'
+                            aria-selected='false'
+                          >
+                            Wrappers
+                          </a>
+                        </li>
+                      </ul>
+                      <div className='tab-content' id='myTabSideContent'>
+                        <div
+                          className='tab-pane fade show active'
+                          id='selection'
+                          role='tabpanel'
+                          aria-labelledby='selection-tab'
                         >
-                          Selection
-                        </a>
-                      </li>
-                      <li className='nav-item'>
-                        <a
-                          className='nav-link'
-                          id='wrapper-tab'
-                          data-toggle='tab'
-                          href='#wrapper'
-                          role='tab'
-                          aria-controls='treeview'
-                          aria-selected='false'
+                          {data && <Selection />}
+                          {(startAutoUpdatePkl || graphReady) && (
+                            <div>
+                              <ul className="nav nav-tabs" id="downTabSideGraph" role="tablist">
+                                {startAutoUpdatePkl && (
+                                  <li className="nav-item">
+                                    <a
+                                      className={'nav-link ' + (!graphReady ? "active" : "")}
+                                      id='monitor-tab-graph'
+                                      data-toggle='tab'
+                                      href='#monitor-graph'
+                                      role='tab'
+                                      aria-controls='monitor-graph'                                  
+                                    >
+                                      Monitor
+                                    </a>
+                                  </li>                                
+                                )}
+                                {graphReady && (
+                                  <li className='nav-item'>
+                                    <a
+                                      className={'nav-link ' + (!startAutoUpdatePkl ? "active" : "") }
+                                      id='readyjobs-tab-graph'
+                                      data-toggle='tab'
+                                      href='#readyjobs-graph'
+                                      role='tab'
+                                      aria-controls='readyjobs-graph'                                
+                                    >
+                                      Ready Jobs
+                                    </a>
+                                  </li>
+                                )} 
+                              </ul>
+                              <div className="tab-content" id="graphDownSide">
+                                  {startAutoUpdatePkl && (
+                                    <div 
+                                      className="tab-pane fade show active"
+                                      id="monitor-graph"
+                                      role="tabpanel"
+                                      aria-labelledby="monitor-tab-graph"
+                                    >
+                                      <JobMonitor
+                                        experiment={experiment}
+                                        getExperimentPkl={getExperimentPkl}
+                                        cleanPklData={cleanPklData}
+                                        pklchanges={pklchanges}
+                                        experimentRunning={experimentRunning}
+                                        notificationTitleGraph={notificationTitleGraph}
+                                        setNotificationTitleGraph={
+                                          setNotificationTitleGraph
+                                        }
+                                      />
+                                    </div>
+                                  )}
+                                  {graphReady && (
+                                    <div 
+                                      className={"tab-pane fade show " + (!startAutoUpdatePkl ? "active" : "")}
+                                      id="readyjobs-graph"
+                                      role="tabpanel"
+                                      aria-labelledby="readyjobs-tab-graph"
+                                    >
+                                      <ReadyJobs readyJobs={graphReady} source="graph" />
+                                    </div>
+                                  )}
+                              </div>
+                            
+                            </div>
+                          )}
+                        </div>
+                        <div
+                          className='tab-pane fade show'
+                          id='wrapper'
+                          role='tabpanel'
+                          aria-labelledby='wrapper-tab'
                         >
-                          Wrappers
-                        </a>
-                      </li>
-                    </ul>
-                    <div className='tab-content' id='myTabSideContent'>
-                      <div
-                        className='tab-pane fade show active'
-                        id='selection'
-                        role='tabpanel'
-                        aria-labelledby='selection-tab'
-                      >
-                        {data && <Selection />}
-                        {startAutoUpdatePkl && (
-                          <JobMonitor
-                            experiment={experiment}
-                            getExperimentPkl={getExperimentPkl}
-                            cleanPklData={cleanPklData}
-                            pklchanges={pklchanges}
-                            experimentRunning={experimentRunning}
-                            notificationTitleGraph={notificationTitleGraph}
-                            setNotificationTitleGraph={
-                              setNotificationTitleGraph
-                            }
-                          />
-                        )}
-                      </div>
-                      <div
-                        className='tab-pane fade show'
-                        id='wrapper'
-                        role='tabpanel'
-                        aria-labelledby='wrapper-tab'
-                      >
-                        <div>
-                          <WrapperList />
+                          <div>
+                            <WrapperList />
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
+                  )}
+                  
                   {experiment && data && canSelect && (
                     <div className='col-2 pl-0'>
                       <JobSelection target={"graph"} source={"experiment"} />
@@ -388,17 +449,74 @@ const ExperimentCentral = ({ match }) => {
                       }
                     >
                       <SelectionTreeNode />
-                      {startAutoUpdateTreePkl && (
-                        <JobMonitorTree
-                          experiment={experiment}
-                          getExperimentTreePkl={getExperimentTreePkl}
-                          cleanPklTreeData={cleanPklTreeData}
-                          pkltreechanges={pkltreechanges}
-                          experimentRunning={experimentRunning}
-                          notificationTitleTree={notificationTitleTree}
-                          setNotificationTitleTree={setNotificationTitleTree}
-                        />
-                      )}
+                        {(startAutoUpdateTreePkl || treeReady) && (
+                        <div>
+                          <ul className="nav nav-tabs" id="downTabSideTree" role="tablist">
+                            {startAutoUpdateTreePkl && (
+                              <li className='nav-item'>
+                                <a
+                                  className={'nav-link ' + (!treeReady ? "active" : "")}
+                                  id='monitor-tab-tree'
+                                  data-toggle='tab'
+                                  href='#monitor-tree'
+                                  role='tab'
+                                  aria-controls='monitor-tree'                                  
+                                >
+                                  Monitor
+                                </a>
+                              </li>
+                            )}
+                            {treeReady && (
+                              <li className='nav-item'>
+                                <a
+                                  className={'nav-link ' + (!startAutoUpdateTreePkl ? "active" : "") }
+                                  id='readyjobs-tab-tree'
+                                  data-toggle='tab'
+                                  href='#readyjobs-tree'
+                                  role='tab'
+                                  aria-controls='readyjobs-tree'                                
+                                >
+                                  Ready Jobs
+                                </a>
+                              </li>
+                            )}                            
+                            
+                          </ul>
+                         
+                            <div className="tab-content" id="treeDownSide">                              
+                                {startAutoUpdateTreePkl && (
+                                  <div 
+                                  className="tab-pane fade show active"
+                                  id="monitor-tree"
+                                  role="tabpanel"
+                                  aria-labelledby="monitor-tab-tree"
+                                >
+                                  <JobMonitorTree
+                                    experiment={experiment}
+                                    getExperimentTreePkl={getExperimentTreePkl}
+                                    cleanPklTreeData={cleanPklTreeData}
+                                    pkltreechanges={pkltreechanges}
+                                    experimentRunning={experimentRunning}
+                                    notificationTitleTree={notificationTitleTree}
+                                    setNotificationTitleTree={setNotificationTitleTree}
+                                  />
+                                   </div>
+                                )}  
+                                {treeReady && (
+                                  <div 
+                                    className={"tab-pane fade show " + (!startAutoUpdateTreePkl ? "active" : "")}
+                                    id="readyjobs-tree"
+                                    role="tabpanel"
+                                    aria-labelledby="readyjobs-tab-tree"
+                                  >
+                                    <ReadyJobs readyJobs={treeReady} source="tree" />
+                                  </div>
+                                )}                           
+                              
+                            </div>
+                                                                             
+                        </div>  
+                        )}                     
                     </div>
                   )}
 

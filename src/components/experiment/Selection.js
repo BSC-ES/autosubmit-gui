@@ -263,7 +263,7 @@ const Selection = () => {
                             <div className='input-group input-group-sm'>
                               <input
                                 className='form-control py-0'
-                                type='button'
+                                type='text'
                                 value={selectedNode.out}
                                 id='g_out'
                                 readOnly
