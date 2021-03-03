@@ -2,12 +2,15 @@ export const timeStampToDate = (value) => {
   //console.log('Setting new format: ' + value);
   let formattedDate = "";
   var date = new Date(value * 1000);
+  //const offsetAtBSC = -3600; 
+  //const timezoneFixedValue = value + (date.getTimezoneOffset()* 60) - offsetAtBSC;
+  // date = new Date(timezoneFixedValue * 1000)
   var hours = date.getHours();
   var minutes = "0" + date.getMinutes();
   var seconds = "0" + date.getSeconds();
   var month = date.getMonth() + 1;
-  var day = date.getDate();
-  //console.log(date)
+  var day = date.getDate();  
+  // console.log(date.toLocaleDateString())
   formattedDate =
     "[" +
     day +
@@ -20,6 +23,7 @@ export const timeStampToDate = (value) => {
     ":" +
     seconds.substr(-2);
   // formattedDate = date.toISOString();
+  // console.log(formattedDate);
   return formattedDate;
 };
 
