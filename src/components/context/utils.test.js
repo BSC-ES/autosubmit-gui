@@ -4,7 +4,7 @@ test('1604334422 is converted to [2/11]17:27:02', () => {
   const offsetBSC = -3600;
   var date = new Date();
   const offset = (date.getTimezoneOffset() * 60) - offsetBSC;
-  // The timedelta returned by the function is its the user's browser timezone.
+  // The timedelta returned by the function is on the user's browser timezone.
   // Adds offset so the test is accurate in any time zone.  
   const testValue = 1604334422 + offset;
   expect(timeStampToDate(testValue)).toBe("[2/11] 17:27:02");

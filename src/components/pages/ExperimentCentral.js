@@ -12,6 +12,7 @@ import GraphContext from "../context/graph/graphContext";
 import TreeContext from "../context/tree/treeContext";
 import LighterContext from "../context/lighter/lighterContext";
 import Selection from "../experiment/Selection";
+import FAQ from "../experiment/FAQ";
 import SelectionTreeNode from "../experiment/SelectionTreeNode";
 import Running from "../experiment/Running";
 import JobMonitor from "../experiment/JobMonitor";
@@ -245,6 +246,18 @@ const ExperimentCentral = ({ match }) => {
                 aria-selected='false'
               >
                 Quick View
+              </a>
+            </li>
+            <li className="nav-item">
+              <a 
+                href="#faq" 
+                className="nav-link" 
+                id="faq-tab" 
+                data-toggle="tab" 
+                role='tab' 
+                aria-controls='faq' 
+                aria-selected='false'>
+                  FAQ
               </a>
             </li>
           </ul>
@@ -616,6 +629,20 @@ const ExperimentCentral = ({ match }) => {
                   )}
                 </div>
               </div>
+            </div>
+            <div className="tab-pane fade"
+              id='faq'
+              role='tabpanel'
+              aria-labelledby='faq-tab'>
+                <div className="card mt-2">
+                  <div className="card-header">
+                    Frequently Asked Questions
+                  </div>
+                  <div className="card-body p-1">
+                    <FAQ/>
+                  </div>
+                </div>
+
             </div>
           </div>
         </div>

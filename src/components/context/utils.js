@@ -1,15 +1,15 @@
 export const timeStampToDate = (value) => {
   //console.log('Setting new format: ' + value);
   let formattedDate = "";
-  var date = new Date(value * 1000);
+  let date = new Date(value * 1000);
   //const offsetAtBSC = -3600; 
   //const timezoneFixedValue = value + (date.getTimezoneOffset()* 60) - offsetAtBSC;
   // date = new Date(timezoneFixedValue * 1000)
-  var hours = date.getHours();
-  var minutes = "0" + date.getMinutes();
-  var seconds = "0" + date.getSeconds();
-  var month = date.getMonth() + 1;
-  var day = date.getDate();  
+  let hours = date.getHours();
+  let minutes = "0" + date.getMinutes();
+  let seconds = "0" + date.getSeconds();
+  let month = date.getMonth() + 1;
+  let day = date.getDate();  
   // console.log(date.toLocaleDateString())
   formattedDate =
     "[" +
@@ -28,7 +28,7 @@ export const timeStampToDate = (value) => {
 };
 
 export const hashCode = (value) => {
-  var hash = 0,
+  let hash = 0,
     i,
     chr;
   if (value.length === 0) return hash;
@@ -83,10 +83,10 @@ export const statusChangeTextGenerator = (jobs, status) => {
 
 export const secondsToDelta = (SECONDS) => {
   if (SECONDS > 0) {
-    var sec_num = SECONDS; // don't forget the second param
-    var hours = Math.floor(sec_num / 3600);
-    var minutes = Math.floor((sec_num - hours * 3600) / 60);
-    var seconds = sec_num - hours * 3600 - minutes * 60;
+    let sec_num = SECONDS; // don't forget the second param
+    let hours = Math.floor(sec_num / 3600);
+    let minutes = Math.floor((sec_num - hours * 3600) / 60);
+    let seconds = sec_num - hours * 3600 - minutes * 60;
 
     if (hours < 10) {
       hours = "0" + hours;
@@ -103,7 +103,7 @@ export const secondsToDelta = (SECONDS) => {
   }
 };
 
-var startTime, endTime;
+let startTime, endTime;
 
 export const start = () => {
   startTime = new Date();
@@ -111,12 +111,12 @@ export const start = () => {
 
 export const end = () => {
   endTime = new Date();
-  var timeDiff = endTime - startTime; //in ms
+  let timeDiff = endTime - startTime; //in ms
   // strip the ms
   timeDiff /= 1000;
 
   // get seconds
-  var seconds = Math.round(timeDiff);
+  let seconds = Math.round(timeDiff);
   console.log(seconds + " seconds");
 };
 
@@ -143,8 +143,8 @@ export const exportHistoryToCSV = (data, columnNames, title) => {
     data.map((item) => mapped.push([item.counter,item.job_id,item.submit,item.start,item.finish,item.queue_time,item.run_time, item.status, item.energy, item.wallclock, item.ncpus, item.nodes]));
     csvContent += mapped.map((item) => item.join(",")).join("\n");
   }
-  var encodedUri = encodeURI(csvContent);
-  var link = document.createElement("a");
+  let encodedUri = encodeURI(csvContent);
+  let link = document.createElement("a");
   link.setAttribute("href", encodedUri);
   link.setAttribute("download", title);
   document.body.appendChild(link); // Required for FF
