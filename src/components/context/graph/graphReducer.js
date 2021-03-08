@@ -53,6 +53,7 @@ import {
 
 import { timeStampToDate, getReadyJobs } from "../utils";
 
+/* eslint import/no-anonymous-default-export: ["error", {"allowArrowFunction": true}] */
 export default (state, action) => {
   switch (action.type) {
     case GET_GRAPH:

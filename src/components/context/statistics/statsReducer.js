@@ -4,6 +4,7 @@ import {
     CLEAR_STATS,
     SET_ERROR_STATS, } from '../types';
 
+/* eslint import/no-anonymous-default-export: ["error", {"allowArrowFunction": true}] */
 export default (state, action) => {
     switch (action.type) {
         case SET_LOADING:
