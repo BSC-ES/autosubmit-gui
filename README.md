@@ -76,6 +76,8 @@ Almost all tests can be found at `/autosubmitreact/src/components/experiment/tes
 
 Make sure that you have installed the dependencies before running the tests.
 
+Note: It could happen that `jest` fails to run or is not automatically installed along the other dependencies on a Windows machine, please install it manually.
+
 ### User Guide
 
 A user guide has been developed and published at [https://autosubmit.readthedocs.io/en/latest/autosubmit-gui.html](https://autosubmit.readthedocs.io/en/latest/autosubmit-gui.html).
