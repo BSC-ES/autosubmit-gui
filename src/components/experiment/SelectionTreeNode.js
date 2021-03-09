@@ -48,7 +48,7 @@ const SelectionTreeNode = () => {
     window.copyToClip(inputname);
   };
 
-  console.log(selectedNode);
+  // console.log(selectedNode);
   return (
     <Fragment>
       {selectedNode && (
