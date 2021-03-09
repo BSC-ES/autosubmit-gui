@@ -220,7 +220,10 @@ export default (state, action) => {
               state.data.nodes[i].start = jobs[state.data.nodes[i].id].start;
               state.data.nodes[i].finish = jobs[state.data.nodes[i].id].finish;
               state.data.nodes[i].rm_id = jobs[state.data.nodes[i].id].rm_id;
-              //console.log(state.data.nodes[i].status_color)
+              // Updating the SYPD field if it exists
+              if (state.data.nodes[i].SYPD !== undefined){
+                state.data.nodes[i].SYPD = jobs[state.data.nodes[i].id].SYPD ?? jobs[state.data.nodes[i].id].SYPD;
+              }
 
               requireUpdate = true;
             }

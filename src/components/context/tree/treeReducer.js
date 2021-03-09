@@ -151,6 +151,10 @@ export default (state, action) => {
             cjob.start = ijob.start;
             cjob.finish = ijob.finish;
             cjob.rm_id = ijob.rm_id;
+            // Update SYPD is exists
+            if (cjob.SYPD !== undefined) {
+              cjob.SYPD = ijob.SYPD ?? ijob.SYPD;
+            }
             // Parents are those groups to which a job belongs in the tree
             let tree_parent_wrapper = "Wrapper: " + ijob.wrapper;
             if (!cjob.tree_parents.includes(tree_parent_wrapper)) {

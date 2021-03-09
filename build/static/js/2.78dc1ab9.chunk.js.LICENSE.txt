@@ -5,14 +5,14 @@ object-assign
 */
 
 /*!
-   * Sizzle CSS Selector Engine v2.3.5
+   * Sizzle CSS Selector Engine v2.3.6
    * https://sizzlejs.com/
    *
    * Copyright JS Foundation and other contributors
    * Released under the MIT license
    * https://js.foundation/
    *
-   * Date: 2020-03-14
+   * Date: 2021-02-16
    */
 
 /*!
@@ -41,27 +41,27 @@ object-assign
  * Support faster lookup of nodes by key and shared ref-ids.
  * (Extension module for jquery.fancytree.js: https://github.com/mar10/fancytree/)
  *
- * Copyright (c) 2008-2020, Martin Wendt (https://wwWendt.de)
+ * Copyright (c) 2008-2021, Martin Wendt (https://wwWendt.de)
  *
  * Released under the MIT license
  * https://github.com/mar10/fancytree/wiki/LicenseInfo
  *
- * @version 2.37.0
- * @date 2020-09-11T18:58:08Z
+ * @version 2.38.0
+ * @date 2021-02-09T20:03:49Z
  */
 
 /*!
- * jQuery JavaScript Library v3.5.1
+ * jQuery JavaScript Library v3.6.0
  * https://jquery.com/
  *
  * Includes Sizzle.js
  * https://sizzlejs.com/
  *
- * Copyright JS Foundation and other contributors
+ * Copyright OpenJS Foundation and other contributors
  * Released under the MIT license
  * https://jquery.org/license
  *
- * Date: 2020-05-04T22:49Z
+ * Date: 2021-03-02T17:08Z
  */
 
 /*!
@@ -70,13 +70,13 @@ object-assign
  * Add a child counter bubble to tree nodes.
  * (Extension module for jquery.fancytree.js: https://github.com/mar10/fancytree/)
  *
- * Copyright (c) 2008-2020, Martin Wendt (https://wwWendt.de)
+ * Copyright (c) 2008-2021, Martin Wendt (https://wwWendt.de)
  *
  * Released under the MIT license
  * https://github.com/mar10/fancytree/wiki/LicenseInfo
  *
- * @version 2.37.0
- * @date 2020-09-11T18:58:08Z
+ * @version 2.38.0
+ * @date 2021-02-09T20:03:49Z
  */
 
 /*!
@@ -85,13 +85,13 @@ object-assign
  * Make node titles editable.
  * (Extension module for jquery.fancytree.js: https://github.com/mar10/fancytree/)
  *
- * Copyright (c) 2008-2020, Martin Wendt (https://wwWendt.de)
+ * Copyright (c) 2008-2021, Martin Wendt (https://wwWendt.de)
  *
  * Released under the MIT license
  * https://github.com/mar10/fancytree/wiki/LicenseInfo
  *
- * @version 2.37.0
- * @date 2020-09-11T18:58:08Z
+ * @version 2.38.0
+ * @date 2021-02-09T20:03:49Z
  */
 
 /*!
@@ -100,13 +100,13 @@ object-assign
  * Remove or highlight tree nodes, based on a filter.
  * (Extension module for jquery.fancytree.js: https://github.com/mar10/fancytree/)
  *
- * Copyright (c) 2008-2020, Martin Wendt (https://wwWendt.de)
+ * Copyright (c) 2008-2021, Martin Wendt (https://wwWendt.de)
  *
  * Released under the MIT license
  * https://github.com/mar10/fancytree/wiki/LicenseInfo
  *
- * @version 2.37.0
- * @date 2020-09-11T18:58:08Z
+ * @version 2.38.0
+ * @date 2021-02-09T20:03:49Z
  */
 
 /*!
@@ -114,12 +114,12 @@ object-assign
  * Tree view control with support for lazy loading and much more.
  * https://github.com/mar10/fancytree/
  *
- * Copyright (c) 2008-2020, Martin Wendt (https://wwWendt.de)
+ * Copyright (c) 2008-2021, Martin Wendt (https://wwWendt.de)
  * Released under the MIT license
  * https://github.com/mar10/fancytree/wiki/LicenseInfo
  *
- * @version 2.37.0
- * @date 2020-09-11T18:58:08Z
+ * @version 2.38.0
+ * @date 2021-02-09T20:03:49Z
  */
 
 /*!
@@ -128,13 +128,13 @@ object-assign
  * Allow multiple selection of nodes  by mouse or keyboard.
  * (Extension module for jquery.fancytree.js: https://github.com/mar10/fancytree/)
  *
- * Copyright (c) 2008-2020, Martin Wendt (https://wwWendt.de)
+ * Copyright (c) 2008-2021, Martin Wendt (https://wwWendt.de)
  *
  * Released under the MIT license
  * https://github.com/mar10/fancytree/wiki/LicenseInfo
  *
- * @version 2.37.0
- * @date 2020-09-11T18:58:08Z
+ * @version 2.38.0
+ * @date 2021-02-09T20:03:49Z
  */
 
 /*! jQuery UI - v1.12.1 - 2018-05-20
@@ -188,6 +188,15 @@ object-assign
 
 /** @license React v16.14.0
  * react-dom.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/** @license React v17.0.1
+ * react-jsx-runtime.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
  *

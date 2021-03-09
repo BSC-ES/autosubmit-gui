@@ -312,7 +312,7 @@ const Selection = () => {
                     )}
                   </div>
                   <div className='row'>
-                    <div className='col'>
+                    <div className='col-md-8'>
                       <table>
                         <tbody>
                           {selectedNode.submit !== null && (
@@ -354,6 +354,11 @@ const Selection = () => {
                         </tbody>
                       </table>
                     </div>
+                    {selectedNode.SYPD !== undefined && selectedNode.SYPD !== null && selectedNode.SYPD > 0 && (
+                      <div className="col-md-4">
+                        <span className="badge badge-info" data-toggle='tooltip' data-placement='bottom' title="Generalization of Simulated Years per Day.">SYPD: {selectedNode.SYPD}</span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

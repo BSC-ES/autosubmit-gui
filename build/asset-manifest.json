@@ -1,24 +1,22 @@
 {
   "files": {
-    "main.css": "/autosubmitapp/static/css/main.137486ef.chunk.css",
-    "main.js": "/autosubmitapp/static/js/main.ba3823c7.chunk.js",
-    "main.js.map": "/autosubmitapp/static/js/main.ba3823c7.chunk.js.map",
-    "runtime-main.js": "/autosubmitapp/static/js/runtime-main.d63e75bf.js",
-    "runtime-main.js.map": "/autosubmitapp/static/js/runtime-main.d63e75bf.js.map",
-    "static/js/2.6c5d86e2.chunk.js": "/autosubmitapp/static/js/2.6c5d86e2.chunk.js",
-    "static/js/2.6c5d86e2.chunk.js.map": "/autosubmitapp/static/js/2.6c5d86e2.chunk.js.map",
+    "main.css": "/autosubmitapp/static/css/main.3206b6c4.chunk.css",
+    "main.js": "/autosubmitapp/static/js/main.b1ee4995.chunk.js",
+    "main.js.map": "/autosubmitapp/static/js/main.b1ee4995.chunk.js.map",
+    "runtime-main.js": "/autosubmitapp/static/js/runtime-main.aff45655.js",
+    "runtime-main.js.map": "/autosubmitapp/static/js/runtime-main.aff45655.js.map",
+    "static/js/2.78dc1ab9.chunk.js": "/autosubmitapp/static/js/2.78dc1ab9.chunk.js",
+    "static/js/2.78dc1ab9.chunk.js.map": "/autosubmitapp/static/js/2.78dc1ab9.chunk.js.map",
     "index.html": "/autosubmitapp/index.html",
-    "precache-manifest.9dd17997730189ea3fcf7b4bdf2df909.js": "/autosubmitapp/precache-manifest.9dd17997730189ea3fcf7b4bdf2df909.js",
-    "service-worker.js": "/autosubmitapp/service-worker.js",
-    "static/css/main.137486ef.chunk.css.map": "/autosubmitapp/static/css/main.137486ef.chunk.css.map",
-    "static/js/2.6c5d86e2.chunk.js.LICENSE.txt": "/autosubmitapp/static/js/2.6c5d86e2.chunk.js.LICENSE.txt",
-    "static/media/catload.gif": "/autosubmitapp/static/media/catload.0e70881c.gif",
-    "static/media/dogload.gif": "/autosubmitapp/static/media/dogload.9bbeb4de.gif"
+    "static/css/main.3206b6c4.chunk.css.map": "/autosubmitapp/static/css/main.3206b6c4.chunk.css.map",
+    "static/js/2.78dc1ab9.chunk.js.LICENSE.txt": "/autosubmitapp/static/js/2.78dc1ab9.chunk.js.LICENSE.txt",
+    "static/media/catload.d22d6312.gif": "/autosubmitapp/static/media/catload.d22d6312.gif",
+    "static/media/dogload.7fd39847.gif": "/autosubmitapp/static/media/dogload.7fd39847.gif"
   },
   "entrypoints": [
-    "static/js/runtime-main.d63e75bf.js",
-    "static/js/2.6c5d86e2.chunk.js",
-    "static/css/main.137486ef.chunk.css",
-    "static/js/main.ba3823c7.chunk.js"
+    "static/js/runtime-main.aff45655.js",
+    "static/js/2.78dc1ab9.chunk.js",
+    "static/css/main.3206b6c4.chunk.css",
+    "static/js/main.b1ee4995.chunk.js"
   ]
 }
