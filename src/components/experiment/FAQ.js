@@ -16,6 +16,9 @@ const FAQ = () => {
       <h5>Where can I report an issue?</h5>
       <p className="lead">If you find that something is broken or you suspect that it is not working correctly, you can open an issue at <a href="https://earth.bsc.es/gitlab/es/autosubmit/-/issues" rel="noopener noreferrer" target="_blank">Autosubmit Project Issues</a>.</p>
 
+      <h5>The Job Information Panel shows the values SYPD and ASYPD. What are those?</h5>
+      <p className="lead">Refer to the definition of the <em>Generalization of SYPD and ASYPD</em> at <a href="https://earth.bsc.es/gitlab/wuruchi/autosubmitreact/-/wikis/Performance-Metrics" target="_blank" rel="noreferrer">Autosubmit API Wiki: Performance Metrics</a>. <em>SYPD</em> is automatically updated when Job Monitor is active. <em>ASYPD</em>, due to the nature of its computation, will require a reload of the Tree or Graph view to be updated.</p>
+
       <p className="small text-muted">We will continue adding more information. For suggestions, you can open an issue on the Autosubmit project.</p>
 
     </div>

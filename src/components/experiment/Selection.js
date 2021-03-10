@@ -354,11 +354,14 @@ const Selection = () => {
                         </tbody>
                       </table>
                     </div>
-                    {selectedNode.SYPD !== undefined && selectedNode.SYPD !== null && selectedNode.SYPD > 0 && (
-                      <div className="col-md-4">
-                        <span className="badge badge-info" data-toggle='tooltip' data-placement='bottom' title="Generalization of Simulated Years per Day.">SYPD: {selectedNode.SYPD}</span>
-                      </div>
+                    <div className="col-md-4">
+                    {selectedNode.SYPD !== undefined && selectedNode.SYPD !== null && selectedNode.SYPD > 0 && (                      
+                        <span className="badge badge-info" data-toggle='tooltip' data-placement='bottom' title="Generalization of Simulated Years per Day.">SYPD: {selectedNode.SYPD}</span>                     
                     )}
+                    {selectedNode.ASYPD !== undefined && selectedNode.ASYPD !== null && selectedNode.ASYPD > 0 && (
+                      <span className="badge badge-info" data-toggle='tooltip' data-placement='bottom' title="Generalization of Actual SYPD.">ASYPD: {selectedNode.ASYPD}</span>                        
+                    )}
+                    </div>
                   </div>
                 </div>
               </div>

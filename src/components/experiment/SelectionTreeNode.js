@@ -347,12 +347,14 @@ const SelectionTreeNode = () => {
                       </tbody>
                     </table>
                   </div>
-                  {selectedNode.SYPD !== undefined && selectedNode.SYPD !== null && selectedNode.SYPD > 0 && (
-                    <div className="col-md-4">
+                  <div className="col-md-4">
+                  {selectedNode.SYPD !== undefined && selectedNode.SYPD !== null && selectedNode.SYPD > 0 && (                    
                       <span className="badge badge-info" data-toggle='tooltip' data-placement='bottom' title="Generalization of Simulated Years per Day.">SYPD: {selectedNode.SYPD}</span>
-                    </div>
                   )}
-                  
+                  {selectedNode.ASYPD !== undefined && selectedNode.ASYPD !== null && selectedNode.ASYPD > 0 && (
+                    <span className="badge badge-info" data-toggle='tooltip' data-placement='bottom' title="Generalization of Actual SYPD.">ASYPD: {selectedNode.ASYPD}</span>
+                  )}
+                  </div>
                 </div>
                 {selectedNode.wrapper !== null &&
                   selectedNode.wrapper.length > 0 && (
