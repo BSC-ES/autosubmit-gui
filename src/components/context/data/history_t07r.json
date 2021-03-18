@@ -18,7 +18,8 @@
           "status": "COMPLETED",
           "submit": "2020-11-24-10:53:02",
           "wallclock": "00:30",
-          "SYPD": 1.5
+          "SYPD": 1.5,
+          "ASYPD": 1.15
       },
       {
           "counter": 8,
@@ -36,7 +37,8 @@
           "status": "COMPLETED",
           "submit": "2020-11-23-10:09:00",
           "wallclock": "00:30",
-          "SYPD": 1.5
+          "SYPD": 1.5,
+          "ASYPD": 1.1
       },
       {
           "counter": 7,
@@ -54,7 +56,8 @@
           "status": "COMPLETED",
           "submit": "2020-11-20-15:01:05",
           "wallclock": "00:30",
-          "SYPD": 1.5
+          "SYPD": 1.5,
+          "ASYPD": 1.5
       },
       {
           "counter": 5,
@@ -90,7 +93,8 @@
           "status": "COMPLETED",
           "submit": "2020-07-29-12:55:34",
           "wallclock": "00:30",
-          "SYPD": 1.5
+          "SYPD": 1.5,
+          "ASYPD": 1.12
       },
       {
           "counter": 3,
@@ -108,7 +112,8 @@
           "status": "COMPLETED",
           "submit": "2020-07-28-16:05:39",
           "wallclock": "00:30",
-          "SYPD": 1.5
+          "SYPD": 1.5,
+          "ASYPD": 1.16
       },
       {
           "counter": 2,
@@ -126,7 +131,8 @@
           "status": "COMPLETED",
           "submit": "2020-07-28-10:29:41",
           "wallclock": "00:30",
-          "SYPD": 1.5
+          "SYPD": 1.5,
+          "ASYPD": 0.5
       }
   ]
 }
