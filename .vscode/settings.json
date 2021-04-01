@@ -3,5 +3,6 @@
     "--ignore",
     "E402"
   ],
-  "git.ignoreLimitWarning": true
+  "git.ignoreLimitWarning": true,
+  "python.pythonPath": "/Library/Frameworks/Python.framework/Versions/2.7/bin/python"
 }

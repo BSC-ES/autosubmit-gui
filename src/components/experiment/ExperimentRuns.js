@@ -61,7 +61,7 @@ const  ExperimentRuns = () => {
             <div className='modal-content'>
               <div className='modal-header'>
                 <h5 className='modal-title' id={dataTarget + "Title"}>
-                  Runs of <strong>{expid}</strong> 
+                  Runs of <strong>{expid}</strong> <small className="text-muted">(The first row represents the current run.)</small>
                   {currentRunIdOnTree && !loadingPreviousRun &&                 
                 <small>
                   &nbsp;&nbsp; Data from run {currentRunIdOnTree.runId} is displayed in the Tree View.

@@ -119,7 +119,7 @@ const TreeState = (props) => {
       const res = await axios.get(`${localserver}/rundetail/${expid}/${run_id}`).catch((error) => { alert(error.message);});
       debug && console.log(res.data);
       // console.log(res.data);
-      result = res ? res.data.rundata : null;
+      result = res ? res.data : null;
     }
     
     dispatch({

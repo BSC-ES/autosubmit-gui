@@ -14,9 +14,9 @@ const AlertTotal = ({ source }) => {
 
   switch (source) {
     case "tree":
-      const { treedata } = treeContext;
+      const { treedata, currentRunIdOnTree } = treeContext;
       const { total } = treedata;
-      if (totalJobs !== total) {
+      if (totalJobs !== total && !currentRunIdOnTree) {
         alertMessage =
           "The number of jobs in the experiment tree is different than the number of jobs in your current run. This might be due to a change in the config files of your experiment while Autosubmit was already running.";
         // console.log(totalJobs);

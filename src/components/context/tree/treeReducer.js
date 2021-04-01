@@ -25,7 +25,8 @@ import {
   //CLEAR_RUNDETAIL_ON_TREE,
 } from "../types";
 
-import { updateTreeData, buildRunTitle } from "../treeutils";
+// updateTreeData
+import { buildRunTitle } from "../treeutils";
 
 import { timeStampToDate, getReadyJobs } from "../utils";
 
@@ -392,16 +393,27 @@ export default (state, action) => {
       };
     }
     case GET_EXPERIMENT_RUN_JOBDATA:
-      const { result, runId, meta } = action.payload;
-      if (state.treedata && state.fancyTree){
-        updateTreeData(result, state.treedata, state.fancyTree);
-        //updateFancyTree(runDetail, state.fancyTree);
-      }
-      return {
-        ...state,
-        currentRunIdOnTree : {runId: runId, message: buildRunTitle(runId, meta) },
-        startAutoUpdateTreePkl: false,
-        loadingPreviousRun: false,
+      {
+        const { result, runId, meta } = action.payload;
+        const { jobs } = result;
+        const completed_jobs = jobs !== null && jobs !== undefined ? jobs.filter(x => x.status === "COMPLETED") : [];
+
+        if (state.treedata && state.fancyTree){
+          //updateTreeData(result, state.treedata, state.fancyTree);
+          //updateFancyTree(runDetail, state.fancyTree);
+
+        }
+        return {
+          ...state,
+          currentRunIdOnTree : {runId: runId, message: buildRunTitle(runId, meta, completed_jobs.length)},
+          treedata: result,
+          loadingTree: false,
+          enabledTreeSearch: true,
+          elapsedLoadingTree: 1,        
+          startAutoUpdateTreePkl: false,
+          loadingPreviousRun: false,
+          treeReady: getReadyJobs(jobs),
+        }
       }
     case FILTER_TREEVIEW:
       const string = action.payload;
