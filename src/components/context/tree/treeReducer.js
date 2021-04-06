@@ -154,7 +154,7 @@ export default (state, action) => {
             cjob.rm_id = ijob.rm_id;
             // Update SYPD is exists
             if (cjob.SYPD !== undefined) {
-              cjob.SYPD = ijob.SYPD ?? ijob.SYPD;
+              cjob.SYPD = ijob.SYPD;
             }
             // Parents are those groups to which a job belongs in the tree
             let tree_parent_wrapper = "Wrapper: " + ijob.wrapper;

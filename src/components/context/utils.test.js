@@ -1,7 +1,7 @@
 import { timeStampToDate, secondsToDelta, commandGenerator } from "./utils";
 
 test('1604334422 is converted to [2/11]17:27:02', () => {
-  const offsetBSC = -3600;
+  const offsetBSC = -7200;
   var date = new Date();
   const offset = (date.getTimezoneOffset() * 60) - offsetBSC;
   // The timedelta returned by the function is on the user's browser timezone.
