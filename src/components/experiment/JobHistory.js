@@ -85,6 +85,7 @@ const JobHistory = ({ source }) => {
                   <table className='table'>
                     <thead>
                       <tr>
+                        <th scope='col'>RunId</th>
                         <th scope='col'>Counter</th>
                         <th scope='col'>JobId</th>
                         {/* <th scope='col'>Created</th> */}
@@ -96,6 +97,7 @@ const JobHistory = ({ source }) => {
                         <th scope='col'>Status</th>
                         <th scope='col'>Energy</th>
                         <th scope='col'>SYPD</th>
+                        <th scope='col'>ASYPD</th>
                         <th scope='col'>Wallclock</th>
                         <th scope='col'>NCpus</th>
                         <th scope='col'>NNodes</th>
@@ -104,6 +106,7 @@ const JobHistory = ({ source }) => {
                     <tbody>
                       {jobHistory.history.map((item) => (
                         <tr key={item.counter}>
+                          <td>{item.run_id}</td>
                           <td>{item.counter}</td>
                           <td>{item.job_id}</td>
                           {/* <td>{item.created}</td> */}
@@ -127,6 +130,7 @@ const JobHistory = ({ source }) => {
                           <td>{item.status}</td>
                           <td>{item.energy}</td>
                           <td>{item.SYPD}</td>
+                          <td>{item.ASYPD}</td>
                           <td>{item.wallclock}</td>
                           <td>{item.ncpus}</td>
                           <td>{item.nodes}</td>
