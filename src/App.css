@@ -65,6 +65,11 @@ pre.bash {
   margin: 0 auto;
 }
 
+.modal-dialog-summary {
+  width: 50%;
+  margin: 0 auto;
+}
+
 .modal-dialog {
   max-width: 80%;
 }

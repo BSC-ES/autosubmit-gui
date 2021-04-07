@@ -4,7 +4,8 @@ import ExperimentContext from "../context/experiment/experimentContext";
 const JobLog = ({ source }) => {
   const experimentContext = useContext(ExperimentContext);
   const { experiment, joblog, getJobLog } = experimentContext;
-
+  const pathid = source !== undefined ? source.substring(source.lastIndexOf(".")+1) : "undefined";
+  console.log(pathid);
   const onGetJobLog = (e) => {
     e.preventDefault();
     getJobLog(source)
@@ -18,13 +19,13 @@ const JobLog = ({ source }) => {
           type='button'
           onClick={onGetJobLog}
           data-toggle='modal'
-          data-target='#joblog'
+          data-target={'#joblog'+pathid}
         >
           <i className='fas fa-eye'></i>
         </button>
         <div
           className='modal fade text-dark'
-          id='joblog'
+          id={'joblog'+pathid}
           tabIndex='-1'
           role='dialog'
           aria-labelledby='joblogTitle'  

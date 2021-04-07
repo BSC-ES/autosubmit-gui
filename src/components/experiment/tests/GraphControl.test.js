@@ -46,9 +46,9 @@ it("GraphControl renders with content", () => {
   // console.log(container.textContent);
   expect(container.innerHTML).toContain("Start Job Monitor");
   expect(container.innerHTML).toContain("Classic");
-  expect(container.innerHTML).toContain("Laplacian");
-  expect(container.innerHTML).toContain("Grouped by D-M");
-  expect(container.innerHTML).toContain("Grouped by Status");
+  //expect(container.innerHTML).toContain("Laplacian"); // Label removed in recent version
+  expect(container.innerHTML).toContain("Date-Member");
+  expect(container.innerHTML).toContain("Status");
   expect(container.innerHTML).toContain("Refresh");
 });
 
@@ -74,8 +74,8 @@ it("GraphControl renders when experiment is not running", () => {
   //console.log(container.textContent);
   expect(container.innerHTML).not.toContain("Start Job Monitor");
   expect(container.innerHTML).toContain("Classic");
-  expect(container.innerHTML).toContain("Laplacian");
-  expect(container.innerHTML).toContain("Grouped by D-M");
-  expect(container.innerHTML).toContain("Grouped by Status");
+  // expect(container.innerHTML).toContain("Laplacian"); // Label removed in recent version
+  expect(container.innerHTML).toContain("Date-Member");
+  expect(container.innerHTML).toContain("Status");
   expect(container.innerHTML).not.toContain("Refresh");
 });

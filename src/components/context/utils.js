@@ -132,10 +132,28 @@ export const approximateLoadingQuickView = (x) => {
   return y;
 };
 
+export const exportSummaryToCSV = (data, columnNames, title) => {
+  let date = new Date();
+  title =  date.getFullYear().toString() + "-" + date.getMonth() + "-" + date.getDate() + "_" + date.getHours() + "-" + date.getMinutes() + "_" + title;
+  let csvContent = "data:text/csv;charset=utf-8,";
+  csvContent += columnNames.join(",") + "\n";
+  if (data){
+    let mapped = []
+    data.map((item) => mapped.push([item.Name, item.Queue, item.Run, item.Status]));
+    csvContent += mapped.map((item) => item.join(",")).join("\n");
+  }
+  let encodedUri = encodeURI(csvContent);
+  let link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", title);
+  document.body.appendChild(link); // Required for FF
+  link.click();
+}
+
 export const exportHistoryToCSV = (data, columnNames, title) => {
   
   let date = new Date();  
-  title =  date.getFullYear().toString() + date.getMonth() + date.getDate() + date.getHours() + date.getMinutes() + "_" + title;
+  title =  date.getFullYear().toString() + "-" + date.getMonth() + "-" + date.getDate() + "_" + date.getHours() + "-" + date.getMinutes() + "_" + title;
   let csvContent = "data:text/csv;charset=utf-8,";
   csvContent += columnNames.join(",") + "\n";
   if (data){

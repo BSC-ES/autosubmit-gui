@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
 import TreeContext from "../context/tree/treeContext";
 import SelectionControl from "./SelectionControl";
+import JobSummary from "./JobSummary";
 
 const TreeControl = () => {
   const experimentContext = useContext(ExperimentContext);
@@ -53,15 +54,25 @@ const TreeControl = () => {
       <div className='row justify-content-end'>
         {currentRunIdOnTree && (
           <div className="col text-left" ><small>{currentRunIdOnTree.message}</small></div>
-        )}
+        )}        
         {(loadingTreeRefresh || loadingTreePkl) && (
           <div className='col text-left'>Querying...</div>
         )}
+
+        {experiment && treedata && (
+          <div className="col-md-1">
+            <JobSummary source="tree"/>
+          </div>
+        )}
+
         {experiment && treedata && !currentRunIdOnTree && (
           <div className='col-md-2'>
             <SelectionControl />
           </div>
         )}
+
+        
+
         {experiment && !treedata && (
           <div className='col-md-1'>
             <form onSubmit={onSubmitTree} className='form'>

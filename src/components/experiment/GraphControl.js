@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
 import GraphContext from "../context/graph/graphContext";
+import JobSummary from "./JobSummary";
 import SelectionControl from "./SelectionControl";
 
 const GraphControl = () => {
@@ -52,23 +53,28 @@ const GraphControl = () => {
         </div>
         <div className='col-md-10'>
           <div className='row justify-content-end'>
+            
             {experiment && data && (
-              <div className='col-md-2'>
-                <SelectionControl />
+              <div className='col-md-1'>
+                <JobSummary source="graph" />
               </div>
             )}
 
-            <div className='col-md-2'>
-              <form onSubmit={onSubmitGraph()} className='form'>
+            <div className='col-md-1'>
+              <div className="btn-group" role="group" aria-label="Representation">
+                <button className="btn btn-info btn-sm" disabled={disableQuery} onClick={onSubmitGraph()}>Classic</button>
+                
+              </div>
+              {/* <form onSubmit={onSubmitGraph()} className='form'>
                 <input
                   type='submit'
                   value='Classic'
                   className='btn btn-info btn-block btn-sm'
                   disabled={disableQuery}
                 />
-              </form>
+              </form> */}
             </div>
-            <div className='col-md-1'>
+            {/* <div className='col-md-1'>
               <form
                 onSubmit={onSubmitGraph("none", "laplacian")}
                 className='form'
@@ -80,18 +86,23 @@ const GraphControl = () => {
                   disabled={disableQuery}
                 />
               </form>
-            </div>
-            <div className='col-md-2'>
-              <form onSubmit={onSubmitGraph("date-member")} className='form'>
+            </div> */}
+            <div className='col-md-3'>
+              <div className="btn-group" role="group" aria-label="Group By">
+              <button className="btn btn-info btn-sm" disabled={disableQuery} onClick={onSubmitGraph("none", "laplacian")}><i className="fas fa-chess-board"></i></button>
+                <button className="btn btn-info btn-sm" onClick={onSubmitGraph("date-member")} disabled={disableQuery}>Date-Member</button>
+                <button className="btn btn-info btn-sm" onClick={onSubmitGraph("status")} disabled={disableQuery} >Status</button>
+              </div>
+              {/* <form onSubmit={onSubmitGraph("date-member")} className='form'>
                 <input
                   type='submit'
                   value='Grouped by D-M'
                   className='btn btn-info btn-block btn-sm'
                   disabled={disableQuery}
                 />
-              </form>
+              </form> */}
             </div>
-            <div className='col-md-2'>
+            {/* <div className='col-md-2'>
               <form onSubmit={onSubmitGraph("status")} className='form'>
                 <input
                   type='submit'
@@ -100,7 +111,14 @@ const GraphControl = () => {
                   disabled={disableQuery}
                 />
               </form>
-            </div>
+            </div> */}
+
+            {experiment && data && (
+              <div className='col-md-2'>
+                <SelectionControl />
+              </div>
+            )}
+
             {experiment && data && experimentRunning && !startAutoUpdatePkl && (
               <div className='col-md-1'>
                 <form onSubmit={onRequestUpdate} className='form'>

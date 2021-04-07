@@ -298,7 +298,7 @@ const ExperimentCentral = ({ match }) => {
                   </div>
                   {data && (
                     <div
-                      className={canSelect === true ? "col-3 px-0" : "col-3 pl-0"}
+                      className={canSelect === true ? "col-md-3 px-0" : "col-md-3 pl-0"}
                     >
                       <ul className='nav nav-tabs' id='myTabSide' role='tablist'>
                         <li className='nav-item'>
@@ -458,7 +458,7 @@ const ExperimentCentral = ({ match }) => {
                   {treedata && (
                     <div
                       className={
-                        canSelect === true ? "col-3 px-0" : "col-3 pl-0"
+                        canSelect === true ? "col-md-3 px-0" : "col-md-3 pl-0"
                       }
                     >
                       <SelectionTreeNode />

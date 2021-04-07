@@ -49,19 +49,27 @@ class GraphNativeRep extends Component {
             to developed a general algorithm.
           </p>
           <p className='lead'>
-            Press <span className='badge badge-info'>Grouped</span> to see the
-            grouped by date-member graph representation of the experiment.
+            Press <span className='badge badge-info'>Date-Member</span> to see the graph representation grouped by date-member.
           </p>
-          <p>
+
+          <p className='lead'>
+            Press <span className='badge badge-info'>Status</span> to see the graph representation grouped by status. <span className="badge badge-danger">FAILED</span> jobs are not grouped.
+          </p>
+
+          <p className="lead">
+            The <span className="badge badge-info"><i className="fas fa-chess-board"></i></span> button produces a graph representation based on 2nd and 3rd eigenvectors of the Laplacian Matrix of the Graph representation of your experiment. Could be interesting in some instances.
+          </p>
+
+          {/* <p>
             If the experiment instance cannot be handled by graphviz, then it
             would not be possible to group it. Again, work is being done to
             overcome this.
-          </p>
+          </p> */}
           <p className='lead'>
             If the experiment is{" "}
             <span className='badge badge-success'>RUNNING</span> and the Graph
             has been rendered, press{" "}
-            <span className='badge badge-dark'>Start Job Monitor</span> to start
+            <span className='badge badge-success'>Start Job Monitor</span> to start
             a live tracker of the changes on the experiment's jobs. This process
             will automatically update the graph's nodes colors and show a log of
             the detected changes.
