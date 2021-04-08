@@ -2,13 +2,14 @@ import React, { useContext } from 'react';
 import ExperimentContext from '../context/experiment/experimentContext';
 import TreeContext from '../context/tree/treeContext';
 import GraphContext from '../context/graph/graphContext';
-import { exportSummaryToCSV } from '../context/utils';
+import { exportSummaryToCSV, groupByAndAggregate, secondsToDelta } from '../context/utils';
 
 const JobSummary = ({ source }) => {
   const experimentContext  = useContext(ExperimentContext);
   const treeContext = useContext(TreeContext);
   const graphContext = useContext(GraphContext);
   let sourceNodes = null;
+  let groupedNodes = [];
   let sourceData = [];
   const dataTarget = source+"summarymodal";
   if (source === "graph") {
@@ -16,7 +17,9 @@ const JobSummary = ({ source }) => {
     if (data) {
       sourceNodes = data.nodes;
       if (sourceNodes) {
-        sourceNodes.map((item) => (item.status === "COMPLETED" || item.status === "RUNNING") && sourceData.push({"Name": item.id, "Queue": item.minutes_queue, "Run": item.minutes, "Status": item.status}));
+        sourceNodes.map((item) => (item.status === "COMPLETED" || item.status === "RUNNING") && sourceData.push({"Name": item.id, "Queue": item.minutes_queue, "Run": item.minutes, "Status": item.status, "Section": item.section}));
+        groupedNodes = groupByAndAggregate(sourceData, "Section");
+        
       }      
     }    
   } else if (source === "tree") {
@@ -24,12 +27,18 @@ const JobSummary = ({ source }) => {
     if (treedata) {
       sourceNodes = treedata.jobs;
       if (sourceNodes) {
-        sourceNodes.map((item) => (item.status === "COMPLETED" || item.status === "RUNNING") && sourceData.push({"Name": item.id, "Queue": item.minutes_queue, "Run": item.minutes, "Status": item.status}));
+        sourceNodes.map((item) => (item.status === "COMPLETED" || item.status === "RUNNING") && sourceData.push({"Name": item.id, "Queue": item.minutes_queue, "Run": item.minutes, "Status": item.status, "Section": item.section}));
+        groupedNodes = groupByAndAggregate(sourceData, "Section");
       }      
     }
   }
 
-  const Export = (data, columns, title) => (e) => {
+  const ExportDetail = (data, columns, title) => (e) => {
+    e.preventDefault();
+    exportSummaryToCSV(data, columns, title);
+  }
+
+  const ExportAggregated = (data, columns, title) => (e) => {
     e.preventDefault();
     exportSummaryToCSV(data, columns, title);
   }
@@ -64,12 +73,9 @@ const JobSummary = ({ source }) => {
           <div className='modal-content'>
             <div className='modal-header'>
               <h5 className='modal-title' id={dataTarget + "Title"}>
-                Summary data for <strong>{expid}</strong><p><small><span className='text-muted'>Queue and Run are in seconds. Only COMPLETED or RUNNING jobs are listed.</span></small></p>
+                Summary data for <strong>{expid}</strong><p><small><span className='text-muted'>Queue and Run in <strong>seconds</strong> when <strong>exported</strong>, <span className="badge badge-primary">blue</span> button. Only COMPLETED or RUNNING jobs are listed.</span></small></p>
               </h5>
-              &nbsp;
-              {sourceData && sourceData.length > 0 &&                
-              <button type="button" className="btn-sm btn-primary" onClick={Export(sourceData, ["JobName","Queue", "Run", "Status"], "summary_"+expid)} data-toggle='tooltip' data-placement='left' title='Export data table to CSV format file.'><i className="fas fa-file-export"></i></button>
-              }                
+                            
               <button
                 className='close'
                 type='button'
@@ -80,27 +86,67 @@ const JobSummary = ({ source }) => {
               </button>
             </div>
             <div className='modal-body'>
-              {sourceData && (
-                <table className='table'>
-                  <thead>
-                    <tr>
-                      <th scope='col'>JobName</th>
-                      <th scope='col'>Queue (s.)</th>
-                      <th scope='col'>Run (s.)</th>
-                      <th scope='col'>Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {sourceData.map((item) => (
-                      <tr key={item.Name}>
-                        <td>{item.Name}</td>
-                        <td>{item.Queue}</td>
-                        <td>{item.Run}</td>
-                        <td>{item.Status}</td>                        
+              {groupedNodes && (
+                <div>
+                  Aggregated by Job <strong>Section</strong>.
+                  &nbsp;
+                  {groupedNodes && groupedNodes.length > 0 && 
+                    <button type="button" className="btn btn-sm btn-primary" onClick={ExportAggregated(groupedNodes, ["Section","Count", "SumQueue", "AverageQueue", "SumRun", "AverageRun"], "summaryaggregated_"+expid)} data-toggle='tooltip' data-placement='left' title='Export data table to CSV format file.'><i className="fas fa-file-export"></i></button>
+                  }
+                  <table className="table">
+                    <thead>
+                      <tr>
+                        <th scope='col'>Section</th>
+                        <th scope='col' className="text-right">Count</th>
+                        <th scope='col' className="text-right">Queue Sum</th>
+                        <th scope='col' className="text-right">Average Queue</th>
+                        <th scope='col' className="text-right">Run Sum</th>                        
+                        <th scope='col' className="text-right">Average Run</th>                        
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {groupedNodes.map((item) => (
+                        <tr key={item.Section}>
+                          <td><strong>{item.Section}</strong></td>
+                          <td className="text-right">{item.Count}</td> 
+                          <td className="text-right">{secondsToDelta(item.SumQueue)}</td>
+                          <td className="text-right">{secondsToDelta(item.AverageQueue)}</td>
+                          <td className="text-right">{secondsToDelta(item.SumRun)}</td>
+                          <td className="text-right">{secondsToDelta(item.AverageRun)}</td>                                          
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}                      
+              {sourceData && (
+                <div>
+                  List of jobs.
+                  &nbsp;
+                  {sourceData && sourceData.length > 0 &&                
+                  <button type="button" className="btn btn-sm btn-primary" onClick={ExportDetail(sourceData, ["Name","Queue", "Run", "Status"], "summary_"+expid)} data-toggle='tooltip' data-placement='left' title='Export data table to CSV format file.'><i className="fas fa-file-export"></i></button>
+                  }  
+                  <table className='table'>
+                    <thead>
+                      <tr>
+                        <th scope='col'>JobName</th>
+                        <th scope='col' className="text-right">Queue</th>
+                        <th scope='col' className="text-right">Run</th>
+                        <th scope='col'>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {sourceData.map((item) => (
+                        <tr key={item.Name}>
+                          <td>{item.Name}</td>
+                          <td className="text-right">{secondsToDelta(item.Queue)}</td>
+                          <td className="text-right">{secondsToDelta(item.Run)}</td>
+                          <td>{item.Status}</td>                        
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               )}
               {sourceData && sourceData.length === 0 && (
                 <p>

@@ -84,10 +84,15 @@ export const statusChangeTextGenerator = (jobs, status) => {
 export const secondsToDelta = (SECONDS) => {
   if (SECONDS > 0) {
     let sec_num = SECONDS; // don't forget the second param
-    let hours = Math.floor(sec_num / 3600);
-    let minutes = Math.floor((sec_num - hours * 3600) / 60);
-    let seconds = sec_num - hours * 3600 - minutes * 60;
+    let days = Math.floor(sec_num / (3600 * 24));
+    let hours = Math.floor((sec_num - days * (3600 * 24)) / 3600);
+    let minutes = Math.floor((sec_num - days * (3600 * 24) - hours * 3600) / 60);
+    let seconds = sec_num - days * (3600 * 24) - hours * 3600 - minutes * 60;
 
+    // if (days < 10){
+    //   days = "0" + days;
+    // }
+    //console.log(days + "-" + hou);
     if (hours < 10) {
       hours = "0" + hours;
     }
@@ -97,7 +102,8 @@ export const secondsToDelta = (SECONDS) => {
     if (seconds < 10) {
       seconds = "0" + seconds;
     }
-    return hours + ":" + minutes + ":" + seconds;
+    
+    return (days > 0 ? days + (days > 1 ? " days - " : " day - ") : "") + hours + ":" + minutes + ":" + seconds;
   } else {
     return "0:00:00";
   }
@@ -139,7 +145,11 @@ export const exportSummaryToCSV = (data, columnNames, title) => {
   csvContent += columnNames.join(",") + "\n";
   if (data){
     let mapped = []
-    data.map((item) => mapped.push([item.Name, item.Queue, item.Run, item.Status]));
+    if (columnNames.length === 4){
+      data.map((item) => mapped.push([item[columnNames[0]], item[columnNames[1]], item[columnNames[2]], item[columnNames[3]]]));
+    } else if (columnNames.length === 6) {
+      data.map((item) => mapped.push([item[columnNames[0]], item[columnNames[1]], item[columnNames[2]], item[columnNames[3]], item[columnNames[4]], item[columnNames[5]]]));
+    }        
     csvContent += mapped.map((item) => item.join(",")).join("\n");
   }
   let encodedUri = encodeURI(csvContent);
@@ -188,3 +198,38 @@ export const getReadyJobs = (jobs) => {
   return null;
 }
 
+
+export const groupBy = (arrayObjects, key) => {
+  return arrayObjects.reduce(function(result, currentObject) {
+    const val = currentObject[key];
+    result[val] = result[val] || [];
+    result[val].push(currentObject);
+    return result;
+  }, {})
+}
+
+export const groupByAndAggregate = (arrayObjects, key) => {
+  const groupedBySection = groupBy(arrayObjects, key);
+  let result = []
+  // console.log(groupedBySection);
+  // console.log(typeof groupedBySection);
+  // for (let section in groupedBySection)
+  //   console.log(section);
+  if (groupedBySection){
+    for (let sectionName in groupedBySection){
+      let queueSum = 0;
+      let runSum = 0;    
+      // console.log(sectionName);
+      groupedBySection[sectionName].forEach((itemJob) => {
+        queueSum += itemJob.Queue;
+        runSum += itemJob.Run;
+      })
+      let averageQueue = queueSum/groupedBySection[sectionName].length;
+      averageQueue = Math.round(averageQueue);
+      let averageRun = runSum/groupedBySection[sectionName].length;
+      averageRun = Math.round(averageRun);
+      result.push({ "Section": sectionName, "SumQueue": queueSum, "AverageQueue": averageQueue, "SumRun": runSum, "AverageRun": averageRun, "Count": groupedBySection[sectionName].length})
+    }
+  }
+  return result;
+}
