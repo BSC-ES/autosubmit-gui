@@ -88,12 +88,12 @@ const JobSummary = ({ source }) => {
             <div className='modal-body'>
               {groupedNodes && (
                 <div>
-                  Aggregated by Job <strong>Section</strong>.
+                  Aggregated by Job <strong>Section</strong>:
                   &nbsp;
                   {groupedNodes && groupedNodes.length > 0 && 
                     <button type="button" className="btn btn-sm btn-primary" onClick={ExportAggregated(groupedNodes, ["Section","Count", "SumQueue", "AverageQueue", "SumRun", "AverageRun"], "summaryaggregated_"+expid)} data-toggle='tooltip' data-placement='left' title='Export data table to CSV format file.'><i className="fas fa-file-export"></i></button>
                   }
-                  <table className="table">
+                  <table className="table mt-2">
                     <thead>
                       <tr>
                         <th scope='col'>Section</th>
@@ -121,12 +121,12 @@ const JobSummary = ({ source }) => {
               )}                      
               {sourceData && (
                 <div>
-                  List of jobs.
+                  List of jobs:
                   &nbsp;
                   {sourceData && sourceData.length > 0 &&                
                   <button type="button" className="btn btn-sm btn-primary" onClick={ExportDetail(sourceData, ["Name","Queue", "Run", "Status"], "summary_"+expid)} data-toggle='tooltip' data-placement='left' title='Export data table to CSV format file.'><i className="fas fa-file-export"></i></button>
                   }  
-                  <table className='table'>
+                  <table className='table mt-2'>
                     <thead>
                       <tr>
                         <th scope='col'>JobName</th>
