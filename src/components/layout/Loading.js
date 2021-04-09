@@ -26,7 +26,7 @@ const Loading = ({ source }) => {
   const expectedTime =
     source === "tree" ? expectedLoadingTreeTime : expectedLoadingQuickView;
   const gifload = source === "tree" ? (randomImage === 3 ? platyload : dogload) : catload;
-  const widthValue = randomImage === 3 ? "350px" : "200px";
+  //const widthValue = randomImage === 3 ? "350px" : "200px";
 
   //console.log(expectedLoadingTreeTime);
   if (expectedTime >= 1) {
@@ -38,7 +38,7 @@ const Loading = ({ source }) => {
               <img
                 src={gifload}
                 alt='Loading...'
-                style={{ width: widthValue, margin: "auto", display: "block" }}
+                style={{ width: "200px", margin: "auto", display: "block" }}
               />
             </div>
           </div>
