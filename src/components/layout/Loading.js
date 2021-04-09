@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import dogload from "./dogload.gif";
 import catload from "./catload.gif";
+import platyload from "./platyload.gif";
 import Spinner from "./Spinner";
 import LoadingCounter from "./LoadingCounter";
 import ExperimentContext from "../context/experiment/experimentContext";
@@ -21,9 +22,11 @@ const Loading = ({ source }) => {
   //   return () => clearInterval(interval);
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, []);
+  let randomImage = Math.floor(Math.random()*3)+1;
   const expectedTime =
     source === "tree" ? expectedLoadingTreeTime : expectedLoadingQuickView;
-  const gifload = source === "tree" ? dogload : catload;
+  const gifload = source === "tree" ? (randomImage === 3 ? platyload : dogload) : catload;
+  const widthValue = randomImage === 3 ? "350px" : "200px";
 
   //console.log(expectedLoadingTreeTime);
   if (expectedTime >= 1) {
@@ -35,7 +38,7 @@ const Loading = ({ source }) => {
               <img
                 src={gifload}
                 alt='Loading...'
-                style={{ width: "200px", margin: "auto", display: "block" }}
+                style={{ width: widthValue, margin: "auto", display: "block" }}
               />
             </div>
           </div>

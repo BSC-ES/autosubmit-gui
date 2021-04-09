@@ -128,6 +128,7 @@ export const end = () => {
 
 export const approximateLoadingTreeTime = (x) => {
   if (x <= 1000) return 1;
+  if (x > 1000 && x <= 1600) return 5;
   let y = Math.round(0.02 * x - 30);
   return y;
 };
