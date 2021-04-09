@@ -73,7 +73,8 @@ const JobSummary = ({ source }) => {
           <div className='modal-content'>
             <div className='modal-header'>
               <h5 className='modal-title' id={dataTarget + "Title"}>
-                Summary data for <strong>{expid}</strong><p><small><span className='text-muted'>Queue and Run in <strong>seconds</strong> when <strong>exported</strong>, <span className="badge badge-primary">blue</span> button. Only COMPLETED or RUNNING jobs are listed.</span></small></p>
+                Summary data for <strong>{expid}</strong>
+                <p><small><span className='text-muted'>Queue and Run in <strong>seconds</strong> when <strong>exported</strong>, <span className="badge badge-primary">blue</span> button. Only COMPLETED or RUNNING jobs are listed.</span></small></p>
               </h5>
                             
               <button
@@ -121,31 +122,45 @@ const JobSummary = ({ source }) => {
               )}                      
               {sourceData && (
                 <div>
-                  List of jobs:
-                  &nbsp;
-                  {sourceData && sourceData.length > 0 &&                
-                  <button type="button" className="btn btn-sm btn-primary" onClick={ExportDetail(sourceData, ["Name","Queue", "Run", "Status"], "summary_"+expid)} data-toggle='tooltip' data-placement='left' title='Export data table to CSV format file.'><i className="fas fa-file-export"></i></button>
-                  }  
-                  <table className='table mt-2'>
-                    <thead>
-                      <tr>
-                        <th scope='col'>JobName</th>
-                        <th scope='col' className="text-right">Queue</th>
-                        <th scope='col' className="text-right">Run</th>
-                        <th scope='col'>Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {sourceData.map((item) => (
-                        <tr key={item.Name}>
-                          <td>{item.Name}</td>
-                          <td className="text-right">{secondsToDelta(item.Queue)}</td>
-                          <td className="text-right">{secondsToDelta(item.Run)}</td>
-                          <td>{item.Status}</td>                        
+                  <div className="my-2">
+                    <button
+                      data-target='#summaryCollapse'
+                      type='button'
+                      aria-expanded='false'
+                      aria-controls='summaryCollapse'
+                      className='btn btn-sm btn-info'
+                      data-toggle='collapse'
+                    >
+                      Show List of Jobs
+                    </button>
+                  </div>
+                  <div className="collapse" id="summaryCollapse">
+                    List of jobs:
+                    &nbsp;
+                    {sourceData && sourceData.length > 0 &&                
+                    <button type="button" className="btn btn-sm btn-primary" onClick={ExportDetail(sourceData, ["Name","Queue", "Run", "Status"], "summary_"+expid)} data-toggle='tooltip' data-placement='left' title='Export data table to CSV format file.'><i className="fas fa-file-export"></i></button>
+                    }  
+                    <table className='table mt-2'>
+                      <thead>
+                        <tr>
+                          <th scope='col'>JobName</th>
+                          <th scope='col' className="text-right">Queue</th>
+                          <th scope='col' className="text-right">Run</th>
+                          <th scope='col'>Status</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {sourceData.map((item) => (
+                          <tr key={item.Name}>
+                            <td>{item.Name}</td>
+                            <td className="text-right">{secondsToDelta(item.Queue)}</td>
+                            <td className="text-right">{secondsToDelta(item.Run)}</td>
+                            <td>{item.Status}</td>                        
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               )}
               {sourceData && sourceData.length === 0 && (
