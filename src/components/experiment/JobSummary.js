@@ -53,7 +53,7 @@ const JobSummary = ({ source }) => {
     return (
     <small>
       <button
-          className='btn-sm btn-info'
+          className='btn btn-sm btn-info'
           type='button'
           data-toggle='modal'                    
           data-target={"#" + dataTarget}

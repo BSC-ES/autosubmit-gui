@@ -114,7 +114,8 @@ const TreeState = (props) => {
     setLoadingPreviousRun();
     let result = null;
     if (NOAPI) {
-      result = require("../data/rundetail_"+String(expid)+"_"+String(run_id)+".json").rundata;
+      result = require("../data/rundetail_"+String(expid)+"_"+String(run_id)+".json");
+      // console.log(result);
     } else {
       const res = await axios.get(`${localserver}/rundetail/${expid}/${run_id}`).catch((error) => { alert(error.message);});
       debug && console.log(res.data);
@@ -122,6 +123,8 @@ const TreeState = (props) => {
       result = res ? res.data : null;
     }
     
+    // console.log(result);
+
     dispatch({
       type: GET_EXPERIMENT_RUN_JOBDATA,
       payload: {result: result, runId: run_id, meta: meta},

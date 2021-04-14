@@ -53,7 +53,7 @@ const TreeControl = () => {
     <div className='card-header p-1'>
       <div className='row justify-content-end'>
         {currentRunIdOnTree && (
-          <div className="col text-left" ><small>{currentRunIdOnTree.message}</small></div>
+          <div className="col text-left py-1 pl-4" >{currentRunIdOnTree.message}</div>
         )}        
         {(loadingTreeRefresh || loadingTreePkl) && (
           <div className='col text-left'>Querying...</div>

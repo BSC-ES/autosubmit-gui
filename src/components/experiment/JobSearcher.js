@@ -120,18 +120,15 @@ const JobSearcher = () => {
       </div>
       <div className='col-md-2'>
         <GraphNodeSelection />
-      </div>
-
-      <div className='col-md-4 text-right text-muted pr-4'>
+      </div>      
         {data && (
-          <small>
+          <div className='col-md-4 text-right text-muted pr-4'>
             Max out: {data.max_children} | Max in: {data.max_parents} | Total
             #Jobs: {data.total_jobs} <AlertTotal source={"graph"} /> | Chunk
             unit: <strong>{data.chunk_unit}</strong> | Chunk size{" "}
             <strong>{data.chunk_size}</strong>{" "}
-          </small>
-        )}
-      </div>
+          </div>
+        )}      
     </div>
   );
 };

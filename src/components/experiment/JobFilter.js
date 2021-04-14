@@ -78,16 +78,14 @@ const JobFilter = () => {
       </div>
       <div className='col-md-2'>
         <TreeNodeSelection />
-      </div>
-      <div className='col-md-4 text-right text-muted pr-4'>
+      </div>      
         {treedata && treedata.jobs && (
-          <small>
+          <div className='col-md-4 text-right text-muted pr-4 py-1'>
             Total #Jobs: {treedata.total} <AlertTotal source={"tree"} /> | Chunk
             unit: <strong>{treedata.reference.chunk_unit}</strong> | Chunk size:{" "}
             <strong>{treedata.reference.chunk_size}</strong>{" "}
-          </small>
-        )}
-      </div>
+          </div>
+        )}      
     </div>
   );
 };

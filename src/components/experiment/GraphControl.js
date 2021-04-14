@@ -60,7 +60,7 @@ const GraphControl = () => {
               </div>
             )}
 
-            <div className='col-md-1'>
+            <div className='col-1'>
               <div className="btn-group" role="group" aria-label="Representation">
                 <button className="btn btn-info btn-sm" disabled={disableQuery} onClick={onSubmitGraph()}>Classic</button>
                 
@@ -87,7 +87,7 @@ const GraphControl = () => {
                 />
               </form>
             </div> */}
-            <div className='col-md-3'>
+            <div className='col-auto'>
               <div className="btn-group" role="group" aria-label="Group By">
               <button className="btn btn-info btn-sm" disabled={disableQuery} onClick={onSubmitGraph("none", "laplacian")}><i className="fas fa-chess-board"></i></button>
                 <button className="btn btn-info btn-sm" onClick={onSubmitGraph("date-member")} disabled={disableQuery}>Date-Member</button>
