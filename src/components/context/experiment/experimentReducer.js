@@ -155,8 +155,9 @@ export default (state, action) => {
         loading: false,
       };
 
-    case GET_EXPERIMENT:
-      const { total_jobs } = action.payload;
+    case GET_EXPERIMENT:      
+      const { total_jobs, owner } = action.payload;
+      const whichAnimal = owner === "molid" ? 1 : Math.floor(Math.random()*3)+1; 
       return {
         ...state,
         experiment: action.payload,
@@ -166,6 +167,7 @@ export default (state, action) => {
         expectedLoadingQuickView: approximateLoadingQuickView(total_jobs),
         data: null,
         canSelect: false,
+        animal: whichAnimal,
       };
     case SET_LOADING_SUMMARY: {
       const expid = action.payload;

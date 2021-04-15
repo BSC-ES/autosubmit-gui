@@ -49,6 +49,7 @@ const ExperimentState = (props) => {
     summaries: [],
     experiment: {},
     totalJobs: 0,
+    animal: 1,
     jobHistory: null,
     experimentRuns: null,        
     expectedLoadingTreeTime: 0,
@@ -237,7 +238,8 @@ const ExperimentState = (props) => {
       const res = await axios.get(`${localserver}/expinfo/${expid}`).catch(error => alert(ERROR_MESSAGE + "\n" + error.message));
       result = res ? res.data : null;
       debug && console.log(result);
-    }    
+    }   
+    
     dispatch({
       type: GET_EXPERIMENT,
       payload: result,
@@ -404,6 +406,7 @@ const ExperimentState = (props) => {
         currentTextCommand: state.currentTextCommand,
         canSelect: state.canSelect,
         totalJobs: state.totalJobs,
+        animal: state.animal,
         expectedLoadingTreeTime: state.expectedLoadingTreeTime,
         expectedLoadingQuickView: state.expectedLoadingQuickView,
         experimentRunDetailForTree: state.experimentRunDetailForTree,   

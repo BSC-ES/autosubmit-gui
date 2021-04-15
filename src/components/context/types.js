@@ -7,6 +7,7 @@ export const SET_LOADING_TREE = "SET_LOADING_TREE";
 export const SET_OFF_LOADING_TREE = "SET_OFF_LOADING_TREE";
 export const SET_LOADING_SUMMARY = "SET_LOADING_SUMMARY";
 export const SET_ALERT = "SET_ALERT";
+export const SET_ANIMAL = "SET_ANIMAL";
 export const REMOVE_ALERT = "REMOVE_ALERT";
 export const GET_GRAPH = "GET_GRAPH";
 export const GET_TREE = "GET_TREE";

@@ -13,6 +13,7 @@ const Loading = ({ source }) => {
     expectedLoadingQuickView,
     //increaseElapsedLoadingTree,
     //elapsedLoadingTree,
+    animal,
   } = experimentContext;
 
   // useEffect(() => {
@@ -22,10 +23,10 @@ const Loading = ({ source }) => {
   //   return () => clearInterval(interval);
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, []);
-  let randomImage = Math.floor(Math.random()*3)+1;
+  
   const expectedTime =
     source === "tree" ? expectedLoadingTreeTime : expectedLoadingQuickView;
-  const gifload = source === "tree" ? (randomImage === 3 ? platyload : dogload) : catload;
+  const gifload = source === "tree" ? (animal === 3 ? platyload : (animal === 2 ? dogload : catload)) : catload;
   //const widthValue = randomImage === 3 ? "350px" : "200px";
 
   //console.log(expectedLoadingTreeTime);
