@@ -134,8 +134,8 @@ export const buildRunTitle = (runId, meta, jobs_number_completed) => {
   let runTitle = "Run " + runId;
   // console.log(meta);
   if (meta){
-    const { created, finished, completed, total } = meta;
-    runTitle = runTitle + " created on " + String(created) + (finished ? " finished on " + finished : " ") + " | " + String(completed) + " of " + String(total) + " jobs completed." + ( jobs_number_completed !== completed ? " This view might contain reruns or missing information." : "" );
+    const { created, finished, completed, total } = meta;    
+    runTitle = runTitle + " created on " + String(created) + (finished ? " finished on " + finished : " ") + " | " + String(completed) + " of " + String(total) + " jobs completed." + ( jobs_number_completed !== completed ? " This view might contain reruns (incremental + sign on name) or missing information." : "" );
   }  
   // console.log(runTitle);
   return runTitle;
