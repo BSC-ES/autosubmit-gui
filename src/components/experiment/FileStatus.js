@@ -64,7 +64,7 @@ class FileStatus extends Component {
         
       )
     } else {
-      return (<span className="navbar-brand ml-4"><span className="badge badge-secondary">UNKNOWN</span></span>);
+      return (<span className="navbar-brand ml-4"><span className="badge badge-secondary">Testing esarchive...</span></span>);
     }
     
   }
