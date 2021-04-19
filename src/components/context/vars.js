@@ -1,4 +1,4 @@
-export const AUTOSUBMIT_API_SOURCE = "https://earth.bsc.es/autosubmitapi/";
+export const AUTOSUBMIT_API_SOURCE = "https://earth.bsc.es/autosubmitapi";
 //export const AUTOSUBMIT_API_SOURCE = "http://84.88.185.33:8081";
 export const DEBUG = false;
 export const NOAPI = false;

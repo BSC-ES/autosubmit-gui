@@ -282,7 +282,7 @@ const ExperimentState = (props) => {
       }
       result = res ? res.data : null;
       debug && console.log(result);
-      //console.log(result);
+      console.log(result);
     }
     dispatch({
       type: GET_FILE_STATUS,
