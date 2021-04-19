@@ -234,3 +234,19 @@ export const groupByAndAggregate = (arrayObjects, key) => {
   }
   return result;
 }
+
+
+export const errorEsarchiveStatus = { data: {
+  "avg_bandwidth": null,
+  "avg_latency": null,
+  "bandwidth_warning": null,
+  "current_bandwidth": null,
+  "current_latency": null,
+  "datetime": "2021-04-19-13:50:04",
+  "error": true,
+  "error_message": "The server couldn't reach esarchive in a reasonable time. Some simple operations might be completed, but complex requests are likely to fail.",
+  "latency_warning": null,
+  "reponse_time": 2,
+  "response_warning": null,
+  "status": "OFFLINE"}
+}

@@ -41,7 +41,7 @@ import {
 
 import { AUTOSUBMIT_API_SOURCE, DEBUG, ERROR_MESSAGE, NOAPI } from "../vars";
 
-import { timeStampToDate } from "../utils";
+import { timeStampToDate, errorEsarchiveStatus } from "../utils";
 
 const ExperimentState = (props) => {
   const initialState = {
@@ -267,12 +267,22 @@ const ExperimentState = (props) => {
   // Get current esarchive status
   const getFileStatus = async () => {
     let result = null;
+    let res = null;
+    let iserror = false;
     if (NOAPI) {
       result = require("../data/filestatus.json");
     } else {
-      const res = await axios.get(`${localserver}/filestatus/`).catch(error => alert(ERROR_MESSAGE + "\n" + error.message));
+      res = await axios.get(`${localserver}/filestatus/`).catch(error => {
+        // alert(ERROR_MESSAGE + "\n" + error.message);
+        // ;
+        iserror = true;
+      });
+      if (iserror === true){
+        res = errorEsarchiveStatus;
+      }
       result = res ? res.data : null;
       debug && console.log(result);
+      //console.log(result);
     }
     dispatch({
       type: GET_FILE_STATUS,

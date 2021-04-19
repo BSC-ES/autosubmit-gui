@@ -14,6 +14,7 @@ class FileStatus extends Component {
 
   render() {
     
+    console.log(this.props.esarchiveStatus);
     if (this.props.esarchiveStatus){
       const {
         avg_bandwidth,
@@ -36,7 +37,7 @@ class FileStatus extends Component {
       let span_alert = <small>esarchive {metrics_text}</small>;
       if (error || status !== "ONLINE"){
         const message_pop = error ? error_message : "Access to esarchive seems to be unstable at the moment.";
-        span_alert = <span className="badge badge-light" data-toggle='tooltip' data-placement='bottom' title={message_pop}>esarchive UNKNOWN!</span>;
+        span_alert = <span className="badge badge-light" data-toggle='tooltip' data-placement='bottom' title={message_pop}>esarchive unreachable</span>;
       } else {
         if (bandwidth_warning || latency_warning || response_warning){
           //badge_style = "badge badge-warning";     
