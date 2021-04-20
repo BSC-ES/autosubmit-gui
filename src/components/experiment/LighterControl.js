@@ -55,15 +55,15 @@ const LighterControl = () => {
 
   return (
     <div className='card-header p-1'>
-      <div className='row justify-content-end'>
+      <div className='row-hl d-flex flex-wrap'>
         {lightData && (
-          <div className='col'>
-            <button className='btn-sm btn-secondary' onClick={onClearFilter}>
+          <div className='item-hl'>
+            <button className='btn btn-sm btn-secondary' onClick={onClearFilter}>
               {lightData.total} total jobs
             </button>
             {lightData.completed > 0 && (
               <button
-                className='btn-sm'
+                className='btn btn-sm btn-secondary'
                 type='button'
                 style={completedColor}
                 onClick={onFilterStatus("#COMPLETED")}
@@ -74,7 +74,7 @@ const LighterControl = () => {
             )}
             {lightData.failed > 0 && (
               <button
-                className='btn-sm'
+                className='btn btn-sm btn-secondary'
                 type='button'
                 style={failedColor}
                 onClick={onFilterStatus("#FAILED")}
@@ -85,7 +85,7 @@ const LighterControl = () => {
             )}
             {lightData.running > 0 && (
               <button
-                className='btn-sm'
+                className='btn btn-sm btn-secondary'
                 type='button'
                 style={runningColor}
                 onClick={onFilterStatus("#RUNNING")}
@@ -96,7 +96,7 @@ const LighterControl = () => {
             )}
             {lightData.queuing > 0 && (
               <button
-                className='btn-sm'
+                className='btn btn-sm btn-secondary'
                 type='button'
                 style={queueColor}
                 onClick={onFilterStatus("#QUEUING")}
@@ -109,7 +109,7 @@ const LighterControl = () => {
         )}
         {lightData && <AlertTotal source={"lighter"} />}
         {lightData && (
-          <div className='col-md'>
+          <div className='item-hl ml-2'>
             <form onSubmit={onSubmit} className='form' autoComplete='off'>
               {loadingFilterTreeView && <span>Searching...</span>}
               {!loadingFilterTreeView && (
@@ -134,17 +134,17 @@ const LighterControl = () => {
           </div>
         )}
         {lightData && filterCount > 0 && (
-          <div className='col-md-1'>
+          <div className='item-hl mx-1'>
             <form onSubmit={onClearFilter} className='form'>
               <input
                 type='submit'
                 value={clearText}
-                className='btn btn-info btn-sm'
+                className='btn btn-sm btn-primary'
               />
             </form>
           </div>
         )}
-        <div className='col-md-2'>
+        <div className='item-hl ml-auto'>
           {experiment && (
             <form onSubmit={onSubmitRequest} className='form'>
               <input

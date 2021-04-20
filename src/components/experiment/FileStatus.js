@@ -14,7 +14,7 @@ class FileStatus extends Component {
 
   render() {
     
-    console.log(this.props.esarchiveStatus);
+    //console.log(this.props.esarchiveStatus);
     if (this.props.esarchiveStatus){
       const {
         avg_bandwidth,

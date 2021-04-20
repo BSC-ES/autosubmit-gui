@@ -43,8 +43,8 @@ const JobFilter = () => {
   // }
 
   return (
-    <div className='row'>
-      <div className='col-md-4 pr-1'>
+    <div className='row-hl flex-wrap d-flex'>
+      <div className='item-hl'>
         <form onSubmit={onSubmit} className='form' autoComplete='off'>
           <div className='input-group input-group-sm'>
             <input
@@ -67,20 +67,20 @@ const JobFilter = () => {
           </div>
         </form>
       </div>
-      <div className='col-md-2 text-left pl-1'>
+      <div className='item-hl ml-2'>
         <form onSubmit={onClearFilter} className='form'>
           <input
             type='submit'
             value={clearText}
-            className='btn btn-info btn-sm'
+            className='btn btn-primary btn-sm'
           />
         </form>
       </div>
-      <div className='col-md-2'>
+      <div className='item-hl ml-2'>
         <TreeNodeSelection />
       </div>      
         {treedata && treedata.jobs && (
-          <div className='col-md-4 text-right text-muted pr-4 py-1'>
+          <div className='item-hl text-right ml-auto'>
             Total #Jobs: {treedata.total} <AlertTotal source={"tree"} /> | Chunk
             unit: <strong>{treedata.reference.chunk_unit}</strong> | Chunk size:{" "}
             <strong>{treedata.reference.chunk_size}</strong>{" "}

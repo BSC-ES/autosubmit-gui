@@ -44,15 +44,17 @@ const JobHistory = ({ source }) => {
   ) {
     return (
       <small>
-        <button
-          className='btn-sm btn-info my-0 py-0'
-          type='button'
-          onClick={onGetJobHistory}
-          data-toggle='modal'                    
-          data-target={"#" + dataTarget}
-        >
-          <i className='fas fa-history' data-toggle='tooltip' data-placement='bottom' title="Shows information from previous runs of the job." ></i>
-        </button>
+        <span className="p-0 m-0" data-toggle='tooltip' data-placement='bottom' title="Shows information from previous runs of the job." >
+          <button
+            className='btn btn-sm btn-info my-0 py-0'
+            type='button'
+            onClick={onGetJobHistory}
+            data-toggle='modal'                    
+            data-target={"#" + dataTarget}
+          >
+            <i className='fas fa-history' ></i>
+          </button>
+        </span>
         <div
           className='modal fade text-dark'
           id={dataTarget}
@@ -69,7 +71,7 @@ const JobHistory = ({ source }) => {
                 </h5>
                 &nbsp;
                 {jobHistory && jobHistory.history && jobHistory.history.length > 0 &&                
-                <button type="button" className="btn-sm btn-primary" onClick={onExport(selectedJob)}><i className="fas fa-file-export"></i></button>
+                <button type="button" className="btn btn-sm btn-primary" onClick={onExport(selectedJob)}data-toggle='tooltip' data-placement='right' title='Export data table to CSV format file.'><i className="fas fa-file-export"></i></button>
                 }                
                 <button
                   className='close'
@@ -80,7 +82,7 @@ const JobHistory = ({ source }) => {
                   <span aria-hidden='true'>&times;</span>
                 </button>
               </div>
-              <div className='modal-body'>
+              <div className='modal-body scroll-x-table'>
                 {jobHistory && jobHistory.history && (
                   <table className='table'>
                     <thead>

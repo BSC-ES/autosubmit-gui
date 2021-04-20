@@ -18,7 +18,7 @@ const TreeNodeSelection = ({ target = "manual-tree" }) => {
     return (
       <Fragment>
         <button
-          className='btn-sm btn-info'
+          className='btn btn-sm btn-primary'
           type='button'
           data-toggle='modal'
           data-target={"#command" + target}

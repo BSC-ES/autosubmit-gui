@@ -49,8 +49,8 @@ const JobSearcher = () => {
   };
 
   return (
-    <div className='row'>
-      <div className='col-md-4'>
+    <div className='row-hl d-flex flex-wrap'>
+      <div className='item-hl'>
         <form onSubmit={onSubmit} className='form'>
           <div className='input-group input-group-sm'>
             <input
@@ -80,18 +80,18 @@ const JobSearcher = () => {
           </div>
         </form>
       </div>
-      <div className='col-md-2 text-center'>
+      <div className='item-hl'>
         {foundNodes && foundNodes.length > 1 && (
-          <div>
+          <div className='ml-2'>
             <button
-              className='btn-sm btn-info'
+              className='btn btn-sm btn-primary'
               type='button'
               onClick={onNext(-1)}
             >
               Previous
             </button>
             <button
-              className='btn-sm btn-info'
+              className='btn btn-sm btn-primary'
               type='button'
               onClick={onNext(1)}
             >
@@ -118,11 +118,11 @@ const JobSearcher = () => {
           </div>
         )}
       </div>
-      <div className='col-md-2'>
+      <div className='item-hl ml-2'>
         <GraphNodeSelection />
       </div>      
         {data && (
-          <div className='col-md-4 text-right text-muted pr-4'>
+          <div className='item-hl text-right ml-auto'>
             Max out: {data.max_children} | Max in: {data.max_parents} | Total
             #Jobs: {data.total_jobs} <AlertTotal source={"graph"} /> | Chunk
             unit: <strong>{data.chunk_unit}</strong> | Chunk size{" "}

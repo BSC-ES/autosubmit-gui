@@ -39,16 +39,18 @@ const  ExperimentRuns = () => {
     db_historic_version >= 12
   ) {
     return (
-      <small>
+      <span>
+        
         <button
-          className='btn-sm btn-info my-0 py-0'
+          className='btn btn-sm btn-info my-0 py-0'
           type='button'
           onClick={onGetExperimentRuns}
           data-toggle='modal'          
           data-target={"#" + dataTarget}          
         >
-          <i className='fas fa-history' data-toggle='tooltip' data-placement='bottom' title='Shows information from previous runs of the experiment.'></i>
+          <span data-toggle='tooltip' data-placement='bottom' title='Shows information from previous runs of the experiment.'><i className='fas fa-history' ></i></span>
         </button>
+        
         <div
           className='modal fade text-dark'
           id={dataTarget}
@@ -88,19 +90,18 @@ const  ExperimentRuns = () => {
                   <span aria-hidden='true'>&times;</span>
                 </button>
               </div>              
-              <div className='modal-body'>
+              <div className='modal-body scroll-x-table'>
                 {experimentRuns && experimentRuns.runs && (
                   <small>
                   <table className='table mb-0'>
                     
                     <thead>
                       <tr>
+                        <th scope='col'></th>
                         <th scope='col'>RunId</th>
                         <th scope='col'>Created</th>
                         {/* <th scope='col'>Created</th> */}
                         <th scope='col'>Finish</th>
-                        <th scope='col'>ChunkUnit</th>
-                        <th scope='col'>ChunkSize</th>
                         <th scope='col'>Submitted</th>
                         <th scope='col'>Queuing</th>
                         <th scope='col'>Running</th>
@@ -110,49 +111,36 @@ const  ExperimentRuns = () => {
                         <th scope='col'>Total</th>
                         <th scope='col'>SYPD</th>
                         <th scope='col'>ASYPD</th>
-                        <th scope='col'></th>
+                        <th scope='col'>ChunkUnit</th>
+                        <th scope='col'>ChunkSize</th>
                       </tr>
                     </thead>
                     
                     <tbody>
                       {experimentRuns.runs.map((item) => (
                         <tr key={item.run_id}>
-                          <td>{item.run_id}</td>
-                          <td>{item.created}</td>
-                          {/* <td>{item.created}</td> */}
-                          <td>{item.finish}</td>
-                          <td>{item.chunk_unit}</td>
-                          <td>{item.chunk_size}</td>
-                          <td>{item.submitted}</td>
-                          {/* <td>
-                            {item.run_time}{" "}
-                            {item.run_time === "0:00:00" && (
-                              <span
-                                className='badge badge-warning'
-                                data-toggle='tooltip'
-                                data-placement='bottom'
-                                title='This running time value usually means that there has been some error either on the completion of the job or in the historical database storage process.'
-                              >
-                                !
-                              </span>
-                            )}
-                          </td> */}
-                          <td>{item.queuing}</td>
-                          <td>{item.running}</td>
-                          <td>{item.failed}</td>
-                          <td>{item.suspended}</td>
-                          <td>{item.completed}</td>
-                          <td>{item.total}</td>
-                          <td>{item.SYPD}</td>
-                          <td>{item.ASYPD}</td>
                           <td className="py-1"> 
                           {loadingPreviousRun && <span>...</span>}                         
                           {!loadingPreviousRun && (
-                              <button className={currentRunIdOnTree && currentRunIdOnTree.runId === item.run_id ? 'btn-sm btn-success' : 'btn-sm btn-primary'} type='button' onClick={onGetExperimentRunDetail(item.run_id, item.created, item.finished, item.completed, item.total)}>
+                              <button className={currentRunIdOnTree && currentRunIdOnTree.runId === item.run_id ? 'btn btn-sm btn-success' : 'btn btn-sm btn-primary'} type='button' onClick={onGetExperimentRunDetail(item.run_id, item.created, item.finished, item.completed, item.total)}>
                               <i className="fas fa-eye"></i>
                               </button>
                           )}                          
                           </td>
+                          <td>{item.run_id}</td>
+                          <td>{item.created}</td>
+                          <td>{item.finish}</td>
+                          <td className='text-right'>{item.submitted}</td>
+                          <td className='text-right'>{item.queuing}</td>
+                          <td className='text-right'>{item.running}</td>
+                          <td className='text-right'>{item.failed}</td>
+                          <td className='text-right'>{item.suspended}</td>
+                          <td className='text-right'>{item.completed}</td>
+                          <td className='text-right'><strong>{item.total}</strong></td>
+                          <td className='text-right'>{item.SYPD}</td>
+                          <td className='text-right'>{item.ASYPD}</td>
+                          <td className='text-right'>{item.chunk_unit}</td>
+                          <td className='text-right'>{item.chunk_size}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -179,7 +167,7 @@ const  ExperimentRuns = () => {
             </div>
           </div>
         </div>
-      </small>
+      </span>
     );
   } else {
     return null;

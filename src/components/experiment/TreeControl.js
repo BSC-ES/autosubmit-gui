@@ -51,91 +51,81 @@ const TreeControl = () => {
 
   return (
     <div className='card-header p-1'>
-      <div className='row justify-content-end'>
+      <div className='d-flex flex-wrap row-hl'>
         {currentRunIdOnTree && (
-          <div className="col text-left py-1 pl-4" >{currentRunIdOnTree.message}</div>
+          <div className="mr-auto item-hl" >{currentRunIdOnTree.message}</div>
         )}        
         {(loadingTreeRefresh || loadingTreePkl) && (
-          <div className='col text-left'>Querying...</div>
+          <div className='mr-auto item-hl'>Querying...</div>
         )}
-
-        {experiment && treedata && (
-          <div className="col-md-1">
-            <JobSummary source="tree"/>
-          </div>
-        )}
-
-        {experiment && treedata && !currentRunIdOnTree && (
-          <div className='col-md-2'>
-            <SelectionControl />
-          </div>
-        )}
-
-        
 
         {experiment && !treedata && (
-          <div className='col-md-1'>
+          <div className='item-hl ml-auto'>
             <form onSubmit={onSubmitTree} className='form'>
               <input
                 type='submit'
                 value='Show'
-                className='btn btn-info btn-block btn-sm'
+                className='btn btn-primary btn-block btn-sm'
                 disabled={disabledQuery}
               />
             </form>
           </div>
         )}
-        {experiment && treedata && !startAutoUpdateTreePkl && (
-          <div className='col-md-1'>
+        {experiment && treedata && (
+          <div className='item-hl ml-auto'>
             <form onSubmit={onClearTree} className='form'>
               <input
                 type='submit'
                 value='Clear Tree'
-                className='btn btn-secondary btn-block btn-sm'
-                disabled={disabledQuery}
+                className='btn btn-dark btn-block btn-sm'
+                disabled={disabledQuery || startAutoUpdateTreePkl}
               />
             </form>
           </div>
         )}
-        {experiment &&
-          treedata &&
-          experimentRunning &&
-          !startAutoUpdateTreePkl && !currentRunIdOnTree && (
-            <div className='col-md-1'>
-              <form onSubmit={onRequestUpdate} className='form'>
-                <input
-                  type='submit'
-                  value='Refresh'
-                  className='btn btn-success btn-block btn-sm'
-                  disabled={disabledQuery}
-                />
-              </form>
-            </div>
-          )}
-        {experimentRunning && treedata && !startAutoUpdateTreePkl && !currentRunIdOnTree && (
-          <div className='col-md-2'>
-            <form onSubmit={onJobMonitor} className='form'>
-              <input
-                type='submit'
-                value='Start Job Monitor'
-                className='btn btn-success btn-block btn-sm'
-                disabled={disabledQuery}
-              />
-            </form>
+
+        {experiment && treedata && (
+          <div className="item-hl pl-1">
+            <JobSummary source="tree"/>
+          </div>
+        )}  
+
+        {experiment && treedata && !currentRunIdOnTree && (
+          <div className='item-hl px-1'>
+            <SelectionControl />
           </div>
         )}
-        {experimentRunning && treedata && startAutoUpdateTreePkl && !currentRunIdOnTree && (
-          <div className='col-md-2'>
-            <form onSubmit={onNotJobMonitor} className='form'>
-              <input
-                type='submit'
-                value='Stop Job Monitor'
-                className='btn btn-danger btn-block btn-sm'
-                disabled={disabledQuery}
-              />
-            </form>
+        <div className="item-hl">
+          <div className="btn-group" role="group" aria-label="workflow-tree">
+            {experiment &&
+              treedata &&
+              experimentRunning &&
+              !startAutoUpdateTreePkl && !currentRunIdOnTree && (
+                    <button
+                      type='button'
+                      className='btn btn-success btn-sm'
+                      disabled={disabledQuery}
+                      onClick={onRequestUpdate}
+                    >Refresh</button>
+              )}
+            {experimentRunning && treedata && !startAutoUpdateTreePkl && !currentRunIdOnTree && (
+                  <button
+                    type='button'
+                    className='btn btn-success btn-sm'
+                    disabled={disabledQuery}
+                    onClick={onJobMonitor}
+                  >Start Job Monitor</button>
+            )}
+            {experimentRunning && treedata && startAutoUpdateTreePkl && !currentRunIdOnTree && (
+                  <button
+                    type='button'
+                    className='btn btn-danger btn-sm'
+                    disabled={disabledQuery}
+                    onClick={onNotJobMonitor}
+                  >Stop Job Monitor</button>
+            )}
           </div>
-        )}
+        </div>
       </div>
     </div>
   );

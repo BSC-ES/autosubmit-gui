@@ -139,6 +139,14 @@ pre.bash {
   overflow-x: auto;
 }
 
+.scroll-x-table {
+  overflow-x: scroll;
+  /* height: 323px; */
+  width: 100%;
+  /* font-size: 0.7rem;
+  font-family: Arial, Helvetica, sans-serif; */
+}
+
 .allowResizeVertical {
   resize: vertical;
 }

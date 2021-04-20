@@ -30,7 +30,7 @@ const WrapperList = () => {
     wrapperTitles = Object.keys(packages);
     wrapperItems = wrapperTitles.map((wrapper, index) => (
       <button
-        className='btn-sm btn-warning btn-block'
+        className='btn-warning btn-block'
         type='button'
         key={index}
         onClick={Honk({ wrapper })}
@@ -55,7 +55,7 @@ const WrapperList = () => {
         <div className='row'>
           <div className='col-12'>
             <div
-              className='card text-white bg-info scroll'
+              className='card text-white bg-primary scroll'
               style={experimentStyle}
             >
               <div className='card-header text-center p-0' style={headerCard}>

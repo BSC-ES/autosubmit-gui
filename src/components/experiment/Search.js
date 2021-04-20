@@ -67,7 +67,7 @@ const Search = () => {
         <div className='row pb-3'>
           <div className='col-md-3'>
             <button
-              className='btn btn-info btn-block'
+              className='btn btn-primary btn-block'
               onClick={experimentContext.getSummaries}
             >
               Show Detailed Data

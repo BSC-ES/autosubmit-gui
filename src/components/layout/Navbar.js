@@ -55,20 +55,24 @@ const Navbar = ({ icon, title }) => {
           history.location.pathname !== "/autosubmitapp/" &&
           history.location.pathname !== "/autosubmitapp" && (
             <form className='form-inline my-2 my-lg-0' onSubmit={submitSearch}>
-              <input
-                type='search'
-                className='form-control mr-sm-2'
-                placeholder='Search Experiments'
-                aria-label='Search'
-                value={text}
-                onChange={onChange}
-              />
-              <button
-                className='btn btn-outline-light my-2 my-sm-0'
+              <div className="input-group input-group-sm">
+                <input
+                  type='search'
+                  className='form-control py-0'
+                  placeholder='Search Experiments'
+                  aria-label='Search'
+                  value={text}
+                  onChange={onChange}
+                />
+                <div className='input-group-append'>
+                <button
+                className='btn btn-dark'
                 type='submit'
               >
                 Search
               </button>
+                </div>
+              </div>
             </form>
           )}
         

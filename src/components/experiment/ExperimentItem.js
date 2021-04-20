@@ -76,11 +76,11 @@ const ExperimentItem = ({
               </h6>
             </div>
             <div>
-              <small className='text-muted'>HPC: {hpc}</small>
+              <span className='text-muted'>HPC: {hpc}</span>
             </div>
           </div>          
           <p className='card-text py-1 mb-1'>
-            <small>{description}</small>
+            <span>{description}</span>
           </p>
           <div className='row'>
             <div className='col-3 px-1'>
@@ -89,8 +89,8 @@ const ExperimentItem = ({
                   <input
                     className={
                       summaries[name]
-                        ? "btn btn-info btn-block btn-sm"
-                        : "btn btn-outline-info btn-block btn-sm"
+                        ? "btn btn-warning btn-block btn-sm"
+                        : "btn btn-info btn-block btn-sm"
                     }
                     type='submit'
                     value={summaries[name] ? "Refresh" : "Summary"}
@@ -100,7 +100,7 @@ const ExperimentItem = ({
               )}
               {loadingSummary.has(name) && (
                 <button
-                  className='btn-sm btn-secondary btn-block disabled'
+                  className='btn btn-sm btn-secondary btn-block disabled'
                   disabled='True'
                 >
                   Loading...
@@ -109,14 +109,14 @@ const ExperimentItem = ({
             </div>
             <div className='col-6 px-1'>
               {disabledMore === true && (
-                <button className='btn-sm btn-block' disabled='True'>
+                <button className='btn btn-sm btn-block' disabled='True'>
                   More &#8594;
                 </button>
               )}
               {disabledMore === false && (
                 <Link
                   to={`/autosubmitapp/experiment/${name}`}
-                  className='btn btn-outline-primary btn-block btn-sm'
+                  className='btn btn-primary btn-block btn-sm'
                 >
                   More
                 </Link>
@@ -125,7 +125,7 @@ const ExperimentItem = ({
             <div className='col-3 px-1'>
               <Link
                 to={`/autosubmitapp/experiment/${name}/light`}
-                className='btn btn-outline-success btn-block btn-sm'
+                className='btn btn-success btn-block btn-sm'
               >
                 Quick
               </Link>

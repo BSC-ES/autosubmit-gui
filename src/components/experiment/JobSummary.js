@@ -53,12 +53,13 @@ const JobSummary = ({ source }) => {
     return (
     <small>
       <button
-          className='btn btn-sm btn-info'
+          className='btn btn-sm btn-primary'
           type='button'
           data-toggle='modal'                    
           data-target={"#" + dataTarget}
         >
-          Summary
+          <span data-toggle='tooltip' data-placement='bottom' title="Shows a summary of the Queue and Run times per type of job.">Summary</span>
+          
         {/* <i className='fas fa-history' data-toggle='tooltip' data-placement='bottom' title="Shows information from previous runs of the job." ></i> */}
       </button>
       <div
@@ -86,13 +87,13 @@ const JobSummary = ({ source }) => {
                 <span aria-hidden='true'>&times;</span>
               </button>
             </div>
-            <div className='modal-body'>
+            <div className='modal-body scroll-x-table'>
               {groupedNodes && (
-                <div>
+                <div className=''>
                   Aggregated by Job <strong>Section</strong>:
                   &nbsp;
                   {groupedNodes && groupedNodes.length > 0 && 
-                    <button type="button" className="btn btn-sm btn-primary" onClick={ExportAggregated(groupedNodes, ["Section","Count", "SumQueue", "AverageQueue", "SumRun", "AverageRun"], "summaryaggregated_"+expid)} data-toggle='tooltip' data-placement='left' title='Export data table to CSV format file.'><i className="fas fa-file-export"></i></button>
+                    <button type="button" className="btn btn-sm btn-primary" onClick={ExportAggregated(groupedNodes, ["Section","Count", "SumQueue", "AverageQueue", "SumRun", "AverageRun"], "summaryaggregated_"+expid)} data-toggle='tooltip' data-placement='right' title='Export data table to CSV format file.'><i className="fas fa-file-export"></i></button>
                   }
                   <table className="table mt-2">
                     <thead>
@@ -128,7 +129,7 @@ const JobSummary = ({ source }) => {
                       type='button'
                       aria-expanded='false'
                       aria-controls='summaryCollapse'
-                      className='btn btn-sm btn-info'
+                      className='btn btn-sm btn-primary'
                       data-toggle='collapse'
                     >
                       Show List of Jobs
@@ -138,7 +139,7 @@ const JobSummary = ({ source }) => {
                     List of jobs:
                     &nbsp;
                     {sourceData && sourceData.length > 0 &&                
-                    <button type="button" className="btn btn-sm btn-primary" onClick={ExportDetail(sourceData, ["Name","Queue", "Run", "Status"], "summary_"+expid)} data-toggle='tooltip' data-placement='left' title='Export data table to CSV format file.'><i className="fas fa-file-export"></i></button>
+                    <button type="button" className="btn btn-sm btn-primary" onClick={ExportDetail(sourceData, ["Name","Queue", "Run", "Status"], "summary_"+expid)} data-toggle='tooltip' data-placement='right' title='Export data table to CSV format file.'><i className="fas fa-file-export"></i></button>
                     }  
                     <table className='table mt-2'>
                       <thead>

@@ -120,7 +120,7 @@ const Performance = () => {
                   type='button'
                   aria-expanded='false'
                   aria-controls='warningsCollapse'
-                  className='btn-sm btn-warning'
+                  className='btn btn-sm btn-warning'
                   data-toggle='collapse'
                 >
                   Show warnings

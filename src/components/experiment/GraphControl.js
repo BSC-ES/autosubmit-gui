@@ -47,116 +47,60 @@ const GraphControl = () => {
 
   return (
     <div className='card-header p-1'>
-      <div className='row'>        
-        <div className='col-md-2'>
-          {(loadingJobMonitor || loadingPkl) && <div>Querying...</div>} 
-        </div>
-        <div className='col-md-10'>
-          <div className='row justify-content-end'>
-            
+      <div className='d-flex flex-wrap row-hl'>        
+      
+          {(loadingJobMonitor || loadingPkl) && <div className='mr-auto item-hl'>Querying...</div>} 
+
+            <div className='item-hl ml-auto'>
+              <div className="btn-group" role="group" aria-label="Group By">
+              <button className="btn btn-primary btn-sm" disabled={disableQuery} onClick={onSubmitGraph()}>Classic</button>
+              <button className="btn btn-primary btn-sm" disabled={disableQuery} onClick={onSubmitGraph("none", "laplacian")}><i className="fas fa-chess-board"></i></button>
+                <button className="btn btn-primary btn-sm" onClick={onSubmitGraph("date-member")} disabled={disableQuery}>Date-Member</button>
+                <button className="btn btn-primary btn-sm" onClick={onSubmitGraph("status")} disabled={disableQuery} >Status</button>
+              </div>
+            </div>
+
             {experiment && data && (
-              <div className='col-md-1'>
+              <div className='item-hl pl-1'>
                 <JobSummary source="graph" />
               </div>
             )}
 
-            <div className='col-1'>
-              <div className="btn-group" role="group" aria-label="Representation">
-                <button className="btn btn-info btn-sm" disabled={disableQuery} onClick={onSubmitGraph()}>Classic</button>
-                
-              </div>
-              {/* <form onSubmit={onSubmitGraph()} className='form'>
-                <input
-                  type='submit'
-                  value='Classic'
-                  className='btn btn-info btn-block btn-sm'
-                  disabled={disableQuery}
-                />
-              </form> */}
-            </div>
-            {/* <div className='col-md-1'>
-              <form
-                onSubmit={onSubmitGraph("none", "laplacian")}
-                className='form'
-              >
-                <input
-                  type='submit'
-                  value='Laplacian'
-                  className='btn btn-info btn-block btn-sm'
-                  disabled={disableQuery}
-                />
-              </form>
-            </div> */}
-            <div className='col-auto'>
-              <div className="btn-group" role="group" aria-label="Group By">
-              <button className="btn btn-info btn-sm" disabled={disableQuery} onClick={onSubmitGraph("none", "laplacian")}><i className="fas fa-chess-board"></i></button>
-                <button className="btn btn-info btn-sm" onClick={onSubmitGraph("date-member")} disabled={disableQuery}>Date-Member</button>
-                <button className="btn btn-info btn-sm" onClick={onSubmitGraph("status")} disabled={disableQuery} >Status</button>
-              </div>
-              {/* <form onSubmit={onSubmitGraph("date-member")} className='form'>
-                <input
-                  type='submit'
-                  value='Grouped by D-M'
-                  className='btn btn-info btn-block btn-sm'
-                  disabled={disableQuery}
-                />
-              </form> */}
-            </div>
-            {/* <div className='col-md-2'>
-              <form onSubmit={onSubmitGraph("status")} className='form'>
-                <input
-                  type='submit'
-                  value='Grouped by Status'
-                  className='btn btn-info btn-block btn-sm'
-                  disabled={disableQuery}
-                />
-              </form>
-            </div> */}
-
             {experiment && data && (
-              <div className='col-md-2'>
+              <div className='item-hl px-1'>
                 <SelectionControl />
               </div>
             )}
 
-            {experiment && data && experimentRunning && !startAutoUpdatePkl && (
-              <div className='col-md-1'>
-                <form onSubmit={onRequestUpdate} className='form'>
-                  <input
-                    type='submit'
-                    value='Refresh'
-                    className='btn btn-success btn-block btn-sm'
-                    disabled={disableQuery}
-                  />
-                </form>
+            <div className="item-hl">
+              <div className="btn-group" role="group" aria-label="workflow">
+              {experiment && data && experimentRunning && !startAutoUpdatePkl && (
+                    <button
+                      type='button'
+                      className='btn btn-success btn-sm'
+                      disabled={disableQuery}
+                      onClick={onRequestUpdate}
+                    >Refresh</button>
+              )}
+              {experimentRunning && data && !startAutoUpdatePkl && (
+                    <button
+                      type='button'
+                      className='btn btn-success btn-sm'
+                      disabled={disableQuery}
+                      onClick={onJobMonitor}
+                    >Start Job Monitor</button>
+              )}
+              {experimentRunning && data && startAutoUpdatePkl && (
+                    <button
+                      type='button'
+                      className='btn btn-danger btn-sm'
+                      disabled={disableQuery}
+                      onClick={onNotJobMonitor}
+                    >Stop Job Monitor</button>
+              )}
               </div>
-            )}
-            {experimentRunning && data && !startAutoUpdatePkl && (
-              <div className='col-md-2'>
-                <form onSubmit={onJobMonitor} className='form'>
-                  <input
-                    type='submit'
-                    value='Start Job Monitor'
-                    className='btn btn-success btn-block btn-sm'
-                    disabled={disableQuery}
-                  />
-                </form>
-              </div>
-            )}
-            {experimentRunning && data && startAutoUpdatePkl && (
-              <div className='col-md-2'>
-                <form onSubmit={onNotJobMonitor} className='form'>
-                  <input
-                    type='submit'
-                    value='Stop Job Monitor'
-                    className='btn btn-danger btn-block btn-sm'
-                    disabled={disableQuery}
-                  />
-                </form>
-              </div>
-            )}
-          </div>
-        </div>
+            </div>
+            
       </div>
     </div>
   );

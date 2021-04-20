@@ -96,7 +96,7 @@ const CommandModal = ({ source, target }) => {
         Set status to:{" "}
         <div className='btn-group' role='group' aria-label='Status'>
           <button
-            className='btn btn-sm'
+            className='btn btn-sm btn-secondary'
             style={{ background: "lightblue" }}
             onClick={setStatusCommand("READY")}
           >
@@ -109,14 +109,14 @@ const CommandModal = ({ source, target }) => {
             Waiting
           </button>
           <button
-            className='btn btn-sm'
+            className='btn btn-sm btn-secondary'
             style={{ background: "yellow" }}
             onClick={setStatusCommand("COMPLETED")}
           >
             Completed
           </button>
           <button
-            className='btn btn-sm'
+            className='btn btn-sm btn-secondary'
             style={{ background: "orange" }}
             onClick={setStatusCommand("SUSPENDED")}
           >
@@ -137,7 +137,7 @@ const CommandModal = ({ source, target }) => {
       Generate file text:{" "}
       <div className='btn-group' role='group' aria-label='Status'>
         <button
-          className='btn btn-sm'
+          className='btn btn-sm btn-secondary'
           style={{ background: "lightblue" }}
           onClick={setStatusTextCommand("READY")}
         >
@@ -150,14 +150,14 @@ const CommandModal = ({ source, target }) => {
           Waiting
         </button>
         <button
-          className='btn btn-sm'
+          className='btn btn-sm btn-secondary'
           style={{ background: "yellow" }}
           onClick={setStatusTextCommand("COMPLETED")}
         >
           Completed
         </button>
         <button
-          className='btn btn-sm'
+          className='btn btn-sm btn-secondary'
           style={{ background: "orange" }}
           onClick={setStatusTextCommand("SUSPENDED")}
         >

@@ -56,12 +56,12 @@ const Selection = () => {
         <Fragment>
           <div className='row'>
             <div className='col-12'>
-              <div className='card text-white bg-info' style={experimentStyle}>
+              <div className='card text-white bg-primary rounded-0' style={experimentStyle}>
                 <div className='card-header text-center p-0' style={headerCard}>
                   <div className='mh-100 px-0 mx-0'>
-                    <small>
+                    
                       <strong>{selectedNode.id}</strong>{" "}
-                      </small>
+                      
                       <JobHistory source='graph' />
                     
                   </div>
@@ -69,43 +69,43 @@ const Selection = () => {
                 <div className='card-body py-0'>
                   <div className='row'>
                     <div className='col-md-6'>
-                      <small>
+                      
                         <strong>Start:</strong> {selectedNode.date}
-                      </small>
+                      
                     </div>
                     <div className='col-md-6'>
-                      <small>
+                      
                         <strong>End:</strong> {selectedNode.date_plus}
-                      </small>
+                      
                     </div>
                   </div>
                   <div>
                     <div className='row'>
                       <div className='col-12'>
-                        <small>
+                        
                           <strong>Section:</strong> {selectedNode.section}
-                        </small>
+                       
                       </div>
                     </div>
                   </div>
                   <div>
                     <div className='row'>
                       <div className='col-md-6'>
-                        <small>
+                       
                           <strong>Member:</strong> {selectedNode.member}
-                        </small>
+                        
                       </div>
                       <div className='col-md-6'>
-                        <small>
+                        
                           <strong>Chunk:</strong> {selectedNode.chunk}
-                        </small>
+                        
                       </div>
                     </div>
                   </div>
                   <div>
                     <div className='row'>
                       <div className='col-12'>
-                        <small>
+                        
                           <strong>Platform:</strong>{" "}
                           {selectedNode.platform_name &&
                             selectedNode.platform_name}{" "}
@@ -116,7 +116,7 @@ const Selection = () => {
                               {selectedNode.rm_id}
                             </span>
                           )}
-                        </small>
+                        
                       </div>
                     </div>
                   </div>
@@ -126,23 +126,25 @@ const Selection = () => {
                   <div>
                     <div className='row'>
                       <div className='col-6'>
-                        <small>
+                        
                           <strong>Processors:</strong> {selectedNode.processors}
-                        </small>
+                        
                       </div>
                       <div className='col-6'>
-                        <small>
+                        
                           <strong>Wallclock:</strong> {selectedNode.wallclock}
-                        </small>
+                        
                       </div>
                     </div>
                   </div>
-                  <div className='row'>
-                    <div className='col-md-6'>
+                  <div className='row-hl d-flex flex-wrap py-1'>
+                    <div className='item-hl'>
                       {" "}
-                      {selectedNode.minutes_queue >= 0 && (
+                      {selectedNode.minutes_queue >= 0 && ["SUBMITTED", "QUEUING", "RUNNING", "COMPLETED", "FAILED"].includes(
+                          selectedNode.status
+                        ) &&  (
                         <span
-                          className='badge text-center'
+                          className='rounded text-center px-2'
                           style={{
                             width: "100%",
                             backgroundColor:
@@ -152,38 +154,39 @@ const Selection = () => {
                             color: "black",
                           }}
                         >
-                          <small>
+                          <strong>
+                          <span>
                             {selectedNode.status === "SUBMITTED"
                               ? "Submit"
                               : "Queue"}
                             :
-                          </small>{" "}
-                          {secondsToDelta(selectedNode.minutes_queue)}
+                          </span>{" "}
+                          {secondsToDelta(selectedNode.minutes_queue)}</strong>
                           {/* <small>min.</small> */}
                         </span>
                       )}
                     </div>
-                    <div className='col-md-6'>
+                    <div className='item-hl'>
                       {selectedNode.minutes >= 0 &&
                         ["RUNNING", "COMPLETED", "FAILED"].includes(
                           selectedNode.status
                         ) && (
                           <span
-                            className='badge badge-success text-center ml-1'
+                            className='rounded px-2 bg-success text-center ml-1'
                             style={{ width: "100%" }}
                           >
-                            <small>Run:</small>{" "}
-                            {secondsToDelta(selectedNode.minutes)}{" "}
+                            <strong>Run:{" "}
+                            {secondsToDelta(selectedNode.minutes)}{" "}</strong>
                             {/* <small>min.</small> */}
                           </span>
                         )}
                     </div>
                   </div>
 
-                  <div className='row py-1'>
-                    <div className='col-md-6'>
+                  <div className='row-hl d-flex flex-wrap py-1'>
+                    <div className='item-hl'>
                       <span
-                        className='badge text-center'
+                        className='px-1 mr-2 rounded text-center'
                         style={{
                           width: "100%",
                           backgroundColor: selectedNode.status_color,
@@ -193,11 +196,11 @@ const Selection = () => {
                               : "black",
                         }}
                       >
-                        Status:
-                        <strong> {selectedNode.status}</strong>
+                        <strong> 
+                        Status: {selectedNode.status}</strong>
                       </span>
                     </div>
-                    <div className='col-md-3 px-1'>
+                    <div className='item-hl'>
                       {selectedNode.children_list &&
                         selectedNode.children_list.length > 0 && (
                           <button
@@ -206,48 +209,44 @@ const Selection = () => {
                             data-target='#childrenList'
                             type='button'
                           >
-                            <small>
+                          
                               <strong>Out:</strong> {selectedNode.children}
-                            </small>
+                          
                           </button>
                         )}
                       {selectedNode.children_list &&
                         selectedNode.children_list.length === 0 && (
                           <button
-                            className='btn-sm btn-dark btn-block'
+                            className='btn btn-sm btn-dark btn-block'
                             type='button'
                             disabled
                           >
-                            <small>
+                            
                               <strong>Out:</strong> {selectedNode.children}
-                            </small>
+                          
                           </button>
                         )}
                     </div>
-                    <div className='col-md-3 px-1'>
+                    <div className='item-hl ml-1'>
                       {selectedNode.parent_list &&
                         selectedNode.parent_list.length > 0 && (
                           <button
-                            className='btn-sm btn-dark btn-block'
+                            className='btn btn-sm btn-dark btn-block'
                             data-toggle='modal'
                             data-target='#parentList'
                             type='button'
                           >
-                            <small>
                               <strong>In:</strong> {selectedNode.parents}
-                            </small>
                           </button>
                         )}
                       {selectedNode.parent_list &&
                         selectedNode.parent_list.length === 0 && (
                           <button
-                            className='btn-sm btn-dark btn-block'
+                            className='btn btn-sm btn-dark btn-block'
                             type='button'
                             disabled
                           >
-                            <small>
                               <strong>In:</strong> {selectedNode.parents}
-                            </small>
                           </button>
                         )}
                     </div>
@@ -271,11 +270,12 @@ const Selection = () => {
                               <div className='input-group-append'>
                                 <input
                                   type='submit'
-                                  className='btn-sm btn-light py-0'
+                                  className='btn btn-sm btn-light py-0'
                                   value='Copy out'
                                 />
+                                <JobLog source={selectedNode.out} tab="graph"/>  
                               </div>
-                              <JobLog source={selectedNode.out}/>  
+                              
                             </div>
                           </form>
                         </div>
@@ -303,25 +303,26 @@ const Selection = () => {
                                   className='btn btn-light btn-sm py-0'
                                   value='Copy err'
                                 />
+                                <JobLog source={selectedNode.err} tab="graph"/>
                               </div>
-                              <JobLog source={selectedNode.err}/>
+                              
                             </div>
                           </form>
                         </div>
                       </div>
                     )}
                   </div>
-                  <div className='row'>
-                    <div className='col-md-8'>
+                  <div className='row-hl d-flex flex-wrap pt-1'>
+                    <div className='item-hl'>
                       <table>
                         <tbody>
                           {selectedNode.submit !== null && (
                             <tr>
                               <td>
-                                <small>Submit:</small>
+                                <span>Submit:</span>
                               </td>
                               <td>
-                                <span className='badge badge-dark'>
+                                <span className='bg-dark px-1 rounded'>
                                   {selectedNode.submit}
                                 </span>
                               </td>
@@ -330,10 +331,10 @@ const Selection = () => {
                           {selectedNode.start !== null && (
                             <tr>
                               <td>
-                                <small>Start:</small>
+                                <span>Start:</span>
                               </td>
                               <td>
-                                <span className='badge badge-dark'>
+                                <span className='bg-dark px-1 rounded'>
                                   {selectedNode.start}
                                 </span>
                               </td>
@@ -342,10 +343,10 @@ const Selection = () => {
                           {selectedNode.finish !== null && (
                             <tr>
                               <td>
-                                <small>Finish:</small>
+                                <span>Finish:</span>
                               </td>
                               <td>
-                                <span className='badge badge-dark'>
+                                <span className='bg-dark px-1 rounded'>
                                   {selectedNode.finish}
                                 </span>
                               </td>
@@ -354,12 +355,13 @@ const Selection = () => {
                         </tbody>
                       </table>
                     </div>
-                    <div className="col-md-4">
+                    <div className="item-hl ml-1">
                     {selectedNode.SYPD !== undefined && selectedNode.SYPD !== null && selectedNode.SYPD > 0 && (                      
-                        <span className="badge badge-info" data-toggle='tooltip' data-placement='bottom' title="Generalization of Simulated Years per Day.">SYPD: {selectedNode.SYPD}</span>                     
+                        <span className="bg-secondary rounded text-dark px-2" data-toggle='tooltip' data-placement='bottom' title="Generalization of Simulated Years per Day.">SYPD: <strong>{selectedNode.SYPD}</strong></span>                     
                     )}
+                    <br></br>
                     {selectedNode.ASYPD !== undefined && selectedNode.ASYPD !== null && selectedNode.ASYPD > 0 && (
-                      <span className="badge badge-info" data-toggle='tooltip' data-placement='bottom' title="Generalization of Actual SYPD.">ASYPD: {selectedNode.ASYPD}</span>                        
+                      <span className="bg-secondary rounded text-dark px-2" data-toggle='tooltip' data-placement='bottom' title="Generalization of Actual SYPD.">ASYPD: <strong>{selectedNode.ASYPD}</strong></span>                        
                     )}
                     </div>
                   </div>
@@ -372,7 +374,7 @@ const Selection = () => {
       {!selectedNode && data && (
         <div className='row'>
           <div className='col-12'>
-            <div className='card text-white bg-info' style={experimentStyle}>
+            <div className='card text-white bg-primary' style={experimentStyle}>
               <div className='card-header text-center py-0'>
                 <small>Here goes the Job Id</small>
               </div>

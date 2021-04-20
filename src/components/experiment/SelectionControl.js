@@ -45,7 +45,7 @@ const SelectionControl = () => {
         <input
           type='submit'
           value='Activate Selection Mode'
-          className='btn btn-info btn-sm btn-block'
+          className='btn btn-secondary btn-sm btn-block'
         />
       </form>
     );
