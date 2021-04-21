@@ -72,7 +72,7 @@ const ExperimentItem = ({
           <div className="d-flex justify-content-between">
             <div>
               <h6 className='card-subtitle text-muted pt-2'>
-                <small>Owner:</small> {user}
+                <span>Owner:</span> {user}
               </h6>
             </div>
             <div>
@@ -97,7 +97,7 @@ const ExperimentItem = ({
                     aria-controls={name}
                     data-toggle='tooltip' 
                     data-placement='bottom' 
-                    title={summaries[name] ? "Update the summary information." : "Show a summary of the current progress of the experiment."}
+                    title={summaries[name] ? "Updates the summary information." : "Shows a summary of the current progress of the experiment."}
                   />
                 </form>
               )}
@@ -245,7 +245,7 @@ const ExperimentItem = ({
             )}
           </div>
           <p className='card-text text-center'>
-            <small className='text-muted'>{version}</small>
+            <span className='text-muted'>{version}</span>
           </p>
         </div>
       </div>

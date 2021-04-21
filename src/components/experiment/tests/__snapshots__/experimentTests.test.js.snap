@@ -68,9 +68,9 @@ exports[`ExperimentItem renders correctly 1`] = `
           <h6
             className="card-subtitle text-muted pt-2"
           >
-            <small>
+            <span>
               Owner:
-            </small>
+            </span>
              
             wuruchi
           </h6>
@@ -106,7 +106,7 @@ exports[`ExperimentItem renders correctly 1`] = `
               className="btn btn-info btn-block btn-sm"
               data-placement="bottom"
               data-toggle="tooltip"
-              title="Show a summary of the current progress of the experiment."
+              title="Shows a summary of the current progress of the experiment."
               type="submit"
               value="Summary"
             />
@@ -144,11 +144,11 @@ exports[`ExperimentItem renders correctly 1`] = `
       <p
         className="card-text text-center"
       >
-        <small
+        <span
           className="text-muted"
         >
           3.11.0
-        </small>
+        </span>
       </p>
     </div>
   </div>

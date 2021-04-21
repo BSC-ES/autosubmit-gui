@@ -251,4 +251,4 @@ export const errorEsarchiveStatus = { data: {
   "response_warning": null,
   "status": "OFFLINE"}
 }
-export const openIcon = <i className="far fa-window-maximize"></i>;
+export const openIcon = <i className="far fa-square"></i>;
