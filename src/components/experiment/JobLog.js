@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
 import ExperimentContext from "../context/experiment/experimentContext";
+import { openIcon } from "../context/utils";
 
 const JobLog = ({ source, tab }) => {
   const experimentContext = useContext(ExperimentContext);
   const { experiment, joblog, getJobLog } = experimentContext;
   const pathid = source !== undefined ? source.substring(source.lastIndexOf(".")+1) : "undefined";
-  console.log(pathid);
+  //console.log(pathid);
   const onGetJobLog = (e) => {
     e.preventDefault();
     getJobLog(source)
@@ -21,7 +22,7 @@ const JobLog = ({ source, tab }) => {
             data-toggle='modal'
             data-target={'#joblog'+pathid+'-'+tab}
           >
-            <span data-toggle='tooltip' data-placement='bottom' title="Shows the last 150 lines of the corresponding log file."><i className='fas fa-eye'></i></span>
+            <span data-toggle='tooltip' data-placement='bottom' title="Shows the last 150 lines of the corresponding log file.">{openIcon}</span>
             
           </button>
         <div

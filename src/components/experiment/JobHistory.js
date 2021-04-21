@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
 import GraphContext from "../context/graph/graphContext";
 import TreeContext from "../context/tree/treeContext";
-import { exportHistoryToCSV } from "../context/utils";
+import { exportHistoryToCSV, openIcon } from "../context/utils";
 
 const JobHistory = ({ source }) => {
   const experimentContext = useContext(ExperimentContext);
@@ -52,7 +52,7 @@ const JobHistory = ({ source }) => {
             data-toggle='modal'                    
             data-target={"#" + dataTarget}
           >
-            <i className='fas fa-history' ></i>
+            {openIcon}
           </button>
         </span>
         <div

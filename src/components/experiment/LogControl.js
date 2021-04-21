@@ -29,7 +29,9 @@ const LogControl = () => {
                 type='submit'
                 value='Show Log'
                 className='btn btn-dark btn-sm btn-block'
-                // disabled={!enabledGraphSearch}
+                data-toggle='tooltip' 
+                data-placement='bottom' 
+                title="Show the last 150 lines of the current run log of your experiment."
               />
             </form>
           )}

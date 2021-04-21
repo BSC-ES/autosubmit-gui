@@ -51,7 +51,7 @@ const JobFilter = () => {
               className='form-control'
               type='text'
               name='section'
-              placeholder='Filter text'
+              placeholder='Filter string'
               onChange={onChangeFilter}
             />
             {loadingFilterTree && <span>Searching...</span>}
@@ -61,6 +61,9 @@ const JobFilter = () => {
                   type='submit'
                   value='Filter'
                   className='btn btn-dark btn-sm'
+                  data-toggle='tooltip' 
+                  data-placement='bottom' 
+                  title="Use the Filter string to filter the contents of the Tree View, you can use '*' as a wildcard."
                 />
               </div>
             )}
@@ -73,6 +76,9 @@ const JobFilter = () => {
             type='submit'
             value={clearText}
             className='btn btn-primary btn-sm'
+            data-toggle='tooltip' 
+            data-placement='bottom' 
+            title="Returns the Tree View to its original content if a filter has been applied."
           />
         </form>
       </div>

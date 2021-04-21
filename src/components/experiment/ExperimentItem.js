@@ -95,6 +95,9 @@ const ExperimentItem = ({
                     type='submit'
                     value={summaries[name] ? "Refresh" : "Summary"}
                     aria-controls={name}
+                    data-toggle='tooltip' 
+                    data-placement='bottom' 
+                    title={summaries[name] ? "Update the summary information." : "Show a summary of the current progress of the experiment."}
                   />
                 </form>
               )}
@@ -117,6 +120,9 @@ const ExperimentItem = ({
                 <Link
                   to={`/autosubmitapp/experiment/${name}`}
                   className='btn btn-primary btn-block btn-sm'
+                  data-toggle='tooltip' 
+                  data-placement='bottom' 
+                  title='Opens the experiment page where the Tree View representation is loaded as default.'
                 >
                   More
                 </Link>
@@ -126,6 +132,9 @@ const ExperimentItem = ({
               <Link
                 to={`/autosubmitapp/experiment/${name}/light`}
                 className='btn btn-success btn-block btn-sm'
+                data-toggle='tooltip' 
+                data-placement='bottom' 
+                title='Opens the experiment page where a simple list of jobs and their status is presented. Loads quicker than the Tree View.'
               >
                 Quick
               </Link>

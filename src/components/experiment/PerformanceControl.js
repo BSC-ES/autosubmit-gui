@@ -29,6 +29,9 @@ const PerformanceControl = () => {
                 value='Refresh'
                 className='btn btn-success btn-block btn-sm'
                 disabled={!enabledTreeSearch || loadingPerformance}
+                data-toggle='tooltip' 
+                data-placement='bottom' 
+                title="Updates the performance metrics using the latest job data information."
               />
             </form>
           )}

@@ -76,20 +76,20 @@ exports[`ExperimentItem renders correctly 1`] = `
           </h6>
         </div>
         <div>
-          <small
+          <span
             className="text-muted"
           >
             HPC: 
             LOCAL
-          </small>
+          </span>
         </div>
       </div>
       <p
         className="card-text py-1 mb-1"
       >
-        <small>
+        <span>
           Test
-        </small>
+        </span>
       </p>
       <div
         className="row"
@@ -103,7 +103,10 @@ exports[`ExperimentItem renders correctly 1`] = `
           >
             <input
               aria-controls="a2h6"
-              className="btn btn-outline-info btn-block btn-sm"
+              className="btn btn-info btn-block btn-sm"
+              data-placement="bottom"
+              data-toggle="tooltip"
+              title="Show a summary of the current progress of the experiment."
               type="submit"
               value="Summary"
             />
@@ -113,9 +116,12 @@ exports[`ExperimentItem renders correctly 1`] = `
           className="col-6 px-1"
         >
           <a
-            className="btn btn-outline-primary btn-block btn-sm"
+            className="btn btn-primary btn-block btn-sm"
+            data-placement="bottom"
+            data-toggle="tooltip"
             href="/autosubmitapp/experiment/a2h6"
             onClick={[Function]}
+            title="Opens the experiment page where the Tree View representation is loaded as default."
           >
             More
           </a>
@@ -124,9 +130,12 @@ exports[`ExperimentItem renders correctly 1`] = `
           className="col-3 px-1"
         >
           <a
-            className="btn btn-outline-success btn-block btn-sm"
+            className="btn btn-success btn-block btn-sm"
+            data-placement="bottom"
+            data-toggle="tooltip"
             href="/autosubmitapp/experiment/a2h6/light"
             onClick={[Function]}
+            title="Opens the experiment page where a simple list of jobs and their status is presented. Loads quicker than the Tree View."
           >
             Quick
           </a>

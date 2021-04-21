@@ -53,10 +53,43 @@ const GraphControl = () => {
 
             <div className='item-hl ml-auto'>
               <div className="btn-group" role="group" aria-label="Group By">
-              <button className="btn btn-primary btn-sm" disabled={disableQuery} onClick={onSubmitGraph()}>Classic</button>
-              <button className="btn btn-primary btn-sm" disabled={disableQuery} onClick={onSubmitGraph("none", "laplacian")}><i className="fas fa-chess-board"></i></button>
-                <button className="btn btn-primary btn-sm" onClick={onSubmitGraph("date-member")} disabled={disableQuery}>Date-Member</button>
-                <button className="btn btn-primary btn-sm" onClick={onSubmitGraph("status")} disabled={disableQuery} >Status</button>
+                <button 
+                  className="btn btn-primary btn-sm" 
+                  disabled={disableQuery} 
+                  onClick={onSubmitGraph()}
+                  data-toggle='tooltip' 
+                  data-placement='bottom' 
+                  title="Shows the default Graph Representation of the experiment."
+                  >
+                    Classic
+                </button>
+                <button 
+                  className="btn btn-primary btn-sm" 
+                  disabled={disableQuery} 
+                  onClick={onSubmitGraph("none", "laplacian")}
+                  data-toggle='tooltip' 
+                  data-placement='bottom' 
+                  title="Shows Graph Laplacian representation of the experiment.">
+                    <i className="fas fa-chess-board"></i>
+                </button>
+                <button 
+                  className="btn btn-primary btn-sm" 
+                  onClick={onSubmitGraph("date-member")} 
+                  disabled={disableQuery}
+                  data-toggle='tooltip' 
+                  data-placement='bottom' 
+                  title="Similar to Classic, but the nodes are grouped by date-member.">
+                    Date-Member
+                </button>
+                <button 
+                  className="btn btn-primary btn-sm" 
+                  onClick={onSubmitGraph("status")} 
+                  disabled={disableQuery}
+                  data-toggle='tooltip' 
+                  data-placement='bottom' 
+                  title="Similar to Classic, but the nodes are grouped by status.">
+                    Status
+                </button>
               </div>
             </div>
 
@@ -75,20 +108,30 @@ const GraphControl = () => {
             <div className="item-hl">
               <div className="btn-group" role="group" aria-label="workflow">
               {experiment && data && experimentRunning && !startAutoUpdatePkl && (
-                    <button
-                      type='button'
-                      className='btn btn-success btn-sm'
-                      disabled={disableQuery}
-                      onClick={onRequestUpdate}
-                    >Refresh</button>
+                <button
+                  type='button'
+                  className='btn btn-success btn-sm'
+                  disabled={disableQuery}
+                  onClick={onRequestUpdate}
+                  data-toggle='tooltip' 
+                  data-placement='bottom' 
+                  title="Updates the Graph's job data (including status) with the most recent information."
+                >
+                  Refresh
+                </button>
               )}
               {experimentRunning && data && !startAutoUpdatePkl && (
-                    <button
-                      type='button'
-                      className='btn btn-success btn-sm'
-                      disabled={disableQuery}
-                      onClick={onJobMonitor}
-                    >Start Job Monitor</button>
+                <button
+                  type='button'
+                  className='btn btn-success btn-sm'
+                  disabled={disableQuery}
+                  onClick={onJobMonitor}
+                  data-toggle='tooltip' 
+                  data-placement='bottom' 
+                  title="Starts a worker that periodically updates the Graph's job data."
+                >
+                  Start Job Monitor
+                </button>
               )}
               {experimentRunning && data && startAutoUpdatePkl && (
                     <button

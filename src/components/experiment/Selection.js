@@ -209,9 +209,12 @@ const Selection = () => {
                             data-target='#childrenList'
                             type='button'
                           >
-                          
+                            <span
+                            data-toggle='tooltip' 
+                            data-placement='bottom' 
+                            title="Shows the list of jobs that depend on this job.">
                               <strong>Out:</strong> {selectedNode.children}
-                          
+                            </span>
                           </button>
                         )}
                       {selectedNode.children_list &&
@@ -230,14 +233,19 @@ const Selection = () => {
                     <div className='item-hl ml-1'>
                       {selectedNode.parent_list &&
                         selectedNode.parent_list.length > 0 && (
-                          <button
-                            className='btn btn-sm btn-dark btn-block'
-                            data-toggle='modal'
-                            data-target='#parentList'
-                            type='button'
-                          >
-                              <strong>In:</strong> {selectedNode.parents}
-                          </button>
+                        <button
+                          className='btn btn-sm btn-dark btn-block'
+                          data-toggle='modal'
+                          data-target='#parentList'
+                          type='button'
+                        >
+                          <span
+                          data-toggle='tooltip' 
+                          data-placement='bottom' 
+                          title="Shows the list of jobs on which this job depends.">
+                            <strong>In:</strong> {selectedNode.parents}
+                          </span>
+                        </button>
                         )}
                       {selectedNode.parent_list &&
                         selectedNode.parent_list.length === 0 && (
@@ -272,6 +280,9 @@ const Selection = () => {
                                   type='submit'
                                   className='btn btn-sm btn-light py-0'
                                   value='Copy out'
+                                  data-toggle='tooltip' 
+                                  data-placement='left' 
+                                  title="Copies the path to your clipboard."
                                 />
                                 <JobLog source={selectedNode.out} tab="graph"/>  
                               </div>
@@ -302,6 +313,9 @@ const Selection = () => {
                                   type='submit'
                                   className='btn btn-light btn-sm py-0'
                                   value='Copy err'
+                                  data-toggle='tooltip' 
+                                  data-placement='left' 
+                                  title="Copies the path to your clipboard."
                                 />
                                 <JobLog source={selectedNode.err} tab="graph"/>
                               </div>

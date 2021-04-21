@@ -118,8 +118,11 @@ const StatsSearch = () => {
                   <input
                     type='submit'
                     value='Get Statistics'
-                    className='btn btn-info'
+                    className='btn btn-primary'
                     disabled={loading}
+                    data-toggle='tooltip' 
+                    data-placement='bottom' 
+                    title="Gets the statistics for the Section and Hours values provided."
                   />
                 </div>
               </div>
@@ -149,7 +152,7 @@ const StatsSearch = () => {
                 executed.
               </p>
               <p className='lead'>
-                Press <span className='badge badge-info'>Get Statistics</span>{" "}
+                Press <span className='badge badge-primary'>Get Statistics</span>{" "}
                 to generate the statistics, this will generate a Bar Chart and
                 some extra statistics below. Drag the mouse inside the chart to
                 zoom in; however, zoom in capabilities are not unlimited, so try

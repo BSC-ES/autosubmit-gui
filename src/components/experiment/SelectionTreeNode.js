@@ -194,16 +194,20 @@ const SelectionTreeNode = () => {
                   <div className='item-hl'>
                     {selectedNode.children_list &&
                       selectedNode.children_list.length > 0 && (
-                        <button
-                          className='btn btn-sm btn-dark btn-block'
-                          data-toggle='modal'
-                          data-target='#childrenList-tree'
-                          type='button'
-                        >
-                          
-                            <strong>Out:</strong> {selectedNode.children}
-                         
-                        </button>
+                          <button
+                            className='btn btn-sm btn-dark btn-block'
+                            data-toggle='modal'
+                            data-target='#childrenList-tree'
+                            type='button'
+                          >
+                            <span
+                            data-toggle='tooltip' 
+                            data-placement='bottom' 
+                            title="Shows the list of jobs that depend on this job.">
+                              <strong>Out:</strong> {selectedNode.children}
+                            </span>
+                          </button>
+                        
                       )}
                     {selectedNode.children_list &&
                       selectedNode.children_list.length === 0 && (
@@ -221,14 +225,19 @@ const SelectionTreeNode = () => {
                   <div className='item-hl ml-1'>
                     {selectedNode.parent_list !== null &&
                       selectedNode.parents > 0 && (
-                        <button
-                          className='btn btn-sm btn-dark'
-                          data-toggle='modal'
-                          data-target='#parentList-tree'
-                          type='button'
-                        >
-                            <strong>In:</strong> {selectedNode.parents}
-                        </button>
+                          <button
+                            className='btn btn-sm btn-dark'
+                            data-toggle='modal'
+                            data-target='#parentList-tree'
+                            type='button'
+                          >
+                            <span
+                            data-toggle='tooltip' 
+                            data-placement='bottom' 
+                            title="Shows the list of jobs on which this job depends.">
+                              <strong>In:</strong> {selectedNode.parents}
+                            </span>
+                          </button>
                       )}
                     {selectedNode.parent_list !== null &&
                       selectedNode.parents === 0 && (
@@ -265,6 +274,9 @@ const SelectionTreeNode = () => {
                                   type='submit'
                                   className='btn btn-light btn-sm py-0'
                                   value='Copy out'
+                                  data-toggle='tooltip' 
+                                  data-placement='left' 
+                                  title="Copies the path to your clipboard."
                                 />
                                 <JobLog source={selectedNode.out} tab="tree"/>
                               </div>           
@@ -293,9 +305,9 @@ const SelectionTreeNode = () => {
                                 type='submit'
                                 className='btn btn-light btn-sm py-0'
                                 value='Copy err'
-                                // data-toggle='tooltip' 
-                                // data-placement='bottom' 
-                                // title="Copy the log path to the clipboard."
+                                data-toggle='tooltip' 
+                                data-placement='left' 
+                                title="Copies the path to your clipboard."
                               />
                               <JobLog source={selectedNode.err} tab="tree"/>
                             </div>

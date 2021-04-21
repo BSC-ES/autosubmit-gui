@@ -103,3 +103,4 @@ export const statusCodeToStyle = (code) => {
     return skippedColor;
   return unknownColor;
 };
+

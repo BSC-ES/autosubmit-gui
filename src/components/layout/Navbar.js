@@ -68,6 +68,9 @@ const Navbar = ({ icon, title }) => {
                 <button
                 className='btn btn-dark'
                 type='submit'
+                data-toggle='tooltip' 
+                data-placement='bottom' 
+                title='Search by expid, description, or owner.'
               >
                 Search
               </button>

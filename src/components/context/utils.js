@@ -1,3 +1,4 @@
+import React from 'react';
 export const timeStampToDate = (value) => {
   //console.log('Setting new format: ' + value);
   let formattedDate = "";
@@ -250,3 +251,4 @@ export const errorEsarchiveStatus = { data: {
   "response_warning": null,
   "status": "OFFLINE"}
 }
+export const openIcon = <i className="far fa-window-maximize"></i>;

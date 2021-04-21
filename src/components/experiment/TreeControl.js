@@ -67,6 +67,9 @@ const TreeControl = () => {
                 value='Show'
                 className='btn btn-primary btn-block btn-sm'
                 disabled={disabledQuery}
+                data-toggle='tooltip' 
+                data-placement='bottom' 
+                title="Shows the Tree View representation of the experiment."
               />
             </form>
           </div>
@@ -77,8 +80,12 @@ const TreeControl = () => {
               <input
                 type='submit'
                 value='Clear Tree'
-                className='btn btn-dark btn-block btn-sm'
+                id='bs-tooltip'
+                className='btn btn-dark btn-block btn-sm bs-tooltip'
                 disabled={disabledQuery || startAutoUpdateTreePkl}
+                data-toggle='tooltip' 
+                data-placement='bottom' 
+                title="Clears all the data from the Tree View."
               />
             </form>
           </div>
@@ -101,20 +108,30 @@ const TreeControl = () => {
               treedata &&
               experimentRunning &&
               !startAutoUpdateTreePkl && !currentRunIdOnTree && (
-                    <button
-                      type='button'
-                      className='btn btn-success btn-sm'
-                      disabled={disabledQuery}
-                      onClick={onRequestUpdate}
-                    >Refresh</button>
+                <button
+                  type='button'
+                  className='btn btn-success btn-sm'
+                  disabled={disabledQuery}
+                  onClick={onRequestUpdate}
+                  data-toggle='tooltip' 
+                  data-placement='bottom' 
+                  title="Updates the Tree View job data (including status) with the most recent information."
+                >
+                  Refresh
+                </button>
               )}
             {experimentRunning && treedata && !startAutoUpdateTreePkl && !currentRunIdOnTree && (
-                  <button
-                    type='button'
-                    className='btn btn-success btn-sm'
-                    disabled={disabledQuery}
-                    onClick={onJobMonitor}
-                  >Start Job Monitor</button>
+                <button
+                  type='button'
+                  className='btn btn-success btn-sm'
+                  disabled={disabledQuery}
+                  onClick={onJobMonitor}
+                  data-toggle='tooltip' 
+                  data-placement='bottom' 
+                  title="Starts a worker that periodically updates the Tree View job data."
+                >
+                  Start Job Monitor
+                </button>
             )}
             {experimentRunning && treedata && startAutoUpdateTreePkl && !currentRunIdOnTree && (
                   <button

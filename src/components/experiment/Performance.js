@@ -123,7 +123,12 @@ const Performance = () => {
                   className='btn btn-sm btn-warning'
                   data-toggle='collapse'
                 >
-                  Show warnings
+                  <span
+                  data-toggle='tooltip' 
+                  data-placement='bottom' 
+                  title="Opens a list of warnings, click again to close the list.">
+                    Show warnings
+                  </span>
                 </button>
               </p>
             </div>

@@ -34,7 +34,7 @@ class FileStatus extends Component {
       // let badge_style = status === "ONLINE" ? "badge badge-success" : "badge badge-secondary";
       // let show_alert = false;
       const metrics_text = !error ? current_bandwidth.toFixed(2) + " MB/s " + current_latency.toFixed(2) + " s" : "";
-      let span_alert = <small>esarchive {metrics_text}</small>;
+      let span_alert = <span>esarchive {metrics_text}</span>;
       if (error || status !== "ONLINE"){
         const message_pop = error ? error_message : "Access to esarchive seems to be unstable at the moment.";
         span_alert = <span className="badge badge-light" data-toggle='tooltip' data-placement='bottom' title={message_pop}>esarchive unreachable</span>;
@@ -59,7 +59,7 @@ class FileStatus extends Component {
       
       return (
         <span className="navbar-brand ml-4">
-          <small>{span_alert}</small>
+          <span>{span_alert}</span>
         </span>
         
       )

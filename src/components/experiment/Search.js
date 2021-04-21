@@ -57,6 +57,9 @@ const Search = () => {
                 type='submit'
                 value='Active Exps'
                 className='btn btn-success'
+                data-toggle='tooltip' 
+                data-placement='bottom' 
+                title="Shows all the experiments that are currently running under Autosubmit."
               ></input>
             </div>
           </form>
@@ -69,6 +72,9 @@ const Search = () => {
             <button
               className='btn btn-primary btn-block'
               onClick={experimentContext.getSummaries}
+              data-toggle='tooltip' 
+              data-placement='bottom' 
+              title="Shows a summary of the current progress of each experiment in the result."
             >
               Show Detailed Data
             </button>

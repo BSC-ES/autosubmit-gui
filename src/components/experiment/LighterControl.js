@@ -46,7 +46,8 @@ const LighterControl = () => {
     filterLighterTreeView(statusString);
   };
 
-  const labelButton = lightData ? "Refresh" : "View";
+  const labelButton = lightData ? "Refresh" : "Show";
+  const labelToolTip = lightData ? "Updates the job data with the latest information." : "Show the list of jobs.";
 
   let clearText = "Clear";
   if (filterCount && filterCount >= 0) {
@@ -58,7 +59,13 @@ const LighterControl = () => {
       <div className='row-hl d-flex flex-wrap'>
         {lightData && (
           <div className='item-hl'>
-            <button className='btn btn-sm btn-secondary' onClick={onClearFilter}>
+            <button 
+              className='btn btn-sm btn-secondary' 
+              onClick={onClearFilter}
+              data-toggle='tooltip' 
+              data-placement='bottom' 
+              title="List all jobs."
+            >
               {lightData.total} total jobs
             </button>
             {lightData.completed > 0 && (
@@ -68,6 +75,9 @@ const LighterControl = () => {
                 style={completedColor}
                 onClick={onFilterStatus("#COMPLETED")}
                 disabled={loadingFilterTreeView}
+                data-toggle='tooltip' 
+                data-placement='bottom' 
+                title="Filters the list and only shows COMPLETED jobs."
               >
                 {lightData.completed} completed
               </button>
@@ -79,6 +89,9 @@ const LighterControl = () => {
                 style={failedColor}
                 onClick={onFilterStatus("#FAILED")}
                 disabled={loadingFilterTreeView}
+                data-toggle='tooltip' 
+                data-placement='bottom' 
+                title="Filters the list and only shows FAILED jobs."
               >
                 {lightData.failed} failed
               </button>
@@ -90,6 +103,9 @@ const LighterControl = () => {
                 style={runningColor}
                 onClick={onFilterStatus("#RUNNING")}
                 disabled={loadingFilterTreeView}
+                data-toggle='tooltip' 
+                data-placement='bottom' 
+                title="Filters the list and only shows RUNNING jobs."
               >
                 {lightData.running} running
               </button>
@@ -101,6 +117,9 @@ const LighterControl = () => {
                 style={queueColor}
                 onClick={onFilterStatus("#QUEUING")}
                 disabled={loadingFilterTreeView}
+                data-toggle='tooltip' 
+                data-placement='bottom' 
+                title="Filters the list and only shows QUEUING jobs."
               >
                 {lightData.queuing} queuing
               </button>
@@ -118,7 +137,7 @@ const LighterControl = () => {
                     className='form-control'
                     type='text'
                     name='section'
-                    placeholder='Filter View'
+                    placeholder='Filter string'
                     onChange={onChangeFilter}
                   />
                   <div className='input-group-append'>
@@ -126,6 +145,9 @@ const LighterControl = () => {
                       type='submit'
                       value='Filter'
                       className='btn btn-dark btn-sm'
+                      data-toggle='tooltip' 
+                      data-placement='bottom' 
+                      title="Use the Filter string to filter the contents of the list, you can use '*' as a wildcard."
                     />
                   </div>
                 </div>
@@ -140,6 +162,9 @@ const LighterControl = () => {
                 type='submit'
                 value={clearText}
                 className='btn btn-sm btn-primary'
+                data-toggle='tooltip' 
+                data-placement='bottom' 
+                title="Returns the list to its original content if a filter has been applied."
               />
             </form>
           </div>
@@ -152,6 +177,9 @@ const LighterControl = () => {
                 value={labelButton}
                 className='btn btn-success btn-block btn-sm'
                 disabled={loadingView}
+                data-toggle='tooltip' 
+                data-placement='bottom' 
+                title={labelToolTip}
               />
             </form>
           )}

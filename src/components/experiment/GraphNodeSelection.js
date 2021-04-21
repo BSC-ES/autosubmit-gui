@@ -24,7 +24,12 @@ const GraphNodeSelection = ({ target = "manual-graph" }) => {
           data-target={"#command" + target}
           onClick={onChangeStatus}
         >
-          <strong>Change Status</strong>
+          <span
+          data-toggle='tooltip' 
+          data-placement='bottom' 
+          title="Generate a command/text to change the status of the selected jobs on the Graph.">
+            <strong>Change Status</strong>
+          </span>
         </button>
         <CommandModal source={"graph-only"} target={target} />
       </Fragment>

@@ -46,6 +46,9 @@ const SelectionControl = () => {
           type='submit'
           value='Activate Selection Mode'
           className='btn btn-secondary btn-sm btn-block'
+          data-toggle='tooltip' 
+          data-placement='bottom' 
+          title="You select jobs by clicking on them, then you can generate a command with those selected jobs."
         />
       </form>
     );

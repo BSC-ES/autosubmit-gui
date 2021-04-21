@@ -58,38 +58,38 @@ const ExperimentColumn = ({ expidToken, refTree }) => {
   return (
     <div className='row'>
       <div className='col'>
-        <div className='footer bg-dark text-white '>
-          <div className='card-footer py-0 scroll-x'>
+        <div className='footer bg-dark text-white py-0 mb-0'>
+          <div className='card-footer py-0 mb-0 scroll-x'>
             <div className='row text-right'>
               <div className='col'>
-                <small className='mr-2'>{description}</small>|
-                <small className='mx-2'>
+                <span className='mr-2'>{description}</span>|
+                <span className='mx-2'>
                   <strong>Branch:</strong> {branch}
-                </small>
+                </span>
                 |
-                <small className='mx-2'>
+                <span className='mx-2'>
                   <strong>Hpc:</strong> {hpc}
-                </small>
+                </span>
                 |
-                <small className='mx-2'>
+                <span className='mx-2'>
                   <strong>Owner:</strong> {owner_id} {owner}{" "}
-                </small>
+                </span>
                 |
-                <small className='mx-2'>
+                <span className='mx-2'>
                   <strong>Version:</strong> {version}
-                </small>
+                </span>
                 {/* |
-                <small className='mx-2'>
+                <span className='mx-2'>
                   <strong>Modified:</strong> {time_last_mod}
-                </small> */}
+                </span> */}
                 |
-                <small className='mx-2'>
+                <span className='mx-2'>
                   <strong>DB:</strong> {db_version}
-                </small>
+                </span>
                 |
-                <small className='mx-2'>
+                <span className='mx-2'>
                   <strong>#Jobs:</strong> {totalJobs}
-                </small>
+                </span>
               </div>
             </div>
           </div>

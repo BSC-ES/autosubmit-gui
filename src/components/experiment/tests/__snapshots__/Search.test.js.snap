@@ -49,6 +49,9 @@ exports[`Search renders correctly 1`] = `
         >
           <input
             className="btn btn-success"
+            data-placement="bottom"
+            data-toggle="tooltip"
+            title="Shows all the experiments that are currently running under Autosubmit."
             type="submit"
             value="Active Exps"
           />

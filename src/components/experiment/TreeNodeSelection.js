@@ -24,7 +24,12 @@ const TreeNodeSelection = ({ target = "manual-tree" }) => {
           data-target={"#command" + target}
           onClick={onChangeStatus}
         >
-          <strong>Change Status</strong>
+          <span
+          data-toggle='tooltip' 
+          data-placement='bottom' 
+          title="Generate a command/text to change the status of the selected jobs on the Tree View.">
+            <strong>Change Status</strong>
+          </span>
         </button>
         <CommandModal source={"tree-only"} target={target} />
       </Fragment>

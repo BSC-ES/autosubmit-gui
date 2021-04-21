@@ -51,7 +51,7 @@ const JobSummary = ({ source }) => {
     // Build data
     // let sourceData = [];
     return (
-    <small>
+    <div>
       <button
           className='btn btn-sm btn-primary'
           type='button'
@@ -59,8 +59,7 @@ const JobSummary = ({ source }) => {
           data-target={"#" + dataTarget}
         >
           <span data-toggle='tooltip' data-placement='bottom' title="Shows a summary of the Queue and Run times per type of job.">Summary</span>
-          
-        {/* <i className='fas fa-history' data-toggle='tooltip' data-placement='bottom' title="Shows information from previous runs of the job." ></i> */}
+
       </button>
       <div
           className='modal fade text-dark'
@@ -182,7 +181,7 @@ const JobSummary = ({ source }) => {
           </div>
         </div>
       </div>
-    </small>
+    </div>
     );
   } 
   else{
