@@ -29,13 +29,13 @@ const JobSelection = ({ source, target }) => {
     return (
       <Fragment>
         <div className='card p-0 m-0'>
-          <div className='card-header text-center p-0 m-0'>
+          <div className='card-header text-center p-1'>
             <button
-              className='btn btn-info btn-sm my-0 py-0'
+              className='btn btn-primary btn-sm'
               data-toggle='modal'
               data-target={"#command" + target}
             >
-              <strong>Generate Command</strong>
+              <span>Generate Command</span>
             </button>
           </div>
           <div className='card-body'>
@@ -46,11 +46,11 @@ const JobSelection = ({ source, target }) => {
                   <button
                     key={job.name}
                     type='button'
-                    className='btn btn-sm m-1 p-1'
+                    className='btn btn-sm btn-secondary'
                     style={{ background: job.color }}
                     onClick={removeSelected(job.name)}
                   >
-                    <small>{job.name}</small>
+                    <span>{job.name}</span>
                   </button>
                 ))}
           </div>
