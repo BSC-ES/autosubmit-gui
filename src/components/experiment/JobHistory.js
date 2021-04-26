@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
 import GraphContext from "../context/graph/graphContext";
 import TreeContext from "../context/tree/treeContext";
-import { exportHistoryToCSV, openIcon } from "../context/utils";
+import { exportHistoryToCSV, openIconHistory } from "../context/utils";
 
 const JobHistory = ({ source }) => {
   const experimentContext = useContext(ExperimentContext);
@@ -43,7 +43,7 @@ const JobHistory = ({ source }) => {
     db_historic_version >= 12
   ) {
     return (
-      <small>
+      <span>
         <span className="p-0 m-0" data-toggle='tooltip' data-placement='bottom' title="Shows information from previous runs of the job." >
           <button
             className='btn btn-sm btn-info my-0 py-0'
@@ -52,7 +52,7 @@ const JobHistory = ({ source }) => {
             data-toggle='modal'                    
             data-target={"#" + dataTarget}
           >
-            {openIcon}
+            {openIconHistory}
           </button>
         </span>
         <div
@@ -161,7 +161,7 @@ const JobHistory = ({ source }) => {
             </div>
           </div>
         </div>
-      </small>
+      </span>
     );
   } else {
     return null;

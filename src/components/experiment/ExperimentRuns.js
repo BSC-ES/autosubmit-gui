@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
 import TreeContext from "../context/tree/treeContext";
-import { openIcon } from "../context/utils";
+import { openIconHistory } from "../context/utils";
 
 const  ExperimentRuns = () => {
   const experimentContext = useContext(ExperimentContext);
@@ -48,7 +48,7 @@ const  ExperimentRuns = () => {
           data-toggle='modal'          
           data-target={"#" + dataTarget}          
         >
-          <span data-toggle='tooltip' data-placement='bottom' title='Shows information from previous runs of the experiment.'>{openIcon}</span>
+          <span data-toggle='tooltip' data-placement='bottom' title='Shows information from previous runs of the experiment.'>{openIconHistory}</span>
         </button>
         
         <div

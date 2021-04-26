@@ -252,3 +252,4 @@ export const errorEsarchiveStatus = { data: {
   "status": "OFFLINE"}
 }
 export const openIcon = <i className="far fa-square"></i>;
+export const openIconHistory = <i className="fas fa-history"></i>;

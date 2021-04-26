@@ -390,11 +390,11 @@ const Selection = () => {
           <div className='col-12'>
             <div className='card text-white bg-primary' style={experimentStyle}>
               <div className='card-header text-center py-0'>
-                <small>Here goes the Job Id</small>
+                <span>Here goes the Job Id</span>
               </div>
               <div className='card-body'>
                 <div className='text-center'>
-                  <small>Select a Node to see more information.</small>
+                  <span>Select a Node to see more information.</span>
                 </div>
               </div>
             </div>
