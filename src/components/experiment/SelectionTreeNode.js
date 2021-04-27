@@ -101,21 +101,10 @@ const SelectionTreeNode = () => {
                   </div>
                 </div>
                 <div>
-                  <div className='row'>
-                    <div className='col-12'>
-                      
-                        <strong>Platform:</strong>{" "}
-                        {selectedNode.platform_name &&
-                          selectedNode.platform_name}{" "}
-                        {!selectedNode.platform_name && experiment.hpc}
-                        {selectedNode.rm_id && (
-                          <span>
-                            <strong> &nbsp; Id: </strong>
-                            {selectedNode.rm_id}
-                          </span>
-                        )}
-                      
-                    </div>
+                  <div className='row-hl d-flex flex-wrap'>
+                    <div className="item-hl"><strong>Platform: </strong>{selectedNode.platform_name ? selectedNode.platform_name : experiment.hpc}</div>
+                    {selectedNode.queue && <div className="item-hl ml-3"><strong>QoS: </strong>{selectedNode.queue}</div>}
+                    <div className="item-hl ml-3">{selectedNode.rm_id && <span><strong>Id: </strong>{selectedNode.rm_id}</span>}</div>                    
                   </div>
                 </div>
                 <div>
