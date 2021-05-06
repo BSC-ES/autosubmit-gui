@@ -131,8 +131,8 @@ const JobHistory = ({ source }) => {
                           </td>
                           <td>{item.status}</td>
                           <td>{item.energy}</td>
-                          <td>{item.SYPD}</td>
-                          <td>{item.ASYPD}</td>
+                          <td>{item.run_id ? item.SYPD : <span className='badge badge-warning' data-toggle='tooltip' data-placement='bottom' title='This register is not associated to a run Id because it ran with an old version of the database, SYPD cannot be calculated.'>!</span>}</td>
+                          <td>{item.run_id ? item.ASYPD : <span className='badge badge-warning' data-toggle='tooltip' data-placement='bottom' title='This register is not associated to a run Id because it ran with an old version of the database, ASYPD cannot be calculated.'>!</span>}</td>
                           <td>{item.wallclock}</td>
                           <td>{item.ncpus}</td>
                           <td>{item.nodes}</td>
