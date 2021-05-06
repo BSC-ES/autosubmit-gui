@@ -37,6 +37,7 @@ import {
   GET_FILE_STATUS,
   CLEAN_FILE_STATUS_DATA,
   GET_JOB_LOG,
+  SET_CURRENT_UPDATE_DESCRIP_COMMAND,
 } from "../types";
 
 import { AUTOSUBMIT_API_SOURCE, DEBUG, ERROR_MESSAGE, NOAPI } from "../vars";
@@ -67,6 +68,7 @@ const ExperimentState = (props) => {
     loadingExperimentRuns: false,
     currentCommand: null,
     currentTextCommand: null,
+    currentUpdateDescripCommand: null,
     currentSelected: [],
     startAutoUpdateRun: false,
     startAutoUpdateTreePkl: false,
@@ -317,6 +319,13 @@ const ExperimentState = (props) => {
     //return command;
   };
 
+  const setCurrentUpdateDescripCommand = async (command) => {
+    dispatch({
+      type: SET_CURRENT_UPDATE_DESCRIP_COMMAND,
+      payload: command,
+    });
+  }
+
   const setCurrentTextCommand = async (command) => {
     dispatch({
       type: SET_CURRENT_TEXT_COMMAND,
@@ -421,6 +430,7 @@ const ExperimentState = (props) => {
         expectedLoadingQuickView: state.expectedLoadingQuickView,
         experimentRunDetailForTree: state.experimentRunDetailForTree,   
         esarchiveStatus: state.esarchiveStatus,     
+        currentUpdateDescripCommand: state.currentUpdateDescripCommand,
         setAutoUpdateRun,
         searchExperiments,
         getCurrentRunning,
@@ -449,6 +459,7 @@ const ExperimentState = (props) => {
         getFileStatus,
         getJobLog,
         cleanFileStatusData,
+        setCurrentUpdateDescripCommand,
       }}
     >
       {props.children}

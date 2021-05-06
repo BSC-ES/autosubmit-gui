@@ -31,6 +31,7 @@ import {
   CLEAN_FILE_STATUS_DATA,
   SET_CURRENT_TEXT_COMMAND,
   GET_JOB_LOG,
+  SET_CURRENT_UPDATE_DESCRIP_COMMAND,
 } from "../types";
 
 import {
@@ -74,6 +75,7 @@ export default (state, action) => {
         data: null,
         canSelect: false,
         joblog: null,
+        currentUpdateDescripCommand: null,
       };
     }
     case CLEAN_FILE_STATUS_DATA:
@@ -243,6 +245,11 @@ export default (state, action) => {
       return {
         ...state,
         currentCommand: action.payload,        
+      };
+    case SET_CURRENT_UPDATE_DESCRIP_COMMAND:
+      return {
+        ...state,
+        currentUpdateDescripCommand: action.payload,
       };
     case SET_CURRENT_TEXT_COMMAND:
       return {

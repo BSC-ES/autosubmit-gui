@@ -89,8 +89,8 @@ const ExperimentItem = ({
                   <input
                     className={
                       summaries[name]
-                        ? "btn btn-warning btn-block btn-sm"
-                        : "btn btn-info btn-block btn-sm"
+                        ? "btn btn-info btn-block btn-sm"
+                        : "btn btn-primary btn-block btn-sm"
                     }
                     type='submit'
                     value={summaries[name] ? "Refresh" : "Summary"}
@@ -110,10 +110,10 @@ const ExperimentItem = ({
                 </button>
               )}
             </div>
-            <div className='col-6 px-1'>
+            <div className='col-3 px-1'>
               {disabledMore === true && (
                 <button className='btn btn-sm btn-block' disabled='True'>
-                  More &#8594;
+                  Tree &#8594;
                 </button>
               )}
               {disabledMore === false && (
@@ -122,16 +122,34 @@ const ExperimentItem = ({
                   className='btn btn-primary btn-block btn-sm'
                   data-toggle='tooltip' 
                   data-placement='bottom' 
-                  title='Opens the experiment page where the Tree View representation is loaded as default.'
+                  title='Opens the experiment page where the Tree View representation is loaded by default.'
                 >
-                  More
+                  Tree
+                </Link>
+              )}
+            </div>
+            <div className="col-3 px-1">
+              {disabledMore === true && (
+                <button className="btn btn-sm btn-block" disabled='True'>
+                  Graph &#8594;
+                </button>
+              )}
+              {disabledMore === false &&(
+                <Link
+                  to={`/autosubmitapp/experiment/${name}/graph`}
+                  className='btn btn-primary btn-block btn-sm'
+                  data-toggle='tooltip'
+                  data-placement='bottom'
+                  title='Opens the experiment page where the Graph View representation is loaded by default.'
+                >
+                  Graph
                 </Link>
               )}
             </div>
             <div className='col-3 px-1'>
               <Link
                 to={`/autosubmitapp/experiment/${name}/light`}
-                className='btn btn-success btn-block btn-sm'
+                className='btn btn-primary btn-block btn-sm'
                 data-toggle='tooltip' 
                 data-placement='bottom' 
                 title='Opens the experiment page where a simple list of jobs and their status is presented. Loads quicker than the Tree View.'

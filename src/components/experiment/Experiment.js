@@ -3,6 +3,7 @@ import Spinner from "../layout/Spinner";
 // import { Link } from "react-router-dom";
 import ExperimentContext from "../context/experiment/experimentContext";
 import ExperimentRuns from "./ExperimentRuns";
+import DescriptionModal from "./DescriptionModal";
 
 const Experiment = ({ expidToken }) => {
   //console.log(expidToken);
@@ -50,6 +51,8 @@ const Experiment = ({ expidToken }) => {
       )}
       &nbsp;
         <ExperimentRuns />
+      &nbsp;
+        <DescriptionModal />
     </span>
   );
 };

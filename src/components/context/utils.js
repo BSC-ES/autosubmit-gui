@@ -58,6 +58,14 @@ export const commandGeneratorGraph = (expid, jobs, status) => {
   return command;
 };
 
+export const commandGeneratorUpdateDescrip = (expid, description) => {
+  let command = "Not a valid experiment.";
+  if (expid){
+    command = "autosubmit updatedescrip " + expid + " '" + description + "'";
+  }
+  return command;
+}
+
 export const commandGenerator = (expid, jobs, status) => {
   let arrayNames = [];
   //let command = "Invalid Command: You have to select at least one job.";
