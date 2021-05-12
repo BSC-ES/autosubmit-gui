@@ -172,12 +172,12 @@ const ExperimentState = (props) => {
     if (NOAPI){
       return null;
     } else {
-      console.log('Attempt inside state of ' + ticket);
+      //console.log('Attempt inside state of ' + ticket);
       const res = await axios.get(`${localserver}/login?ticket=${ticket}`)
       // {authentication: bool, user: str}
-      console.log(res);
+      //console.log(res);
       authdata = res ? res.data : null;
-      console.log(authdata);
+      //console.log(authdata);
     }
     if (authdata) {
       dispatch({

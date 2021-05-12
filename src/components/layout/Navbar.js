@@ -8,7 +8,7 @@ import FileStatus from "../experiment/FileStatus";
 const Navbar = ({ icon, title }) => {
   const history = useHistory();
   const experimentContext = useContext(ExperimentContext);
-  const { searchExperiments, experiment, cleanFileStatusData, getFileStatus, esarchiveStatus } = experimentContext;
+  const { searchExperiments, experiment, cleanFileStatusData, getFileStatus, esarchiveStatus, loggedUser } = experimentContext;
 
   const [text, setText] = useState("");
   //const expid = match.params.expid;
@@ -78,6 +78,13 @@ const Navbar = ({ icon, title }) => {
               </div>
             </form>
           )}
+        
+        {loggedUser && loggedUser !== "Failed" && (
+          <span className="bg-secondary rounded text-dark px-2">{loggedUser}</span>          
+        )}
+        {!loggedUser && (
+          <Link className='btn btn-sm btn-primary' to='/autosubmitapp/login'>Login</Link>
+        )}
         
       </div>
     </nav>
