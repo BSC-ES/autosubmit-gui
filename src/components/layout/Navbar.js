@@ -80,7 +80,7 @@ const Navbar = ({ icon, title }) => {
           )}
         
         {loggedUser && loggedUser !== "Failed" && (
-          <span className="bg-secondary rounded text-dark px-2">{loggedUser}</span>          
+          <span className="bg-secondary rounded text-dark px-2 ml-1">{loggedUser}</span>          
         )}
         {!loggedUser && (
           <Link className='btn btn-sm btn-primary' to='/autosubmitapp/login'>Login</Link>
