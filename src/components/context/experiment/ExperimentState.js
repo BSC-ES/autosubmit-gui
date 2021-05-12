@@ -169,11 +169,14 @@ const ExperimentState = (props) => {
   // CAS Login
   const getVerifyTicket = (ticket) => {
     let authdata = null;
+    let res = null;
     if (NOAPI){
       return null;
     } else {
       console.log('Attempt inside state of ' + ticket);
-      const res = axios.get(`${localserver}/login?ticket=${ticket}`)
+      axios.get(`${localserver}/login?ticket=${ticket}`).then((response) => {
+        res = response;
+      });
       // {authentication: bool, user: str}
       console.log(res);
       authdata = res ? res.data : null;
@@ -189,7 +192,7 @@ const ExperimentState = (props) => {
   const getExperimentSummary = async (expid) => {
     clearSummary(expid);
     setLoadingSummary(expid);
-    let summary = null;
+    let summary = null;    
     if (NOAPI){
       summary = require("../data/summary_"+String(expid)+".json");
     } else {
