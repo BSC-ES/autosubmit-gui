@@ -167,13 +167,13 @@ const ExperimentState = (props) => {
   }
 
   // CAS Login
-  const getVerifyTicket = async (ticket) => {
+  const getVerifyTicket = (ticket) => {
     let authdata = null;
     if (NOAPI){
       return null;
     } else {
       console.log('Attempt inside state of ' + ticket);
-      const res = await axios.get(`${localserver}/login?ticket=${ticket}`)
+      const res = axios.get(`${localserver}/login?ticket=${ticket}`)
       // {authentication: bool, user: str}
       console.log(res);
       authdata = res ? res.data : null;
