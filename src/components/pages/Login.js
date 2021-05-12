@@ -7,10 +7,11 @@ const Login = (props) => {
   const values = queryString.parse(props.location.search);
   const experimentContext = useContext(ExperimentContext);
   const { getVerifyTicket, loggedUser } = experimentContext;
-  const onVerify = (ticket) => {
+  const onVerify = (ticket) => (e) => {
     //e.preventDefault();
     console.log('Attempt to verify ' + ticket)
     getVerifyTicket(ticket);
+    e.preventDefault();
   }
   const onCASLogin = () => {
     const _target = "https://cas.bsc.es/cas/login?service=https://earth.bsc.es/autosubmitapp/login";
