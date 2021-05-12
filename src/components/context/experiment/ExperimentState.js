@@ -167,25 +167,24 @@ const ExperimentState = (props) => {
   }
 
   // CAS Login
-  const getVerifyTicket = (ticket) => {
+  const getVerifyTicket = async (ticket) => {
     let authdata = null;
-    let res = null;
     if (NOAPI){
       return null;
     } else {
       console.log('Attempt inside state of ' + ticket);
-      axios.get(`${localserver}/login?ticket=${ticket}`).then((response) => {
-        res = response;
-      });
+      const res = await axios.get(`${localserver}/login?ticket=${ticket}`)
       // {authentication: bool, user: str}
       console.log(res);
       authdata = res ? res.data : null;
       console.log(authdata);
     }
-    dispatch({
-      type: VERIFY_TOKEN_DATA,
-      payload: authdata,
-    })
+    if (authdata) {
+      dispatch({
+        type: VERIFY_TOKEN_DATA,
+        payload: authdata,
+      })
+    }    
   }
 
   // Get Summary for Search item
