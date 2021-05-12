@@ -23,6 +23,7 @@ const Login = (props) => {
     )
   } else {
     if (values.ticket){
+      console.log('Verify'+ values.ticket);
       onVerify(values.ticket);
       return (    
         <div>
