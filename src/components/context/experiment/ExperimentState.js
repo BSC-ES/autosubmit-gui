@@ -71,7 +71,7 @@ const ExperimentState = (props) => {
     currentTextCommand: null,
     currentUpdateDescripCommand: null,
     currentSelected: [],
-    loggedUser: null,
+    loggedUser: null,    
     startAutoUpdateRun: false,
     startAutoUpdateTreePkl: false,
     fancyTree: null,

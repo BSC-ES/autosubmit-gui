@@ -17,11 +17,19 @@ const Login = (props) => {
     window.location.href = _target;
   }
   if (loggedUser) {
-    return (
-      <div>
-        Welcome {loggedUser}
-      </div>
-    )
+    if (loggedUser == 'Failed') {
+      return (
+        <div>
+          Oops! We couldn't authenticate you.
+        </div>
+      )
+    } else {
+      return (
+        <div>
+          Welcome {loggedUser}
+        </div>
+      )
+    }    
   } else {
     if (values.ticket){
       console.log('Verify'+ values.ticket);

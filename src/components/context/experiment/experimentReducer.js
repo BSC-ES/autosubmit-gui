@@ -283,10 +283,10 @@ export default (state, action) => {
         joblog: action.payload,
       }
     case VERIFY_TOKEN_DATA:
-      const { user } = action.payload;
+      const { authenticated,  user } = action.payload;
       return {
         ...state,
-        loggedUser: user,
+        loggedUser: authenticated ? user : 'Failed',
       }
     default:
       return null;
