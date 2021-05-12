@@ -11,7 +11,7 @@ const Login = (props) => {
     //e.preventDefault();
     console.log('Attempt to verify ' + ticket)
     getVerifyTicket(ticket);
-    e.preventDefault();
+    //e.preventDefault();
   }
   const onCASLogin = () => {
     const _target = "https://cas.bsc.es/cas/login?service=https://earth.bsc.es/autosubmitapp/login";
@@ -35,17 +35,18 @@ const Login = (props) => {
     if (values.ticket){
       console.log('Verify'+ values.ticket);
       onVerify(values.ticket);
-      return (    
-        <div>
-          Login...  {values.ticket}   
-        </div>
-      )
+      // return (    
+      //   <div>
+      //     Login...  {values.ticket}   
+      //   </div>
+      // )
     } else {      
       onCASLogin();
       return null;
     }
   }
   
+  return null;
   
 }
 
