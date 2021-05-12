@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import ExperimentContext from "../context/experiment/experimentContext";
 import queryString from 'query-string';
 import  { Redirect } from 'react-router-dom';
@@ -7,6 +7,15 @@ const Login = (props) => {
   const values = queryString.parse(props.location.search);
   const experimentContext = useContext(ExperimentContext);
   const { getVerifyTicket, loggedUser } = experimentContext;
+  
+  useEffect(() => {
+    if (values.ticket){
+      onVerify(values.ticket);
+    } else {
+      onCASLogin();
+    }
+  }, [])
+  
   const onVerify = (ticket) => {
     //e.preventDefault();
     console.log('Attempt to verify ' + ticket)
@@ -18,8 +27,8 @@ const Login = (props) => {
     console.log('On CAS Log')
     window.location.href = _target;
   }
-  console.log(loggedUser);
-  console.log(values);
+  // console.log(loggedUser);
+  // console.log(values);
   if (loggedUser) {
     if (loggedUser == 'Failed') {
       return (
@@ -34,24 +43,10 @@ const Login = (props) => {
         </div>
       );
     }    
-  } else {
-    if (values.ticket){
-      console.log('Verify: '+ values.ticket);
-      onVerify(values.ticket);
-      return null;
-      // return (    
-      //   <div>
-      //     Login...  {values.ticket}   
-      //   </div>
-      // )
-    } else {      
-      onCASLogin();
-      return null;
-    }
-  }
+  };
   
   
-
+  return null;
 }
 
 export default Login
