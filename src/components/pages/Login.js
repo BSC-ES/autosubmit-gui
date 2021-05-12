@@ -9,6 +9,7 @@ const Login = (props) => {
   const { getVerifyTicket, loggedUser } = experimentContext;
   const onVerify = (ticket) => (e) => {
     e.preventDefault();
+    console.log('Attempt to verify ' + ticket)
     getVerifyTicket(ticket);
   }
   const onCASLogin = () => {
