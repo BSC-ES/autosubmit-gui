@@ -18,6 +18,8 @@ const Login = (props) => {
     console.log('On CAS Log')
     window.location.href = _target;
   }
+  console.log(loggedUser);
+  console.log(values);
   if (loggedUser) {
     if (loggedUser == 'Failed') {
       return (
