@@ -11,6 +11,10 @@ const Login = (props) => {
     e.preventDefault();
     getVerifyTicket(ticket);
   }
+  const onCASLogin = () => {
+    const _target = "https://cas.bsc.es/cas/login?service=https://earth.bsc.es/autosubmitapp/login";
+    window.location.href = _target;
+  }
   if (loggedUser) {
     return (
       <div>
@@ -25,9 +29,9 @@ const Login = (props) => {
           Login...  {values.ticket}   
         </div>
       )
-    } else {
-      const _target = "https://cas.bsc.es/cas/login?service=https://earth.bsc.es/autosubmitapp/login";
-      return <Redirect to={_target} />
+    } else {      
+      onCASLogin();
+      return null;
     }
   }
   
