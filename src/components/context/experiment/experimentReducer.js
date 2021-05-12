@@ -32,6 +32,7 @@ import {
   SET_CURRENT_TEXT_COMMAND,
   GET_JOB_LOG,
   SET_CURRENT_UPDATE_DESCRIP_COMMAND,
+  VERIFY_TOKEN_DATA,
 } from "../types";
 
 import {
@@ -280,6 +281,12 @@ export default (state, action) => {
       return {
         ...state,
         joblog: action.payload,
+      }
+    case VERIFY_TOKEN_DATA:
+      const { user } = action.payload;
+      return {
+        ...state,
+        loggedUser: user,
       }
     default:
       return null;

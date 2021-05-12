@@ -103,7 +103,7 @@ exports[`ExperimentItem renders correctly 1`] = `
           >
             <input
               aria-controls="a2h6"
-              className="btn btn-info btn-block btn-sm"
+              className="btn btn-primary btn-block btn-sm"
               data-placement="bottom"
               data-toggle="tooltip"
               title="Shows a summary of the current progress of the experiment."
@@ -113,7 +113,7 @@ exports[`ExperimentItem renders correctly 1`] = `
           </form>
         </div>
         <div
-          className="col-6 px-1"
+          className="col-3 px-1"
         >
           <a
             className="btn btn-primary btn-block btn-sm"
@@ -121,16 +121,30 @@ exports[`ExperimentItem renders correctly 1`] = `
             data-toggle="tooltip"
             href="/autosubmitapp/experiment/a2h6"
             onClick={[Function]}
-            title="Opens the experiment page where the Tree View representation is loaded as default."
+            title="Opens the experiment page where the Tree View representation is loaded by default."
           >
-            More
+            Tree
           </a>
         </div>
         <div
           className="col-3 px-1"
         >
           <a
-            className="btn btn-success btn-block btn-sm"
+            className="btn btn-primary btn-block btn-sm"
+            data-placement="bottom"
+            data-toggle="tooltip"
+            href="/autosubmitapp/experiment/a2h6/graph"
+            onClick={[Function]}
+            title="Opens the experiment page where the Graph View representation is loaded by default."
+          >
+            Graph
+          </a>
+        </div>
+        <div
+          className="col-3 px-1"
+        >
+          <a
+            className="btn btn-primary btn-block btn-sm"
             data-placement="bottom"
             data-toggle="tooltip"
             href="/autosubmitapp/experiment/a2h6/light"

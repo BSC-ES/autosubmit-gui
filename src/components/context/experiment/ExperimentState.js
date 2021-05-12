@@ -38,6 +38,7 @@ import {
   CLEAN_FILE_STATUS_DATA,
   GET_JOB_LOG,
   SET_CURRENT_UPDATE_DESCRIP_COMMAND,
+  VERIFY_TOKEN_DATA,
 } from "../types";
 
 import { AUTOSUBMIT_API_SOURCE, DEBUG, ERROR_MESSAGE, NOAPI } from "../vars";
@@ -70,6 +71,7 @@ const ExperimentState = (props) => {
     currentTextCommand: null,
     currentUpdateDescripCommand: null,
     currentSelected: [],
+    loggedUser: null,
     startAutoUpdateRun: false,
     startAutoUpdateTreePkl: false,
     fancyTree: null,
@@ -161,6 +163,23 @@ const ExperimentState = (props) => {
     dispatch({
       type: GET_JOB_LOG,
       payload: result,
+    })
+  }
+
+  // CAS Login
+  const getVerifyTicket = async (ticket) => {
+    let authdata = null;
+    if (NOAPI){
+      return null;
+    } else {
+      const res = await axios.get(`${localserver}/login?ticket=${ticket}`)
+      // {authentication: bool, user: str}
+      authdata = res ? res.data : null;
+      debug && console.log(authdata);
+    }
+    dispatch({
+      type: VERIFY_TOKEN_DATA,
+      payload: authdata,
     })
   }
 
@@ -426,6 +445,7 @@ const ExperimentState = (props) => {
         canSelect: state.canSelect,
         totalJobs: state.totalJobs,
         animal: state.animal,
+        loggedUser: state.loggedUser,
         expectedLoadingTreeTime: state.expectedLoadingTreeTime,
         expectedLoadingQuickView: state.expectedLoadingQuickView,
         experimentRunDetailForTree: state.experimentRunDetailForTree,   
@@ -460,6 +480,7 @@ const ExperimentState = (props) => {
         getJobLog,
         cleanFileStatusData,
         setCurrentUpdateDescripCommand,
+        getVerifyTicket
       }}
     >
       {props.children}
