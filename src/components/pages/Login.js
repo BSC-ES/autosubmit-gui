@@ -7,7 +7,7 @@ const Login = (props) => {
   const values = queryString.parse(props.location.search);
   const experimentContext = useContext(ExperimentContext);
   const { getVerifyTicket, loggedUser } = experimentContext;
-  const onVerify = (ticket) => (e) => {
+  const onVerify = (ticket) => {
     //e.preventDefault();
     console.log('Attempt to verify ' + ticket)
     getVerifyTicket(ticket);
@@ -15,6 +15,7 @@ const Login = (props) => {
   }
   const onCASLogin = () => {
     const _target = "https://cas.bsc.es/cas/login?service=https://earth.bsc.es/autosubmitapp/login";
+    console.log('On CAS Log')
     window.location.href = _target;
   }
   if (loggedUser) {
@@ -33,8 +34,9 @@ const Login = (props) => {
     }    
   } else {
     if (values.ticket){
-      console.log('Verify'+ values.ticket);
+      console.log('Verify: '+ values.ticket);
       onVerify(values.ticket);
+      return null;
       // return (    
       //   <div>
       //     Login...  {values.ticket}   
@@ -46,8 +48,8 @@ const Login = (props) => {
     }
   }
   
-  return null;
   
+
 }
 
 export default Login
