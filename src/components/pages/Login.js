@@ -7,8 +7,8 @@ const Login = (props) => {
   const values = queryString.parse(props.location.search);
   const experimentContext = useContext(ExperimentContext);
   const { getVerifyTicket, loggedUser } = experimentContext;
-  const onVerify = (ticket) => (e) => {
-    e.preventDefault();
+  const onVerify = (ticket) => {
+    //e.preventDefault();
     console.log('Attempt to verify ' + ticket)
     getVerifyTicket(ticket);
   }
