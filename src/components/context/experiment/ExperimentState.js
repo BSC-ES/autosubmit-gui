@@ -174,8 +174,9 @@ const ExperimentState = (props) => {
     } else {
       const res = await axios.get(`${localserver}/login?ticket=${ticket}`)
       // {authentication: bool, user: str}
+      console.log(res);
       authdata = res ? res.data : null;
-      debug && console.log(authdata);
+      console.log(authdata);
     }
     dispatch({
       type: VERIFY_TOKEN_DATA,
