@@ -24,13 +24,13 @@ const Login = (props) => {
         <div>
           Oops! We couldn't authenticate you.
         </div>
-      )
+      );
     } else {
       return (
         <div>
           Welcome {loggedUser}
         </div>
-      )
+      );
     }    
   } else {
     if (values.ticket){
