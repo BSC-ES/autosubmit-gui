@@ -47,8 +47,8 @@ const Login = (props) => {
   // console.log(loggedUser);
   // console.log(values);
   if (loggedUser) {
-    if (loggedUser === 'Failed') {
-      actionAfter();
+    actionAfter();
+    if (loggedUser === 'Failed') {      
       return (
         <div>
           Oops! We couldn't authenticate you.
