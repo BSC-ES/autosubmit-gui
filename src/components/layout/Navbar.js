@@ -83,7 +83,7 @@ const Navbar = ({ icon, title }) => {
           <span className="bg-secondary rounded text-dark px-2 ml-1">{loggedUser}</span>          
         )}
         {!loggedUser && (
-          <Link className='btn btn-sm btn-primary' to='/autosubmitapp/login'>Login</Link>
+          <Link title='Only for testing purposes.' className='btn btn-sm btn-primary' to='/autosubmitapp/login'>Login</Link>
         )}
         
       </div>

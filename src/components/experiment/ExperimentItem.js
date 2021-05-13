@@ -1,23 +1,45 @@
-import React, { useContext } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from "react";
+//import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import ExperimentContext from "../context/experiment/experimentContext";
+//import ExperimentContext from "../context/experiment/experimentContext";
 import { quickThreshold } from "../context/vars";
+//import { render } from "react-dom";
 
-const ExperimentItem = ({
-  experiment: { name, description, user, hpc, status, completed, total, version },
-}) => {
-  const experimentContext = useContext(ExperimentContext);
-  const { getExperimentSummary, summaries, loadingSummary } = experimentContext;
-  const onGetSummary = (e) => {
-    e.preventDefault();
-    //console.log(name);
-    getExperimentSummary(name);
-  };
+export class ExperimentItem extends Component {
+//   experiment: { name, description, user, hpc, status, completed, total, version },
+// }) => {
+  // const experimentContext = useContext(ExperimentContext);
+  // const { getExperimentSummary, summaries, loadingSummary } = experimentContext;
+  
 
-  const disabledMore = total >= quickThreshold ? true : false;
+  // const disabledMore = total >= quickThreshold ? true : false;
 
-  return (
+  shouldComponentUpdate(nextProps) {
+    // console.log(nextProps.experiment.name);    
+    // console.log('Next loading has name ' + nextProps.isLoading);
+    // console.log(this.props.experiment.name);
+    // console.log('Current loading has name ' + this.props.isLoading);
+    return (nextProps.experiment !== this.props.experiment
+      || nextProps.isLoading !== this.props.isLoading);
+  }
+
+  render() {
+    const { experiment, getExperimentSummary, summaries, isLoading } = this.props;
+
+    if (!experiment) {
+      return null;
+    }
+
+    const { name, description, user, hpc, status, completed, total, version } = experiment;
+    
+    const onGetSummary = (name) => (e) => {
+      e.preventDefault();
+      //console.log(name);
+      getExperimentSummary(name);
+    };
+
+    const disabledMore = total >= quickThreshold ? true : false;
+    return (
     <div className='col mb-4'>
       <div className='card'>
         <div className='card-header text-center py-1'>
@@ -84,24 +106,24 @@ const ExperimentItem = ({
           </p>
           <div className='row'>
             <div className='col-3 px-1'>
-              {!loadingSummary.has(name) && (
-                <form onSubmit={onGetSummary} className='form'>
-                  <input
+              {!isLoading && (
+                // <form onSubmit={onGetSummary} className='form'>
+                  <button
                     className={
                       summaries[name]
                         ? "btn btn-info btn-block btn-sm"
                         : "btn btn-primary btn-block btn-sm"
                     }
-                    type='submit'
-                    value={summaries[name] ? "Refresh" : "Summary"}
+                    type='button'                    
+                    onClick={onGetSummary(name)}
                     aria-controls={name}
                     data-toggle='tooltip' 
                     data-placement='bottom' 
                     title={summaries[name] ? "Updates the summary information." : "Shows a summary of the current progress of the experiment."}
-                  />
-                </form>
+                  >{summaries[name] ? "Refresh" : "Summary"}</button>
+             
               )}
-              {loadingSummary.has(name) && (
+              {isLoading && (
                 <button
                   className='btn btn-sm btn-secondary btn-block disabled'
                   disabled='True'
@@ -267,12 +289,12 @@ const ExperimentItem = ({
           </p>
         </div>
       </div>
-    </div>
-  );
-};
+    </div>)
+  }
+}
 
-ExperimentItem.propTypes = {
-  experiment: PropTypes.object.isRequired,
-};
+// ExperimentItem.propTypes = {
+//   experiment: PropTypes.object.isRequired,
+// };
 
 export default ExperimentItem;

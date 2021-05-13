@@ -9,13 +9,29 @@ const Login = (props) => {
   
   useEffect(() => {
     const values = queryString.parse(props.location.search);
-    if (values.ticket){      
-      onVerify(values.ticket);
-    } else {
-      onCASLogin();
-    }
+    // console.log(loggedUser);
+    // if (loggedUser){
+    //   // console.log('Timeout');
+    //   setTimeout(() => {
+    //     props.history.push('/autosubmitapp/');
+    //   }, 5000)
+    // } else {
+      if (values.ticket){      
+        onVerify(values.ticket);
+      } else {
+        onCASLogin();
+      }
+    // }    
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  const actionAfter = () => {
+    if (loggedUser){      
+      setTimeout(() => {
+        props.history.push('/autosubmitapp/');
+      }, 3000) 
+    }
+  }
   
   const onVerify = (ticket) => {
     //e.preventDefault();
@@ -32,15 +48,22 @@ const Login = (props) => {
   // console.log(values);
   if (loggedUser) {
     if (loggedUser === 'Failed') {
+      actionAfter();
       return (
         <div>
           Oops! We couldn't authenticate you.
+
+          <p>You will be redirected after some seconds.</p>
         </div>
       );
     } else {
       return (
         <div>
           Welcome {loggedUser}
+
+          <p>We are currently testing CAS login for Autosubmit GUI. Thanks for logging in.</p>
+
+          <p>You will be redirected after some seconds.</p>  
         </div>
       );
     }    

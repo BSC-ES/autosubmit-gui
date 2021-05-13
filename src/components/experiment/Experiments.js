@@ -5,7 +5,18 @@ import ExperimentContext from "../context/experiment/experimentContext";
 
 const Experiments = () => {
   const experimentContext = useContext(ExperimentContext);
-  const { loading, experiments } = experimentContext;
+  const { loading, experiments, summaries, loadingSummary, getExperimentSummary } = experimentContext;
+
+  const isLoading = (loadingSummaries, name) => {    
+    if (loadingSummaries && name){
+      if (loadingSummaries.has(name)){
+        // console.log(name + ' is loading.');
+        return true;
+      }
+    }
+    return false;
+  }
+
   if (loading) {
     return <Spinner />;
   } else {
@@ -18,7 +29,7 @@ const Experiments = () => {
             experiments
               .sort((a, b) => (a.status > b.status ? -1 : 1))
               .map(experiment => (
-                <ExperimentItem key={experiment.id} experiment={experiment} />
+                <ExperimentItem key={experiment.id} experiment={experiment} summaries={summaries} isLoading={isLoading(loadingSummary, experiment.name)} getExperimentSummary={getExperimentSummary} />
               ))}
         </div>
       </div>
