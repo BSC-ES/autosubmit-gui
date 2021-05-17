@@ -16,11 +16,15 @@ const Login = (props) => {
     //     props.history.push('/autosubmitapp/');
     //   }, 5000)
     // } else {
+    // if (user && token && !loggedUser){
+
+    // } else {
       if (values.ticket){      
         onVerify(values.ticket);
       } else {
         onCASLogin();
       }
+    //}      
     // }    
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

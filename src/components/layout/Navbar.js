@@ -8,10 +8,10 @@ import FileStatus from "../experiment/FileStatus";
 const Navbar = ({ icon, title }) => {
   const history = useHistory();
   const experimentContext = useContext(ExperimentContext);
-  const { searchExperiments, experiment, cleanFileStatusData, getFileStatus, esarchiveStatus, loggedUser } = experimentContext;
+  const { searchExperiments, experiment, cleanFileStatusData, getFileStatus, esarchiveStatus, loggedUser, setLoggedUser } = experimentContext;
 
   const [text, setText] = useState("");
-  //const expid = match.params.expid;
+  // const expid = match.params.expid;
   const submitSearch = (e) => {
     e.preventDefault();
     if (text !== "") {
@@ -23,8 +23,20 @@ const Navbar = ({ icon, title }) => {
   if (experiment) {
     expid = experiment.expid;
   }
-  //const { expid } = experiment;
+  const user = localStorage.getItem("user");
+  // const token = localStorage.getItem("token");
+  if (user && !loggedUser){
+    setLoggedUser(user);
+  }
+  // const { expid } = experiment;
   const onChange = (e) => setText(e.target.value);
+
+  const onLogout = (e) => {
+    e.preventDefault()
+    setLoggedUser(null);
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+  }
 
   return (
     <nav className='navbar navbar-expand-sm navbar-dark bg-dark mb-1 p-1'>
@@ -80,7 +92,12 @@ const Navbar = ({ icon, title }) => {
           )}
         
         {loggedUser && loggedUser !== "Failed" && (
-          <span className="bg-secondary rounded text-dark px-2 ml-1">{loggedUser}</span>          
+          <span className="bg-secondary rounded text-dark px-2 mx-1">{loggedUser}</span>          
+        )}
+        {loggedUser && loggedUser !== "Failed" && (
+          <button className="btn btn-sm btn-dark" onClick={onLogout()}>
+            Logout
+          </button>
         )}
         {!loggedUser && (
           <Link title='Only for testing purposes.' className='btn btn-sm btn-primary' to='/autosubmitapp/login'>Login</Link>

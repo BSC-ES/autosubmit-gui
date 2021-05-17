@@ -33,6 +33,7 @@ import {
   GET_JOB_LOG,
   SET_CURRENT_UPDATE_DESCRIP_COMMAND,
   VERIFY_TOKEN_DATA,
+  SET_LOGGED_USER
 } from "../types";
 
 import {
@@ -283,10 +284,22 @@ export default (state, action) => {
         joblog: action.payload,
       }
     case VERIFY_TOKEN_DATA:
-      const { authenticated,  user } = action.payload;
+      const { authenticated,  user, token } = action.payload;
+      if (authenticated === true){
+        localStorage.setItem('user', user);
+        localStorage.setItem('token', token);
+      }  else {
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
+      }    
       return {
         ...state,
-        loggedUser: authenticated ? user : 'Failed',
+        loggedUser: authenticated ? user : 'Failed',        
+      }
+    case SET_LOGGED_USER:
+      return {
+        ...state,
+        loggedUser: action.payload,
       }
     default:
       return null;

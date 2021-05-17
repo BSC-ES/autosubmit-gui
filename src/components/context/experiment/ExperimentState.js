@@ -39,6 +39,7 @@ import {
   GET_JOB_LOG,
   SET_CURRENT_UPDATE_DESCRIP_COMMAND,
   VERIFY_TOKEN_DATA,
+  SET_LOGGED_USER,
 } from "../types";
 
 import { AUTOSUBMIT_API_SOURCE, DEBUG, ERROR_MESSAGE, NOAPI } from "../vars";
@@ -356,6 +357,13 @@ const ExperimentState = (props) => {
     });
   }
 
+  const setLoggedUser = async (user) => {
+    dispatch({
+      type: SET_LOGGED_USER,
+      payload: user,
+    });
+  }
+
   // Cleaning
   const clearExperiments = () => dispatch({ type: CLEAR_EXPERIMENTS });
   //const cleanGraphData = () => dispatch({ type: CLEAN_GRAPH_DATA });
@@ -484,7 +492,8 @@ const ExperimentState = (props) => {
         getJobLog,
         cleanFileStatusData,
         setCurrentUpdateDescripCommand,
-        getVerifyTicket
+        getVerifyTicket,
+        setLoggedUser
       }}
     >
       {props.children}
