@@ -99,7 +99,7 @@ const Navbar = ({ icon, title }) => {
             Logout
           </button>
         )}
-        {!loggedUser && (
+        {(!loggedUser || loggedUser === "Failed") && (
           <Link title='Only for testing purposes.' className='btn btn-sm btn-primary' to='/autosubmitapp/login'>Login</Link>
         )}
         
