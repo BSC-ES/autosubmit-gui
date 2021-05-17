@@ -95,7 +95,7 @@ const Navbar = ({ icon, title }) => {
           <span className="bg-secondary rounded text-dark px-2 mx-1">{loggedUser}</span>          
         )}
         {loggedUser && loggedUser !== "Failed" && (
-          <button className="btn btn-sm btn-dark" onClick={onLogout()}>
+          <button className="btn btn-sm btn-dark" onClick={onLogout}>
             Logout
           </button>
         )}
