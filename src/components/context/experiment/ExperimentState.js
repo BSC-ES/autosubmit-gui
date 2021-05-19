@@ -40,6 +40,7 @@ import {
   SET_CURRENT_UPDATE_DESCRIP_COMMAND,
   VERIFY_TOKEN_DATA,
   SET_LOGGED_USER,
+  UPDATE_DESCRIPTION_OWN_EXP,
 } from "../types";
 
 import { AUTOSUBMIT_API_SOURCE, DEBUG, ERROR_MESSAGE, NOAPI } from "../vars";
@@ -73,6 +74,7 @@ const ExperimentState = (props) => {
     currentUpdateDescripCommand: null,
     currentSelected: [],
     loggedUser: null,    
+    currentToken: null,
     startAutoUpdateRun: false,
     startAutoUpdateTreePkl: false,
     fancyTree: null,
@@ -319,12 +321,13 @@ const ExperimentState = (props) => {
   // Get Running State
   const getRunningState = async (expid) => {
     setLoadingState();
+    let defaultResult = {"result": false}
     let result = null;
     if (NOAPI) {
       result = require("../data/ifrun_"+String(expid)+".json");
-    } else {
-      const res = await axios.get(`${localserver}/ifrun/${expid}`).catch(error => alert(ERROR_MESSAGE + "\n" + error.message));
-      result = res ? res.data : null;
+    } else {      
+      const res = await axios.get(`${localserver}/ifrun/${expid}`).catch(error => alert(ERROR_MESSAGE + "\n" + error.message));      
+      result = res ? res.data : defaultResult;                  
       debug && console.log(result);
     }
     
@@ -333,6 +336,59 @@ const ExperimentState = (props) => {
       payload: result,
     });
   };
+
+  const updateDescription = async (expid, new_description) => {
+    //const user = localStorage.getItem("user");
+    console.log(expid + " : " + new_description);
+    const token = localStorage.getItem("token");
+    const defaultResponse = {
+      'error': true,
+      'auth': false,
+      'message': 'Not a valid user'
+    }
+    let result = null;
+    const body = {
+      'expid': expid,
+      'description': new_description,
+    };
+    if (NOAPI) {
+      result = defaultResponse;
+    } else {
+      let isError = false;
+      const res = await axios.post(`${localserver}/updatedesc`, body, {headers: {"Authorization": token}}).catch(error => {alert(ERROR_MESSAGE + "\n" + error.message); isError = true;});
+      if (isError === false){
+        result = res ? res.data : null;
+      } else {
+        result = defaultResponse;
+      }      
+    }
+
+    // Result example
+    // return {
+    //   #         'error': True,
+    //   #         'auth': False,
+    //   #         'description': None,
+    //   #         'message': 'Not a valid user'
+    //   #     }
+
+    //console.log(result);
+
+    dispatch({
+      type: UPDATE_DESCRIPTION_OWN_EXP,
+      payload: result,
+    })
+
+    const { message } = result;
+    alert(message);
+    // if (auth === false || error === true){
+    //   alert(message);
+    // }
+
+    // if (auth === true && error === false){
+    //   alert
+    // }
+
+  }
 
   const setCurrentCommand = async (command) => {
     // for change status
@@ -357,10 +413,10 @@ const ExperimentState = (props) => {
     });
   }
 
-  const setLoggedUser = async (user) => {
+  const setLoggedUser = async (user, token) => {
     dispatch({
       type: SET_LOGGED_USER,
-      payload: user,
+      payload: {user: user, token: token},
     });
   }
 
@@ -410,6 +466,8 @@ const ExperimentState = (props) => {
     }
   };
 
+
+
   const updateCurrentSelectedGraph = (selectedJob, data) => {
     // console.log(data);
     // console.log(selectedJob);
@@ -458,6 +516,7 @@ const ExperimentState = (props) => {
         totalJobs: state.totalJobs,
         animal: state.animal,
         loggedUser: state.loggedUser,
+        currentToken: state.currentToken,
         expectedLoadingTreeTime: state.expectedLoadingTreeTime,
         expectedLoadingQuickView: state.expectedLoadingQuickView,
         experimentRunDetailForTree: state.experimentRunDetailForTree,   
@@ -493,7 +552,8 @@ const ExperimentState = (props) => {
         cleanFileStatusData,
         setCurrentUpdateDescripCommand,
         getVerifyTicket,
-        setLoggedUser
+        setLoggedUser,
+        updateDescription
       }}
     >
       {props.children}

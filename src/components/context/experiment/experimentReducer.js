@@ -33,7 +33,8 @@ import {
   GET_JOB_LOG,
   SET_CURRENT_UPDATE_DESCRIP_COMMAND,
   VERIFY_TOKEN_DATA,
-  SET_LOGGED_USER
+  SET_LOGGED_USER,
+  UPDATE_DESCRIPTION_OWN_EXP
 } from "../types";
 
 import {
@@ -284,22 +285,49 @@ export default (state, action) => {
         joblog: action.payload,
       }
     case VERIFY_TOKEN_DATA:
-      const { authenticated,  user, token } = action.payload;
-      if (authenticated === true){
-        localStorage.setItem('user', user);
-        localStorage.setItem('token', token);
-      }  else {
-        localStorage.removeItem('user');
-        localStorage.removeItem('token');
-      }    
-      return {
-        ...state,
-        loggedUser: authenticated ? user : 'Failed',        
+      {
+        const { authenticated, user, token } = action.payload;
+        if (authenticated === true){
+          localStorage.setItem('user', user);
+          localStorage.setItem('token', token);
+        }  else {
+          localStorage.removeItem('user');
+          localStorage.removeItem('token');
+        }    
+        return {
+          ...state,
+          loggedUser: authenticated ? user : 'Failed', 
+          currentToken: authenticated ? token : null,    
+        }
       }
     case SET_LOGGED_USER:
-      return {
-        ...state,
-        loggedUser: action.payload,
+      {
+        const { user, token } = action.payload;
+        return {
+          ...state,
+          loggedUser: user,
+          currentToken: token,
+        }
+      }
+    case UPDATE_DESCRIPTION_OWN_EXP:
+      {
+        const { error, auth, description } = action.payload;
+        const loggedUser = auth ? state.loggedUser : null;
+        const currentToken = auth ? state.currentToken : null;
+        const experiment = state.experiment;
+        if (error === false && description){
+          experiment.description = description;
+        }
+        if (auth === false) {
+          localStorage.removeItem('user');
+          localStorage.removeItem('token');
+        }
+        return {
+          ...state,
+          loggedUser: loggedUser,
+          experiment: experiment,
+          currentToken: currentToken,
+        }
       }
     default:
       return null;

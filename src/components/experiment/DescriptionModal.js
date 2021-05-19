@@ -9,9 +9,15 @@ const DescriptionModal = () => {
     experiment,
     currentUpdateDescripCommand,
     setCurrentUpdateDescripCommand,
+    loggedUser,
+    currentToken,   
+    updateDescription 
   } = experimentContext;
 
   const [text, setText] = useState("");
+
+
+
   const onChange = (e) => setText(e.target.value);
 
   let expid = null;
@@ -25,7 +31,10 @@ const DescriptionModal = () => {
     copyContent(command);
   }
 
-
+  const onSetNewDescription = (expid, new_description) => (e) => {
+    e.preventDefault();
+    updateDescription(expid, new_description)
+  }
 
   const copyContent = (inputname) => {
     //e.preventDefault();
@@ -58,6 +67,42 @@ const DescriptionModal = () => {
           <div className='modal-dialog modal-dialog-status' role='document'>
             <div className='modal-content'>
               <div className='modal-body pb-1'>
+                {experiment && loggedUser && experiment.owner === loggedUser && currentToken &&(
+                  <div className="">
+                    <div className="row text-dark">
+                      <div className="col">
+                        <small>Type your command and press change to directly change the description of your experiment:</small>
+                      </div>
+                    </div>
+                    <div className="row text-dark">
+                      <div className="col">
+                      <form onSubmit={onSetNewDescription(expid,text)} className='form'>
+                        <div className="input-group input-group-sm">
+                          <input 
+                          type="text" 
+                          name="text"
+                          className="form-control py-0"
+                          placeholder="Insert your new description and press Enter or click on Set."
+                          aria-label='Update'
+                          value={text}
+                          onChange={onChange}/>  
+                          <div className="input-group-append">
+                            <input 
+                            className="btn btn-success"
+                            type="submit"
+                            data-toggle="tooltip"
+                            data-placement="bottom"
+                            value='Change'
+                            title="Insert your new description and click."
+                            />
+                            
+                          </div>
+                        </div>
+                      </form>
+                      </div>
+                    </div>
+                  </div>
+                )}
                 <div className="row text-dark">
                   <div className="col">
                     <small>Generate a command to change the description of your experiment.</small>

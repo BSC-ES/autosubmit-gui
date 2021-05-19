@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link, useHistory } from "react-router-dom";
 import ExperimentContext from "../context/experiment/experimentContext";
@@ -10,6 +10,13 @@ const Navbar = ({ icon, title }) => {
   const experimentContext = useContext(ExperimentContext);
   const { searchExperiments, experiment, cleanFileStatusData, getFileStatus, esarchiveStatus, loggedUser, setLoggedUser } = experimentContext;
 
+  useEffect(() => {
+    if (user && !loggedUser){
+      setLoggedUser(user, token);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  } ,[])
+
   const [text, setText] = useState("");
   // const expid = match.params.expid;
   const submitSearch = (e) => {
@@ -19,23 +26,23 @@ const Navbar = ({ icon, title }) => {
       history.push("/autosubmitapp/");
     }
   };
-  var expid = null;
+  let expid = null;
   if (experiment) {
     expid = experiment.expid;
   }
+  // localStorage.setItem("user", "wuruchi");
+  // localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c");
   const user = localStorage.getItem("user");
-  // const token = localStorage.getItem("token");
-  if (user && !loggedUser){
-    setLoggedUser(user);
-  }
+  const token = localStorage.getItem("token");
+ 
   // const { expid } = experiment;
   const onChange = (e) => setText(e.target.value);
 
   const onLogout = (e) => {
     e.preventDefault()
-    setLoggedUser(null);
     localStorage.removeItem('user');
     localStorage.removeItem('token');
+    setLoggedUser(null, null);    
   }
 
   return (
