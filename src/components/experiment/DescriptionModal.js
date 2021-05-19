@@ -71,7 +71,7 @@ const DescriptionModal = () => {
                   <div className="">
                     <div className="row text-dark">
                       <div className="col">
-                        <small>Type your command and press change to directly change the description of your experiment:</small>
+                        <small>Type your new description and press change to directly change the description of your experiment:</small>
                       </div>
                     </div>
                     <div className="row text-dark">

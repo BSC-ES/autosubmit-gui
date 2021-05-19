@@ -32,7 +32,7 @@ afterEach(() => {
 it("ExperimentItem renders with content", () => {
   const experiment = {name: "a2h6", description: "Test", user:"wuruchi", hpc:"LOCAL", status:"RUNNING", completed:10, total:100, version:"3.11.0"};
   act(() => {
-    render(<Router><ExperimentContext.Provider value={{ experiment: {}, summaries: new Map(), loadingSummary: new Map()}}><ExperimentItem key="a2h6" experiment={experiment}/></ExperimentContext.Provider></Router>, container);
+    render(<Router><ExperimentContext.Provider value={{ experiment: {}, summaries: new Map(), loadingSummary: new Map()}}><ExperimentItem key="a2h6" experiment={experiment} summaries={new Map()} loadingSummary={new Map()}/></ExperimentContext.Provider></Router>, container);
   });
   expect(container.textContent).toContain("a2h6");
   expect(container.textContent).toContain("wuruchi");
@@ -41,7 +41,7 @@ it("ExperimentItem renders with content", () => {
 
 it('ExperimentItem renders correctly', () => {
   const experiment = {name: "a2h6", description: "Test", user:"wuruchi", hpc:"LOCAL", status:"RUNNING", completed:10, total:100, version:"3.11.0"};
-  const tree = renderer.create(<Router><ExperimentContext.Provider value={{ experiment: {}, summaries: new Map(), loadingSummary: new Map()}}><ExperimentItem key="a2h6" experiment={experiment}/></ExperimentContext.Provider></Router>).toJSON();
+  const tree = renderer.create(<Router><ExperimentContext.Provider value={{ experiment: {}, summaries: new Map(), loadingSummary: new Map()}}><ExperimentItem key="a2h6" experiment={experiment} summaries={new Map()} loadingSummary={new Map()}/></ExperimentContext.Provider></Router>).toJSON();
   expect(tree).toMatchSnapshot();
 });
 

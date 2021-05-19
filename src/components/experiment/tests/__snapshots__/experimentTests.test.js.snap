@@ -97,20 +97,17 @@ exports[`ExperimentItem renders correctly 1`] = `
         <div
           className="col-3 px-1"
         >
-          <form
-            className="form"
-            onSubmit={[Function]}
+          <button
+            aria-controls="a2h6"
+            className="btn btn-primary btn-block btn-sm"
+            data-placement="bottom"
+            data-toggle="tooltip"
+            onClick={[Function]}
+            title="Shows a summary of the current progress of the experiment."
+            type="button"
           >
-            <input
-              aria-controls="a2h6"
-              className="btn btn-primary btn-block btn-sm"
-              data-placement="bottom"
-              data-toggle="tooltip"
-              title="Shows a summary of the current progress of the experiment."
-              type="submit"
-              value="Summary"
-            />
-          </form>
+            Summary
+          </button>
         </div>
         <div
           className="col-3 px-1"
