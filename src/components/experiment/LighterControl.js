@@ -68,7 +68,7 @@ const LighterControl = () => {
             >
               {lightData.total} total jobs
             </button>
-            {lightData.completed > 0 && (
+            {lightData.completed >= 0 && (
               <button
                 className='btn btn-sm btn-secondary'
                 type='button'
@@ -82,7 +82,7 @@ const LighterControl = () => {
                 {lightData.completed} completed
               </button>
             )}
-            {lightData.failed > 0 && (
+            {lightData.failed >= 0 && (
               <button
                 className='btn btn-sm btn-secondary'
                 type='button'
@@ -96,7 +96,7 @@ const LighterControl = () => {
                 {lightData.failed} failed
               </button>
             )}
-            {lightData.running > 0 && (
+            {lightData.running >= 0 && (
               <button
                 className='btn btn-sm btn-secondary'
                 type='button'
@@ -110,7 +110,7 @@ const LighterControl = () => {
                 {lightData.running} running
               </button>
             )}
-            {lightData.queuing > 0 && (
+            {lightData.queuing >= 0 && (
               <button
                 className='btn btn-sm btn-secondary'
                 type='button'
