@@ -4,6 +4,7 @@ import ExperimentContext from "./experimentContext";
 import ExperimentReducer from "./experimentReducer";
 import {
   SEARCH_EXPERIMENTS,
+  SEARCH_BY_OWNER,
   SET_LOADING,
   CLEAR_EXPERIMENTS,
   GET_EXPERIMENT,
@@ -105,6 +106,24 @@ const ExperimentState = (props) => {
       payload: result,
     });
   };
+
+  //Search Experiments by Owner
+  const searchExperimentsByOwner = async (owner) => {
+    setLoading();
+    let result = null;
+    if (NOAPI) {
+      result = require("../data/search.json").experiment;
+    } else {
+      const res = await axios.get(`${localserver}/searchowner/${owner}`).catch(error => alert(ERROR_MESSAGE + "\n" + error.message));
+      debug && console.log(res.data);
+      result = res ? res.data.experiment : [];
+    }
+
+    dispatch({
+      type: SEARCH_BY_OWNER,
+      payload: result,
+    })
+  }
 
   const getSummaries = () => {
     const experiments = state.experiments;
@@ -339,12 +358,13 @@ const ExperimentState = (props) => {
 
   const updateDescription = async (expid, new_description) => {
     //const user = localStorage.getItem("user");
-    console.log(expid + " : " + new_description);
+    // console.log(expid + " : " + new_description);
     const token = localStorage.getItem("token");
     const defaultResponse = {
       'error': true,
       'auth': false,
-      'message': 'Not a valid user'
+      'message': 'Not a valid user',
+      "description": null
     }
     let result = null;
     const body = {
@@ -360,7 +380,9 @@ const ExperimentState = (props) => {
         result = res ? res.data : null;
       } else {
         result = defaultResponse;
-      }      
+      } 
+      // test error
+      // result = {'error': false, 'auth': true, 'message': "test message", "description": new_description}     
     }
 
     // Result example
@@ -372,6 +394,8 @@ const ExperimentState = (props) => {
     //   #     }
 
     //console.log(result);
+    // If valid result, add the expid key
+    if (result) result.expid = expid;
 
     dispatch({
       type: UPDATE_DESCRIPTION_OWN_EXP,
@@ -524,6 +548,7 @@ const ExperimentState = (props) => {
         currentUpdateDescripCommand: state.currentUpdateDescripCommand,
         setAutoUpdateRun,
         searchExperiments,
+        searchExperimentsByOwner, 
         getCurrentRunning,
         clearExperiments,
         getExperiment,

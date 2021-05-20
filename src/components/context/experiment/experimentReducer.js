@@ -1,5 +1,6 @@
 import {
   SEARCH_EXPERIMENTS,
+  SEARCH_BY_OWNER,
   SET_LOADING,
   CLEAR_EXPERIMENTS,
   GET_EXPERIMENT,
@@ -126,6 +127,12 @@ export default (state, action) => {
         experiments: action.payload,
         loading: false,
       };
+    case SEARCH_BY_OWNER:
+      return {
+        ...state,
+        experiments: action.payload,
+        loading: false,
+      }
     case CURRENT_RUNNING:
       return {
         ...state,
@@ -311,7 +318,7 @@ export default (state, action) => {
       }
     case UPDATE_DESCRIPTION_OWN_EXP:
       {
-        const { error, auth, description } = action.payload;
+        const { error, auth, description, expid } = action.payload;
         const loggedUser = auth ? state.loggedUser : null;
         const currentToken = auth ? state.currentToken : null;
         const experiment = state.experiment;
@@ -321,6 +328,16 @@ export default (state, action) => {
         if (auth === false) {
           localStorage.removeItem('user');
           localStorage.removeItem('token');
+        }
+        if (state.experiments){
+          state.experiments.find((exp) => {
+            if (exp.name === expid){
+              exp.description = description;
+              //console.log(exp);
+              return exp;
+            }
+            return false;            
+          })          
         }
         return {
           ...state,

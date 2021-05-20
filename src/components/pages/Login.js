@@ -27,12 +27,12 @@ const Login = (props) => {
     //}      
     // }    
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []);
 
   const actionAfter = () => {
     if (loggedUser){      
       setTimeout(() => {
-        props.history.push('/autosubmitapp/');
+        props.history.push(`/autosubmitapp/?user=${loggedUser}`);
       }, 3000) 
     }
   }

@@ -1,10 +1,19 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
 import AlertContext from "../context/alert/alertContext";
 
-const Search = () => {
+const Search = ({ specificSearch }) => {
   const experimentContext = useContext(ExperimentContext);
   const alertContext = useContext(AlertContext);
+
+  useEffect(() => {
+    if (specificSearch){
+      // Search by user
+      // experimentContext
+      experimentContext.searchExperimentsByOwner(specificSearch);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const [text, setText] = useState("");
 
