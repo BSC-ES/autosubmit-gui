@@ -51,7 +51,7 @@ const Selection = () => {
     //console.log("Data: " + selectedNode.id + " " + selectedNode.platform_name)
   }
   return (
-    <Fragment>
+    <div id="mainTreeJobInfo">
       {selectedNode && (
         <Fragment>
           <div className='row'>
@@ -479,7 +479,7 @@ const Selection = () => {
             </div>
           </div>
         )}
-    </Fragment>
+    </div>
   );
 };
 

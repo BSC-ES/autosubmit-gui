@@ -13,6 +13,8 @@ const JobSearcher = () => {
     loadingSearchJob,
     data,
     navigateTo,
+    displayJobInfoPanel,
+    setJobInfoPanelVisibility,
   } = graphContext;
 
   const [jobId, setJobId] = useState("");
@@ -24,6 +26,11 @@ const JobSearcher = () => {
     searchJobInGraph(jobId);
     setCurrentIndex(0);
   };
+
+  const onSetDisplayPanel = (value) => (e) => {
+    e.preventDefault();
+    setJobInfoPanelVisibility(value);
+  }
 
   const onNext = (index) => (e) => {
     e.preventDefault();
@@ -120,9 +127,27 @@ const JobSearcher = () => {
       </div>
       <div className='item-hl ml-2'>
         <GraphNodeSelection />
-      </div>      
+      </div>    
+      <div className="item-hl ml-auto">
+      {displayJobInfoPanel === "none" ? 
+        <button 
+          className="btn btn-sm btn-primary" 
+          data-toggle='tooltip' 
+          data-placement='bottom' 
+          title="Show the Job Information Panel."
+          onClick={onSetDisplayPanel("block")}>Show Panel</button> 
+        : 
+        <button 
+        className="btn btn-sm btn-secondary"
+        data-toggle='tooltip' 
+        data-placement='bottom' 
+        title="Hide the Job Information Panel."
+        onClick={onSetDisplayPanel("none")}>Hide Panel</button>
+      }  
+      </div>
+      
         {data && (
-          <div className='item-hl text-right ml-auto'>
+          <div className='ml-2 item-hl text-right'>
             Max out: {data.max_children} | Max in: {data.max_parents} | Total
             #Jobs: {data.total_jobs} <AlertTotal source={"graph"} /> | Chunk
             unit: <strong>{data.chunk_unit}</strong> | Chunk size{" "}

@@ -26,7 +26,7 @@ import {
   SET_CURRENT_COMMAND,
   SET_NOTIFICATION_TITLE_GRAPH,
   SET_CURRENT_TEXT_COMMAND,
-  //DEACTIVATE_COPY_TO,
+  SET_JOB_INFO_PANEL_VISIBILITY,
 } from "../types";
 
 import { DEBUG } from "../vars";
@@ -563,11 +563,11 @@ export default (state, action) => {
         ...state,
         notificationTitleGraph: action.payload,
       };
-    // case DEACTIVATE_COPY_TO:
-    //   return {
-    //     ...state,
-    //     canCopyToClipboard: false,
-    //   };
+    case SET_JOB_INFO_PANEL_VISIBILITY:
+      return {
+        ...state,
+        displayJobInfoPanel: action.payload,
+      }
     default:
       return null;
   }

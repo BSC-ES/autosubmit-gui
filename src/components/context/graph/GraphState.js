@@ -31,7 +31,7 @@ import {
   UPDATE_GRAPH_SELECTED_NODES,
   SET_NOTIFICATION_TITLE_GRAPH,
   SET_OFF_LOADING_GRAPH,
-  //DEACTIVATE_COPY_TO,
+  SET_JOB_INFO_PANEL_VISIBILITY,
 } from "../types";
 
 import { AUTOSUBMIT_API_SOURCE, DEBUG, NOAPI } from "../vars";
@@ -62,6 +62,7 @@ const GraphState = (props) => {
     graphSelectedNodes: null,
     pkldata: null,
     graphReady: null,
+    displayJobInfoPanel: "block",
   };
 
   const [state, dispatch] = useReducer(GraphReducer, initialState);
@@ -186,6 +187,14 @@ const GraphState = (props) => {
     });
   }
 
+  // value: block or none
+  const setJobInfoPanelVisibility = (value) => {
+    dispatch({
+      type: SET_JOB_INFO_PANEL_VISIBILITY,
+      payload: value,
+    })
+  }
+
   // Clean state data
   const cleanOnlyGraphData = () => dispatch({ type: CLEAN_ONLY_GRAH_DATA });
   const cleanGraphData = () => dispatch({ type: CLEAN_GRAPH_DATA });
@@ -238,6 +247,7 @@ const GraphState = (props) => {
         currentTextCommandGraph: state.currentTextCommandGraph,
         notificationTitleGraph: state.notificationTitleGraph,
         graphReady: state.graphReady,
+        displayJobInfoPanel: state.displayJobInfoPanel,
         getExperimentGraph,
         getExperimentPkl,
         cleanOnlyGraphData,
@@ -259,6 +269,7 @@ const GraphState = (props) => {
         setCurrentCommandGraph,
         setCurrentTextCommandGraph,
         setNotificationTitleGraph,
+        setJobInfoPanelVisibility,
       }}
     >
       {props.children}

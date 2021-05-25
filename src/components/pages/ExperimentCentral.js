@@ -118,6 +118,7 @@ const ExperimentCentral = ({ match }) => {
     notificationTitleGraph,
     setNotificationTitleGraph,
     graphReady,
+    displayJobInfoPanel,
   } = graphContext;
 
   const { clearStats } = statsContext;
@@ -299,6 +300,7 @@ const ExperimentCentral = ({ match }) => {
                   {data && (
                     <div
                       className={canSelect === true ? "col-md-3 px-0" : "col-md-3 pl-0"}
+                      style={{display:displayJobInfoPanel}}
                     >
                       <ul className='nav nav-tabs' id='myTabSide' role='tablist'>
                         <li className='nav-item'>
