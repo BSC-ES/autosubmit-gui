@@ -54,10 +54,11 @@ export default (state, action) => {
       const string = action.payload;
       if (state.lightData && state.lightFancyTree) {
         let count = 0;
+        let isNegation = string.indexOf('!') === 0;
         if (string.indexOf("*") > -1) {
-          const fields = string.split("*");
-          let result = false;
+          const fields = isNegation === true ? string.substring(1).split('*') : string.split("*");            
           count = state.lightFancyTree.filterNodes(function (node) {
+            let result = false;
             let string_test = node.title;
             for (let i = 0; i < fields.length; i++) {
               if (fields[i].length > 0) {
@@ -67,19 +68,47 @@ export default (state, action) => {
                     string_test.indexOf(fields[i]) + fields[i].length;
                   string_test = string_test.substring(found_index);
                   //debug && console.log(found_index + " in " + string_test);
-                  result = true;
+                  if (isNegation){
+                    result = false;
+                    break;
+                  } else {
+                    result = true;
+                  }
                 } else {
                   // debug &&
                   //   console.log(fields[i] + " Not found in " + string_test);
-                  result = false;
-                  break;
+                  if (isNegation){
+                    result = true;
+                  } else {
+                    result = false;
+                    break;         
+                  }
                 }
               }
             }
             return result;
           });
         } else {
-          count = state.lightFancyTree.filterNodes(string);
+          const searchString = isNegation === true ? string.substring(1) : string;
+          count = state.lightFancyTree.filterNodes(function (node) {
+            let result = false;
+            let stringTest = node.title;
+            if (stringTest.indexOf(searchString) > -1){
+              if (isNegation){
+                result = false;
+              } else {
+                result = true;
+              }
+            } else {
+              if (isNegation){
+                result = true;
+              } else {
+                result = false;
+              }
+            }
+            return result;
+          });
+          // count = state.lightFancyTree.filterNodes(string);
         }
         //debug && console.log(count);
         state.filterCount = count;
