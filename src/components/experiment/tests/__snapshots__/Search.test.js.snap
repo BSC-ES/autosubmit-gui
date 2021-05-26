@@ -5,17 +5,100 @@ exports[`Search renders correctly 1`] = `
   className="container"
 >
   <div
-    className="row"
+    className="row-hl d-flex flex-wrap mb-2"
   >
     <div
-      className="col-11"
+      className="item-hl mr-1 px-2 pt-1 border rounded"
+    >
+      <div
+        className="form-check form-check-inline"
+      >
+        <input
+          checked={false}
+          className="form-check-input"
+          id="experimentTypeTest"
+          name="experimentType"
+          onChange={[Function]}
+          type="radio"
+          value="test"
+        />
+        <label
+          className="form-check-label"
+          htmlFor="experimentTypeTest"
+        >
+          Test
+        </label>
+      </div>
+      <div
+        className="form-check form-check-inline"
+      >
+        <input
+          checked={false}
+          className="form-check-input"
+          id="experimentTypeExperiment"
+          name="experimentType"
+          onChange={[Function]}
+          type="radio"
+          value="experiment"
+        />
+        <label
+          className="form-check-label"
+          htmlFor="experimentTypeExperiment"
+        >
+          Experiment
+        </label>
+      </div>
+      <div
+        className="form-check form-check-inline"
+      >
+        <input
+          checked={false}
+          className="form-check-input"
+          id="experimentTypeAll"
+          name="experimentType"
+          onChange={[Function]}
+          type="radio"
+          value="all"
+        />
+        <label
+          className="form-check-label"
+          htmlFor="experimentTypeAll"
+        >
+          All
+        </label>
+      </div>
+    </div>
+    <div
+      className="item-hl mr-1 pt-1 px-2 border rounded"
+    >
+      <div
+        className="form-check"
+      >
+        <input
+          checked={false}
+          className="form-check-input"
+          id="switchActive"
+          onChange={[Function]}
+          type="checkbox"
+          value="active"
+        />
+        <label
+          className="form-check-label"
+          htmlFor="switchActive"
+        >
+          Only Active
+        </label>
+      </div>
+    </div>
+    <div
+      className="item-hl flex-fill mr-1"
     >
       <form
         className="form"
         onSubmit={[Function]}
       >
         <div
-          className="input-group mb-3"
+          className="input-group"
         >
           <input
             className="form-control"
@@ -38,14 +121,14 @@ exports[`Search renders correctly 1`] = `
       </form>
     </div>
     <div
-      className="col-1"
+      className="item-hl"
     >
       <form
         className="form"
         onSubmit={[Function]}
       >
         <div
-          className="input-group mb-3"
+          className="input-group"
         >
           <input
             className="btn btn-success"

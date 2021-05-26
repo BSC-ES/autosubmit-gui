@@ -44,7 +44,7 @@ import {
   UPDATE_DESCRIPTION_OWN_EXP,
 } from "../types";
 
-import { AUTOSUBMIT_API_SOURCE, DEBUG, ERROR_MESSAGE, NOAPI } from "../vars";
+import { AUTOSUBMIT_API_SOURCE, DEBUG, ERROR_MESSAGE, NOAPI, localStorageExperimentTypeSearch, localStorageExperimentActiveCheck } from "../vars";
 
 import { timeStampToDate, errorEsarchiveStatus } from "../utils";
 
@@ -91,13 +91,16 @@ const ExperimentState = (props) => {
   const debug = DEBUG;
 
   // Search Experiments
-  const searchExperiments = async (text) => {
+  const searchExperiments = async (text, expType, activeCheck) => {
+    // console.log(text + " || " + expType + " || " + activeCheck);
+    localStorage.setItem(localStorageExperimentTypeSearch, expType);
+    localStorage.setItem(localStorageExperimentActiveCheck, activeCheck);
     setLoading();
     let result = null;
     if (NOAPI) {      
       result = require("../data/search.json").experiment;
     } else {
-      const res = await axios.get(`${localserver}/search/${text}`).catch(error => alert(ERROR_MESSAGE + "\n" + error.message));
+      const res = await axios.get(`${localserver}/search/${text}/${expType}/${activeCheck}`).catch(error => alert(ERROR_MESSAGE + "\n" + error.message));
       debug && console.log(res.data);
       result = res ? res.data.experiment : [];
     }  
@@ -109,12 +112,14 @@ const ExperimentState = (props) => {
 
   //Search Experiments by Owner
   const searchExperimentsByOwner = async (owner) => {
+    const expType = localStorage.getItem(localStorageExperimentTypeSearch);    
+    const activeCheck = localStorage.getItem(localStorageExperimentActiveCheck);
     setLoading();
     let result = null;
     if (NOAPI) {
       result = require("../data/search.json").experiment;
     } else {
-      const res = await axios.get(`${localserver}/searchowner/${owner}`).catch(error => alert(ERROR_MESSAGE + "\n" + error.message));
+      const res = await axios.get(`${localserver}/searchowner/${owner}/${expType}/${activeCheck}`).catch(error => alert(ERROR_MESSAGE + "\n" + error.message));
       debug && console.log(res.data);
       result = res ? res.data.experiment : [];
     }

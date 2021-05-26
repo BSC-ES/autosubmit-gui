@@ -104,3 +104,5 @@ export const statusCodeToStyle = (code) => {
   return unknownColor;
 };
 
+export const localStorageExperimentTypeSearch = "experimentTypeSearch";
+export const localStorageExperimentActiveCheck = "activeCheckSearch";
