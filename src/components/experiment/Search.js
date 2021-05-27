@@ -19,6 +19,8 @@ const Search = ({ specificSearch }) => {
 
     if (currentActiveCheck) {
       setActiveChoice(currentActiveCheck);
+    } else {
+      setActiveChoice("all");
     }
 
     if (specificSearch){

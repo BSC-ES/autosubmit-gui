@@ -92,7 +92,7 @@ const ExperimentState = (props) => {
 
   // Search Experiments
   const searchExperiments = async (text, expType, activeCheck) => {
-    // console.log(text + " || " + expType + " || " + activeCheck);
+    //console.log(text + " || " + expType + " || " + activeCheck);
     localStorage.setItem(localStorageExperimentTypeSearch, expType);
     localStorage.setItem(localStorageExperimentActiveCheck, activeCheck);
     setLoading();
