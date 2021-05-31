@@ -416,7 +416,7 @@ export default (state, action) => {
         }
       }
     case FILTER_TREEVIEW:
-      const string = action.payload;
+      const string = String(action.payload).toUpperCase();
       if (state.treedata && state.fancyTree) {
         let count = 0;
         const isNegation = string.indexOf('!') === 0;
@@ -424,7 +424,7 @@ export default (state, action) => {
           const fields = isNegation === true ? string.substring(1).split('*') : string.split("*");          
           count = state.fancyTree.filterNodes(function (node) {
             let result = false;
-            let string_test = node.title;
+            let string_test = String(node.title).toUpperCase();
             for (let i = 0; i < fields.length; i++) {
               if (fields[i].length > 0) {
                 if (string_test.indexOf(fields[i]) > -1) {
@@ -459,7 +459,7 @@ export default (state, action) => {
           const searchString = isNegation === true ? string.substring(1) : string;
           count = state.fancyTree.filterNodes(function (node) {
             let result = false;
-            let stringTest = node.title;
+            let stringTest = String(node.title).toUpperCase();
             if (stringTest.indexOf(searchString) > -1){
               if (isNegation){
                 result = false;

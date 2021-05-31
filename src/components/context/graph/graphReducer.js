@@ -412,14 +412,70 @@ export default (state, action) => {
         visNetwork: action.payload,
       };
     case SET_FOUND_NODES:
-      const string = action.payload;
+      const string = String(action.payload).toUpperCase();
       if (state.data && state.data.nodes) {
-        const foundNodes = state.data.nodes.filter(
-          (node) => node.id.toUpperCase().indexOf(string) >= 0
+        const isNegation = string.indexOf('!') === 0;        
+        let foundNodes = null;
+        if (string.indexOf('*') > -1){
+          const fields = isNegation === true ? string.substring(1).split('*') : string.split("*");   
+          foundNodes = state.data.nodes.filter(function (node) {              
+              let stringTest = String(node.id).toUpperCase();
+              let result = false;
+              for (let i = 0; i < fields.length; i++) {
+                if (fields[i].length > 0) {
+                  if (stringTest.indexOf(fields[i]) > -1) {
+                    //debug && console.log(fields[i] + " found in " + string_test);
+                    let found_index =
+                      stringTest.indexOf(fields[i]) + fields[i].length;
+                    stringTest = stringTest.substring(found_index);
+                    //debug && console.log(found_index + " in " + string_test);
+                    if (isNegation){
+                      return false;
+                    } else {
+                      result = true;
+                    }
+                    
+                  } else {
+                    // debug &&
+                    //   console.log(fields[i] + " Not found in " + string_test);
+                    if (isNegation){
+                      result = true;
+                    } else {
+                      return false;   
+                    }
+                             
+                  }
+                }
+              }
+              return result;
+            }
+          );
+        } else {
+          const searchString = isNegation === true ? string.substring(1) : string;
+          foundNodes = state.data.nodes.filter(function (node) {
+            //console.log(searchString);
+            let stringTest = String(node.id).toUpperCase();
+            if (stringTest.indexOf(searchString) > -1){
+              if (isNegation){
+                return false;
+              } else {
+                return true;
+              }
+            } else {
+              if (isNegation){
+                return true;
+              } else {
+                return false;
+              }
+            }            
+          }
         );
+        }
+        
 
         if (foundNodes && foundNodes.length > 0) {
           state.foundNodes = foundNodes;
+          //console.log(state.foundNodes);
           const position = findIdinGraph(foundNodes[0].id, state);
           if (position.x && position.y) {
             navigateGraph(

@@ -158,7 +158,7 @@ const ExperimentCentral = ({ match }) => {
       getExperimentPerformanceMetrics(expid);
     }
     // getExperimentTree(expid);
-    const interval = setInterval(() => getRunningState(expid), 300000);
+    const interval = setInterval(() => getRunningState(expid), 300000); // Every 5 minutes
     return () => {
       clearInterval(interval);
       cleanExperimentData();

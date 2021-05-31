@@ -51,7 +51,7 @@ export default (state, action) => {
         elapsedLoadingQuickView: state.elapsedLoadingQuickView + 1,
       };
     case FILTER_LIGHTER_TREE_VIEW:
-      const string = action.payload;
+      const string = String(action.payload).toUpperCase();
       if (state.lightData && state.lightFancyTree) {
         let count = 0;
         let isNegation = string.indexOf('!') === 0;
@@ -59,7 +59,7 @@ export default (state, action) => {
           const fields = isNegation === true ? string.substring(1).split('*') : string.split("*");            
           count = state.lightFancyTree.filterNodes(function (node) {
             let result = false;
-            let string_test = node.title;
+            let string_test = String(node.title).toUpperCase();
             for (let i = 0; i < fields.length; i++) {
               if (fields[i].length > 0) {
                 if (string_test.indexOf(fields[i]) > -1) {
@@ -92,7 +92,7 @@ export default (state, action) => {
           const searchString = isNegation === true ? string.substring(1) : string;
           count = state.lightFancyTree.filterNodes(function (node) {
             let result = false;
-            let stringTest = node.title;
+            let stringTest = String(node.title).toUpperCase();
             if (stringTest.indexOf(searchString) > -1){
               if (isNegation){
                 result = false;
