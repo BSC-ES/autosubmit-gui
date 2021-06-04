@@ -208,6 +208,20 @@ export const getReadyJobs = (jobs) => {
   return null;
 }
 
+export const getIFActiveJobs = (jobs) =>
+{
+  if (jobs) {
+    const activeJobs = jobs.filter(x => x.status === "QUEUING" || x.status === "SUBMITTED" || x.status === "RUNNING");
+    if (activeJobs.length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  return false;
+}
+
+
 
 export const groupBy = (arrayObjects, key) => {
   return arrayObjects.reduce(function(result, currentObject) {
@@ -244,6 +258,19 @@ export const groupByAndAggregate = (arrayObjects, key) => {
   return result;
 }
 
+export const buildWarningInactiveMessageTree = (experimentRunning, timeDiff, logPath, jobs) => {
+  let message = null;
+  //console.log("Running " + String(experimentRunning) + " - TimeDiff " + String(timeDiff) + " LogPath " + String(logPath));
+  // NOT Active, and more than 10 minutes difference
+  if (!experimentRunning && timeDiff > 600 && jobs){
+    const activeJobs = getIFActiveJobs(jobs);
+    //console.log("Active jobs " + String(activeJobs));
+    if (activeJobs){
+      message = "The log of your experiment has been inactive for an extended period of time while some jobs are still active. Verify that Autosubmit is still working. Review your log: " + String(logPath);
+    }    
+  }
+  return message;
+}
 
 export const errorEsarchiveStatus = { data: {
   "avg_bandwidth": null,

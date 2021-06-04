@@ -78,6 +78,7 @@ const ExperimentCentral = ({ match }) => {
     updateCurrentSelectedTree,
     cleanExperimentData,
     totalJobs,
+    getLogStatus,
   } = experimentContext;
 
   const {
@@ -156,6 +157,8 @@ const ExperimentCentral = ({ match }) => {
       }
       // Get performance metrics 
       getExperimentPerformanceMetrics(expid);
+      // Get Current Log Status
+      getLogStatus(expid);      
     }
     // getExperimentTree(expid);
     const interval = setInterval(() => getRunningState(expid), 300000); // Every 5 minutes

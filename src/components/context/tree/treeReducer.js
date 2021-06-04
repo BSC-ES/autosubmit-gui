@@ -22,6 +22,7 @@ import {
   LOADING_PREVIOUS_RUN,
   SET_CURRENT_COMMAND,
   SET_CURRENT_TEXT_COMMAND,
+  SET_WARNING_ACTIVE,
   //CLEAR_RUNDETAIL_ON_TREE,
 } from "../types";
 
@@ -508,8 +509,14 @@ export default (state, action) => {
         elapsedLoadingTree: 1,
         currentRunIdOnTree: null,
         treeReady: null,
+        warningActive: null,
         //canSelect: false,
       };
+    case SET_WARNING_ACTIVE:
+      return {
+        ...state,
+        warningActive: action.payload,
+      }
     case CLEAN_TREE_PKL_DATA:
       return {
         ...state,

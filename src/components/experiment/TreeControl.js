@@ -1,13 +1,14 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
 import TreeContext from "../context/tree/treeContext";
 import SelectionControl from "./SelectionControl";
 import JobSummary from "./JobSummary";
+import { buildWarningInactiveMessageTree } from "../context/utils";
 
 const TreeControl = () => {
   const experimentContext = useContext(ExperimentContext);
   const treeContext = useContext(TreeContext);
-  const { experiment, experimentRunning } = experimentContext;
+  const { experiment, experimentRunning, getLogStatus, logTimeDiff, currentLog } = experimentContext;
 
   const {
     treedata,
@@ -20,11 +21,26 @@ const TreeControl = () => {
     startAutoUpdateTreePkl,
     loadingTreePkl,
     currentRunIdOnTree,
+    warningActive,
+    setWarningActive
   } = treeContext;
+  
+  useEffect(() => {
+    if (treedata){      
+      setWarningActive(buildWarningInactiveMessageTree(experimentRunning, logTimeDiff, currentLog, treedata ? treedata.jobs : null));
+    }
+    //}
+    
+    // return () => {
+    //   cleanup
+    // }
+    // eslint-disable-next-line
+  }, [experimentRunning, treedata])
 
   const onSubmitTree = (e) => {
     e.preventDefault();
-    getExperimentTree(experiment.expid);
+    getLogStatus(experiment.expid);
+    getExperimentTree(experiment.expid);    
   };
 
   const onClearTree = (e) => {
@@ -34,6 +50,7 @@ const TreeControl = () => {
 
   const onRequestUpdate = (e) => {
     e.preventDefault();
+    getLogStatus(experiment.expid);
     getExperimentTreePkl(experiment.expid, experiment.pkl_timestamp);
   };
 
@@ -48,6 +65,7 @@ const TreeControl = () => {
   };
 
   const disabledQuery = !enabledTreeSearch || loadingTreePkl;
+  
 
   return (
     <div className='card-header p-1'>
@@ -57,6 +75,17 @@ const TreeControl = () => {
         )}        
         {(loadingTreeRefresh || loadingTreePkl) && (
           <div className='mr-auto item-hl'>Querying...</div>
+        )}
+        {warningActive && (
+          <div className="mr-auto item-hl">
+            <span
+              className='px-2 bg-warning text-white rounded text-center ml-1'
+              style={{ width: "100%" }}
+              title={warningActive}
+            >
+              <strong>ACTIVE WARNING</strong>
+            </span>
+          </div>
         )}
 
         {experiment && !treedata && (

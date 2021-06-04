@@ -35,7 +35,8 @@ import {
   SET_CURRENT_UPDATE_DESCRIP_COMMAND,
   VERIFY_TOKEN_DATA,
   SET_LOGGED_USER,
-  UPDATE_DESCRIPTION_OWN_EXP
+  UPDATE_DESCRIPTION_OWN_EXP,
+  GET_LOG_RUNNING_DATA
 } from "../types";
 
 import {
@@ -80,6 +81,8 @@ export default (state, action) => {
         canSelect: false,
         joblog: null,
         currentUpdateDescripCommand: null,
+        logTimeDiff: 0,
+        currentLog: null,
       };
     }
     case CLEAN_FILE_STATUS_DATA:
@@ -290,6 +293,13 @@ export default (state, action) => {
       return {
         ...state,
         joblog: action.payload,
+      }
+    case GET_LOG_RUNNING_DATA:
+      const { timediff, log_path } = action.payload;
+      return {
+        ...state,
+        logTimeDiff: timediff,
+        currentLog: log_path,
       }
     case VERIFY_TOKEN_DATA:
       {

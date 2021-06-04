@@ -1,8 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
 import GraphContext from "../context/graph/graphContext";
 import JobSummary from "./JobSummary";
 import SelectionControl from "./SelectionControl";
+import { buildWarningInactiveMessageTree } from "../context/utils";
 
 const GraphControl = () => {
   const experimentContext = useContext(ExperimentContext);
@@ -11,6 +12,9 @@ const GraphControl = () => {
     experiment,
     experimentRunning,
     loadingJobMonitor,
+    getLogStatus,
+    logTimeDiff,
+    currentLog,
   } = experimentContext;
 
   const {
@@ -21,12 +25,23 @@ const GraphControl = () => {
     startAutoUpdatePkl,
     enabledGraphSearch,
     loadingPkl,
+    warningActive,
+    setWarningActive,
   } = graphContext;
+
+  useEffect(() => {
+    if (data){      
+      setWarningActive(buildWarningInactiveMessageTree(experimentRunning, logTimeDiff, currentLog, data ? data.nodes : null));
+    }
+    
+    // eslint-disable-next-line
+  }, [experimentRunning, data])
 
   const disableQuery = !enabledGraphSearch || loadingPkl;
 
   const onSubmitGraph = (grouped = "none", layout = "standard") => (e) => {
     e.preventDefault();
+    getLogStatus(experiment.expid);
     getExperimentGraph(experiment.expid, grouped, layout);
   };
 
@@ -42,6 +57,7 @@ const GraphControl = () => {
 
   const onRequestUpdate = (e) => {
     e.preventDefault();
+    getLogStatus(experiment.expid);
     getExperimentPkl(experiment.expid, experiment.pkl_timestamp);
   };
 
@@ -50,6 +66,17 @@ const GraphControl = () => {
       <div className='d-flex flex-wrap row-hl'>        
       
           {(loadingJobMonitor || loadingPkl) && <div className='mr-auto item-hl'>Querying...</div>} 
+          {warningActive && (
+            <div className="mr-auto item-hl">
+              <span
+                className='px-2 bg-warning text-white rounded text-center ml-1'
+                style={{ width: "100%" }}
+                title={warningActive}
+              >
+                <strong>ACTIVE WARNING</strong>
+              </span>
+            </div>
+          )}
 
             <div className='item-hl ml-auto'>
               <div className="btn-group" role="group" aria-label="Group By">

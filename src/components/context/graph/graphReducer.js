@@ -27,6 +27,7 @@ import {
   SET_NOTIFICATION_TITLE_GRAPH,
   SET_CURRENT_TEXT_COMMAND,
   SET_JOB_INFO_PANEL_VISIBILITY,
+  SET_WARNING_ACTIVE
 } from "../types";
 
 import { DEBUG } from "../vars";
@@ -568,6 +569,7 @@ export default (state, action) => {
         currentCommand: null,
         currentTextCommandGraph: null,
         graphSelectedNodes: null,
+        warningActive: null,
         //startAutoUpdatePkl: false,
       };
     case CLEAN_PKL_DATA:
@@ -589,6 +591,11 @@ export default (state, action) => {
         ...state,
         selection: action.payload,
       };
+    case SET_WARNING_ACTIVE:
+      return {
+        ...state,
+        warningActive: action.payload,
+      }
     case UPDATE_GRAPH_SELECTED_NODES:
       //const selectedNodes = action.payload;
       state.graphSelectedNodes = null;

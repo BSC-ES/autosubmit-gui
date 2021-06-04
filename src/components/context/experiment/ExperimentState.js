@@ -42,6 +42,7 @@ import {
   VERIFY_TOKEN_DATA,
   SET_LOGGED_USER,
   UPDATE_DESCRIPTION_OWN_EXP,
+  GET_LOG_RUNNING_DATA,
 } from "../types";
 
 import { AUTOSUBMIT_API_SOURCE, DEBUG, ERROR_MESSAGE, NOAPI, localStorageExperimentTypeSearch, localStorageExperimentActiveCheck } from "../vars";
@@ -82,6 +83,8 @@ const ExperimentState = (props) => {
     allowJobMonitor: false,
     canSelect: false,
     esarchiveStatus: null,
+    logTimeDiff: 0,
+    currentLog: null,
   };
 
   const [state, dispatch] = useReducer(ExperimentReducer, initialState);
@@ -126,6 +129,22 @@ const ExperimentState = (props) => {
 
     dispatch({
       type: SEARCH_BY_OWNER,
+      payload: result,
+    })
+  }
+
+  const getLogStatus = async (expid) => {
+    let result = null;
+    if (NOAPI){
+      result = {timeDiff: 0, error: false, error_message: "NO API", log_path: "/none/none"}
+    } else {
+      const res = await axios.get(`${localserver}/logrun/${expid}`).catch(error => alert(ERROR_MESSAGE + "\n" + error.message));
+      debug && console.log(res.data);
+      result = res ? res.data : {};
+    }
+    //console.log(result);
+    dispatch({
+      type: GET_LOG_RUNNING_DATA,
       payload: result,
     })
   }
@@ -390,15 +409,6 @@ const ExperimentState = (props) => {
       // result = {'error': false, 'auth': true, 'message': "test message", "description": new_description}     
     }
 
-    // Result example
-    // return {
-    //   #         'error': True,
-    //   #         'auth': False,
-    //   #         'description': None,
-    //   #         'message': 'Not a valid user'
-    //   #     }
-
-    //console.log(result);
     // If valid result, add the expid key
     if (result) result.expid = expid;
 
@@ -466,6 +476,7 @@ const ExperimentState = (props) => {
   const setLoading = () => dispatch({ type: SET_LOADING });
   const setLoadingRun = () => dispatch({ type: SET_LOADING_RUN });
   const setLoadingState = () => dispatch({ type: SET_LOADING_STATE });
+
   const setLoadingSummary = (summExpid) =>
     dispatch({ type: SET_LOADING_SUMMARY, payload: summExpid });
   const setLoadingPerformanceMetrics = () =>
@@ -551,6 +562,8 @@ const ExperimentState = (props) => {
         experimentRunDetailForTree: state.experimentRunDetailForTree,   
         esarchiveStatus: state.esarchiveStatus,     
         currentUpdateDescripCommand: state.currentUpdateDescripCommand,
+        logTimeDiff: state.logTimeDiff,
+        currentLog: state.currentLog,        
         setAutoUpdateRun,
         searchExperiments,
         searchExperimentsByOwner, 
@@ -583,7 +596,8 @@ const ExperimentState = (props) => {
         setCurrentUpdateDescripCommand,
         getVerifyTicket,
         setLoggedUser,
-        updateDescription
+        updateDescription,
+        getLogStatus,
       }}
     >
       {props.children}
