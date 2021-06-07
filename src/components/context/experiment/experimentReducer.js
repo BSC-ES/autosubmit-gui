@@ -36,13 +36,17 @@ import {
   VERIFY_TOKEN_DATA,
   SET_LOGGED_USER,
   UPDATE_DESCRIPTION_OWN_EXP,
-  GET_LOG_RUNNING_DATA
+  GET_LOG_RUNNING_DATA,
+  SET_PAGINATED_RESULT,
+  SET_CURRENT_PAGE
 } from "../types";
 
 import {
   approximateLoadingTreeTime,
   approximateLoadingQuickView,
 } from "../utils";
+
+import { pageSize } from "../vars";
 
 /* eslint import/no-anonymous-default-export: ["error", {"allowArrowFunction": true}] */
 export default (state, action) => {
@@ -168,6 +172,8 @@ export default (state, action) => {
         experiments: [],
         summaries: [],
         loading: false,
+        currentPage: 1,
+        numberPages: 0,
       };
 
     case GET_EXPERIMENT:      
@@ -355,6 +361,32 @@ export default (state, action) => {
           experiment: experiment,
           currentToken: currentToken,
         }
+      }
+    case SET_PAGINATED_RESULT:
+      {
+        const experiments = state.experiments;
+        const currentPage = state.currentPage;
+        const numberPages = experiments ? Math.ceil(experiments.length/pageSize) : 0;
+        const experimentsInPage = [];
+        let resultCount = 0;
+        experiments.map((item, index) => {        
+          resultCount += 1;
+          if ((index >= (currentPage - 1)*pageSize) && (index < (currentPage*pageSize))){
+            experimentsInPage.push(item);
+          };
+          return null;
+        });
+        return {
+          ...state,
+          experimentsInPage: experimentsInPage,
+          pageResultCount: resultCount,
+          numberPages: numberPages,
+        }
+      }
+    case SET_CURRENT_PAGE:
+      return {
+        ...state,
+        currentPage: action.payload,
       }
     default:
       return null;

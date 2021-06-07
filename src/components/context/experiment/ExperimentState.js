@@ -43,6 +43,8 @@ import {
   SET_LOGGED_USER,
   UPDATE_DESCRIPTION_OWN_EXP,
   GET_LOG_RUNNING_DATA,
+  SET_PAGINATED_RESULT,
+  SET_CURRENT_PAGE,
 } from "../types";
 
 import { AUTOSUBMIT_API_SOURCE, DEBUG, ERROR_MESSAGE, NOAPI, localStorageExperimentTypeSearch, localStorageExperimentActiveCheck } from "../vars";
@@ -52,6 +54,8 @@ import { timeStampToDate, errorEsarchiveStatus } from "../utils";
 const ExperimentState = (props) => {
   const initialState = {
     experiments: [],
+    experimentsInPage: [],
+    pageResultCount: 0,
     summaries: [],
     experiment: {},
     totalJobs: 0,
@@ -85,6 +89,8 @@ const ExperimentState = (props) => {
     esarchiveStatus: null,
     logTimeDiff: 0,
     currentLog: null,
+    currentPage: 1,
+    numberPages: 0,
   };
 
   const [state, dispatch] = useReducer(ExperimentReducer, initialState);
@@ -459,6 +465,19 @@ const ExperimentState = (props) => {
     });
   }
 
+  const setPaginatedResult = () => {
+    dispatch({
+      type: SET_PAGINATED_RESULT
+    })
+  }
+
+  const setCurrentPage = (pageNumber) => {
+    dispatch({
+      type: SET_CURRENT_PAGE,
+      payload: pageNumber,
+    })
+  }
+
   // Cleaning
   const clearExperiments = () => dispatch({ type: CLEAR_EXPERIMENTS });
   //const cleanGraphData = () => dispatch({ type: CLEAN_GRAPH_DATA });
@@ -563,7 +582,11 @@ const ExperimentState = (props) => {
         esarchiveStatus: state.esarchiveStatus,     
         currentUpdateDescripCommand: state.currentUpdateDescripCommand,
         logTimeDiff: state.logTimeDiff,
-        currentLog: state.currentLog,        
+        currentLog: state.currentLog, 
+        currentPage: state.currentPage, 
+        experimentsInPage: state.experimentsInPage,   
+        pageResultCount: state.pageResultCount,   
+        numberPages: state.numberPages,
         setAutoUpdateRun,
         searchExperiments,
         searchExperimentsByOwner, 
@@ -598,6 +621,8 @@ const ExperimentState = (props) => {
         setLoggedUser,
         updateDescription,
         getLogStatus,
+        setPaginatedResult,
+        setCurrentPage,
       }}
     >
       {props.children}

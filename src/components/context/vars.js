@@ -106,3 +106,5 @@ export const statusCodeToStyle = (code) => {
 
 export const localStorageExperimentTypeSearch = "experimentTypeSearch";
 export const localStorageExperimentActiveCheck = "activeCheckSearch";
+
+export const pageSize = 12;

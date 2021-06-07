@@ -288,3 +288,7 @@ export const errorEsarchiveStatus = { data: {
 }
 export const openIcon = <i className="far fa-square"></i>;
 export const openIconHistory = <i className="fas fa-history"></i>;
+
+export const generateArrayOfNumbers = (numbers) => {  
+  return [...Array(numbers).keys()].slice(1);
+}

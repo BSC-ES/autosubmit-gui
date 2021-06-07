@@ -119,6 +119,10 @@ pre.bash {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.bg-queue {
+  background-color: lightpink;
+}
+
 .scroll-y-jobs {
   overflow-y: auto;
   min-height: 100px;

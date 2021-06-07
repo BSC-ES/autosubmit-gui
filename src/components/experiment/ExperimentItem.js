@@ -30,7 +30,7 @@ export class ExperimentItem extends Component {
       return null;
     }
 
-    const { name, description, user, hpc, status, completed, total, version } = experiment;
+    const { name, description, user, hpc, status, completed, total, version, wrapper, queuing, failed } = experiment;
     
     const onGetSummary = (name) => (e) => {
       e.preventDefault();
@@ -56,10 +56,10 @@ export class ExperimentItem extends Component {
                     completed === total
                       ? "progress-bar bg-warning"
                       : status === "RUNNING"
-                      ? summaries[name] && summaries[name].n_failed > 0
+                      ? ((summaries[name] && summaries[name].n_failed > 0) || failed > 0)
                         ? "progress-bar progress-bar-striped progress-bar-animated bg-danger"
-                        : "progress-bar progress-bar-striped progress-bar-animated bg-success"
-                      : summaries[name] && summaries[name].n_failed > 0
+                        : queuing > 0 ? "progress-bar progress-bar-striped progress-bar-animated bg-queue" : "progress-bar progress-bar-striped progress-bar-animated bg-success"
+                      : ((summaries[name] && summaries[name].n_failed > 0) || failed > 0)
                       ? "progress-bar bg-danger"
                       : "progress-bar bg-info"
                   }
@@ -285,7 +285,7 @@ export class ExperimentItem extends Component {
             )}
           </div>
           <p className='card-text text-center'>
-            <span className='text-muted'>{version}</span>
+            <span className='text-muted'>{version}</span>{wrapper && (<span className="px-1 ml-1 bg-dark text-white rounded">{wrapper} wrapper</span>)}
           </p>
         </div>
       </div>
