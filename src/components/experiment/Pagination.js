@@ -18,7 +18,7 @@ const Pagination = () => {
   const showingText = "From " + String(pageSize*(currentPage - 1)+1) + " to " + String(pageSize*(currentPage) > totalCount ? totalCount : pageSize*(currentPage));
 
   return (
-    <div>
+    <div className="item-hl">
       {numberPages && numberPages > 1 ? (
       <nav aria-label="Navigation">
         <ul className="pagination pagination-sm pt-1">

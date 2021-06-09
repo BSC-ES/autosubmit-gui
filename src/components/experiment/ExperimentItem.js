@@ -30,7 +30,7 @@ export class ExperimentItem extends Component {
       return null;
     }
 
-    const { name, description, user, hpc, status, completed, total, version, wrapper, queuing, failed } = experiment;
+    const { name, description, user, hpc, status, completed, total, version, wrapper, queuing, failed, running } = experiment;
     
     const onGetSummary = (name) => (e) => {
       e.preventDefault();
@@ -54,14 +54,16 @@ export class ExperimentItem extends Component {
                 <div
                   className={
                     completed === total
-                      ? "progress-bar bg-warning"
+                      ? "progress-bar bg-completed"
                       : status === "RUNNING"
                       ? ((summaries[name] && summaries[name].n_failed > 0) || failed > 0)
                         ? "progress-bar progress-bar-striped progress-bar-animated bg-danger"
-                        : queuing > 0 ? "progress-bar progress-bar-striped progress-bar-animated bg-queue" : "progress-bar progress-bar-striped progress-bar-animated bg-success"
+                        : running > 0 ? "progress-bar progress-bar-striped progress-bar-animated bg-success" 
+                          : queuing > 0 ? "progress-bar progress-bar-striped progress-bar-animated bg-queue" : "progress-bar bg-success"
                       : ((summaries[name] && summaries[name].n_failed > 0) || failed > 0)
                       ? "progress-bar bg-danger"
-                      : "progress-bar bg-info"
+                      : running > 0 ? "progress-bar bg-success" 
+                        : queuing > 0 ? "progress-bar bg-queue" : "progress-bar bg-info"
                   }
                   role='progressbar'
                   style={{
@@ -70,8 +72,8 @@ export class ExperimentItem extends Component {
                   aria-valuenow={completed}
                   aria-valuemin='0'
                   aria-valuemax={total}
-                ></div>
-              </div>
+                ></div> 
+              </div> 
               {/* <span className='badge badge-default'>
               {" "}
               
@@ -86,6 +88,7 @@ export class ExperimentItem extends Component {
                   INACTIVE
                 </span>
               )}
+              {/* {queuing > 0 && <span className="rounded bg-queue px-1 py-0 float-right">{queuing}</span>} */}
             </div>
           </div>
         </div>
@@ -285,7 +288,7 @@ export class ExperimentItem extends Component {
             )}
           </div>
           <p className='card-text text-center'>
-            <span className='text-muted'>{version}</span>{wrapper && (<span className="px-1 ml-1 bg-dark text-white rounded">{wrapper} wrapper</span>)}
+            <span className='text-muted'>{version}</span>{wrapper && (<span className="px-1 ml-1 bg-secondary text-dark rounded">{wrapper} wrapper</span>)}
           </p>
         </div>
       </div>

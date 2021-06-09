@@ -45,6 +45,7 @@ import {
   GET_LOG_RUNNING_DATA,
   SET_PAGINATED_RESULT,
   SET_CURRENT_PAGE,
+  ORDER_EXPERIMENTS_RESULT,
 } from "../types";
 
 import { AUTOSUBMIT_API_SOURCE, DEBUG, ERROR_MESSAGE, NOAPI, localStorageExperimentTypeSearch, localStorageExperimentActiveCheck } from "../vars";
@@ -91,6 +92,7 @@ const ExperimentState = (props) => {
     currentLog: null,
     currentPage: 1,
     numberPages: 0,
+    pageSetup: false,
   };
 
   const [state, dispatch] = useReducer(ExperimentReducer, initialState);
@@ -525,7 +527,12 @@ const ExperimentState = (props) => {
     }
   };
 
-
+  const orderExperimentsInResult = (orderType) => {
+    dispatch({
+      type: ORDER_EXPERIMENTS_RESULT,
+      payload: orderType,
+    })
+  }
 
   const updateCurrentSelectedGraph = (selectedJob, data) => {
     // console.log(data);
@@ -563,6 +570,7 @@ const ExperimentState = (props) => {
         loadingPerformance: state.loadingPerformance,
         jobHistory: state.jobHistory,
         joblog: state.joblog,
+        pageSetup: state.pageSetup,
         performancedata: state.performancedata,
         experimentRuns: state.experimentRuns,
         rundata: state.rundata,
@@ -623,6 +631,7 @@ const ExperimentState = (props) => {
         getLogStatus,
         setPaginatedResult,
         setCurrentPage,
+        orderExperimentsInResult,
       }}
     >
       {props.children}

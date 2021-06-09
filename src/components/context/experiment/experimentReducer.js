@@ -38,15 +38,18 @@ import {
   UPDATE_DESCRIPTION_OWN_EXP,
   GET_LOG_RUNNING_DATA,
   SET_PAGINATED_RESULT,
-  SET_CURRENT_PAGE
+  SET_CURRENT_PAGE,
+  ORDER_EXPERIMENTS_RESULT
 } from "../types";
 
 import {
   approximateLoadingTreeTime,
   approximateLoadingQuickView,
+  normalizeString,
+  normalizeInt
 } from "../utils";
 
-import { pageSize } from "../vars";
+import { pageSize, orderByType } from "../vars";
 
 /* eslint import/no-anonymous-default-export: ["error", {"allowArrowFunction": true}] */
 export default (state, action) => {
@@ -170,12 +173,46 @@ export default (state, action) => {
       return {
         ...state,
         experiments: [],
+        experimentsInPage: [],
         summaries: [],
         loading: false,
         currentPage: 1,
         numberPages: 0,
       };
-
+    case ORDER_EXPERIMENTS_RESULT:
+      {
+        const orderType = action.payload;
+        let currentResult = state.experiments;
+        if (currentResult && currentResult.length > 0){
+          switch(orderType) {
+            case orderByType.wrapper:              
+              currentResult.sort((a,b) => normalizeString(a.wrapper) < normalizeString(b.wrapper) ? 1 : -1);
+              break;
+            case orderByType.total:
+              currentResult.sort((a,b) => { return normalizeInt(b.total) - normalizeInt(a.total) })
+              break;
+            case orderByType.completed: 
+              currentResult.sort((a,b) => { return normalizeInt(b.completed) - normalizeInt(a.completed) })
+              break;
+            case orderByType.running:
+              currentResult.sort((a,b) => { return normalizeInt(b.running) - normalizeInt(a.running) })
+              break;
+            case orderByType.queuing:
+              currentResult.sort((a,b) => { return normalizeInt(b.queuing) - normalizeInt(a.queuing) })
+              break;
+            case orderByType.failed:
+              currentResult.sort((a,b) => { return normalizeInt(b.failed) - normalizeInt(a.failed) })
+              break;
+            default:
+              break;
+          }
+        }        
+        return {
+          ...state,
+          experiments: currentResult,
+          pageSetup: true,
+        }
+      }      
     case GET_EXPERIMENT:      
       const { total_jobs, owner } = action.payload;
       const whichAnimal = owner === "molid" ? 1 : Math.floor(Math.random()*3)+1; 
@@ -381,6 +418,7 @@ export default (state, action) => {
           experimentsInPage: experimentsInPage,
           pageResultCount: resultCount,
           numberPages: numberPages,
+          pageSetup: false,
         }
       }
     case SET_CURRENT_PAGE:

@@ -69,7 +69,7 @@ export default (state, action) => {
         graphSelectedNodes: null,
         graphReady: getReadyJobs(resdata.nodes),
       };
-    case GET_PKL_DATA:
+    case GET_PKL_DATA:      
       let retrievedPkl = action.payload;
       if (
         state.data !== null &&

@@ -292,3 +292,16 @@ export const openIconHistory = <i className="fas fa-history"></i>;
 export const generateArrayOfNumbers = (numbers) => {  
   return [...Array(numbers).keys()].slice(1);
 }
+
+
+export const normalizeString = (input) => {
+  if (input) return String(input);
+  return "";
+}
+
+export const normalizeInt = (input) => {
+  if (input && input !== "NA"){
+    return input;
+  } 
+  return 0;
+}

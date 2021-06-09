@@ -3,11 +3,12 @@ import ExperimentItem from "./ExperimentItem";
 import Spinner from "../layout/Spinner";
 import ExperimentContext from "../context/experiment/experimentContext";
 import Pagination from "./Pagination";
+import { orderByType } from "../context/vars";
 
 
 const Experiments = () => {
   const experimentContext = useContext(ExperimentContext);
-  const { loading, experiments, summaries, loadingSummary, getExperimentSummary, currentPage, setPaginatedResult, experimentsInPage } = experimentContext;
+  const { loading, experiments, summaries, loadingSummary, getExperimentSummary, currentPage, setPaginatedResult, experimentsInPage, orderExperimentsInResult, pageSetup } = experimentContext;
 
   const isLoading = (loadingSummaries, name) => {    
     if (loadingSummaries && name){
@@ -19,12 +20,17 @@ const Experiments = () => {
     return false;
   }
 
+  const onOrderBy = (orderType) => (e) => {
+    e.preventDefault();
+    orderExperimentsInResult(orderType);
+  }
+
   useEffect(() => {
     if (experiments){
       setPaginatedResult();
     }    
     // eslint-disable-next-line
-  }, [experiments, currentPage])
+  }, [experiments, currentPage, pageSetup])
 
   
 
@@ -36,13 +42,26 @@ const Experiments = () => {
     // Order them by status so the ACTIVE ones are shown first.
     return (
       <div className='container'>      
-        <div className="row">
-          <div className="col">
-            <Pagination />
-          </div>          
-        </div>  
+        <div className="d-flex flex-wrap row-hl">
+            <Pagination />      
+            {experimentsInPage && experimentsInPage.length > 0 && (
+              <div className="item-hl ml-auto">
+                Order By:{" "}
+                <div className="btn-group" role="group" aria-label="Order">
+                  <button type="button" className="btn btn-primary btn-sm" onClick={onOrderBy(orderByType.wrapper)}>Wrapper</button>
+                  <button type="button" className="btn btn-primary btn-sm" onClick={onOrderBy(orderByType.total)}>Total Jobs</button>
+                  <button type="button" className="btn btn-primary btn-sm" onClick={onOrderBy(orderByType.completed)}>Completed Jobs</button>
+                  <button type="button" className="btn btn-primary btn-sm" onClick={onOrderBy(orderByType.queuing)}>Queuing Jobs</button>
+                  <button type="button" className="btn btn-primary btn-sm" onClick={onOrderBy(orderByType.running)}>Running Jobs</button>
+                  <button type="button" className="btn btn-primary btn-sm" onClick={onOrderBy(orderByType.failed)}>Failed Jobs</button>                  
+                </div>
+              </div>
+            )}
+        </div>
+        
+        
         <div className='row row-cols-1 row-cols-md-3'>
-          {experimentsInPage &&
+          {experimentsInPage && experimentsInPage.length > 0 && 
             experimentsInPage
               .sort((a, b) => (a.status > b.status ? -1 : 1))
               .map(experiment => (

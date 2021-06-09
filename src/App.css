@@ -123,6 +123,10 @@ pre.bash {
   background-color: lightpink;
 }
 
+.bg-completed {
+  background-color: yellow;
+}
+
 .scroll-y-jobs {
   overflow-y: auto;
   min-height: 100px;

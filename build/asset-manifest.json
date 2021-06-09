@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/autosubmitapp/static/css/main.a363c917.chunk.css",
-    "main.js": "/autosubmitapp/static/js/main.c29a840d.chunk.js",
-    "main.js.map": "/autosubmitapp/static/js/main.c29a840d.chunk.js.map",
+    "main.css": "/autosubmitapp/static/css/main.03443df4.chunk.css",
+    "main.js": "/autosubmitapp/static/js/main.bc9c39d9.chunk.js",
+    "main.js.map": "/autosubmitapp/static/js/main.bc9c39d9.chunk.js.map",
     "runtime-main.js": "/autosubmitapp/static/js/runtime-main.915062e5.js",
     "runtime-main.js.map": "/autosubmitapp/static/js/runtime-main.915062e5.js.map",
     "static/js/2.37068869.chunk.js": "/autosubmitapp/static/js/2.37068869.chunk.js",
     "static/js/2.37068869.chunk.js.map": "/autosubmitapp/static/js/2.37068869.chunk.js.map",
     "index.html": "/autosubmitapp/index.html",
-    "static/css/main.a363c917.chunk.css.map": "/autosubmitapp/static/css/main.a363c917.chunk.css.map",
+    "static/css/main.03443df4.chunk.css.map": "/autosubmitapp/static/css/main.03443df4.chunk.css.map",
     "static/js/2.37068869.chunk.js.LICENSE.txt": "/autosubmitapp/static/js/2.37068869.chunk.js.LICENSE.txt",
     "static/media/catload.d22d6312.gif": "/autosubmitapp/static/media/catload.d22d6312.gif",
     "static/media/dogload.7fd39847.gif": "/autosubmitapp/static/media/dogload.7fd39847.gif",
@@ -17,7 +17,7 @@
   "entrypoints": [
     "static/js/runtime-main.915062e5.js",
     "static/js/2.37068869.chunk.js",
-    "static/css/main.a363c917.chunk.css",
-    "static/js/main.c29a840d.chunk.js"
+    "static/css/main.03443df4.chunk.css",
+    "static/js/main.bc9c39d9.chunk.js"
   ]
 }
