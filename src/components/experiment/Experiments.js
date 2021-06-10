@@ -45,7 +45,7 @@ const Experiments = () => {
         <div className="d-flex flex-wrap row-hl">
             <Pagination />      
             {experimentsInPage && experimentsInPage.length > 0 && (
-              <div className="item-hl ml-auto">
+              <div className="item-hl ml-auto mb-1">
                 Order By:{" "}
                 <div className="btn-group" role="group" aria-label="Order">
                   <button type="button" className="btn btn-primary btn-sm" onClick={onOrderBy(orderByType.wrapper)}>Wrapper</button>
