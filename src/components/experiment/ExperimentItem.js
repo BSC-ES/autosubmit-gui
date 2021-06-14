@@ -2,7 +2,7 @@ import React, { Component } from "react";
 //import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 //import ExperimentContext from "../context/experiment/experimentContext";
-import { quickThreshold } from "../context/vars";
+import { quickThreshold, completedColor, runningColor, failedColor, queueColor } from "../context/vars";
 //import { render } from "react-dom";
 
 export class ExperimentItem extends Component {
@@ -48,8 +48,17 @@ export class ExperimentItem extends Component {
               <h3 className='font-weight-bold'>{name}</h3>
             </div>
             <div className='col-md-6 text-center'>
-              {" "}
-              {completed} / {total}{" "}
+              <div className="row-hl d-flex flex-wrap">
+                <div className="item-hl">
+                {queuing > 0 && <span className="badge" style={queueColor}>{queuing}</span>}
+                {running > 0 && <span className="badge" style={runningColor}>{running}</span>}
+                {failed > 0 && <span className="badge" style={failedColor}>{failed}</span>}
+                {completed > 0 && <span className='badge' style={completedColor}>{completed}</span>}
+                </div>
+                <div className="item-hl ml-auto">
+                {completed} / {total}
+                </div>
+              </div>
               <div className='progress border'>
                 <div
                   className={

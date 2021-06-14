@@ -63,7 +63,6 @@ const Experiments = () => {
         <div className='row row-cols-1 row-cols-md-3'>
           {experimentsInPage && experimentsInPage.length > 0 && 
             experimentsInPage
-              .sort((a, b) => (a.status > b.status ? -1 : 1))
               .map(experiment => (
                 <ExperimentItem key={experiment.id} experiment={experiment} summaries={summaries} isLoading={isLoading(loadingSummary, experiment.name)} getExperimentSummary={getExperimentSummary} />
               ))}

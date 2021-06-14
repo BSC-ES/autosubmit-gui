@@ -132,23 +132,41 @@ export default (state, action) => {
         ...state,
       };
     case SEARCH_EXPERIMENTS:
-      return {
-        ...state,
-        experiments: action.payload,
-        loading: false,
-      };
+      {
+        const experiments = action.payload;
+        if (experiments) {
+          experiments.sort((a, b) => (a.status > b.status ? -1 : 1));
+        }
+        return {
+          ...state,
+          experiments: experiments,
+          loading: false,
+        };
+      }
     case SEARCH_BY_OWNER:
-      return {
-        ...state,
-        experiments: action.payload,
-        loading: false,
+      {
+        const experiments = action.payload;
+        if (experiments) {
+          experiments.sort((a, b) => (a.status > b.status ? -1 : 1));
+        }
+        return {
+          ...state,
+          experiments: experiments,
+          loading: false,
+        }
       }
     case CURRENT_RUNNING:
-      return {
-        ...state,
-        experiments: action.payload,
-        loading: false,
-      };
+      {
+        const experiments = action.payload;
+        if (experiments){
+          experiments.sort((a, b) => (a.status > b.status ? -1 : 1));
+        }
+        return {
+          ...state,
+          experiments: experiments,
+          loading: false,
+        };
+      }
     case SET_AUTOUPDATE_RUN:
       return {
         ...state,
@@ -207,6 +225,7 @@ export default (state, action) => {
               break;
           }
         }        
+        // console.log(currentResult);
         return {
           ...state,
           experiments: currentResult,
