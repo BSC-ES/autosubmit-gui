@@ -209,8 +209,14 @@ export default (state, action) => {
             case orderByType.total:
               currentResult.sort((a,b) => { return normalizeInt(b.total) - normalizeInt(a.total) })
               break;
+            case orderByType.total_asc:
+              currentResult.sort((a,b) => { return normalizeInt(a.total) - normalizeInt(b.total) })
+              break;
             case orderByType.completed: 
               currentResult.sort((a,b) => { return normalizeInt(b.completed) - normalizeInt(a.completed) })
+              break;
+            case orderByType.completed_asc:
+              currentResult.sort((a,b) => { return normalizeInt(a.completed) - normalizeInt(b.completed) })
               break;
             case orderByType.running:
               currentResult.sort((a,b) => { return normalizeInt(b.running) - normalizeInt(a.running) })
@@ -224,12 +230,12 @@ export default (state, action) => {
             default:
               break;
           }
-        }        
-        // console.log(currentResult);
+        }                
         return {
           ...state,
           experiments: currentResult,
-          pageSetup: true,
+          currentOrderType: orderType,
+          pageSetup: true,          
         }
       }      
     case GET_EXPERIMENT:      

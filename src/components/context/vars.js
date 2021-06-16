@@ -111,7 +111,9 @@ export const pageSize = 12;
 
 export const orderByType ={
   total: "TOTAL",
+  total_asc: "TOTAL_ASC",
   completed: "COMPLETED",
+  completed_asc: "COMPLETED_ASC",
   queuing: "QUEUING",
   running: "RUNNING",
   failed: "FAILED",

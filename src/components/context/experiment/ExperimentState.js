@@ -93,6 +93,7 @@ const ExperimentState = (props) => {
     currentPage: 1,
     numberPages: 0,
     pageSetup: false,
+    curerntOrderType: null,
   };
 
   const [state, dispatch] = useReducer(ExperimentReducer, initialState);
@@ -595,6 +596,7 @@ const ExperimentState = (props) => {
         experimentsInPage: state.experimentsInPage,   
         pageResultCount: state.pageResultCount,   
         numberPages: state.numberPages,
+        currentOrderType: state.currentOrderType,
         setAutoUpdateRun,
         searchExperiments,
         searchExperimentsByOwner, 
