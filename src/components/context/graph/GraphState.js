@@ -78,7 +78,7 @@ const GraphState = (props) => {
   // Get Experiment Graph
   const getExperimentGraph = async (
     expid,
-    grouped = "none",
+    grouped = "none",  
     layout = "standard"
   ) => {
     cleanOnlyGraphData();

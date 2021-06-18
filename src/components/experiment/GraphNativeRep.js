@@ -291,9 +291,9 @@ class GraphNativeRep extends Component {
         if (this.props.clusterGroups) {
           const groups = this.props.clusterGroups;
           if (current_grouped === "date-member") {
-            var clusterOptionsByDateMember;
-            for (var i = 0; i < groups.length; i++) {
-              var startingName = groups[i];
+            let clusterOptionsByDateMember;
+            for (let i = 0; i < groups.length; i++) {
+              let startingName = groups[i];
               // if (positions[startingName]){
               //   console.log(positions[startingName]);
               // }
@@ -307,8 +307,8 @@ class GraphNativeRep extends Component {
                   childNodes,
                   childEdges
                 ) {
-                  var totalMass = 0;
-                  for (var i = 0; i < childNodes.length; i++) {
+                  let totalMass = 0;
+                  for (let i = 0; i < childNodes.length; i++) {
                     totalMass += childNodes[i].mass;
                   }
                   clusterOptions.mass = totalMass;
@@ -326,6 +326,40 @@ class GraphNativeRep extends Component {
                 },
               };
               network.clustering.cluster(clusterOptionsByDateMember);
+            }
+          } else if (current_grouped === "date-member-chunk") { 
+            let clusterOptionsByDateMemberChunk;
+            for (let k = 0; k < groups.length; k++) {
+              let startingName = groups[k];
+              clusterOptionsByDateMemberChunk = {
+                // eslint-disable-next-line no-loop-func
+                joinCondition: function (options) {
+                  return options.id.startsWith(startingName);
+                },
+                processProperties: function (
+                  clusterOptions,
+                  childNodes,
+                  childEdges
+                ) {
+                  let totalMass = 0;
+                  for (let i = 0; i < childNodes.length; i++) {
+                    totalMass += childNodes[i].mass;
+                  }
+                  clusterOptions.mass = totalMass;
+                  return clusterOptions;
+                },
+                clusterNodeProperties: {
+                  id: "cluster:" + startingName,
+                  borderWidth: 3,
+                  shape: "box",
+                  label: startingName.split("_").join("\n"),
+                  color: groups_data[startingName].color,
+                  font: { size: 50 },
+                  x: groups_data[startingName].x,
+                  y: groups_data[startingName].y,
+                },
+              };
+              network.clustering.cluster(clusterOptionsByDateMemberChunk);
             }
           } else if (current_grouped === "status") {
             var clusterOptionsByStatus;
