@@ -10,7 +10,7 @@ const Selection = () => {
   const experimentContext = useContext(ExperimentContext);
   const graphContext = useContext(GraphContext);
   const { experiment } = experimentContext;
-  const { data, selection } = graphContext;
+  const { data, selection, navigateToGroup } = graphContext;
   // const { model, branch, hpc } = experiment;
   //var currentSelection = "Node: "
 
@@ -23,12 +23,25 @@ const Selection = () => {
   let selectedNode = null;
   let parentList = [];
   let childrenList = [];
+  const packages = data.packages;
 
 
   const copyContent = (inputname) => (e) => {
     e.preventDefault();
     DEBUG && console.log("Sending " + inputname);
     window.copyToClip(inputname);
+  };
+
+  const FocusWrapper = (id) => (e) => {
+    e.preventDefault();
+    if (packages) {
+      // console.log(id);
+      //console.log(id["wrapper"]);
+      //console.log(packages[id["wrapper"]]);
+      navigateToGroup(data.packages[id]);
+    }
+
+    //navigateToGroup()
   };
 
   if (selection && data && data.nodes) {
@@ -45,7 +58,7 @@ const Selection = () => {
       //console.log(childrenList);
     }
 
-    
+    // console.log(selectedNode);
     // If selection mode is activated
     //console.log("Selected node")
     //console.log("Data: " + selectedNode.id + " " + selectedNode.platform_name)
@@ -365,6 +378,19 @@ const Selection = () => {
                     )}
                     </div>
                   </div>
+                  {selectedNode.package && selectedNode.package.length > 0 && (
+                    <div className="row p-0 my-1">
+                      <div className="col">
+                        <button
+                          className='btn btn-info btn-block'
+                          type='button'
+                          onClick={FocusWrapper(selectedNode.package)}
+                        >
+                          Wrapper: {selectedNode.package.split("_").slice(1).join("_")} ({data.packages[selectedNode.package].length} jobs)
+                        </button>
+                      </div>
+                    </div>
+                  )}                  
                 </div>
               </div>
             </div>
@@ -484,7 +510,7 @@ const Selection = () => {
 };
 
 const experimentStyle = {
-  height: 360,
+  height: 385,
 };
 
 const headerCard = {

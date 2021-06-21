@@ -20,12 +20,21 @@ const WrapperList = () => {
 
     //navigateToGroup()
   };
+
+  // useEffect(() => {
+  //   effect
+  //   return () => {
+      
+  //   }
+  // }, [data.packages])
+
   if (
     experiment &&
     data &&
     data.packages &&
     Object.keys(data.packages).length > 0
   ) {
+    // console.log(data.packages);
     packages = data.packages;
     wrapperTitles = Object.keys(packages);
     wrapperItems = wrapperTitles.map((wrapper, index) => (
