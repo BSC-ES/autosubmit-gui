@@ -212,7 +212,7 @@ class GraphNativeRep extends Component {
       nodes: {
         shape: "dot",
         font: {
-          size: 10,
+          size: 17.5,
         },
       },
     };
