@@ -9,7 +9,7 @@ const Pagination = () => {
   const experimentContext = useContext(ExperimentContext);
   const { numberPages, currentPage, setCurrentPage, experiments } = experimentContext;  
   const contentNavigation = generateArrayOfNumbers(numberPages + 1);
-  const totalCount = experiments ? experiments.length : 0;
+  const totalCount = experiments ? experiments.filter(x => x.hidden === false).length : 0;
   const onSubmit = (number) => (e) => {
     e.preventDefault();
     setCurrentPage(number);

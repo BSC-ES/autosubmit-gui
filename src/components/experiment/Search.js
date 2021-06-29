@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
 import AlertContext from "../context/alert/alertContext";
-import { localStorageExperimentTypeSearch, localStorageExperimentActiveCheck } from "../context/vars";
+import { localStorageExperimentTypeSearch, localStorageExperimentActiveCheck, orderByType } from "../context/vars";
 
 const Search = ({ specificSearch }) => {
   const experimentContext = useContext(ExperimentContext);
@@ -57,9 +57,30 @@ const Search = ({ specificSearch }) => {
 
   const onChange = (e) => setText(e.target.value);
 
-  const onChangeType = (e) => setTypeExperiment(e.target.value);
+  const onChangeType = (e) => {
+    let inputType = null;
+    switch(e.target.value) {
+      case "experiment":
+        inputType = orderByType.radioExperiments;
+        break;
+      case "test":
+        inputType = orderByType.radioTests;
+        break;
+      case "all":        
+      default:
+        inputType = orderByType.radioAll;
+        break;
+    }
+    experimentContext.orderExperimentsInResult(inputType);
+    setTypeExperiment(e.target.value);
+  }
 
-  const onChangeActiveCheck = (e) => setActiveChoice(e.target.value);
+  const onChangeActiveCheck = (e) => {
+    const inputStatus = e.target.value;
+    // console.log(inputStatus);
+    experimentContext.orderExperimentsInResult(inputStatus === "active" ? orderByType.showOnlyActive : orderByType.showAllActiveInactive);
+    setActiveChoice(e.target.value);
+  };
 
   return (
     <div className='container'>

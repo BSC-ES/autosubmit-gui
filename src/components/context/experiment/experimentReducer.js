@@ -39,7 +39,7 @@ import {
   GET_LOG_RUNNING_DATA,
   SET_PAGINATED_RESULT,
   SET_CURRENT_PAGE,
-  ORDER_EXPERIMENTS_RESULT
+  ORDER_EXPERIMENTS_RESULT,
 } from "../types";
 
 import {
@@ -136,11 +136,15 @@ export default (state, action) => {
         const experiments = action.payload;
         if (experiments) {
           experiments.sort((a, b) => (a.status > b.status ? -1 : 1));
+          experiments.forEach(function(element){
+            element.hidden = false;
+          });
         }
         return {
           ...state,
           experiments: experiments,
           loading: false,
+          currentPage: 1,
         };
       }
     case SEARCH_BY_OWNER:
@@ -148,11 +152,15 @@ export default (state, action) => {
         const experiments = action.payload;
         if (experiments) {
           experiments.sort((a, b) => (a.status > b.status ? -1 : 1));
+          experiments.forEach(function(element){
+            element.hidden = false;
+          });
         }
         return {
           ...state,
           experiments: experiments,
           loading: false,
+          currentPage: 1,
         }
       }
     case CURRENT_RUNNING:
@@ -160,11 +168,15 @@ export default (state, action) => {
         const experiments = action.payload;
         if (experiments){
           experiments.sort((a, b) => (a.status > b.status ? -1 : 1));
+          experiments.forEach(function(element){
+            element.hidden = false;
+          });
         }
         return {
           ...state,
           experiments: experiments,
           loading: false,
+          currentPage: 1,
         };
       }
     case SET_AUTOUPDATE_RUN:
@@ -200,7 +212,10 @@ export default (state, action) => {
     case ORDER_EXPERIMENTS_RESULT:
       {
         const orderType = action.payload;
-        let currentResult = state.experiments;
+        let currentResult = state.experiments;        
+        let activeInactive = state.activeInactiveFilter;
+        let currentTypeFilter = state.typeFilter;
+        //let currentExperiments = [];
         if (currentResult && currentResult.length > 0){
           switch(orderType) {
             case orderByType.wrapper:              
@@ -227,14 +242,133 @@ export default (state, action) => {
             case orderByType.failed:
               currentResult.sort((a,b) => { return normalizeInt(b.failed) - normalizeInt(a.failed) })
               break;
+            case orderByType.showOnlyActive:
+              currentResult.forEach(function (element) {
+                switch(currentTypeFilter) {
+                  case orderByType.radioExperiments:
+                    if (element.status === "RUNNING" && !(element.name.startsWith('t'))) {
+                      element.hidden = false;
+                    } else {
+                      element.hidden = true;
+                    }
+                    break;
+                  case orderByType.radioTests:
+                    if (element.status === "RUNNING" && element.name.startsWith('t')) {
+                      element.hidden = false;
+                    } else {
+                      element.hidden = true;
+                    }
+                    break;
+                  case orderByType.radioAll:
+                  default:
+                    if (element.status === "RUNNING") {
+                      element.hidden = false;                    
+                    } else {
+                      element.hidden = true;
+                    }
+                    break;
+                }                
+              });
+              activeInactive = orderByType.showOnlyActive;
+              break;
+            case orderByType.showAllActiveInactive:
+              currentResult.forEach(function (element) {
+                switch(currentTypeFilter) {
+                  case orderByType.radioExperiments:
+                    if (!(element.name.startsWith('t'))) {
+                      element.hidden = false;
+                    } else {
+                      element.hidden = true;
+                    }
+                    break;
+                  case orderByType.radioTests:
+                    if (element.name.startsWith('t')) {
+                      element.hidden = false;
+                    } else {
+                      element.hidden = true;
+                    }
+                    break;
+                  case orderByType.radioAll:
+                  default:
+                    element.hidden = false;
+                    break;
+                }                
+              });
+              activeInactive = orderByType.showAllActiveInactive;
+              break;
+            case orderByType.radioExperiments:
+              currentResult.forEach(function (element) {
+                switch(activeInactive) {
+                  case orderByType.showOnlyActive:
+                    if (element.status === "RUNNING" && !(element.name.startsWith('t'))) {
+                      element.hidden = false;
+                    } else {
+                      element.hidden = true;
+                    }
+                    break;
+                  case orderByType.showAllActiveInactive:
+                  default:
+                    if (!(element.name.startsWith('t'))){
+                      element.hidden = false;
+                    } else {
+                      element.hidden = true;
+                    }
+                    break;                  
+                }                
+              });
+              currentTypeFilter = orderByType.radioExperiments;
+              break;
+            case orderByType.radioTests:
+              currentResult.forEach(function (element) {
+                switch(activeInactive) {
+                  case orderByType.showOnlyActive:
+                    if (element.status === "RUNNING" && element.name.startsWith('t')) {
+                      element.hidden = false;
+                    } else {
+                      element.hidden = true;
+                    }
+                    break;
+                  case orderByType.showAllActiveInactive:
+                  default:
+                    if (element.name.startsWith('t')){
+                      element.hidden = false;
+                    } else {
+                      element.hidden = true;
+                    }
+                    break;
+                }                
+              });
+              currentTypeFilter = orderByType.radioTests;
+              break;
+            case orderByType.radioAll:
+              currentResult.forEach(function (element) {
+                switch(activeInactive) {
+                  case orderByType.showOnlyActive:
+                    if (element.status === "RUNNING") {
+                      element.hidden = false;
+                    } else {
+                      element.hidden = true;
+                    }
+                    break;
+                  case orderByType.showAllActiveInactive:
+                  default:
+                    element.hidden = false;
+                    break;                  
+                }                
+              });
+              currentTypeFilter = orderByType.radioAll;
+              break;
             default:
               break;
           }
         }                
+        // console.log(currentResult.filter(x => x.hidden === false));
         return {
           ...state,
           experiments: currentResult,
           currentOrderType: orderType,
+          activeInactiveFilter: activeInactive,
+          typeFilter: currentTypeFilter,
           pageSetup: true,          
         }
       }      
@@ -426,23 +560,27 @@ export default (state, action) => {
       }
     case SET_PAGINATED_RESULT:
       {
-        const experiments = state.experiments;
-        const currentPage = state.currentPage;
-        const numberPages = experiments ? Math.ceil(experiments.length/pageSize) : 0;
+        const experiments = state.experiments.filter(x => x.hidden === false);        
+        const numberPages = experiments ? Math.ceil(experiments.length/pageSize) : 1;
+        const currentPage = numberPages === 1 ? 1 :  state.currentPage;
+        // console.log("NumberPages " + numberPages);
+        // console.log("CurrentPage " + currentPage);
         const experimentsInPage = [];
         let resultCount = 0;
-        experiments.map((item, index) => {        
+        experiments.filter(x => x.hidden === false).map((item, index) => {        
           resultCount += 1;
           if ((index >= (currentPage - 1)*pageSize) && (index < (currentPage*pageSize))){
             experimentsInPage.push(item);
           };
           return null;
         });
+        // console.log("Experiments In Page");
+        // console.log(experimentsInPage);
         return {
           ...state,
           experimentsInPage: experimentsInPage,
           pageResultCount: resultCount,
-          numberPages: numberPages,
+          numberPages: numberPages,          
           pageSetup: false,
         }
       }

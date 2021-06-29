@@ -117,5 +117,10 @@ export const orderByType ={
   queuing: "QUEUING",
   running: "RUNNING",
   failed: "FAILED",
-  wrapper: "WRAPPER"
+  wrapper: "WRAPPER",
+  showOnlyActive: "ONLY ACTIVE",
+  showAllActiveInactive: "ACTIVE INACTIVE",
+  radioExperiments: "RADIO EXPERIMENTS",
+  radioTests: "RADIO TESTS",
+  radioAll: "RADIO ALL",
 }

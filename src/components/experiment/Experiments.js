@@ -59,7 +59,7 @@ const Experiments = () => {
         
         <div className='row row-cols-1 row-cols-md-3'>
           {experimentsInPage && experimentsInPage.length > 0 && 
-            experimentsInPage
+            experimentsInPage.filter(x => x.hidden === false)
               .map(experiment => (
                 <ExperimentItem key={experiment.id} experiment={experiment} summaries={summaries} isLoading={isLoading(loadingSummary, experiment.name)} getExperimentSummary={getExperimentSummary} />
               ))}
