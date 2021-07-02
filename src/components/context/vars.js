@@ -114,6 +114,8 @@ export const orderByType ={
   total_asc: "TOTAL_ASC",
   completed: "COMPLETED",
   completed_asc: "COMPLETED_ASC",
+  name: "NAME",
+  name_asc: "NAME_ASC",
   queuing: "QUEUING",
   running: "RUNNING",
   failed: "FAILED",

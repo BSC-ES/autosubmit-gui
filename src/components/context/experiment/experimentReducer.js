@@ -221,6 +221,16 @@ export default (state, action) => {
             case orderByType.wrapper:              
               currentResult.sort((a,b) => normalizeString(a.wrapper) < normalizeString(b.wrapper) ? 1 : -1);
               break;
+            case orderByType.name_asc:
+              currentResult.sort(function (a,b) {              
+                return ('' + a.name).localeCompare(b.name);
+              });
+              break;
+            case orderByType.name:
+              currentResult.sort(function (a,b) {
+                return ('' + b.name).localeCompare(a.name);
+              });
+              break;
             case orderByType.total:
               currentResult.sort((a,b) => { return normalizeInt(b.total) - normalizeInt(a.total) })
               break;

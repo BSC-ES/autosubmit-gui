@@ -47,6 +47,7 @@ const Experiments = () => {
                 <div className="btn-group" role="group" aria-label="Order">                  
                   <button type="button" className="btn btn-primary btn-sm" onClick={onOrderBy(currentOrderType === orderByType.total ? orderByType.total_asc : orderByType.total)}>Total Jobs {currentOrderType === orderByType.total ? <span>&#8595;</span> : <span>&#8593;</span>}</button>
                   <button type="button" className="btn btn-primary btn-sm" onClick={onOrderBy(currentOrderType === orderByType.completed ? orderByType.completed_asc : orderByType.completed)}>Completed Jobs {currentOrderType === orderByType.completed ? <span>&#8595;</span> : <span>&#8593;</span>}</button>
+                  <button type="button" className="btn btn-primary btn-sm" onClick={onOrderBy(currentOrderType === orderByType.name ? orderByType.name_asc : orderByType.name)}>Name {currentOrderType === orderByType.name ? <span>&#8595;</span> : <span>&#8593;</span>}</button>
                   <button type="button" className="btn btn-primary btn-sm" onClick={onOrderBy(orderByType.queuing)}>Queuing Jobs</button>
                   <button type="button" className="btn btn-primary btn-sm" onClick={onOrderBy(orderByType.running)}>Running Jobs</button>
                   <button type="button" className="btn btn-primary btn-sm" onClick={onOrderBy(orderByType.failed)}>Failed Jobs</button>   
