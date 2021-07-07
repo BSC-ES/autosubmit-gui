@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
 import TreeContext from "../context/tree/treeContext";
-import { openIconHistory } from "../context/utils";
+import { openIconHistory, creationDateToId } from "../context/utils";
 
 const  ExperimentRuns = () => {
   const experimentContext = useContext(ExperimentContext);
@@ -66,7 +66,7 @@ const  ExperimentRuns = () => {
                   Runs of <strong>{expid}</strong> <small className="text-muted">(The first row represents the current run.)</small>
                   {currentRunIdOnTree && !loadingPreviousRun &&                 
                 <small>
-                  &nbsp;&nbsp; Data from run {currentRunIdOnTree.runId} is displayed in the Tree View.
+                  &nbsp;&nbsp; Data from run {creationDateToId(String(currentRunIdOnTree.created), currentRunIdOnTree.runId)} is displayed in the Tree View.
                 </small>
                 }
                 {loadingPreviousRun && (
@@ -127,7 +127,7 @@ const  ExperimentRuns = () => {
                               </button>
                           )}                          
                           </td>
-                          <td>{item.run_id}</td>
+                          <td>{creationDateToId(String(item.created), item.run_id)}</td>
                           <td>{item.created}</td>
                           <td>{item.finish}</td>
                           <td className='text-right'>{item.submitted}</td>

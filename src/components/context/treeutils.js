@@ -1,3 +1,4 @@
+import { creationDateToId } from './utils';
 // runData: array of jobs from previous run
 // treedata: current experiment data (visualized in tree view)
 // fancyTree: fancyTree object from states
@@ -131,7 +132,7 @@ const traverseUpdate = (treeNode, currentMap, fancyTree, parentCompletedMap, par
 }
 
 export const buildRunTitle = (runId, meta, jobs_number_completed) => {
-  let runTitle = "Run " + runId;
+  let runTitle = "Run " + creationDateToId(String(meta.created), runId);
   // console.log(meta);
   if (meta){
     const { created, finished, completed, total } = meta;    

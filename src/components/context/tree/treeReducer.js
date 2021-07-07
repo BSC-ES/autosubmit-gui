@@ -406,7 +406,7 @@ export default (state, action) => {
         }
         return {
           ...state,
-          currentRunIdOnTree : {runId: runId, message: buildRunTitle(runId, meta, completed_jobs.length)},
+          currentRunIdOnTree : {runId: runId, created: meta.created, message: buildRunTitle(runId, meta, completed_jobs.length)},
           treedata: result,
           loadingTree: false,
           enabledTreeSearch: true,

@@ -305,3 +305,13 @@ export const normalizeInt = (input) => {
   } 
   return 0;
 }
+
+export const creationDateToId = (strCreationDate, intRunId) => {
+  // 2021-07-07-10:36:37
+  if (strCreationDate === null || strCreationDate.length === 0) {
+    return "210101-0000";
+  }
+  const creationDate = strCreationDate.split("-");
+  const code = creationDate[0].substr(2,2) + "" + creationDate[1] + "" + creationDate[2] + "-" + String(intRunId);
+  return code;
+}
