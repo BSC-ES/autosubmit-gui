@@ -312,6 +312,7 @@ export const creationDateToId = (strCreationDate, intRunId) => {
     return "210101-0000";
   }
   const creationDate = strCreationDate.split("-");
-  const code = creationDate[0].substr(2,2) + "" + creationDate[1] + "" + creationDate[2] + "-" + String(intRunId);
+  const timeDay = creationDate[3].split(":");
+  const code = creationDate[0].substr(2,2) + "" + creationDate[1] + "" + creationDate[2] + "" + timeDay[0] + "" + timeDay[1];
   return code;
 }
