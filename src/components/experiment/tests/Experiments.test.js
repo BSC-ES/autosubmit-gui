@@ -20,7 +20,8 @@ const experiments = {
           "status": "NOT RUNNING",
           "total": 0,
           "user": "mcastril",
-          "version": "3.7.3"
+          "version": "3.7.3",
+          "hidden": false,
       },
       {
           "completed": "NA",
@@ -31,7 +32,8 @@ const experiments = {
           "status": "NOT RUNNING",
           "total": "NA",
           "user": "mcastril",
-          "version": "3.11.0-hotfix"
+          "version": "3.11.0-hotfix",
+          "hidden": false,
       },
       {
           "completed": 0,
@@ -42,7 +44,8 @@ const experiments = {
           "status": "NOT RUNNING",
           "total": 19,
           "user": "mcastril",
-          "version": "3.12.1b"
+          "version": "3.12.1b",
+          "hidden": false,
       },
       {
           "completed": 243,
@@ -53,7 +56,8 @@ const experiments = {
           "status": "NOT RUNNING",
           "total": 243,
           "user": "mcastril",
-          "version": "3.13.0b0"
+          "version": "3.13.0b0",
+          "hidden": false,
       },
       {
           "completed": 51,
@@ -64,7 +68,8 @@ const experiments = {
           "status": "NOT RUNNING",
           "total": 51,
           "user": "mcastril",
-          "version": "3.12.1b0"
+          "version": "3.12.1b0",
+          "hidden": false,
       },
       {
           "completed": 4,
@@ -75,7 +80,8 @@ const experiments = {
           "status": "NOT RUNNING",
           "total": 8,
           "user": "mcastril",
-          "version": "3.13.0b0"
+          "version": "3.13.0b0",
+          "hidden": false,
       },
       {
           "completed": 4,
@@ -86,7 +92,8 @@ const experiments = {
           "status": "NOT RUNNING",
           "total": 5,
           "user": "mcastril",
-          "version": "3.13.0b0"
+          "version": "3.13.0b0",
+          "hidden": false,
       },
       {
           "completed": 0,
@@ -97,7 +104,8 @@ const experiments = {
           "status": "NOT RUNNING",
           "total": 1,
           "user": "mcastril",
-          "version": "3.13.0b0"
+          "version": "3.13.0b0",
+          "hidden": false,
       },
       {
           "completed": 5,
@@ -108,7 +116,8 @@ const experiments = {
           "status": "NOT RUNNING",
           "total": 5,
           "user": "mcastril",
-          "version": "3.13.0b0"
+          "version": "3.13.0b0",
+          "hidden": false,
       },
       {
           "completed": 9,
@@ -119,7 +128,8 @@ const experiments = {
           "status": "NOT RUNNING",
           "total": 9,
           "user": "mcastril",
-          "version": "3.13.0b0"
+          "version": "3.13.0b0",
+          "hidden": false,
       },
       {
           "completed": 9,
@@ -130,7 +140,8 @@ const experiments = {
           "status": "NOT RUNNING",
           "total": 9,
           "user": "mcastril",
-          "version": "3.13.0b0"
+          "version": "3.13.0b0",
+          "hidden": false,
       },
       {
           "completed": 9,
@@ -141,7 +152,8 @@ const experiments = {
           "status": "NOT RUNNING",
           "total": 9,
           "user": "mcastril",
-          "version": "3.13.0b0"
+          "version": "3.13.0b0",
+          "hidden": false,
       },
       {
           "completed": 9,
@@ -152,7 +164,8 @@ const experiments = {
           "status": "NOT RUNNING",
           "total": 9,
           "user": "mcastril",
-          "version": "3.13.0b0"
+          "version": "3.13.0b0",
+          "hidden": false,
       },
       {
           "completed": 9,
@@ -163,7 +176,8 @@ const experiments = {
           "status": "NOT RUNNING",
           "total": 9,
           "user": "mcastril",
-          "version": "3.13.0b0"
+          "version": "3.13.0b0",
+          "hidden": false,
       },
       {
           "completed": 9,
@@ -174,7 +188,8 @@ const experiments = {
           "status": "NOT RUNNING",
           "total": 9,
           "user": "mcastril",
-          "version": "3.13.0b0"
+          "version": "3.13.0b0",
+          "hidden": false,
       },
       {
           "completed": 4,
@@ -185,7 +200,8 @@ const experiments = {
           "status": "NOT RUNNING",
           "total": 9,
           "user": "mcastril",
-          "version": "3.13.0b0"
+          "version": "3.13.0b0",
+          "hidden": false,
       },
       {
           "completed": 4,
@@ -196,7 +212,8 @@ const experiments = {
           "status": "NOT RUNNING",
           "total": 9,
           "user": "mcastril",
-          "version": "3.13.0b0"
+          "version": "3.13.0b0",
+          "hidden": false,
       },
       {
           "completed": 32,
@@ -207,7 +224,8 @@ const experiments = {
           "status": "NOT RUNNING",
           "total": 147,
           "user": "mcastril",
-          "version": "3.12.0"
+          "version": "3.12.0",
+          "hidden": false,
       },
       {
           "completed": 0,
@@ -218,7 +236,8 @@ const experiments = {
           "status": "NOT RUNNING",
           "total": 21,
           "user": "mcastril",
-          "version": "3.13.0b0"
+          "version": "3.13.0b0",
+          "hidden": false,
       }
   ]
 };
@@ -242,7 +261,7 @@ afterEach(() => {
 it("Experiments renders with content", () => {
   
   act(() => {
-    render(<Router><ExperimentContext.Provider value={{ experiments: experiments.experiment, searchExperiments: () => null, getCurrentRunning: () => null, experimentRunning: true, getSummaries: () => null, clearExperiments: () => null, loading: false, getExperimentSummary: () => null, summaries: new Map(), loadingSummary: new Map()}}>
+    render(<Router><ExperimentContext.Provider value={{ experiments: experiments.experiment, experimentsInPage: experiments.experiment, searchExperiments: () => null, getCurrentRunning: () => null, experimentRunning: true, getSummaries: () => null, clearExperiments: () => null, loading: false, getExperimentSummary: () => null, summaries: new Map(), loadingSummary: new Map(), numberPages: 1, currentPage: 1, setCurrentPage: () => null, setPaginatedResult: () => null }}>
           <AlertContext.Provider 
           value={{ setAlert: () => null }}>
             <Experiments />

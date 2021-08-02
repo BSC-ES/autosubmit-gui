@@ -35,6 +35,7 @@ it("TreeControl renders with content", () => {
       getExperimentTreePkl: () => null, 
       loadingTreeRefresh: false, 
       setAutoUpdateTreePkl: () => null, 
+      setWarningActive: () => null,
       startAutoUpdateTreePkl: false, 
       loadingTreePkl: false }}>
         <TreeControl />

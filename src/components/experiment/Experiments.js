@@ -8,7 +8,20 @@ import { orderByType } from "../context/vars";
 
 const Experiments = () => {
   const experimentContext = useContext(ExperimentContext);
-  const { loading, experiments, summaries, loadingSummary, getExperimentSummary, currentPage, setPaginatedResult, experimentsInPage, orderExperimentsInResult, pageSetup, currentOrderType } = experimentContext;
+  const { loading, 
+    experiments, 
+    summaries, 
+    loadingSummary, 
+    getExperimentSummary, 
+    currentPage, 
+    setPaginatedResult, 
+    experimentsInPage, 
+    orderExperimentsInResult, 
+    pageSetup, 
+    currentOrderType,
+    activeInactiveFilter,
+    typeFilter,
+    currentSearchString } = experimentContext;
 
   const isLoading = (loadingSummaries, name) => {    
     if (loadingSummaries && name){
@@ -37,10 +50,13 @@ const Experiments = () => {
   } else {
     // Render one Experiment Item for each item in experiments.
     // Order them by status so the ACTIVE ones are shown first.
-    return (
+    const totalCount = experiments ? experiments.length : 0;
+    const filteredCount = experiments ? experiments.filter(x => x.hidden === false).length : 0;
+
+    return (      
       <div className='container'>      
         <div className="d-flex flex-wrap row-hl">
-            <Pagination />      
+            <Pagination />
             {experimentsInPage && experimentsInPage.length > 0 && (
               <div className="item-hl ml-auto mb-1">
                 Order By:{" "}
@@ -64,6 +80,26 @@ const Experiments = () => {
               .map(experiment => (
                 <ExperimentItem key={experiment.id} experiment={experiment} summaries={summaries} isLoading={isLoading(loadingSummary, experiment.name)} getExperimentSummary={getExperimentSummary} />
               ))}
+        </div>
+        <div className="row">          
+            <div className="col">                
+              {/* {(experimentsInPage || experimentsInPage.length <= 0) && currentSearchString && <span className="px-1 bg-secondary text-dark rounded">No results.</span>} */}
+              {currentSearchString ? 
+              <span className="px-1 ml-1 bg-secondary text-dark rounded"> 
+                {(experimentsInPage && filteredCount > 0) ? 
+                <span>Considering <strong>{filteredCount}</strong> of  <strong>{totalCount}</strong> results for: <i>{currentSearchString}</i></span> 
+                : <i>No results</i>} 
+              </span> 
+              : <span className="px-1 ml-1 bg-secondary text-dark rounded">
+                {(experimentsInPage && filteredCount > 0) ? 
+                <span>Considering <strong>{filteredCount}</strong> of  <strong>{totalCount}</strong> active experiments</span> 
+                : <i>No results</i>}
+                </span>
+              }                
+              {typeFilter && <span className="px-1 ml-1 bg-secondary text-dark rounded">Type of Experiment: <strong>{typeFilter}</strong></span>}  
+              {activeInactiveFilter && <span className="px-1 ml-1 bg-secondary text-dark rounded">Status: <strong>{activeInactiveFilter}</strong></span>}               
+              {currentOrderType && <span className="px-1 ml-1 bg-secondary text-dark rounded">Ordered by: <strong>{currentOrderType}</strong></span>}               
+            </div>          
         </div>
       </div>
     );

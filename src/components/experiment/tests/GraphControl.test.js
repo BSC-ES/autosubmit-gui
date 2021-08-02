@@ -35,6 +35,7 @@ it("GraphControl renders with content", () => {
           enabledGraphSearch: true, 
           getExperimentPkl: () => null, 
           setAutoUpdatePkl: () => null, 
+          setWarningActive: () => null,
           startAutoUpdatePkl: false, 
           loadingPkl: false }}>
             <GraphControl />
@@ -55,14 +56,15 @@ it("GraphControl renders with content", () => {
 it("GraphControl renders when experiment is not running", () => {
   
   act(() => {
-    render(<Router><ExperimentContext.Provider value={{ experiment: experiment, summaries: new Map(), loadingSummary: new Map(), experimentRunning:false}}>
+    render(<Router><ExperimentContext.Provider value={{ experiment: experiment, summaries: new Map(), loadingSummary: new Map(), experimentRunning:false,  }}>
         <TreeContext.Provider value={{setStartSelection:() => null}}>
           <GraphContext.Provider 
           value={{data: {}, 
           getExperimentGraph: () => null, 
           enabledGraphSearch: true, 
+          setWarningActive: () => null,
           getExperimentPkl: () => null, 
-          setAutoUpdatePkl: () => null, 
+          setAutoUpdatePkl: () => null,           
           startAutoUpdatePkl: false, 
           loadingPkl: false }}>
             <GraphControl />

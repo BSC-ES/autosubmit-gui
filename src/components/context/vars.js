@@ -109,20 +109,55 @@ export const localStorageExperimentActiveCheck = "activeCheckSearch";
 
 export const pageSize = 12;
 
-export const orderByType ={
-  total: "TOTAL",
-  total_asc: "TOTAL_ASC",
-  completed: "COMPLETED",
-  completed_asc: "COMPLETED_ASC",
-  name: "NAME",
-  name_asc: "NAME_ASC",
-  queuing: "QUEUING",
-  running: "RUNNING",
-  failed: "FAILED",
-  wrapper: "WRAPPER",
-  showOnlyActive: "ONLY ACTIVE",
-  showAllActiveInactive: "ACTIVE INACTIVE",
-  radioExperiments: "RADIO EXPERIMENTS",
-  radioTests: "RADIO TESTS",
-  radioAll: "RADIO ALL",
+export const orderByType = {
+  total: "Total Number of Jobs",
+  total_asc: "Total Number of Jobs (Asc)",
+  completed: "Number of Completed Jobs",
+  completed_asc: "Number of Completed Jobs (Asc)",
+  name: "Name of Experiment",
+  name_asc: "Name of Experiments (Asc)",
+  queuing: "Number of Queuing Jobs",
+  running: "Number of Running Jobs",
+  failed: "Number of Failed Jobs",
+  wrapper: "Name of Wrapper",
+  showOnlyActive: "Only Active",
+  showAllActiveInactive: "Active & Inactive",
+  radioExperiments: "Only Experiments",
+  radioTests: "Only Tests",
+  radioAll: "Experiments & Tests",
+}
+
+export const simpleExperimentType = {
+  Experiment: "experiment",
+  Test: "test",
+  All: "all"
+}
+
+export const simpleActiveStatus = {
+  All: "all",
+  Active: "active",
+}
+
+export const simpleActiveStatusToComplex = (simple) => {
+  switch (simple){
+    case simpleActiveStatus.All:
+      return orderByType.showAllActiveInactive;
+    case simpleActiveStatus.Active:
+      return orderByType.showOnlyActive;
+    default:
+      return null;
+  }
+}
+
+export const simpleTypeToComplex = (simple) => {  
+  switch(simple) {
+    case simpleExperimentType.Experiment:
+      return orderByType.radioExperiments;
+    case simpleExperimentType.Test:
+      return orderByType.radioTests;    
+    case simpleExperimentType.All:    
+      return orderByType.radioAll;
+    default:
+      return null;
+  }  
 }

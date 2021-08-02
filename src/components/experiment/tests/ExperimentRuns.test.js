@@ -304,7 +304,7 @@ it("ExperimentItem renders with content", () => {
   
   act(() => {
     render(<Router><ExperimentContext.Provider value={{ experiment: experiment, getExperimentRuns: () => null, experimentRuns: runs }}>
-        <TreeContext.Provider value={{ getExperimentRunJobData: () => null, fancyTree: {}, startAutoUpdateTreePkl: false, loadingPreviousRun: false, currentRunIdOnTree: {runId: 1, message: "None"} }}>
+        <TreeContext.Provider value={{ getExperimentRunJobData: () => null, fancyTree: {}, startAutoUpdateTreePkl: false, loadingPreviousRun: false, currentRunIdOnTree: {runId: 1, message: "None", created: "2021-01-01-10:10:10"} }}>
             <ExperimentRuns />
         </TreeContext.Provider>        
       </ExperimentContext.Provider></Router>, container);

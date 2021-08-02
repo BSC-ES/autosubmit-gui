@@ -48,7 +48,7 @@ import {
   ORDER_EXPERIMENTS_RESULT,
 } from "../types";
 
-import { AUTOSUBMIT_API_SOURCE, DEBUG, ERROR_MESSAGE, NOAPI, localStorageExperimentTypeSearch, localStorageExperimentActiveCheck } from "../vars";
+import { AUTOSUBMIT_API_SOURCE, DEBUG, ERROR_MESSAGE, NOAPI, localStorageExperimentTypeSearch, localStorageExperimentActiveCheck, orderByType } from "../vars";
 
 import { timeStampToDate, errorEsarchiveStatus } from "../utils";
 
@@ -95,7 +95,8 @@ const ExperimentState = (props) => {
     currentPage: 1,
     numberPages: 0,
     pageSetup: false,
-    curerntOrderType: null,
+    currentOrderType: null,
+    currentSearchString: null,
   };
 
   const [state, dispatch] = useReducer(ExperimentReducer, initialState);
@@ -120,7 +121,7 @@ const ExperimentState = (props) => {
     }  
     dispatch({
       type: SEARCH_EXPERIMENTS,
-      payload: result,
+      payload: {result: result, searchText: text, expType: expType, activeCheck: activeCheck },
     });
   };
 
@@ -140,7 +141,7 @@ const ExperimentState = (props) => {
 
     dispatch({
       type: SEARCH_BY_OWNER,
-      payload: result,
+      payload: {result: result, searchText: owner, expType: expType, activeCheck: activeCheck},
     })
   }
 
@@ -291,6 +292,8 @@ const ExperimentState = (props) => {
   };
 
   const getCurrentRunning = async () => {
+    localStorage.setItem(localStorageExperimentTypeSearch, orderByType.radioAll);
+    localStorage.setItem(localStorageExperimentActiveCheck, orderByType.showAllActiveInactive);
     setLoading();
     let result = null;
     if (NOAPI){
@@ -601,6 +604,7 @@ const ExperimentState = (props) => {
         numberPages: state.numberPages,
         currentOrderType: state.currentOrderType,
         typeFilter: state.typeFilter,
+        currentSearchString: state.currentSearchString,
         setAutoUpdateRun,
         searchExperiments,
         searchExperimentsByOwner, 

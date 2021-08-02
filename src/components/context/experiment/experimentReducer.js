@@ -49,7 +49,7 @@ import {
   normalizeInt
 } from "../utils";
 
-import { pageSize, orderByType } from "../vars";
+import { pageSize, orderByType, simpleTypeToComplex, simpleActiveStatusToComplex } from "../vars";
 
 /* eslint import/no-anonymous-default-export: ["error", {"allowArrowFunction": true}] */
 export default (state, action) => {
@@ -131,25 +131,29 @@ export default (state, action) => {
       return {
         ...state,
       };
+    // case SEARCH_EXPERIMENTS:
+    //   {
+    //     const { result, searchText, expType, activeCheck } = action.payload;
+    //     const experiments = result;
+    //     if (experiments) {
+    //       experiments.sort((a, b) => (a.status > b.status ? -1 : 1));
+    //       experiments.forEach(function(element){
+    //         element.hidden = false;
+    //       });
+    //     }
+    //     return {
+    //       ...state,
+    //       experiments: experiments,
+    //       loading: false,
+    //       currentPage: 1,
+    //       currentSearchString: searchText,
+    //     };
+    //   }
     case SEARCH_EXPERIMENTS:
-      {
-        const experiments = action.payload;
-        if (experiments) {
-          experiments.sort((a, b) => (a.status > b.status ? -1 : 1));
-          experiments.forEach(function(element){
-            element.hidden = false;
-          });
-        }
-        return {
-          ...state,
-          experiments: experiments,
-          loading: false,
-          currentPage: 1,
-        };
-      }
     case SEARCH_BY_OWNER:
       {
-        const experiments = action.payload;
+        const { result, searchText, expType, activeCheck } = action.payload;
+        const experiments = result;
         if (experiments) {
           experiments.sort((a, b) => (a.status > b.status ? -1 : 1));
           experiments.forEach(function(element){
@@ -161,6 +165,10 @@ export default (state, action) => {
           experiments: experiments,
           loading: false,
           currentPage: 1,
+          currentOrderType: null,
+          typeFilter: simpleTypeToComplex(expType),
+          activeInactiveFilter: simpleActiveStatusToComplex(activeCheck),
+          currentSearchString: searchText,
         }
       }
     case CURRENT_RUNNING:
@@ -177,6 +185,10 @@ export default (state, action) => {
           experiments: experiments,
           loading: false,
           currentPage: 1,
+          currentSearchString: null,
+          currentOrderType: null,
+          activeInactiveFilter: orderByType.showOnlyActive,
+          typeFilter: orderByType.radioAll,
         };
       }
     case SET_AUTOUPDATE_RUN:
@@ -208,10 +220,15 @@ export default (state, action) => {
         loading: false,
         currentPage: 1,
         numberPages: 0,
+        currentSearchString: null,
+        currentOrderType: null,
+        activeInactiveFilter: null,
+        typeFilter: null,
       };
     case ORDER_EXPERIMENTS_RESULT:
       {
         const orderType = action.payload;
+        let orderedByDescription = null;
         let currentResult = state.experiments;        
         let activeInactive = state.activeInactiveFilter;
         let currentTypeFilter = state.typeFilter;
@@ -220,37 +237,47 @@ export default (state, action) => {
           switch(orderType) {
             case orderByType.wrapper:              
               currentResult.sort((a,b) => normalizeString(a.wrapper) < normalizeString(b.wrapper) ? 1 : -1);
+              orderedByDescription = orderByType.wrapper;
               break;
             case orderByType.name_asc:
               currentResult.sort(function (a,b) {              
                 return ('' + a.name).localeCompare(b.name);
               });
+              orderedByDescription = orderByType.name_asc;
               break;
             case orderByType.name:
               currentResult.sort(function (a,b) {
                 return ('' + b.name).localeCompare(a.name);
               });
+              orderedByDescription = orderByType.name;
               break;
             case orderByType.total:
-              currentResult.sort((a,b) => { return normalizeInt(b.total) - normalizeInt(a.total) })
+              currentResult.sort((a,b) => { return normalizeInt(b.total) - normalizeInt(a.total) });
+              orderedByDescription = orderByType.total;
               break;
             case orderByType.total_asc:
-              currentResult.sort((a,b) => { return normalizeInt(a.total) - normalizeInt(b.total) })
+              currentResult.sort((a,b) => { return normalizeInt(a.total) - normalizeInt(b.total) });
+              orderedByDescription = orderByType.total_asc;
               break;
             case orderByType.completed: 
-              currentResult.sort((a,b) => { return normalizeInt(b.completed) - normalizeInt(a.completed) })
+              currentResult.sort((a,b) => { return normalizeInt(b.completed) - normalizeInt(a.completed) });
+              orderedByDescription = orderByType.completed;
               break;
             case orderByType.completed_asc:
-              currentResult.sort((a,b) => { return normalizeInt(a.completed) - normalizeInt(b.completed) })
+              currentResult.sort((a,b) => { return normalizeInt(a.completed) - normalizeInt(b.completed) });
+              orderedByDescription = orderByType.completed_asc;
               break;
             case orderByType.running:
-              currentResult.sort((a,b) => { return normalizeInt(b.running) - normalizeInt(a.running) })
+              currentResult.sort((a,b) => { return normalizeInt(b.running) - normalizeInt(a.running) });
+              orderedByDescription = orderByType.running;
               break;
             case orderByType.queuing:
-              currentResult.sort((a,b) => { return normalizeInt(b.queuing) - normalizeInt(a.queuing) })
+              currentResult.sort((a,b) => { return normalizeInt(b.queuing) - normalizeInt(a.queuing) });
+              orderedByDescription = orderByType.queuing;
               break;
             case orderByType.failed:
-              currentResult.sort((a,b) => { return normalizeInt(b.failed) - normalizeInt(a.failed) })
+              currentResult.sort((a,b) => { return normalizeInt(b.failed) - normalizeInt(a.failed) });
+              orderedByDescription = orderByType.failed;
               break;
             case orderByType.showOnlyActive:
               currentResult.forEach(function (element) {
@@ -315,6 +342,7 @@ export default (state, action) => {
                     } else {
                       element.hidden = true;
                     }
+                    activeInactive = orderByType.showOnlyActive;
                     break;
                   case orderByType.showAllActiveInactive:
                   default:
@@ -323,6 +351,7 @@ export default (state, action) => {
                     } else {
                       element.hidden = true;
                     }
+                    activeInactive = orderByType.showAllActiveInactive;
                     break;                  
                 }                
               });
@@ -337,6 +366,7 @@ export default (state, action) => {
                     } else {
                       element.hidden = true;
                     }
+                    activeInactive = orderByType.showOnlyActive;
                     break;
                   case orderByType.showAllActiveInactive:
                   default:
@@ -345,6 +375,7 @@ export default (state, action) => {
                     } else {
                       element.hidden = true;
                     }
+                    activeInactive = orderByType.showAllActiveInactive;
                     break;
                 }                
               });
@@ -359,10 +390,12 @@ export default (state, action) => {
                     } else {
                       element.hidden = true;
                     }
+                    activeInactive = orderByType.showOnlyActive;
                     break;
                   case orderByType.showAllActiveInactive:
                   default:
                     element.hidden = false;
+                    activeInactive = orderByType.showAllActiveInactive;
                     break;                  
                 }                
               });
@@ -376,8 +409,9 @@ export default (state, action) => {
         return {
           ...state,
           experiments: currentResult,
-          currentOrderType: orderType,
+          currentOrderType: orderedByDescription,
           activeInactiveFilter: activeInactive,
+          currentPage: 1,
           typeFilter: currentTypeFilter,
           pageSetup: true,          
         }

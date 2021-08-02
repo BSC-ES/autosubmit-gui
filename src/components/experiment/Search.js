@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
 import AlertContext from "../context/alert/alertContext";
-import { localStorageExperimentTypeSearch, localStorageExperimentActiveCheck, orderByType } from "../context/vars";
+import { localStorageExperimentTypeSearch, localStorageExperimentActiveCheck, orderByType, simpleActiveStatusToComplex } from "../context/vars";
 
 const Search = ({ specificSearch }) => {
   const experimentContext = useContext(ExperimentContext);
@@ -11,13 +11,13 @@ const Search = ({ specificSearch }) => {
 
     const currentExpTypeChoice = localStorage.getItem(localStorageExperimentTypeSearch);
     const currentActiveCheck = localStorage.getItem(localStorageExperimentActiveCheck);
-    if (currentExpTypeChoice){
+    if (currentExpTypeChoice){      
       setTypeExperiment(currentExpTypeChoice);
     } else {
       setTypeExperiment("all");
     }
 
-    if (currentActiveCheck) {
+    if (currentActiveCheck) {      
       setActiveChoice(currentActiveCheck);
     } else {
       setActiveChoice("all");
@@ -78,10 +78,10 @@ const Search = ({ specificSearch }) => {
   const onChangeActiveCheck = (e) => {
     const inputStatus = e.target.value;
     // console.log(inputStatus);
-    experimentContext.orderExperimentsInResult(inputStatus === "active" ? orderByType.showOnlyActive : orderByType.showAllActiveInactive);
+    experimentContext.orderExperimentsInResult(simpleActiveStatusToComplex(inputStatus));
     setActiveChoice(e.target.value);
   };
-
+  
   return (
     <div className='container'>
       <div className='row-hl d-flex flex-wrap mb-2'> 
