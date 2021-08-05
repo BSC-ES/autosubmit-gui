@@ -23,8 +23,7 @@ const StatsState = (props) => {
   };
 
   const localserver = AUTOSUBMIT_API_SOURCE;
-  //const localserver = "https://earth.bsc.es/autosubmitapi/";
-  //const localserver = "http://84.88.185.94:8081";
+
   const debug = DEBUG;
   const [state, dispatch] = useReducer(StatsReducer, initialState);
 
@@ -51,8 +50,13 @@ const StatsState = (props) => {
       );
     }
     
-    let result = [];
-    var requestResult = null;
+    let resultQueued = [["Jobs", "Queue Time"]];
+    let resultRun = [["Jobs", "Run Time"]];
+    let resultNumberFailedJobs = [["Jobs", "# Failed Attempts"]];
+    let resultFailedQueued = [["Jobs", "Failed Queue Time"]];
+    let resultFailedRun = [["Jobs", "Failed Run Time"]];
+
+    let requestResult = null;
     let ticks = [];
     debug && console.log(res.data);
     if (res.data) {
@@ -62,24 +66,32 @@ const StatsState = (props) => {
         setIsError(false, "");
       }
 
-      result.push([
-        "Jobs",
-        "Queued",
-        "Run",
-        "Failed Jobs",
-        "Failed Queued",
-        "Fail Run",
-      ]);
+      // resultQueued.push([
+      //   "Jobs",
+      //   "Queued",
+      //   "Run",
+      //   "Failed Jobs",
+      //   "Failed Queued",
+      //   "Fail Run",
+      // ]);
 
-      for (var i = 0; i < res.data.jobs.length; i++) {
-        result.push([
-          { v: i + 1, f: res.data.jobs[i] },
-          res.data.stats.queued[i],
-          res.data.stats.run[i],
-          res.data.stats.failed_jobs[i],
-          res.data.stats.fail_queued[i],
-          res.data.stats.fail_run[i],
+      for (let i = 0; i < res.data.jobs.length; i++) {
+        resultQueued.push([
+          res.data.jobs[i],
+          res.data.stats.queued[i]
         ]);
+        resultRun.push([
+          res.data.jobs[i],
+          res.data.stats.run[i]]);
+        resultNumberFailedJobs.push([
+          res.data.jobs[i],
+          res.data.stats.failed_jobs[i]]);
+        resultFailedQueued.push([
+          res.data.jobs[i],
+          res.data.stats.fail_queued[i]]);
+        resultFailedRun.push([
+          res.data.jobs[i],
+          res.data.stats.fail_run[i]])
         ticks.push({ v: i + 1, f: res.data.jobs[i] });
       }
       requestResult = res.data;
@@ -88,9 +100,11 @@ const StatsState = (props) => {
     // console.log(result);
     // console.log(requestResult);
     // console.log(ticks);
+    // console.log(requestResult);
+    // console.log(result);
     dispatch({
       type: GET_EXPERIMENT_STATS,
-      payload: { result, requestResult, ticks },
+      payload: { result: { resultQueued, resultRun, resultNumberFailedJobs, resultFailedQueued, resultFailedRun }, requestResult, ticks },
     });
   };
 

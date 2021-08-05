@@ -17,10 +17,12 @@ const StatsSearch = () => {
     isError,
     errorMessage,
     totaldata,
-    ticksdata,
   } = statsContext;
   const { experiment } = experimentContext;
-
+  // let resultQueued, resultRun, resultNumberFailedJobs, resultFailedQueued, resultFailedRun;
+  // if (statdata) {
+  //   { resultQueued, resultRun, resultNumberFailedJobs, resultFailedQueued, resultFailedRun } = statdata;
+  // }
   // const data = [
   //     ["Year", "Visitations", "Crashes", { role: "style" }],
   //     ["2010", 10, 30, "color: gray"],
@@ -38,20 +40,31 @@ const StatsSearch = () => {
   // const jsonTicks = JSON.stringify({ticksdata});
   // console.log(jsonTicks['ticksdata'])
   const options = {
-    chartArea: { width: "90%", height: "700px" },
-    hAxis: {
-      title: "Jobs",
-      ticks: ticksdata, //ticks: [{v:1, f:'job_1-2323'}, {v:2, f:'job_other'}],
-    },
+    chartArea: { width: "62%"},
     vAxis: {
+      title: "Jobs",
+      textStyle: {
+        fontSize: 14,
+        bold: true,
+        color: '#848484'
+      },
+      titleTextStyle: {
+        fontSize: 14,
+        bold: true,
+        color: '#848484'
+      }
+       //ticks: [{v:1, f:'job_1-2323'}, {v:2, f:'job_other'}],
+    },
+    hAxis: {
       title: "Hours",
+      // ticks: ticksdata,
     },
     legend: {
       position: "top",
     },
     explorer: {
-      actions: ["dragToZoom", "rightClickToReset"],
-      axis: "horizontal",
+      //actions: ["dragToZoom", "rightClickToReset"],
+      //axis: "horizontal",
       // maxZoomIn: 4.0,
     },
   };
@@ -161,13 +174,48 @@ const StatsSearch = () => {
             </div>
           )}
           {loading && <Spinner />}
-          {statdata && !isError && (
+          {statdata && statdata.resultQueued && !isError && (
             <Chart
-              chartType='ColumnChart'
+              chartType='BarChart'
               loader={<div>Loading Chart</div>}
               width={"100%"}
-              height={"700px"}
-              data={statdata}
+              data={statdata.resultQueued}
+              options={options}
+            />
+          )}
+          {statdata && statdata.resultRun && !isError && (
+            <Chart
+              chartType='BarChart'
+              loader={<div>Loading Chart</div>}
+              width={"100%"}
+              data={statdata.resultRun}
+              options={options}
+            />
+          )}
+          {statdata && statdata.resultNumberFailedJobs && !isError && (
+            <Chart
+              chartType='BarChart'
+              loader={<div>Loading Chart</div>}
+              width={"100%"}
+              data={statdata.resultNumberFailedJobs}
+              options={options}
+            />
+          )}
+          {statdata && statdata.resultFailedQueued && !isError && (
+            <Chart
+              chartType='BarChart'
+              loader={<div>Loading Chart</div>}
+              width={"100%"}
+              data={statdata.resultFailedQueued}
+              options={options}
+            />
+          )}
+          {statdata && statdata.resultFailedRun && !isError && (
+            <Chart
+              chartType='BarChart'
+              loader={<div>Loading Chart</div>}
+              width={"100%"}
+              data={statdata.resultFailedRun}
               options={options}
             />
           )}
