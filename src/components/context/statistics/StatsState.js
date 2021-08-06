@@ -76,27 +76,38 @@ const StatsState = (props) => {
       // ]);
 
       for (let i = 0; i < res.data.jobs.length; i++) {
-        resultQueued.push([
-          res.data.jobs[i],
-          res.data.stats.queued[i]
-        ]);
-        resultRun.push([
-          res.data.jobs[i],
-          res.data.stats.run[i]]);
-        resultNumberFailedJobs.push([
-          res.data.jobs[i],
-          res.data.stats.failed_jobs[i]]);
-        resultFailedQueued.push([
-          res.data.jobs[i],
-          res.data.stats.fail_queued[i]]);
-        resultFailedRun.push([
-          res.data.jobs[i],
-          res.data.stats.fail_run[i]])
+        if (res.data.stats.queued[i] > 0) {
+          resultQueued.push([
+            res.data.jobs[i],
+            res.data.stats.queued[i]
+          ]);
+        }
+        if (res.data.stats.run[i] > 0) {
+          resultRun.push([
+            res.data.jobs[i],
+            res.data.stats.run[i]]);
+        }
+        if (res.data.stats.failed_jobs[i] > 0) {
+          resultNumberFailedJobs.push([
+            res.data.jobs[i],
+            res.data.stats.failed_jobs[i]]);
+        }
+        if (res.data.stats.fail_queued[i] > 0) {
+          resultFailedQueued.push([
+            res.data.jobs[i],
+            res.data.stats.fail_queued[i]]);
+        }
+        if (res.data.stats.fail_run[i] > 0) {
+          resultFailedRun.push([
+            res.data.jobs[i],
+            res.data.stats.fail_run[i]]);
+        }
         ticks.push({ v: i + 1, f: res.data.jobs[i] });
       }
       requestResult = res.data;
     }
-    //console.log(ticks);
+    // console.log(resultQueued);
+    // console.log(ticks);
     // console.log(result);
     // console.log(requestResult);
     // console.log(ticks);

@@ -14,6 +14,7 @@ export default (state, action) => {
             };
         case GET_EXPERIMENT_STATS:
             const { result, requestResult, ticks } = action.payload;
+            // console.log(result);
             return {
                 ...state,
                 statdata: result,
