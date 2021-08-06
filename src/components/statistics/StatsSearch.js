@@ -22,19 +22,21 @@ const StatsSearch = () => {
 
   // const jsonTicks = JSON.stringify({ticksdata});
   // console.log(jsonTicks['ticksdata'])
-  const factorHeight = 28;
-  const minRows = 10;
-  const minHeight = 400;
-  const resultQueuedHeight = statdata && statdata.resultQueued.length > minRows ? String(statdata.resultQueued.length*factorHeight) : minHeight;
-  const resultRunHeight = statdata && statdata.resultRun.length > minRows ? String(statdata.resultRun.length*factorHeight) : minHeight;
-  const resultNumberFailedJobsHeight = statdata && statdata.resultNumberFailedJobs.length > minRows ? String(statdata.resultNumberFailedJobs.length*factorHeight) : minHeight;
-  const resultFailedQueuedHeight = statdata && statdata.resultFailedQueued.length > minRows ? String(statdata.resultFailedQueued.length*factorHeight) : minHeight;
-  const resultFailedRunHeight = statdata && statdata.resultFailedRun.length > minRows ? String(statdata.resultFailedRun.length*factorHeight) : minHeight;
+  const factorHeight = 30;
+  const minRows = 1;
+  const minHeight = 130;
+  const headerHeight = 100;
+  const resultQueuedHeight = statdata && statdata.resultQueued.length > minRows ? String(statdata.resultQueued.length*factorHeight + headerHeight) : minHeight;
+  const resultRunHeight = statdata && statdata.resultRun.length > minRows ? String(statdata.resultRun.length*factorHeight + headerHeight) : minHeight;
+  const resultNumberFailedJobsHeight = statdata && statdata.resultNumberFailedJobs.length > minRows ? String(statdata.resultNumberFailedJobs.length*factorHeight + headerHeight) : minHeight;
+  const resultFailedQueuedHeight = statdata && statdata.resultFailedQueued.length > minRows ? String(statdata.resultFailedQueued.length*factorHeight + headerHeight) : minHeight;
+  const resultFailedRunHeight = statdata && statdata.resultFailedRun.length > minRows ? String(statdata.resultFailedRun.length*factorHeight + headerHeight) : minHeight;
   //console.log(resultQueuedHeight);
+  // console.log(statdata.resultFailedQueued);
 
   const resultQueuedOptions = {
     title: "Queue Time per Job",
-    chartArea: { height: "80%", width: "62%"},
+    chartArea: { height: resultQueuedHeight - headerHeight, width: "62%"},
     colors: [queueColor.background],            
     vAxis: {
       title: "Jobs",
@@ -44,7 +46,7 @@ const StatsSearch = () => {
     },
     hAxis: {
       title: "Hours",
-
+      minValue: 0,
     },        
     width: "100%",
     height: resultQueuedHeight,
@@ -52,7 +54,7 @@ const StatsSearch = () => {
 
   const resultRunOptions = {
     title: "Run Time per Job",
-    chartArea: { height: "80%", width: "62%"},
+    chartArea: { height: resultRunHeight - headerHeight, width: "62%"},
     colors: [runningColor.background],            
     vAxis: {
       title: "Jobs",
@@ -62,6 +64,7 @@ const StatsSearch = () => {
     },
     hAxis: {
       title: "Hours",
+      minValue: 0,
     },        
     width: "100%",
     height: resultRunHeight,
@@ -69,7 +72,7 @@ const StatsSearch = () => {
 
   const resultNumberFailedJobsOptions = {
     title: "Number of Attempts per Job",
-    chartArea: { height: "80%", width: "62%"},
+    chartArea: { height: resultNumberFailedJobsHeight - headerHeight, width: "62%"},
     colors: [failedColor.background],            
     vAxis: {
       title: "Jobs",
@@ -80,6 +83,7 @@ const StatsSearch = () => {
     hAxis: {
       title: "Attempts", 
       format: "#", 
+      minValue: 0,
     },        
     width: "100%",
     height: resultNumberFailedJobsHeight,
@@ -87,7 +91,7 @@ const StatsSearch = () => {
 
   const resultFailedQueuedOptions = {
     title: "Queue Time for Failed Attempts per Job",
-    chartArea: { height: "80%", width: "62%"},
+    chartArea: { height: resultFailedQueuedHeight - headerHeight, width: "62%"},
     colors: ["salmon"],            
     vAxis: {
       title: "Jobs",
@@ -96,7 +100,8 @@ const StatsSearch = () => {
       },
     },
     hAxis: {
-      title: "Hours",      
+      title: "Hours",  
+      minValue: 0,    
     },        
     width: "100%",
     height: resultFailedQueuedHeight,
@@ -104,7 +109,7 @@ const StatsSearch = () => {
 
   const resultFailedRunOptions = {
     title: "Run Time for Failed Attempts per Job",
-    chartArea: { height: "80%", width: "62%"},   
+    chartArea: { height: resultFailedRunHeight - headerHeight, width: "62%"},   
     vAxis: {
       title: "Jobs",     
       textStyle: {
@@ -113,6 +118,7 @@ const StatsSearch = () => {
     },
     hAxis: {
       title: "Hours",
+      minValue: 0,
     },
     width: "100%",
     height: resultFailedRunHeight,
