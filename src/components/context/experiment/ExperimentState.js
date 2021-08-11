@@ -399,7 +399,7 @@ const ExperimentState = (props) => {
 
   const requestCurrentConfiguration = async (expid) => {
     const token = localStorage.getItem("token");
-    
+    //const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoid3VydWNoaSJ9.rkINCmvCUuUu9ODSvOGc8VJ119EDHJxrZp-oFvCzdJk";
     const defaultResponse = {
       "are_equal": false,
       "configuration_current_run": {

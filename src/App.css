@@ -15,6 +15,10 @@
   padding: 0;
 } */
 
+table {
+  table-layout: fixed;
+}
+
 .box {
   width: 400px;
   margin: 0 auto;
