@@ -20,6 +20,7 @@ const CurrentConfiguration = () => {
       /*  No errors detected. Proceed to validate data 
           and identify current configuration. 
       */
+      console.log(currentConfiguration);
       const currentValidConfiguration = currentConfiguration.areEqual === true ?
         currentConfiguration.configurationCurrentRun.contains_nones === false ?
           currentConfiguration.configurationCurrentRun : 
