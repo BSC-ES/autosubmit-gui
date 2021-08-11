@@ -40,6 +40,8 @@ import {
   SET_PAGINATED_RESULT,
   SET_CURRENT_PAGE,
   ORDER_EXPERIMENTS_RESULT,
+  GET_CURRENT_CONFIGURATION,
+  CLEAR_CURRENT_CONFIGURATION_DATA,
 } from "../types";
 
 import {
@@ -90,6 +92,7 @@ export default (state, action) => {
         currentUpdateDescripCommand: null,
         logTimeDiff: 0,
         currentLog: null,
+        currentConfiguration: null,
       };
     }
     case CLEAN_FILE_STATUS_DATA:
@@ -97,6 +100,11 @@ export default (state, action) => {
         ...state,
         esarchiveStatus: null,
       };
+    case CLEAR_CURRENT_CONFIGURATION_DATA:
+      return {
+        ...state,
+        currentConfiguration: null,
+      }
     case LOADING_JOB_HISTORY:
       return {
         ...state,
@@ -632,6 +640,12 @@ export default (state, action) => {
       return {
         ...state,
         currentPage: action.payload,
+      }
+    case GET_CURRENT_CONFIGURATION: 
+
+      return {
+        ...state,
+        currentConfiguration: action.payload,
       }
     default:
       return null;

@@ -46,6 +46,8 @@ import {
   SET_PAGINATED_RESULT,
   SET_CURRENT_PAGE,
   ORDER_EXPERIMENTS_RESULT,
+  GET_CURRENT_CONFIGURATION,
+  CLEAR_CURRENT_CONFIGURATION_DATA,
 } from "../types";
 
 import { AUTOSUBMIT_API_SOURCE, DEBUG, ERROR_MESSAGE, NOAPI, localStorageExperimentTypeSearch, localStorageExperimentActiveCheck, orderByType } from "../vars";
@@ -97,6 +99,7 @@ const ExperimentState = (props) => {
     pageSetup: false,
     currentOrderType: null,
     currentSearchString: null,
+    currentConfiguration: null,
   };
 
   const [state, dispatch] = useReducer(ExperimentReducer, initialState);
@@ -394,6 +397,54 @@ const ExperimentState = (props) => {
     });
   };
 
+  const requestCurrentConfiguration = async (expid) => {
+    const token = localStorage.getItem("token");
+    
+    const defaultResponse = {
+      "are_equal": false,
+      "configuration_current_run": {
+        "contains_nones": true,
+      },
+      "configuration_filesystem": {
+        "contains_nones": true,
+      },
+      "error": true,
+      "error_message": "Request failed.",
+      "warning": false,
+      "warning_message": "" 
+    }
+    let result = null;
+    if (NOAPI) {
+      result = defaultResponse;
+    } else {
+      let isError = false;
+      const res = await axios.get(`${localserver}/cconfig/${expid}`, {headers: { "Authorization": token }}).catch(error => { 
+        alert(ERROR_MESSAGE + "\n" + error.message); 
+        isError = true;
+      });
+      if (isError === false){
+        //console.log(res);
+        result = res ? res.data : null;
+      } else {
+        result = defaultResponse;
+      }
+    }
+
+    // console.log(result);
+    dispatch({
+      type: GET_CURRENT_CONFIGURATION,
+      payload: {
+          error: result.error, 
+          errorMessage: result.error_message,
+          warning: result.warning,
+          warningMessage: result.warning_message,
+          areEqual: result.are_equal,
+          configurationCurrentRun: result.configuration_current_run,
+          configurationFileSystem: result.configurationFileSystem,
+      },
+    })
+  }
+
   const updateDescription = async (expid, new_description) => {
     //const user = localStorage.getItem("user");
     // console.log(expid + " : " + new_description);
@@ -498,7 +549,7 @@ const ExperimentState = (props) => {
     dispatch({ type: CLEAN_PERFORMANCE_METRICS });
 
   const cleanExperimentData = () => dispatch({ type: CLEAN_EXPERIMENT_DATA });
-
+  const clearCurrentConfigurationData = () => dispatch({ type: CLEAR_CURRENT_CONFIGURATION_DATA});
   // Set Loading
   const setLoading = () => dispatch({ type: SET_LOADING });
   const setLoadingRun = () => dispatch({ type: SET_LOADING_RUN });
@@ -605,6 +656,7 @@ const ExperimentState = (props) => {
         currentOrderType: state.currentOrderType,
         typeFilter: state.typeFilter,
         currentSearchString: state.currentSearchString,
+        currentConfiguration: state.currentConfiguration,
         setAutoUpdateRun,
         searchExperiments,
         searchExperimentsByOwner, 
@@ -642,6 +694,8 @@ const ExperimentState = (props) => {
         setPaginatedResult,
         setCurrentPage,
         orderExperimentsInResult,
+        requestCurrentConfiguration,
+        clearCurrentConfigurationData,
       }}
     >
       {props.children}

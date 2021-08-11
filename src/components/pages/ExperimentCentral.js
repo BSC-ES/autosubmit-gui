@@ -29,6 +29,8 @@ import LighterControl from "../experiment/LighterControl";
 import PerformanceControl from "../experiment/PerformanceControl";
 import Performance from "../experiment/Performance";
 import ReadyJobs from "../experiment/ReadyJobs";
+import ConfigurationControl from "../experiment/ConfigurationControl";
+import CurrentConfiguration from "../experiment/CurrentConfiguration";
 
 // Main render component. Calls other component and supplies props if necessary.
 const ExperimentCentral = ({ match }) => {
@@ -211,6 +213,18 @@ const ExperimentCentral = ({ match }) => {
                 aria-selected='false'
               >
                 Log
+              </a>
+            </li>
+            <li className="nav-item">
+              <a 
+                href="#config" 
+                className="nav-link"
+                id="config-tab"
+                data-toggle="tab"
+                role="tab"
+                aria-controls="config"
+                aria-selected="false">
+                  Configuration
               </a>
             </li>
             <li className='nav-item'>
@@ -648,6 +662,17 @@ const ExperimentCentral = ({ match }) => {
                   </div>
                 </div>
 
+            </div>
+            <div className="tab-pane fade"
+            id="config"
+            role="tabpanel"
+            aria-labelledby="config-tab">
+              <div className="card">
+                <ConfigurationControl/>
+                <div className="card-body p-1">
+                    <CurrentConfiguration/>
+                </div>
+              </div>
             </div>
           </div>
         </div>

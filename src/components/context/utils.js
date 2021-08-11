@@ -316,3 +316,52 @@ export const creationDateToId = (strCreationDate, intRunId) => {
   const code = creationDate[0].substr(2,2) + "" + creationDate[1] + "" + creationDate[2] + "" + timeDay[0] + "" + timeDay[1];
   return code;
 }
+
+export const generateConfigFileHtml = (conf) => {
+  if (conf){
+    //console.log(conf);
+    let htmlResult = <div className="row mx-2">
+      <div className="col">
+      {Object.keys(conf).map(v => (
+        <div key={v}>
+          <p className="lead">[{v}]</p>
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col">Setting</th>
+                <th scope="col">Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Object.keys(conf[v]).map(w => (
+                <tr key={w}>
+                  <td>{w}</td>
+                  <td>{conf[v][w]}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ))}
+      </div>
+    </div>;
+    return htmlResult;
+      // <table className="table">
+      //   <thead>
+      //     <tr>
+      //       <th scope="col">Section</th>
+      //       <th scope="col">Setting</th>
+      //       <th scope="col">Value</th>
+      //     </tr>
+      //   </thead>
+      //   <tbody>
+      //     {conf.values.map(v => (
+      //       <tr key={v}>
+
+      //       </tr>
+      //     ))}
+      //   </tbody>
+      // </table>;
+  }
+  return null;
+}
