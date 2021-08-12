@@ -289,7 +289,7 @@ const CurrentConfiguration = () => {
       <div className="row">
         <div className="col">
           <p>
-          Press <span className="badge badge-primary">SHOW CURRENT INFORMATION</span> to visualize the current configuration of your experiment. The information will be retrieved from the historical database; if that source is not available, the filesystem will be used.
+          Press <span className="badge badge-primary">SHOW CURRENT INFORMATION</span> to visualize the current configuration of your experiment. The information will be retrieved from the historical database and from the filesystem, each datasource is displayed in its own table.
           </p>
         </div>
       </div>
