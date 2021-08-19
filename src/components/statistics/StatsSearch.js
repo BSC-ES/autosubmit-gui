@@ -1,9 +1,10 @@
 import React, { useState, useContext, Fragment } from "react";
 import StatsContext from "../context/statistics/statsContext";
 import ExperimentContext from "../context/experiment/experimentContext";
-import Chart from "react-google-charts";
+// import Chart from "react-google-charts";
 import Spinner from "../layout/Spinner";
-import { DEBUG, queueColor, runningColor, failedColor } from "../context/vars";
+import { DEBUG, queueColor, runningColor, failedQueueColor, failedRunAttempts } from "../context/vars";
+import BarChart from "./BarChart";
 
 const StatsSearch = () => {
   const statsContext = useContext(StatsContext);
@@ -22,107 +23,107 @@ const StatsSearch = () => {
 
   // const jsonTicks = JSON.stringify({ticksdata});
   // console.log(jsonTicks['ticksdata'])
-  const factorHeight = 30;
-  const minRows = 1;
-  const minHeight = 130;
-  const headerHeight = 100;
-  const resultQueuedHeight = statdata && statdata.resultQueued.length > minRows ? String(statdata.resultQueued.length*factorHeight + headerHeight) : minHeight;
-  const resultRunHeight = statdata && statdata.resultRun.length > minRows ? String(statdata.resultRun.length*factorHeight + headerHeight) : minHeight;
-  const resultNumberFailedJobsHeight = statdata && statdata.resultNumberFailedJobs.length > minRows ? String(statdata.resultNumberFailedJobs.length*factorHeight + headerHeight) : minHeight;
-  const resultFailedQueuedHeight = statdata && statdata.resultFailedQueued.length > minRows ? String(statdata.resultFailedQueued.length*factorHeight + headerHeight) : minHeight;
-  const resultFailedRunHeight = statdata && statdata.resultFailedRun.length > minRows ? String(statdata.resultFailedRun.length*factorHeight + headerHeight) : minHeight;
+  // const factorHeight = 30;
+  // const minRows = 1;
+  // const minHeight = 130;
+  // const headerHeight = 100;
+  // const resultQueuedHeight = statdata && statdata.resultQueued.length > minRows ? String(statdata.resultQueued.length*factorHeight + headerHeight) : minHeight;
+  // const resultRunHeight = statdata && statdata.resultRun.length > minRows ? String(statdata.resultRun.length*factorHeight + headerHeight) : minHeight;
+  // const resultNumberFailedJobsHeight = statdata && statdata.resultNumberFailedJobs.length > minRows ? String(statdata.resultNumberFailedJobs.length*factorHeight + headerHeight) : minHeight;
+  // const resultFailedQueuedHeight = statdata && statdata.resultFailedQueued.length > minRows ? String(statdata.resultFailedQueued.length*factorHeight + headerHeight) : minHeight;
+  // const resultFailedRunHeight = statdata && statdata.resultFailedRun.length > minRows ? String(statdata.resultFailedRun.length*factorHeight + headerHeight) : minHeight;
   //console.log(resultQueuedHeight);
   // console.log(statdata.resultFailedQueued);
 
-  const resultQueuedOptions = {
-    title: "Queue Time per Job",
-    chartArea: { height: resultQueuedHeight - headerHeight, width: "62%"},
-    colors: [queueColor.background],            
-    vAxis: {
-      title: "Jobs",
-      textStyle: {
-        fontSize: 12,
-      },
-    },
-    hAxis: {
-      title: "Hours",
-      minValue: 0,
-    },        
-    width: "100%",
-    height: resultQueuedHeight,
-  };
+  // const resultQueuedOptions = {
+  //   title: "Queue Time per Job",
+  //   chartArea: { height: resultQueuedHeight - headerHeight, width: "62%"},
+  //   colors: [queueColor.background],            
+  //   vAxis: {
+  //     title: "Jobs",
+  //     textStyle: {
+  //       fontSize: 12,
+  //     },
+  //   },
+  //   hAxis: {
+  //     title: "Hours",
+  //     minValue: 0,
+  //   },        
+  //   width: "100%",
+  //   height: resultQueuedHeight,
+  // };
 
-  const resultRunOptions = {
-    title: "Run Time per Job",
-    chartArea: { height: resultRunHeight - headerHeight, width: "62%"},
-    colors: [runningColor.background],            
-    vAxis: {
-      title: "Jobs",
-      textStyle: {
-        fontSize: 12,
-      },
-    },
-    hAxis: {
-      title: "Hours",
-      minValue: 0,
-    },        
-    width: "100%",
-    height: resultRunHeight,
-  };
+  // const resultRunOptions = {
+  //   title: "Run Time per Job",
+  //   chartArea: { height: resultRunHeight - headerHeight, width: "62%"},
+  //   colors: [runningColor.background],            
+  //   vAxis: {
+  //     title: "Jobs",
+  //     textStyle: {
+  //       fontSize: 12,
+  //     },
+  //   },
+  //   hAxis: {
+  //     title: "Hours",
+  //     minValue: 0,
+  //   },        
+  //   width: "100%",
+  //   height: resultRunHeight,
+  // };
 
-  const resultNumberFailedJobsOptions = {
-    title: "Number of Attempts per Job",
-    chartArea: { height: resultNumberFailedJobsHeight - headerHeight, width: "62%"},
-    colors: [failedColor.background],            
-    vAxis: {
-      title: "Jobs",
-      textStyle: {
-        fontSize: 12,
-      },
-    },
-    hAxis: {
-      title: "Attempts", 
-      format: "#", 
-      minValue: 0,
-    },        
-    width: "100%",
-    height: resultNumberFailedJobsHeight,
-  };
+  // const resultNumberFailedJobsOptions = {
+  //   title: "Number of Attempts per Job",
+  //   chartArea: { height: resultNumberFailedJobsHeight - headerHeight, width: "62%"},
+  //   colors: [failedColor.background],            
+  //   vAxis: {
+  //     title: "Jobs",
+  //     textStyle: {
+  //       fontSize: 12,
+  //     },
+  //   },
+  //   hAxis: {
+  //     title: "Attempts", 
+  //     format: "#", 
+  //     minValue: 0,
+  //   },        
+  //   width: "100%",
+  //   height: resultNumberFailedJobsHeight,
+  // };
 
-  const resultFailedQueuedOptions = {
-    title: "Queue Time for Failed Attempts per Job",
-    chartArea: { height: resultFailedQueuedHeight - headerHeight, width: "62%"},
-    colors: ["salmon"],            
-    vAxis: {
-      title: "Jobs",
-      textStyle: {
-        fontSize: 12,
-      },
-    },
-    hAxis: {
-      title: "Hours",  
-      minValue: 0,    
-    },        
-    width: "100%",
-    height: resultFailedQueuedHeight,
-  };
+  // const resultFailedQueuedOptions = {
+  //   title: "Queue Time for Failed Attempts per Job",
+  //   chartArea: { height: resultFailedQueuedHeight - headerHeight, width: "62%"},
+  //   colors: ["salmon"],            
+  //   vAxis: {
+  //     title: "Jobs",
+  //     textStyle: {
+  //       fontSize: 12,
+  //     },
+  //   },
+  //   hAxis: {
+  //     title: "Hours",  
+  //     minValue: 0,    
+  //   },        
+  //   width: "100%",
+  //   height: resultFailedQueuedHeight,
+  // };
 
-  const resultFailedRunOptions = {
-    title: "Run Time for Failed Attempts per Job",
-    chartArea: { height: resultFailedRunHeight - headerHeight, width: "62%"},   
-    vAxis: {
-      title: "Jobs",     
-      textStyle: {
-        fontSize: 12,
-      },
-    },
-    hAxis: {
-      title: "Hours",
-      minValue: 0,
-    },
-    width: "100%",
-    height: resultFailedRunHeight,
-  };
+  // const resultFailedRunOptions = {
+  //   title: "Run Time for Failed Attempts per Job",
+  //   chartArea: { height: resultFailedRunHeight - headerHeight, width: "62%"},   
+  //   vAxis: {
+  //     title: "Jobs",     
+  //     textStyle: {
+  //       fontSize: 12,
+  //     },
+  //   },
+  //   hAxis: {
+  //     title: "Hours",
+  //     minValue: 0,
+  //   },
+  //   width: "100%",
+  //   height: resultFailedRunHeight,
+  // };
 
   // console.log(options);
 
@@ -229,52 +230,27 @@ const StatsSearch = () => {
             </div>
           )}
           {loading && <Spinner />}
-          {statdata && statdata.resultQueued && statdata.resultQueued.length > 1 && !isError && (
-            <Chart
-              chartType='BarChart'
-              loader={<div>Loading Chart</div>}
-              // width={"100%"}   
-              // height={"1000"}                       
-              data={statdata.resultQueued}
-              options={resultQueuedOptions}
-            />
+          {statdata && statdata.length > 0 && (
+            <div className="row">
+              <div className="col-md-12">
+                <span className="px-1 mx-1 rounded text-white" style={{ background: runningColor.background }}>Run time</span>
+                <span className="px-1 mx-1 rounded " style={{ background: queueColor.background }}>Queue time</span>
+                <span className="px-1 mx-1 rounded " style={{ background: failedQueueColor }}>Failed Queue time</span>
+                <span className="px-1 mx-1 rounded " style={{ background: failedRunAttempts }}>Failed Run time</span>
+                <span className="px-1 mx-1 rounded " style={{ background: failedRunAttempts }}>Failed Attempts</span>
+              </div>
+            </div>
           )}
-          {statdata && statdata.resultRun && statdata.resultRun.length > 1 && !isError && (
-            <Chart
-              chartType='BarChart'
-              loader={<div>Loading Chart</div>}
-              //width={"100%"}
-              data={statdata.resultRun}
-              options={resultRunOptions}
-            />
-          )}
-          {statdata && statdata.resultNumberFailedJobs && statdata.resultNumberFailedJobs.length > 1 && !isError && (
-            <Chart
-              chartType='BarChart'
-              loader={<div>Loading Chart</div>}
-              // width={"100%"}
-              data={statdata.resultNumberFailedJobs}
-              options={resultNumberFailedJobsOptions}
-            />
-          )}
-          {statdata && statdata.resultFailedQueued && statdata.resultFailedQueued.length > 1 && !isError && (
-            <Chart
-              chartType='BarChart'
-              loader={<div>Loading Chart</div>}
-              //width={"100%"}
-              data={statdata.resultFailedQueued}
-              options={resultFailedQueuedOptions}
-            />
-          )}
-          {statdata && statdata.resultFailedRun && statdata.resultFailedRun > 1 && !isError && (
-            <Chart
-              chartType='BarChart'
-              loader={<div>Loading Chart</div>}
-              width={"100%"}
-              data={statdata.resultFailedRun}
-              options={resultFailedRunOptions}
-            />
-          )}
+          {statdata && statdata.length > 0 && (
+            <div className="row">              
+              <div className="col-sm-6 text-center scroll-x">                
+                <BarChart data={statdata} title="Statistics" metrics={["queue", "run", "failedQueue", "failedRun"]} xtitle="Hours" />
+              </div>
+              <div className="col-sm-6 text-center scroll-x">
+                <BarChart data={statdata} title="Failed Attempts per Job"  metrics={["failedAttempts"]} xtitle="Attempts" />
+              </div>
+            </div>            
+          )}          
           {statdata && isError && (
             <div className='col-md-12 text-center p-3'>{errorMessage}</div>
           )}

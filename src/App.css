@@ -159,6 +159,39 @@ pre.bash {
   font-family: Arial, Helvetica, sans-serif; */
 }
 
+/* D3 CSS adjustments */
+
+.tick line {
+  stroke: #ccc;
+  stroke-dasharray: 10, 5;
+}
+
+.tooltip-d3 {
+  opacity: 0;
+  position: absolute;
+  pointer-events: none;
+  background-color: lightblue;
+  border: 1px solid blue;
+  border-radius: 1px;
+  padding: 5px;
+}
+
+.tooltip-d3 p {
+  margin: 0;
+}
+
+/* .tooltip-d3:before {
+  content: "";
+  position: absolute;
+  border: 12px solid transparent;
+  border-bottom-color: blue;
+  top: -30px;
+  left: 50%;
+  margin-left: -6px;
+} */
+
+/* End of D3 CSS */
+
 .allowResizeVertical {
   resize: vertical;
 }

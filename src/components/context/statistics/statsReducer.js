@@ -13,13 +13,13 @@ export default (state, action) => {
                 loading: true,
             };
         case GET_EXPERIMENT_STATS:
-            const { result, requestResult, ticks } = action.payload;
+            const { result, totalData } = action.payload;
             // console.log(result);
             return {
                 ...state,
                 statdata: result,
-                totaldata: requestResult,
-                ticksdata: ticks,
+                totaldata: totalData,
+                ticksdata: null,
                 loading: false,
             };
         case CLEAR_STATS:

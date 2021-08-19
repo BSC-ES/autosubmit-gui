@@ -50,14 +50,15 @@ const StatsState = (props) => {
       );
     }
     
-    let resultQueued = [["Jobs", "Queue Time"]];
-    let resultRun = [["Jobs", "Run Time"]];
-    let resultNumberFailedJobs = [["Jobs", "# Failed Attempts"]];
-    let resultFailedQueued = [["Jobs", "Failed Queue Time"]];
-    let resultFailedRun = [["Jobs", "Failed Run Time"]];
+    // let resultQueued = [["Jobs", "Queue Time"]];
+    // let resultRun = [["Jobs", "Run Time"]];
+    // let resultNumberFailedJobs = [["Jobs", "# Failed Attempts"]];
+    // let resultFailedQueued = [["Jobs", "Failed Queue Time"]];
+    // let resultFailedRun = [["Jobs", "Failed Run Time"]];
 
-    let requestResult = null;
-    let ticks = [];
+    // let requestResult = [];
+    let jobStatData = [];
+    // let ticks = [];
     debug && console.log(res.data);
     if (res.data) {
       if (res.data.error === true) {
@@ -76,35 +77,45 @@ const StatsState = (props) => {
       // ]);
 
       for (let i = 0; i < res.data.jobs.length; i++) {
-        if (res.data.stats.queued[i] > 0) {
-          resultQueued.push([
-            res.data.jobs[i],
-            res.data.stats.queued[i]
-          ]);
-        }
-        if (res.data.stats.run[i] > 0) {
-          resultRun.push([
-            res.data.jobs[i],
-            res.data.stats.run[i]]);
-        }
-        if (res.data.stats.failed_jobs[i] > 0) {
-          resultNumberFailedJobs.push([
-            res.data.jobs[i],
-            res.data.stats.failed_jobs[i]]);
-        }
-        if (res.data.stats.fail_queued[i] > 0) {
-          resultFailedQueued.push([
-            res.data.jobs[i],
-            res.data.stats.fail_queued[i]]);
-        }
-        if (res.data.stats.fail_run[i] > 0) {
-          resultFailedRun.push([
-            res.data.jobs[i],
-            res.data.stats.fail_run[i]]);
-        }
-        ticks.push({ v: i + 1, f: res.data.jobs[i] });
+        
+        jobStatData.push(
+          {
+            name: res.data.jobs[i],
+            queue: Number.parseFloat(res.data.stats.queued[i]).toFixed(2),
+            run: Number.parseFloat(res.data.stats.run[i]).toFixed(2),
+            failedAttempts: res.data.stats.failed_jobs[i],
+            failedQueue: Number.parseFloat(res.data.stats.fail_queued[i]).toFixed(2),
+            failedRun: Number.parseFloat(res.data.stats.fail_run[i]).toFixed(2)  
+          });
+        // if (res.data.stats.queued[i] > 0) {
+        //   resultQueued.push([
+        //     res.data.jobs[i],
+        //     res.data.stats.queued[i]
+        //   ]);
+        // }
+        // if (res.data.stats.run[i] > 0) {
+        //   resultRun.push([
+        //     res.data.jobs[i],
+        //     res.data.stats.run[i]]);
+        // }
+        // if (res.data.stats.failed_jobs[i] > 0) {
+        //   resultNumberFailedJobs.push([
+        //     res.data.jobs[i],
+        //     res.data.stats.failed_jobs[i]]);
+        // }
+        // if (res.data.stats.fail_queued[i] > 0) {
+        //   resultFailedQueued.push([
+        //     res.data.jobs[i],
+        //     res.data.stats.fail_queued[i]]);
+        // }
+        // if (res.data.stats.fail_run[i] > 0) {
+        //   resultFailedRun.push([
+        //     res.data.jobs[i],
+        //     res.data.stats.fail_run[i]]);
+        // }
+        // ticks.push({ v: i + 1, f: res.data.jobs[i] });
       }
-      requestResult = res.data;
+      // requestResult = res.data;
     }
     // console.log(resultQueued);
     // console.log(ticks);
@@ -115,7 +126,8 @@ const StatsState = (props) => {
     // console.log(result);
     dispatch({
       type: GET_EXPERIMENT_STATS,
-      payload: { result: { resultQueued, resultRun, resultNumberFailedJobs, resultFailedQueued, resultFailedRun }, requestResult, ticks },
+      payload: { result: jobStatData, totalData: res.data },
+      // payload: { result: { resultQueued, resultRun, resultNumberFailedJobs, resultFailedQueued, resultFailedRun }, requestResult, ticks },
     });
   };
 

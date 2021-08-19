@@ -75,6 +75,10 @@ export const skippedColor = {
   fontWeight: "bold",
 };
 
+export const failedQueueColor = "lightSalmon";
+export const failedRunAttempts = "#ff6666";
+export const runStatColor = "#40bf40";
+
 
 export const statusCodeToStyle = (code) => {
   if (code === WaitingCode)
