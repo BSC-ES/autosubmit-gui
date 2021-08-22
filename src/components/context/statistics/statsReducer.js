@@ -2,7 +2,9 @@ import {
     SET_LOADING,
     GET_EXPERIMENT_STATS,
     CLEAR_STATS,
-    SET_ERROR_STATS, } from '../types';
+    SET_ERROR_STATS,
+    SET_FILTER_CHART
+ } from '../types';
 
 /* eslint import/no-anonymous-default-export: ["error", {"allowArrowFunction": true}] */
 export default (state, action) => {
@@ -19,7 +21,7 @@ export default (state, action) => {
                 ...state,
                 statdata: result,
                 totaldata: totalData,
-                ticksdata: null,
+                backupdata: result,
                 loading: false,
             };
         case CLEAR_STATS:
@@ -27,7 +29,7 @@ export default (state, action) => {
                 ...state,
                 statdata: null,
                 totaldata: null,
-                ticksdata: null,
+                backupdata: null,
                 loading: false,
                 isError: false,
                 errorMessage: "",
@@ -38,6 +40,38 @@ export default (state, action) => {
                 ...state,
                 isError: error,
                 errorMessage: msg,
+            }
+        case SET_FILTER_CHART:
+            const { currentChecked, target } = action.payload;
+            let newStatData = null;
+            console.log(currentChecked);
+            console.log(target);
+            if ( currentChecked === true) {
+                switch (target) {
+                    case "queue":
+                        newStatData = state.backupdata;
+                        break;
+                    default:
+                        newStatData = null;
+                }            
+            } else {
+                switch (target) {
+                    case "queue":
+                        //let backup = state.backupdata;
+                        console.log(state.backupdata);
+                        newStatData = state.backupdata;
+                        newStatData.forEach(element => {
+                            element.queue = 0;
+                        });
+                        break;
+                    default:
+                        newStatData = null;
+                }
+            }
+            console.log(newStatData);
+            return {
+                ...state,
+                statdata: newStatData,
             }
         default:
             return state;
