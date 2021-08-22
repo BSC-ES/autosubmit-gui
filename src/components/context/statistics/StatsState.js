@@ -66,11 +66,11 @@ const StatsState = (props) => {
         jobStatData.push(
           {
             name: res.data.jobs[i],
-            queue: Number.parseFloat(res.data.stats.queued[i]).toFixed(2),
-            run: Number.parseFloat(res.data.stats.run[i]).toFixed(2),
+            queue: Number.parseFloat(res.data.stats.queued[i]) >= 0.00 ? Number.parseFloat(res.data.stats.queued[i]).toFixed(2) : 0.00,
+            run: Number.parseFloat(res.data.stats.run[i]) >= 0.00 ? Number.parseFloat(res.data.stats.run[i]).toFixed(2) : 0.00,
             failedAttempts: res.data.stats.failed_jobs[i],
-            failedQueue: Number.parseFloat(res.data.stats.fail_queued[i]).toFixed(2),
-            failedRun: Number.parseFloat(res.data.stats.fail_run[i]).toFixed(2)  
+            failedQueue: Number.parseFloat(res.data.stats.fail_queued[i]) >= 0.00 ? Number.parseFloat(res.data.stats.fail_queued[i]).toFixed(2) : 0.00,
+            failedRun: Number.parseFloat(res.data.stats.fail_run[i]) >= 0.00 ? Number.parseFloat(res.data.stats.fail_run[i]).toFixed(2) : 0.00 
           });
       }
     }
@@ -83,8 +83,8 @@ const StatsState = (props) => {
   };
 
   const filterBarChart = (currentChecked, target) => {
-    console.log(currentChecked);
-    console.log(target);
+    // console.log(currentChecked);
+    // console.log(target);
     dispatch({
       type: SET_FILTER_CHART,
       payload: { currentChecked: currentChecked, target: target },
