@@ -8,7 +8,7 @@ import FileStatus from "../experiment/FileStatus";
 const Navbar = ({ icon, title }) => {
   const history = useHistory();
   const experimentContext = useContext(ExperimentContext);
-  const { searchExperiments, experiment, cleanFileStatusData, getFileStatus, esarchiveStatus, loggedUser, setLoggedUser, testToken } = experimentContext;
+  const { searchExperiments, experiment, cleanFileStatusData, getFileStatus, esarchiveStatus, loggedUser, setLoggedUser } = experimentContext;
   // localStorage.setItem("user", "molid");
   // localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c")
   useEffect(() => {
@@ -20,7 +20,7 @@ const Navbar = ({ icon, title }) => {
     // if (user && token && loggedUser){
     //   testToken();
     // }    
-  } ,[loggedUser, setLoggedUser, testToken])
+  } ,[loggedUser, setLoggedUser])
 
   const [text, setText] = useState("");
   // const expid = match.params.expid;
