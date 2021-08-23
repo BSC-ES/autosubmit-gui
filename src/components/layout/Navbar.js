@@ -17,9 +17,9 @@ const Navbar = ({ icon, title }) => {
     if (user && token && !loggedUser){
       setLoggedUser(user, token);
     }
-    if (user && token && loggedUser){
-      // testToken();
-    }    
+    // if (user && token && loggedUser){
+    //   testToken();
+    // }    
   } ,[loggedUser, setLoggedUser, testToken])
 
   const [text, setText] = useState("");
