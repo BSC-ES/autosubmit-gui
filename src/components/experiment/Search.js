@@ -11,7 +11,7 @@ const Search = ({ specificSearch }) => {
   
   const alertContext = useContext(AlertContext);
   const experimentContext = useContext(ExperimentContext);
-  const { searchExperimentsByOwner } = experimentContext;
+  const { searchExperimentsByOwner, experiments } = experimentContext;
   const currentExpTypeChoice = localStorage.getItem(localStorageExperimentTypeSearch);
   const currentActiveCheck = localStorage.getItem(localStorageExperimentActiveCheck);
 
@@ -29,10 +29,10 @@ const Search = ({ specificSearch }) => {
       setActiveChoice(orderByType.showAllActiveInactive);
     }
 
-    if (specificSearch){
+    if (specificSearch && !experiments){
       searchExperimentsByOwner(specificSearch, currentExpTypeChoice, currentActiveCheck);
     }    
-  }, [specificSearch, searchExperimentsByOwner, currentExpTypeChoice, currentActiveCheck]);
+  }, [specificSearch, searchExperimentsByOwner, currentExpTypeChoice, currentActiveCheck, experiments]);
 
   const [text, setText] = useState("");
   const [typeExperiment, setTypeExperiment] = useState("");
