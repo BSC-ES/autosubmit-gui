@@ -50,7 +50,15 @@ import {
   CLEAR_CURRENT_CONFIGURATION_DATA,
 } from "../types";
 
-import { AUTOSUBMIT_API_SOURCE, DEBUG, ERROR_MESSAGE, NOAPI, localStorageExperimentTypeSearch, localStorageExperimentActiveCheck, orderByType } from "../vars";
+import { AUTOSUBMIT_API_SOURCE, 
+  DEBUG, 
+  ERROR_MESSAGE, 
+  NOAPI, 
+  localStorageExperimentTypeSearch, 
+  localStorageExperimentActiveCheck, 
+  orderByType,
+  complexTypeExperimentToSimple,
+  complexActiveStatusToSimple } from "../vars";
 
 import { timeStampToDate, errorEsarchiveStatus } from "../utils";
 
@@ -118,7 +126,9 @@ const ExperimentState = (props) => {
     if (NOAPI) {      
       result = require("../data/search.json").experiment;
     } else {
-      const res = await axios.get(`${localserver}/search/${text}/${expType}/${activeCheck}`).catch(error => alert(ERROR_MESSAGE + "\n" + error.message));
+      const simpleExpType = complexTypeExperimentToSimple(expType);
+      const simpleActiveStatus = complexActiveStatusToSimple(activeCheck);
+      const res = await axios.get(`${localserver}/search/${text}/${simpleExpType}/${simpleActiveStatus}`).catch(error => alert(ERROR_MESSAGE + "\n" + error.message));
       debug && console.log(res.data);
       result = res ? res.data.experiment : [];
     }  
@@ -137,7 +147,9 @@ const ExperimentState = (props) => {
     if (NOAPI) {
       result = require("../data/search.json").experiment;
     } else {
-      const res = await axios.get(`${localserver}/searchowner/${owner}/${expType}/${activeCheck}`).catch(error => alert(ERROR_MESSAGE + "\n" + error.message));
+      const simpleExpType = complexTypeExperimentToSimple(expType);
+      const simpleActiveStatus = complexActiveStatusToSimple(activeCheck);
+      const res = await axios.get(`${localserver}/searchowner/${owner}/${simpleExpType}/${simpleActiveStatus}`).catch(error => alert(ERROR_MESSAGE + "\n" + error.message));
       debug && console.log(res.data);
       result = res ? res.data.experiment : [];
     }
@@ -296,7 +308,7 @@ const ExperimentState = (props) => {
 
   const getCurrentRunning = async () => {
     localStorage.setItem(localStorageExperimentTypeSearch, orderByType.radioAll);
-    localStorage.setItem(localStorageExperimentActiveCheck, orderByType.showAllActiveInactive);
+    localStorage.setItem(localStorageExperimentActiveCheck, orderByType.showOnlyActive);
     setLoading();
     let result = null;
     if (NOAPI){

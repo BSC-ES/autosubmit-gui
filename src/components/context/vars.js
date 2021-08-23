@@ -142,6 +142,28 @@ export const simpleActiveStatus = {
   Active: "active",
 }
 
+export const complexTypeExperimentToSimple = (complex) => {
+  switch (complex) {
+    case orderByType.radioExperiments:
+      return simpleExperimentType.Experiment;
+    case orderByType.radioTests:
+      return simpleExperimentType.Test;
+    case orderByType.radioAll:
+    default:
+      return simpleExperimentType.All;
+  }
+}
+
+export const complexActiveStatusToSimple = (complex) => {
+  switch (complex) {
+    case orderByType.showAllActiveInactive:
+    default:
+      return simpleActiveStatus.All;      
+    case orderByType.showOnlyActive:
+      return simpleActiveStatus.Active;      
+  }
+}
+
 export const simpleActiveStatusToComplex = (simple) => {
   switch (simple){
     case simpleActiveStatus.All:

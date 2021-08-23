@@ -22,16 +22,43 @@ const StatsSearch = () => {
   const { experiment } = experimentContext;
 
 
-  let summary = null;
-  if (totaldata && totaldata.stats && totaldata.stats.totals) {
-    summary = totaldata.stats.totals.map((item, index) => (
-      <li key={index}>{item}</li>
-    ));
-    // console.log(totaldata.stats.totals[0]);
-    // for(var i = 0; i < totaldata.stats.totals.length; i++){
-    //     console.log(totaldata.stats.totals[i]);
-    //     summary += <li key={i}>{totaldata.stats.totals[i]}</li>
-    // }
+  let summaryTable = null;
+  let summaryHeader = null;
+  if (totaldata && totaldata.stats && totaldata.stats.totals && totaldata.stats.totals.length > 0) {
+    let summary = [];
+    totaldata.stats.totals.forEach((item, index) => {
+      if (index === 0){
+        summaryHeader = <p className="lead"><strong>{item}</strong></p>;
+      } else {
+        if (item.indexOf(":") >= 0){
+          summary.push({
+            field: item.split(":")[0], 
+            value: item.split(":")[1]
+          });
+        } else {
+          summary.push({
+            field: "",
+            value: item
+          });
+        }        
+      }      
+    });
+    summaryTable = <table className="table table-sm">
+      <thead className="thead-dark">
+        <tr>
+          <th scope="col">Field</th>
+          <th scope="col">Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        {summary.map((w, index) => (
+          <tr key={index}>
+            <td>{w.field}</td>
+            <td>{w.value}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   }
 
   const onSubmitStats = (e) => {
@@ -53,55 +80,67 @@ const StatsSearch = () => {
   const [section, setSection] = useState("");
   const onChangeHour = (e) => setHour(e.target.value);
   const onChangeSection = (e) => setSection(e.target.value);
-  const pStyle = {
-    listStyleType: "none",
-  };
+  // const pStyle = {
+  //   listStyleType: "none",
+  // };
 
   return (
     <Fragment>
       <div className='row'>
-        <div className='col-md-4 offset-md-4 text-center'>
+        <div className='col text-center'>
           {!statdata && experiment && experimentContext.loading === false && (
-            <form onSubmit={onSubmitStats} className='form'>
-              <div className='input-group input-group-sm'>
-                <input
-                  className='form-control'
-                  type='text'
-                  name='section'
-                  placeholder='Section'
-                  onChange={onChangeSection}
-                />
-                <input
-                  className='form-control'
-                  type='text'
-                  name='hours'
-                  placeholder='Hours'
-                  onChange={onChangeHour}
-                />
-                <div className='input-group-append'>
-                  <input
-                    type='submit'
-                    value='Get Statistics'
-                    className='btn btn-primary'
-                    disabled={loading}
-                    data-toggle='tooltip' 
-                    data-placement='bottom' 
-                    title="Gets the statistics for the Section and Hours values provided."
-                  />
-                </div>
+            <div className="row">
+              <div className="col-4">
+                <form onSubmit={onSubmitStats} className='form'>
+                  <div className='input-group input-group-sm'>
+                    <input
+                      className='form-control'
+                      type='text'
+                      name='section'
+                      placeholder='Section'
+                      onChange={onChangeSection}
+                    />
+                    <input
+                      className='form-control'
+                      type='text'
+                      name='hours'
+                      placeholder='Hours'
+                      onChange={onChangeHour}
+                    />
+                    <div className='input-group-append'>
+                      <input
+                        type='submit'
+                        value='Get Statistics'
+                        className='btn btn-primary'
+                        disabled={loading}
+                        data-toggle='tooltip' 
+                        data-placement='bottom' 
+                        title="Gets the statistics for the Section and Hours values provided."
+                      />
+                    </div>
+                  </div>
+                </form>
               </div>
-            </form>
+            </div>
+            
           )}
           {statdata && (
-            <form onSubmit={onSubmitClear} className='form'>
-              <div className=''>
-                <input
-                  type='submit'
-                  value='Clear Statistics'
-                  className='btn btn-dark btn-sm'
-                />
+            <div className="row-hl d-flex flex-wrap">
+              <div className="item-hl">
+                {summaryHeader && summaryHeader}
               </div>
-            </form>
+              <div className="item-hl ml-auto">
+                <form onSubmit={onSubmitClear} className='form'>
+                  <div className=''>
+                    <input
+                      type='submit'
+                      value='Clear Statistics'
+                      className='btn btn-dark btn-sm'
+                    />
+                  </div>
+                </form>
+              </div>              
+            </div>            
           )}
         </div>
         <div className='col-md-12'>
@@ -125,19 +164,8 @@ const StatsSearch = () => {
             </div>
           )}
           {loading && <Spinner />}
-          {/* {statdata && statdata.length > 0 && (
-            <div className="row">
-              <div className="col-md-12">
-                <span className="px-1 mx-1 rounded text-white" style={{ background: runningColor.background }}>Run time</span>
-                <span className="px-1 mx-1 rounded " style={{ background: queueColor.background }}>Queue time</span>
-                <span className="px-1 mx-1 rounded " style={{ background: failedQueueColor }}>Failed Queue time</span>
-                <span className="px-1 mx-1 rounded " style={{ background: failedRunAttempts }}>Failed Run time</span>
-                <span className="px-1 mx-1 rounded " style={{ background: failedRunAttempts }}>Failed Attempts</span>
-              </div>
-            </div>
-          )} */}
           {statdata && statdata.length > 0 && (
-            <div className="row">              
+            <div className="row mt-2">              
               <div className="col-sm-6 text-center scroll-x">                
                 <BarChart data={statdata} title="Statistics" metrics={["queue", "run", "failedQueue", "failedRun"]} xtitle="Hours" clearStats={clearStats} helperId={"4"} />
               </div>
@@ -147,22 +175,22 @@ const StatsSearch = () => {
             </div>            
           )}          
           {statdata && isError && (
-            <div className='col-md-12 text-center p-3'>{errorMessage}</div>
+            <div className="row mt-2">
+              <div className='col-md-12 text-center p-3'>{errorMessage}</div>
+            </div>            
           )}
           {totaldata && (
-            <div className='col-md-8 offset-md-4 mt-2'>
-              {totaldata && <ul style={pStyle}>{summary && summary}</ul>}
+            <div className="row mt-2 justify-content-center">
+              <div className='col-md-4'>
+                {totaldata && summaryTable && summaryTable}
+              </div>
             </div>
+            
           )}
         </div>
       </div>
-      {/* <div className='row' style={experimentBuffer}></div> */}
     </Fragment>
   );
 };
-
-// const experimentBuffer = {
-//   minHeight: "100%",
-// };
 
 export default StatsSearch;

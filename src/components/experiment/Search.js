@@ -1,35 +1,38 @@
 import React, { useState, useContext, useEffect } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
 import AlertContext from "../context/alert/alertContext";
-import { localStorageExperimentTypeSearch, localStorageExperimentActiveCheck, orderByType, simpleActiveStatusToComplex } from "../context/vars";
+import { localStorageExperimentTypeSearch, 
+  localStorageExperimentActiveCheck, 
+  orderByType, 
+  simpleActiveStatusToComplex, 
+} from "../context/vars";
 
 const Search = ({ specificSearch }) => {
-  const experimentContext = useContext(ExperimentContext);
+  
   const alertContext = useContext(AlertContext);
+  const experimentContext = useContext(ExperimentContext);
+  const { searchExperimentsByOwner } = experimentContext;
+  const currentExpTypeChoice = localStorage.getItem(localStorageExperimentTypeSearch);
+  const currentActiveCheck = localStorage.getItem(localStorageExperimentActiveCheck);
 
   useEffect(() => {
-
-    const currentExpTypeChoice = localStorage.getItem(localStorageExperimentTypeSearch);
-    const currentActiveCheck = localStorage.getItem(localStorageExperimentActiveCheck);
-    if (currentExpTypeChoice){      
+    
+    if (currentExpTypeChoice){        
       setTypeExperiment(currentExpTypeChoice);
     } else {
-      setTypeExperiment("all");
+      setTypeExperiment(orderByType.radioAll);
     }
 
-    if (currentActiveCheck) {      
+    if (currentActiveCheck) {       
       setActiveChoice(currentActiveCheck);
     } else {
-      setActiveChoice("all");
+      setActiveChoice(orderByType.showAllActiveInactive);
     }
 
     if (specificSearch){
-      // Search by user
-      // experimentContext
-      experimentContext.searchExperimentsByOwner(specificSearch, currentExpTypeChoice, currentActiveCheck);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+      searchExperimentsByOwner(specificSearch, currentExpTypeChoice, currentActiveCheck);
+    }    
+  }, [specificSearch, searchExperimentsByOwner, currentExpTypeChoice, currentActiveCheck]);
 
   const [text, setText] = useState("");
   const [typeExperiment, setTypeExperiment] = useState("");
@@ -39,21 +42,16 @@ const Search = ({ specificSearch }) => {
     e.preventDefault();
     if (text === "") {
       alertContext.setAlert("Please enter something", "light");
-    } else {
+    } else {      
       experimentContext.searchExperiments(text, typeExperiment, activeChoice);
       //setText('');
     }
   };
 
   const onSubmitRunning = (e) => {
-    e.preventDefault();
+    e.preventDefault();    
     experimentContext.getCurrentRunning();
   };
-
-  // const onRequestDetail = e => {
-  //   e.preventDefault();
-  //   experimentContext.getSummaries();
-  // };
 
   const onChange = (e) => setText(e.target.value);
 
@@ -69,17 +67,19 @@ const Search = ({ specificSearch }) => {
       case "all":        
       default:
         inputType = orderByType.radioAll;
-        break;
     }
-    experimentContext.orderExperimentsInResult(inputType);
-    setTypeExperiment(e.target.value);
+    experimentContext.orderExperimentsInResult(inputType);    
+    setTypeExperiment(inputType);
+    localStorage.setItem(localStorageExperimentTypeSearch, inputType);    
   }
 
-  const onChangeActiveCheck = (e) => {
-    const inputStatus = e.target.value;
-    // console.log(inputStatus);
-    experimentContext.orderExperimentsInResult(simpleActiveStatusToComplex(inputStatus));
-    setActiveChoice(e.target.value);
+  const onChangeActiveCheck = (e) => {    
+    const simpleInput = e.target.value;
+    const nextValue = simpleInput === "all" ? "active" : "all";    
+    const complexInput = simpleActiveStatusToComplex(nextValue);
+    experimentContext.orderExperimentsInResult(complexInput);    
+    setActiveChoice(complexInput);
+    localStorage.setItem(localStorageExperimentActiveCheck, complexInput);    
   };
   
   return (
@@ -87,21 +87,21 @@ const Search = ({ specificSearch }) => {
       <div className='row-hl d-flex flex-wrap mb-2'> 
         <div className="item-hl mr-1 px-2 pt-1 border rounded">
           <div className="form-check form-check-inline">
-            <input type="radio" name="experimentType" id="experimentTypeTest" className="form-check-input" value="test" checked={typeExperiment === "test"} onChange={onChangeType} />
+            <input type="radio" name="experimentType" id="experimentTypeTest" className="form-check-input" value="test" checked={typeExperiment === orderByType.radioTests} onChange={onChangeType} />
             <label htmlFor="experimentTypeTest" className="form-check-label">Test</label>
           </div>
           <div className="form-check form-check-inline">
-            <input type="radio" name="experimentType" id="experimentTypeExperiment" className="form-check-input" value="experiment" checked={typeExperiment === "experiment"} onChange={onChangeType} />
+            <input type="radio" name="experimentType" id="experimentTypeExperiment" className="form-check-input" value="experiment" checked={typeExperiment === orderByType.radioExperiments} onChange={onChangeType} />
             <label htmlFor="experimentTypeExperiment" className="form-check-label">Experiment</label>
           </div>
           <div className="form-check form-check-inline">
-            <input type="radio" name="experimentType" id="experimentTypeAll" className="form-check-input" value="all" checked={typeExperiment === "all"} onChange={onChangeType} />
+            <input type="radio" name="experimentType" id="experimentTypeAll" className="form-check-input" value="all" checked={typeExperiment === orderByType.radioAll} onChange={onChangeType} />
             <label htmlFor="experimentTypeAll" className="form-check-label">All</label>
           </div>
         </div>
         <div className="item-hl mr-1 pt-1 px-2 border rounded">
           <div className="form-check">
-            <input className="form-check-input" type="checkbox" id="switchActive" value={activeChoice === "active" ? "all" : "active"} onChange={onChangeActiveCheck} checked={activeChoice === "active"} />
+            <input className="form-check-input" type="checkbox" id="switchActive" value={activeChoice === orderByType.showAllActiveInactive ? "all" : "active"} onChange={onChangeActiveCheck} checked={activeChoice === orderByType.showOnlyActive ? true : false } />
             <label className="form-check-label" htmlFor="switchActive">Only Active</label>
           </div>
         </div>       

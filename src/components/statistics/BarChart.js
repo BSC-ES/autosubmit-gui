@@ -288,10 +288,6 @@ class BarChart extends Component {
       const currentRun = d3.select(`#runTimeChart-${helperId}`).property("checked");
       const currentFailedQueue = d3.select(`#failedQueueTimeChart-${helperId}`).property("checked");
       const currentFailedRun = d3.select(`#failedRunTimeChart-${helperId}`).property("checked");
-      //console.log(currentQueue);
-      // const targetValue = d3.event.target.value;
-      // console.log(targetValue);
-      // console.log(currentChecked);
       const ignoreMetrics = [
         currentQueue === false || (currentValue === "queue" && currentValue === false) ? "queue" : "",
         currentRun === false || (currentValue === "run" && currentValue === false) ? "run" : "",
@@ -299,7 +295,6 @@ class BarChart extends Component {
         currentFailedRun === false || (currentValue === "qufailedRunue" && currentValue === false) ? "failedRun" : "",
       ];
 
-      // console.log(ignoreMetrics);
 
       if (currentChecked === false) {
         // console.log(d3.selectAll(".bar-queue"));
