@@ -18,7 +18,7 @@ const Navbar = ({ icon, title }) => {
       setLoggedUser(user, token);
     }
     if (user && token && loggedUser){
-      testToken();
+      // testToken();
     }    
   } ,[loggedUser, setLoggedUser, testToken])
 
