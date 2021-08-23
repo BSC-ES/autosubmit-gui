@@ -42,6 +42,7 @@ import {
   ORDER_EXPERIMENTS_RESULT,
   GET_CURRENT_CONFIGURATION,
   CLEAR_CURRENT_CONFIGURATION_DATA,
+  TEST_TOKEN,
 } from "../types";
 
 import {
@@ -580,6 +581,23 @@ export default (state, action) => {
           currentToken: token,
         }
       }
+    case TEST_TOKEN:
+      {
+        const { isValid, message } = action.payload;
+        if (state.loggedUser && isValid === false) {
+          localStorage.removeItem("user");
+          localStorage.removeItem("token");
+          console.log(message);
+          return {
+            ...state,
+            loggedUser: null,
+            currentToken: null,
+          }
+        }
+        return {
+          ...state,
+        }
+      }      
     case UPDATE_DESCRIPTION_OWN_EXP:
       {
         const { error, auth, description, expid } = action.payload;

@@ -48,6 +48,7 @@ import {
   ORDER_EXPERIMENTS_RESULT,
   GET_CURRENT_CONFIGURATION,
   CLEAR_CURRENT_CONFIGURATION_DATA,
+  TEST_TOKEN,
 } from "../types";
 
 import { AUTOSUBMIT_API_SOURCE, 
@@ -457,9 +458,34 @@ const ExperimentState = (props) => {
     })
   }
 
+  const testToken = async () => {
+    const token = localStorage.getItem("token");
+    const body = {};
+    const defaultResponse = {
+      "isValid" : false,
+      "message" : "Session Expired",
+    }
+    let result = null;
+    if (NOAPI) {
+      result = defaultResponse;
+    } else {
+      let isError = false;
+      const res = await axios.post(`${localserver}/tokentest`, body, { headers: { "Authorization": token } }).catch(error => { alert(ERROR_MESSAGE + "\n" + error.message); isError = true; });
+      if (isError === false) {
+        result = res ? res.data : null;
+      } else {
+        result = defaultResponse;
+      }
+    }
+
+    dispatch({
+      type: TEST_TOKEN,
+      payload: result,
+    });
+
+  }
+
   const updateDescription = async (expid, new_description) => {
-    //const user = localStorage.getItem("user");
-    // console.log(expid + " : " + new_description);
     const token = localStorage.getItem("token");
     const defaultResponse = {
       'error': true,
@@ -481,9 +507,7 @@ const ExperimentState = (props) => {
         result = res ? res.data : null;
       } else {
         result = defaultResponse;
-      } 
-      // test error
-      // result = {'error': false, 'auth': true, 'message': "test message", "description": new_description}     
+      }     
     }
 
     // If valid result, add the expid key
@@ -496,14 +520,6 @@ const ExperimentState = (props) => {
 
     const { message } = result;
     alert(message);
-    // if (auth === false || error === true){
-    //   alert(message);
-    // }
-
-    // if (auth === true && error === false){
-    //   alert
-    // }
-
   }
 
   const setCurrentCommand = async (command) => {
@@ -708,6 +724,7 @@ const ExperimentState = (props) => {
         orderExperimentsInResult,
         requestCurrentConfiguration,
         clearCurrentConfigurationData,
+        testToken,
       }}
     >
       {props.children}

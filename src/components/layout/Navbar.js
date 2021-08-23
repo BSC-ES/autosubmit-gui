@@ -8,14 +8,19 @@ import FileStatus from "../experiment/FileStatus";
 const Navbar = ({ icon, title }) => {
   const history = useHistory();
   const experimentContext = useContext(ExperimentContext);
-  const { searchExperiments, experiment, cleanFileStatusData, getFileStatus, esarchiveStatus, loggedUser, setLoggedUser } = experimentContext;
-
+  const { searchExperiments, experiment, cleanFileStatusData, getFileStatus, esarchiveStatus, loggedUser, setLoggedUser, testToken } = experimentContext;
+  // localStorage.setItem("user", "molid");
+  // localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c")
   useEffect(() => {
-    if (user && !loggedUser){
+    const user = localStorage.getItem("user");
+    const token = localStorage.getItem("token");
+    if (user && token && !loggedUser){
       setLoggedUser(user, token);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  } ,[])
+    if (user && token && loggedUser){
+      testToken();
+    }    
+  } ,[loggedUser, setLoggedUser, testToken])
 
   const [text, setText] = useState("");
   // const expid = match.params.expid;
@@ -33,8 +38,7 @@ const Navbar = ({ icon, title }) => {
   // Uncomment these to set a fake session. The token is not valid.
   // localStorage.setItem("user", "molid");
   // localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c");
-  const user = localStorage.getItem("user");
-  const token = localStorage.getItem("token");
+ 
  
   // const { expid } = experiment;
   const onChange = (e) => setText(e.target.value);
