@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import Spinner from "../layout/Spinner";
 // import { Link } from "react-router-dom";
 import ExperimentContext from "../context/experiment/experimentContext";
@@ -17,18 +17,18 @@ const Experiment = ({ expidToken }) => {
   } = experimentContext;
   //var interval;
 
-  useEffect(() => {
-    if (expidToken) {
-      // getExperiment(expidToken);
-      // getRunningState(expidToken);
-      // getExperimentTree(expidToken);
-      // getExperimentPerformanceMetrics(expidToken);
-      // const interval = setInterval(() => getRunningState(expidToken), 300000);
-      // return () => clearInterval(interval);
-    }
+  // useEffect(() => {
+  //   if (expidToken) {
+  //     // getExperiment(expidToken);
+  //     // getRunningState(expidToken);
+  //     // getExperimentTree(expidToken);
+  //     // getExperimentPerformanceMetrics(expidToken);
+  //     // const interval = setInterval(() => getRunningState(expidToken), 300000);
+  //     // return () => clearInterval(interval);
+  //   }
 
-    // eslint-disable-next-line
-  }, []);
+  //   // eslint-disable-next-line
+  // }, []);
 
   if (experiment === null) return <Spinner />;
 

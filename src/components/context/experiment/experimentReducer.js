@@ -140,24 +140,7 @@ export default (state, action) => {
       return {
         ...state,
       };
-    // case SEARCH_EXPERIMENTS:
-    //   {
-    //     const { result, searchText, expType, activeCheck } = action.payload;
-    //     const experiments = result;
-    //     if (experiments) {
-    //       experiments.sort((a, b) => (a.status > b.status ? -1 : 1));
-    //       experiments.forEach(function(element){
-    //         element.hidden = false;
-    //       });
-    //     }
-    //     return {
-    //       ...state,
-    //       experiments: experiments,
-    //       loading: false,
-    //       currentPage: 1,
-    //       currentSearchString: searchText,
-    //     };
-    //   }
+
     case SEARCH_EXPERIMENTS:
     case SEARCH_BY_OWNER:
       {

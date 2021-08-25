@@ -325,7 +325,7 @@ export const generateConfigFileHtml = (conf) => {
       {Object.keys(conf).map(v => (
         <div key={v}>
           <p className="lead">[{v}]</p>
-          <table className="table table-sm">
+          <table className="table table-sm table-fixed">
             <thead className="thead-dark">
               <tr>
                 <th scope="col">Setting</th>

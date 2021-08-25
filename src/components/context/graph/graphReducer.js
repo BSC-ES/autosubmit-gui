@@ -26,8 +26,7 @@ import {
   SET_CURRENT_COMMAND,
   SET_NOTIFICATION_TITLE_GRAPH,
   SET_CURRENT_TEXT_COMMAND,
-  SET_JOB_INFO_PANEL_VISIBILITY,
-  SET_WARNING_ACTIVE
+  SET_JOB_INFO_PANEL_VISIBILITY
 } from "../types";
 
 import { DEBUG } from "../vars";
@@ -58,7 +57,7 @@ import { timeStampToDate, getReadyJobs } from "../utils";
 export default (state, action) => {
   switch (action.type) {
     case GET_GRAPH:
-      const { resdata, grouped, layout } = action.payload;            
+      const { resdata, grouped, layout, warning } = action.payload;            
       return {
         ...state,
         data: resdata,
@@ -68,6 +67,7 @@ export default (state, action) => {
         enabledGraphSearch: true,
         graphSelectedNodes: null,
         graphReady: getReadyJobs(resdata.nodes),
+        warningActive: warning,
       };
     case GET_PKL_DATA:      
       let retrievedPkl = action.payload;
@@ -591,11 +591,11 @@ export default (state, action) => {
         ...state,
         selection: action.payload,
       };
-    case SET_WARNING_ACTIVE:
-      return {
-        ...state,
-        warningActive: action.payload,
-      }
+    // case SET_WARNING_ACTIVE:
+    //   return {
+    //     ...state,
+    //     warningActive: action.payload,
+    //   }
     case UPDATE_GRAPH_SELECTED_NODES:
       //const selectedNodes = action.payload;
       state.graphSelectedNodes = null;

@@ -33,15 +33,7 @@ class BarChart extends Component {
     const svgHeight = data.length * 40.0 > minHeight ? data.length * 40.0 : minHeight;
     const svgWidth = 620.0;
     // const rangeQueue = d3.extent(data, d => { return d.queue; });
-    let maxDomain = 0;
-    if (metrics[0] === "failedAttempts"){
-        maxDomain = d3.max(data, d => { return Number.parseInt(d.failedAttempts); });
-    } else {
-        maxDomain = d3.max([d3.max(data, d => { return Number.parseFloat(d.queue); }),
-                            d3.max(data, d => { return Number.parseFloat(d.run); }),
-                            d3.max(data, d => { return Number.parseFloat(d.failedQueue); }),
-                            d3.max(data, d => { return Number.parseFloat(d.failedRun); })]);
-    }
+    
         
     // const minQueue = d3.min(data, d => { return d.queue; });
     // const rangeRun = d3.extent(data, d => { return d.run; });
@@ -62,25 +54,14 @@ class BarChart extends Component {
     // console.log(rangeRun);
     // console.log(rangeFailedQueue);
     // console.log(rangeFailedRun);
-    let xScaleQueue = null;
-    if (metrics[0] === "failedAttempts") {
-      xScaleQueue = d3.scaleLinear()
-        .domain([0, maxDomain])
-        .range([0, svgWidth - 1.3*padding]);
-    } else {
-      xScaleQueue = d3.scaleLinear()
-      .domain([0, maxDomain])
-      .range([0, svgWidth - 1.2*padding]);
-    }
+    
     
     
     const yScaleQueue = d3.scaleLinear()
       .domain([0, data.length])
       .range([padding, svgHeight - padding]);
 
-    const xAxis = d3.axisBottom(xScaleQueue)
-      .tickSize(-svgHeight + 2*padding)
-      .tickSizeOuter(0);
+
 
       
     // Tooltip
@@ -88,24 +69,64 @@ class BarChart extends Component {
                       .append("div")
                         .classed("tooltip-d3", true);
     // console.log(this.svgElement);
+    // const svgEl = d3.select(this.svgElement);
+    // svgEl.attr("width", svgWidth);
+    // svgEl.attr("height", svgHeight);
+    // svgEl.selectAll("*").remove();
+
+    // svgEl.append("g")
+    //   .attr("transform", "translate(" + padding + "," + (svgHeight - padding) + ")")
+    //   .call(xAxis);
+
+    // let groupsEnter = svgEl.selectAll("rect")
+    //   .data(data)
+    //   .enter()      
+    
     const svgEl = d3.select(this.svgElement);
     svgEl.attr("width", svgWidth);
     svgEl.attr("height", svgHeight);
     svgEl.selectAll("*").remove();
 
-    svgEl.append("g")
-      .attr("transform", "translate(" + padding + "," + (svgHeight - padding) + ")")
-      .call(xAxis);
-
-    let groupsEnter = svgEl.selectAll("rect")
-      .data(data)
-      .enter()      
-    
-
-    addBars(metrics, groupsEnter);
+    addBars(metrics);
 
     // enterSequence is the object returned by enter()
-    function addBars(metrics, enterSequence, ignoredMetrics = []) {
+    function addBars(metrics, ignoredMetrics = []) {
+      
+      // Calculate domain
+      let maxDomain = 0;
+      if (metrics[0] === "failedAttempts"){
+          maxDomain = d3.max(data, d => { return Number.parseInt(d.failedAttempts); });
+      } else {
+          maxDomain = d3.max([ignoredMetrics.includes("queue") ? 0.00 : d3.max(data, d => { return Number.parseFloat(d.queue); }),
+                              ignoredMetrics.includes("run") ? 0.00 : d3.max(data, d => { return Number.parseFloat(d.run); }),
+                              ignoredMetrics.includes("failedQueue") ? 0.00 : d3.max(data, d => { return Number.parseFloat(d.failedQueue); }),
+                              ignoredMetrics.includes("failedRun") ? 0.00 : d3.max(data, d => { return Number.parseFloat(d.failedRun); })]);
+      }
+
+      let xScaleQueue = null;
+      if (metrics[0] === "failedAttempts") {
+        xScaleQueue = d3.scaleLinear()
+          .domain([0, maxDomain])
+          .range([0, svgWidth - 1.3*padding]);
+      } else {
+        xScaleQueue = d3.scaleLinear()
+        .domain([0, maxDomain])
+        .range([0, svgWidth - 1.2*padding]);
+      }
+
+      const xAxis = d3.axisBottom(xScaleQueue)
+      .tickSize(-svgHeight + 2*padding)
+      .tickSizeOuter(0);                  
+
+      svgEl.append("g")
+        .classed(`xaxis-${helperId}`, true)
+        .attr("transform", "translate(" + padding + "," + (svgHeight - padding) + ")")
+        .call(xAxis);
+  
+      const groupsEnter = svgEl.selectAll("rect")
+        .data(data)
+        .enter()   
+
       // console.log(metrics);
       for (let j = 0; j < metrics.length; j++){
 
@@ -113,7 +134,7 @@ class BarChart extends Component {
         //const metricClassName = `bar-${metrics[j]}`
 
         
-        enterSequence.append("rect")
+        groupsEnter.append("rect")
         .classed(`newbar-${helperId}`, true)        
         .attr("height", d => { 
           if (metrics[0] === "failedAttempts") {
@@ -178,11 +199,6 @@ class BarChart extends Component {
 
     }
     
-    
-
-
-        
-    
     // Add title
     d3.select(this.svgElement)
       .append("text")
@@ -192,6 +208,7 @@ class BarChart extends Component {
         .style("text-anchor", "middle")
         .text(this.props.title);
     
+    // Add xAxis title
     d3.select(this.svgElement)
       .append("text")
         .attr("x", svgWidth / 2)
@@ -200,6 +217,7 @@ class BarChart extends Component {
         .style("text-anchor", "middle")
         .text(this.props.xtitle);
     
+    // Add yAxis title
     d3.select(this.svgElement)
       .append("text")
         .attr("transform", "rotate(-90)")
@@ -300,6 +318,9 @@ class BarChart extends Component {
         // console.log(d3.selectAll(".bar-queue"));
         d3.selectAll(`.newbar-${helperId}`).remove();  
         d3.selectAll(`.newtext-${helperId}`).remove();
+        //console.log(d3.selectAll(`xaxis-${helperId}`));
+        d3.selectAll(`.xaxis-${helperId}`).remove();
+        
         // const svgEl = d3.select(this.svgElement);          
         // let newGroupsEnter = d3.select(this.svgElement).selectAll("rect")
         //   .data(data)
@@ -307,11 +328,12 @@ class BarChart extends Component {
 
         // console.log(newGroupsEnter);
         // console.log(groupsEnter);
-        addBars(metrics, groupsEnter, ignoreMetrics);       
+        addBars(metrics, ignoreMetrics);       
       } else {
         d3.selectAll(`.newbar-${helperId}`).remove();  
         d3.selectAll(`.newtext-${helperId}`).remove();
-        addBars(metrics, groupsEnter, ignoreMetrics);
+        d3.selectAll(`.xaxis-${helperId}`).remove();
+        addBars(metrics, ignoreMetrics);
       }
     }
 

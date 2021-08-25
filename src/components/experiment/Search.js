@@ -32,6 +32,7 @@ const Search = ({ specificSearch }) => {
     if (specificSearch && !experiments){
       searchExperimentsByOwner(specificSearch, currentExpTypeChoice, currentActiveCheck);
     }    
+    // console.log("Rendering Search");
   }, [specificSearch, searchExperimentsByOwner, currentExpTypeChoice, currentActiveCheck, experiments]);
 
   const [text, setText] = useState("");

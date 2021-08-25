@@ -23,7 +23,7 @@ export class ExperimentItem extends Component {
       || nextProps.isLoading !== this.props.isLoading);
   }
 
-  render() {
+  render() {    
     const { experiment, getExperimentSummary, summaries, isLoading } = this.props;
 
     if (!experiment) {

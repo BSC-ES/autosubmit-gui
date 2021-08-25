@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import ExperimentItem from "./ExperimentItem";
 import Spinner from "../layout/Spinner";
 import ExperimentContext from "../context/experiment/experimentContext";
@@ -13,11 +13,11 @@ const Experiments = () => {
     summaries, 
     loadingSummary, 
     getExperimentSummary, 
-    currentPage, 
-    setPaginatedResult, 
+    // currentPage, 
+    // setPaginatedResult, 
     experimentsInPage, 
     orderExperimentsInResult, 
-    pageSetup, 
+    // pageSetup, 
     currentOrderType,
     activeInactiveFilter,
     typeFilter,
@@ -33,17 +33,23 @@ const Experiments = () => {
     return false;
   }
 
+  // const handlePaginatedResult = useCallback(() => {
+  //   // const localExperimentContext = useContext(ExperimentContext);
+  //   // const { setPaginatedResult } = localExperimentContext;
+  //   setPaginatedResult();
+  // }, []);
+
   const onOrderBy = (orderType) => (e) => {
     e.preventDefault();
     orderExperimentsInResult(orderType);
+    // setPaginatedResult();
   }
 
-  useEffect(() => {
-    if (experiments){
-      setPaginatedResult();
-    }    
-    // eslint-disable-next-line
-  }, [experiments, currentPage, pageSetup])  
+  // useEffect(() => {    
+  //   if (experiments){      
+  //     handlePaginatedResult();
+  //   }        
+  // }, [experiments, currentPage, pageSetup, handlePaginatedResult])  
 
   if (loading) {
     return <Spinner />;

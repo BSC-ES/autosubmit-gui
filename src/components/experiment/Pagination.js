@@ -13,6 +13,7 @@ const Pagination = () => {
   const onSubmit = (number) => (e) => {
     e.preventDefault();
     setCurrentPage(number);
+    // setPaginatedResult();
   }
 
   const showingText = "From " + String(pageSize*(currentPage - 1)+1) + " to " + String(pageSize*(currentPage) > totalCount ? totalCount : pageSize*(currentPage));

@@ -31,6 +31,7 @@ import Performance from "../experiment/Performance";
 import ReadyJobs from "../experiment/ReadyJobs";
 import ConfigurationControl from "../experiment/ConfigurationControl";
 import CurrentConfiguration from "../experiment/CurrentConfiguration";
+import { buildWarningInactiveMessageTree } from "../context/utils";
 
 // Main render component. Calls other component and supplies props if necessary.
 const ExperimentCentral = ({ match }) => {
@@ -81,6 +82,9 @@ const ExperimentCentral = ({ match }) => {
     cleanExperimentData,
     totalJobs,
     getLogStatus,
+    logTimeDiff,
+    currentLog,
+    testToken,
   } = experimentContext;
 
   const {
@@ -150,7 +154,8 @@ const ExperimentCentral = ({ match }) => {
       // Some type of switch might be useful here but more views are unlikely
       if (resolve_action) {
         if (resolve_action === "graph") {
-          getExperimentGraph(expid);
+          const warningMessage = buildWarningInactiveMessageTree(experimentRunning, logTimeDiff, currentLog, data ? data.nodes : null);
+          getExperimentGraph(expid, "none", "standard", warningMessage);
         } else if (resolve_action === "light") {
           getLighterView(expid);
         }
@@ -160,7 +165,10 @@ const ExperimentCentral = ({ match }) => {
       // Get performance metrics 
       getExperimentPerformanceMetrics(expid);
       // Get Current Log Status
-      getLogStatus(expid);      
+      getLogStatus(expid);   
+      // Test token
+      testToken();
+      // console.log("Exp Central");
     }
     // getExperimentTree(expid);
     const interval = setInterval(() => getRunningState(expid), 300000); // Every 5 minutes

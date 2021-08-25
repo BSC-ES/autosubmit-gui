@@ -32,7 +32,6 @@ import {
   SET_NOTIFICATION_TITLE_GRAPH,
   SET_OFF_LOADING_GRAPH,
   SET_JOB_INFO_PANEL_VISIBILITY,
-  SET_WARNING_ACTIVE,
 } from "../types";
 
 import { AUTOSUBMIT_API_SOURCE, DEBUG, NOAPI } from "../vars";
@@ -79,7 +78,8 @@ const GraphState = (props) => {
   const getExperimentGraph = async (
     expid,
     grouped = "none",  
-    layout = "standard"
+    layout = "standard",
+    warningMessage = null
   ) => {
     cleanOnlyGraphData();
     setLoadingGraph();
@@ -104,9 +104,9 @@ const GraphState = (props) => {
       //const resdata = res.data;
       dispatch({
         type: GET_GRAPH,
-        payload: { resdata: result, grouped, layout },
+        payload: { resdata: result, grouped, layout, warning: warningMessage },
       });
-    }
+    }    
   };
 
   // Get Experiment Pkl Data for Graph changes update
@@ -211,9 +211,9 @@ const GraphState = (props) => {
     dispatch({ type: SET_LOADING_JOB_MONITOR });
 
   // Set Data
-  const setWarningActive = (warning) => {      
-    dispatch({ type: SET_WARNING_ACTIVE, payload: warning });
-  }
+  // const setWarningActive = (warning) => {      
+  //   dispatch({ type: SET_WARNING_ACTIVE, payload: warning });
+  // }
   const setAutoUpdatePkl = (value) =>
     dispatch({ type: SET_AUTOUPDATE_PKL, payload: value });
   const setVisData = (value) =>
@@ -275,8 +275,7 @@ const GraphState = (props) => {
         setCurrentCommandGraph,
         setCurrentTextCommandGraph,
         setNotificationTitleGraph,
-        setJobInfoPanelVisibility,
-        setWarningActive
+        setJobInfoPanelVisibility,        
       }}
     >
       {props.children}

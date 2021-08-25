@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
 import GraphContext from "../context/graph/graphContext";
 import JobSummary from "./JobSummary";
@@ -26,23 +26,23 @@ const GraphControl = () => {
     enabledGraphSearch,
     loadingPkl,
     warningActive,
-    setWarningActive,
   } = graphContext;
 
-  useEffect(() => {
-    if (data){      
-      setWarningActive(buildWarningInactiveMessageTree(experimentRunning, logTimeDiff, currentLog, data ? data.nodes : null));
-    }
+  // useEffect(() => {
+  //   if (data){      
+  //     setWarningActive(buildWarningInactiveMessageTree(experimentRunning, logTimeDiff, currentLog, data ? data.nodes : null));
+  //   }
     
-    // eslint-disable-next-line
-  }, [experimentRunning, data])
+  //   // eslint-disable-next-line
+  // }, [experimentRunning, data])
 
   const disableQuery = !enabledGraphSearch || loadingPkl;
 
   const onSubmitGraph = (grouped = "none", layout = "standard") => (e) => {
     e.preventDefault();
     getLogStatus(experiment.expid);
-    getExperimentGraph(experiment.expid, grouped, layout);
+    const warningMessage = buildWarningInactiveMessageTree(experimentRunning, logTimeDiff, currentLog, data ? data.nodes : null);
+    getExperimentGraph(experiment.expid, grouped, layout, warningMessage);
   };
 
   const onJobMonitor = (e) => {

@@ -137,6 +137,7 @@ const ExperimentState = (props) => {
       type: SEARCH_EXPERIMENTS,
       payload: {result: result, searchText: text, expType: expType, activeCheck: activeCheck },
     });
+    setPaginatedResult();
   };
 
   //Search Experiments by Owner
@@ -158,7 +159,8 @@ const ExperimentState = (props) => {
     dispatch({
       type: SEARCH_BY_OWNER,
       payload: {result: result, searchText: owner, expType: expType, activeCheck: activeCheck},
-    })
+    });
+    setPaginatedResult();
   }
 
   const getLogStatus = async (expid) => {
@@ -324,6 +326,7 @@ const ExperimentState = (props) => {
       type: CURRENT_RUNNING,
       payload: result,
     });
+    setPaginatedResult();
   };
 
   //const updateSelection = async () => {};
@@ -563,6 +566,7 @@ const ExperimentState = (props) => {
       type: SET_CURRENT_PAGE,
       payload: pageNumber,
     })
+    setPaginatedResult();
   }
 
   // Cleaning
@@ -617,6 +621,7 @@ const ExperimentState = (props) => {
       type: ORDER_EXPERIMENTS_RESULT,
       payload: orderType,
     })
+    setPaginatedResult();
   }
 
   const updateCurrentSelectedGraph = (selectedJob, data) => {
