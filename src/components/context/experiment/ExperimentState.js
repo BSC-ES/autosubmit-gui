@@ -109,6 +109,7 @@ const ExperimentState = (props) => {
     currentOrderType: null,
     currentSearchString: null,
     currentConfiguration: null,
+    configDifferences: new Set(),
   };
 
   const [state, dispatch] = useReducer(ExperimentReducer, initialState);
@@ -690,6 +691,7 @@ const ExperimentState = (props) => {
         typeFilter: state.typeFilter,
         currentSearchString: state.currentSearchString,
         currentConfiguration: state.currentConfiguration,
+        configDifferences: state.configDifferences,
         setAutoUpdateRun,
         searchExperiments,
         searchExperimentsByOwner, 

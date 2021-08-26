@@ -49,7 +49,8 @@ import {
   approximateLoadingTreeTime,
   approximateLoadingQuickView,
   normalizeString,
-  normalizeInt
+  normalizeInt,
+  differenceBetweenConfigurations
 } from "../utils";
 
 import { pageSize, orderByType, simpleTypeToComplex, simpleActiveStatusToComplex } from "../vars";
@@ -105,6 +106,7 @@ export default (state, action) => {
       return {
         ...state,
         currentConfiguration: null,
+        currentDifferences: new Set(),
       }
     case LOADING_JOB_HISTORY:
       return {
@@ -643,10 +645,12 @@ export default (state, action) => {
         currentPage: action.payload,
       }
     case GET_CURRENT_CONFIGURATION: 
-
+      const { configurationCurrentRun, configurationFileSystem } = action.payload;
+      const currentDifferences =  differenceBetweenConfigurations(configurationCurrentRun, configurationFileSystem);
       return {
         ...state,
         currentConfiguration: action.payload,
+        configDifferences: currentDifferences,
       }
     default:
       return null;

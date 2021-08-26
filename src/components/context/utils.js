@@ -317,14 +317,63 @@ export const creationDateToId = (strCreationDate, intRunId) => {
   return code;
 }
 
-export const generateConfigFileHtml = (conf) => {
+/* 
+Finds differences between configurations
+*/
+export const differenceBetweenConfigurations = (historicalConf, currentConf) => {
+  let differences = new Set();
+  if (historicalConf && currentConf) { 
+    // First Level
+    Object.keys(currentConf).forEach(file => {
+      const historicalFile = Object.keys(historicalConf) ? Object.keys(historicalConf) : [];
+      if (historicalFile.includes(file)) {
+        // Second Level
+        Object.keys(currentConf[file]).forEach(header => {
+          const historicalFileHeader = Object.keys(historicalConf[file]) ? Object.keys(historicalConf[file]) : [];
+          if (historicalFileHeader.includes(header)) {
+            Object.keys(currentConf[file][header]).forEach(field => {
+              const historicalFileHeaderField = Object.keys(historicalConf[file][header]) ? Object.keys(historicalConf[file][header]) : [];
+              if (historicalFileHeaderField.includes(field)) {
+                if (currentConf[file][header][field] !== historicalConf[file][header][field]) {
+                  differences.add(`${file}+${header}+${field}`);
+                  differences.add(`${file}+${header}`);
+                  differences.add(file);
+                }
+              } else {
+                differences.add(`${file}+${header}+${field}`);
+                differences.add(`${file}+${header}`);
+                differences.add(file);
+              }
+            });
+          } else {           
+            differences.add(`${file}+${header}`);
+            differences.add(file);
+          }
+          const fileFileHeader = Object.keys(currentConf[file]) ? Object.keys(currentConf[file]) : [];
+          // console.log(fileFileHeader);
+          // console.log(historicalFileHeader); 
+          historicalFileHeader.forEach(head => {
+            if (!fileFileHeader.includes(head)) differences.add(`${file}+${head}`);
+          });
+        });
+      } else {
+        differences.add(file);
+      }      
+    });
+  }
+  // console.log(differences);
+  return differences;
+}
+
+export const generateConfigFileHtml = (conf, confName = "name", differences = new Set(), alertSpan = "Differencia") => {  
   if (conf){
-    //console.log(conf);
+    // console.log(conf);
+    // console.log(differences);
     let htmlResult = <div className="row mx-2">
       <div className="col">
       {Object.keys(conf).map(v => (
         <div key={v}>
-          <p className="lead">[{v}]</p>
+          <p className="lead"><strong>[{v}]</strong> {differences.has(`${confName}+${v}`) && alertSpan}</p>
           <table className="table table-sm table-fixed">
             <thead className="thead-dark">
               <tr>
@@ -333,9 +382,9 @@ export const generateConfigFileHtml = (conf) => {
               </tr>
             </thead>
             <tbody>
-              {Object.keys(conf[v]).map(w => (
+              {Object.keys(conf[v]).map(w => (                
                 <tr key={w}>
-                  <td>{w}</td>
+                  <td>{w} {differences.has(`${confName}+${v}+${w}`) && alertSpan}</td>
                   <td>{conf[v][w]}</td>
                 </tr>
               ))}
@@ -346,22 +395,6 @@ export const generateConfigFileHtml = (conf) => {
       </div>
     </div>;
     return htmlResult;
-      // <table className="table">
-      //   <thead>
-      //     <tr>
-      //       <th scope="col">Section</th>
-      //       <th scope="col">Setting</th>
-      //       <th scope="col">Value</th>
-      //     </tr>
-      //   </thead>
-      //   <tbody>
-      //     {conf.values.map(v => (
-      //       <tr key={v}>
-
-      //       </tr>
-      //     ))}
-      //   </tbody>
-      // </table>;
   }
   return null;
 }
