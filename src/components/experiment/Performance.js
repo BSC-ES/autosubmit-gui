@@ -1,7 +1,7 @@
 import React, { useContext, Fragment } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
 import Spinner from "../layout/Spinner";
-import { secondsToDelta } from "../context/utils";
+import { secondsToDelta, arrayAverage, arrayVariance } from "../context/utils";
 
 const Performance = () => {
   const experimentContext = useContext(ExperimentContext);
@@ -10,6 +10,8 @@ const Performance = () => {
   if (loadingPerformance === true) {
     return <Spinner />;
   }
+
+  // console.log(performancedata);
 
   if (!experiment || !performancedata) {
     return (
@@ -29,33 +31,91 @@ const Performance = () => {
     Parallelization,
     CHSY,
     considered,
+    arrSYPDdata,
+    arrASYPDdata,
+    arrCHSY
   } = performancedata;
+
+  // console.log(arrJPSYdata);
+    
   return (
     <Fragment>
-      <div className='row px-3'>
-        <div className='col-4 p-4'>
+      <div className='row pr-3 pb-3'>
+        <div className='col-4 p-4 scroll-x'>
           <h5>
             Parallelization:{" "}
             <span className='badge badge-secondary'>{Parallelization}</span>
           </h5>
           <h5>
+            RSYPD: <span className='badge badge-secondary'>{RSYPD}</span>
+          </h5>
+          <h5>
+            JPSY: <span className='badge badge-secondary'>{JPSY}</span>
+          </h5>
+
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col">Metric</th>
+                <th scope="col">Value</th>
+                <th scope="col">Min</th>
+                <th scope="col">Max</th>
+                <th scope="col">Mean</th>
+                <th scope="col">Variance</th>
+              </tr>
+            </thead>
+            <tbody>
+              {/* <tr>
+                <th scope="row">JPSY</th>
+                <td className="text-right"><span className='rounded px-1 bg-secondary'>{JPSY}</span></td>
+                <td className="text-right">{Math.min(...arrJPSYdata)}</td>
+                <td className="text-right">{Math.max(...arrJPSYdata)}</td>
+                <td className="text-right">{arrayAverage(arrJPSYdata)}</td>
+                <td className="text-right">{arrayVariance(arrJPSYdata)}</td>
+              </tr> */}
+              <tr>
+                <th scope="row">SYPD</th>
+                <td className="text-right"><span className='rounded px-1 bg-secondary'>{Number.parseFloat(SYPD).toFixed(2)}</span></td>
+                <td className="text-right">{Math.min(...arrSYPDdata)}</td>
+                <td className="text-right">{Math.max(...arrSYPDdata)}</td>
+                <td className="text-right">{arrayAverage(arrSYPDdata)}</td>
+                <td className="text-right">{arrayVariance(arrSYPDdata)}</td>
+              </tr>
+              <tr>
+                <th scope="row">ASYPD</th>
+                <td className="text-right"><span className='rounded px-1 bg-secondary'>{Number.parseFloat(ASYPD).toFixed(2)}</span></td>
+                <td className="text-right">{Math.min(...arrASYPDdata)}</td>
+                <td className="text-right">{Math.max(...arrASYPDdata)}</td>
+                <td className="text-right">{arrayAverage(arrASYPDdata)}</td>
+                <td className="text-right">{arrayVariance(arrASYPDdata)}</td>
+              </tr>
+              <tr>
+                <th scope="row">CHSY</th>
+                <td className="text-right"><span className='rounded px-1 bg-secondary'>{CHSY}</span></td>
+                <td className="text-right">{Math.min(...arrCHSY)}</td>
+                <td className="text-right">{Math.min(...arrCHSY)}</td>
+                <td className="text-right">{arrayAverage(arrCHSY)}</td>
+                <td className="text-right">{arrayVariance(arrCHSY)}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          {/* <h5>
             JPSY: <span className='badge badge-secondary'>{JPSY}</span>
           </h5>
           <h5>
             SYPD: <span className='badge badge-secondary'>{SYPD}</span>
           </h5>
-          <h5>
-            RSYPD: <span className='badge badge-secondary'>{RSYPD}</span>
-          </h5>
+          
           <h5>
             ASYPD: <span className='badge badge-secondary'>{ASYPD}</span>
           </h5>
           <h5>
             CHSY: <span className='badge badge-secondary'>{CHSY}</span>
-          </h5>
-          {/* <strong>considered: </strong> {considered} */}
+          </h5> */}
+
         </div>
-        <div className='col-8 p-3 scroll-y-jobs'>
+        <div className='col-8 pt-3 scroll-y-jobs'>
           <p className='lead'>Considered: ({considered.length})</p>
           <table className='table'>
             <thead>

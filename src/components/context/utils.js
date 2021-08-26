@@ -38,7 +38,7 @@ export const hashCode = (value) => {
     hash = (hash << 5) - hash + chr;
     hash |= 0; // Convert to 32bit integer
   }
-  console.log(hash);
+  // console.log(hash);
   return hash;
 };
 
@@ -132,7 +132,7 @@ export const end = () => {
 
   // get seconds
   let seconds = Math.round(timeDiff);
-  console.log(seconds + " seconds");
+  // console.log(seconds + " seconds");
 };
 
 export const approximateLoadingTreeTime = (x) => {
@@ -397,4 +397,25 @@ export const generateConfigFileHtml = (conf, confName = "name", differences = ne
     return htmlResult;
   }
   return null;
+}
+
+export const arrayAverage = (arr) => {
+  if (!arr || arr.length === 0) return 0.0000;
+  const sumArr = arr.reduce((accum, x) => {
+    accum += x;
+    return accum;
+  })
+  return arr.length > 0 ? Number.parseFloat(sumArr / arr.length).toFixed(4) : 0.0000;
+}
+
+export const arrayVariance = (arr) => {
+  const average = arrayAverage(arr);
+  // console.log(arr.map(x => {
+  //   return Math.pow(x - average, 2);
+  // }));
+  const variance = arrayAverage(arr.map(x => {
+    return Math.pow(x - average, 2);
+  }));
+  // console.log(variance);
+  return Number.parseFloat(variance).toFixed(4);
 }

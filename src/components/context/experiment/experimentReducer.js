@@ -451,11 +451,45 @@ export default (state, action) => {
       };
     }
     case GET_EXPERIMENT_PERFORMANCE:
+    {
+      const performanceData = action.payload;
+      const { considered } = action.payload;
+      const arrJPSYdata = action.payload ? considered.reduce((accum, obj) => {
+        const j_i = obj.JPSY;
+        accum.push(j_i);
+        return accum;
+      }, []) : [];
+    
+      const arrSYPDdata = action.payload ? considered.reduce((accum, obj) => {
+        const s_i = obj.SYPD;
+        accum.push(s_i);
+        return accum;
+      }, []) : [];
+    
+      const arrASYPDdata = action.payload ? considered.reduce((accum, obj) => {
+        const a_i = obj.ASYPD;
+        accum.push(a_i);
+        return accum;
+      }, []) : [];
+    
+      const arrCHSY = action.payload ? considered.reduce((accum, obj) => {
+        const c_i = obj.CHSY;
+        accum.push(c_i);
+        return accum;
+      }, []) : [];
+      
+      performanceData.arrJPSYdata = arrJPSYdata;
+      performanceData.arrSYPDdata = arrSYPDdata;
+      performanceData.arrASYPDdata = arrASYPDdata;
+      performanceData.arrCHSY = arrCHSY;
+      
+      // console.log(performanceData);
       return {
         ...state,
-        performancedata: action.payload,
+        performancedata: performanceData,
         loadingPerformance: false,
       };
+    }
     case CLEAN_PERFORMANCE_METRICS:
       return {
         ...state,
