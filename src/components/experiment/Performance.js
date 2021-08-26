@@ -74,7 +74,7 @@ const Performance = () => {
                 <td className="text-right">{arrayVariance(arrJPSYdata)}</td>
               </tr> */}
               <tr>
-                <th scope="row">SYPD</th>
+                <th scope="row" className="text-right">SYPD</th>
                 <td className="text-right"><span className='rounded px-1 bg-secondary'>{Number.parseFloat(SYPD).toFixed(2)}</span></td>
                 <td className="text-right">{Math.min(...arrSYPDdata)}</td>
                 <td className="text-right">{Math.max(...arrSYPDdata)}</td>
@@ -82,7 +82,7 @@ const Performance = () => {
                 <td className="text-right">{arrayVariance(arrSYPDdata)}</td>
               </tr>
               <tr>
-                <th scope="row">ASYPD</th>
+                <th scope="row" className="text-right">ASYPD</th>
                 <td className="text-right"><span className='rounded px-1 bg-secondary'>{Number.parseFloat(ASYPD).toFixed(2)}</span></td>
                 <td className="text-right">{Math.min(...arrASYPDdata)}</td>
                 <td className="text-right">{Math.max(...arrASYPDdata)}</td>
@@ -90,10 +90,10 @@ const Performance = () => {
                 <td className="text-right">{arrayVariance(arrASYPDdata)}</td>
               </tr>
               <tr>
-                <th scope="row">CHSY</th>
+                <th scope="row" className="text-right">CHSY</th>
                 <td className="text-right"><span className='rounded px-1 bg-secondary'>{CHSY}</span></td>
                 <td className="text-right">{Math.min(...arrCHSY)}</td>
-                <td className="text-right">{Math.min(...arrCHSY)}</td>
+                <td className="text-right">{Math.max(...arrCHSY)}</td>
                 <td className="text-right">{arrayAverage(arrCHSY)}</td>
                 <td className="text-right">{arrayVariance(arrCHSY)}</td>
               </tr>
