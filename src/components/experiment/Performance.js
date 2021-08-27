@@ -1,7 +1,7 @@
 import React, { useContext, Fragment } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
 import Spinner from "../layout/Spinner";
-import { secondsToDelta, arrayAverage, arrayStandardDeviation } from "../context/utils";
+import { secondsToDelta, arrayAverage, arrayStandardDeviation, arrayMeanAbsoluteDeviationAroundMean } from "../context/utils";
 
 const Performance = () => {
   const experimentContext = useContext(ExperimentContext);
@@ -37,7 +37,6 @@ const Performance = () => {
     arrJPSYdata
   } = performancedata;
 
-  console.log(arrJPSYdata);
     
   return (
     <Fragment>
@@ -55,7 +54,8 @@ const Performance = () => {
                 <th scope="col" className="text-right">Min</th>
                 <th scope="col" className="text-right">Max</th>
                 <th scope="col" className="text-right">Mean</th>
-                <th scope="col" className="text-right">S.d.</th>
+                <th scope="col" className="text-right">S.D.</th>
+                <th scope="col" className="text-right">MAD</th>
               </tr>
             </thead>
             <tbody>
@@ -66,6 +66,7 @@ const Performance = () => {
                 <td className="text-right">{Math.max(...arrJPSYdata)}</td>
                 <td className="text-right"><strong>{arrayAverage(arrJPSYdata)}</strong></td>
                 <td className="text-right">{arrayStandardDeviation(arrJPSYdata)}</td>
+                <td className="text-right">{arrayMeanAbsoluteDeviationAroundMean(arrJPSYdata)}</td>
               </tr>
               <tr>
                 <th scope="row">SYPD</th>
@@ -74,6 +75,7 @@ const Performance = () => {
                 <td className="text-right">{Math.max(...arrSYPDdata)}</td>
                 <td className="text-right"><strong>{arrayAverage(arrSYPDdata)}</strong></td>
                 <td className="text-right">{arrayStandardDeviation(arrSYPDdata)}</td>
+                <td className="text-right">{arrayMeanAbsoluteDeviationAroundMean(arrSYPDdata)}</td>
               </tr>
               <tr>
                 <th scope="row">ASYPD</th>
@@ -82,6 +84,7 @@ const Performance = () => {
                 <td className="text-right">{Math.max(...arrASYPDdata)}</td>
                 <td className="text-right">{arrayAverage(arrASYPDdata)}</td>
                 <td className="text-right">{arrayStandardDeviation(arrASYPDdata)}</td>
+                <td className="text-right">{arrayMeanAbsoluteDeviationAroundMean(arrASYPDdata)}</td>
               </tr>
               <tr>
                 <th scope="row">CHSY</th>
@@ -90,11 +93,15 @@ const Performance = () => {
                 <td className="text-right">{Math.max(...arrCHSY)}</td>
                 <td className="text-right"><strong>{arrayAverage(arrCHSY)}</strong></td>
                 <td className="text-right">{arrayStandardDeviation(arrCHSY)}</td>
+                <td className="text-right">{arrayMeanAbsoluteDeviationAroundMean(arrCHSY)}</td>
               </tr>
             </tbody>
           </table>
+          <span><strong>Value</strong>: Value of the metric calculated at the experiment level.</span><br></br>
+          <span><strong>S.D.</strong>: Standard Deviation.</span><br></br>
+          <span><strong>MAD</strong>: Mean Absolute Deviation Around the Mean.</span>
         </div>
-        <div className='col-8 pt-3'>
+        <div className='col-md-8 pt-3'>
           <p className='lead'>Considered: ({considered.length})</p>
           <div className="scroll-y-jobs">
           <table className='table'>

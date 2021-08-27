@@ -400,12 +400,12 @@ export const generateConfigFileHtml = (conf, confName = "name", differences = ne
 }
 
 export const arrayAverage = (arr) => {
-  if (!arr || arr.length === 0) return 0.0000;
+  if (!arr || arr.length === 0) return 0.00;
   const sumArr = arr.reduce((accum, x) => {
     accum += x;
     return accum;
   })
-  return arr.length > 0 ? Number.parseFloat(sumArr / arr.length).toFixed(2) : 0.0000;
+  return arr.length > 0 ? Number.parseFloat(sumArr / arr.length).toFixed(2) : 0.00;
 }
 
 export const arrayVariance = (arr) => {
@@ -422,4 +422,14 @@ export const arrayVariance = (arr) => {
 
 export const arrayStandardDeviation = (arr) => {
   return Number.parseFloat(Math.sqrt(arrayVariance(arr))).toFixed(2);
+}
+
+export const arrayMeanAbsoluteDeviationAroundMean = (arr) => {
+  if (!arr || arr.length === 0) return 0.00;
+  const mean = arrayAverage(arr);
+  const madam = arrayAverage(arr.map(x => {
+    return Math.abs(x - mean);
+  }));
+  return Number.parseFloat(madam).toFixed(2);
+
 }
