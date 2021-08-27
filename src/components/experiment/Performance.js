@@ -64,7 +64,7 @@ const Performance = () => {
                 <td className="text-right"><span className='rounded px-1 bg-secondary'>{JPSY}</span></td>
                 <td className="text-right">{Math.min(...arrJPSYdata)}</td>
                 <td className="text-right">{Math.max(...arrJPSYdata)}</td>
-                <td className="text-right"><strong>{Number.parseFloat(arrayAverage(arrJPSYdata)).toFixed(0)}</strong></td>
+                <td className="text-right"><strong>{arrayAverage(arrJPSYdata)}</strong></td>
                 <td className="text-right">{arrayStandardDeviation(arrJPSYdata)}</td>
               </tr>
               <tr>

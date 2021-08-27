@@ -405,7 +405,7 @@ export const arrayAverage = (arr) => {
     accum += x;
     return accum;
   })
-  return arr.length > 0 ? Number.parseFloat(sumArr / arr.length).toFixed(4) : 0.0000;
+  return arr.length > 0 ? Number.parseFloat(sumArr / arr.length).toFixed(2) : 0.0000;
 }
 
 export const arrayVariance = (arr) => {
@@ -421,5 +421,5 @@ export const arrayVariance = (arr) => {
 }
 
 export const arrayStandardDeviation = (arr) => {
-  return Number.parseFloat(Math.sqrt(arrayAverage(arr))).toFixed(2);
+  return Number.parseFloat(Math.sqrt(arrayVariance(arr))).toFixed(2);
 }

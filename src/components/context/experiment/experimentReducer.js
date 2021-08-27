@@ -95,6 +95,7 @@ export default (state, action) => {
         logTimeDiff: 0,
         currentLog: null,
         currentConfiguration: null,
+        performancedata: null,
       };
     }
     case CLEAN_FILE_STATUS_DATA:

@@ -85,6 +85,7 @@ const ExperimentCentral = ({ match }) => {
     logTimeDiff,
     currentLog,
     testToken,
+    performancedata,
   } = experimentContext;
 
   const {
@@ -164,7 +165,7 @@ const ExperimentCentral = ({ match }) => {
         getExperimentTree(expid, warningMessage);
       }
       // Get performance metrics 
-      getExperimentPerformanceMetrics(expid);
+      if (!performancedata) getExperimentPerformanceMetrics(expid);
       // Get Current Log Status
       getLogStatus(expid);   
       // Test token
