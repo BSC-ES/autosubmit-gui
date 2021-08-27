@@ -46,7 +46,7 @@ const JobLog = ({ source, tab }) => {
                     <ul style={pStyle} className="p-1 mb-0 ul-2">
                       {joblog.logcontent.map((item) => (
                         <li key={item.index}>
-                         <small>{item.content}</small>
+                         <span>{item.content}</span>
                         </li>
                       ))}
                     </ul>
@@ -61,7 +61,7 @@ const JobLog = ({ source, tab }) => {
                   <p>The log was not found.</p>
                 )}
               <div className='text-muted text-center'>
-                <small>Showing last 150 lines.</small>
+                <span>Showing last 150 lines.</span>
               </div>
               </div>
             </div>

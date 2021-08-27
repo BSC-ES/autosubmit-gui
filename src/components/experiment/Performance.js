@@ -1,4 +1,4 @@
-import React, { useContext, Fragment } from "react";
+import React, { useContext } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
 import Spinner from "../layout/Spinner";
 import { secondsToDelta, arrayAverage, arrayStandardDeviation, arrayMeanAbsoluteDeviationAroundMean } from "../context/utils";
@@ -39,14 +39,15 @@ const Performance = () => {
 
     
   return (
-    <Fragment>
-      <div className='row px-2 pb-3'>
-        <div className='col-md-4 pt-3 scroll-x'>
+    <div className="container">
+      <div className='row'>
+        <div className='col'>
           <p className="lead">
             <span className="mr-4">Parallelization:{" "}<span className='badge badge-secondary'>{Parallelization}</span></span>            
             <span>RSYPD:{" "}<span className='badge badge-secondary'>{RSYPD}</span></span>
-          </p>                  
-          <table className="table">
+          </p>      
+          <div className="scroll-x">
+            <table className="table">
             <thead>
               <tr>
                 <th scope="col">Metric</th>
@@ -97,11 +98,12 @@ const Performance = () => {
               </tr>
             </tbody>
           </table>
+          </div>            
           <span><strong>Value</strong>: Value of the metric calculated at the experiment level.</span><br></br>
           <span><strong>S.D.</strong>: Standard Deviation.</span><br></br>
           <span><strong>MAD</strong>: Mean Absolute Deviation Around the Mean.</span>
         </div>
-        <div className='col-md-8 pt-3'>
+        <div className='col'>
           <p className='lead'>Considered: ({considered.length})</p>
           <div className="scroll-y-jobs">
           <table className='table'>
@@ -158,7 +160,7 @@ const Performance = () => {
         performancedata.warnings_job_data &&
         performancedata.warnings_job_data.length > 0 && (
           <div className='row px-3 pb-1'>
-            <div className='col-12 px-4'>
+            <div className='col-md-12 px-4'>
               <p>
                 {" "}
                 There are some warnings about the calculations of performance
@@ -195,8 +197,8 @@ const Performance = () => {
           </div>
         )}
 
-      <div className='row px-3'>
-        <div className='col-12 px-4'>
+      <div className='row'>
+        <div className='col'>
           <h3>Metrics description:</h3>
           <p>
             <strong>Parallelization</strong>: Total number of cores allocated
@@ -254,7 +256,7 @@ const Performance = () => {
           </p>
         </div>
       </div>
-    </Fragment>
+    </div>
   );
 };
 

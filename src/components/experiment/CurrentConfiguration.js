@@ -54,8 +54,7 @@ const CurrentConfiguration = () => {
       // console.log(sourceName);
       // console.log(configDifferences)
       return (
-        <div className="row">
-          <div className="col">
+        <div className="container">
             <div className="row">
               <div className="col-md-12">
                 {currentConfiguration.warning === true && <p>{currentConfiguration.warningMessage}</p>}          
@@ -63,7 +62,7 @@ const CurrentConfiguration = () => {
               </div>            
             </div>
             <div className="row">          
-              <div className="col">                           
+              <div className="col-md-12">                           
                 <ul className="nav nav-pills ml-4 mb-2" id="hconf-pills-tab" role="tablist">
                   <li className="nav-item" role="presentation">
                     <a 
@@ -224,32 +223,34 @@ const CurrentConfiguration = () => {
             </div>           
           </div>             
         </div>
-        </div>
       )
     }    
   } else {
     return (
-      <div className="row">
-        <div className="col">
-          <p>
-          Press <span className="badge badge-primary">SHOW CURRENT INFORMATION</span> to visualize the current configuration of your experiment. The information will be retrieved from the historical database and from the filesystem, each datasource is displayed in its own table.
-          </p>
-          <h4>What is the <strong>Current FileSystem Configuration</strong>?</h4>
-          <p>It is the configuration of your experiment stored in the files inside the folder <strong>conf</strong>. Autosubmit GUI might have problems accessing this information if your conf files have <strong>restricted read permissions</strong>.</p>
-          <h4>What is the <strong>Current Run Configuration (Historical Database)</strong>?</h4>
-          <p>
-            Whenever you start a new run of your experiment, the current configuration stored in the file system is stored in the historical database for reference.
-          </p>
-          <h4>What is a <strong>new run</strong> of the experiment?</h4>
-          <p>
-            A new run is created in any of these situations:            
-          </p>
-          <ul>
-              <li><code>autosubmit create</code> is executed.</li>
-              <li><code>autosubmit run</code> is executed and the historical database is empty.</li>
-              <li><code>autosubmit run</code> is executed and it is detected that the number of jobs in the experiment has changed.</li>
-              <li><code>autosubmit setstatus</code> and/or a significant amount of jobs changes status.</li>              
-            </ul>
+      <div className="container">
+        <div className="row">
+          <div className="col-md-12">
+            <p>
+            Press <span className="badge badge-primary">SHOW CURRENT INFORMATION</span> to visualize the current configuration of your experiment. The information will be retrieved from the historical database and from the filesystem, each datasource is displayed in its own table.
+            </p>
+            <h4>What is the <strong>Current FileSystem Configuration</strong>?</h4>
+            <p>It is the configuration of your experiment stored in the files inside the folder <strong>conf</strong>. Autosubmit GUI might have problems accessing this information if your conf files have <strong>restricted read permissions</strong>.</p>
+            <h4>What is the <strong>Current Run Configuration (Historical Database)</strong>?</h4>
+            <p>
+              Whenever you start a new run of your experiment, the current configuration stored in the file system is stored in the historical database for reference.
+            </p>
+            <h4>What is a <strong>new run</strong> of the experiment?</h4>
+            <p>
+              A new run is created in any of these situations:            
+            </p>
+            <ul>
+                <li><code>autosubmit create</code> is executed.</li>
+                <li><code>autosubmit run</code> is executed and the historical database is empty.</li>
+                <li><code>autosubmit run</code> is executed and it is detected that the number of jobs in the experiment has changed.</li>
+                <li><code>autosubmit setstatus</code> and/or a significant amount of jobs changes status.</li>              
+              </ul>
+          </div>
+          
         </div>
       </div>
     );

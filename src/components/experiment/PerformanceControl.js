@@ -19,15 +19,13 @@ const PerformanceControl = () => {
   };
 
   return (
-    <div className='card-header p-1'>
-      <div className='row justify-content-end'>
-        <div className='col-md-2'>
+    <div className='card-header p-1 text-right'>
           {experiment && (
             <form onSubmit={onSubmitRequest} className='form'>
               <input
                 type='submit'
                 value='Refresh'
-                className='btn btn-success btn-block btn-sm'
+                className='btn btn-success btn-sm'
                 disabled={!enabledTreeSearch || loadingPerformance}
                 data-toggle='tooltip' 
                 data-placement='bottom' 
@@ -35,8 +33,6 @@ const PerformanceControl = () => {
               />
             </form>
           )}
-        </div>
-      </div>
     </div>
   );
 };

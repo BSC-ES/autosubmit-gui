@@ -615,14 +615,12 @@ const ExperimentCentral = ({ match }) => {
               role='tabpanel'
               aria-labelledby='stats-tab'
             >
-              <div className='card mt-2' style={experimentMinStyle}>
+              <div className='card' style={experimentMinStyle}>
                 <div className='card-header py-0 text-muted'>
                   <small>Statistics</small>
                 </div>
-                <div className='card-body p-1'>
-                  <div className='col-12'>
-                    <StatsSearch />
-                  </div>
+                <div className='card-body p-1'>                  
+                    <StatsSearch />                  
                 </div>
               </div>
             </div>
@@ -632,9 +630,9 @@ const ExperimentCentral = ({ match }) => {
               role='tabpanel'
               aria-labelledby='performance-tab'
             >
-              <div className='card mt-2'>
+              <div className='card'>
                 {experiment && <PerformanceControl />}
-                <div className='card-body p-1'>
+                <div className='card-body'>
                   {experiment && <Performance />}
                 </div>
               </div>
@@ -645,7 +643,7 @@ const ExperimentCentral = ({ match }) => {
               role='tabpanel'
               aria-labelledby='lightview-tab'
             >
-              <div className='card mt-2'>
+              <div className='card'>
                 {experiment && <LighterControl />}
                 <div className='card-body p-1'>
                   {experiment && (

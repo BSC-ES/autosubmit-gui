@@ -21,14 +21,13 @@ const LogControl = () => {
 
   return (
     <div className='card-header p-1'>
-      <div className='row justify-content-end'>
-        <div className='col-md-2'>
+      <div className='text-right'>
           {experiment && !startAutoUpdateRun && (
             <form onSubmit={onSubmitRun} className='form'>
               <input
                 type='submit'
                 value='Show Log'
-                className='btn btn-dark btn-sm btn-block'
+                className='btn btn-dark btn-sm'
                 data-toggle='tooltip' 
                 data-placement='bottom' 
                 title="Show the last 150 lines of the current run log of your experiment."
@@ -40,12 +39,11 @@ const LogControl = () => {
               <input
                 type='submit'
                 value='Hide Log'
-                className='btn btn-secondary btn-sm btn-block'
+                className='btn btn-secondary btn-sm'
                 // disabled={!enabledGraphSearch}
               />
             </form>
           )}
-        </div>
       </div>
     </div>
   );

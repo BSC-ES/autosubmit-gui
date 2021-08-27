@@ -1,4 +1,4 @@
-import React, { useState, useContext, Fragment } from "react";
+import React, { useState, useContext } from "react";
 import StatsContext from "../context/statistics/statsContext";
 import ExperimentContext from "../context/experiment/experimentContext";
 // import Chart from "react-google-charts";
@@ -85,111 +85,106 @@ const StatsSearch = () => {
   // };
 
   return (
-    <Fragment>
-      <div className='row'>
-        <div className='col text-center'>
-          {!statdata && experiment && experimentContext.loading === false && (
-            <div className="row">
-              <div className="col-4">
-                <form onSubmit={onSubmitStats} className='form'>
-                  <div className='input-group input-group-sm'>
-                    <input
-                      className='form-control'
-                      type='text'
-                      name='section'
-                      placeholder='Section'
-                      onChange={onChangeSection}
-                    />
-                    <input
-                      className='form-control'
-                      type='text'
-                      name='hours'
-                      placeholder='Hours'
-                      onChange={onChangeHour}
-                    />
-                    <div className='input-group-append'>
-                      <input
-                        type='submit'
-                        value='Get Statistics'
-                        className='btn btn-primary'
-                        disabled={loading}
-                        data-toggle='tooltip' 
-                        data-placement='bottom' 
-                        title="Gets the statistics for the Section and Hours values provided."
-                      />
-                    </div>
-                  </div>
-                </form>
+    <div className="container">
+      {!statdata && experiment && experimentContext.loading === false && (
+        <div className="row">
+          <div className="col-md-4 offset-md-4">
+            <form onSubmit={onSubmitStats} className='form'>
+              <div className='input-group input-group-sm'>
+                <input
+                  className='form-control'
+                  type='text'
+                  name='section'
+                  placeholder='Section'
+                  onChange={onChangeSection}
+                />
+                <input
+                  className='form-control'
+                  type='text'
+                  name='hours'
+                  placeholder='Hours'
+                  onChange={onChangeHour}
+                />
+                <div className='input-group-append'>
+                  <input
+                    type='submit'
+                    value='Get Statistics'
+                    className='btn btn-primary'
+                    disabled={loading}
+                    data-toggle='tooltip' 
+                    data-placement='bottom' 
+                    title="Gets the statistics for the Section and Hours values provided."
+                  />
+                </div>
               </div>
-            </div>
-            
-          )}
-          {statdata && (
-            <div className="row-hl d-flex flex-wrap">
-              <div className="item-hl">
-                {summaryHeader && summaryHeader}
-              </div>
-              <div className="item-hl ml-auto">
-                <form onSubmit={onSubmitClear} className='form'>
-                  <div className=''>
-                    <input
-                      type='submit'
-                      value='Clear Statistics'
-                      className='btn btn-dark btn-sm'
-                    />
-                  </div>
-                </form>
-              </div>              
-            </div>            
-          )}
+            </form>
+          </div>
         </div>
-        <div className='col-md-12'>
-          {!statdata && experiment && (
-            <div className='col-md-12 p-3'>
-              <p className='lead'>
-                Supply a Section (Type) in the appropriate textbox to filter the
-                jobs that will be included in the query. Also, you can also
-                supply the Hours value that determines how many hours before the
-                current time you want to query. Leave both empty and a query for
-                Any Section since the date of creation of the experiment will be
-                executed.
-              </p>
-              <p className='lead'>
-                Press <span className='badge badge-primary'>Get Statistics</span>{" "}
-                to generate the statistics, this will generate a Bar Chart and
-                some extra statistics below. Drag the mouse inside the chart to
-                zoom in; however, zoom in capabilities are not unlimited, so try
-                to narrow your query.
-              </p>
-            </div>
-          )}
-          {loading && <Spinner />}
-          {statdata && statdata.length > 0 && (
-            <div className="row mt-2">              
-              <div className="col-sm-6 text-center scroll-x">                
-                <BarChart data={statdata} title="Statistics" metrics={["queue", "run", "failedQueue", "failedRun"]} xtitle="Hours" clearStats={clearStats} helperId={"4"} />
+        
+      )}
+      {statdata && (
+        <div className="row-hl d-flex flex-wrap pb-1">
+          <div className="item-hl">
+            {summaryHeader && summaryHeader}
+          </div>
+          <div className="item-hl ml-auto">
+            <form onSubmit={onSubmitClear} className='form'>
+              <div className=''>
+                <input
+                  type='submit'
+                  value='Clear Statistics'
+                  className='btn btn-dark btn-sm'
+                />
               </div>
-              <div className="col-sm-6 text-center scroll-x">
-                <BarChart data={statdata} title="Failed Attempts per Job"  metrics={["failedAttempts"]} xtitle="Attempts" clearStats={clearStats} helperId={"1"} />
-              </div>
-            </div>            
-          )}          
-          {statdata && isError && (
-            <div className="row mt-2">
-              <div className='col-md-12 text-center p-3'>{errorMessage}</div>
-            </div>            
-          )}
-          {totaldata && (
-            <div className="row mt-2 justify-content-center">
-              <div className='col-md-4'>
-                {totaldata && summaryTable && summaryTable}
-              </div>
-            </div>
-            
-          )}
+            </form>
+          </div>              
+        </div>            
+      )}
+      {!statdata && experiment && (
+        <div className='row'>
+          <div className="col">
+            <p className='lead'>
+              Supply a Section (Type) in the appropriate textbox to filter the
+              jobs that will be included in the query. Also, you can also
+              supply the Hours value that determines how many hours before the
+              current time you want to query. Leave both empty and a query for
+              Any Section since the date of creation of the experiment will be
+              executed.
+            </p>
+            <p className='lead'>
+              Press <span className='badge badge-primary'>Get Statistics</span>{" "}
+              to generate the statistics, this will generate a Bar Chart and
+              some extra statistics below. Drag the mouse inside the chart to
+              zoom in; however, zoom in capabilities are not unlimited, so try
+              to narrow your query.
+            </p>
+          </div>          
         </div>
-      </div>
-    </Fragment>
+      )}
+      {loading && <Spinner />}
+      {statdata && statdata.length > 0 && (
+        <div className="row">              
+          <div className="col-md-6 scroll-x text-right">                
+            <BarChart data={statdata} title="Statistics" metrics={["queue", "run", "failedQueue", "failedRun"]} xtitle="Hours" clearStats={clearStats} helperId={"4"} />
+          </div>
+          <div className="col-md-6 scroll-x">
+            <BarChart data={statdata} title="Failed Attempts per Job"  metrics={["failedAttempts"]} xtitle="Attempts" clearStats={clearStats} helperId={"1"} />
+          </div>
+        </div>            
+      )}          
+      {statdata && isError && (
+        <div className="row">
+          <div className='col-md-12 text-center p-3'>{errorMessage}</div>
+        </div>            
+      )}
+      {totaldata && (
+        <div className="row justify-content-center">
+          <div className='col-md-4'>
+            {totaldata && summaryTable && summaryTable}
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 

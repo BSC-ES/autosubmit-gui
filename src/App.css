@@ -17,6 +17,9 @@
 
 tbody tr:hover {
   background-color: #f4f4f4;
+  -webkit-transition: 0.4s;
+  -o-transition: 0.4s;
+  transition: 0.4s;
 }
 
 .table th {

@@ -40,7 +40,6 @@ export class ExperimentItem extends Component {
 
     const disabledMore = total >= quickThreshold ? true : false;
     return (
-    <div className='col mb-4'>
       <div className='card'>
         <div className='card-header text-center py-1'>
           <div className='row'>
@@ -117,7 +116,7 @@ export class ExperimentItem extends Component {
             <span>{description}</span>
           </p>
           <div className='row'>
-            <div className='col-3 px-1'>
+            <div className='col-md-3 px-1'>
               {!isLoading && (
                 // <form onSubmit={onGetSummary} className='form'>
                   <button
@@ -144,7 +143,7 @@ export class ExperimentItem extends Component {
                 </button>
               )}
             </div>
-            <div className='col-3 px-1'>
+            <div className='col-md-3 px-1'>
               {disabledMore === true && (
                 <button className='btn btn-sm btn-block' disabled='True'>
                   Tree &#8594;
@@ -162,7 +161,7 @@ export class ExperimentItem extends Component {
                 </Link>
               )}
             </div>
-            <div className="col-3 px-1">
+            <div className="col-md-3 px-1">
               {disabledMore === true && (
                 <button className="btn btn-sm btn-block" disabled='True'>
                   Graph &#8594;
@@ -180,7 +179,7 @@ export class ExperimentItem extends Component {
                 </Link>
               )}
             </div>
-            <div className='col-3 px-1'>
+            <div className='col-md-3 px-1'>
               <Link
                 to={`/autosubmitapp/experiment/${name}/light`}
                 className='btn btn-primary btn-block btn-sm'
@@ -300,8 +299,7 @@ export class ExperimentItem extends Component {
             <span className='text-muted'>{version}</span>{wrapper && (<span className="px-1 ml-1 bg-secondary text-dark rounded">{wrapper} wrapper</span>)}
           </p>
         </div>
-      </div>
-    </div>)
+      </div>)
   }
 }
 
