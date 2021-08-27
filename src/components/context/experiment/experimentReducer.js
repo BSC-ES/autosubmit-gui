@@ -454,7 +454,8 @@ export default (state, action) => {
     {
       const performanceData = action.payload;
       const { considered } = action.payload;
-      const arrJPSYdata = action.payload ? considered.reduce((accum, obj) => {
+      const arraJPSYnoZeroes = considered.filter(x => x.JPSY > 0);
+      const arrJPSYdata = action.payload ? arraJPSYnoZeroes.reduce((accum, obj) => {
         const j_i = obj.JPSY;
         accum.push(j_i);
         return accum;

@@ -10,7 +10,7 @@ class JobMonitor extends Component {
         this.props.experiment.expid,
         this.props.experiment.pkl_timestamp
       );
-      if (this.props.experimentRunning) {
+      if (this.props.experimentRunning) {        
         this.interval = setInterval(
           () =>
             this.props.getExperimentPkl(

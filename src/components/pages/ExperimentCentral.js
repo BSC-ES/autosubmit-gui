@@ -160,7 +160,8 @@ const ExperimentCentral = ({ match }) => {
           getLighterView(expid);
         }
       } else {
-        getExperimentTree(expid);
+        const warningMessage = buildWarningInactiveMessageTree(experimentRunning, logTimeDiff, currentLog, treedata ? treedata.jobs : null)
+        getExperimentTree(expid, warningMessage);
       }
       // Get performance metrics 
       getExperimentPerformanceMetrics(expid);

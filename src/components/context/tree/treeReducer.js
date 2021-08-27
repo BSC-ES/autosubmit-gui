@@ -16,14 +16,14 @@ import {
   SET_NOTIFICATION_TITLE_TREE,
   SET_OFF_LOADING_TREE,
   INCREASE_LOADING_TREE,
-  //UPDATE_RUNDETAIL_ON_TREE,
+  // UPDATE_RUNDETAIL_ON_TREE,
   UPDATE_TREE_SELECTED_NODES,
   GET_EXPERIMENT_RUN_JOBDATA,
   LOADING_PREVIOUS_RUN,
   SET_CURRENT_COMMAND,
   SET_CURRENT_TEXT_COMMAND,
-  SET_WARNING_ACTIVE,
-  //CLEAR_RUNDETAIL_ON_TREE,
+  // SET_WARNING_ACTIVE,
+  // CLEAR_RUNDETAIL_ON_TREE,
 } from "../types";
 
 // updateTreeData
@@ -37,7 +37,7 @@ import { DEBUG } from "../vars";
 export default (state, action) => {
   switch (action.type) {
     case GET_TREE:      
-      const { jobs } = action.payload;
+      const { jobs, warningMessage } = action.payload;
       return {
         ...state,
         treedata: action.payload,
@@ -46,6 +46,7 @@ export default (state, action) => {
         elapsedLoadingTree: 1,
         currentRunIdOnTree: null,
         treeReady: getReadyJobs(jobs),
+        warningActive: warningMessage,
       };
     case SET_LOADING_TREE_PKL:
       return {
@@ -512,11 +513,6 @@ export default (state, action) => {
         warningActive: null,
         //canSelect: false,
       };
-    case SET_WARNING_ACTIVE:
-      return {
-        ...state,
-        warningActive: action.payload,
-      }
     case CLEAN_TREE_PKL_DATA:
       return {
         ...state,

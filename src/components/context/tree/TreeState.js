@@ -27,7 +27,6 @@ import {
   UPDATE_TREE_SELECTED_NODES,
   SET_CURRENT_COMMAND,
   SET_CURRENT_TEXT_COMMAND,
-  SET_WARNING_ACTIVE,
 } from "../types";
 
 // import { start, end } from "../utils";
@@ -63,7 +62,7 @@ const TreeState = (props) => {
   const localserver = AUTOSUBMIT_API_SOURCE;
   const debug = DEBUG;
   
-  const getExperimentTree = async (expid) => {
+  const getExperimentTree = async (expid, warningMessage = null) => {
     setLoadingTree();
     let result = null;
     //start();
@@ -81,6 +80,7 @@ const TreeState = (props) => {
   
     if (result) {
       debug && console.log(result);
+      result.warningMessage = warningMessage;
       dispatch({
         type: GET_TREE,
         payload: result,
@@ -192,9 +192,9 @@ const TreeState = (props) => {
   const setLoadingTreePkl = () => dispatch({ type: SET_LOADING_TREE_PKL });
   const setAutoUpdateTreePkl = (value) =>
     dispatch({ type: SET_AUTOUPDATE_TREE_PKL, payload: value });
-  const setWarningActive = (warning) => {      
-      dispatch({ type: SET_WARNING_ACTIVE, payload: warning });
-    }
+  // const setWarningActive = (warning) => {      
+  //     dispatch({ type: SET_WARNING_ACTIVE, payload: warning });
+  //  }
   const setStartSelection = () => dispatch({ type: SET_START_TREE_SELECTION });
   const setNotificationTitleTree = (notification) =>
     dispatch({ type: SET_NOTIFICATION_TITLE_TREE, payload: notification });
@@ -241,8 +241,7 @@ const TreeState = (props) => {
         getExperimentRunJobData,
         updateTreeSelectedNodes,
         setCurrentCommandTree,
-        setCurrentTextCommandTree,
-        setWarningActive,
+        setCurrentTextCommandTree,        
       }}
     >
       {props.children}

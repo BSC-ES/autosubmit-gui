@@ -102,17 +102,17 @@ const  ExperimentRuns = () => {
                         <th scope='col'>Created</th>
                         {/* <th scope='col'>Created</th> */}
                         <th scope='col'>Finish</th>
-                        <th scope='col'>Submitted</th>
-                        <th scope='col'>Queuing</th>
-                        <th scope='col'>Running</th>
-                        <th scope='col'>Failed</th>
-                        <th scope='col'>Suspended</th>
-                        <th scope='col'>Completed</th>
-                        <th scope='col'>Total</th>
-                        <th scope='col'>SYPD</th>
-                        <th scope='col'>ASYPD</th>
-                        <th scope='col'>ChunkUnit</th>
-                        <th scope='col'>ChunkSize</th>
+                        <th scope='col' className='text-right'>Submitted</th>
+                        <th scope='col' className='text-right'>Queuing</th>
+                        <th scope='col' className='text-right'>Running</th>
+                        <th scope='col' className='text-right'>Failed</th>
+                        <th scope='col' className='text-right'>Suspended</th>
+                        <th scope='col' className='text-right'>Completed</th>
+                        <th scope='col' className='text-right'>Total</th>
+                        <th scope='col' className='text-right'>SYPD</th>
+                        <th scope='col' className='text-right'>ASYPD</th>
+                        <th scope='col' className='text-right'>ChunkUnit</th>
+                        <th scope='col' className='text-right'>ChunkSize</th>
                       </tr>
                     </thead>
                     

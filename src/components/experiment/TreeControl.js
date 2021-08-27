@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
 import TreeContext from "../context/tree/treeContext";
 import SelectionControl from "./SelectionControl";
@@ -21,26 +21,25 @@ const TreeControl = () => {
     startAutoUpdateTreePkl,
     loadingTreePkl,
     currentRunIdOnTree,
-    warningActive,
-    setWarningActive
+    warningActive,    
   } = treeContext;
   
-  useEffect(() => {
-    if (treedata){      
-      setWarningActive(buildWarningInactiveMessageTree(experimentRunning, logTimeDiff, currentLog, treedata ? treedata.jobs : null));
-    }
-    //}
+  // useEffect(() => {
+  //   if (treedata){      
+  //     setWarningActive();
+  //   }
+  //   //}
     
-    // return () => {
-    //   cleanup
-    // }
-    // eslint-disable-next-line
-  }, [experimentRunning, treedata])
+  //   // return () => {
+  //   //   cleanup
+  //   // }
+  //   // eslint-disable-next-line
+  // }, [experimentRunning, treedata])
 
   const onSubmitTree = (e) => {
     e.preventDefault();
     getLogStatus(experiment.expid);
-    getExperimentTree(experiment.expid);    
+    getExperimentTree(experiment.expid, buildWarningInactiveMessageTree(experimentRunning, logTimeDiff, currentLog, treedata ? treedata.jobs : null));    
   };
 
   const onClearTree = (e) => {

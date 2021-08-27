@@ -1,7 +1,7 @@
 import React, { useContext, Fragment } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
 import Spinner from "../layout/Spinner";
-import { secondsToDelta, arrayAverage, arrayVariance } from "../context/utils";
+import { secondsToDelta, arrayAverage, arrayStandardDeviation } from "../context/utils";
 
 const Performance = () => {
   const experimentContext = useContext(ExperimentContext);
@@ -33,102 +33,82 @@ const Performance = () => {
     considered,
     arrSYPDdata,
     arrASYPDdata,
-    arrCHSY
+    arrCHSY,
+    arrJPSYdata
   } = performancedata;
 
-  // console.log(arrJPSYdata);
+  console.log(arrJPSYdata);
     
   return (
     <Fragment>
-      <div className='row pr-3 pb-3'>
-        <div className='col-4 p-4 scroll-x'>
-          <h5>
-            Parallelization:{" "}
-            <span className='badge badge-secondary'>{Parallelization}</span>
-          </h5>
-          <h5>
-            RSYPD: <span className='badge badge-secondary'>{RSYPD}</span>
-          </h5>
-          <h5>
-            JPSY: <span className='badge badge-secondary'>{JPSY}</span>
-          </h5>
-
+      <div className='row px-2 pb-3'>
+        <div className='col-md-4 pt-3 scroll-x'>
+          <p className="lead">
+            <span className="mr-4">Parallelization:{" "}<span className='badge badge-secondary'>{Parallelization}</span></span>            
+            <span>RSYPD:{" "}<span className='badge badge-secondary'>{RSYPD}</span></span>
+          </p>                  
           <table className="table">
             <thead>
               <tr>
                 <th scope="col">Metric</th>
-                <th scope="col">Value</th>
-                <th scope="col">Min</th>
-                <th scope="col">Max</th>
-                <th scope="col">Mean</th>
-                <th scope="col">Variance</th>
+                <th scope="col" className="text-right">Value</th>
+                <th scope="col" className="text-right">Min</th>
+                <th scope="col" className="text-right">Max</th>
+                <th scope="col" className="text-right">Mean</th>
+                <th scope="col" className="text-right">S.d.</th>
               </tr>
             </thead>
             <tbody>
-              {/* <tr>
+              <tr>
                 <th scope="row">JPSY</th>
                 <td className="text-right"><span className='rounded px-1 bg-secondary'>{JPSY}</span></td>
                 <td className="text-right">{Math.min(...arrJPSYdata)}</td>
                 <td className="text-right">{Math.max(...arrJPSYdata)}</td>
-                <td className="text-right">{arrayAverage(arrJPSYdata)}</td>
-                <td className="text-right">{arrayVariance(arrJPSYdata)}</td>
-              </tr> */}
+                <td className="text-right"><strong>{Number.parseFloat(arrayAverage(arrJPSYdata)).toFixed(0)}</strong></td>
+                <td className="text-right">{arrayStandardDeviation(arrJPSYdata)}</td>
+              </tr>
               <tr>
-                <th scope="row" className="text-right">SYPD</th>
+                <th scope="row">SYPD</th>
                 <td className="text-right"><span className='rounded px-1 bg-secondary'>{Number.parseFloat(SYPD).toFixed(2)}</span></td>
                 <td className="text-right">{Math.min(...arrSYPDdata)}</td>
                 <td className="text-right">{Math.max(...arrSYPDdata)}</td>
-                <td className="text-right">{arrayAverage(arrSYPDdata)}</td>
-                <td className="text-right">{arrayVariance(arrSYPDdata)}</td>
+                <td className="text-right"><strong>{arrayAverage(arrSYPDdata)}</strong></td>
+                <td className="text-right">{arrayStandardDeviation(arrSYPDdata)}</td>
               </tr>
               <tr>
-                <th scope="row" className="text-right">ASYPD</th>
-                <td className="text-right"><span className='rounded px-1 bg-secondary'>{Number.parseFloat(ASYPD).toFixed(2)}</span></td>
+                <th scope="row">ASYPD</th>
+                <td className="text-right"><strong><span className='rounded px-1 bg-secondary'>{Number.parseFloat(ASYPD).toFixed(2)}</span></strong></td>
                 <td className="text-right">{Math.min(...arrASYPDdata)}</td>
                 <td className="text-right">{Math.max(...arrASYPDdata)}</td>
                 <td className="text-right">{arrayAverage(arrASYPDdata)}</td>
-                <td className="text-right">{arrayVariance(arrASYPDdata)}</td>
+                <td className="text-right">{arrayStandardDeviation(arrASYPDdata)}</td>
               </tr>
               <tr>
-                <th scope="row" className="text-right">CHSY</th>
+                <th scope="row">CHSY</th>
                 <td className="text-right"><span className='rounded px-1 bg-secondary'>{CHSY}</span></td>
                 <td className="text-right">{Math.min(...arrCHSY)}</td>
                 <td className="text-right">{Math.max(...arrCHSY)}</td>
-                <td className="text-right">{arrayAverage(arrCHSY)}</td>
-                <td className="text-right">{arrayVariance(arrCHSY)}</td>
+                <td className="text-right"><strong>{arrayAverage(arrCHSY)}</strong></td>
+                <td className="text-right">{arrayStandardDeviation(arrCHSY)}</td>
               </tr>
             </tbody>
           </table>
-
-          {/* <h5>
-            JPSY: <span className='badge badge-secondary'>{JPSY}</span>
-          </h5>
-          <h5>
-            SYPD: <span className='badge badge-secondary'>{SYPD}</span>
-          </h5>
-          
-          <h5>
-            ASYPD: <span className='badge badge-secondary'>{ASYPD}</span>
-          </h5>
-          <h5>
-            CHSY: <span className='badge badge-secondary'>{CHSY}</span>
-          </h5> */}
-
         </div>
-        <div className='col-8 pt-3 scroll-y-jobs'>
+        <div className='col-8 pt-3'>
           <p className='lead'>Considered: ({considered.length})</p>
+          <div className="scroll-y-jobs">
           <table className='table'>
             <thead>
               <tr>
                 <th scope='col'>#</th>
                 <th scope='col'>Job Name</th>
-                <th scope='col'>Queue</th>
-                <th scope='col'>Run</th>
-                <th scope='col'>CHSY</th>
-                <th scope='col'>JPSY</th>
-                <th scope='col'>Energy</th>
-                <th scope='col'>SYPD</th>
-                <th scope='col'>ASYPD</th>
+                <th scope='col' className="text-right">Queue</th>
+                <th scope='col' className="text-right">Run</th>
+                <th scope='col' className="text-right">CHSY</th>
+                <th scope='col' className="text-right">SYPD</th>
+                <th scope='col' className="text-right">ASYPD</th>
+                <th scope='col' className="text-right">JPSY</th>
+                <th scope='col' className="text-right">Energy</th>                
               </tr>
             </thead>
             <tbody>
@@ -138,38 +118,39 @@ const Performance = () => {
                   <tr key={item.name}>
                     <th scope='row'>{index + 1}</th>
                     <td>{item.name}</td>
-                    <td>
+                    <td className="text-right">
                       <strong> {secondsToDelta(item.queue)}</strong>
                     </td>
-                    <td>
+                    <td className="text-right">
                       <strong>{secondsToDelta(item.running)}</strong>
                     </td>
-                    <td>
-                      <strong>{item.CHSY}</strong>
+                    <td className="text-right">
+                      {Number.parseFloat(item.CHSY).toFixed(2)}
                     </td>
-                    <td>
-                      <strong>{item.JPSY}</strong>
+                    <td className="text-right">
+                      {Number.parseFloat(item.SYPD).toFixed(2)}
                     </td>
-                    <td>
-                      <strong>{item.energy}</strong>
+                    <td className="text-right">
+                      {Number.parseFloat(item.ASYPD).toFixed(2)}
                     </td>
-                    <td>
-                      <strong>{item.SYPD}</strong>
+                    <td className="text-right">
+                      {item.JPSY}
                     </td>
-                    <td>
-                      {item.ASYPD}
-                    </td>
+                    <td className="text-right">
+                      {item.energy}
+                    </td>                    
                   </tr>
                 ))}
             </tbody>
           </table>
+          </div>
         </div>
       </div>
 
       {performancedata &&
         performancedata.warnings_job_data &&
         performancedata.warnings_job_data.length > 0 && (
-          <div className='row px-3'>
+          <div className='row px-3 pb-1'>
             <div className='col-12 px-4'>
               <p>
                 {" "}
@@ -194,14 +175,14 @@ const Performance = () => {
             </div>
 
             <div className='collapse px-4' id='warningsCollapse'>
-              <div className='card card-body'>
-                <small>
-                  <ol>
+              <div className='card card-body p-1'>
+                
+                  <ol className="py-0 my-0">
                     {performancedata.warnings_job_data.map((item) => (
                       <li key={item}>{item}</li>
                     ))}
                   </ol>
-                </small>
+                
               </div>
             </div>
           </div>
@@ -209,30 +190,35 @@ const Performance = () => {
 
       <div className='row px-3'>
         <div className='col-12 px-4'>
-          <p className='lead'>Metrics description:</p>
+          <h3>Metrics description:</h3>
           <p>
             <strong>Parallelization</strong>: Total number of cores allocated
             for the run, per SIM.
-          </p>
+          </p>         
           <p>
             <strong>JPSY</strong>: Energy cost of a simulation, measured in
-            Joules per simulated year.
+            Joules per simulated year. The JPSY <strong>value</strong> at the experiment level is the mean of the values calculated at the job level. 
+            Energy values are only collected for jobs running on <strong>Marenostrum4</strong>.
+            In rare occassions the query that retrieves the energy information fails and the value stays at 0.
+            Jobs with <strong>0</strong> energy value are not considered for the calculation.  
           </p>
           <p>
-            <strong>SYPD</strong>: Simulated years per day for the model in a 24
-            h period.
+            <strong>SYPD</strong>: Simulated Years Per Day for the model in a 24h period. 
+            The <strong>value</strong> at the experiment level is the mean of the values calculated at the job level.
           </p>
           <p>
-            <strong>ASYPD</strong>: Actual SYPD, this number should be lower
-            than SYPD due to interruptions, queue wait time, data transfer or
-            issues with the model workflow. This is collected by measuring the
-            time between first submission and the date of arrival of the last
-            history file on the storage file system.
+            <strong>ASYPD</strong>: Actual Simulated Years Per Day, this number should be lower than SYPD due to interruptions, queue wait time, data transfer or
+            issues with the model workflow.
+            The ASYPD <strong>value</strong> calculated at the job level uses a generalization of the formula applied at the experiment level. 
+            As a consequence, the ASYPD value at the experiment level can be different that the mean of the values calculated at the job level.
           </p>
           <p>
-            <strong>CHSY</strong>: Core hours per simulated year. This is
-            measured as the product of the model runtime for 1 SY and the number
-            of cores allocated. This is an average of the CHSY of all SIM jobs.
+            <strong>CHSY</strong>: Core Hours Per Simulated Year. 
+            This metric is the product of the model runtime for 1 Simulated Year and the number of processors (Parallelization) allocated. 
+            The CHSY <strong>value</strong> at the experiment level is the mean of the values calculated at the job level.
+          </p>
+          <p>
+            <strong>RSYPD</strong>: "Real" Simulated Years Per Day. This variation of SYPD has been defined only at the experiment level. It depends on the existences of <strong>TRANSFER</strong> or <strong>CLEAN</strong> jobs. Then, it uses the finish time of the last TRANSFER or CLEAN job and the start time of the first SIM job in the experiment to calculate an approximation of the total duration of the simulation.
           </p>
           <p>
             <strong>Considered</strong>: Scrollable list where each item in the
@@ -247,6 +233,7 @@ const Performance = () => {
               platforms.
             </i>
           </p>
+          
           <p>
             Visit{" "}
             <a

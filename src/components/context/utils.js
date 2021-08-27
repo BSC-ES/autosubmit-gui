@@ -114,7 +114,7 @@ export const secondsToDelta = (SECONDS) => {
     
     return (days > 0 ? days + (days > 1 ? " days - " : " day - ") : "") + hours + ":" + minutes + ":" + seconds;
   } else {
-    return "0:00:00";
+    return "00:00:00";
   }
 };
 
@@ -132,7 +132,7 @@ export const end = () => {
 
   // get seconds
   let seconds = Math.round(timeDiff);
-  // console.log(seconds + " seconds");
+  console.log(seconds + " seconds");
 };
 
 export const approximateLoadingTreeTime = (x) => {
@@ -418,4 +418,8 @@ export const arrayVariance = (arr) => {
   }));
   // console.log(variance);
   return Number.parseFloat(variance).toFixed(4);
+}
+
+export const arrayStandardDeviation = (arr) => {
+  return Number.parseFloat(Math.sqrt(arrayAverage(arr))).toFixed(2);
 }
