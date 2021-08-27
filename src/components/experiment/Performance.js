@@ -214,7 +214,7 @@ const Performance = () => {
             The <strong>value</strong> at the experiment level is the mean of the values calculated at the job level.
           </p>
           <p>
-            <strong>ASYPD</strong>: Actual Simulated Years Per Day, this number should be lower than SYPD due to interruptions, queue wait time, data transfer or
+            <strong>ASYPD</strong>: Actual Simulated Years Per Day, this number should be lower than SYPD due to interruptions, queue wait time, <strong>POST</strong> jobs, data transfer, or
             issues with the model workflow.
             The ASYPD <strong>value</strong> calculated at the job level uses a generalization of the formula applied at the experiment level. 
             As a consequence, the ASYPD value at the experiment level can be different that the mean of the values calculated at the job level.
