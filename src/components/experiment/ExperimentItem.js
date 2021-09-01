@@ -39,8 +39,8 @@ export class ExperimentItem extends Component {
     };
 
     const disabledMore = total >= quickThreshold ? true : false;
-    return (
-      <div className='card'>
+    return (      
+      <div className='card card-hover'>
         <div className='card-header text-center py-1'>
           <div className='row'>
             <div className='col-md-3 text-left'>
@@ -112,10 +112,11 @@ export class ExperimentItem extends Component {
               <span className='text-muted'>HPC: {hpc}</span>
             </div>
           </div>          
-          <p className='card-text py-1 mb-1'>
+          <p className='card-text mb-0'>
             <span>{description}</span>
           </p>
-          <div className='row'>
+          
+          <div className='row row-in-card'>
             <div className='col-md-3 px-1'>
               {!isLoading && (
                 // <form onSubmit={onGetSummary} className='form'>
@@ -189,36 +190,31 @@ export class ExperimentItem extends Component {
               >
                 Quick
               </Link>
-            </div>
+            </div>                        
+          </div>
+          {summaries[name] && (
+          <div className="row">
             {summaries[name] && summaries[name].error === true && (
-              <div className='col-12 pt-2' id={name}>
-                <div className='card card-body py-0 scroll-x'>
-                  <div className='row text-left'>
-                    <div className='col-md-12'>
-                      <div className='small'>
-                        <strong>ERROR: {summaries[name].error_message}</strong>
+                <div className='col scroll-x' id={name}>
+                    <div className='row text-left'>
+                      <div className='col-md-12'>                        
+                          <strong>ERROR: {summaries[name].error_message}</strong>                        
                       </div>
                     </div>
-                  </div>
                 </div>
-              </div>
-            )}
+            )}       
             {summaries[name] && summaries[name].error === false && (
-              <div className='col-12 pt-2' id={name}>
-                <div className='card card-body py-0 scroll-x'>
+              <div className='col scroll-x' id={name}>
                   <div className='row text-left'>
                     <div className='col-md-12'>
-                      <small>
                         All : avg. queue{" "}
                         <strong>{summaries[name].avg_queue_time}</strong> | run{" "}
                         <strong>{summaries[name].avg_run_time}</strong>
-                      </small>
                     </div>
                   </div>
                   {summaries[name].sim_queue_considered > 0 && (
                     <div className='row text-left'>
                       <div className='col-md-12'>
-                        <small>
                           SIM {" ("}
                           {summaries[name].n_sim}
                           {") "} : avg. queue{" "}
@@ -230,12 +226,11 @@ export class ExperimentItem extends Component {
                           {" ("}
                           {summaries[name].sim_run_considered}
                           {")"}
-                        </small>
                       </div>
                     </div>
                   )}
-                  <div className='row pb-2'>
-                    <div className='col-12'>
+                  <div className='row'>
+                    <div className='col'>
                       {summaries[name].n_running > 0 && (
                         <span className='badge badge-success'>
                           Running: {summaries[name].n_running}
@@ -269,8 +264,8 @@ export class ExperimentItem extends Component {
                   </div>
 
                   {summaries[name].n_failed > 0 && (
-                    <div className='row px-1'>
-                      <div className='col-md-2 text-center px-2'>
+                    <div className='row'>
+                      <div className='col-md-2 text-center'>
                         <span className='badge badge-danger'>
                           Failed: {summaries[name].n_failed}
                         </span>
@@ -279,27 +274,26 @@ export class ExperimentItem extends Component {
                         <div
                           className=''
                           style={{ overflow: "auto", maxHeight: "200px" }}
-                        >
-                          <small>
+                        >                          
                             <ol>
                               {summaries[name].failed_jobs.map((item) => (
                                 <li key={item}>{item}</li>
                               ))}
-                            </ol>
-                          </small>
+                            </ol>                          
                         </div>
                       </div>
                     </div>
                   )}
-                </div>
               </div>
             )}
           </div>
+          )}
           <p className='card-text text-center'>
             <span className='text-muted'>{version}</span>{wrapper && (<span className="px-1 ml-1 bg-secondary text-dark rounded">{wrapper} wrapper</span>)}
           </p>
         </div>
-      </div>)
+      </div>
+      )
   }
 }
 
