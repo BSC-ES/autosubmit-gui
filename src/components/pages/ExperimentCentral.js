@@ -19,6 +19,7 @@ import JobMonitor from "../experiment/JobMonitor";
 import JobMonitorTree from "../experiment/JobMonitorTree";
 import Navigator from "../experiment/Navigator";
 import StatsSearch from "../statistics/StatsSearch";
+import StatsControl from "../statistics/StatsControl";
 import JobSearcher from "../experiment/JobSearcher";
 import JobFilter from "../experiment/JobFilter";
 import WrapperList from "../experiment/WrapperList";
@@ -616,9 +617,7 @@ const ExperimentCentral = ({ match }) => {
               aria-labelledby='stats-tab'
             >
               <div className='card' style={experimentMinStyle}>
-                <div className='card-header py-0 text-muted'>
-                  <small>Statistics</small>
-                </div>
+                <StatsControl/>
                 <div className='card-body p-1'>                  
                     <StatsSearch />                  
                 </div>

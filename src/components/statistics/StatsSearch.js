@@ -1,9 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import StatsContext from "../context/statistics/statsContext";
 import ExperimentContext from "../context/experiment/experimentContext";
 // import Chart from "react-google-charts";
 import Spinner from "../layout/Spinner";
-import { DEBUG } from "../context/vars";
 import BarChart from "./BarChart";
 
 const StatsSearch = () => {
@@ -11,7 +10,6 @@ const StatsSearch = () => {
   const experimentContext = useContext(ExperimentContext);
 
   const {
-    getExperimentStats,
     statdata,
     loading,
     clearStats,
@@ -22,148 +20,168 @@ const StatsSearch = () => {
   const { experiment } = experimentContext;
 
 
-  let summaryTable = null;
-  let summaryHeader = null;
-  if (totaldata && totaldata.stats && totaldata.stats.totals && totaldata.stats.totals.length > 0) {
-    let summary = [];
-    totaldata.stats.totals.forEach((item, index) => {
-      if (index === 0){
-        summaryHeader = <p className="lead"><strong>{item}</strong></p>;
-      } else {
-        if (item.indexOf(":") >= 0){
-          summary.push({
-            field: item.split(":")[0], 
-            value: item.split(":")[1]
-          });
-        } else {
-          summary.push({
-            field: "",
-            value: item
-          });
-        }        
-      }      
-    });
-    summaryTable = <table className="table table-sm">
-      <thead className="thead-dark">
+  let countsSummaryTable = null;
+  let CPUconsumptionTable = null;
+  let consumptionTable = null;
+  const summaryHeader = totaldata && totaldata.totals && totaldata.totals.Period ? <span>Statistics from the period <span className="bg-secondary rounded px-1">{totaldata.totals.Period.From}</span> to <span className="bg-secondary rounded px-1">{totaldata.totals.Period.To}</span></span> : <span>No results</span>;
+  const consumptionPercentage = totaldata && totaldata.totals ? totaldata.totals.pConsumption: 0.00;
+  const queueTime = totaldata && totaldata.totals ? totaldata.totals.tQueue : 0.00;
+  // if (totaldata && totaldata.stats && totaldata.stats.totals && totaldata.stats.totals.length > 0) {
+    // let summary = [];
+    // totaldata.stats.totals.forEach((item, index) => {
+    //   if (index === 0){
+    //     summaryHeader = <p className="lead"><strong>{item}</strong></p>;
+    //   } else {
+    //     if (item.indexOf(":") >= 0){
+    //       summary.push({
+    //         field: item.split(":")[0], 
+    //         value: item.split(":")[1]
+    //       });
+    //     } else {
+    //       summary.push({
+    //         field: "",
+    //         value: item
+    //       });
+    //     }        
+    //   }      
+    // });
+  if (totaldata && totaldata.totals) {
+    countsSummaryTable = <table className="table table-sm table-bordered">
+      <caption>Considers number of jobs and retrials.</caption>
+      <thead className="thead-dark">        
         <tr>
-          <th scope="col">Field</th>
-          <th scope="col">Value</th>
+          <th scope="col" className="pl-2">Description</th>
+          <th scope="col" className="text-right pr-2">Count</th>
         </tr>
       </thead>
-      <tbody>
-        {summary.map((w, index) => (
-          <tr key={index}>
-            <td>{w.field}</td>
-            <td>{w.value}</td>
-          </tr>
-        ))}
+      <tbody>        
+          <tr>
+            <th scope="row" className="pl-2">Jobs Submitted</th>
+            <td className="text-right pr-2">{totaldata.totals.nSubmitted}</td>            
+          </tr> 
+          <tr>
+            <th scope="row" className="pl-2">Jobs Run</th>
+            <td className="text-right pr-2">{totaldata.totals.nRun}</td>            
+          </tr> 
+          <tr>
+            <th scope="row" className="pl-2">Jobs Completed</th>
+            <td className="text-right pr-2">{totaldata.totals.nCompleted}</td>            
+          </tr> 
+          <tr>
+            <th scope="row" className="pl-2">Jobs Failed</th>
+            <td className="text-right pr-2">{totaldata.totals.nFailed}</td>            
+          </tr>        
       </tbody>
-    </table>
+    </table>;
+    CPUconsumptionTable = <table className="table table-sm table-bordered">
+      <caption>Considers the number of processors requested by the job (and retrials) multiplied by the corresponding running time.</caption>
+      <thead className="thead-dark">
+        <tr>
+          <th scope="col" className="pl-2">Description</th>
+          <th scope="col" className="text-right pr-2">Hours</th>
+        </tr>
+      </thead>
+      <tbody>        
+          <tr>
+            <th scope="row" className="pl-2">Expected CPU Consumption</th>
+            <td className="text-right pr-2">{Number.parseFloat(totaldata.totals.tExpectedConsumptionCpuTime).toFixed(2)}</td>            
+          </tr> 
+          <tr>
+            <th scope="row" className="pl-2">CPU Consumption</th>
+            <td className="text-right pr-2">{Number.parseFloat(totaldata.totals.tCpuConsumption).toFixed(2)}</td>            
+          </tr> 
+          <tr>
+            <th scope="row" className="pl-2">Failed CPU Consumption</th>
+            <td className="text-right pr-2">{Number.parseFloat(totaldata.totals.tFailedCpuConsumption).toFixed(2)}</td>            
+          </tr>       
+      </tbody>
+    </table>;
+    consumptionTable = <table className="table table-sm table-bordered">
+      <caption>Considers the running time of the jobs and retrials.</caption>
+      <thead className="thead-dark">
+        <tr>
+          <th scope="col" className="pl-2">Description</th>
+          <th scope="col" className="text-right pr-2">Hours</th>
+        </tr>
+      </thead>
+      <tbody>        
+          <tr>
+            <th scope="row" className="pl-2">Expected Consumption</th>
+            <td className="text-right pr-2">{Number.parseFloat(totaldata.totals.tExpectedConsumptionReal).toFixed(2)}</td>            
+          </tr> 
+          <tr>
+            <th scope="row" className="pl-2">Real Consumption</th>
+            <td className="text-right pr-2">{Number.parseFloat(totaldata.totals.tRealConsumption).toFixed(2)}</td>            
+          </tr> 
+          <tr>
+            <th scope="row" className="pl-2">Failed Real Consumption</th>
+            <td className="text-right pr-2">{Number.parseFloat(totaldata.totals.tFailedRealConsumption).toFixed(2)}</td>            
+          </tr>       
+      </tbody>
+    </table>;
   }
-
-  const onSubmitStats = (e) => {
-    e.preventDefault();
-    DEBUG && console.log(experiment.expid);
-    DEBUG && console.log("Hours : " + hour);
-    DEBUG && console.log("Type : " + section);
-    getExperimentStats(experiment.expid, hour, section);
-  };
-
-  const onSubmitClear = (e) => {
-    e.preventDefault();
-    setHour("");
-    setSection("");
-    clearStats();
-  };
-
-  const [hour, setHour] = useState("");
-  const [section, setSection] = useState("");
-  const onChangeHour = (e) => setHour(e.target.value);
-  const onChangeSection = (e) => setSection(e.target.value);
-  // const pStyle = {
-  //   listStyleType: "none",
-  // };
+    
+  // }
 
   return (
     <div className="container">
-      {!statdata && experiment && experimentContext.loading === false && (
-        <div className="row">
-          <div className="col-md-4 offset-md-4">
-            <form onSubmit={onSubmitStats} className='form'>
-              <div className='input-group input-group-sm'>
-                <input
-                  className='form-control'
-                  type='text'
-                  name='section'
-                  placeholder='Section'
-                  onChange={onChangeSection}
-                />
-                <input
-                  className='form-control'
-                  type='text'
-                  name='hours'
-                  placeholder='Hours'
-                  onChange={onChangeHour}
-                />
-                <div className='input-group-append'>
-                  <input
-                    type='submit'
-                    value='Get Statistics'
-                    className='btn btn-primary'
-                    disabled={loading}
-                    data-toggle='tooltip' 
-                    data-placement='bottom' 
-                    title="Gets the statistics for the Section and Hours values provided."
-                  />
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-        
-      )}
-      {statdata && (
-        <div className="row-hl d-flex flex-wrap pb-1">
-          <div className="item-hl">
-            {summaryHeader && summaryHeader}
-          </div>
-          <div className="item-hl ml-auto">
-            <form onSubmit={onSubmitClear} className='form'>
-              <div className=''>
-                <input
-                  type='submit'
-                  value='Clear Statistics'
-                  className='btn btn-dark btn-sm'
-                />
-              </div>
-            </form>
-          </div>              
-        </div>            
-      )}
+      {/* {statdata && (
+        <p>{summaryHeader && summaryHeader}</p>
+      )} */}
       {!statdata && experiment && (
         <div className='row'>
           <div className="col">
             <p className='lead'>
               Supply a Section (Type) in the appropriate textbox to filter the
-              jobs that will be included in the query. Also, you can also
-              supply the Hours value that determines how many hours before the
-              current time you want to query. Leave both empty and a query for
-              Any Section since the date of creation of the experiment will be
-              executed.
+              jobs that will be included in the query. Also, you can
+              supply the <strong>Hours</strong> value that determines how many hours before the current time you want to query.               
             </p>
             <p className='lead'>
               Press <span className='badge badge-primary'>Get Statistics</span>{" "}
-              to generate the statistics, this will generate a Bar Chart and
-              some extra statistics below. Drag the mouse inside the chart to
-              zoom in; however, zoom in capabilities are not unlimited, so try
-              to narrow your query.
+              to generate the result. The main BarChart can be filtered using the supplied checkboxes.
             </p>
           </div>          
         </div>
       )}
       {loading && <Spinner />}
+      {totaldata && (
+        <div className="container border rounded my-1 py-2">
+          <div className="row">
+            <div className="col text-center">
+              <p className="h3">
+                {summaryHeader}
+              </p>
+              <p className="lead">
+                <span>
+                  Consumption <span className="bg-secondary rounded px-1">{`${Number.parseFloat(consumptionPercentage).toFixed(2)} %`}</span>
+                </span>
+                <span className="pl-3">
+                  Total Queue Time <span className="bg-secondary rounded px-1">{`${Number.parseFloat(queueTime).toFixed(2)} hours`}</span>
+                </span>
+              </p>              
+            </div>
+          </div>
+          <div className="row ">
+            <div className='col'>
+              {totaldata && countsSummaryTable && countsSummaryTable}
+            </div>
+            <div className="col">
+              {totaldata && consumptionTable && consumptionTable}              
+            </div>
+            <div className="col">
+              {totaldata && CPUconsumptionTable && CPUconsumptionTable}
+            </div>
+          </div> 
+          {/* <div className="row">
+            <div className="col">
+              More information about these metrics: <a href="https://autosubmit.readthedocs.io/en/v3.13.0/usage/stats/stats.html#console-output-description" target="_blank" rel="noreferrer">Autosubmit Documentaion</a>.
+            </div>
+          </div>          */}
+        </div>
+      )}
+      
       {statdata && statdata.length > 0 && (
-        <div className="row">              
+        <div className="row py-4">              
           <div className="col-md-6 scroll-x text-right">                
             <BarChart data={statdata} title="Statistics" metrics={["queue", "run", "failedQueue", "failedRun"]} xtitle="Hours" clearStats={clearStats} helperId={"4"} />
           </div>
@@ -176,14 +194,7 @@ const StatsSearch = () => {
         <div className="row">
           <div className='col-md-12 text-center p-3'>{errorMessage}</div>
         </div>            
-      )}
-      {totaldata && (
-        <div className="row justify-content-center">
-          <div className='col-md-4'>
-            {totaldata && summaryTable && summaryTable}
-          </div>
-        </div>
-      )}
+      )}      
     </div>
   );
 };
