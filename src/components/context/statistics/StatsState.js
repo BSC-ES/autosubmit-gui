@@ -68,7 +68,7 @@ const StatsState = (props) => {
             name: res.data.jobs[i],
             queue: Number.parseFloat(res.data.stats.queued[i]) >= 0.00 ? Number.parseFloat(res.data.stats.queued[i]).toFixed(2) : 0.00,
             run: Number.parseFloat(res.data.stats.run[i]) >= 0.00 ? Number.parseFloat(res.data.stats.run[i]).toFixed(2) : 0.00,
-            failedAttempts: res.data.stats.failed_jobs[i],
+            failedAttempts: Number.parseInt(res.data.stats.failed_jobs[i]),
             failedQueue: Number.parseFloat(res.data.stats.fail_queued[i]) >= 0.00 ? Number.parseFloat(res.data.stats.fail_queued[i]).toFixed(2) : 0.00,
             failedRun: Number.parseFloat(res.data.stats.fail_run[i]) >= 0.00 ? Number.parseFloat(res.data.stats.fail_run[i]).toFixed(2) : 0.00 
           });

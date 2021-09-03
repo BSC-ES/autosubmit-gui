@@ -46,7 +46,7 @@ class BarChart extends Component {
     // const paddingBottom = 10;
     
     //const height = 500;
-    const totalBarHeight = numBars > 0 ? Math.floor((svgHeight - 2*padding) / numBars - barPadding) : barPadding;
+    const totalBarHeight = numBars > 0 ? Math.floor((svgHeight - 3*padding) / numBars - barPadding) : barPadding;
     const singleBarHeight = totalBarHeight / 4.0; // Maximum = 4
     const doubleBarHeight = totalBarHeight / 2.0;
     const tripleBarHeight = totalBarHeight / 3.0;
@@ -59,7 +59,7 @@ class BarChart extends Component {
     
     const yScaleQueue = d3.scaleLinear()
       .domain([0, data.length])
-      .range([padding, svgHeight - padding]);
+      .range([padding*2, svgHeight - padding]);
 
 
 
@@ -106,22 +106,48 @@ class BarChart extends Component {
       let xScaleQueue = null;
       if (metrics[0] === "failedAttempts") {
         xScaleQueue = d3.scaleLinear()
-          .domain([0, maxDomain])
+          .domain([0, Number.parseInt(maxDomain)])
           .range([0, svgWidth - 1.3*padding]);
       } else {
         xScaleQueue = d3.scaleLinear()
         .domain([0, maxDomain])
         .range([0, svgWidth - 1.2*padding]);
       }
-
+      const intDomain = Number.parseInt(maxDomain + 1);
+      console.log([...Array(intDomain).keys()])
+      
       const xAxis = d3.axisBottom(xScaleQueue)
-      .tickSize(-svgHeight + 2*padding)
+      .tickSize(-svgHeight + 2.8*padding)
+      .tickValues(metrics[0] === "failedAttempts" ? [...Array(intDomain).keys()] : null)
+      .tickFormat(x => {
+        if (metrics[0] === "failedAttempts") {
+          return `${x.toFixed(0)}`;
+        } else {
+          return x;
+        }
+      })
       .tickSizeOuter(0);                  
+
+      const xAxisTop = d3.axisTop(xScaleQueue)
+        .tickValues(metrics[0] === "failedAttempts" ? [...Array(intDomain).keys()] : null)
+        .tickFormat(x => {
+          if (metrics[0] === "failedAttempts") {
+            return `${x.toFixed(0)}`;
+          } else {
+            return x;
+          }
+        })
+        .tickSizeOuter(0);
 
       svgEl.append("g")
         .classed(`xaxis-${helperId}`, true)
         .attr("transform", "translate(" + padding + "," + (svgHeight - padding) + ")")
         .call(xAxis);
+      
+      svgEl.append("g")
+        .classed(`xaxis-${helperId}`, true)
+        .attr("transform", "translate(" + padding + "," + (1.8*padding) + ")")
+        .call(xAxisTop);
   
       const groupsEnter = svgEl.selectAll("rect")
         .data(data)
