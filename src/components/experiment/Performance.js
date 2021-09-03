@@ -13,11 +13,21 @@ const Performance = () => {
 
   // console.log(performancedata);
 
-  if (!experiment || !performancedata) {
+  if (!experiment) {
     return (
       <div className='row'>
         <div className='col-12'>
           <div className='lead'>Experiment not defined.</div>
+        </div>
+      </div>
+    );
+  };
+
+  if(!performancedata) {
+    return (
+      <div className='row'>
+        <div className='col-12'>
+          <p>Press <span className="bg-primary text-white px-1 rounded">Show</span>.</p>
         </div>
       </div>
     );

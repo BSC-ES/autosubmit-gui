@@ -9,6 +9,7 @@ const PerformanceControl = () => {
     getExperimentPerformanceMetrics,
     experiment,
     loadingPerformance,
+    performancedata,
   } = experimentContext;
 
   const { enabledTreeSearch } = treeContext;
@@ -24,8 +25,8 @@ const PerformanceControl = () => {
             <form onSubmit={onSubmitRequest} className='form'>
               <input
                 type='submit'
-                value='Refresh'
-                className='btn btn-success btn-sm'
+                value={performancedata ? 'Refresh' : 'Show'}
+                className={performancedata ? 'btn btn-success btn-sm' : 'btn btn-primary btn-sm'}
                 disabled={!enabledTreeSearch || loadingPerformance}
                 data-toggle='tooltip' 
                 data-placement='bottom' 

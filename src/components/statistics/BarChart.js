@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import * as d3 from "d3";
 import { queueColor, runningColor, unknownColor, failedQueueColor, failedRunAttempts } from "../context/vars";
+import { formatNumberMoney } from "../context/utils";
 // import StatsContext from "../context/statistics/statsContext";
 
 class BarChart extends Component { 
@@ -29,8 +30,8 @@ class BarChart extends Component {
     const metrics = this.props.metrics;
     const helperId = this.props.helperId;
 
-    const minHeight = 120.0;
-    const svgHeight = data.length * 40.0 > minHeight ? data.length * 40.0 : minHeight;
+    const minHeight = 240.0;
+    const svgHeight = Math.max(data.length * 35.0, minHeight);
     const svgWidth = 620.0;
     // const rangeQueue = d3.extent(data, d => { return d.queue; });
     
@@ -40,7 +41,7 @@ class BarChart extends Component {
     // const rangeFailedQueue = d3.extent(data, d => { return d.failedQueue; });
     // const rangeFailedRun = d3.extent(data, d => { return d.failedRun; });
     const numBars = data.length * 1.0;
-    const barPadding = 6;
+    const barPadding = 4;
     const padding = 30;
     // const paddingTop = 10;
     // const paddingBottom = 10;
@@ -261,14 +262,14 @@ class BarChart extends Component {
         .html(
           (metrics[0] === "failedAttempts" ? 
           `
-          <p> Failed Attempts: ${d.failedAttempts} </p>
+          <p> Failed Attempts: ${formatNumberMoney(d.failedAttempts, true)} </p>
           `
           : 
           `
-          <p> Queue: ${d.queue} h.</p>
-        ` + (metrics.includes("run") ? `<p> Run: ${d.run} h.</p>`: ``)
-          + (metrics.includes("failedQueue") ? `<p> Failed Queue: ${d.failedQueue} h.</p>` : ``)
-          + (metrics.includes("failedRun") ? `<p> Failed Run: ${d.failedRun} h.</p>` : ``))
+          <p> Queue: ${formatNumberMoney(d.queue, false, 4)} h.</p>
+        ` + (metrics.includes("run") ? `<p> Run: ${formatNumberMoney(d.run, false, 4)} h.</p>`: ``)
+          + (metrics.includes("failedQueue") ? `<p> Failed Queue: ${formatNumberMoney(d.failedQueue, false, 4)} h.</p>` : ``)
+          + (metrics.includes("failedRun") ? `<p> Failed Run: ${formatNumberMoney(d.failedRun, false, 4)} h.</p>` : ``))
          );
     }
     

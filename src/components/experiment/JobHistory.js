@@ -11,7 +11,11 @@ const JobHistory = ({ source }) => {
   const { experiment, jobHistory, getJobHistory } = experimentContext;
   const { selection } = graphContext;
   const { selectedTreeNode } = treeContext;
-  const { db_historic_version, expid } = experiment;
+  
+  if (experiment) {
+    var { db_historic_version, expid } = experiment;
+  }
+  
   const selectedJob =
     source === "tree"
       ? selectedTreeNode
@@ -25,7 +29,9 @@ const JobHistory = ({ source }) => {
 
   const onGetJobHistory = (e) => {
     e.preventDefault();
-    getJobHistory(expid, selectedJob);
+    if (expid) {
+      getJobHistory(expid, selectedJob);
+    }    
   };
 
   const onExport = (jobName) => (e) => {

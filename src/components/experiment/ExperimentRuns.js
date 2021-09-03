@@ -90,7 +90,7 @@ const  ExperimentRuns = () => {
                   <span aria-hidden='true'>&times;</span>
                 </button>
               </div>              
-              <div className='modal-body scroll-x-table'>
+              <div className='modal-body scroll-x'>
                 {experimentRuns && experimentRuns.runs && (
                   <small>
                   <table className='table table-sm table-bordered'>

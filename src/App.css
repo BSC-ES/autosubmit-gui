@@ -153,12 +153,8 @@ pre.bash {
 }
 
 .modal-dialog-summary {
-  width: 60%;
+  max-width: 90%;
   margin: 0 auto;
-}
-
-.modal-dialog {
-  max-width: 80%;
 }
 
 .modal-dialog-status {

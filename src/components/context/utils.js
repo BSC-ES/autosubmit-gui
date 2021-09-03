@@ -308,8 +308,10 @@ export const normalizeInt = (input) => {
 
 export const creationDateToId = (strCreationDate, intRunId) => {
   // 2021-07-07-10:36:37
+  // console.log(strCreationDate);
+  // console.log(intRunId);
   if (strCreationDate === null || strCreationDate === undefined || strCreationDate.length === 0 || strCreationDate === "NA") {
-    return "210101-0000";
+    return "NA";
   }
   // console.log(strCreationDate);
   const creationDate = strCreationDate.split("-");
@@ -436,7 +438,7 @@ export const arrayMeanAbsoluteDeviationAroundMean = (arr) => {
 
 export const formatNumberMoney = (money, integerFormat = false, decimals = 2) => {
   const moneyToFormat = money && Number.isFinite(money) ? money : 0.00;
-  const floatFormat = moneyToFormat.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+  const floatFormat = moneyToFormat.toFixed(integerFormat === true ? 2 : decimals).replace(/\d(?=(\d{3})+\.)/g, '$&,');
   if (integerFormat === false){
     return floatFormat;
   } else {    

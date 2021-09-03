@@ -62,16 +62,23 @@ const StatsState = (props) => {
       }
 
       for (let i = 0; i < res.data.jobs.length; i++) {
-        
-        jobStatData.push(
-          {
-            name: res.data.jobs[i],
-            queue: Number.parseFloat(res.data.stats.queued[i]) >= 0.00 ? Number.parseFloat(res.data.stats.queued[i]).toFixed(2) : 0.00,
-            run: Number.parseFloat(res.data.stats.run[i]) >= 0.00 ? Number.parseFloat(res.data.stats.run[i]).toFixed(2) : 0.00,
-            failedAttempts: Number.parseInt(res.data.stats.failed_jobs[i]),
-            failedQueue: Number.parseFloat(res.data.stats.fail_queued[i]) >= 0.00 ? Number.parseFloat(res.data.stats.fail_queued[i]).toFixed(2) : 0.00,
-            failedRun: Number.parseFloat(res.data.stats.fail_run[i]) >= 0.00 ? Number.parseFloat(res.data.stats.fail_run[i]).toFixed(2) : 0.00 
-          });
+        const jobName = res.data.jobs[i];
+        const queueTime = Math.max(Number.parseFloat(res.data.stats.queued[i]), 0);
+        const runTime = Math.max(Number.parseFloat(res.data.stats.run[i]), 0);
+        const numberFailedAttempts = Math.max(Number.parseInt(res.data.stats.failed_jobs[i]), 0);
+        const failedQueueTime = Math.max(Number.parseFloat(res.data.stats.fail_queued[i]), 0);
+        const failedRunTime = Math.max(Number.parseFloat(res.data.stats.fail_run[i]), 0);
+        if (queueTime > 0 || runTime > 0 || numberFailedAttempts > 0 || failedQueueTime > 0 || failedRunTime > 0) {
+          jobStatData.push(
+            {
+              name: jobName,
+              queue: queueTime,
+              run: runTime,
+              failedAttempts: numberFailedAttempts,
+              failedQueue: failedQueueTime,
+              failedRun: failedRunTime 
+            });
+        }        
       }
     }
 
