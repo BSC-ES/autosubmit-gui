@@ -55,8 +55,7 @@ const StatsControl = () => {
               className='form-control'
               type='number'
               min="1"
-              name='hours'
-              required
+              name='hours'              
               placeholder='Hours'
               onChange={onChangeHour}
             />

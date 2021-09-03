@@ -23,7 +23,7 @@ const StatsSearch = () => {
   let countsSummaryTable = null;
   let CPUconsumptionTable = null;
   let consumptionTable = null;
-  const summaryHeader = totaldata && totaldata.totals && totaldata.totals.Period ? <span>Statistics from the period <span className="bg-secondary rounded px-1">{totaldata.totals.Period.From}</span> to <span className="bg-secondary rounded px-1">{totaldata.totals.Period.To}</span></span> : <span>No results</span>;
+  const summaryHeader = totaldata && totaldata.totals && totaldata.totals.Period ? <span>Statistics from the time frame: <span className="bg-secondary rounded px-1">{totaldata.totals.Period.From && totaldata.totals.Period.From !== "None" ? totaldata.totals.Period.From : "Start of experiment"}</span> to <span className="bg-secondary rounded px-1">{totaldata.totals.Period.To}</span></span> : <span>No results</span>;
   const consumptionPercentage = totaldata && totaldata.totals ? totaldata.totals.pConsumption: 0.00;
   const queueTime = totaldata && totaldata.totals ? totaldata.totals.tQueue : 0.00;
   // if (totaldata && totaldata.stats && totaldata.stats.totals && totaldata.stats.totals.length > 0) {
