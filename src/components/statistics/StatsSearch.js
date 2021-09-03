@@ -154,7 +154,7 @@ const StatsSearch = () => {
               </p>
               <p className="lead">
                 <span>
-                  Consumption <span className="bg-secondary rounded px-1">{`${formatNumberMoney(consumptionPercentage)} %`}</span>
+                  CPU Consumption <span className="bg-secondary rounded px-1">{`${formatNumberMoney(consumptionPercentage)} %`}</span>
                 </span>
                 <span className="pl-3">
                   Total Queue Time <span className="bg-secondary rounded px-1">{`${formatNumberMoney(queueTime)} hours`}</span>
