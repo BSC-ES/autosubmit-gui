@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
 import Spinner from "../layout/Spinner";
-import { secondsToDelta, arrayAverage, arrayStandardDeviation, arrayMeanAbsoluteDeviationAroundMean } from "../context/utils";
+import { secondsToDelta, arrayAverage, arrayStandardDeviation, arrayMeanAbsoluteDeviationAroundMean, formatNumberMoney } from "../context/utils";
 
 const Performance = () => {
   const experimentContext = useContext(ExperimentContext);
@@ -47,77 +47,77 @@ const Performance = () => {
             <span>RSYPD:{" "}<span className='badge badge-secondary'>{RSYPD}</span></span>
           </p>      
           <div className="scroll-x">
-            <table className="table">
-            <thead>
+            <table className="table table-sm table-bordered">
+            <thead className="thead-dark">
               <tr>
                 <th scope="col">Metric</th>
-                <th scope="col" className="text-right">Value</th>
-                <th scope="col" className="text-right">Min</th>
-                <th scope="col" className="text-right">Max</th>
-                <th scope="col" className="text-right">Mean</th>
-                <th scope="col" className="text-right">S.D.</th>
-                <th scope="col" className="text-right">MAD</th>
+                <th scope="col" className="text-right pr-2">Value</th>
+                <th scope="col" className="text-right pr-2">Min</th>
+                <th scope="col" className="text-right pr-2">Max</th>
+                <th scope="col" className="text-right pr-2">Mean</th>
+                <th scope="col" className="text-right pr-2">SD</th>
+                <th scope="col" className="text-right pr-2">MAD</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <th scope="row">JPSY</th>
-                <td className="text-right"><span className='rounded px-1 bg-secondary'>{JPSY}</span></td>
-                <td className="text-right">{Math.min(...arrJPSYdata)}</td>
-                <td className="text-right">{Math.max(...arrJPSYdata)}</td>
-                <td className="text-right"><strong>{arrayAverage(arrJPSYdata)}</strong></td>
-                <td className="text-right">{arrayStandardDeviation(arrJPSYdata)}</td>
-                <td className="text-right">{arrayMeanAbsoluteDeviationAroundMean(arrJPSYdata)}</td>
+                <td className="text-right pr-1"><span className='rounded px-1 bg-secondary'>{formatNumberMoney(JPSY, true)}</span></td>
+                <td className="text-right pr-1">{formatNumberMoney(Math.min(...arrJPSYdata), true)}</td>
+                <td className="text-right pr-1">{formatNumberMoney(Math.max(...arrJPSYdata), true)}</td>
+                <td className="text-right pr-1"><strong>{formatNumberMoney(arrayAverage(arrJPSYdata))}</strong></td>
+                <td className="text-right pr-1">{formatNumberMoney(arrayStandardDeviation(arrJPSYdata))}</td>
+                <td className="text-right pr-1">{formatNumberMoney(arrayMeanAbsoluteDeviationAroundMean(arrJPSYdata))}</td>
               </tr>
               <tr>
                 <th scope="row">SYPD</th>
-                <td className="text-right"><span className='rounded px-1 bg-secondary'>{Number.parseFloat(SYPD).toFixed(2)}</span></td>
-                <td className="text-right">{Math.min(...arrSYPDdata)}</td>
-                <td className="text-right">{Math.max(...arrSYPDdata)}</td>
-                <td className="text-right"><strong>{arrayAverage(arrSYPDdata)}</strong></td>
-                <td className="text-right">{arrayStandardDeviation(arrSYPDdata)}</td>
-                <td className="text-right">{arrayMeanAbsoluteDeviationAroundMean(arrSYPDdata)}</td>
+                <td className="text-right pr-1"><span className='rounded px-1 bg-secondary'>{formatNumberMoney(SYPD)}</span></td>
+                <td className="text-right pr-1">{formatNumberMoney(Math.min(...arrSYPDdata))}</td>
+                <td className="text-right pr-1">{formatNumberMoney(Math.max(...arrSYPDdata))}</td>
+                <td className="text-right pr-1"><strong>{formatNumberMoney(arrayAverage(arrSYPDdata))}</strong></td>
+                <td className="text-right pr-1">{formatNumberMoney(arrayStandardDeviation(arrSYPDdata))}</td>
+                <td className="text-right pr-1">{formatNumberMoney(arrayMeanAbsoluteDeviationAroundMean(arrSYPDdata))}</td>
               </tr>
               <tr>
                 <th scope="row">ASYPD</th>
-                <td className="text-right"><strong><span className='rounded px-1 bg-secondary'>{Number.parseFloat(ASYPD).toFixed(2)}</span></strong></td>
-                <td className="text-right">{Math.min(...arrASYPDdata)}</td>
-                <td className="text-right">{Math.max(...arrASYPDdata)}</td>
-                <td className="text-right">{arrayAverage(arrASYPDdata)}</td>
-                <td className="text-right">{arrayStandardDeviation(arrASYPDdata)}</td>
-                <td className="text-right">{arrayMeanAbsoluteDeviationAroundMean(arrASYPDdata)}</td>
+                <td className="text-right pr-1"><strong><span className='rounded px-1 bg-secondary'>{formatNumberMoney(ASYPD)}</span></strong></td>
+                <td className="text-right pr-1">{formatNumberMoney(Math.min(...arrASYPDdata))}</td>
+                <td className="text-right pr-1">{formatNumberMoney(Math.max(...arrASYPDdata))}</td>
+                <td className="text-right pr-1">{formatNumberMoney(arrayAverage(arrASYPDdata))}</td>
+                <td className="text-right pr-1">{formatNumberMoney(arrayStandardDeviation(arrASYPDdata))}</td>
+                <td className="text-right pr-1">{formatNumberMoney(arrayMeanAbsoluteDeviationAroundMean(arrASYPDdata))}</td>
               </tr>
               <tr>
                 <th scope="row">CHSY</th>
-                <td className="text-right"><span className='rounded px-1 bg-secondary'>{CHSY}</span></td>
-                <td className="text-right">{Math.min(...arrCHSY)}</td>
-                <td className="text-right">{Math.max(...arrCHSY)}</td>
-                <td className="text-right"><strong>{arrayAverage(arrCHSY)}</strong></td>
-                <td className="text-right">{arrayStandardDeviation(arrCHSY)}</td>
-                <td className="text-right">{arrayMeanAbsoluteDeviationAroundMean(arrCHSY)}</td>
+                <td className="text-right pr-1"><span className='rounded px-1 bg-secondary'>{formatNumberMoney(CHSY)}</span></td>
+                <td className="text-right pr-1">{formatNumberMoney(Math.min(...arrCHSY))}</td>
+                <td className="text-right pr-1">{formatNumberMoney(Math.max(...arrCHSY))}</td>
+                <td className="text-right pr-1"><strong>{formatNumberMoney(arrayAverage(arrCHSY))}</strong></td>
+                <td className="text-right pr-1">{formatNumberMoney(arrayStandardDeviation(arrCHSY))}</td>
+                <td className="text-right pr-1">{formatNumberMoney(arrayMeanAbsoluteDeviationAroundMean(arrCHSY))}</td>
               </tr>
             </tbody>
           </table>
           </div>            
           <span><strong>Value</strong>: Value of the metric calculated at the experiment level.</span><br></br>
-          <span><strong>S.D.</strong>: Standard Deviation.</span><br></br>
+          <span><strong>SD</strong>: Standard Deviation.</span><br></br>
           <span><strong>MAD</strong>: Mean Absolute Deviation Around the Mean.</span>
         </div>
         <div className='col'>
           <p className='lead'>Considered: ({considered.length})</p>
           <div className="scroll-y-jobs">
-          <table className='table'>
-            <thead>
+          <table className='table table-sm table-bordered'>
+            <thead className="thead-dark">
               <tr>
                 <th scope='col'>#</th>
-                <th scope='col'>Job Name</th>
-                <th scope='col' className="text-right">Queue</th>
-                <th scope='col' className="text-right">Run</th>
-                <th scope='col' className="text-right">CHSY</th>
-                <th scope='col' className="text-right">SYPD</th>
-                <th scope='col' className="text-right">ASYPD</th>
-                <th scope='col' className="text-right">JPSY</th>
-                <th scope='col' className="text-right">Energy</th>                
+                <th scope='col' className="pl-2">Job Name</th>
+                <th scope='col' className="text-right pr-2">Queue</th>
+                <th scope='col' className="text-right pr-2">Run</th>
+                <th scope='col' className="text-right pr-2">CHSY</th>
+                <th scope='col' className="text-right pr-2">SYPD</th>
+                <th scope='col' className="text-right pr-2">ASYPD</th>
+                <th scope='col' className="text-right pr-2">JPSY</th>
+                <th scope='col' className="text-right pr-2">Energy</th>                
               </tr>
             </thead>
             <tbody>
@@ -126,27 +126,27 @@ const Performance = () => {
                 .map((item, index) => (
                   <tr key={item.name}>
                     <th scope='row'>{index + 1}</th>
-                    <td>{item.name}</td>
-                    <td className="text-right">
+                    <td className="pl-1">{item.name}</td>
+                    <td className="text-right pr-1">
                       <strong> {secondsToDelta(item.queue)}</strong>
                     </td>
-                    <td className="text-right">
+                    <td className="text-right pr-1">
                       <strong>{secondsToDelta(item.running)}</strong>
                     </td>
-                    <td className="text-right">
-                      {Number.parseFloat(item.CHSY).toFixed(2)}
+                    <td className="text-right pr-1">
+                      {formatNumberMoney(item.CHSY)}
                     </td>
-                    <td className="text-right">
-                      {Number.parseFloat(item.SYPD).toFixed(2)}
+                    <td className="text-right pr-1">
+                      {formatNumberMoney(item.SYPD)}
                     </td>
-                    <td className="text-right">
-                      {Number.parseFloat(item.ASYPD).toFixed(2)}
+                    <td className="text-right pr-1">
+                      {formatNumberMoney(item.ASYPD)}
                     </td>
-                    <td className="text-right">
-                      {item.JPSY}
+                    <td className="text-right pr-1">
+                      {formatNumberMoney(item.JPSY, true)}
                     </td>
-                    <td className="text-right">
-                      {item.energy}
+                    <td className="text-right pr-1">
+                      {formatNumberMoney(item.energy, true)}
                     </td>                    
                   </tr>
                 ))}

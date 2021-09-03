@@ -93,33 +93,32 @@ const  ExperimentRuns = () => {
               <div className='modal-body scroll-x-table'>
                 {experimentRuns && experimentRuns.runs && (
                   <small>
-                  <table className='table mb-0'>
-                    
-                    <thead>
+                  <table className='table table-sm table-bordered'>
+                    <thead className="thead-dark">
                       <tr>
-                        <th scope='col'></th>
-                        <th scope='col'>RunId</th>
-                        <th scope='col'>Created</th>
+                        <th scope='col' className=""></th>
+                        <th scope='col' className="pl-2">RunId</th>
+                        <th scope='col' className="pl-2">Created</th>
                         {/* <th scope='col'>Created</th> */}
-                        <th scope='col'>Finish</th>
-                        <th scope='col' className='text-right'>Submitted</th>
-                        <th scope='col' className='text-right'>Queuing</th>
-                        <th scope='col' className='text-right'>Running</th>
-                        <th scope='col' className='text-right'>Failed</th>
-                        <th scope='col' className='text-right'>Suspended</th>
-                        <th scope='col' className='text-right'>Completed</th>
-                        <th scope='col' className='text-right'>Total</th>
-                        <th scope='col' className='text-right'>SYPD</th>
-                        <th scope='col' className='text-right'>ASYPD</th>
-                        <th scope='col' className='text-right'>ChunkUnit</th>
-                        <th scope='col' className='text-right'>ChunkSize</th>
+                        <th scope='col' className="pl-2">Finish</th>
+                        <th scope='col' className='text-right pr-2'>Submitted</th>
+                        <th scope='col' className='text-right pr-2'>Queuing</th>
+                        <th scope='col' className='text-right pr-2'>Running</th>
+                        <th scope='col' className='text-right pr-2'>Failed</th>
+                        <th scope='col' className='text-right pr-2'>Suspended</th>
+                        <th scope='col' className='text-right pr-2'>Completed</th>
+                        <th scope='col' className='text-right pr-2'>Total</th>
+                        <th scope='col' className='text-right pr-2'>SYPD</th>
+                        <th scope='col' className='text-right pr-2'>ASYPD</th>
+                        <th scope='col' className='text-right pr-2'>ChunkUnit</th>
+                        <th scope='col' className='text-right pr-2'>ChunkSize</th>
                       </tr>
                     </thead>
                     
                     <tbody>
                       {experimentRuns.runs.map((item) => (
                         <tr key={item.run_id}>
-                          <td className="py-1"> 
+                          <td className="text-center"> 
                           {loadingPreviousRun && <span>...</span>}                         
                           {!loadingPreviousRun && (
                               <button className={currentRunIdOnTree && currentRunIdOnTree.runId === item.run_id ? 'btn btn-sm btn-success' : 'btn btn-sm btn-primary'} type='button' onClick={onGetExperimentRunDetail(item.run_id, item.created, item.finished, item.completed, item.total)}>
@@ -127,20 +126,20 @@ const  ExperimentRuns = () => {
                               </button>
                           )}                          
                           </td>
-                          <td>{creationDateToId(String(item.created), item.run_id)}</td>
-                          <td>{item.created}</td>
-                          <td>{item.finish}</td>
-                          <td className='text-right'>{item.submitted}</td>
-                          <td className='text-right'>{item.queuing}</td>
-                          <td className='text-right'>{item.running}</td>
-                          <td className='text-right'>{item.failed}</td>
-                          <td className='text-right'>{item.suspended}</td>
-                          <td className='text-right'>{item.completed}</td>
-                          <td className='text-right'><strong>{item.total}</strong></td>
-                          <td className='text-right'>{item.SYPD}</td>
-                          <td className='text-right'>{item.ASYPD}</td>
-                          <td className='text-right'>{item.chunk_unit}</td>
-                          <td className='text-right'>{item.chunk_size}</td>
+                          <td className="pl-1 runIdtd">{creationDateToId(String(item.created), item.run_id)} <span className="bg-primary text-white rounded px-1">{item.run_id}</span></td>
+                          <td className="pl-1">{item.created}</td>
+                          <td className="pl-1">{item.finish}</td>
+                          <td className='text-right pr-1'>{item.submitted}</td>
+                          <td className='text-right pr-1'>{item.queuing}</td>
+                          <td className='text-right pr-1'>{item.running}</td>
+                          <td className='text-right pr-1'>{item.failed}</td>
+                          <td className='text-right pr-1'>{item.suspended}</td>
+                          <td className='text-right pr-1'>{item.completed}</td>
+                          <td className='text-right pr-1'><strong>{item.total}</strong></td>
+                          <td className='text-right pr-1'>{item.SYPD}</td>
+                          <td className='text-right pr-1'>{item.ASYPD}</td>
+                          <td className='text-right pr-1'>{item.chunk_unit}</td>
+                          <td className='text-right pr-1'>{item.chunk_size}</td>
                         </tr>
                       ))}
                     </tbody>

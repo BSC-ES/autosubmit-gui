@@ -4,6 +4,7 @@ import ExperimentContext from "../context/experiment/experimentContext";
 // import Chart from "react-google-charts";
 import Spinner from "../layout/Spinner";
 import BarChart from "./BarChart";
+import { formatNumberMoney } from "../context/utils";
 
 const StatsSearch = () => {
   const statsContext = useContext(StatsContext);
@@ -57,19 +58,19 @@ const StatsSearch = () => {
       <tbody>        
           <tr>
             <th scope="row" className="pl-2">Jobs Submitted</th>
-            <td className="text-right pr-2">{totaldata.totals.nSubmitted}</td>            
+            <td className="text-right pr-2">{formatNumberMoney(totaldata.totals.nSubmitted, true)}</td>            
           </tr> 
           <tr>
             <th scope="row" className="pl-2">Jobs Run</th>
-            <td className="text-right pr-2">{totaldata.totals.nRun}</td>            
+            <td className="text-right pr-2">{formatNumberMoney(totaldata.totals.nRun, true)}</td>            
           </tr> 
           <tr>
             <th scope="row" className="pl-2">Jobs Completed</th>
-            <td className="text-right pr-2">{totaldata.totals.nCompleted}</td>            
+            <td className="text-right pr-2">{formatNumberMoney(totaldata.totals.nCompleted, true)}</td>            
           </tr> 
           <tr>
             <th scope="row" className="pl-2">Jobs Failed</th>
-            <td className="text-right pr-2">{totaldata.totals.nFailed}</td>            
+            <td className="text-right pr-2">{formatNumberMoney(totaldata.totals.nFailed, true)}</td>            
           </tr>        
       </tbody>
     </table>;
@@ -84,15 +85,15 @@ const StatsSearch = () => {
       <tbody>        
           <tr>
             <th scope="row" className="pl-2">Expected CPU Consumption</th>
-            <td className="text-right pr-2">{Number.parseFloat(totaldata.totals.tExpectedConsumptionCpuTime).toFixed(2)}</td>            
+            <td className="text-right pr-2">{formatNumberMoney(totaldata.totals.tExpectedConsumptionCpuTime)}</td>            
           </tr> 
           <tr>
             <th scope="row" className="pl-2">CPU Consumption</th>
-            <td className="text-right pr-2">{Number.parseFloat(totaldata.totals.tCpuConsumption).toFixed(2)}</td>            
+            <td className="text-right pr-2">{formatNumberMoney(totaldata.totals.tCpuConsumption)}</td>            
           </tr> 
           <tr>
             <th scope="row" className="pl-2">Failed CPU Consumption</th>
-            <td className="text-right pr-2">{Number.parseFloat(totaldata.totals.tFailedCpuConsumption).toFixed(2)}</td>            
+            <td className="text-right pr-2">{formatNumberMoney(totaldata.totals.tFailedCpuConsumption)}</td>            
           </tr>       
       </tbody>
     </table>;
@@ -107,15 +108,15 @@ const StatsSearch = () => {
       <tbody>        
           <tr>
             <th scope="row" className="pl-2">Expected Consumption</th>
-            <td className="text-right pr-2">{Number.parseFloat(totaldata.totals.tExpectedConsumptionReal).toFixed(2)}</td>            
+            <td className="text-right pr-2">{formatNumberMoney(totaldata.totals.tExpectedConsumptionReal)}</td>            
           </tr> 
           <tr>
             <th scope="row" className="pl-2">Real Consumption</th>
-            <td className="text-right pr-2">{Number.parseFloat(totaldata.totals.tRealConsumption).toFixed(2)}</td>            
+            <td className="text-right pr-2">{formatNumberMoney(totaldata.totals.tRealConsumption)}</td>            
           </tr> 
           <tr>
             <th scope="row" className="pl-2">Failed Real Consumption</th>
-            <td className="text-right pr-2">{Number.parseFloat(totaldata.totals.tFailedRealConsumption).toFixed(2)}</td>            
+            <td className="text-right pr-2">{formatNumberMoney(totaldata.totals.tFailedRealConsumption)}</td>            
           </tr>       
       </tbody>
     </table>;
@@ -153,10 +154,10 @@ const StatsSearch = () => {
               </p>
               <p className="lead">
                 <span>
-                  Consumption <span className="bg-secondary rounded px-1">{`${Number.parseFloat(consumptionPercentage).toFixed(2)} %`}</span>
+                  Consumption <span className="bg-secondary rounded px-1">{`${formatNumberMoney(consumptionPercentage)} %`}</span>
                 </span>
                 <span className="pl-3">
-                  Total Queue Time <span className="bg-secondary rounded px-1">{`${Number.parseFloat(queueTime).toFixed(2)} hours`}</span>
+                  Total Queue Time <span className="bg-secondary rounded px-1">{`${formatNumberMoney(queueTime)} hours`}</span>
                 </span>
               </p>              
             </div>

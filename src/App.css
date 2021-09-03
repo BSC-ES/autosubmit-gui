@@ -65,6 +65,19 @@ tbody tr:hover {
   z-index: -1;
 }
 
+.runIdtd span {
+  display: inline-block;
+  -webkit-transform: scale(0);
+  -ms-transform: scale(0);
+  transform: scale(0);
+}
+
+.runIdtd:hover span {
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+}
+
 /* .row-in-card {
   position: absolute;
   top: 70px;
@@ -135,7 +148,7 @@ pre.bash {
 }
 
 .modal-dialog-historic {
-  width: 85%;
+  max-width: 90%;
   margin: 0 auto;
 }
 

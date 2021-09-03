@@ -308,9 +308,10 @@ export const normalizeInt = (input) => {
 
 export const creationDateToId = (strCreationDate, intRunId) => {
   // 2021-07-07-10:36:37
-  if (strCreationDate === null || strCreationDate.length === 0) {
+  if (strCreationDate === null || strCreationDate === undefined || strCreationDate.length === 0 || strCreationDate === "NA") {
     return "210101-0000";
   }
+  // console.log(strCreationDate);
   const creationDate = strCreationDate.split("-");
   const timeDay = creationDate[3].split(":");
   const code = creationDate[0].substr(2,2) + "" + creationDate[1] + "" + creationDate[2] + "" + timeDay[0] + "" + timeDay[1];
@@ -405,7 +406,7 @@ export const arrayAverage = (arr) => {
     accum += x;
     return accum;
   })
-  return arr.length > 0 ? Number.parseFloat(sumArr / arr.length).toFixed(2) : 0.00;
+  return arr.length > 0 ? (sumArr / arr.length) : 0.00;
 }
 
 export const arrayVariance = (arr) => {
@@ -417,11 +418,11 @@ export const arrayVariance = (arr) => {
     return Math.pow(x - average, 2);
   }));
   // console.log(variance);
-  return Number.parseFloat(variance).toFixed(4);
+  return variance;
 }
 
 export const arrayStandardDeviation = (arr) => {
-  return Number.parseFloat(Math.sqrt(arrayVariance(arr))).toFixed(2);
+  return Math.sqrt(arrayVariance(arr));
 }
 
 export const arrayMeanAbsoluteDeviationAroundMean = (arr) => {
@@ -430,6 +431,17 @@ export const arrayMeanAbsoluteDeviationAroundMean = (arr) => {
   const madam = arrayAverage(arr.map(x => {
     return Math.abs(x - mean);
   }));
-  return Number.parseFloat(madam).toFixed(2);
+  return madam;
+}
 
+export const formatNumberMoney = (money, integerFormat = false, decimals = 2) => {
+  const moneyToFormat = money && Number.isFinite(money) ? money : 0.00;
+  const floatFormat = moneyToFormat.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+  if (integerFormat === false){
+    return floatFormat;
+  } else {    
+    // Does it hold?
+    return floatFormat.substr(0, floatFormat.length - 3);
+  }
+  
 }

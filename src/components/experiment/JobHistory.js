@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
 import GraphContext from "../context/graph/graphContext";
 import TreeContext from "../context/tree/treeContext";
-import { exportHistoryToCSV, openIconHistory } from "../context/utils";
+import { exportHistoryToCSV, openIconHistory, creationDateToId } from "../context/utils";
 
 const JobHistory = ({ source }) => {
   const experimentContext = useContext(ExperimentContext);
@@ -82,10 +82,10 @@ const JobHistory = ({ source }) => {
                   <span aria-hidden='true'>&times;</span>
                 </button>
               </div>
-              <div className='modal-body scroll-x-table'>
+              <div className='modal-body scroll-x'>
                 {jobHistory && jobHistory.history && (
-                  <table className='table'>
-                    <thead>
+                  <table className='table table-sm table-bordered'>
+                    <thead className="thead-dark">
                       <tr>
                         <th scope='col'>RunId</th>
                         <th scope='col'>Counter</th>
@@ -108,7 +108,7 @@ const JobHistory = ({ source }) => {
                     <tbody>
                       {jobHistory.history.map((item) => (
                         <tr key={item.counter}>
-                          <td>{item.run_id}</td>
+                          <td className="runIdtd">{creationDateToId(String(item.run_created), item.run_id)} <span className="bg-primary text-white rounded px-1">{item.run_id}</span></td>
                           <td>{item.counter}</td>
                           <td>{item.job_id}</td>
                           {/* <td>{item.created}</td> */}
