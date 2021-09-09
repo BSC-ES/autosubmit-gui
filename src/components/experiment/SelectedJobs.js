@@ -2,7 +2,7 @@ import React, { useContext, Fragment } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
 import CommandModal from "./CommandModal";
 
-const JobSelection = ({ source, target }) => {
+const SelectedJobs = ({ source, target }) => {
   //const util = require("util");
   const experimentContext = useContext(ExperimentContext);
   const { currentSelected, removeSelectedJob, canSelect } = experimentContext;
@@ -62,4 +62,4 @@ const JobSelection = ({ source, target }) => {
   return <div className='card'></div>;
 };
 
-export default JobSelection;
+export default SelectedJobs;

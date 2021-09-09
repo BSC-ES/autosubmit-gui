@@ -245,6 +245,7 @@ class GraphNativeRep extends Component {
         const current_grouped = this.props.current_grouped;
 
         this.props.setVisNetwork(network);
+
         network.on("select", (params) => {
           if (params.nodes) {
             if (params.nodes.length === 1) {
@@ -410,7 +411,7 @@ class GraphNativeRep extends Component {
 
       render() {
         return (
-          <div className='card-body p-0'>
+          <div className='card-body p-01'>
             <div id="graphrep" ref='myRef' style={experimentStyle}></div>
           </div>
         );

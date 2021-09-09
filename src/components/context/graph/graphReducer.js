@@ -585,6 +585,7 @@ export default (state, action) => {
         foundNodes: null,
         startAutoUpdatePkl: false,
         selection: null,
+        visNetwork: null,
       };
     case UPDATE_SELECTION:
       return {

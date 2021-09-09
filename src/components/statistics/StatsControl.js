@@ -12,6 +12,7 @@ const StatsControl = () => {
     statdata,
     loading,
     clearStats,
+    applyRegExToJobDataSet,
   } = statsContext;
   const { experiment } = experimentContext;
 
@@ -30,11 +31,17 @@ const StatsControl = () => {
     clearStats();
   };
 
+  const onSubmitFilter = (e) => {
+    e.preventDefault();    
+    applyRegExToJobDataSet(regularExpression);
+  }
+
+  const [regularExpression, setRegExp] = useState("");
   const [hour, setHour] = useState("");
   const [section, setSection] = useState("");
   const onChangeHour = (e) => setHour(e.target.value);
   const onChangeSection = (e) => setSection(e.target.value);
-
+  const onChangeRegExp = (e) => setRegExp(e.target.value);
 
   return (
     <div className="card-header p-1">
@@ -72,9 +79,34 @@ const StatsControl = () => {
             </div>
           </div>
         </form>
-          )} 
+      )} 
       </div>
-                    
+
+      {statdata && (
+          <div className="item-hl mr-1 minimum-w-filter">
+            <form onSubmit={onSubmitFilter} className="form">
+              <div className="input-group input-group-sm">
+                <input 
+                  type="text" 
+                  name="regExp"
+                  placeholder="Filter using a regular expression"
+                  onChange={onChangeRegExp}
+                  className="form-control" 
+                />
+                <div className="input-group-append">
+                  <input 
+                    type="submit" 
+                    className="btn btn-dark" 
+                    value="Filter"
+                    data-toggle="tooltip"
+                    data-placement="bottom"
+                    title="Filters the list of jobs according to the regular expression."
+                  />
+                </div>
+              </div>  
+            </form>         
+          </div>
+      )}       
       {statdata && (
         <div className="item-hl">
           <form onSubmit={onSubmitClear} className='form'>

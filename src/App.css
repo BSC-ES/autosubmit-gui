@@ -30,6 +30,14 @@ tbody tr:hover {
   
 } */
 
+.minimum-w-filter {
+  min-width: 230px;
+}
+
+.p-01 {
+  padding: 2px;
+}
+
 .card-hover:hover {
   border-color: rgb(45, 99, 180);
   -webkit-transition: all 0.35s ease-in-out;

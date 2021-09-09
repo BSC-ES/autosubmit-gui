@@ -33,55 +33,21 @@ class BarChart extends Component {
     const minHeight = 240.0;
     const svgHeight = Math.max(data.length * 35.0, minHeight);
     const svgWidth = 620.0;
-    // const rangeQueue = d3.extent(data, d => { return d.queue; });
-    
-        
-    // const minQueue = d3.min(data, d => { return d.queue; });
-    // const rangeRun = d3.extent(data, d => { return d.run; });
-    // const rangeFailedQueue = d3.extent(data, d => { return d.failedQueue; });
-    // const rangeFailedRun = d3.extent(data, d => { return d.failedRun; });
     const numBars = data.length * 1.0;
     const barPadding = 4;
     const padding = 30;
-    // const paddingTop = 10;
-    // const paddingBottom = 10;
-    
-    //const height = 500;
     const totalBarHeight = numBars > 0 ? Math.floor((svgHeight - 3*padding) / numBars - barPadding) : barPadding;
     const singleBarHeight = totalBarHeight / 4.0; // Maximum = 4
     const doubleBarHeight = totalBarHeight / 2.0;
     const tripleBarHeight = totalBarHeight / 3.0;
-    // console.log(rangeQueue);
-    // console.log(rangeRun);
-    // console.log(rangeFailedQueue);
-    // console.log(rangeFailedRun);
-    
-    
-    
+
     const yScaleQueue = d3.scaleLinear()
       .domain([0, data.length])
       .range([padding*2, svgHeight - padding]);
 
-
-
-      
-    // Tooltip
     const tooltip = d3.select("body")
                       .append("div")
-                        .classed("tooltip-d3", true);
-    // console.log(this.svgElement);
-    // const svgEl = d3.select(this.svgElement);
-    // svgEl.attr("width", svgWidth);
-    // svgEl.attr("height", svgHeight);
-    // svgEl.selectAll("*").remove();
-
-    // svgEl.append("g")
-    //   .attr("transform", "translate(" + padding + "," + (svgHeight - padding) + ")")
-    //   .call(xAxis);
-
-    // let groupsEnter = svgEl.selectAll("rect")
-    //   .data(data)
-    //   .enter()      
+                      .classed("tooltip-d3", true); 
     
     const svgEl = d3.select(this.svgElement);
     svgEl.attr("width", svgWidth);
@@ -95,17 +61,17 @@ class BarChart extends Component {
       
       // Calculate domain
       let maxDomain = 0;
-      if (metrics[0] === "failedAttempts"){
-          maxDomain = d3.max(data, d => { return Number.parseInt(d.failedAttempts); });
+      if (metrics[0] === "failedCount"){
+          maxDomain = d3.max(data, d => { return Number.parseInt(d.failedCount); });
       } else {
-          maxDomain = d3.max([ignoredMetrics.includes("queue") ? 0.00 : d3.max(data, d => { return Number.parseFloat(d.queue); }),
-                              ignoredMetrics.includes("run") ? 0.00 : d3.max(data, d => { return Number.parseFloat(d.run); }),
-                              ignoredMetrics.includes("failedQueue") ? 0.00 : d3.max(data, d => { return Number.parseFloat(d.failedQueue); }),
-                              ignoredMetrics.includes("failedRun") ? 0.00 : d3.max(data, d => { return Number.parseFloat(d.failedRun); })]);
+          maxDomain = d3.max([ignoredMetrics.includes("completedQueueTime") ? 0.00 : d3.max(data, d => { return Number.parseFloat(d.completedQueueTime); }),
+                              ignoredMetrics.includes("completedRunTime") ? 0.00 : d3.max(data, d => { return Number.parseFloat(d.completedRunTime); }),
+                              ignoredMetrics.includes("failedQueueTime") ? 0.00 : d3.max(data, d => { return Number.parseFloat(d.failedQueueTime); }),
+                              ignoredMetrics.includes("failedRunTime") ? 0.00 : d3.max(data, d => { return Number.parseFloat(d.failedRunTime); })]);
       }
 
       let xScaleQueue = null;
-      if (metrics[0] === "failedAttempts") {
+      if (metrics[0] === "failedCount") {
         xScaleQueue = d3.scaleLinear()
           .domain([0, Number.parseInt(maxDomain)])
           .range([0, svgWidth - 1.3*padding]);
@@ -115,13 +81,13 @@ class BarChart extends Component {
         .range([0, svgWidth - 1.2*padding]);
       }
       const intDomain = Number.parseInt(maxDomain + 1);
-      console.log([...Array(intDomain).keys()])
+      // console.log([...Array(intDomain).keys()])
       
       const xAxis = d3.axisBottom(xScaleQueue)
       .tickSize(-svgHeight + 2.8*padding)
-      .tickValues(metrics[0] === "failedAttempts" ? [...Array(intDomain).keys()] : null)
+      .tickValues(metrics[0] === "failedCount" ? [...Array(intDomain).keys()] : null)
       .tickFormat(x => {
-        if (metrics[0] === "failedAttempts") {
+        if (metrics[0] === "failedCount") {
           return `${x.toFixed(0)}`;
         } else {
           return x;
@@ -130,9 +96,9 @@ class BarChart extends Component {
       .tickSizeOuter(0);                  
 
       const xAxisTop = d3.axisTop(xScaleQueue)
-        .tickValues(metrics[0] === "failedAttempts" ? [...Array(intDomain).keys()] : null)
+        .tickValues(metrics[0] === "failedCount" ? [...Array(intDomain).keys()] : null)
         .tickFormat(x => {
-          if (metrics[0] === "failedAttempts") {
+          if (metrics[0] === "failedCount") {
             return `${x.toFixed(0)}`;
           } else {
             return x;
@@ -164,23 +130,20 @@ class BarChart extends Component {
         groupsEnter.append("rect")
         .classed(`newbar-${helperId}`, true)        
         .attr("height", d => { 
-          if (metrics[0] === "failedAttempts") {
+          if (metrics[0] === "failedCount") {
             return totalBarHeight;
           } else {
             return calculateBarHeight(d, ignoredMetrics);
           }})
         .attr("x", padding)
         .attr("y", function(d, i) {
-          // console.log(d.name);        
-          //console.log(yScaleQueue(i) + j*singleBarHeight );
-          if (metrics[0] === "failedAttempts"){
+          if (metrics[0] === "failedCount"){
             return yScaleQueue(i);
           } else {
-            let validValues = [ignoredMetrics.includes("run") ? 0.00 : d.run, 
-            ignoredMetrics.includes("queue") ? 0.00 : d.queue, 
-            ignoredMetrics.includes("failedQueue") ? 0.00 : d.failedQueue,
-            ignoredMetrics.includes("failedRun") ? 0.00 : d.failedRun]
-            // [d.run, d.queue, d.failedQueue, d.failedRun];        
+            let validValues = [ignoredMetrics.includes("completedRunTime") ? 0.00 : d.completedRunTime, 
+            ignoredMetrics.includes("completedQueueTime") ? 0.00 : d.completedQueueTime, 
+            ignoredMetrics.includes("failedQueueTime") ? 0.00 : d.failedQueueTime,
+            ignoredMetrics.includes("failedRunTime") ? 0.00 : d.failedRunTime]     
             let sequantialIndex = 0;
             for (let k = 0; k < validValues.length; k++ ){
               if (Number.parseFloat(validValues[k]) > 0.00) {
@@ -198,8 +161,8 @@ class BarChart extends Component {
         .duration(500)           
         .ease(d3.easeLinear)
         .attr("width", d => { 
-          if (metrics[0] === "failedAttempts") {
-            return xScaleQueue(d.failedAttempts);
+          if (metrics[0] === "failedCount") {
+            return xScaleQueue(d.failedCount);
           } else {
             if (ignoredMetrics.includes(metrics[j])){
               return xScaleQueue(0.00);
@@ -255,43 +218,46 @@ class BarChart extends Component {
         .text("Job Name");
     
     function showTooltip(d) {
+      
       tooltip
         .style("opacity", 1)
         .style("left", d3.event.pageX + "px")
         .style("top", d3.event.pageY + "px")
         .html(
-          (metrics[0] === "failedAttempts" ? 
+          (metrics[0] === "failedCount" ? 
           `
-          <p> Failed Attempts: ${formatNumberMoney(d.failedAttempts, true)} </p>
+          <p> Failed Attempts: ${formatNumberMoney(d.failedCount, true)} </p>
           `
           : 
           `
-          <p> Queue: ${formatNumberMoney(d.queue, false, 4)} h.</p>
-        ` + (metrics.includes("run") ? `<p> Run: ${formatNumberMoney(d.run, false, 4)} h.</p>`: ``)
-          + (metrics.includes("failedQueue") ? `<p> Failed Queue: ${formatNumberMoney(d.failedQueue, false, 4)} h.</p>` : ``)
-          + (metrics.includes("failedRun") ? `<p> Failed Run: ${formatNumberMoney(d.failedRun, false, 4)} h.</p>` : ``))
+          <p> Queue: ${formatNumberMoney(d.completedQueueTime, false, 4)} h.</p>
+        ` + (metrics.includes("completedRunTime") ? `<p> Run: ${formatNumberMoney(d.completedRunTime, false, 4)} h.</p>`: ``)
+          + (metrics.includes("failedQueueTime") ? `<p> Failed Queue: ${formatNumberMoney(d.failedQueueTime, false, 4)} h.</p>` : ``)
+          + (metrics.includes("failedRunTime") ? `<p> Failed Run: ${formatNumberMoney(d.failedRunTime, false, 4)} h.</p>` : ``))
          );
     }
     
-    function hideTooltip() {  
+    function hideTooltip() {        
       tooltip
-        .style("opacity", 0);  
+        .style("left", "10px")
+        .style("top", "10px")
+        .style("opacity", 0);         
     }
 
     function colorMetric(metric) {
       let color = unknownColor.background;
       switch(metric) {
-        case "queue":
+        case "completedQueueTime":
           color = queueColor.background;
           break;
-        case "run":
+        case "completedRunTime":
           color = runningColor.background;
           break;
-        case "failedQueue":
+        case "failedQueueTime":
           color = failedQueueColor;
           break;
-        case "failedAttempts":
-        case "failedRun":
+        case "failedCount":
+        case "failedRunTime":
           color = failedRunAttempts;
           break;         
         default:
@@ -303,10 +269,10 @@ class BarChart extends Component {
     function calculateBarHeight(d, ignoredMetrics = []) {
       // const metricsNumber = metrics.length;      
 
-      const _barCount = [ignoredMetrics.includes("run") ? 0.00 : d.run, 
-      ignoredMetrics.includes("queue") ? 0.00 : d.queue, 
-      ignoredMetrics.includes("failedQueue") ? 0.00 : d.failedQueue,
-      ignoredMetrics.includes("failedRun") ? 0.00 : d.failedRun].filter(x => Number.parseFloat(x) > 0.00);      
+      const _barCount = [ignoredMetrics.includes("completedRunTime") ? 0.00 : d.completedRunTime, 
+      ignoredMetrics.includes("completedQueueTime") ? 0.00 : d.completedQueueTime, 
+      ignoredMetrics.includes("failedQueueTime") ? 0.00 : d.failedQueueTime,
+      ignoredMetrics.includes("failedRunTime") ? 0.00 : d.failedRunTime].filter(x => Number.parseFloat(x) > 0.00);      
       // console.log(_barCount);
       const barCount = _barCount.length;      
       // console.log(d.name + " : " + barCount);
@@ -334,27 +300,17 @@ class BarChart extends Component {
       const currentFailedQueue = d3.select(`#failedQueueTimeChart-${helperId}`).property("checked");
       const currentFailedRun = d3.select(`#failedRunTimeChart-${helperId}`).property("checked");
       const ignoreMetrics = [
-        currentQueue === false || (currentValue === "queue" && currentValue === false) ? "queue" : "",
-        currentRun === false || (currentValue === "run" && currentValue === false) ? "run" : "",
-        currentFailedQueue === false || (currentValue === "failedQueue" && currentValue === false) ? "failedQueue" : "",
-        currentFailedRun === false || (currentValue === "qufailedRunue" && currentValue === false) ? "failedRun" : "",
+        currentQueue === false || (currentValue === "completedQueueTime" && currentValue === false) ? "completedQueueTime" : "",
+        currentRun === false || (currentValue === "completedRunTime" && currentValue === false) ? "completedRunTime" : "",
+        currentFailedQueue === false || (currentValue === "failedQueueTime" && currentValue === false) ? "failedQueueTime" : "",
+        currentFailedRun === false || (currentValue === "qufailedRunue" && currentValue === false) ? "failedRunTime" : "",
       ];
 
 
       if (currentChecked === false) {
-        // console.log(d3.selectAll(".bar-queue"));
         d3.selectAll(`.newbar-${helperId}`).remove();  
         d3.selectAll(`.newtext-${helperId}`).remove();
-        //console.log(d3.selectAll(`xaxis-${helperId}`));
         d3.selectAll(`.xaxis-${helperId}`).remove();
-        
-        // const svgEl = d3.select(this.svgElement);          
-        // let newGroupsEnter = d3.select(this.svgElement).selectAll("rect")
-        //   .data(data)
-        //   .enter();
-
-        // console.log(newGroupsEnter);
-        // console.log(groupsEnter);
         addBars(metrics, ignoreMetrics);       
       } else {
         d3.selectAll(`.newbar-${helperId}`).remove();  
@@ -398,29 +354,27 @@ class BarChart extends Component {
   componentWillUnmount() {
     this.props.clearStats();
   }
-  // console.log(metrics);
 
   render() {
 
   
-  const queueFilter = this.props.metrics.includes("queue") ? <div className="form-check form-check-inline">                
-  {/* <input type="checkbox" name="chartMetricsQ" id="queueTimeChart" className="form-check-input" defaultChecked onClick={onChangeQueue} value="queue"/> */}
-  <input type="checkbox" name="chartMetricsQ" id={`queueTimeChart-${this.props.helperId}`} className="form-check-input" defaultChecked value="queue"/>
+  const queueFilter = this.props.metrics.includes("completedQueueTime") ? <div className="form-check form-check-inline">                
+  <input type="checkbox" name="chartMetricsQ" id={`queueTimeChart-${this.props.helperId}`} className="form-check-input" defaultChecked value="completedQueueTime"/>
   <label htmlFor="queueTimeChart" className="px-1 mx-1 rounded form-check-label " style={{ background: queueColor.background }}>Queue</label>
   </div> : null;
-  const runFilter = this.props.metrics.includes("run") ? <div className="form-check form-check-inline">
-  <input type="checkbox" name="chartMetricsR" id={`runTimeChart-${this.props.helperId}`} className="form-check-input" defaultChecked value="run"/>
+  const runFilter = this.props.metrics.includes("completedRunTime") ? <div className="form-check form-check-inline">
+  <input type="checkbox" name="chartMetricsR" id={`runTimeChart-${this.props.helperId}`} className="form-check-input" defaultChecked value="completedRunTime"/>
   <label htmlFor="runTimeChart" className="px-1 mx-1 rounded form-check-label text-white" style={{ background: runningColor.background }}>Run</label>
   </div> : null;
-  const failedQueueFilter = this.props.metrics.includes("failedQueue") ? <div className="form-check form-check-inline">
-  <input type="checkbox" name="chartMetricsFq" id={`failedQueueTimeChart-${this.props.helperId}`} className="form-check-input" defaultChecked value="failedQueue"/>
+  const failedQueueFilter = this.props.metrics.includes("failedQueueTime") ? <div className="form-check form-check-inline">
+  <input type="checkbox" name="chartMetricsFq" id={`failedQueueTimeChart-${this.props.helperId}`} className="form-check-input" defaultChecked value="failedQueueTime"/>
   <label htmlFor="failedQueueTimeChart" className="px-1 mx-1 rounded form-check-label" style={{ background: failedQueueColor }}>Failed Queue</label>
   </div> : null;
-  const failedRunFilter = this.props.metrics.includes("failedRun") ? <div className="form-check form-check-inline">
-  <input type="checkbox" name="chartMetricsFr" id={`failedRunTimeChart-${this.props.helperId}`} className="form-check-input" defaultChecked value="failedRun"/>
+  const failedRunFilter = this.props.metrics.includes("failedRunTime") ? <div className="form-check form-check-inline">
+  <input type="checkbox" name="chartMetricsFr" id={`failedRunTimeChart-${this.props.helperId}`} className="form-check-input" defaultChecked value="failedRunTime"/>
   <label htmlFor="failedRunTimeChart" className="px-1 mx-1 rounded form-check-label" style={{ background: failedRunAttempts }}>Failed Run</label>
   </div> : null;
-  const failedAttemptFilter = this.props.metrics.includes("failedAttempts") ? <div className="form-check form-check-inline"><label className="px-1 mx-1 rounded form-check-label" style={{ background: failedRunAttempts }}>Failed Attempts</label></div> : null;
+  const failedAttemptFilter = this.props.metrics.includes("failedCount") ? <div className="form-check form-check-inline"><label className="px-1 mx-1 rounded form-check-label" style={{ background: failedRunAttempts }}>Failed Attempts</label></div> : null;
 
   return (
     <div>

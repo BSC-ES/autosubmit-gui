@@ -447,3 +447,58 @@ export const formatNumberMoney = (money, integerFormat = false, decimals = 2) =>
   }
   
 }
+
+export const calculateStatistics = (jobs) => {
+  let jobsSubmittedCount = 0;
+  let jobsRunCount = 0;
+  let jobsCompletedCount = 0;
+  let jobsFailedCount = 0;
+  
+  let expectedConsumption = 0.00;
+  let realConsumption = 0.00;
+  let failedRealConsumption = 0.00;
+
+  let expectedCpuConsumption = 0.00;
+  let cpuConsumption = 0.00;
+  let failedCpuConsumption = 0.00;
+
+  let totalQueueTime = 0.00;
+  let cpuConsumptionPercentage = 0.00;
+
+  jobs.forEach(job => {
+    jobsSubmittedCount += job.submittedCount;
+    jobsRunCount += job.retrialCount;
+    jobsCompletedCount += job.completedCount;;
+    jobsFailedCount += job.failedCount;
+
+    expectedConsumption += job.expectedConsumption;
+    realConsumption += job.realConsumption;
+    failedRealConsumption += job.failedRealConsumption;
+
+    expectedCpuConsumption += job.expectedCpuConsumption;
+    cpuConsumption += job.cpuConsumption;
+    failedCpuConsumption += job.failedCpuConsumption;
+
+    totalQueueTime += job.completedRunTime + job.failedRunTime;
+  });
+
+  if (expectedCpuConsumption > 0) {
+    cpuConsumptionPercentage = (cpuConsumption/expectedCpuConsumption) * 100;
+  }
+
+  return {
+     jobsSubmittedCount: formatNumberMoney(jobsSubmittedCount, true),
+     jobsRunCount: formatNumberMoney(jobsRunCount, true), 
+     jobsCompletedCount: formatNumberMoney(jobsCompletedCount, true), 
+     jobsFailedCount: formatNumberMoney(jobsFailedCount, true),     
+     expectedConsumption: formatNumberMoney(expectedConsumption),  
+     realConsumption: formatNumberMoney(realConsumption),
+     failedRealConsumption: formatNumberMoney(failedRealConsumption),  
+     expectedCpuConsumption: formatNumberMoney(expectedCpuConsumption),
+     cpuConsumption: formatNumberMoney(cpuConsumption), 
+     failedCpuConsumption: formatNumberMoney(failedCpuConsumption),
+     totalQueueTime: formatNumberMoney(totalQueueTime),
+     cpuConsumptionPercentage: formatNumberMoney(cpuConsumptionPercentage),
+  }
+
+}

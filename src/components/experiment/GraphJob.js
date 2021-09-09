@@ -6,7 +6,7 @@ import JobLog from "./JobLog";
 import { secondsToDelta } from "../context/utils";
 import { DEBUG, statusCodeToStyle } from "../context/vars";
 
-const Selection = () => {
+const GraphJob = () => {
   const experimentContext = useContext(ExperimentContext);
   const graphContext = useContext(GraphContext);
   const { experiment } = experimentContext;
@@ -81,12 +81,12 @@ const Selection = () => {
                 </div>
                 <div className='card-body py-0'>
                   <div className='row'>
-                    <div className='col-md-6'>
+                    <div className='col'>
                       
                         <strong>Start:</strong> {selectedNode.date}
                       
                     </div>
-                    <div className='col-md-6'>
+                    <div className='col'>
                       
                         <strong>End:</strong> {selectedNode.date_plus}
                       
@@ -94,7 +94,7 @@ const Selection = () => {
                   </div>
                   <div>
                     <div className='row'>
-                      <div className='col-12'>
+                      <div className='col'>
                         
                           <strong>Section:</strong> {selectedNode.section}
                        
@@ -103,12 +103,12 @@ const Selection = () => {
                   </div>
                   <div>
                     <div className='row'>
-                      <div className='col-md-6'>
+                      <div className='col'>
                        
                           <strong>Member:</strong> {selectedNode.member}
                         
                       </div>
-                      <div className='col-md-6'>
+                      <div className='col'>
                         
                           <strong>Chunk:</strong> {selectedNode.chunk}
                         
@@ -124,12 +124,12 @@ const Selection = () => {
                   </div>
                   <div>
                     <div className='row'>
-                      <div className='col-6'>
+                      <div className='col'>
                         
                           <strong>Processors:</strong> {selectedNode.processors}
                         
                       </div>
-                      <div className='col-6'>
+                      <div className='col'>
                         
                           <strong>Wallclock:</strong> {selectedNode.wallclock}
                         
@@ -261,7 +261,7 @@ const Selection = () => {
                   <div>
                     {selectedNode.out && (
                       <div className='row'>
-                        <div className='col-12 px-0'>
+                        <div className='col-12'>
                           <form
                             onSubmit={copyContent("g_out")}
                             className='form'
@@ -294,7 +294,7 @@ const Selection = () => {
 
                     {selectedNode.err && (
                       <div className='row mt-1'>
-                        <div className='col-12 px-0'>
+                        <div className='col-12'>
                           <form
                             onSubmit={copyContent("g_err")}
                             className='form'
@@ -379,7 +379,7 @@ const Selection = () => {
                     </div>
                   </div>
                   {selectedNode.package && selectedNode.package.length > 0 && (
-                    <div className="row p-0 my-1">
+                    <div className="row my-1">
                       <div className="col">
                         <button
                           className='btn btn-info btn-block'
@@ -517,4 +517,4 @@ const headerCard = {
   height: 30,
 };
 
-export default Selection;
+export default GraphJob;

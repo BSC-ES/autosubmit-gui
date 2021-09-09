@@ -6,7 +6,7 @@ import JobLog from "./JobLog";
 import { secondsToDelta } from "../context/utils";
 import { DEBUG, statusCodeToStyle } from "../context/vars";
 
-const SelectionTreeNode = () => {
+const TreeJob = () => {
   const experimentContext = useContext(ExperimentContext);
   const treeContext = useContext(TreeContext);
   const { experiment } = experimentContext;
@@ -64,39 +64,30 @@ const SelectionTreeNode = () => {
                   <JobHistory source='tree' />
                 </div>
               </div>
-              <div className='card-body py-0'>
+              <div className='card-body p-0'>
+              <div className="container">
                 <div className='row'>
-                  <div className='col-md-6'>
-                    
-                      <strong>Start:</strong> {selectedNode.date}
-                    
+                  <div className='col'>                    
+                      <strong>Start:</strong> {selectedNode.date}                    
                   </div>
-                  <div className='col-md-6'>
-                    
-                      <strong>End:</strong> {selectedNode.date_plus}
-                    
+                  <div className='col'>                    
+                      <strong>End:</strong> {selectedNode.date_plus}                    
                   </div>
                 </div>
                 <div>
                   <div className='row'>
-                    <div className='col-12'>
-                      
-                        <strong>Section:</strong> {selectedNode.section}
-                      
+                    <div className='col'>                      
+                        <strong>Section:</strong> {selectedNode.section}                      
                     </div>
                   </div>
                 </div>
                 <div>
                   <div className='row'>
-                    <div className='col-md-6'>
-                      
-                        <strong>Member:</strong> {selectedNode.member}
-                      
+                    <div className="col">                      
+                        <strong>Member:</strong> {selectedNode.member}                      
                     </div>
-                    <div className='col-md-6'>
-                      
-                        <strong>Chunk:</strong> {selectedNode.chunk}
-                      
+                    <div className="col">                      
+                        <strong>Chunk:</strong> {selectedNode.chunk}                      
                     </div>
                   </div>
                 </div>
@@ -109,15 +100,11 @@ const SelectionTreeNode = () => {
                 </div>
                 <div>
                   <div className='row'>
-                    <div className='col-6'>
-                      
-                        <strong>Processors:</strong> {selectedNode.processors}
-                      
+                    <div className='col'>                      
+                        <strong>Processors:</strong> {selectedNode.processors}                      
                     </div>
-                    <div className='col-6'>
-                      
-                        <strong>Wallclock:</strong> {selectedNode.wallclock}
-                      
+                    <div className='col'>                      
+                        <strong>Wallclock:</strong> {selectedNode.wallclock}                      
                     </div>
                   </div>
                 </div>
@@ -240,72 +227,71 @@ const SelectionTreeNode = () => {
                       )}
                   </div>
                 </div>
-                
-                  {/* .out log viewer */}
-                  {selectedNode.out && (
-                    <div className='row'>
-                      <div className='col-12 px-0'>
-                        <form
-                          onSubmit={copyContent("g_out_t")}
-                          className='form'
-                        >
-                            <div className='input-group input-group-sm'>
-                              <input
-                                className='form-control py-0'
-                                type='text'
-                                value={selectedNode.out}
-                                id='g_out_t'
-                                aria-describedby="addon-out1"
-                                readOnly
-                              />
-                              <div className='input-group-append' id='addon-out1'>
-                                <input
-                                  type='submit'
-                                  className='btn btn-light btn-sm py-0'
-                                  value='Copy out'
-                                  data-toggle='tooltip' 
-                                  data-placement='left' 
-                                  title="Copies the path to your clipboard."
-                                />
-                                <JobLog source={selectedNode.out} tab="tree"/>
-                              </div>           
-                            </div>
-                        </form>
-                      </div>
-                    </div>
-                  )}
-                  {selectedNode.err && (
-                    <div className='row mt-1'>
-                      <div className='col-12 px-0'>
-                        <form
-                          onSubmit={copyContent("g_err_t")}
-                          className='form'
-                        >
+                 
+                {selectedNode.out && (
+                  <div className='row'>
+                    <div className='col-12'>
+                      <form
+                        onSubmit={copyContent("g_out_t")}
+                        className='form'
+                      >
                           <div className='input-group input-group-sm'>
                             <input
                               className='form-control py-0'
                               type='text'
-                              value={selectedNode.err}
-                              id='g_err_t'
+                              value={selectedNode.out}
+                              id='g_out_t'
+                              aria-describedby="addon-out1"
                               readOnly
                             />
-                            <div className='input-group-append'>
+                            <div className='input-group-append' id='addon-out1'>
                               <input
                                 type='submit'
                                 className='btn btn-light btn-sm py-0'
-                                value='Copy err'
+                                value='Copy out'
                                 data-toggle='tooltip' 
                                 data-placement='left' 
                                 title="Copies the path to your clipboard."
                               />
-                              <JobLog source={selectedNode.err} tab="tree"/>
-                            </div>
-                            
+                              <JobLog source={selectedNode.out} tab="tree"/>
+                            </div>           
                           </div>
-                        </form>
-                      </div>
+                      </form>
                     </div>
-                  )}
+                  </div>
+                )}
+                {selectedNode.err && (
+                  <div className='row mt-1'>
+                    <div className='col-12'>
+                      <form
+                        onSubmit={copyContent("g_err_t")}
+                        className='form'
+                      >
+                        <div className='input-group input-group-sm'>
+                          <input
+                            className='form-control py-0'
+                            type='text'
+                            value={selectedNode.err}
+                            id='g_err_t'
+                            readOnly
+                          />
+                          <div className='input-group-append'>
+                            <input
+                              type='submit'
+                              className='btn btn-light btn-sm py-0'
+                              value='Copy err'
+                              data-toggle='tooltip' 
+                              data-placement='left' 
+                              title="Copies the path to your clipboard."
+                            />
+                            <JobLog source={selectedNode.err} tab="tree"/>
+                          </div>
+                          
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                )}
                 
                 <div className='row-hl d-flex flex-wrap pt-1'>
                   <div className='item-hl'>
@@ -392,6 +378,7 @@ const SelectionTreeNode = () => {
                       </div>
                     </div>
                   )} */}
+              </div>
               </div>
             </div>
           </div>
@@ -515,4 +502,4 @@ const headerCard = {
   height: 30,
 };
 
-export default SelectionTreeNode;
+export default TreeJob;

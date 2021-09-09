@@ -8,6 +8,7 @@ import {
   CLEAR_STATS,
   SET_ERROR_STATS,
   SET_FILTER_CHART,
+  APPLY_FILTER,
 } from "../types";
 import { sleep } from "../utils";
 
@@ -17,9 +18,9 @@ const StatsState = (props) => {
   const initialState = {
     loading: false,
     statdata: null,
-    backupdata: null,
+    displayStatdata: null,
+    timeframe: null,
     isError: false,
-    totaldata: null,
     errorMessage: "",
   };
 
@@ -41,6 +42,13 @@ const StatsState = (props) => {
     setLoading();
     //cleanGraphData();
     let res = null;
+    let statistics = { Statistics: {
+      JobStatistics: [],
+      Period: {
+        From: null,
+        To: null,
+      }
+    }};
     if (NOAPI) {
       res = {data:null};
       res.data = require("../data/stats_"+String(expid)+".json")
@@ -51,7 +59,6 @@ const StatsState = (props) => {
       );
     }
 
-    let jobStatData = [];
     debug && console.log(res.data);
     
     if (res.data) {
@@ -59,49 +66,32 @@ const StatsState = (props) => {
         setIsError(true, res.data.error_message);
       } else {
         setIsError(false, "");
-      }
-
-      for (let i = 0; i < res.data.jobs.length; i++) {
-        const jobName = res.data.jobs[i];
-        const queueTime = Math.max(Number.parseFloat(res.data.stats.queued[i]), 0);
-        const runTime = Math.max(Number.parseFloat(res.data.stats.run[i]), 0);
-        const numberFailedAttempts = Math.max(Number.parseInt(res.data.stats.failed_jobs[i]), 0);
-        const failedQueueTime = Math.max(Number.parseFloat(res.data.stats.fail_queued[i]), 0);
-        const failedRunTime = Math.max(Number.parseFloat(res.data.stats.fail_run[i]), 0);
-        if (queueTime > 0 || runTime > 0 || numberFailedAttempts > 0 || failedQueueTime > 0 || failedRunTime > 0) {
-          jobStatData.push(
-            {
-              name: jobName,
-              queue: queueTime,
-              run: runTime,
-              failedAttempts: numberFailedAttempts,
-              failedQueue: failedQueueTime,
-              failedRun: failedRunTime 
-            });
-        }        
-      }
+        statistics = res.data.Statistics;
+      }     
     }
 
     dispatch({
       type: GET_EXPERIMENT_STATS,
-      payload: { result: jobStatData, totalData: res.data },
-      // payload: { result: { resultQueued, resultRun, resultNumberFailedJobs, resultFailedQueued, resultFailedRun }, requestResult, ticks },
+      payload: { statistics: statistics },      
     });
   };
 
   const filterBarChart = (currentChecked, target) => {
-    // console.log(currentChecked);
-    // console.log(target);
     dispatch({
       type: SET_FILTER_CHART,
       payload: { currentChecked: currentChecked, target: target },
     })
   }
-
-  // Clear stats data
+  
   const clearStats = () => dispatch({ type: CLEAR_STATS });
-
   const setLoading = () => dispatch({ type: SET_LOADING });
+  const applyRegExToJobDataSet = (regularExpression) => {    
+    dispatch({
+      type: APPLY_FILTER,
+      payload : { regularExpression },
+    });
+  };
+
 
   const setIsError = (error, msg) => {
     dispatch({
@@ -117,11 +107,12 @@ const StatsState = (props) => {
         statdata: state.statdata,
         isError: state.isError,
         errorMessage: state.errorMessage,
-        totaldata: state.totaldata,
-        backupdata: state.backupdata,
+        timeframe: state.timeframe,
+        displayStatdata: state.displayStatdata,
         getExperimentStats,
         clearStats,
-        filterBarChart
+        filterBarChart,
+        applyRegExToJobDataSet
       }}
     >
       {props.children}
