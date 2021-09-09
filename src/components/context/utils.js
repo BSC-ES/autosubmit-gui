@@ -484,7 +484,7 @@ export const calculateStatistics = (jobs) => {
 
   if (expectedCpuConsumption > 0) {
     cpuConsumptionPercentage = (cpuConsumption/expectedCpuConsumption) * 100;
-  }
+  }  
 
   return {
      jobsSubmittedCount: formatNumberMoney(jobsSubmittedCount, true),

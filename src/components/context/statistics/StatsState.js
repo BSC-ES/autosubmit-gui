@@ -18,9 +18,10 @@ const StatsState = (props) => {
   const initialState = {
     loading: false,
     statdata: null,
-    displayStatdata: null,
+    filteredStatdata: null,
     timeframe: null,
     isError: false,
+    filterAppliedCount: 0,
     errorMessage: "",
   };
 
@@ -108,7 +109,8 @@ const StatsState = (props) => {
         isError: state.isError,
         errorMessage: state.errorMessage,
         timeframe: state.timeframe,
-        displayStatdata: state.displayStatdata,
+        filteredStatdata: state.filteredStatdata,
+        filterAppliedCount: state.filterAppliedCount,
         getExperimentStats,
         clearStats,
         filterBarChart,

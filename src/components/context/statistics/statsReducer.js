@@ -24,7 +24,8 @@ export default (state, action) => {
             return {
                 ...state,
                 statdata: JobStatistics,
-                displayStatdata: displayJobStatistics,
+                filterAppliedCount: 0,
+                filteredStatdata: displayJobStatistics,
                 timeframe: Period,
                 loading: false,
             };
@@ -32,23 +33,35 @@ export default (state, action) => {
             return {
                 ...state,
                 statdata: null,
-                displayStatdata: null,
+                filteredStatdata: null,
                 loading: false,
                 isError: false,
                 timeframe: null,
                 errorMessage: "",
+                filterAppliedCount: 0,
             };
         case APPLY_FILTER:
             {
                 const { regularExpression } = action.payload;
-                if (state.statdata && state.backupdata) {                    
-                    const re = RegExp(regularExpression);                    
-                    const filteredDataSet = state.backupdata.filter(job => {                    
+                if (state.statdata) {    
+                    // console.log(regularExpression);   
+                    if (String(regularExpression).trim().length === 0) {                        
+                        const totalData = state.statdata;
+                        return {
+                            ...state,
+                            filteredStatdata: totalData,
+                            filterAppliedCount: 0,
+                        }
+                    }            
+                    const re = RegExp(regularExpression, 'i');                    
+                    const filteredDataSet = state.statdata.filter(job => {                    
                         return re.test(job.name);
                     });                    
+                    const filterCount = state.filterAppliedCount + 1;                    
                     return {
                         ...state,
-                        statdata: filteredDataSet,
+                        filteredStatdata: filteredDataSet,
+                        filterAppliedCount: filterCount,
                     }
                 }
                 return {

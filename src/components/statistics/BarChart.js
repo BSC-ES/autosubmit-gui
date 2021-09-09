@@ -11,21 +11,23 @@ class BarChart extends Component {
     this.svgElement = null;
     this.setSvgElement = element => {
       this.svgElement = element;
-    }    
+    }  
+    
+    
   }
   
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (nextProps.loading !== this.props.loading){
+    //console.log(`next ${nextProps.filterCount} past ${this.props.filterCount}`)
+    if (nextProps.loading !== this.props.loading || nextProps.filterCount !== this.props.filterCount){
+      // console.log("Should rerender");
       return true;
     } else {
       return false;
     }
   }
 
-  componentDidMount() {
-
-    // Min Max pairs
+  handleBarChart() {
     const data = this.props.data;
     const metrics = this.props.metrics;
     const helperId = this.props.helperId;
@@ -40,6 +42,11 @@ class BarChart extends Component {
     const singleBarHeight = totalBarHeight / 4.0; // Maximum = 4
     const doubleBarHeight = totalBarHeight / 2.0;
     const tripleBarHeight = totalBarHeight / 3.0;
+
+    d3.select(`#queueTimeChart-${helperId}`).property("checked", true);
+    d3.select(`#runTimeChart-${helperId}`).property("checked", true);
+    d3.select(`#failedQueueTimeChart-${helperId}`).property("checked", true);
+    d3.select(`#failedRunTimeChart-${helperId}`).property("checked", true);
 
     const yScaleQueue = d3.scaleLinear()
       .domain([0, data.length])
@@ -335,27 +342,51 @@ class BarChart extends Component {
         onClickFilter(currentChecked, currentValue);
       })
     
-      d3.select(`#failedQueueTimeChart-${helperId}`)
+    d3.select(`#failedQueueTimeChart-${helperId}`)
       .on("click", function() {
         const currentChecked = d3.event.target.checked;
         const currentValue = d3.event.target.value;
         onClickFilter(currentChecked, currentValue);
       })
 
-      d3.select(`#failedRunTimeChart-${helperId}`)
+    d3.select(`#failedRunTimeChart-${helperId}`)
       .on("click", function() {
         const currentChecked = d3.event.target.checked;
         const currentValue = d3.event.target.value;
         onClickFilter(currentChecked, currentValue);
       })
+  }
+
+  componentDidMount() {
+
+    // Min Max pairs
+    if (this.props.data.length > 0) {
+      this.handleBarChart();
+    }    
 
   };
 
+  componentDidUpdate() {
+    if (this.props.data.length > 0) {
+      this.handleBarChart();
+    }
+  }
+
   componentWillUnmount() {
-    this.props.clearStats();
+   // console.log('Unmounting Bar Chart')
   }
 
   render() {
+
+    if (this.props.data.length === 0) {
+      return (
+        <div>
+          <div className="row">
+            <div className="col">No data</div>
+          </div>
+        </div>
+      );
+    }
 
   
   const queueFilter = this.props.metrics.includes("completedQueueTime") ? <div className="form-check form-check-inline">                

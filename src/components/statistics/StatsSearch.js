@@ -13,7 +13,8 @@ const StatsSearch = () => {
     clearStats,
     isError,
     errorMessage,
-    displayStatdata,
+    filterAppliedCount,
+    filteredStatdata,
     timeframe
   } = statsContext;
 
@@ -79,6 +80,9 @@ const StatsSearch = () => {
      cpuConsumptionPercentage,
   } = calculateStatistics(statdata);
 
+  const filteredStats = calculateStatistics(filteredStatdata);
+  
+  // console.log(calculateStatistics(filteredStatdata));
   // const consumptionPercentage = 0; // totaldata && totaldata.totals ? totaldata.totals.pConsumption: 0.00;
   // const queueTime = 0; // totaldata && totaldata.totals ? totaldata.totals.tQueue : 0.00;    
   const countsSummaryTable = <table className="table table-sm table-bordered mb-0">
@@ -87,24 +91,29 @@ const StatsSearch = () => {
         <tr>
           <th scope="col" className="pl-2">Description</th>
           <th scope="col" className="text-right pr-2">Count</th>
+          {filterAppliedCount > 0 && <th scope="col" className="text-right pr-2">Count <sup>(*)</sup></th>}
         </tr>
       </thead>
       <tbody>        
           <tr>
             <th scope="row" className="pl-2">Jobs Submitted</th>
-            <td className="text-right pr-2">{jobsSubmittedCount}</td>            
+            <td className="text-right pr-2">{jobsSubmittedCount}</td>
+            {filterAppliedCount > 0 && <td className="text-right pr-2">{filteredStats.jobsSubmittedCount}</td>}            
           </tr> 
           <tr>
             <th scope="row" className="pl-2">Jobs Run</th>
-            <td className="text-right pr-2">{jobsRunCount}</td>            
+            <td className="text-right pr-2">{jobsRunCount}</td>     
+            {filterAppliedCount > 0 && <td className="text-right pr-2">{filteredStats.jobsRunCount}</td>}       
           </tr> 
           <tr>
             <th scope="row" className="pl-2">Jobs Completed</th>
-            <td className="text-right pr-2">{jobsCompletedCount}</td>            
+            <td className="text-right pr-2">{jobsCompletedCount}</td>
+            {filterAppliedCount > 0 && <td className="text-right pr-2">{filteredStats.jobsCompletedCount}</td>}            
           </tr> 
           <tr>
             <th scope="row" className="pl-2">Jobs Failed</th>
-            <td className="text-right pr-2">{jobsFailedCount}</td>            
+            <td className="text-right pr-2">{jobsFailedCount}</td>
+            {filterAppliedCount > 0 && <td className="text-right pr-2">{filteredStats.jobsFailedCount}</td>}            
           </tr>        
       </tbody>
     </table>;
@@ -114,20 +123,24 @@ const StatsSearch = () => {
         <tr>
           <th scope="col" className="pl-2">Description</th>
           <th scope="col" className="text-right pr-2">Hours</th>
+          {filterAppliedCount > 0 && <th scope="col" className="text-right pr-2">Hours <sup>(*)</sup></th>}
         </tr>
       </thead>
       <tbody>        
           <tr>
             <th scope="row" className="pl-2">Expected CPU Consumption</th>
-            <td className="text-right pr-2">{expectedCpuConsumption}</td>            
+            <td className="text-right pr-2">{expectedCpuConsumption}</td>
+            {filterAppliedCount > 0 && <td className="text-right pr-2">{filteredStats.expectedCpuConsumption}</td>}           
           </tr> 
           <tr>
             <th scope="row" className="pl-2">CPU Consumption</th>
-            <td className="text-right pr-2">{cpuConsumption}</td>            
+            <td className="text-right pr-2">{cpuConsumption}</td>   
+            {filterAppliedCount > 0 && <td className="text-right pr-2">{filteredStats.cpuConsumption}</td>}         
           </tr> 
           <tr>
             <th scope="row" className="pl-2">Failed CPU Consumption</th>
-            <td className="text-right pr-2">{failedCpuConsumption}</td>            
+            <td className="text-right pr-2">{failedCpuConsumption}</td>  
+            {filterAppliedCount > 0 && <td className="text-right pr-2">{filteredStats.failedCpuConsumption}</td>}          
           </tr>       
       </tbody>
     </table>;
@@ -137,20 +150,24 @@ const StatsSearch = () => {
         <tr>
           <th scope="col" className="pl-2">Description</th>
           <th scope="col" className="text-right pr-2">Hours</th>
+          {filterAppliedCount > 0 && <th scope="col" className="text-right pr-2">Hours <sup>(*)</sup></th>}
         </tr>
       </thead>
       <tbody>        
           <tr>
             <th scope="row" className="pl-2">Expected Consumption</th>
-            <td className="text-right pr-2">{expectedConsumption}</td>            
+            <td className="text-right pr-2">{expectedConsumption}</td>
+            {filterAppliedCount > 0 && <td className="text-right pr-2">{filteredStats.expectedConsumption}</td>}            
           </tr> 
           <tr>
             <th scope="row" className="pl-2">Real Consumption</th>
-            <td className="text-right pr-2">{realConsumption}</td>            
+            <td className="text-right pr-2">{realConsumption}</td>        
+            {filterAppliedCount > 0 && <td className="text-right pr-2">{filteredStats.realConsumption}</td>}    
           </tr> 
           <tr>
             <th scope="row" className="pl-2">Failed Real Consumption</th>
-            <td className="text-right pr-2">{failedRealConsumption}</td>            
+            <td className="text-right pr-2">{failedRealConsumption}</td> 
+            {filterAppliedCount > 0 && <td className="text-right pr-2">{filteredStats.failedRealConsumption}</td>}           
           </tr>       
       </tbody>
     </table>;
@@ -167,10 +184,10 @@ const StatsSearch = () => {
               </p>
               <p className="lead">
                 <span>
-                  CPU Consumption <span className="bg-secondary rounded px-1">{`${cpuConsumptionPercentage} %`}</span>
+                  CPU Consumption <span className="bg-secondary rounded px-1">{`${cpuConsumptionPercentage} %`}</span> {filterAppliedCount > 0 && <span className="bg-secondary rounded px-1">{`${filteredStats.cpuConsumptionPercentage} %`}<sup>(*)</sup></span>}
                 </span>
                 <span className="pl-3">
-                  Total Queue Time <span className="bg-secondary rounded px-1">{`${totalQueueTime} hours`}</span>
+                  Total Queue Time <span className="bg-secondary rounded px-1">{`${totalQueueTime} hours`}</span> {filterAppliedCount > 0 && <span className="bg-secondary rounded px-1">{`${filteredStats.totalQueueTime} hours`}<sup>(*)</sup></span>}
                 </span>
               </p>              
             </div>
@@ -189,13 +206,13 @@ const StatsSearch = () => {
         </div>
       )}      
       
-      {displayStatdata && displayStatdata.length > 0 && (
+      {filteredStatdata && (
         <div className="row py-4">              
           <div className="col-md-6 scroll-x text-right">                
-            <BarChart data={displayStatdata} title="Statistics" metrics={["completedQueueTime", "completedRunTime", "failedQueueTime", "failedRunTime"]} xtitle="Hours" clearStats={clearStats} helperId={"4"} />
+            <BarChart data={filteredStatdata} title="Statistics" metrics={["completedQueueTime", "completedRunTime", "failedQueueTime", "failedRunTime"]} xtitle="Hours" clearStats={clearStats} helperId={"4"} filterCount={filterAppliedCount} />
           </div>
           <div className="col-md-6 scroll-x">
-            <BarChart data={displayStatdata} title="Failed Attempts per Job"  metrics={["failedCount"]} xtitle="Attempts" clearStats={clearStats} helperId={"1"} />
+            <BarChart data={filteredStatdata} title="Failed Attempts per Job"  metrics={["failedCount"]} xtitle="Attempts" clearStats={clearStats} helperId={"1"} filterCount={filterAppliedCount} />
           </div>
         </div>            
       )}            

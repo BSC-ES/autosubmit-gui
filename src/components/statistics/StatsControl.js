@@ -92,6 +92,7 @@ const StatsControl = () => {
                   placeholder="Filter using a regular expression"
                   onChange={onChangeRegExp}
                   className="form-control" 
+                  text=""
                 />
                 <div className="input-group-append">
                   <input 
