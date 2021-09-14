@@ -296,7 +296,7 @@ const ExperimentState = (props) => {
       const res = await axios.get(`${localserver}/performance/${expid}`).catch(error => alert(ERROR_MESSAGE + "\n" + error.message));
       metrics = res ? res.data : null ;
       debug && console.log(metrics);
-    }    
+    }       
     dispatch({
       type: GET_EXPERIMENT_PERFORMANCE,
       payload: metrics,

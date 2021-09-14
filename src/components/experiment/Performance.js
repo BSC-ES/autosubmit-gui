@@ -1,7 +1,9 @@
 import React, { useContext } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
+import TimeScatterPlot from "../plots/TimeScatterPlot";
 import Spinner from "../layout/Spinner";
 import { secondsToDelta, arrayAverage, arrayStandardDeviation, arrayMeanAbsoluteDeviationAroundMean, formatNumberMoney } from "../context/utils";
+import MetricScatterPlot from "../plots/MetricScatterPlot";
 
 const Performance = () => {
   const experimentContext = useContext(ExperimentContext);
@@ -47,6 +49,24 @@ const Performance = () => {
     arrJPSYdata
   } = performancedata;
 
+  const consideredJPSY = [];
+  const maxJPSY = considered ? Math.max(...Array.from(considered.map(d => { return Number.parseInt(d.JPSY)}))) : 0;
+  const maxASYPD = considered ? Math.max(...Array.from(considered.map(d => { return Number.parseInt(d.ASYPD)}))) : 0;
+  const JPSYdivisor = maxJPSY > 9999999999 ? 1000000 : 1000;
+  const JPSYtitleX = maxJPSY > 9999999999 ? "JPSY (millions)" : "JPSY (thousands)";
+  if (considered) {
+    considered.forEach(d => {
+      consideredJPSY.push({
+        "JPSY" : d.JPSY/ JPSYdivisor,
+        "SYPD" : d.SYPD,
+        "ASYPD" : d.ASYPD,
+        "CHSY" : d.CHSY,
+        "running" : d.running,
+        "queue" : d.queue,
+        "name" : d.name,
+      });
+    })
+  }
     
   return (
     <div className="container">
@@ -165,12 +185,109 @@ const Performance = () => {
           </div>
         </div>
       </div>
-
+      {considered && considered.length > 0 && (        
+        <div className="row"> 
+          {maxJPSY > 0 && (
+            <div className="col-lg-6 col-xl-4">
+              <MetricScatterPlot 
+                data={consideredJPSY} 
+                attributeX={"JPSY"} 
+                attributeY={"CHSY"} 
+                titleX={JPSYtitleX} 
+                mainTitle={"CHSY compared to JPSY"} 
+                uniqueId={"4"}
+              />            
+            </div>
+          )}        
+          {maxJPSY > 0 && (
+            <div className="col-lg-6 col-xl-4">
+              <MetricScatterPlot 
+                data={consideredJPSY} 
+                attributeX={"JPSY"} 
+                attributeY={"SYPD"} 
+                titleX={JPSYtitleX} 
+                mainTitle={"SYPD compared to JPSY"} 
+                uniqueId={"5"}
+              />            
+            </div>
+          )}
+          {maxJPSY > 0 && (
+            <div className="col-lg-6 col-xl-4">
+              <MetricScatterPlot 
+                data={consideredJPSY} 
+                attributeX={"JPSY"} 
+                attributeY={"ASYPD"} 
+                titleX={JPSYtitleX} 
+                mainTitle={"ASYPD compared to JPSY"}
+                uniqueId={"6"}
+              />
+            </div>
+          )}
+          {maxASYPD > 0 && (
+            <div className="col-lg-6 col-xl-4">
+              <MetricScatterPlot 
+                data={considered} 
+                attributeX={"SYPD"} 
+                attributeY={"ASYPD"} 
+                mainTitle={"SYPD compared to ASYPD"}
+                uniqueId={"7"}
+              />
+            </div>
+          )}
+          <div className="col-lg-6 col-xl-4">
+            <MetricScatterPlot 
+              data={considered} 
+              attributeX={"CHSY"} 
+              attributeY={"SYPD"} 
+              mainTitle={"SYPD compared to CHSY"}
+              uniqueId={"8"}
+            />
+          </div>
+          {maxASYPD > 0 && 
+            <div className="col-lg-6 col-xl-4">
+              <MetricScatterPlot 
+                data={considered} 
+                attributeX={"CHSY"} 
+                attributeY={"ASYPD"} 
+                mainTitle={"CHSY compared to ASYPD"} 
+                uniqueId={"9"}
+              />
+            </div>
+          }
+          
+          <div className="col-lg-6 col-xl-4">
+            <TimeScatterPlot 
+              data={considered} 
+              attribute={"SYPD"} 
+              mainTitle={"Running time compared to SYPD"}
+              uniqueId={"1"} 
+            />
+          </div>
+          <div className="col-lg-6 col-xl-4">
+            <TimeScatterPlot 
+              data={considered} 
+              attribute={"CHSY"} 
+              mainTitle={"Running time compared to CHSY"}
+              uniqueId={"2"} 
+            />
+          </div>
+          {maxASYPD > 0 && (
+            <div className="col-lg-6 col-xl-4">
+              <TimeScatterPlot 
+                data={considered} 
+                attribute={"ASYPD"} 
+                mainTitle={"Running + Queuing time compared to ASYPD"}
+                uniqueId={"3"} 
+              />
+            </div>
+          )}
+        </div>
+      )}
       {performancedata &&
         performancedata.warnings_job_data &&
         performancedata.warnings_job_data.length > 0 && (
-          <div className='row px-3 pb-1'>
-            <div className='col-md-12 px-4'>
+          <div className='row py-2'>
+            <div className='col-md-12'>
               <p>
                 {" "}
                 There are some warnings about the calculations of performance
@@ -192,7 +309,6 @@ const Performance = () => {
                 </button>
               </p>
             </div>
-
             <div className='collapse px-4' id='warningsCollapse'>
               <div className='card card-body p-1'>
                 

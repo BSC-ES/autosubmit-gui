@@ -33,7 +33,7 @@ const StatsSearch = () => {
     );
   }
 
-  if (statdata && isError) {
+  if (isError) {
     return (
       <div className="container">
         <div className="row">

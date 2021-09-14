@@ -6,7 +6,6 @@ import {
   SET_LOADING,
   GET_EXPERIMENT_STATS,
   CLEAR_STATS,
-  SET_ERROR_STATS,
   SET_FILTER_CHART,
   APPLY_FILTER,
 } from "../types";
@@ -43,7 +42,9 @@ const StatsState = (props) => {
     setLoading();
     //cleanGraphData();
     let res = null;
-    let statistics = { Statistics: {
+    const result = {error: true,
+      error_message: "No response",
+      Statistics: {
       JobStatistics: [],
       Period: {
         From: null,
@@ -61,20 +62,17 @@ const StatsState = (props) => {
     }
 
     debug && console.log(res.data);
-    
-    if (res.data) {
-      if (res.data.error === true) {
-        setIsError(true, res.data.error_message);
-      } else {
-        setIsError(false, "");
-        statistics = res.data.Statistics;
-      }     
-    }
-
-    dispatch({
-      type: GET_EXPERIMENT_STATS,
-      payload: { statistics: statistics },      
-    });
+    if (!res.data) {
+      dispatch({
+        type: GET_EXPERIMENT_STATS,
+        payload: {statistics: result }
+      });
+    } else {
+      dispatch({
+        type: GET_EXPERIMENT_STATS,
+        payload: { statistics: res.data },      
+      });
+    }    
   };
 
   const filterBarChart = (currentChecked, target) => {
@@ -94,12 +92,12 @@ const StatsState = (props) => {
   };
 
 
-  const setIsError = (error, msg) => {
-    dispatch({
-      type: SET_ERROR_STATS,
-      payload: { error, msg },
-    });
-  };
+  // const setIsError = (error, msg) => {
+  //   dispatch({
+  //     type: SET_ERROR_STATS,
+  //     payload: { error, msg },
+  //   });
+  // };
 
   return (
     <StatsContext.Provider

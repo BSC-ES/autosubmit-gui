@@ -1,8 +1,7 @@
 import { 
     SET_LOADING,
     GET_EXPERIMENT_STATS,
-    CLEAR_STATS,
-    SET_ERROR_STATS,
+    CLEAR_STATS,    
     SET_FILTER_CHART,
     APPLY_FILTER,
  } from '../types';
@@ -17,10 +16,24 @@ export default (state, action) => {
             };
         case GET_EXPERIMENT_STATS:
             const { statistics } = action.payload;
-            const { JobStatistics, Period } = statistics;
+            const { Statistics, error, error_message } = statistics;
+            if (error) {
+                return {
+                    ...state,
+                    statdata: null,
+                    filterAppliedCount: 0,
+                    filteredStatdata: null,
+                    timeframe: null,
+                    loading: false,
+                    isError: true,
+                    errorMessage: error_message
+                }
+            }
+            const { JobStatistics, Period } = Statistics;
             let displayJobStatistics = [];
-            JobStatistics.map(job => displayJobStatistics.push(job));
-            // console.log(result);
+            if (JobStatistics) {
+                JobStatistics.map(job => displayJobStatistics.push(job));
+            }            
             return {
                 ...state,
                 statdata: JobStatistics,
@@ -28,6 +41,8 @@ export default (state, action) => {
                 filteredStatdata: displayJobStatistics,
                 timeframe: Period,
                 loading: false,
+                isError: false,
+                errorMessage: null,
             };
         case CLEAR_STATS:
             return {
@@ -67,13 +82,6 @@ export default (state, action) => {
                 return {
                     ...state,
                 }
-            }
-        case SET_ERROR_STATS:
-            const { error, msg } = action.payload;
-            return {
-                ...state,
-                isError: error,
-                errorMessage: msg,
             }
         case SET_FILTER_CHART:
             const { currentChecked, target } = action.payload;
