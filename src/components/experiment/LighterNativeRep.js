@@ -42,11 +42,11 @@ export class LighterNativeRep extends Component {
         </div>
       );
     }
-    if (this.props.data.error === true) {
+    if (this.props.isValid === false) {
       return (
         <div className='card-body text-left' style={experimentStyle}>
           <p className='lead'>Something has gone very wrong.</p>
-          <p className='lead text-danger'>{this.props.data.error_message}</p>
+          <p className='lead text-danger'>{this.props.errorMessage}</p>
         </div>
       );
     }
@@ -93,8 +93,7 @@ export class LighterNativeRep extends Component {
 
     return (
       <LightFancyTree
-        tree_data={this.props.data.tree_view}
-        originaldata={this.props.data}
+        tree_data={this.props.data}        
         setLighterFancyTree={this.props.setLighterFancyTree}
       />
     );

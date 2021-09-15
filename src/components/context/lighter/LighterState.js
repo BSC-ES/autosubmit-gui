@@ -18,11 +18,22 @@ import { AUTOSUBMIT_API_SOURCE, DEBUG, NOAPI } from "../vars";
 
 const LighterState = (props) => {
   const initialState = {
-    lightData: null,
+    baseData: null,    
+    currentData: null,
+    firstCurrentData: null,
+    currentCount: 0,
     lightFancyTree: null,
     loadingView: false,
+    queueCount: 0,
+    runCount: 0,
+    totalCount: 0,
+    failedCount: 0,
+    completedCount: 0,
+    isValid: false,
+    error: false,
+    errorMessage: null,
     loadingFilterTreeView: false,
-    filterCount: 0,
+    filterCount: -1,
     elapsedLoadingQuickView: 1,
   };
 
@@ -83,11 +94,22 @@ const LighterState = (props) => {
     <LighterContext.Provider
       value={{
         lightFancyTree: state.lightFancyTree,
-        lightData: state.lightData,
+        baseData: state.baseData,
+        currentData: state.currentData,
+        firstCurrentData: state.firstCurrentData,
+        currentCount: state.currentCount,
         loadingView: state.loadingView,
         loadingFilterTreeView: state.loadingFilterTreeView,
         filterCount: state.filterCount,
         elapsedLoadingQuickView: state.elapsedLoadingQuickView,
+        queueCount: state.queueCount,
+        isValid: state.isValid,
+        runCount: state.runCount,
+        totalCount: state.totalCount,
+        failedCount: state.failedCount,
+        completedCount: state.completedCount,
+        error: state.error,
+        errorMessage: state.errorMessage,
         getLighterView,
         cleanLoadingLighterView,
         setLighterFancyTree,

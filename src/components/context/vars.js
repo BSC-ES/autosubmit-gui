@@ -17,6 +17,8 @@ export const ReadyCode = 1;
 export const PreparedCode = 7;
 export const SkippedCode = 8;
 
+export const UpperLimitQuickView = 200;
+
 export const maxReponseTimeThreshold = 240; // 4 minutes
 export const quickThreshold = 12000;
 

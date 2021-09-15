@@ -15,7 +15,13 @@ const LighterControl = () => {
   const {
     getLighterView,
     loadingView,
-    lightData,
+    isValid,
+    queueCount,
+    runCount, 
+    totalCount,
+    failedCount,
+    completedCount,
+    currentCount,
     filterLighterTreeView,
     loadingFilterTreeView,
     clearLighterFilterTreeView,
@@ -46,8 +52,8 @@ const LighterControl = () => {
     filterLighterTreeView(statusString);
   };
 
-  const labelButton = lightData ? "Refresh" : "Show";
-  const labelToolTip = lightData ? "Updates the job data with the latest information." : "Show the list of jobs.";
+  const labelButton = isValid ? "Refresh" : "Show";
+  const labelToolTip = isValid ? "Updates the job data with the latest information." : "Show the list of jobs.";
 
   let clearText = "Clear";
   if (filterCount && filterCount >= 0) {
@@ -57,77 +63,70 @@ const LighterControl = () => {
   return (
     <div className='card-header p-1'>
       <div className='row-hl d-flex flex-wrap'>
-        {lightData && (
+        {isValid && (
           <div className='item-hl'>
-            <button 
+            {/* <button 
               className='btn btn-sm btn-secondary' 
               onClick={onClearFilter}
               data-toggle='tooltip' 
               data-placement='bottom' 
               title="List all jobs."
+              disabled
             >
-              {lightData.total} total jobs
+              {totalCount} total jobs
+            </button> */}
+            <button
+              className='btn btn-sm btn-secondary'
+              type='button'
+              style={completedColor}
+              onClick={onFilterStatus("#COMPLETED")}
+              disabled={loadingFilterTreeView}
+              data-toggle='tooltip' 
+              data-placement='bottom' 
+              title="Filters the list and only shows COMPLETED jobs."
+            >
+              {completedCount} completed
             </button>
-            {lightData.completed >= 0 && (
-              <button
-                className='btn btn-sm btn-secondary'
-                type='button'
-                style={completedColor}
-                onClick={onFilterStatus("#COMPLETED")}
-                disabled={loadingFilterTreeView}
-                data-toggle='tooltip' 
-                data-placement='bottom' 
-                title="Filters the list and only shows COMPLETED jobs."
-              >
-                {lightData.completed} completed
-              </button>
-            )}
-            {lightData.failed >= 0 && (
-              <button
-                className='btn btn-sm btn-secondary'
-                type='button'
-                style={failedColor}
-                onClick={onFilterStatus("#FAILED")}
-                disabled={loadingFilterTreeView}
-                data-toggle='tooltip' 
-                data-placement='bottom' 
-                title="Filters the list and only shows FAILED jobs."
-              >
-                {lightData.failed} failed
-              </button>
-            )}
-            {lightData.running >= 0 && (
-              <button
-                className='btn btn-sm btn-secondary'
-                type='button'
-                style={runningColor}
-                onClick={onFilterStatus("#RUNNING")}
-                disabled={loadingFilterTreeView}
-                data-toggle='tooltip' 
-                data-placement='bottom' 
-                title="Filters the list and only shows RUNNING jobs."
-              >
-                {lightData.running} running
-              </button>
-            )}
-            {lightData.queuing >= 0 && (
-              <button
-                className='btn btn-sm btn-secondary'
-                type='button'
-                style={queueColor}
-                onClick={onFilterStatus("#QUEUING")}
-                disabled={loadingFilterTreeView}
-                data-toggle='tooltip' 
-                data-placement='bottom' 
-                title="Filters the list and only shows QUEUING jobs."
-              >
-                {lightData.queuing} queuing
-              </button>
-            )}
+            <button
+              className='btn btn-sm btn-secondary'
+              type='button'
+              style={failedColor}
+              onClick={onFilterStatus("#FAILED")}
+              disabled={loadingFilterTreeView}
+              data-toggle='tooltip' 
+              data-placement='bottom' 
+              title="Filters the list and only shows FAILED jobs."
+            >
+              {failedCount} failed
+            </button>
+            <button
+              className='btn btn-sm btn-secondary'
+              type='button'
+              style={runningColor}
+              onClick={onFilterStatus("#RUNNING")}
+              disabled={loadingFilterTreeView}
+              data-toggle='tooltip' 
+              data-placement='bottom' 
+              title="Filters the list and only shows RUNNING jobs."
+            >
+              {runCount} running
+            </button>
+            <button
+              className='btn btn-sm btn-secondary'
+              type='button'
+              style={queueColor}
+              onClick={onFilterStatus("#QUEUING")}
+              disabled={loadingFilterTreeView}
+              data-toggle='tooltip' 
+              data-placement='bottom' 
+              title="Filters the list and only shows QUEUING jobs."
+            >
+              {queueCount} queuing
+            </button>
           </div>
         )}
-        {lightData && <AlertTotal source={"lighter"} />}
-        {lightData && (
+        {isValid && <AlertTotal source={"lighter"} />}
+        {isValid && (
           <div className='item-hl ml-2'>
             <form onSubmit={onSubmit} className='form' autoComplete='off'>
               {loadingFilterTreeView && <span>Searching...</span>}
@@ -153,9 +152,14 @@ const LighterControl = () => {
                 </div>
               )}
             </form>
+          </div>          
+        )}
+        {isValid && (
+          <div className="item-hl ml-2">
+            <span>Showing {currentCount} of <strong>{totalCount} total jobs</strong>.</span>
           </div>
         )}
-        {lightData && filterCount > 0 && (
+        {isValid && filterCount >= 0 && (
           <div className='item-hl mx-1'>
             <form onSubmit={onClearFilter} className='form'>
               <input

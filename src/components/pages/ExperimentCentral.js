@@ -71,7 +71,7 @@ const ExperimentCentral = ({ match }) => {
     getExperiment,
     getRunningState,
     getExperimentRun,
-    getExperimentPerformanceMetrics,
+    // getExperimentPerformanceMetrics,
     startAutoUpdateRun,
     setAutoUpdateRun,
     rundata,
@@ -86,7 +86,7 @@ const ExperimentCentral = ({ match }) => {
     logTimeDiff,
     currentLog,
     testToken,
-    performancedata,
+    // performancedata,
   } = experimentContext;
 
   const {
@@ -135,7 +135,9 @@ const ExperimentCentral = ({ match }) => {
   const {
     loadingView,
     setLighterFancyTree,
-    lightData,
+    currentData,
+    isValid,
+    errorMessage,
     cleanLoadingLighterView,
     getLighterView,
   } = lighterContext;
@@ -166,7 +168,7 @@ const ExperimentCentral = ({ match }) => {
         getExperimentTree(expid, warningMessage);
       }
       // Get performance metrics 
-      if (!performancedata) getExperimentPerformanceMetrics(expid);
+      // if (!performancedata) getExperimentPerformanceMetrics(expid);
       // Get Current Log Status
       getLogStatus(expid);   
       // Test token
@@ -650,7 +652,9 @@ const ExperimentCentral = ({ match }) => {
                 <div className='card-body p-1'>
                   {experiment && (
                     <LighterNativeRep
-                      data={lightData}
+                      data={currentData}
+                      isValid={isValid}
+                      errorMessage={errorMessage}
                       loadingView={loadingView}
                       setLighterFancyTree={setLighterFancyTree}
                       cleanLoadingLighterView={cleanLoadingLighterView}

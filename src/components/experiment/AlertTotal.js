@@ -32,9 +32,8 @@ const AlertTotal = ({ source }) => {
       }
       break;
     case "lighter": {
-      const { lightData } = lighterContext;
-      const { total } = lightData;
-      if (totalJobs !== total) {
+      const { totalCount } = lighterContext;      
+      if (totalJobs !== totalCount) {
         alertMessage =
           "The number of jobs in the experiment quick representation is different than the number of jobs in your current run. This might be due to a change in the config files of your experiment while Autosubmit was already running.";
       }
