@@ -160,6 +160,11 @@ pre.bash {
   margin: 0 auto;
 }
 
+.modal-dialog-log {
+  max-width: 90%;
+  margin: 0 auto;
+}
+
 .modal-dialog-summary {
   max-width: 90%;
   margin: 0 auto;
@@ -187,7 +192,7 @@ pre.bash {
 }
 
 .scroll {
-  max-height: 780px;
+  max-height: 800px;
   overflow-y: auto;
 }
 

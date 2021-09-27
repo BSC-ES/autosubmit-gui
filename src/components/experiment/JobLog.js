@@ -33,7 +33,7 @@ const JobLog = ({ source, tab }) => {
           aria-labelledby='joblogTitle'  
           aria-hidden='true'
         >
-          <div className='modal-dialog modal-dialog-joblog' role='document'>
+          <div className='modal-dialog modal-dialog-log' role='document'>
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title" id='joblogTitle'>
