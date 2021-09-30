@@ -48,6 +48,7 @@ import {
   ORDER_EXPERIMENTS_RESULT,
   GET_CURRENT_CONFIGURATION,
   CLEAR_CURRENT_CONFIGURATION_DATA,
+  SET_PERFORMANCE_DISPLAY,
   TEST_TOKEN,
 } from "../types";
 
@@ -59,7 +60,8 @@ import { AUTOSUBMIT_API_SOURCE,
   localStorageExperimentActiveCheck, 
   orderByType,
   complexTypeExperimentToSimple,
-  complexActiveStatusToSimple } from "../vars";
+  complexActiveStatusToSimple,
+  defaultPerformanceDisplaySettings } from "../vars";
 
 import { timeStampToDate, errorEsarchiveStatus } from "../utils";
 
@@ -110,6 +112,7 @@ const ExperimentState = (props) => {
     currentSearchString: null,
     currentConfiguration: null,
     configDifferences: new Set(),
+    performanceDisplayPlots: defaultPerformanceDisplaySettings
   };
 
   const [state, dispatch] = useReducer(ExperimentReducer, initialState);
@@ -641,6 +644,13 @@ const ExperimentState = (props) => {
   const setAutoUpdateRun = (value) =>
     dispatch({ type: SET_AUTOUPDATE_RUN, payload: value });
 
+  const setPerformanceDisplay = (key, value) => {
+    dispatch({
+      type: SET_PERFORMANCE_DISPLAY,
+      payload: { plot: key, checked: value }
+    })
+  }
+
   const activateSelectionMode = () =>
     dispatch({ type: ACTIVATE_SELECTION_MODE });
   const deactivateSelectionMode = () =>
@@ -692,6 +702,7 @@ const ExperimentState = (props) => {
         currentSearchString: state.currentSearchString,
         currentConfiguration: state.currentConfiguration,
         configDifferences: state.configDifferences,
+        performanceDisplayPlots: state.performanceDisplayPlots,
         setAutoUpdateRun,
         searchExperiments,
         searchExperimentsByOwner, 
@@ -732,6 +743,7 @@ const ExperimentState = (props) => {
         requestCurrentConfiguration,
         clearCurrentConfigurationData,
         testToken,
+        setPerformanceDisplay,
       }}
     >
       {props.children}

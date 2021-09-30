@@ -190,3 +190,15 @@ export const simpleTypeToComplex = (simple) => {
   }  
 }
 
+export const defaultPerformanceDisplaySettings = {
+  JPSYvsCHSY: false,
+  JPSYvsSYPD: false,
+  JPSYvsASYPD: false,
+  SYPDvsASYPD: false,
+  CHSYvsSYPD: false,
+  CHSYvsASYPD: false,
+  RunVsSYPD: false,
+  RunVsCHSY: false,
+  QueueRunVsASYPD: false,
+}
+

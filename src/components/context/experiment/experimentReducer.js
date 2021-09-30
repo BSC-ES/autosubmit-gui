@@ -43,6 +43,7 @@ import {
   GET_CURRENT_CONFIGURATION,
   CLEAR_CURRENT_CONFIGURATION_DATA,
   TEST_TOKEN,
+  SET_PERFORMANCE_DISPLAY,
 } from "../types";
 
 import {
@@ -53,7 +54,7 @@ import {
   differenceBetweenConfigurations
 } from "../utils";
 
-import { pageSize, orderByType, simpleTypeToComplex, simpleActiveStatusToComplex } from "../vars";
+import { pageSize, orderByType, simpleTypeToComplex, simpleActiveStatusToComplex, defaultPerformanceDisplaySettings } from "../vars";
 
 /* eslint import/no-anonymous-default-export: ["error", {"allowArrowFunction": true}] */
 export default (state, action) => {
@@ -96,6 +97,7 @@ export default (state, action) => {
         currentLog: null,
         currentConfiguration: null,
         performancedata: null,
+        performanceDisplayPlots: defaultPerformanceDisplaySettings,
       };
     }
     case CLEAN_FILE_STATUS_DATA:
@@ -484,14 +486,26 @@ export default (state, action) => {
       performanceData.arrSYPDdata = arrSYPDdata;
       performanceData.arrASYPDdata = arrASYPDdata;
       performanceData.arrCHSY = arrCHSY;
-      
+      const currentPerformanceDisplaySettings = state.performanceDisplayPlots;
+      currentPerformanceDisplaySettings.JPSYvsCHSY = true;
+      currentPerformanceDisplaySettings.JPSYvsSYPD = true;
+      currentPerformanceDisplaySettings.JPSYvsASYPD = true;
       // console.log(performanceData);
       return {
         ...state,
         performancedata: performanceData,
         loadingPerformance: false,
+        performanceDisplayPlots: currentPerformanceDisplaySettings,
       };
     }
+    case SET_PERFORMANCE_DISPLAY:
+      const { plot, checked } = action.payload;
+      const currentPerformanceDisplaySettings = state.performanceDisplayPlots;
+      currentPerformanceDisplaySettings[plot] = checked;      
+      return {
+        ...state,
+        performanceDisplayPlots: currentPerformanceDisplaySettings,
+      }
     case CLEAN_PERFORMANCE_METRICS:
       return {
         ...state,

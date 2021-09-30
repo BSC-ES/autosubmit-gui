@@ -7,7 +7,7 @@ import MetricScatterPlot from "../plots/MetricScatterPlot";
 
 const Performance = () => {
   const experimentContext = useContext(ExperimentContext);
-  const { performancedata, experiment, loadingPerformance } = experimentContext;
+  const { performancedata, experiment, loadingPerformance, performanceDisplayPlots, setPerformanceDisplay } = experimentContext;
 
   if (loadingPerformance === true) {
     return <Spinner />;
@@ -51,9 +51,9 @@ const Performance = () => {
 
   const consideredJPSY = [];
   const maxJPSY = considered ? Math.max(...Array.from(considered.map(d => { return Number.parseInt(d.JPSY)}))) : 0;
-  const maxASYPD = considered ? Math.max(...Array.from(considered.map(d => { return Number.parseInt(d.ASYPD)}))) : 0;
-  const JPSYdivisor = maxJPSY > 9999999999 ? 1000000 : 1000;
-  const JPSYtitleX = maxJPSY > 9999999999 ? "JPSY (millions)" : "JPSY (thousands)";
+  const maxASYPD = considered ? Math.max(...Array.from(considered.map(d => { return Number.parseFloat(d.ASYPD)}))) : 0;
+  const JPSYdivisor = maxJPSY > 999999999 ? 1000000 : 1000;
+  const JPSYtitleX = maxJPSY > 999999999 ? "JPSY (millions)" : "JPSY (thousands)";
   if (considered) {
     considered.forEach(d => {
       consideredJPSY.push({
@@ -67,6 +67,59 @@ const Performance = () => {
       });
     })
   }
+
+  const onChangePlotDisplay = (e) => {        
+    const displayKey = e.target.id;
+    const keyChecked = e.target.checked;
+    setPerformanceDisplay(displayKey, keyChecked);
+  }
+  
+  const checkJPSYvsCHSY = <div className="form-check form-check-inline">                
+  <input type="checkbox" name="JPSYvsCHSY" id="JPSYvsCHSY" className="form-check-input"  checked={performanceDisplayPlots.JPSYvsCHSY} onChange={onChangePlotDisplay} disabled={maxJPSY <= 0}/>
+  <label htmlFor="JPSYvsCHSY" className="px-1 mx-1 rounded form-check-label">JPSY vs CHSY</label>
+  </div>;
+
+  const checkJPSYvsSYPD = <div className="form-check form-check-inline">                
+  <input type="checkbox" name="JPSYvsSYPD" id="JPSYvsSYPD" className="form-check-input" checked={performanceDisplayPlots.JPSYvsSYPD} onChange={onChangePlotDisplay} disabled={maxJPSY <= 0}/>
+  <label htmlFor="JPSYvsSYPD" className="px-1 mx-1 rounded form-check-label">JPSY vs SYPD</label>
+  </div>;
+
+  const checkJPSYvsASYPD = <div className="form-check form-check-inline">                
+  <input type="checkbox" name="JPSYvsASYPD" id="JPSYvsASYPD" className="form-check-input" checked={performanceDisplayPlots.JPSYvsASYPD} onChange={onChangePlotDisplay} disabled={maxJPSY <= 0}/>
+  <label htmlFor="JPSYvsASYPD" className="px-1 mx-1 rounded form-check-label">JPSY vs ASYPD</label>
+  </div>;
+
+
+  const checkSYPDvsASYPD = <div className="form-check form-check-inline">                
+  <input type="checkbox" name="SYPDvsASYPD" id="SYPDvsASYPD" className="form-check-input" checked={performanceDisplayPlots.SYPDvsASYPD} onChange={onChangePlotDisplay} disabled={considered.length <= 0 || maxASYPD <= 0 }/>
+  <label htmlFor="SYPDvsASYPD" className="px-1 mx-1 rounded form-check-label">SYPD vs ASYPD</label>
+  </div>;
+
+  const checkCHSYvsSYPD = <div className="form-check form-check-inline">                
+  <input type="checkbox" name="CHSYvsSYPD" id="CHSYvsSYPD" className="form-check-input" checked={performanceDisplayPlots.CHSYvsSYPD} onChange={onChangePlotDisplay} disabled={considered.length <= 0}/>
+  <label htmlFor="CHSYvsSYPD" className="px-1 mx-1 rounded form-check-label">CHSY vs SYPD</label>
+  </div>;
+
+  const checkCHSYvsASYPD = <div className="form-check form-check-inline">                
+  <input type="checkbox" name="CHSYvsASYPD" id="CHSYvsASYPD" className="form-check-input" checked={performanceDisplayPlots.CHSYvsASYPD} onChange={onChangePlotDisplay} disabled={considered.length <= 0 || maxASYPD <= 0}/>
+  <label htmlFor="CHSYvsASYPD" className="px-1 mx-1 rounded form-check-label">CHSY vs ASYPD</label>
+  </div>;
+
+
+  const checkRunVsSYPD = <div className="form-check form-check-inline">                
+  <input type="checkbox" name="RunVsSYPD" id="RunVsSYPD" className="form-check-input" checked={performanceDisplayPlots.RunVsSYPD} onChange={onChangePlotDisplay} disabled={considered.length <= 0}/>
+  <label htmlFor="RunVsSYPD" className="px-1 mx-1 rounded form-check-label">Run t. vs SYPD</label>
+  </div>;
+
+  const checkRunVsCHSY = <div className="form-check form-check-inline">                
+  <input type="checkbox" name="RunVsCHSY" id="RunVsCHSY" className="form-check-input" checked={performanceDisplayPlots.RunVsCHSY} onChange={onChangePlotDisplay} disabled={considered.length <= 0}/>
+  <label htmlFor="RunVsCHSY" className="px-1 mx-1 rounded form-check-label">Run t. vs ASYPD</label>
+  </div>; 
+
+  const checkQueueRunVsASYPD = <div className="form-check form-check-inline">                
+  <input type="checkbox" name="QueueRunVsASYPD" id="QueueRunVsASYPD" className="form-check-input" checked={performanceDisplayPlots.QueueRunVsASYPD} onChange={onChangePlotDisplay} disabled={maxJPSY <= 0 || maxASYPD <= 0}/>
+  <label htmlFor="QueueRunVsASYPD" className="px-1 mx-1 rounded form-check-label">Queue+Run t. vs ASYPD</label>
+  </div>;
     
   return (
     <div className="container">
@@ -185,98 +238,119 @@ const Performance = () => {
           </div>
         </div>
       </div>
+      <div className="row py-2">
+        Available plots:
+      </div>
+      <div className="row">
+        <div className="col border rounded text-center p-2">
+          {checkJPSYvsCHSY}
+          {checkJPSYvsSYPD}
+          {checkJPSYvsASYPD}
+          {checkSYPDvsASYPD}
+          {checkCHSYvsSYPD}
+          {checkCHSYvsASYPD}
+          {checkRunVsSYPD}
+          {checkRunVsCHSY}
+          {checkQueueRunVsASYPD}
+        </div>
+      </div>
       {considered && considered.length > 0 && (        
         <div className="row"> 
-          {maxJPSY > 0 && (
+          {performanceDisplayPlots.JPSYvsCHSY && maxJPSY > 0 && (
             <div className="col-lg-6 col-xl-4">
               <MetricScatterPlot 
                 data={consideredJPSY} 
                 attributeX={"JPSY"} 
                 attributeY={"CHSY"} 
                 titleX={JPSYtitleX} 
-                mainTitle={"CHSY compared to JPSY"} 
+                mainTitle={"JPSY vs CHSY"} 
                 uniqueId={"4"}
               />            
             </div>
           )}        
-          {maxJPSY > 0 && (
+          {performanceDisplayPlots.JPSYvsSYPD && maxJPSY > 0 && (
             <div className="col-lg-6 col-xl-4">
               <MetricScatterPlot 
                 data={consideredJPSY} 
                 attributeX={"JPSY"} 
                 attributeY={"SYPD"} 
                 titleX={JPSYtitleX} 
-                mainTitle={"SYPD compared to JPSY"} 
+                mainTitle={"JPSY vs SYPD"} 
                 uniqueId={"5"}
               />            
             </div>
           )}
-          {maxJPSY > 0 && (
+          {performanceDisplayPlots.JPSYvsASYPD && maxJPSY > 0 && (
             <div className="col-lg-6 col-xl-4">
               <MetricScatterPlot 
                 data={consideredJPSY} 
                 attributeX={"JPSY"} 
                 attributeY={"ASYPD"} 
                 titleX={JPSYtitleX} 
-                mainTitle={"ASYPD compared to JPSY"}
+                mainTitle={"JPSY vs ASYPD"}
                 uniqueId={"6"}
               />
             </div>
           )}
-          {maxASYPD > 0 && (
+          {performanceDisplayPlots.SYPDvsASYPD && maxASYPD > 0 && (
             <div className="col-lg-6 col-xl-4">
               <MetricScatterPlot 
                 data={considered} 
                 attributeX={"SYPD"} 
                 attributeY={"ASYPD"} 
-                mainTitle={"SYPD compared to ASYPD"}
+                mainTitle={"SYPD vs ASYPD"}
                 uniqueId={"7"}
               />
             </div>
           )}
-          <div className="col-lg-6 col-xl-4">
-            <MetricScatterPlot 
-              data={considered} 
-              attributeX={"CHSY"} 
-              attributeY={"SYPD"} 
-              mainTitle={"SYPD compared to CHSY"}
-              uniqueId={"8"}
-            />
-          </div>
-          {maxASYPD > 0 && 
+          {performanceDisplayPlots.CHSYvsSYPD && (
+            <div className="col-lg-6 col-xl-4">
+              <MetricScatterPlot 
+                data={considered} 
+                attributeX={"CHSY"} 
+                attributeY={"SYPD"} 
+                mainTitle={"CHSY vs SYPD"}
+                uniqueId={"8"}
+              />
+            </div>
+          )}          
+          {performanceDisplayPlots.CHSYvsASYPD && maxASYPD > 0 && 
             <div className="col-lg-6 col-xl-4">
               <MetricScatterPlot 
                 data={considered} 
                 attributeX={"CHSY"} 
                 attributeY={"ASYPD"} 
-                mainTitle={"CHSY compared to ASYPD"} 
+                mainTitle={"CHSY vs ASYPD"} 
                 uniqueId={"9"}
               />
             </div>
-          }
-          
-          <div className="col-lg-6 col-xl-4">
-            <TimeScatterPlot 
-              data={considered} 
-              attribute={"SYPD"} 
-              mainTitle={"Running time compared to SYPD"}
-              uniqueId={"1"} 
-            />
-          </div>
-          <div className="col-lg-6 col-xl-4">
-            <TimeScatterPlot 
-              data={considered} 
-              attribute={"CHSY"} 
-              mainTitle={"Running time compared to CHSY"}
-              uniqueId={"2"} 
-            />
-          </div>
-          {maxASYPD > 0 && (
+          }          
+          {performanceDisplayPlots.RunVsSYPD && (
+            <div className="col-lg-6 col-xl-4">
+              <TimeScatterPlot 
+                data={considered} 
+                attribute={"SYPD"} 
+                mainTitle={"Run time vs SYPD"}
+                uniqueId={"1"} 
+              />
+            </div>
+          )}
+          {performanceDisplayPlots.RunVsCHSY && (
+            <div className="col-lg-6 col-xl-4">
+              <TimeScatterPlot 
+                data={considered} 
+                attribute={"CHSY"} 
+                mainTitle={"Run time vs CHSY"}
+                uniqueId={"2"} 
+              />
+            </div>
+          )}          
+          {performanceDisplayPlots.QueueRunVsASYPD && maxASYPD > 0 && (
             <div className="col-lg-6 col-xl-4">
               <TimeScatterPlot 
                 data={considered} 
                 attribute={"ASYPD"} 
-                mainTitle={"Running + Queuing time compared to ASYPD"}
+                mainTitle={"Queue + Run time vs to ASYPD"}
                 uniqueId={"3"} 
               />
             </div>
