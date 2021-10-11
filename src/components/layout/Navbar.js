@@ -1,14 +1,16 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link, useHistory } from "react-router-dom";
+import { latestNewsLabel } from "../context/vars";
 import ExperimentContext from "../context/experiment/experimentContext";
 import Experiment from "../experiment/Experiment";
 import FileStatus from "../experiment/FileStatus";
 
-const Navbar = ({ icon, title }) => {
+const Navbar = ({ icon, title }) => {  
   const history = useHistory();
   const experimentContext = useContext(ExperimentContext);
   const { searchExperiments, experiment, cleanFileStatusData, getFileStatus, esarchiveStatus, loggedUser, setLoggedUser } = experimentContext;  
+  const haveIReadTheNews = localStorage.getItem(latestNewsLabel);  
   useEffect(() => {
     const user = localStorage.getItem("user");
     const token = localStorage.getItem("token");
@@ -60,6 +62,11 @@ const Navbar = ({ icon, title }) => {
                 <u>About</u>
               </Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/autosubmitapp/news">
+                <u className="text-decoration-none">News {haveIReadTheNews === null ? <span className="badge badge-warning">!</span> : ""}</u>
+              </Link>
+            </li>
             <li className='nav-item'>
               {expid && <Experiment expidToken={expid} />}
             </li>
@@ -108,20 +115,6 @@ const Navbar = ({ icon, title }) => {
         </div>
       </div>
     </nav>
-
-    // <nav className='navbar bg-primary'>
-    //   <h1>
-    //     <i className={icon} /> {title}
-    //   </h1>
-    //   <ul>
-    //     <li>
-    //       <Link to='/'>Home</Link>
-    //     </li>
-    //     <li>
-    //       <Link to='/about'>About</Link>
-    //     </li>
-    //   </ul>
-    // </nav>
   );
 };
 

@@ -22,6 +22,8 @@ export const UpperLimitQuickView = 200;
 export const maxReponseTimeThreshold = 240; // 4 minutes
 export const quickThreshold = 12000;
 
+export const latestNewsLabel = "new-11-10-2021";
+
 export const queueColor = {
   background: "lightpink",
   fontWeight: "bold",

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
 import Alert from "./components/layout/Alert";
 import About from "./components/pages/About";
+import News from "./components/pages/News";
 import NotFound from "./components/pages/NotFound";
 import ExperimentCentral from "./components/pages/ExperimentCentral";
 import Home from "./components/pages/Home";
@@ -52,6 +53,11 @@ class App extends Component {
                             exact
                             path='/autosubmitapp/about'
                             component={About}
+                          />
+                          <Route 
+                            exact
+                            path='/autosubmitapp/news'
+                            component={News}
                           />
                           <Route
                             exact
