@@ -57,7 +57,7 @@ import { timeStampToDate, getReadyJobs } from "../utils";
 export default (state, action) => {
   switch (action.type) {
     case GET_GRAPH:
-      const { resdata, grouped, layout, warning } = action.payload;            
+      const { resdata, grouped, layout, warning } = action.payload;
       return {
         ...state,
         data: resdata,
@@ -69,7 +69,7 @@ export default (state, action) => {
         graphReady: getReadyJobs(resdata.nodes),
         warningActive: warning,
       };
-    case GET_PKL_DATA:      
+    case GET_PKL_DATA:
       let retrievedPkl = action.payload;
       if (
         state.data !== null &&
@@ -222,7 +222,7 @@ export default (state, action) => {
               state.data.nodes[i].finish = jobs[state.data.nodes[i].id].finish;
               state.data.nodes[i].rm_id = jobs[state.data.nodes[i].id].rm_id;
               // Updating the SYPD field if it exists
-              if (state.data.nodes[i].SYPD !== undefined){
+              if (state.data.nodes[i].SYPD !== undefined) {
                 state.data.nodes[i].SYPD = jobs[state.data.nodes[i].id].SYPD ?? jobs[state.data.nodes[i].id].SYPD;
               }
 
@@ -415,64 +415,64 @@ export default (state, action) => {
     case SET_FOUND_NODES:
       const string = String(action.payload).toUpperCase();
       if (state.data && state.data.nodes) {
-        const isNegation = string.indexOf('!') === 0;        
+        const isNegation = string.indexOf('!') === 0;
         let foundNodes = null;
-        if (string.indexOf('*') > -1){
-          const fields = isNegation === true ? string.substring(1).split('*') : string.split("*");   
-          foundNodes = state.data.nodes.filter(function (node) {              
-              let stringTest = String(node.id).toUpperCase();
-              let result = false;
-              for (let i = 0; i < fields.length; i++) {
-                if (fields[i].length > 0) {
-                  if (stringTest.indexOf(fields[i]) > -1) {
-                    //debug && console.log(fields[i] + " found in " + string_test);
-                    let found_index =
-                      stringTest.indexOf(fields[i]) + fields[i].length;
-                    stringTest = stringTest.substring(found_index);
-                    //debug && console.log(found_index + " in " + string_test);
-                    if (isNegation){
-                      return false;
-                    } else {
-                      result = true;
-                    }
-                    
+        if (string.indexOf('*') > -1) {
+          const fields = isNegation === true ? string.substring(1).split('*') : string.split("*");
+          foundNodes = state.data.nodes.filter(function (node) {
+            let stringTest = String(node.id).toUpperCase();
+            let result = false;
+            for (let i = 0; i < fields.length; i++) {
+              if (fields[i].length > 0) {
+                if (stringTest.indexOf(fields[i]) > -1) {
+                  //debug && console.log(fields[i] + " found in " + string_test);
+                  let found_index =
+                    stringTest.indexOf(fields[i]) + fields[i].length;
+                  stringTest = stringTest.substring(found_index);
+                  //debug && console.log(found_index + " in " + string_test);
+                  if (isNegation) {
+                    return false;
                   } else {
-                    // debug &&
-                    //   console.log(fields[i] + " Not found in " + string_test);
-                    if (isNegation){
-                      result = true;
-                    } else {
-                      return false;   
-                    }
-                             
+                    result = true;
                   }
+
+                } else {
+                  // debug &&
+                  //   console.log(fields[i] + " Not found in " + string_test);
+                  if (isNegation) {
+                    result = true;
+                  } else {
+                    return false;
+                  }
+
                 }
               }
-              return result;
             }
+            return result;
+          }
           );
         } else {
           const searchString = isNegation === true ? string.substring(1) : string;
           foundNodes = state.data.nodes.filter(function (node) {
             //console.log(searchString);
             let stringTest = String(node.id).toUpperCase();
-            if (stringTest.indexOf(searchString) > -1){
-              if (isNegation){
+            if (stringTest.indexOf(searchString) > -1) {
+              if (isNegation) {
                 return false;
               } else {
                 return true;
               }
             } else {
-              if (isNegation){
+              if (isNegation) {
                 return true;
               } else {
                 return false;
               }
-            }            
+            }
           }
-        );
+          );
         }
-        
+
 
         if (foundNodes && foundNodes.length > 0) {
           state.foundNodes = foundNodes;
@@ -613,12 +613,12 @@ export default (state, action) => {
     case SET_CURRENT_COMMAND:
       return {
         ...state,
-        currentCommandGraph: action.payload,        
+        currentCommandGraph: action.payload,
         canCopyToClipboard: true,
       };
     case SET_CURRENT_TEXT_COMMAND:
       return {
-        ...state, 
+        ...state,
         currentTextCommandGraph: action.payload,
         canCopyToClipboard: true,
       }

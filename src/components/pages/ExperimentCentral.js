@@ -33,6 +33,7 @@ import ReadyJobs from "../experiment/ReadyJobs";
 import ConfigurationControl from "../experiment/ConfigurationControl";
 import CurrentConfiguration from "../experiment/CurrentConfiguration";
 import { buildWarningInactiveMessageTree } from "../context/utils";
+import { SHOW_PERFORMANCE_TAB } from "../context/vars";
 
 // Main render component. Calls other component and supplies props if necessary.
 const ExperimentCentral = ({ match }) => {
@@ -170,7 +171,7 @@ const ExperimentCentral = ({ match }) => {
       // Get performance metrics 
       // if (!performancedata) getExperimentPerformanceMetrics(expid);
       // Get Current Log Status
-      getLogStatus(expid);   
+      getLogStatus(expid);
       // Test token
       testToken();
       // console.log("Exp Central");
@@ -229,15 +230,15 @@ const ExperimentCentral = ({ match }) => {
               </a>
             </li>
             <li className="nav-item">
-              <a 
-                href="#config" 
+              <a
+                href="#config"
                 className="nav-link"
                 id="config-tab"
                 data-toggle="tab"
                 role="tab"
                 aria-controls="config"
                 aria-selected="false">
-                  Configuration
+                Configuration
               </a>
             </li>
             <li className='nav-item'>
@@ -253,19 +254,22 @@ const ExperimentCentral = ({ match }) => {
                 Statistics
               </a>
             </li>
-            <li className='nav-item'>
-              <a
-                className='nav-link'
-                id='performance-tab'
-                data-toggle='tab'
-                href='#performance'
-                role='tab'
-                aria-controls='performance'
-                aria-selected='false'
-              >
-                Performance
-              </a>
-            </li>
+            {SHOW_PERFORMANCE_TAB && (
+              <li className='nav-item'>
+                <a
+                  className='nav-link'
+                  id='performance-tab'
+                  data-toggle='tab'
+                  href='#performance'
+                  role='tab'
+                  aria-controls='performance'
+                  aria-selected='false'
+                >
+                  Performance
+                </a>
+              </li>
+            )}
+
             <li className='nav-item'>
               <a
                 className={classLighter}
@@ -280,15 +284,15 @@ const ExperimentCentral = ({ match }) => {
               </a>
             </li>
             <li className="nav-item">
-              <a 
-                href="#faq" 
-                className="nav-link" 
-                id="faq-tab" 
-                data-toggle="tab" 
-                role='tab' 
-                aria-controls='faq' 
+              <a
+                href="#faq"
+                className="nav-link"
+                id="faq-tab"
+                data-toggle="tab"
+                role='tab'
+                aria-controls='faq'
                 aria-selected='false'>
-                  FAQ
+                FAQ
               </a>
             </li>
           </ul>
@@ -331,80 +335,80 @@ const ExperimentCentral = ({ match }) => {
                     {data && (
                       <div
                         className="col-lg-3 px-0"
-                        style={{display:displayJobInfoPanel}}
+                        style={{ display: displayJobInfoPanel }}
                       >
                         <div className="col-12 px-0">
-                        <ul className='nav nav-tabs' id='myTabSide' role='tablist'>
-                          <li className='nav-item'>
-                            <a
-                              className='nav-link active'
-                              id='selection-tab'
-                              data-toggle='tab'
-                              href='#selection'
-                              role='tab'
-                              aria-controls='selection'
-                              aria-selected='true'
+                          <ul className='nav nav-tabs' id='myTabSide' role='tablist'>
+                            <li className='nav-item'>
+                              <a
+                                className='nav-link active'
+                                id='selection-tab'
+                                data-toggle='tab'
+                                href='#selection'
+                                role='tab'
+                                aria-controls='selection'
+                                aria-selected='true'
+                              >
+                                Selection
+                              </a>
+                            </li>
+                            <li className='nav-item'>
+                              <a
+                                className='nav-link'
+                                id='wrapper-tab'
+                                data-toggle='tab'
+                                href='#wrapper'
+                                role='tab'
+                                aria-controls='treeview'
+                                aria-selected='false'
+                              >
+                                Wrappers
+                              </a>
+                            </li>
+                          </ul>
+                          <div className='tab-content' id='myTabSideContent'>
+                            <div
+                              className='tab-pane fade show active'
+                              id='selection'
+                              role='tabpanel'
+                              aria-labelledby='selection-tab'
                             >
-                              Selection
-                            </a>
-                          </li>
-                          <li className='nav-item'>
-                            <a
-                              className='nav-link'
-                              id='wrapper-tab'
-                              data-toggle='tab'
-                              href='#wrapper'
-                              role='tab'
-                              aria-controls='treeview'
-                              aria-selected='false'
-                            >
-                              Wrappers
-                            </a>
-                          </li>
-                        </ul>
-                        <div className='tab-content' id='myTabSideContent'>
-                          <div
-                            className='tab-pane fade show active'
-                            id='selection'
-                            role='tabpanel'
-                            aria-labelledby='selection-tab'
-                          >
-                            {data && <GraphJob />}
-                            {(startAutoUpdatePkl || graphReady) && (
-                              <div>
-                                <ul className="nav nav-tabs" id="downTabSideGraph" role="tablist">
-                                  {startAutoUpdatePkl && (
-                                    <li className="nav-item">
-                                      <a
-                                        className={'nav-link ' + (!graphReady ? "active" : "")}
-                                        id='monitor-tab-graph'
-                                        data-toggle='tab'
-                                        href='#monitor-graph'
-                                        role='tab'
-                                        aria-controls='monitor-graph'                                  
-                                      >
-                                        Monitor
-                                      </a>
-                                    </li>                                
-                                  )}
-                                  {graphReady && (
-                                    <li className='nav-item'>
-                                      <a
-                                        className={'nav-link ' + (!startAutoUpdatePkl ? "active" : "") }
-                                        id='readyjobs-tab-graph'
-                                        data-toggle='tab'
-                                        href='#readyjobs-graph'
-                                        role='tab'
-                                        aria-controls='readyjobs-graph'                                
-                                      >
-                                        Ready Jobs
-                                      </a>
-                                    </li>
-                                  )} 
-                                </ul>
-                                <div className="tab-content" id="graphDownSide">
+                              {data && <GraphJob />}
+                              {(startAutoUpdatePkl || graphReady) && (
+                                <div>
+                                  <ul className="nav nav-tabs" id="downTabSideGraph" role="tablist">
                                     {startAutoUpdatePkl && (
-                                      <div 
+                                      <li className="nav-item">
+                                        <a
+                                          className={'nav-link ' + (!graphReady ? "active" : "")}
+                                          id='monitor-tab-graph'
+                                          data-toggle='tab'
+                                          href='#monitor-graph'
+                                          role='tab'
+                                          aria-controls='monitor-graph'
+                                        >
+                                          Monitor
+                                        </a>
+                                      </li>
+                                    )}
+                                    {graphReady && (
+                                      <li className='nav-item'>
+                                        <a
+                                          className={'nav-link ' + (!startAutoUpdatePkl ? "active" : "")}
+                                          id='readyjobs-tab-graph'
+                                          data-toggle='tab'
+                                          href='#readyjobs-graph'
+                                          role='tab'
+                                          aria-controls='readyjobs-graph'
+                                        >
+                                          Ready Jobs
+                                        </a>
+                                      </li>
+                                    )}
+                                  </ul>
+                                  <div className="tab-content" id="graphDownSide">
+                                    {startAutoUpdatePkl && (
+                                      <div
                                         className="tab-pane fade show active"
                                         id="monitor-graph"
                                         role="tabpanel"
@@ -424,7 +428,7 @@ const ExperimentCentral = ({ match }) => {
                                       </div>
                                     )}
                                     {graphReady && (
-                                      <div 
+                                      <div
                                         className={"tab-pane fade show " + (!startAutoUpdatePkl ? "active" : "")}
                                         id="readyjobs-graph"
                                         role="tabpanel"
@@ -433,26 +437,26 @@ const ExperimentCentral = ({ match }) => {
                                         <ReadyJobs readyJobs={graphReady} source="graph" />
                                       </div>
                                     )}
+                                  </div>
+
                                 </div>
-                              
+                              )}
+                            </div>
+                            <div
+                              className='tab-pane fade show'
+                              id='wrapper'
+                              role='tabpanel'
+                              aria-labelledby='wrapper-tab'
+                            >
+                              <div>
+                                <WrapperList />
                               </div>
-                            )}
-                          </div>
-                          <div
-                            className='tab-pane fade show'
-                            id='wrapper'
-                            role='tabpanel'
-                            aria-labelledby='wrapper-tab'
-                          >
-                            <div>
-                              <WrapperList />
                             </div>
                           </div>
                         </div>
-                        </div>
                       </div>
                     )}
-                    
+
                     {experiment && data && canSelect && (
                       <div className='col-2 pl-0'>
                         <SelectedJobs target={"graph"} source={"experiment"} />
@@ -496,7 +500,7 @@ const ExperimentCentral = ({ match }) => {
                       {treedata && (
                         <div className="col-lg-3 px-0">
                           <TreeJob />
-                            {(startAutoUpdateTreePkl || treeReady) && (
+                          {(startAutoUpdateTreePkl || treeReady) && (
                             <div>
                               <ul className="nav nav-tabs" id="downTabSideTree" role="tablist">
                                 {startAutoUpdateTreePkl && (
@@ -507,7 +511,7 @@ const ExperimentCentral = ({ match }) => {
                                       data-toggle='tab'
                                       href='#monitor-tree'
                                       role='tab'
-                                      aria-controls='monitor-tree'                                  
+                                      aria-controls='monitor-tree'
                                     >
                                       Monitor
                                     </a>
@@ -516,54 +520,54 @@ const ExperimentCentral = ({ match }) => {
                                 {treeReady && (
                                   <li className='nav-item'>
                                     <a
-                                      className={'nav-link ' + (!startAutoUpdateTreePkl ? "active" : "") }
+                                      className={'nav-link ' + (!startAutoUpdateTreePkl ? "active" : "")}
                                       id='readyjobs-tab-tree'
                                       data-toggle='tab'
                                       href='#readyjobs-tree'
                                       role='tab'
-                                      aria-controls='readyjobs-tree'                                
+                                      aria-controls='readyjobs-tree'
                                     >
                                       Ready Jobs
                                     </a>
                                   </li>
-                                )}                            
-                                
+                                )}
+
                               </ul>
-                            
-                                <div className="tab-content" id="treeDownSide">                              
-                                    {startAutoUpdateTreePkl && (
-                                      <div 
-                                      className="tab-pane fade show active"
-                                      id="monitor-tree"
-                                      role="tabpanel"
-                                      aria-labelledby="monitor-tab-tree"
-                                    >
-                                      <JobMonitorTree
-                                        experiment={experiment}
-                                        getExperimentTreePkl={getExperimentTreePkl}
-                                        cleanPklTreeData={cleanPklTreeData}
-                                        pkltreechanges={pkltreechanges}
-                                        experimentRunning={experimentRunning}
-                                        notificationTitleTree={notificationTitleTree}
-                                        setNotificationTitleTree={setNotificationTitleTree}
-                                      />
-                                      </div>
-                                    )}  
-                                    {treeReady && (
-                                      <div 
-                                        className={"tab-pane fade show " + (!startAutoUpdateTreePkl ? "active" : "")}
-                                        id="readyjobs-tree"
-                                        role="tabpanel"
-                                        aria-labelledby="readyjobs-tab-tree"
-                                      >
-                                        <ReadyJobs readyJobs={treeReady} source="tree" />
-                                      </div>
-                                    )}                           
-                                  
-                                </div>
-                                                                                
-                            </div>  
-                            )}                     
+
+                              <div className="tab-content" id="treeDownSide">
+                                {startAutoUpdateTreePkl && (
+                                  <div
+                                    className="tab-pane fade show active"
+                                    id="monitor-tree"
+                                    role="tabpanel"
+                                    aria-labelledby="monitor-tab-tree"
+                                  >
+                                    <JobMonitorTree
+                                      experiment={experiment}
+                                      getExperimentTreePkl={getExperimentTreePkl}
+                                      cleanPklTreeData={cleanPklTreeData}
+                                      pkltreechanges={pkltreechanges}
+                                      experimentRunning={experimentRunning}
+                                      notificationTitleTree={notificationTitleTree}
+                                      setNotificationTitleTree={setNotificationTitleTree}
+                                    />
+                                  </div>
+                                )}
+                                {treeReady && (
+                                  <div
+                                    className={"tab-pane fade show " + (!startAutoUpdateTreePkl ? "active" : "")}
+                                    id="readyjobs-tree"
+                                    role="tabpanel"
+                                    aria-labelledby="readyjobs-tab-tree"
+                                  >
+                                    <ReadyJobs readyJobs={treeReady} source="tree" />
+                                  </div>
+                                )}
+
+                              </div>
+
+                            </div>
+                          )}
                         </div>
                       )}
                       {experiment && treedata && canSelect && (
@@ -571,7 +575,7 @@ const ExperimentCentral = ({ match }) => {
                           <SelectedJobs target={"tree"} source={"experiment"} />
                         </div>
                       )}
-                </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -622,25 +626,27 @@ const ExperimentCentral = ({ match }) => {
               aria-labelledby='stats-tab'
             >
               <div className='card' style={experimentMinStyle}>
-                <StatsControl/>
-                <div className='card-body p-1'>                  
-                    <StatsSearch />                  
+                <StatsControl />
+                <div className='card-body p-1'>
+                  <StatsSearch />
                 </div>
               </div>
             </div>
-            <div
-              className='tab-pane fade'
-              id='performance'
-              role='tabpanel'
-              aria-labelledby='performance-tab'
-            >
-              <div className='card'>
-                {experiment && <PerformanceControl />}
-                <div className='card-body'>
-                  {experiment && <Performance />}
+            {SHOW_PERFORMANCE_TAB && (
+              <div
+                className='tab-pane fade'
+                id='performance'
+                role='tabpanel'
+                aria-labelledby='performance-tab'
+              >
+                <div className='card'>
+                  {experiment && <PerformanceControl />}
+                  <div className='card-body'>
+                    {experiment && <Performance />}
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
             <div
               className={classTabLighter}
               id='lightview'
@@ -667,24 +673,24 @@ const ExperimentCentral = ({ match }) => {
               id='faq'
               role='tabpanel'
               aria-labelledby='faq-tab'>
-                <div className="card mt-2">
-                  <div className="card-header">
-                    Frequently Asked Questions
-                  </div>
-                  <div className="card-body p-1">
-                    <FAQ/>
-                  </div>
+              <div className="card mt-2">
+                <div className="card-header">
+                  Frequently Asked Questions
                 </div>
+                <div className="card-body p-1">
+                  <FAQ />
+                </div>
+              </div>
 
             </div>
             <div className="tab-pane fade"
-            id="config"
-            role="tabpanel"
-            aria-labelledby="config-tab">
+              id="config"
+              role="tabpanel"
+              aria-labelledby="config-tab">
               <div className="card">
-                <ConfigurationControl/>
+                <ConfigurationControl />
                 <div className="card-body p-1">
-                    <CurrentConfiguration/>
+                  <CurrentConfiguration />
                 </div>
               </div>
             </div>

@@ -3,6 +3,7 @@ import ExperimentContext from "../context/experiment/experimentContext";
 import GraphContext from "../context/graph/graphContext";
 import TreeContext from "../context/tree/treeContext";
 import { exportHistoryToCSV, openIconHistory, creationDateToId } from "../context/utils";
+import { SHOW_PERFORMANCE_TAB } from "../context/vars"
 
 const JobHistory = ({ source }) => {
   const experimentContext = useContext(ExperimentContext);
@@ -11,33 +12,34 @@ const JobHistory = ({ source }) => {
   const { experiment, jobHistory, getJobHistory } = experimentContext;
   const { selection } = graphContext;
   const { selectedTreeNode } = treeContext;
-  
+
   if (experiment) {
     var { db_historic_version, expid } = experiment;
   }
-  
+
   const selectedJob =
     source === "tree"
       ? selectedTreeNode
         ? selectedTreeNode.node.refKey
         : null
       : source === "graph"
-      ? selection && selection.length > 0
-        ? selection[0]
-        : null
-      : null;
+        ? selection && selection.length > 0
+          ? selection[0]
+          : null
+        : null;
 
   const onGetJobHistory = (e) => {
     e.preventDefault();
     if (expid) {
       getJobHistory(expid, selectedJob);
-    }    
+    }
   };
 
   const onExport = (jobName) => (e) => {
-    e.preventDefault();    
-    const columnNames = ["Counter","JobId","Submit","Start","Finish","Queue","Run","Status","Energy","Wallclock","NCpus","Nnodes"];    
-    exportHistoryToCSV(jobHistory.history,columnNames,jobName+"_history.csv");        
+    e.preventDefault();
+
+    const columnNames = ["Counter", "JobId", "Submit", "Start", "Finish", "Queue", "Run", "Status", "Energy", "Wallclock", "NCpus", "Nnodes"];
+    exportHistoryToCSV(jobHistory.history, columnNames, jobName + "_history.csv");
   }
 
   const dataTarget = "history-" + source;
@@ -55,7 +57,7 @@ const JobHistory = ({ source }) => {
             className='btn btn-sm btn-info my-0 py-0'
             type='button'
             onClick={onGetJobHistory}
-            data-toggle='modal'                    
+            data-toggle='modal'
             data-target={"#" + dataTarget}
           >
             {openIconHistory}
@@ -76,9 +78,9 @@ const JobHistory = ({ source }) => {
                   Historical data for <strong>{selectedJob}</strong>
                 </h5>
                 &nbsp;
-                {jobHistory && jobHistory.history && jobHistory.history.length > 0 &&                
-                <button type="button" className="btn btn-sm btn-primary" onClick={onExport(selectedJob)}data-toggle='tooltip' data-placement='right' title='Export data table to CSV format file.'><i className="fas fa-file-export"></i></button>
-                }                
+                {jobHistory && jobHistory.history && jobHistory.history.length > 0 &&
+                  <button type="button" className="btn btn-sm btn-primary" onClick={onExport(selectedJob)} data-toggle='tooltip' data-placement='right' title='Export data table to CSV format file.'><i className="fas fa-file-export"></i></button>
+                }
                 <button
                   className='close'
                   type='button'
@@ -104,8 +106,8 @@ const JobHistory = ({ source }) => {
                         <th scope='col'>Run</th>
                         <th scope='col'>Status</th>
                         <th scope='col'>Energy</th>
-                        <th scope='col'>SYPD</th>
-                        <th scope='col'>ASYPD</th>
+                        {SHOW_PERFORMANCE_TAB && (<th scope='col'>SYPD</th>)}
+                        {SHOW_PERFORMANCE_TAB && (<th scope='col'>ASYPD</th>)}
                         <th scope='col'>Wallclock</th>
                         <th scope='col'>NCpus</th>
                         <th scope='col'>NNodes</th>
@@ -137,8 +139,12 @@ const JobHistory = ({ source }) => {
                           </td>
                           <td>{item.status}</td>
                           <td>{item.energy}</td>
-                          <td>{item.run_id ? item.SYPD : <span className='badge badge-warning' data-toggle='tooltip' data-placement='bottom' title='This register is not associated to a run Id because it ran with an old version of the database, SYPD cannot be calculated.'>!</span>}</td>
-                          <td>{item.run_id ? item.ASYPD : <span className='badge badge-warning' data-toggle='tooltip' data-placement='bottom' title='This register is not associated to a run Id because it ran with an old version of the database, ASYPD cannot be calculated.'>!</span>}</td>
+                          {SHOW_PERFORMANCE_TAB && (
+                            <td>{item.run_id ? item.SYPD : <span className='badge badge-warning' data-toggle='tooltip' data-placement='bottom' title='This register is not associated to a run Id because it ran with an old version of the database, SYPD cannot be calculated.'>!</span>}</td>
+                          )}
+                          {SHOW_PERFORMANCE_TAB && (
+                            <td>{item.run_id ? item.ASYPD : <span className='badge badge-warning' data-toggle='tooltip' data-placement='bottom' title='This register is not associated to a run Id because it ran with an old version of the database, ASYPD cannot be calculated.'>!</span>}</td>
+                          )}
                           <td>{item.wallclock}</td>
                           <td>{item.ncpus}</td>
                           <td>{item.nodes}</td>

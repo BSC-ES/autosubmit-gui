@@ -117,6 +117,7 @@ export default (state, action) => {
         jobHistory: null,
       };
     case GET_JOB_HISTORY:
+      console.log(action.payload);
       return {
         ...state,
         jobHistory: action.payload,
@@ -153,7 +154,7 @@ export default (state, action) => {
         const experiments = result;
         if (experiments) {
           experiments.sort((a, b) => (a.status > b.status ? -1 : 1));
-          experiments.forEach(function(element){
+          experiments.forEach(function (element) {
             element.hidden = false;
           });
         }
@@ -171,9 +172,9 @@ export default (state, action) => {
     case CURRENT_RUNNING:
       {
         const experiments = action.payload;
-        if (experiments){
+        if (experiments) {
           experiments.sort((a, b) => (a.status > b.status ? -1 : 1));
-          experiments.forEach(function(element){
+          experiments.forEach(function (element) {
             element.hidden = false;
           });
         }
@@ -226,59 +227,59 @@ export default (state, action) => {
       {
         const orderType = action.payload;
         let orderedByDescription = null;
-        let currentResult = state.experiments;        
+        let currentResult = state.experiments;
         let activeInactive = state.activeInactiveFilter;
         let currentTypeFilter = state.typeFilter;
         //let currentExperiments = [];
-        if (currentResult && currentResult.length > 0){
-          switch(orderType) {
-            case orderByType.wrapper:              
-              currentResult.sort((a,b) => normalizeString(a.wrapper) < normalizeString(b.wrapper) ? 1 : -1);
+        if (currentResult && currentResult.length > 0) {
+          switch (orderType) {
+            case orderByType.wrapper:
+              currentResult.sort((a, b) => normalizeString(a.wrapper) < normalizeString(b.wrapper) ? 1 : -1);
               orderedByDescription = orderByType.wrapper;
               break;
             case orderByType.name_asc:
-              currentResult.sort(function (a,b) {              
+              currentResult.sort(function (a, b) {
                 return ('' + a.name).localeCompare(b.name);
               });
               orderedByDescription = orderByType.name_asc;
               break;
             case orderByType.name:
-              currentResult.sort(function (a,b) {
+              currentResult.sort(function (a, b) {
                 return ('' + b.name).localeCompare(a.name);
               });
               orderedByDescription = orderByType.name;
               break;
             case orderByType.total:
-              currentResult.sort((a,b) => { return normalizeInt(b.total) - normalizeInt(a.total) });
+              currentResult.sort((a, b) => { return normalizeInt(b.total) - normalizeInt(a.total) });
               orderedByDescription = orderByType.total;
               break;
             case orderByType.total_asc:
-              currentResult.sort((a,b) => { return normalizeInt(a.total) - normalizeInt(b.total) });
+              currentResult.sort((a, b) => { return normalizeInt(a.total) - normalizeInt(b.total) });
               orderedByDescription = orderByType.total_asc;
               break;
-            case orderByType.completed: 
-              currentResult.sort((a,b) => { return normalizeInt(b.completed) - normalizeInt(a.completed) });
+            case orderByType.completed:
+              currentResult.sort((a, b) => { return normalizeInt(b.completed) - normalizeInt(a.completed) });
               orderedByDescription = orderByType.completed;
               break;
             case orderByType.completed_asc:
-              currentResult.sort((a,b) => { return normalizeInt(a.completed) - normalizeInt(b.completed) });
+              currentResult.sort((a, b) => { return normalizeInt(a.completed) - normalizeInt(b.completed) });
               orderedByDescription = orderByType.completed_asc;
               break;
             case orderByType.running:
-              currentResult.sort((a,b) => { return normalizeInt(b.running) - normalizeInt(a.running) });
+              currentResult.sort((a, b) => { return normalizeInt(b.running) - normalizeInt(a.running) });
               orderedByDescription = orderByType.running;
               break;
             case orderByType.queuing:
-              currentResult.sort((a,b) => { return normalizeInt(b.queuing) - normalizeInt(a.queuing) });
+              currentResult.sort((a, b) => { return normalizeInt(b.queuing) - normalizeInt(a.queuing) });
               orderedByDescription = orderByType.queuing;
               break;
             case orderByType.failed:
-              currentResult.sort((a,b) => { return normalizeInt(b.failed) - normalizeInt(a.failed) });
+              currentResult.sort((a, b) => { return normalizeInt(b.failed) - normalizeInt(a.failed) });
               orderedByDescription = orderByType.failed;
               break;
             case orderByType.showOnlyActive:
               currentResult.forEach(function (element) {
-                switch(currentTypeFilter) {
+                switch (currentTypeFilter) {
                   case orderByType.radioExperiments:
                     if (element.status === "RUNNING" && !(element.name.startsWith('t'))) {
                       element.hidden = false;
@@ -296,18 +297,18 @@ export default (state, action) => {
                   case orderByType.radioAll:
                   default:
                     if (element.status === "RUNNING") {
-                      element.hidden = false;                    
+                      element.hidden = false;
                     } else {
                       element.hidden = true;
                     }
                     break;
-                }                
+                }
               });
               activeInactive = orderByType.showOnlyActive;
               break;
             case orderByType.showAllActiveInactive:
               currentResult.forEach(function (element) {
-                switch(currentTypeFilter) {
+                switch (currentTypeFilter) {
                   case orderByType.radioExperiments:
                     if (!(element.name.startsWith('t'))) {
                       element.hidden = false;
@@ -326,13 +327,13 @@ export default (state, action) => {
                   default:
                     element.hidden = false;
                     break;
-                }                
+                }
               });
               activeInactive = orderByType.showAllActiveInactive;
               break;
             case orderByType.radioExperiments:
               currentResult.forEach(function (element) {
-                switch(activeInactive) {
+                switch (activeInactive) {
                   case orderByType.showOnlyActive:
                     if (element.status === "RUNNING" && !(element.name.startsWith('t'))) {
                       element.hidden = false;
@@ -343,20 +344,20 @@ export default (state, action) => {
                     break;
                   case orderByType.showAllActiveInactive:
                   default:
-                    if (!(element.name.startsWith('t'))){
+                    if (!(element.name.startsWith('t'))) {
                       element.hidden = false;
                     } else {
                       element.hidden = true;
                     }
                     activeInactive = orderByType.showAllActiveInactive;
-                    break;                  
-                }                
+                    break;
+                }
               });
               currentTypeFilter = orderByType.radioExperiments;
               break;
             case orderByType.radioTests:
               currentResult.forEach(function (element) {
-                switch(activeInactive) {
+                switch (activeInactive) {
                   case orderByType.showOnlyActive:
                     if (element.status === "RUNNING" && element.name.startsWith('t')) {
                       element.hidden = false;
@@ -367,20 +368,20 @@ export default (state, action) => {
                     break;
                   case orderByType.showAllActiveInactive:
                   default:
-                    if (element.name.startsWith('t')){
+                    if (element.name.startsWith('t')) {
                       element.hidden = false;
                     } else {
                       element.hidden = true;
                     }
                     activeInactive = orderByType.showAllActiveInactive;
                     break;
-                }                
+                }
               });
               currentTypeFilter = orderByType.radioTests;
               break;
             case orderByType.radioAll:
               currentResult.forEach(function (element) {
-                switch(activeInactive) {
+                switch (activeInactive) {
                   case orderByType.showOnlyActive:
                     if (element.status === "RUNNING") {
                       element.hidden = false;
@@ -393,15 +394,15 @@ export default (state, action) => {
                   default:
                     element.hidden = false;
                     activeInactive = orderByType.showAllActiveInactive;
-                    break;                  
-                }                
+                    break;
+                }
               });
               currentTypeFilter = orderByType.radioAll;
               break;
             default:
               break;
           }
-        }                
+        }
         // console.log(currentResult.filter(x => x.hidden === false));
         return {
           ...state,
@@ -410,12 +411,12 @@ export default (state, action) => {
           activeInactiveFilter: activeInactive,
           currentPage: 1,
           typeFilter: currentTypeFilter,
-          pageSetup: true,          
+          pageSetup: true,
         }
-      }      
-    case GET_EXPERIMENT:      
+      }
+    case GET_EXPERIMENT:
       const { total_jobs, owner } = action.payload;
-      const whichAnimal = owner === "molid" ? 1 : Math.floor(Math.random()*3)+1; 
+      const whichAnimal = owner === "molid" ? 1 : Math.floor(Math.random() * 3) + 1;
       return {
         ...state,
         experiment: action.payload,
@@ -438,9 +439,11 @@ export default (state, action) => {
       // const { summaries, summary, expid } = action.payload;
       // summaries.push({ key: expid, value: summary });
       const { expid, summary } = action.payload;
-      state.summaries[expid] = summary;
+      const summaries = state.summaries;
+      summaries[expid] = summary;
       state.loadingSummary.delete(expid);
       return {
+        summaries: summaries,
         ...state,
       };
     }
@@ -454,54 +457,54 @@ export default (state, action) => {
       };
     }
     case GET_EXPERIMENT_PERFORMANCE:
-    {
-      const performanceData = action.payload;
-      const { considered } = action.payload;
-      const arraJPSYnoZeroes = considered.filter(x => x.JPSY > 0);
-      const arrJPSYdata = action.payload ? arraJPSYnoZeroes.reduce((accum, obj) => {
-        const j_i = obj.JPSY;
-        accum.push(j_i);
-        return accum;
-      }, []) : [];
-    
-      const arrSYPDdata = action.payload ? considered.reduce((accum, obj) => {
-        const s_i = obj.SYPD;
-        accum.push(s_i);
-        return accum;
-      }, []) : [];
-    
-      const arrASYPDdata = action.payload ? considered.reduce((accum, obj) => {
-        const a_i = obj.ASYPD;
-        accum.push(a_i);
-        return accum;
-      }, []) : [];
-    
-      const arrCHSY = action.payload ? considered.reduce((accum, obj) => {
-        const c_i = obj.CHSY;
-        accum.push(c_i);
-        return accum;
-      }, []) : [];
-      
-      performanceData.arrJPSYdata = arrJPSYdata;
-      performanceData.arrSYPDdata = arrSYPDdata;
-      performanceData.arrASYPDdata = arrASYPDdata;
-      performanceData.arrCHSY = arrCHSY;
-      const currentPerformanceDisplaySettings = state.performanceDisplayPlots;
-      currentPerformanceDisplaySettings.JPSYvsCHSY = true;
-      currentPerformanceDisplaySettings.JPSYvsSYPD = true;
-      currentPerformanceDisplaySettings.JPSYvsASYPD = true;
-      // console.log(performanceData);
-      return {
-        ...state,
-        performancedata: performanceData,
-        loadingPerformance: false,
-        performanceDisplayPlots: currentPerformanceDisplaySettings,
-      };
-    }
+      {
+        const performanceData = action.payload;
+        const { considered } = action.payload;
+        const arraJPSYnoZeroes = considered.filter(x => x.JPSY > 0);
+        const arrJPSYdata = action.payload ? arraJPSYnoZeroes.reduce((accum, obj) => {
+          const j_i = obj.JPSY;
+          accum.push(j_i);
+          return accum;
+        }, []) : [];
+
+        const arrSYPDdata = action.payload ? considered.reduce((accum, obj) => {
+          const s_i = obj.SYPD;
+          accum.push(s_i);
+          return accum;
+        }, []) : [];
+
+        const arrASYPDdata = action.payload ? considered.reduce((accum, obj) => {
+          const a_i = obj.ASYPD;
+          accum.push(a_i);
+          return accum;
+        }, []) : [];
+
+        const arrCHSY = action.payload ? considered.reduce((accum, obj) => {
+          const c_i = obj.CHSY;
+          accum.push(c_i);
+          return accum;
+        }, []) : [];
+
+        performanceData.arrJPSYdata = arrJPSYdata;
+        performanceData.arrSYPDdata = arrSYPDdata;
+        performanceData.arrASYPDdata = arrASYPDdata;
+        performanceData.arrCHSY = arrCHSY;
+        const currentPerformanceDisplaySettings = state.performanceDisplayPlots;
+        currentPerformanceDisplaySettings.JPSYvsCHSY = true;
+        currentPerformanceDisplaySettings.JPSYvsSYPD = true;
+        currentPerformanceDisplaySettings.JPSYvsASYPD = true;
+        // console.log(performanceData);
+        return {
+          ...state,
+          performancedata: performanceData,
+          loadingPerformance: false,
+          performanceDisplayPlots: currentPerformanceDisplaySettings,
+        };
+      }
     case SET_PERFORMANCE_DISPLAY:
       const { plot, checked } = action.payload;
       const currentPerformanceDisplaySettings = state.performanceDisplayPlots;
-      currentPerformanceDisplaySettings[plot] = checked;      
+      currentPerformanceDisplaySettings[plot] = checked;
       return {
         ...state,
         performanceDisplayPlots: currentPerformanceDisplaySettings,
@@ -547,7 +550,7 @@ export default (state, action) => {
     case SET_CURRENT_COMMAND:
       return {
         ...state,
-        currentCommand: action.payload,        
+        currentCommand: action.payload,
       };
     case SET_CURRENT_UPDATE_DESCRIP_COMMAND:
       return {
@@ -594,17 +597,17 @@ export default (state, action) => {
     case VERIFY_TOKEN_DATA:
       {
         const { authenticated, user, token } = action.payload;
-        if (authenticated === true){
+        if (authenticated === true) {
           localStorage.setItem('user', user);
           localStorage.setItem('token', token);
-        }  else {
+        } else {
           localStorage.removeItem('user');
           localStorage.removeItem('token');
-        }    
+        }
         return {
           ...state,
-          loggedUser: authenticated ? user : 'Failed', 
-          currentToken: authenticated ? token : null,    
+          loggedUser: authenticated ? user : 'Failed',
+          currentToken: authenticated ? token : null,
         }
       }
     case SET_LOGGED_USER:
@@ -632,29 +635,29 @@ export default (state, action) => {
         return {
           ...state,
         }
-      }      
+      }
     case UPDATE_DESCRIPTION_OWN_EXP:
       {
         const { error, auth, description, expid } = action.payload;
         const loggedUser = auth ? state.loggedUser : null;
         const currentToken = auth ? state.currentToken : null;
         const experiment = state.experiment;
-        if (error === false && description){
+        if (error === false && description) {
           experiment.description = description;
         }
         if (auth === false) {
           localStorage.removeItem('user');
           localStorage.removeItem('token');
         }
-        if (state.experiments){
+        if (state.experiments) {
           state.experiments.find((exp) => {
-            if (exp.name === expid){
+            if (exp.name === expid) {
               exp.description = description;
               //console.log(exp);
               return exp;
             }
-            return false;            
-          })          
+            return false;
+          })
         }
         return {
           ...state,
@@ -665,16 +668,16 @@ export default (state, action) => {
       }
     case SET_PAGINATED_RESULT:
       {
-        const experiments = state.experiments.filter(x => x.hidden === false);        
-        const numberPages = experiments ? Math.ceil(experiments.length/pageSize) : 1;
-        const currentPage = numberPages === 1 ? 1 :  state.currentPage;
+        const experiments = state.experiments.filter(x => x.hidden === false);
+        const numberPages = experiments ? Math.ceil(experiments.length / pageSize) : 1;
+        const currentPage = numberPages === 1 ? 1 : state.currentPage;
         // console.log("NumberPages " + numberPages);
         // console.log("CurrentPage " + currentPage);
         const experimentsInPage = [];
         let resultCount = 0;
-        experiments.filter(x => x.hidden === false).map((item, index) => {        
+        experiments.filter(x => x.hidden === false).map((item, index) => {
           resultCount += 1;
-          if ((index >= (currentPage - 1)*pageSize) && (index < (currentPage*pageSize))){
+          if ((index >= (currentPage - 1) * pageSize) && (index < (currentPage * pageSize))) {
             experimentsInPage.push(item);
           };
           return null;
@@ -685,7 +688,7 @@ export default (state, action) => {
           ...state,
           experimentsInPage: experimentsInPage,
           pageResultCount: resultCount,
-          numberPages: numberPages,          
+          numberPages: numberPages,
           pageSetup: false,
         }
       }
@@ -694,9 +697,9 @@ export default (state, action) => {
         ...state,
         currentPage: action.payload,
       }
-    case GET_CURRENT_CONFIGURATION: 
+    case GET_CURRENT_CONFIGURATION:
       const { configurationCurrentRun, configurationFileSystem } = action.payload;
-      const currentDifferences =  differenceBetweenConfigurations(configurationCurrentRun, configurationFileSystem);
+      const currentDifferences = differenceBetweenConfigurations(configurationCurrentRun, configurationFileSystem);
       return {
         ...state,
         currentConfiguration: action.payload,

@@ -2,15 +2,15 @@ import React, { Component } from "react";
 //import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 //import ExperimentContext from "../context/experiment/experimentContext";
-import { quickThreshold, completedColor, runningColor, failedColor, queueColor } from "../context/vars";
+import { quickThreshold, completedColor, runningColor, failedColor, queueColor, NOAPI, rootAppName } from "../context/vars";
 //import { render } from "react-dom";
 
 export class ExperimentItem extends Component {
-//   experiment: { name, description, user, hpc, status, completed, total, version },
-// }) => {
+  //   experiment: { name, description, user, hpc, status, completed, total, version },
+  // }) => {
   // const experimentContext = useContext(ExperimentContext);
   // const { getExperimentSummary, summaries, loadingSummary } = experimentContext;
-  
+
 
   // const disabledMore = total >= quickThreshold ? true : false;
 
@@ -19,11 +19,13 @@ export class ExperimentItem extends Component {
     // console.log('Next loading has name ' + nextProps.isLoading);
     // console.log(this.props.experiment.name);
     // console.log('Current loading has name ' + this.props.isLoading);
-    return (nextProps.experiment !== this.props.experiment
-      || nextProps.isLoading !== this.props.isLoading);
+    const shouldUpdate = (nextProps.experiment !== this.props.experiment
+      || nextProps.isLoading !== this.props.isLoading || NOAPI);
+    // console.log(shouldUpdate);
+    return shouldUpdate;
   }
 
-  render() {    
+  render() {
     const { experiment, getExperimentSummary, summaries, isLoading } = this.props;
 
     if (!experiment) {
@@ -31,7 +33,7 @@ export class ExperimentItem extends Component {
     }
 
     const { name, description, user, hpc, status, completed, total, version, wrapper, queuing, failed, running } = experiment;
-    
+
     const onGetSummary = (name) => (e) => {
       e.preventDefault();
       //console.log(name);
@@ -39,7 +41,7 @@ export class ExperimentItem extends Component {
     };
 
     const disabledMore = total >= quickThreshold ? true : false;
-    return (      
+    return (
       <div className='card card-hover'>
         <div className='card-header text-center py-1'>
           <div className='row'>
@@ -49,13 +51,13 @@ export class ExperimentItem extends Component {
             <div className='col-md-6 text-center'>
               <div className="row-hl d-flex flex-wrap">
                 <div className="item-hl">
-                {queuing > 0 && <span className="badge" style={queueColor}>{queuing}</span>}
-                {running > 0 && <span className="badge" style={runningColor}>{running}</span>}
-                {failed > 0 && <span className="badge" style={failedColor}>{failed}</span>}
-                {completed > 0 && <span className='badge' style={completedColor}>{completed}</span>}
+                  {queuing > 0 && <span className="badge" style={queueColor}>{queuing}</span>}
+                  {running > 0 && <span className="badge" style={runningColor}>{running}</span>}
+                  {failed > 0 && <span className="badge" style={failedColor}>{failed}</span>}
+                  {completed > 0 && <span className='badge' style={completedColor}>{completed}</span>}
                 </div>
                 <div className="item-hl ml-auto">
-                {completed} / {total}
+                  {completed} / {total}
                 </div>
               </div>
               <div className='progress border'>
@@ -64,14 +66,14 @@ export class ExperimentItem extends Component {
                     completed === total
                       ? "progress-bar bg-completed"
                       : status === "RUNNING"
-                      ? ((summaries[name] && summaries[name].n_failed > 0) || failed > 0)
-                        ? "progress-bar progress-bar-striped progress-bar-animated bg-danger"
-                        : running > 0 ? "progress-bar progress-bar-striped progress-bar-animated bg-success" 
-                          : queuing > 0 ? "progress-bar progress-bar-striped progress-bar-animated bg-queue" : "progress-bar bg-success"
-                      : ((summaries[name] && summaries[name].n_failed > 0) || failed > 0)
-                      ? "progress-bar bg-danger"
-                      : running > 0 ? "progress-bar bg-success" 
-                        : queuing > 0 ? "progress-bar bg-queue" : "progress-bar bg-info"
+                        ? ((summaries[name] && summaries[name].n_failed > 0) || failed > 0)
+                          ? "progress-bar progress-bar-striped progress-bar-animated bg-danger"
+                          : running > 0 ? "progress-bar progress-bar-striped progress-bar-animated bg-success"
+                            : queuing > 0 ? "progress-bar progress-bar-striped progress-bar-animated bg-queue" : "progress-bar bg-success"
+                        : ((summaries[name] && summaries[name].n_failed > 0) || failed > 0)
+                          ? "progress-bar bg-danger"
+                          : running > 0 ? "progress-bar bg-success"
+                            : queuing > 0 ? "progress-bar bg-queue" : "progress-bar bg-info"
                   }
                   role='progressbar'
                   style={{
@@ -80,8 +82,8 @@ export class ExperimentItem extends Component {
                   aria-valuenow={completed}
                   aria-valuemin='0'
                   aria-valuemax={total}
-                ></div> 
-              </div> 
+                ></div>
+              </div>
               {/* <span className='badge badge-default'>
               {" "}
               
@@ -111,29 +113,29 @@ export class ExperimentItem extends Component {
             <div>
               <span className='text-muted'>HPC: {hpc}</span>
             </div>
-          </div>          
+          </div>
           <p className='card-text mb-0'>
             <span>{description}</span>
           </p>
-          
+
           <div className='row row-in-card'>
             <div className='col-md-3 px-1'>
               {!isLoading && (
                 // <form onSubmit={onGetSummary} className='form'>
-                  <button
-                    className={
-                      summaries[name]
-                        ? "btn btn-info btn-block btn-sm"
-                        : "btn btn-primary btn-block btn-sm"
-                    }
-                    type='button'                    
-                    onClick={onGetSummary(name)}
-                    aria-controls={name}
-                    data-toggle='tooltip' 
-                    data-placement='bottom' 
-                    title={summaries[name] ? "Updates the summary information." : "Shows a summary of the current progress of the experiment."}
-                  >{summaries[name] ? "Refresh" : "Summary"}</button>
-             
+                <button
+                  className={
+                    summaries[name]
+                      ? "btn btn-info btn-block btn-sm"
+                      : "btn btn-primary btn-block btn-sm"
+                  }
+                  type='button'
+                  onClick={onGetSummary(name)}
+                  aria-controls={name}
+                  data-toggle='tooltip'
+                  data-placement='bottom'
+                  title={summaries[name] ? "Updates the summary information." : "Shows a summary of the current progress of the experiment."}
+                >{summaries[name] ? "Refresh" : "Summary"}</button>
+
               )}
               {isLoading && (
                 <button
@@ -152,10 +154,10 @@ export class ExperimentItem extends Component {
               )}
               {disabledMore === false && (
                 <Link
-                  to={`/autosubmitapp/experiment/${name}`}
+                  to={`/${rootAppName}/experiment/${name}`}
                   className='btn btn-primary btn-block btn-sm'
-                  data-toggle='tooltip' 
-                  data-placement='bottom' 
+                  data-toggle='tooltip'
+                  data-placement='bottom'
                   title='Opens the experiment page where the Tree View representation is loaded by default.'
                 >
                   Tree
@@ -168,9 +170,9 @@ export class ExperimentItem extends Component {
                   Graph &#8594;
                 </button>
               )}
-              {disabledMore === false &&(
+              {disabledMore === false && (
                 <Link
-                  to={`/autosubmitapp/experiment/${name}/graph`}
+                  to={`/${rootAppName}/experiment/${name}/graph`}
                   className='btn btn-primary btn-block btn-sm'
                   data-toggle='tooltip'
                   data-placement='bottom'
@@ -182,50 +184,50 @@ export class ExperimentItem extends Component {
             </div>
             <div className='col-md-3 px-1'>
               <Link
-                to={`/autosubmitapp/experiment/${name}/light`}
+                to={`/${rootAppName}/experiment/${name}/light`}
                 className='btn btn-primary btn-block btn-sm'
-                data-toggle='tooltip' 
-                data-placement='bottom' 
+                data-toggle='tooltip'
+                data-placement='bottom'
                 title='Opens the experiment page where a simple list of jobs and their status is presented. Loads quicker than the Tree View.'
               >
                 Quick
               </Link>
-            </div>                        
+            </div>
           </div>
           {summaries[name] && (
-          <div className="row">
-            {summaries[name] && summaries[name].error === true && (
+            <div className="row">
+              {summaries[name] && summaries[name].error === true && (
                 <div className='col scroll-x' id={name}>
-                    <div className='row text-left'>
-                      <div className='col-md-12'>                        
-                          <strong>ERROR: {summaries[name].error_message}</strong>                        
-                      </div>
-                    </div>
-                </div>
-            )}       
-            {summaries[name] && summaries[name].error === false && (
-              <div className='col scroll-x' id={name}>
                   <div className='row text-left'>
                     <div className='col-md-12'>
-                        All : avg. queue{" "}
-                        <strong>{summaries[name].avg_queue_time}</strong> | run{" "}
-                        <strong>{summaries[name].avg_run_time}</strong>
+                      <strong>ERROR: {summaries[name].error_message}</strong>
+                    </div>
+                  </div>
+                </div>
+              )}
+              {summaries[name] && summaries[name].error === false && (
+                <div className='col scroll-x' id={name}>
+                  <div className='row text-left'>
+                    <div className='col-md-12'>
+                      All : avg. queue{" "}
+                      <strong>{summaries[name].avg_queue_time}</strong> | run{" "}
+                      <strong>{summaries[name].avg_run_time}</strong>
                     </div>
                   </div>
                   {summaries[name].sim_queue_considered > 0 && (
                     <div className='row text-left'>
                       <div className='col-md-12'>
-                          SIM {" ("}
-                          {summaries[name].n_sim}
-                          {") "} : avg. queue{" "}
-                          <strong>{summaries[name].avg_sim_queue_time}</strong>{" "}
-                          {" ("}
-                          {summaries[name].sim_queue_considered}
-                          {") "}| run{" "}
-                          <strong>{summaries[name].avg_sim_run_time}</strong>
-                          {" ("}
-                          {summaries[name].sim_run_considered}
-                          {")"}
+                        SIM {" ("}
+                        {summaries[name].n_sim}
+                        {") "} : avg. queue{" "}
+                        <strong>{summaries[name].avg_sim_queue_time}</strong>{" "}
+                        {" ("}
+                        {summaries[name].sim_queue_considered}
+                        {") "}| run{" "}
+                        <strong>{summaries[name].avg_sim_run_time}</strong>
+                        {" ("}
+                        {summaries[name].sim_run_considered}
+                        {")"}
                       </div>
                     </div>
                   )}
@@ -274,26 +276,26 @@ export class ExperimentItem extends Component {
                         <div
                           className=''
                           style={{ overflow: "auto", maxHeight: "200px" }}
-                        >                          
-                            <ol>
-                              {summaries[name].failed_jobs.map((item) => (
-                                <li key={item}>{item}</li>
-                              ))}
-                            </ol>                          
+                        >
+                          <ol>
+                            {summaries[name].failed_jobs.map((item) => (
+                              <li key={item}>{item}</li>
+                            ))}
+                          </ol>
                         </div>
                       </div>
                     </div>
                   )}
-              </div>
-            )}
-          </div>
+                </div>
+              )}
+            </div>
           )}
           <p className='card-text text-center'>
             <span className='text-muted'>{version}</span>{wrapper && (<span className="px-1 ml-1 bg-secondary text-dark rounded">{wrapper} wrapper</span>)}
           </p>
         </div>
       </div>
-      )
+    )
   }
 }
 

@@ -52,18 +52,20 @@ import {
   TEST_TOKEN,
 } from "../types";
 
-import { AUTOSUBMIT_API_SOURCE, 
-  DEBUG, 
-  ERROR_MESSAGE, 
-  NOAPI, 
-  localStorageExperimentTypeSearch, 
-  localStorageExperimentActiveCheck, 
+import {
+  AUTOSUBMIT_API_SOURCE,
+  DEBUG,
+  ERROR_MESSAGE,
+  NOAPI,
+  localStorageExperimentTypeSearch,
+  localStorageExperimentActiveCheck,
   orderByType,
   complexTypeExperimentToSimple,
   complexActiveStatusToSimple,
-  defaultPerformanceDisplaySettings } from "../vars";
+  defaultPerformanceDisplaySettings
+} from "../vars";
 
-import { timeStampToDate, errorEsarchiveStatus } from "../utils";
+import { timeStampToDate, errorEsarchiveStatus, sleep } from "../utils";
 
 const ExperimentState = (props) => {
   const initialState = {
@@ -75,7 +77,7 @@ const ExperimentState = (props) => {
     totalJobs: 0,
     animal: 1,
     jobHistory: null,
-    experimentRuns: null,        
+    experimentRuns: null,
     expectedLoadingTreeTime: 0,
     expectedLoadingQuickView: 0,
     loadingSummary: new Map(),
@@ -95,7 +97,7 @@ const ExperimentState = (props) => {
     currentTextCommand: null,
     currentUpdateDescripCommand: null,
     currentSelected: [],
-    loggedUser: null,    
+    loggedUser: null,
     currentToken: null,
     startAutoUpdateRun: false,
     startAutoUpdateTreePkl: false,
@@ -128,7 +130,7 @@ const ExperimentState = (props) => {
     localStorage.setItem(localStorageExperimentActiveCheck, activeCheck);
     setLoading();
     let result = null;
-    if (NOAPI) {      
+    if (NOAPI) {
       result = require("../data/search.json").experiment;
     } else {
       const simpleExpType = complexTypeExperimentToSimple(expType);
@@ -136,17 +138,17 @@ const ExperimentState = (props) => {
       const res = await axios.get(`${localserver}/search/${text}/${simpleExpType}/${simpleActiveStatus}`).catch(error => alert(ERROR_MESSAGE + "\n" + error.message));
       debug && console.log(res.data);
       result = res ? res.data.experiment : [];
-    }  
+    }
     dispatch({
       type: SEARCH_EXPERIMENTS,
-      payload: {result: result, searchText: text, expType: expType, activeCheck: activeCheck },
+      payload: { result: result, searchText: text, expType: expType, activeCheck: activeCheck },
     });
     setPaginatedResult();
   };
 
   //Search Experiments by Owner
   const searchExperimentsByOwner = async (owner) => {
-    const expType = localStorage.getItem(localStorageExperimentTypeSearch);    
+    const expType = localStorage.getItem(localStorageExperimentTypeSearch);
     const activeCheck = localStorage.getItem(localStorageExperimentActiveCheck);
     setLoading();
     let result = null;
@@ -162,15 +164,15 @@ const ExperimentState = (props) => {
 
     dispatch({
       type: SEARCH_BY_OWNER,
-      payload: {result: result, searchText: owner, expType: expType, activeCheck: activeCheck},
+      payload: { result: result, searchText: owner, expType: expType, activeCheck: activeCheck },
     });
     setPaginatedResult();
   }
 
   const getLogStatus = async (expid) => {
     let result = null;
-    if (NOAPI){
-      result = {timeDiff: 0, error: false, error_message: "NO API", log_path: "/none/none"}
+    if (NOAPI) {
+      result = { timeDiff: 0, error: false, error_message: "NO API", log_path: "/none/none" }
     } else {
       const res = await axios.get(`${localserver}/logrun/${expid}`).catch(error => alert(ERROR_MESSAGE + "\n" + error.message));
       debug && console.log(res.data);
@@ -196,16 +198,16 @@ const ExperimentState = (props) => {
     let result = null;
     if (NOAPI) {
       // Only one job for NO-API mode
-      result = require("../data/history_"+String(expid)+".json");
+      result = require("../data/history_" + String(expid) + ".json");
     } else {
       const res = await axios
-      .get(`${localserver}/history/${expid}/${job_name}`)
-      .catch((error) => {
-        alert(error.message);
-      });
+        .get(`${localserver}/history/${expid}/${job_name}`)
+        .catch((error) => {
+          alert(error.message);
+        });
       debug && console.log(res.data);
       result = res ? res.data : null;
-    }    
+    }
     dispatch({
       type: GET_JOB_HISTORY,
       payload: result,
@@ -216,12 +218,12 @@ const ExperimentState = (props) => {
     setLoadingExperimentRuns();
     let result = null;
     if (NOAPI) {
-      result = require("../data/runs_"+String(expid)+".json");
+      result = require("../data/runs_" + String(expid) + ".json");
     } else {
-      const res = await axios.get(`${localserver}/runs/${expid}`).catch((error) => {alert(error.message);});    
+      const res = await axios.get(`${localserver}/runs/${expid}`).catch((error) => { alert(error.message); });
       result = res ? res.data : null;
       debug && console.log(result);
-    }    
+    }
     // console.log(result);
     dispatch({
       type: GET_EXPERIMENT_RUNS,
@@ -236,7 +238,7 @@ const ExperimentState = (props) => {
     if (NOAPI) {
       result = require("../data/joblog.json");
     } else {
-      const res = await axios.get(`${localserver}/joblog/${last}`).catch((error) => {alert(error.message);});    
+      const res = await axios.get(`${localserver}/joblog/${last}`).catch((error) => { alert(error.message); });
       result = res ? res.data : null;
       debug && console.log(result);
     }
@@ -249,7 +251,7 @@ const ExperimentState = (props) => {
   // CAS Login
   const getVerifyTicket = async (ticket) => {
     let authdata = null;
-    if (NOAPI){
+    if (NOAPI) {
       return null;
     } else {
       //console.log('Attempt inside state of ' + ticket);
@@ -264,24 +266,25 @@ const ExperimentState = (props) => {
         type: VERIFY_TOKEN_DATA,
         payload: authdata,
       })
-    }    
+    }
   }
 
   // Get Summary for Search item
   const getExperimentSummary = async (expid) => {
     clearSummary(expid);
     setLoadingSummary(expid);
-    let summary = null;    
-    if (NOAPI){
-      summary = require("../data/summary_"+String(expid)+".json");
+    let summary = null;
+    if (NOAPI) {
+      summary = require("../data/summary_" + String(expid) + ".json");
+      sleep(3000);
     } else {
-      const res = await axios.get(`${localserver}/summary/${expid}`).catch((error) => {alert(ERROR_MESSAGE + "\n" + error.message);});
+      const res = await axios.get(`${localserver}/summary/${expid}`).catch((error) => { alert(ERROR_MESSAGE + "\n" + error.message); });
       summary = res ? res.data : null;
       debug && console.log(summary);
-    }    
+    }
     // console.log(summary);
     // console.log(state.summaries);
-    //state.summaries.push({ key: expid, value: summary });
+    // state.summaries.push({ key: expid, value: summary });
     dispatch({
       type: GET_EXPERIMENT_SUMMARY,
       payload: { expid: expid, summary: summary },
@@ -294,12 +297,12 @@ const ExperimentState = (props) => {
     setLoadingPerformanceMetrics();
     let metrics = null;
     if (NOAPI) {
-      metrics = require("../data/performance_"+String(expid)+".json");
+      metrics = require("../data/performance_" + String(expid) + ".json");
     } else {
       const res = await axios.get(`${localserver}/performance/${expid}`).catch(error => alert(ERROR_MESSAGE + "\n" + error.message));
-      metrics = res ? res.data : null ;
+      metrics = res ? res.data : null;
       debug && console.log(metrics);
-    }       
+    }
     dispatch({
       type: GET_EXPERIMENT_PERFORMANCE,
       payload: metrics,
@@ -318,14 +321,14 @@ const ExperimentState = (props) => {
     localStorage.setItem(localStorageExperimentActiveCheck, orderByType.showOnlyActive);
     setLoading();
     let result = null;
-    if (NOAPI){
-      result = require("../data/search.json").experiment;      
+    if (NOAPI) {
+      result = require("../data/search.json").experiment;
     } else {
       const res = await axios.get(`${localserver}/running/`).catch(error => alert(ERROR_MESSAGE + "\n" + error.message));
       result = res ? res.data.experiment : null;
       debug && console.log(result);
     }
-    
+
     dispatch({
       type: CURRENT_RUNNING,
       payload: result,
@@ -341,12 +344,12 @@ const ExperimentState = (props) => {
     let result = null;
     //cleanGraphData();
     if (NOAPI) {
-      result = require("../data/expinfo_"+String(expid)+".json"); 
+      result = require("../data/expinfo_" + String(expid) + ".json");
     } else {
       const res = await axios.get(`${localserver}/expinfo/${expid}`).catch(error => alert(ERROR_MESSAGE + "\n" + error.message));
       result = res ? res.data : null;
       debug && console.log(result);
-    }   
+    }
     //console.log(result);
     dispatch({
       type: GET_EXPERIMENT,
@@ -359,13 +362,13 @@ const ExperimentState = (props) => {
     setLoadingRun();
     let result = null;
     if (NOAPI) {
-      result = require("../data/exprun_"+String(expid)+".json");
+      result = require("../data/exprun_" + String(expid) + ".json");
     } else {
       const res = await axios.get(`${localserver}/exprun/${expid}`).catch(error => alert(ERROR_MESSAGE + "\n" + error.message));
       result = res ? res.data : null;
       debug && console.log(result);
     }
-    
+
     dispatch({
       type: GET_EXPERIMENT_RUN,
       payload: result,
@@ -385,7 +388,7 @@ const ExperimentState = (props) => {
         // ;
         iserror = true;
       });
-      if (iserror === true){
+      if (iserror === true) {
         res = errorEsarchiveStatus;
       }
       result = res ? res.data : null;
@@ -401,16 +404,16 @@ const ExperimentState = (props) => {
   // Get Running State
   const getRunningState = async (expid) => {
     setLoadingState();
-    let defaultResult = {"result": false}
+    let defaultResult = { "result": false }
     let result = null;
     if (NOAPI) {
-      result = require("../data/ifrun_"+String(expid)+".json");
-    } else {      
-      const res = await axios.get(`${localserver}/ifrun/${expid}`).catch(error => alert(ERROR_MESSAGE + "\n" + error.message));      
-      result = res ? res.data : defaultResult;                  
+      result = require("../data/ifrun_" + String(expid) + ".json");
+    } else {
+      const res = await axios.get(`${localserver}/ifrun/${expid}`).catch(error => alert(ERROR_MESSAGE + "\n" + error.message));
+      result = res ? res.data : defaultResult;
       debug && console.log(result);
     }
-    
+
     dispatch({
       type: GET_RUNNING_STATE,
       payload: result,
@@ -419,7 +422,6 @@ const ExperimentState = (props) => {
 
   const requestCurrentConfiguration = async (expid) => {
     const token = localStorage.getItem("token");
-    // const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoid3VydWNoaSJ9.rkINCmvCUuUu9ODSvOGc8VJ119EDHJxrZp-oFvCzdJk";
     const defaultResponse = {
       "are_equal": false,
       "configuration_current_run": {
@@ -431,18 +433,18 @@ const ExperimentState = (props) => {
       "error": true,
       "error_message": "Request failed.",
       "warning": false,
-      "warning_message": "" 
+      "warning_message": ""
     }
     let result = null;
     if (NOAPI) {
-      result = defaultResponse;
+      result = require("../data/config_a2h6.json");
     } else {
       let isError = false;
-      const res = await axios.get(`${localserver}/cconfig/${expid}`, {headers: { "Authorization": token }}).catch(error => { 
-        alert(ERROR_MESSAGE + "\n" + error.message); 
+      const res = await axios.get(`${localserver}/cconfig/${expid}`, { headers: { "Authorization": token } }).catch(error => {
+        alert(ERROR_MESSAGE + "\n" + error.message);
         isError = true;
       });
-      if (isError === false){
+      if (isError === false) {
         //console.log(res);
         result = res ? res.data : null;
       } else {
@@ -454,13 +456,13 @@ const ExperimentState = (props) => {
     dispatch({
       type: GET_CURRENT_CONFIGURATION,
       payload: {
-          error: result.error, 
-          errorMessage: result.error_message,
-          warning: result.warning,
-          warningMessage: result.warning_message,
-          areEqual: result.are_equal,
-          configurationCurrentRun: result.configuration_current_run,
-          configurationFileSystem: result.configuration_filesystem,
+        error: result.error,
+        errorMessage: result.error_message,
+        warning: result.warning,
+        warningMessage: result.warning_message,
+        areEqual: result.are_equal,
+        configurationCurrentRun: result.configuration_current_run,
+        configurationFileSystem: result.configuration_filesystem,
       },
     })
   }
@@ -469,8 +471,8 @@ const ExperimentState = (props) => {
     const token = localStorage.getItem("token");
     const body = {};
     const defaultResponse = {
-      "isValid" : false,
-      "message" : "Session Expired",
+      "isValid": false,
+      "message": "Session Expired",
     }
     let result = null;
     if (NOAPI) {
@@ -509,12 +511,12 @@ const ExperimentState = (props) => {
       result = defaultResponse;
     } else {
       let isError = false;
-      const res = await axios.post(`${localserver}/updatedesc`, body, {headers: {"Authorization": token}}).catch(error => {alert(ERROR_MESSAGE + "\n" + error.message); isError = true;});
-      if (isError === false){
+      const res = await axios.post(`${localserver}/updatedesc`, body, { headers: { "Authorization": token } }).catch(error => { alert(ERROR_MESSAGE + "\n" + error.message); isError = true; });
+      if (isError === false) {
         result = res ? res.data : null;
       } else {
         result = defaultResponse;
-      }     
+      }
     }
 
     // If valid result, add the expid key
@@ -555,7 +557,7 @@ const ExperimentState = (props) => {
   const setLoggedUser = async (user, token) => {
     dispatch({
       type: SET_LOGGED_USER,
-      payload: {user: user, token: token},
+      payload: { user: user, token: token },
     });
   }
 
@@ -585,7 +587,7 @@ const ExperimentState = (props) => {
     dispatch({ type: CLEAN_PERFORMANCE_METRICS });
 
   const cleanExperimentData = () => dispatch({ type: CLEAN_EXPERIMENT_DATA });
-  const clearCurrentConfigurationData = () => dispatch({ type: CLEAR_CURRENT_CONFIGURATION_DATA});
+  const clearCurrentConfigurationData = () => dispatch({ type: CLEAR_CURRENT_CONFIGURATION_DATA });
   // Set Loading
   const setLoading = () => dispatch({ type: SET_LOADING });
   const setLoadingRun = () => dispatch({ type: SET_LOADING_RUN });
@@ -688,14 +690,14 @@ const ExperimentState = (props) => {
         activeInactiveFilter: state.activeInactiveFilter,
         expectedLoadingTreeTime: state.expectedLoadingTreeTime,
         expectedLoadingQuickView: state.expectedLoadingQuickView,
-        experimentRunDetailForTree: state.experimentRunDetailForTree,   
-        esarchiveStatus: state.esarchiveStatus,     
+        experimentRunDetailForTree: state.experimentRunDetailForTree,
+        esarchiveStatus: state.esarchiveStatus,
         currentUpdateDescripCommand: state.currentUpdateDescripCommand,
         logTimeDiff: state.logTimeDiff,
-        currentLog: state.currentLog, 
-        currentPage: state.currentPage, 
-        experimentsInPage: state.experimentsInPage,   
-        pageResultCount: state.pageResultCount,   
+        currentLog: state.currentLog,
+        currentPage: state.currentPage,
+        experimentsInPage: state.experimentsInPage,
+        pageResultCount: state.pageResultCount,
         numberPages: state.numberPages,
         currentOrderType: state.currentOrderType,
         typeFilter: state.typeFilter,
@@ -705,7 +707,7 @@ const ExperimentState = (props) => {
         performanceDisplayPlots: state.performanceDisplayPlots,
         setAutoUpdateRun,
         searchExperiments,
-        searchExperimentsByOwner, 
+        searchExperimentsByOwner,
         getCurrentRunning,
         clearExperiments,
         getExperiment,

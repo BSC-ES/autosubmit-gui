@@ -4,13 +4,13 @@ const About = () => {
   return (
     <Fragment>
       <h3>User Information</h3>
-      <p>
+      {/* <p>
         For user instructions visit our user guide{" "}
         <a href='https://autosubmit.readthedocs.io/en/latest/autosubmit-gui.html'>
           User Guide
         </a>
         .
-      </p>
+      </p> */}
       <p>
         To request more information make a post in the issue{" "}
         <a href='https://earth.bsc.es/gitlab/es/autosubmit/issues/506'>

@@ -1,8 +1,8 @@
 {
-  "branch": "306-run-hermes-per-member",
+  "branch": "master",
   "completed_jobs": 17,
-  "db_historic_version": 14,
-  "description": "auto-monarch test case: NESTING",
+  "db_historic_version": 15,
+  "description": "auto-monarch reference test case: NESTING cold start (2 domains)",
   "error": false,
   "error_message": "None",
   "expid": "t07r",
@@ -11,11 +11,11 @@
   "owner": "gmontane",
   "owner_id": 2359,
   "path": "/esarchive/autosubmit/t07r",
-  "pkl_timestamp": 1606212095,
+  "pkl_timestamp": 1626259618,
   "running": false,
-  "time_last_access": "2020-11-24 09:13:24",
-  "time_last_mod": "2020-11-24 09:13:24",
+  "time_last_access": "2021-11-07 12:50:21",
+  "time_last_mod": "2021-07-14 07:43:23",
   "total_jobs": 17,
   "updateTime": 10,
-  "version": "3.13.0b0"
+  "version": "3.13.0"
 }

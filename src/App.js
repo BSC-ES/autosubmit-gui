@@ -16,7 +16,7 @@ import TreeState from "./components/context/tree/TreeState";
 import AlertState from "./components/context/alert/AlertState";
 import StatsState from "./components/context/statistics/StatsState";
 import LightState from "./components/context/lighter/LighterState";
-
+import { rootAppName } from "./components/context/vars";
 import "./App.css";
 
 class App extends Component {
@@ -36,37 +36,37 @@ class App extends Component {
                         <Switch>
                           <Route
                             exact
-                            path='/autosubmitapp/'
+                            path={`/${rootAppName}/`}
                             component={Home}
                           />
                           <Route
                             exact
-                            path='/autosubmitapp/login/'
+                            path={`/${rootAppName}/login/`}
                             component={Login}
-                            />
+                          />
                           <Route
                             exact
-                            path='/autosubmitapp/profile/'
+                            path={`/${rootAppName}/profile/`}
                             component={Profile}
-                            />
+                          />
                           <Route
                             exact
-                            path='/autosubmitapp/about'
+                            path={`/${rootAppName}/about`}
                             component={About}
                           />
-                          <Route 
+                          <Route
                             exact
-                            path='/autosubmitapp/news'
+                            path={`/${rootAppName}/news`}
                             component={News}
                           />
                           <Route
                             exact
-                            path='/autosubmitapp/experiment/:expid'
+                            path={`/${rootAppName}/experiment/:expid`}
                             component={ExperimentCentral}
                           />
                           <Route
                             exact
-                            path='/autosubmitapp/experiment/:expid/:action'
+                            path={`/${rootAppName}/experiment/:expid/:action`}
                             component={ExperimentCentral}
                           />
                           <Route component={NotFound} />

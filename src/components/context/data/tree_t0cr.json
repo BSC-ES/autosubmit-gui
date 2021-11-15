@@ -1,950 +1,940 @@
 {
-  "error": false,
-  "error_message": "None",
-  "jobs": [
-      {
-          "children": 4,
-          "children_list": [
-              "t0cr_20081231_000_1_LOCAL_SEND_INITIAL",
-              "t0cr_LOCAL_SEND_SOURCE",
-              "t0cr_LOCAL_SEND_STATIC",
-              "t0cr_20081231_000_2_LOCAL_SEND_INITIAL"
-          ],
-          "chunk": null,
-          "custom_directives": [],
-          "date": "",
-          "date_plus": "",
-          "err": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_LOCAL_SETUP.20201124101419.err",
-          "finish": "2020-11-24 10:14:32",
-          "id": "t0cr_LOCAL_SETUP",
-          "internal_id": "t0cr_LOCAL_SETUP",
-          "label": "t0cr_LOCAL_SETUP",
-          "member": null,
-          "minutes": 0,
-          "minutes_queue": 13,
-          "out": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_LOCAL_SETUP.20201124101419.out",
-          "parent_list": [],
-          "parents": 0,
-          "platform_name": "LOCAL",
-          "priority": 0,
-          "processors": "1",
-          "rm_id": 32573,
-          "section": "LOCAL_SETUP",
-          "start": "2020-11-24 10:14:32",
-          "status": "COMPLETED",
-          "status_code": 5,
-          "status_color": "yellow",
-          "submit": "2020-11-24 10:14:19",
-          "sync": false,
-          "title": "t0cr_LOCAL_SETUP <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:13 ) + 0:00:00 <span class='badge' style='background-color:#80d4ff'>SOURCE</span>",
-          "tree_parents": [],
-          "wallclock": "",
-          "wrapper": null,
-          "wrapper_code": null
-      },
-      {
-          "children": 1,
-          "children_list": [
-              "t0cr_20081231_000_1_PREPROCVAR"
-          ],
-          "chunk": 1,
-          "custom_directives": [],
-          "date": "2008 12 31",
-          "date_plus": "2009 01 01",
-          "err": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_1_LOCAL_SEND_INITIAL.20201124101432.err",
-          "finish": "2020-11-24 10:14:45",
-          "id": "t0cr_20081231_000_1_LOCAL_SEND_INITIAL",
-          "internal_id": "t0cr_20081231_000_1_LOCAL_SEND_INITIAL",
-          "label": "t0cr_20081231_000_1_LOCAL_SEND_INITIAL",
-          "member": "000",
-          "minutes": 0,
-          "minutes_queue": 13,
-          "out": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_1_LOCAL_SEND_INITIAL.20201124101432.out",
-          "parent_list": [
-              "t0cr_LOCAL_SETUP"
-          ],
-          "parents": 1,
-          "platform_name": "LOCAL",
-          "priority": 1,
-          "processors": "1",
-          "rm_id": 328,
-          "section": "LOCAL_SEND_INITIAL",
-          "start": "2020-11-24 10:14:45",
-          "status": "COMPLETED",
-          "status_code": 5,
-          "status_color": "yellow",
-          "submit": "2020-11-24 10:14:32",
-          "sync": false,
-          "title": "t0cr_20081231_000_1_LOCAL_SEND_INITIAL <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:13 ) + 0:00:00",
-          "tree_parents": [
-              "t0cr_20081231_000"
-          ],
-          "wallclock": "",
-          "wrapper": null,
-          "wrapper_code": null
-      },
-      {
-          "children": 1,
-          "children_list": [
-              "t0cr_20081231_000_2_PREPROCVAR"
-          ],
-          "chunk": 2,
-          "custom_directives": [],
-          "date": "2009 01 01",
-          "date_plus": "2009 01 02",
-          "err": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_2_LOCAL_SEND_INITIAL.20201124101450.err",
-          "finish": "2020-11-24 10:15:06",
-          "id": "t0cr_20081231_000_2_LOCAL_SEND_INITIAL",
-          "internal_id": "t0cr_20081231_000_2_LOCAL_SEND_INITIAL",
-          "label": "t0cr_20081231_000_2_LOCAL_SEND_INITIAL",
-          "member": "000",
-          "minutes": 0,
-          "minutes_queue": 15,
-          "out": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_2_LOCAL_SEND_INITIAL.20201124101450.out",
-          "parent_list": [
-              "t0cr_LOCAL_SETUP"
-          ],
-          "parents": 1,
-          "platform_name": "LOCAL",
-          "priority": 1,
-          "processors": "1",
-          "rm_id": 515,
-          "section": "LOCAL_SEND_INITIAL",
-          "start": "2020-11-24 10:15:06",
-          "status": "COMPLETED",
-          "status_code": 5,
-          "status_color": "yellow",
-          "submit": "2020-11-24 10:14:51",
-          "sync": false,
-          "title": "t0cr_20081231_000_2_LOCAL_SEND_INITIAL <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:15 ) + 0:00:00",
-          "tree_parents": [
-              "t0cr_20081231_000"
-          ],
-          "wallclock": "",
-          "wrapper": null,
-          "wrapper_code": null
-      },
-      {
-          "children": 1,
-          "children_list": [
-              "t0cr_REMOTE_COMPILE"
-          ],
-          "chunk": null,
-          "custom_directives": [],
-          "date": "",
-          "date_plus": "",
-          "err": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_LOCAL_SEND_SOURCE.20201124101433.err",
-          "finish": "2020-11-24 10:16:35",
-          "id": "t0cr_LOCAL_SEND_SOURCE",
-          "internal_id": "t0cr_LOCAL_SEND_SOURCE",
-          "label": "t0cr_LOCAL_SEND_SOURCE",
-          "member": null,
-          "minutes": 108,
-          "minutes_queue": 14,
-          "out": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_LOCAL_SEND_SOURCE.20201124101433.out",
-          "parent_list": [
-              "t0cr_LOCAL_SETUP"
-          ],
-          "parents": 1,
-          "platform_name": "LOCAL",
-          "priority": 2,
-          "processors": "1",
-          "rm_id": 416,
-          "section": "LOCAL_SEND_SOURCE",
-          "start": "2020-11-24 10:14:47",
-          "status": "COMPLETED",
-          "status_code": 5,
-          "status_color": "yellow",
-          "submit": "2020-11-24 10:14:33",
-          "sync": false,
-          "title": "t0cr_LOCAL_SEND_SOURCE <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:14 ) + 0:01:48",
-          "tree_parents": [],
-          "wallclock": "",
-          "wrapper": null,
-          "wrapper_code": null
-      },
-      {
-          "children": 1,
-          "children_list": [
-              "t0cr_PREPROCFIX"
-          ],
-          "chunk": null,
-          "custom_directives": [],
-          "date": "",
-          "date_plus": "",
-          "err": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_LOCAL_SEND_STATIC.20201124101432.err",
-          "finish": "2020-11-24 10:14:50",
-          "id": "t0cr_LOCAL_SEND_STATIC",
-          "internal_id": "t0cr_LOCAL_SEND_STATIC",
-          "label": "t0cr_LOCAL_SEND_STATIC",
-          "member": null,
-          "minutes": 0,
-          "minutes_queue": 18,
-          "out": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_LOCAL_SEND_STATIC.20201124101432.out",
-          "parent_list": [
-              "t0cr_LOCAL_SETUP"
-          ],
-          "parents": 1,
-          "platform_name": "LOCAL",
-          "priority": 3,
-          "processors": "1",
-          "rm_id": 367,
-          "section": "LOCAL_SEND_STATIC",
-          "start": "2020-11-24 10:14:50",
-          "status": "COMPLETED",
-          "status_code": 5,
-          "status_color": "yellow",
-          "submit": "2020-11-24 10:14:32",
-          "sync": false,
-          "title": "t0cr_LOCAL_SEND_STATIC <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:18 ) + 0:00:00",
-          "tree_parents": [],
-          "wallclock": "",
-          "wrapper": null,
-          "wrapper_code": null
-      },
-      {
-          "children": 1,
-          "children_list": [
-              "t0cr_PREPROCFIX"
-          ],
-          "chunk": null,
-          "custom_directives": [],
-          "date": "",
-          "date_plus": "",
-          "err": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_REMOTE_COMPILE.20201124101635.err",
-          "finish": "2020-11-24 10:34:42",
-          "id": "t0cr_REMOTE_COMPILE",
-          "internal_id": "t0cr_REMOTE_COMPILE",
-          "label": "t0cr_REMOTE_COMPILE",
-          "member": null,
-          "minutes": 1083,
-          "minutes_queue": 1,
-          "out": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_REMOTE_COMPILE.20201124101635.out",
-          "parent_list": [
-              "t0cr_LOCAL_SEND_SOURCE"
-          ],
-          "parents": 1,
-          "platform_name": null,
-          "priority": 4,
-          "processors": "4",
-          "rm_id": "12730054",
-          "section": "REMOTE_COMPILE",
-          "start": "2020-11-24 10:16:39",
-          "status": "COMPLETED",
-          "status_code": 5,
-          "status_color": "yellow",
-          "submit": "2020-11-24 10:16:38",
-          "sync": false,
-          "title": "t0cr_REMOTE_COMPILE <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:01 ) + 0:18:03",
-          "tree_parents": [],
-          "wallclock": "00:50",
-          "wrapper": null,
-          "wrapper_code": null
-      },
-      {
-          "children": 2,
-          "children_list": [
-              "t0cr_20081231_000_1_PREPROCVAR",
-              "t0cr_20081231_000_2_PREPROCVAR"
-          ],
-          "chunk": null,
-          "custom_directives": [],
-          "date": "",
-          "date_plus": "",
-          "err": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_PREPROCFIX.20201124103442.err",
-          "finish": "2020-11-24 10:41:53",
-          "id": "t0cr_PREPROCFIX",
-          "internal_id": "t0cr_PREPROCFIX",
-          "label": "t0cr_PREPROCFIX",
-          "member": null,
-          "minutes": 408,
-          "minutes_queue": 22,
-          "out": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_PREPROCFIX.20201124103442.out",
-          "parent_list": [
-              "t0cr_REMOTE_COMPILE",
-              "t0cr_LOCAL_SEND_STATIC"
-          ],
-          "parents": 2,
-          "platform_name": null,
-          "priority": 5,
-          "processors": "1",
-          "rm_id": "12730178",
-          "section": "PREPROCFIX",
-          "start": "2020-11-24 10:35:05",
-          "status": "COMPLETED",
-          "status_code": 5,
-          "status_color": "yellow",
-          "submit": "2020-11-24 10:34:43",
-          "sync": false,
-          "title": "t0cr_PREPROCFIX <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:22 ) + 0:06:48",
-          "tree_parents": [],
-          "wallclock": "00:30",
-          "wrapper": null,
-          "wrapper_code": null
-      },
-      {
-          "children": 1,
-          "children_list": [
-              "t0cr_20081231_000_1_SIM"
-          ],
-          "chunk": 1,
-          "custom_directives": [],
-          "date": "2008 12 31",
-          "date_plus": "2009 01 01",
-          "err": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_1_PREPROCVAR.20201124104153.err",
-          "finish": "2020-11-24 10:42:58",
-          "id": "t0cr_20081231_000_1_PREPROCVAR",
-          "internal_id": "t0cr_20081231_000_1_PREPROCVAR",
-          "label": "t0cr_20081231_000_1_PREPROCVAR",
-          "member": "000",
-          "minutes": 62,
-          "minutes_queue": 1,
-          "out": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_1_PREPROCVAR.20201124104153.out",
-          "parent_list": [
-              "t0cr_20081231_000_1_LOCAL_SEND_INITIAL",
-              "t0cr_PREPROCFIX"
-          ],
-          "parents": 2,
-          "platform_name": null,
-          "priority": 6,
-          "processors": "8",
-          "rm_id": "12730254",
-          "section": "PREPROCVAR",
-          "start": "2020-11-24 10:41:56",
-          "status": "COMPLETED",
-          "status_code": 5,
-          "status_color": "yellow",
-          "submit": "2020-11-24 10:41:55",
-          "sync": false,
-          "title": "t0cr_20081231_000_1_PREPROCVAR <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:01 ) + 0:01:02",
-          "tree_parents": [
-              "t0cr_20081231_000"
-          ],
-          "wallclock": "00:25",
-          "wrapper": null,
-          "wrapper_code": null
-      },
-      {
-          "children": 1,
-          "children_list": [
-              "t0cr_20081231_000_2_SIM"
-          ],
-          "chunk": 2,
-          "custom_directives": [],
-          "date": "2009 01 01",
-          "date_plus": "2009 01 02",
-          "err": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_2_PREPROCVAR.20201124104153.err",
-          "finish": "2020-11-24 10:47:44",
-          "id": "t0cr_20081231_000_2_PREPROCVAR",
-          "internal_id": "t0cr_20081231_000_2_PREPROCVAR",
-          "label": "t0cr_20081231_000_2_PREPROCVAR",
-          "member": "000",
-          "minutes": 63,
-          "minutes_queue": 286,
-          "out": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_2_PREPROCVAR.20201124104153.out",
-          "parent_list": [
-              "t0cr_20081231_000_2_LOCAL_SEND_INITIAL",
-              "t0cr_PREPROCFIX"
-          ],
-          "parents": 2,
-          "platform_name": null,
-          "priority": 6,
-          "processors": "8",
-          "rm_id": "12730255",
-          "section": "PREPROCVAR",
-          "start": "2020-11-24 10:46:41",
-          "status": "COMPLETED",
-          "status_code": 5,
-          "status_color": "yellow",
-          "submit": "2020-11-24 10:41:55",
-          "sync": false,
-          "title": "t0cr_20081231_000_2_PREPROCVAR <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:04:46 ) + 0:01:03",
-          "tree_parents": [
-              "t0cr_20081231_000"
-          ],
-          "wallclock": "00:25",
-          "wrapper": null,
-          "wrapper_code": null
-      },
-      {
-          "children": 2,
-          "children_list": [
-              "t0cr_20081231_000_1_REDUCE",
-              "t0cr_20081231_000_2_SIM"
-          ],
-          "chunk": 1,
-          "custom_directives": [],
-          "date": "2008 12 31",
-          "date_plus": "2009 01 01",
-          "err": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_1_SIM.20201124104258.err",
-          "finish": "2020-11-24 10:46:40",
-          "id": "t0cr_20081231_000_1_SIM",
-          "internal_id": "t0cr_20081231_000_1_SIM",
-          "label": "t0cr_20081231_000_1_SIM",
-          "member": "000",
-          "minutes": 210,
-          "minutes_queue": 10,
-          "out": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_1_SIM.20201124104258.out",
-          "parent_list": [
-              "t0cr_20081231_000_1_PREPROCVAR"
-          ],
-          "parents": 1,
-          "platform_name": null,
-          "priority": 7,
-          "processors": "284",
-          "rm_id": "12730269",
-          "section": "SIM",
-          "start": "2020-11-24 10:43:10",
-          "status": "COMPLETED",
-          "status_code": 5,
-          "status_color": "yellow",
-          "submit": "2020-11-24 10:43:00",
-          "sync": false,
-          "title": "t0cr_20081231_000_1_SIM <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:10 ) + 0:03:30",
-          "tree_parents": [
-              "t0cr_20081231_000"
-          ],
-          "wallclock": "01:00",
-          "wrapper": null,
-          "wrapper_code": null
-      },
-      {
-          "children": 1,
-          "children_list": [
-              "t0cr_20081231_000_2_REDUCE"
-          ],
-          "chunk": 2,
-          "custom_directives": [],
-          "date": "2009 01 01",
-          "date_plus": "2009 01 02",
-          "err": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_2_SIM.20201124104744.err",
-          "finish": "2020-11-24 10:51:10",
-          "id": "t0cr_20081231_000_2_SIM",
-          "internal_id": "t0cr_20081231_000_2_SIM",
-          "label": "t0cr_20081231_000_2_SIM",
-          "member": "000",
-          "minutes": 204,
-          "minutes_queue": 0,
-          "out": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_2_SIM.20201124104744.out",
-          "parent_list": [
-              "t0cr_20081231_000_2_PREPROCVAR",
-              "t0cr_20081231_000_1_SIM"
-          ],
-          "parents": 2,
-          "platform_name": null,
-          "priority": 7,
-          "processors": "284",
-          "rm_id": "12730323",
-          "section": "SIM",
-          "start": "2020-11-24 10:47:46",
-          "status": "COMPLETED",
-          "status_code": 5,
-          "status_color": "yellow",
-          "submit": "2020-11-24 10:47:46",
-          "sync": false,
-          "title": "t0cr_20081231_000_2_SIM <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:00 ) + 0:03:24",
-          "tree_parents": [
-              "t0cr_20081231_000"
-          ],
-          "wallclock": "01:00",
-          "wrapper": null,
-          "wrapper_code": null
-      },
-      {
-          "children": 3,
-          "children_list": [
-              "t0cr_20081231_000_2_REDUCE",
-              "t0cr_20081231_000_1_ARCHIVE",
-              "t0cr_20081231_1_ARCHIVE_REDUCE"
-          ],
-          "chunk": 1,
-          "custom_directives": [],
-          "date": "2008 12 31",
-          "date_plus": "2009 01 01",
-          "err": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_1_REDUCE.20201124104640.err",
-          "finish": "2020-11-24 10:54:25",
-          "id": "t0cr_20081231_000_1_REDUCE",
-          "internal_id": "t0cr_20081231_000_1_REDUCE",
-          "label": "t0cr_20081231_000_1_REDUCE",
-          "member": "000",
-          "minutes": 189,
-          "minutes_queue": 275,
-          "out": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_1_REDUCE.20201124104640.out",
-          "parent_list": [
-              "t0cr_20081231_000_1_SIM"
-          ],
-          "parents": 1,
-          "platform_name": null,
-          "priority": 8,
-          "processors": "1",
-          "rm_id": "12730313",
-          "section": "REDUCE",
-          "start": "2020-11-24 10:51:16",
-          "status": "COMPLETED",
-          "status_code": 5,
-          "status_color": "yellow",
-          "submit": "2020-11-24 10:46:41",
-          "sync": false,
-          "title": "t0cr_20081231_000_1_REDUCE <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:04:35 ) + 0:03:09",
-          "tree_parents": [
-              "t0cr_20081231_000"
-          ],
-          "wallclock": "01:00",
-          "wrapper": null,
-          "wrapper_code": null
-      },
-      {
-          "children": 3,
-          "children_list": [
-              "t0cr_20081231_000_2_ARCHIVE",
-              "t0cr_20081231_2_ARCHIVE_REDUCE",
-              "t0cr_20081231_000_1_CLEAN"
-          ],
-          "chunk": 2,
-          "custom_directives": [],
-          "date": "2009 01 01",
-          "date_plus": "2009 01 02",
-          "err": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_2_REDUCE.20201124105426.err",
-          "finish": "2020-11-24 10:57:41",
-          "id": "t0cr_20081231_000_2_REDUCE",
-          "internal_id": "t0cr_20081231_000_2_REDUCE",
-          "label": "t0cr_20081231_000_2_REDUCE",
-          "member": "000",
-          "minutes": 193,
-          "minutes_queue": 1,
-          "out": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_2_REDUCE.20201124105426.out",
-          "parent_list": [
-              "t0cr_20081231_000_1_REDUCE",
-              "t0cr_20081231_000_2_SIM"
-          ],
-          "parents": 2,
-          "platform_name": null,
-          "priority": 8,
-          "processors": "1",
-          "rm_id": "12730402",
-          "section": "REDUCE",
-          "start": "2020-11-24 10:54:28",
-          "status": "COMPLETED",
-          "status_code": 5,
-          "status_color": "yellow",
-          "submit": "2020-11-24 10:54:27",
-          "sync": false,
-          "title": "t0cr_20081231_000_2_REDUCE <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:01 ) + 0:03:13",
-          "tree_parents": [
-              "t0cr_20081231_000"
-          ],
-          "wallclock": "01:00",
-          "wrapper": null,
-          "wrapper_code": null
-      },
-      {
-          "children": 2,
-          "children_list": [
-              "t0cr_20081231_000_2_ARCHIVE",
-              "t0cr_20081231_000_1_CLEAN"
-          ],
-          "chunk": 1,
-          "custom_directives": [],
-          "date": "2008 12 31",
-          "date_plus": "2009 01 01",
-          "err": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_1_ARCHIVE.20201124105425.err",
-          "finish": "2020-11-24 10:54:56",
-          "id": "t0cr_20081231_000_1_ARCHIVE",
-          "internal_id": "t0cr_20081231_000_1_ARCHIVE",
-          "label": "t0cr_20081231_000_1_ARCHIVE",
-          "member": "000",
-          "minutes": 17,
-          "minutes_queue": 14,
-          "out": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_1_ARCHIVE.20201124105425.out",
-          "parent_list": [
-              "t0cr_20081231_000_1_REDUCE"
-          ],
-          "parents": 1,
-          "platform_name": "LOCAL",
-          "priority": 9,
-          "processors": "1",
-          "rm_id": 2835,
-          "section": "ARCHIVE",
-          "start": "2020-11-24 10:54:39",
-          "status": "COMPLETED",
-          "status_code": 5,
-          "status_color": "yellow",
-          "submit": "2020-11-24 10:54:25",
-          "sync": false,
-          "title": "t0cr_20081231_000_1_ARCHIVE <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:14 ) + 0:00:17",
-          "tree_parents": [
-              "t0cr_20081231_000"
-          ],
-          "wallclock": "00:10",
-          "wrapper": null,
-          "wrapper_code": null
-      },
-      {
-          "children": 1,
-          "children_list": [
-              "t0cr_20081231_000_2_CLEAN"
-          ],
-          "chunk": 2,
-          "custom_directives": [],
-          "date": "2009 01 01",
-          "date_plus": "2009 01 02",
-          "err": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_2_ARCHIVE.20201124105741.err",
-          "finish": "2020-11-24 10:57:58",
-          "id": "t0cr_20081231_000_2_ARCHIVE",
-          "internal_id": "t0cr_20081231_000_2_ARCHIVE",
-          "label": "t0cr_20081231_000_2_ARCHIVE",
-          "member": "000",
-          "minutes": 0,
-          "minutes_queue": 17,
-          "out": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_2_ARCHIVE.20201124105741.out",
-          "parent_list": [
-              "t0cr_20081231_000_2_REDUCE",
-              "t0cr_20081231_000_1_ARCHIVE"
-          ],
-          "parents": 2,
-          "platform_name": "LOCAL",
-          "priority": 9,
-          "processors": "1",
-          "rm_id": 3156,
-          "section": "ARCHIVE",
-          "start": "2020-11-24 10:57:58",
-          "status": "COMPLETED",
-          "status_code": 5,
-          "status_color": "yellow",
-          "submit": "2020-11-24 10:57:41",
-          "sync": false,
-          "title": "t0cr_20081231_000_2_ARCHIVE <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:17 ) + 0:00:00",
-          "tree_parents": [
-              "t0cr_20081231_000"
-          ],
-          "wallclock": "00:10",
-          "wrapper": null,
-          "wrapper_code": null
-      },
-      {
-          "children": 1,
-          "children_list": [
-              "t0cr_20081231_000_1_CLEAN"
-          ],
-          "chunk": 1,
-          "custom_directives": [],
-          "date": "2008 12 31",
-          "date_plus": "2009 01 01",
-          "err": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_1_ARCHIVE_REDUCE.20201124105425.err",
-          "finish": "2020-11-24 10:55:11",
-          "id": "t0cr_20081231_1_ARCHIVE_REDUCE",
-          "internal_id": "t0cr_20081231_1_ARCHIVE_REDUCE",
-          "label": "t0cr_20081231_1_ARCHIVE_REDUCE",
-          "member": null,
-          "minutes": 30,
-          "minutes_queue": 16,
-          "out": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_1_ARCHIVE_REDUCE.20201124105425.out",
-          "parent_list": [
-              "t0cr_20081231_000_1_REDUCE"
-          ],
-          "parents": 1,
-          "platform_name": "LOCAL",
-          "priority": 10,
-          "processors": "1",
-          "rm_id": 2807,
-          "section": "ARCHIVE_REDUCE",
-          "start": "2020-11-24 10:54:41",
-          "status": "COMPLETED",
-          "status_code": 5,
-          "status_color": "yellow",
-          "submit": "2020-11-24 10:54:25",
-          "sync": true,
-          "title": "t0cr_20081231_1_ARCHIVE_REDUCE <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:16 ) + 0:00:30 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>",
-          "tree_parents": [
-              "t0cr_20081231_000"
-          ],
-          "wallclock": "01:00",
-          "wrapper": null,
-          "wrapper_code": null
-      },
-      {
-          "children": 1,
-          "children_list": [
-              "t0cr_20081231_000_2_CLEAN"
-          ],
-          "chunk": 2,
-          "custom_directives": [],
-          "date": "2009 01 01",
-          "date_plus": "2009 01 02",
-          "err": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_2_ARCHIVE_REDUCE.20201124105741.err",
-          "finish": "2020-11-24 10:58:11",
-          "id": "t0cr_20081231_2_ARCHIVE_REDUCE",
-          "internal_id": "t0cr_20081231_2_ARCHIVE_REDUCE",
-          "label": "t0cr_20081231_2_ARCHIVE_REDUCE",
-          "member": null,
-          "minutes": 16,
-          "minutes_queue": 14,
-          "out": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_2_ARCHIVE_REDUCE.20201124105741.out",
-          "parent_list": [
-              "t0cr_20081231_000_2_REDUCE"
-          ],
-          "parents": 1,
-          "platform_name": "LOCAL",
-          "priority": 10,
-          "processors": "1",
-          "rm_id": 3123,
-          "section": "ARCHIVE_REDUCE",
-          "start": "2020-11-24 10:57:55",
-          "status": "COMPLETED",
-          "status_code": 5,
-          "status_color": "yellow",
-          "submit": "2020-11-24 10:57:41",
-          "sync": true,
-          "title": "t0cr_20081231_2_ARCHIVE_REDUCE <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:14 ) + 0:00:16 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>",
-          "tree_parents": [
-              "t0cr_20081231_000"
-          ],
-          "wallclock": "01:00",
-          "wrapper": null,
-          "wrapper_code": null
-      },
-      {
-          "children": 0,
-          "children_list": [],
-          "chunk": 1,
-          "custom_directives": [],
-          "date": "2008 12 31",
-          "date_plus": "2009 01 01",
-          "err": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_1_CLEAN.20201124105741.err",
-          "finish": "2020-11-24 10:57:59",
-          "id": "t0cr_20081231_000_1_CLEAN",
-          "internal_id": "t0cr_20081231_000_1_CLEAN",
-          "label": "t0cr_20081231_000_1_CLEAN",
-          "member": "000",
-          "minutes": 0,
-          "minutes_queue": 16,
-          "out": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_1_CLEAN.20201124105741.out",
-          "parent_list": [
-              "t0cr_20081231_000_2_REDUCE",
-              "t0cr_20081231_000_1_ARCHIVE",
-              "t0cr_20081231_1_ARCHIVE_REDUCE"
-          ],
-          "parents": 3,
-          "platform_name": null,
-          "priority": 11,
-          "processors": "1",
-          "rm_id": "12730593",
-          "section": "CLEAN",
-          "start": "2020-11-24 10:57:59",
-          "status": "COMPLETED",
-          "status_code": 5,
-          "status_color": "yellow",
-          "submit": "2020-11-24 10:57:43",
-          "sync": false,
-          "title": "t0cr_20081231_000_1_CLEAN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:16 ) + 0:00:00 <span class='badge' style='background-color:#99ff66'>TARGET</span>",
-          "tree_parents": [
-              "t0cr_20081231_000"
-          ],
-          "wallclock": "00:10",
-          "wrapper": null,
-          "wrapper_code": null
-      },
-      {
-          "children": 0,
-          "children_list": [],
-          "chunk": 2,
-          "custom_directives": [],
-          "date": "2009 01 01",
-          "date_plus": "2009 01 02",
-          "err": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_2_CLEAN.20201124105812.err",
-          "finish": "2020-11-24 10:58:36",
-          "id": "t0cr_20081231_000_2_CLEAN",
-          "internal_id": "t0cr_20081231_000_2_CLEAN",
-          "label": "t0cr_20081231_000_2_CLEAN",
-          "member": "000",
-          "minutes": 12,
-          "minutes_queue": 11,
-          "out": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_2_CLEAN.20201124105812.out",
-          "parent_list": [
-              "t0cr_20081231_2_ARCHIVE_REDUCE",
-              "t0cr_20081231_000_2_ARCHIVE"
-          ],
-          "parents": 2,
-          "platform_name": null,
-          "priority": 11,
-          "processors": "1",
-          "rm_id": "12730617",
-          "section": "CLEAN",
-          "start": "2020-11-24 10:58:24",
-          "status": "COMPLETED",
-          "status_code": 5,
-          "status_color": "yellow",
-          "submit": "2020-11-24 10:58:13",
-          "sync": false,
-          "title": "t0cr_20081231_000_2_CLEAN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:11 ) + 0:00:12 <span class='badge' style='background-color:#99ff66'>TARGET</span>",
-          "tree_parents": [
-              "t0cr_20081231_000"
-          ],
-          "wallclock": "00:10",
-          "wrapper": null,
-          "wrapper_code": null
-      }
-  ],
-  "pkl_timestamp": 10000000,
-  "reference": {
-      "check_mark": " <span class='badge' style='background-color:#4dffa6'>&#10004;</span>",
-      "chunk_size": 1,
-      "chunk_unit": "day",
-      "completed_tag": " <span class='badge' style='background-color:%B'> %C / %T COMPLETED</span>",
-      "failed_tag": " <span class='badge' style='background-color:red'>%F FAILED</span>",
-      "packages": [],
-      "queuing_tag": " <span class='badge' style='background-color:pink'>%Q QUEUING</span>",
-      "running_tag": " <span class='badge' style='background-color:green; color:white'>%R RUNNING</span>",
-      "t0cr_20081231_000": {
-          "completed": 14,
-          "failed": 0,
-          "queuing": 0,
-          "running": 0,
-          "total": 14
-      }
-  },
-  "total": 19,
-  "tree": [
-      {
-          "children": [
-              {
-                  "children": [
-                      {
-                          "children": [],
-                          "data": "Empty",
-                          "refKey": "t0cr_20081231_000_1_LOCAL_SEND_INITIAL",
-                          "title": "t0cr_20081231_000_1_LOCAL_SEND_INITIAL <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:13 ) + 0:00:00"
-                      },
-                      {
-                          "children": [],
-                          "data": "Empty",
-                          "refKey": "t0cr_20081231_000_1_PREPROCVAR",
-                          "title": "t0cr_20081231_000_1_PREPROCVAR <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:01 ) + 0:01:02"
-                      },
-                      {
-                          "children": [],
-                          "data": "Empty",
-                          "refKey": "t0cr_20081231_000_1_SIM",
-                          "title": "t0cr_20081231_000_1_SIM <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:10 ) + 0:03:30"
-                      },
-                      {
-                          "children": [],
-                          "data": "Empty",
-                          "refKey": "t0cr_20081231_000_1_REDUCE",
-                          "title": "t0cr_20081231_000_1_REDUCE <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:04:35 ) + 0:03:09"
-                      },
-                      {
-                          "children": [],
-                          "data": "Empty",
-                          "refKey": "t0cr_20081231_000_1_ARCHIVE",
-                          "title": "t0cr_20081231_000_1_ARCHIVE <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:14 ) + 0:00:17"
-                      },
-                      {
-                          "children": [],
-                          "data": "Empty",
-                          "refKey": "t0cr_20081231_1_ARCHIVE_REDUCE",
-                          "title": "t0cr_20081231_1_ARCHIVE_REDUCE <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:16 ) + 0:00:30 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
-                      },
-                      {
-                          "children": [],
-                          "data": "Empty",
-                          "refKey": "t0cr_20081231_000_1_CLEAN",
-                          "title": "t0cr_20081231_000_1_CLEAN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:16 ) + 0:00:00 <span class='badge' style='background-color:#99ff66'>TARGET</span>"
-                      },
-                      {
-                          "children": [],
-                          "data": "Empty",
-                          "refKey": "t0cr_20081231_000_2_LOCAL_SEND_INITIAL",
-                          "title": "t0cr_20081231_000_2_LOCAL_SEND_INITIAL <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:15 ) + 0:00:00"
-                      },
-                      {
-                          "children": [],
-                          "data": "Empty",
-                          "refKey": "t0cr_20081231_000_2_PREPROCVAR",
-                          "title": "t0cr_20081231_000_2_PREPROCVAR <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:04:46 ) + 0:01:03"
-                      },
-                      {
-                          "children": [],
-                          "data": "Empty",
-                          "refKey": "t0cr_20081231_000_2_SIM",
-                          "title": "t0cr_20081231_000_2_SIM <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:00 ) + 0:03:24"
-                      },
-                      {
-                          "children": [],
-                          "data": "Empty",
-                          "refKey": "t0cr_20081231_000_2_REDUCE",
-                          "title": "t0cr_20081231_000_2_REDUCE <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:01 ) + 0:03:13"
-                      },
-                      {
-                          "children": [],
-                          "data": "Empty",
-                          "refKey": "t0cr_20081231_000_2_ARCHIVE",
-                          "title": "t0cr_20081231_000_2_ARCHIVE <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:17 ) + 0:00:00"
-                      },
-                      {
-                          "children": [],
-                          "data": "Empty",
-                          "refKey": "t0cr_20081231_2_ARCHIVE_REDUCE",
-                          "title": "t0cr_20081231_2_ARCHIVE_REDUCE <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:14 ) + 0:00:16 <span class='badge' style='background-color:#0066ff; color:white'>SYNC</span>"
-                      },
-                      {
-                          "children": [],
-                          "data": "Empty",
-                          "refKey": "t0cr_20081231_000_2_CLEAN",
-                          "title": "t0cr_20081231_000_2_CLEAN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:11 ) + 0:00:12 <span class='badge' style='background-color:#99ff66'>TARGET</span>"
-                      }
-                  ],
-                  "data": "Empty",
-                  "expanded": false,
-                  "folder": true,
-                  "refKey": "t0cr_20081231_000",
-                  "title": "t0cr_20081231_000 <span class='badge' style='background-color:yellow'>14 / 14 COMPLETED</span> <span class='badge' style='background-color:#4dffa6'>&#10004;</span>"
-              }
-          ],
-          "data": "Empty",
-          "expanded": true,
-          "folder": true,
-          "refKey": "t0cr_20081231",
-          "title": "t0cr_20081231"
-      },
-      {
-          "children": [
-              {
-                  "children": [],
-                  "data": "Empty",
-                  "refKey": "t0cr_LOCAL_SETUP",
-                  "title": "t0cr_LOCAL_SETUP <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:13 ) + 0:00:00 <span class='badge' style='background-color:#80d4ff'>SOURCE</span>"
-              },
-              {
-                  "children": [],
-                  "data": "Empty",
-                  "refKey": "t0cr_LOCAL_SEND_SOURCE",
-                  "title": "t0cr_LOCAL_SEND_SOURCE <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:14 ) + 0:01:48"
-              },
-              {
-                  "children": [],
-                  "data": "Empty",
-                  "refKey": "t0cr_LOCAL_SEND_STATIC",
-                  "title": "t0cr_LOCAL_SEND_STATIC <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:18 ) + 0:00:00"
-              },
-              {
-                  "children": [],
-                  "data": "Empty",
-                  "refKey": "t0cr_REMOTE_COMPILE",
-                  "title": "t0cr_REMOTE_COMPILE <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:01 ) + 0:18:03"
-              },
-              {
-                  "children": [],
-                  "data": "Empty",
-                  "refKey": "t0cr_PREPROCFIX",
-                  "title": "t0cr_PREPROCFIX <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:22 ) + 0:06:48"
-              }
-          ],
-          "data": "Empty",
-          "expanded": true,
-          "folder": true,
-          "refKey": "Keys",
-          "title": "Keys"
-      }
-  ]
+    "error": false,
+    "error_message": "None",
+    "jobs": [
+        {
+            "ASYPD": null,
+            "SYPD": null,
+            "children": 4,
+            "children_list": [
+                "t0cr_LOCAL_SEND_SOURCE",
+                "t0cr_20081231_000_1_LOCAL_SEND_INITIAL",
+                "t0cr_LOCAL_SEND_STATIC",
+                "t0cr_20081231_000_2_LOCAL_SEND_INITIAL"
+            ],
+            "chunk": null,
+            "custom_directives": [],
+            "date": "",
+            "date_plus": "",
+            "err": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_LOCAL_SETUP.20210714094935.err",
+            "finish": "2021-07-14 09:52:39",
+            "id": "t0cr_LOCAL_SETUP",
+            "internal_id": "t0cr_LOCAL_SETUP",
+            "label": "t0cr_LOCAL_SETUP",
+            "member": null,
+            "minutes": 184,
+            "minutes_queue": 13,
+            "out": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_LOCAL_SETUP.20210714094935.out",
+            "parent_list": [],
+            "parents": 0,
+            "platform_name": "bscearth000",
+            "processors": "1",
+            "queue": "",
+            "rm_id": 19035,
+            "section": "LOCAL_SETUP",
+            "start": "2021-07-14 09:49:35",
+            "status": "COMPLETED",
+            "status_code": 5,
+            "status_color": "yellow",
+            "submit": "2021-07-14 09:49:22",
+            "sync": false,
+            "title": "t0cr_LOCAL_SETUP <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:13 ) + 0:03:04 <span class='badge' style='background-color:#80d4ff'>SOURCE</span>",
+            "tree_parents": [],
+            "wallclock": "",
+            "wrapper": null,
+            "wrapper_code": null
+        },
+        {
+            "ASYPD": 0,
+            "SYPD": 1.3,
+            "children": 1,
+            "children_list": [
+                "t0cr_20081231_000_1_PREPROCVAR"
+            ],
+            "chunk": 1,
+            "custom_directives": [],
+            "date": "2008 12 31",
+            "date_plus": "2009 01 01",
+            "err": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_1_LOCAL_SEND_INITIAL.20210714094952.err",
+            "finish": "2021-07-14 09:52:54",
+            "id": "t0cr_20081231_000_1_LOCAL_SEND_INITIAL",
+            "internal_id": "t0cr_20081231_000_1_LOCAL_SEND_INITIAL",
+            "label": "t0cr_20081231_000_1_LOCAL_SEND_INITIAL",
+            "member": "000",
+            "minutes": 182,
+            "minutes_queue": 16,
+            "out": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_1_LOCAL_SEND_INITIAL.20210714094952.out",
+            "parent_list": [
+                "t0cr_LOCAL_SETUP"
+            ],
+            "parents": 1,
+            "platform_name": "bscearth000",
+            "processors": "1",
+            "queue": "",
+            "rm_id": 19661,
+            "section": "LOCAL_SEND_INITIAL",
+            "start": "2021-07-14 09:49:52",
+            "status": "COMPLETED",
+            "status_code": 5,
+            "status_color": "yellow",
+            "submit": "2021-07-14 09:49:36",
+            "sync": false,
+            "title": "t0cr_20081231_000_1_LOCAL_SEND_INITIAL <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:16 ) + 0:03:02",
+            "tree_parents": [
+                "t0cr_20081231_000"
+            ],
+            "wallclock": "",
+            "wrapper": null,
+            "wrapper_code": null
+        },
+        {
+            "ASYPD": 0,
+            "SYPD": 1.29,
+            "children": 1,
+            "children_list": [
+                "t0cr_20081231_000_2_PREPROCVAR"
+            ],
+            "chunk": 2,
+            "custom_directives": [],
+            "date": "2009 01 01",
+            "date_plus": "2009 01 02",
+            "err": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_2_LOCAL_SEND_INITIAL.20210714095010.err",
+            "finish": "2021-07-14 09:53:13",
+            "id": "t0cr_20081231_000_2_LOCAL_SEND_INITIAL",
+            "internal_id": "t0cr_20081231_000_2_LOCAL_SEND_INITIAL",
+            "label": "t0cr_20081231_000_2_LOCAL_SEND_INITIAL",
+            "member": "000",
+            "minutes": 183,
+            "minutes_queue": 15,
+            "out": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_2_LOCAL_SEND_INITIAL.20210714095010.out",
+            "parent_list": [
+                "t0cr_LOCAL_SETUP"
+            ],
+            "parents": 1,
+            "platform_name": "bscearth000",
+            "processors": "1",
+            "queue": "",
+            "rm_id": 21143,
+            "section": "LOCAL_SEND_INITIAL",
+            "start": "2021-07-14 09:50:10",
+            "status": "COMPLETED",
+            "status_code": 5,
+            "status_color": "yellow",
+            "submit": "2021-07-14 09:49:55",
+            "sync": false,
+            "title": "t0cr_20081231_000_2_LOCAL_SEND_INITIAL <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:15 ) + 0:03:03",
+            "tree_parents": [
+                "t0cr_20081231_000"
+            ],
+            "wallclock": "",
+            "wrapper": null,
+            "wrapper_code": null
+        },
+        {
+            "ASYPD": null,
+            "SYPD": null,
+            "children": 1,
+            "children_list": [
+                "t0cr_REMOTE_COMPILE"
+            ],
+            "chunk": null,
+            "custom_directives": [],
+            "date": "",
+            "date_plus": "",
+            "err": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_LOCAL_SEND_SOURCE.20210714094955.err",
+            "finish": "2021-07-14 09:53:24",
+            "id": "t0cr_LOCAL_SEND_SOURCE",
+            "internal_id": "t0cr_LOCAL_SEND_SOURCE",
+            "label": "t0cr_LOCAL_SEND_SOURCE",
+            "member": null,
+            "minutes": 209,
+            "minutes_queue": 18,
+            "out": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_LOCAL_SEND_SOURCE.20210714094955.out",
+            "parent_list": [
+                "t0cr_LOCAL_SETUP"
+            ],
+            "parents": 1,
+            "platform_name": "bscearth000",
+            "processors": "1",
+            "queue": "",
+            "rm_id": 20031,
+            "section": "LOCAL_SEND_SOURCE",
+            "start": "2021-07-14 09:49:55",
+            "status": "COMPLETED",
+            "status_code": 5,
+            "status_color": "yellow",
+            "submit": "2021-07-14 09:49:37",
+            "sync": false,
+            "title": "t0cr_LOCAL_SEND_SOURCE <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:18 ) + 0:03:29",
+            "tree_parents": [],
+            "wallclock": "",
+            "wrapper": null,
+            "wrapper_code": null
+        },
+        {
+            "ASYPD": null,
+            "SYPD": null,
+            "children": 1,
+            "children_list": [
+                "t0cr_PREPROCFIX"
+            ],
+            "chunk": null,
+            "custom_directives": [],
+            "date": "",
+            "date_plus": "",
+            "err": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_LOCAL_SEND_STATIC.20210714094950.err",
+            "finish": "2021-07-14 09:52:58",
+            "id": "t0cr_LOCAL_SEND_STATIC",
+            "internal_id": "t0cr_LOCAL_SEND_STATIC",
+            "label": "t0cr_LOCAL_SEND_STATIC",
+            "member": null,
+            "minutes": 188,
+            "minutes_queue": 14,
+            "out": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_LOCAL_SEND_STATIC.20210714094950.out",
+            "parent_list": [
+                "t0cr_LOCAL_SETUP"
+            ],
+            "parents": 1,
+            "platform_name": "bscearth000",
+            "processors": "1",
+            "queue": "",
+            "rm_id": 19857,
+            "section": "LOCAL_SEND_STATIC",
+            "start": "2021-07-14 09:49:50",
+            "status": "COMPLETED",
+            "status_code": 5,
+            "status_color": "yellow",
+            "submit": "2021-07-14 09:49:36",
+            "sync": false,
+            "title": "t0cr_LOCAL_SEND_STATIC <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:14 ) + 0:03:08",
+            "tree_parents": [],
+            "wallclock": "",
+            "wrapper": null,
+            "wrapper_code": null
+        },
+        {
+            "ASYPD": null,
+            "SYPD": null,
+            "children": 1,
+            "children_list": [
+                "t0cr_PREPROCFIX"
+            ],
+            "chunk": null,
+            "custom_directives": [],
+            "date": "",
+            "date_plus": "",
+            "err": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_REMOTE_COMPILE.20210714095036.err",
+            "finish": "2021-07-14 09:58:58",
+            "id": "t0cr_REMOTE_COMPILE",
+            "internal_id": "t0cr_REMOTE_COMPILE",
+            "label": "t0cr_REMOTE_COMPILE",
+            "member": null,
+            "minutes": 513,
+            "minutes_queue": 0,
+            "out": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_REMOTE_COMPILE.20210714095036.out",
+            "parent_list": [
+                "t0cr_LOCAL_SEND_SOURCE"
+            ],
+            "parents": 1,
+            "platform_name": "marenostrum4",
+            "processors": "4",
+            "queue": "debug",
+            "rm_id": "16643292",
+            "section": "REMOTE_COMPILE",
+            "start": "2021-07-14 09:50:25",
+            "status": "COMPLETED",
+            "status_code": 5,
+            "status_color": "yellow",
+            "submit": "2021-07-14 09:50:25",
+            "sync": false,
+            "title": "t0cr_REMOTE_COMPILE <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:00 ) + 0:08:33",
+            "tree_parents": [],
+            "wallclock": "00:50",
+            "wrapper": null,
+            "wrapper_code": null
+        },
+        {
+            "ASYPD": null,
+            "SYPD": null,
+            "children": 2,
+            "children_list": [
+                "t0cr_20081231_000_1_PREPROCVAR",
+                "t0cr_20081231_000_2_PREPROCVAR"
+            ],
+            "chunk": null,
+            "custom_directives": [],
+            "date": "",
+            "date_plus": "",
+            "err": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_PREPROCFIX.20210714095917.err",
+            "finish": "2021-07-14 10:05:48",
+            "id": "t0cr_PREPROCFIX",
+            "internal_id": "t0cr_PREPROCFIX",
+            "label": "t0cr_PREPROCFIX",
+            "member": null,
+            "minutes": 402,
+            "minutes_queue": 1,
+            "out": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_PREPROCFIX.20210714095917.out",
+            "parent_list": [
+                "t0cr_REMOTE_COMPILE",
+                "t0cr_LOCAL_SEND_STATIC"
+            ],
+            "parents": 2,
+            "platform_name": "marenostrum4",
+            "processors": "1",
+            "queue": "debug",
+            "rm_id": "16643345",
+            "section": "PREPROCFIX",
+            "start": "2021-07-14 09:59:06",
+            "status": "COMPLETED",
+            "status_code": 5,
+            "status_color": "yellow",
+            "submit": "2021-07-14 09:59:05",
+            "sync": false,
+            "title": "t0cr_PREPROCFIX <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:01 ) + 0:06:42",
+            "tree_parents": [],
+            "wallclock": "00:30",
+            "wrapper": null,
+            "wrapper_code": null
+        },
+        {
+            "ASYPD": 0,
+            "SYPD": 3.53,
+            "children": 1,
+            "children_list": [
+                "t0cr_20081231_000_1_SIM"
+            ],
+            "chunk": 1,
+            "custom_directives": [],
+            "date": "2008 12 31",
+            "date_plus": "2009 01 01",
+            "err": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_1_PREPROCVAR.20210714100717.err",
+            "finish": "2021-07-14 10:08:14",
+            "id": "t0cr_20081231_000_1_PREPROCVAR",
+            "internal_id": "t0cr_20081231_000_1_PREPROCVAR",
+            "label": "t0cr_20081231_000_1_PREPROCVAR",
+            "member": "000",
+            "minutes": 67,
+            "minutes_queue": 72,
+            "out": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_1_PREPROCVAR.20210714100717.out",
+            "parent_list": [
+                "t0cr_20081231_000_1_LOCAL_SEND_INITIAL",
+                "t0cr_PREPROCFIX"
+            ],
+            "parents": 2,
+            "platform_name": "marenostrum4",
+            "processors": "8",
+            "queue": "debug",
+            "rm_id": "16643397",
+            "section": "PREPROCVAR",
+            "start": "2021-07-14 10:07:07",
+            "status": "COMPLETED",
+            "status_code": 5,
+            "status_color": "yellow",
+            "submit": "2021-07-14 10:05:55",
+            "sync": false,
+            "title": "t0cr_20081231_000_1_PREPROCVAR <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:01:12 ) + 0:01:07",
+            "tree_parents": [
+                "t0cr_20081231_000"
+            ],
+            "wallclock": "00:25",
+            "wrapper": null,
+            "wrapper_code": null
+        },
+        {
+            "ASYPD": 0,
+            "SYPD": 4.15,
+            "children": 1,
+            "children_list": [
+                "t0cr_20081231_000_2_SIM"
+            ],
+            "chunk": 2,
+            "custom_directives": [],
+            "date": "2009 01 01",
+            "date_plus": "2009 01 02",
+            "err": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_2_PREPROCVAR.20210714101236.err",
+            "finish": "2021-07-14 10:13:20",
+            "id": "t0cr_20081231_000_2_PREPROCVAR",
+            "internal_id": "t0cr_20081231_000_2_PREPROCVAR",
+            "label": "t0cr_20081231_000_2_PREPROCVAR",
+            "member": "000",
+            "minutes": 57,
+            "minutes_queue": 386,
+            "out": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_2_PREPROCVAR.20210714101236.out",
+            "parent_list": [
+                "t0cr_20081231_000_2_LOCAL_SEND_INITIAL",
+                "t0cr_PREPROCFIX"
+            ],
+            "parents": 2,
+            "platform_name": "marenostrum4",
+            "processors": "8",
+            "queue": "debug",
+            "rm_id": "16643399",
+            "section": "PREPROCVAR",
+            "start": "2021-07-14 10:12:23",
+            "status": "COMPLETED",
+            "status_code": 5,
+            "status_color": "yellow",
+            "submit": "2021-07-14 10:05:57",
+            "sync": false,
+            "title": "t0cr_20081231_000_2_PREPROCVAR <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:06:26 ) + 0:00:57",
+            "tree_parents": [
+                "t0cr_20081231_000"
+            ],
+            "wallclock": "00:25",
+            "wrapper": null,
+            "wrapper_code": null
+        },
+        {
+            "ASYPD": 0,
+            "SYPD": 1.0,
+            "children": 2,
+            "children_list": [
+                "t0cr_20081231_000_2_SIM",
+                "t0cr_20081231_000_1_REDUCE"
+            ],
+            "chunk": 1,
+            "custom_directives": [],
+            "date": "2008 12 31",
+            "date_plus": "2009 01 01",
+            "err": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_1_SIM.20210714100832.err",
+            "finish": "2021-07-14 10:12:16",
+            "id": "t0cr_20081231_000_1_SIM",
+            "internal_id": "t0cr_20081231_000_1_SIM",
+            "label": "t0cr_20081231_000_1_SIM",
+            "member": "000",
+            "minutes": 236,
+            "minutes_queue": 0,
+            "out": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_1_SIM.20210714100832.out",
+            "parent_list": [
+                "t0cr_20081231_000_1_PREPROCVAR"
+            ],
+            "parents": 1,
+            "platform_name": "marenostrum4",
+            "processors": "284",
+            "queue": "debug",
+            "rm_id": "16643403",
+            "section": "SIM",
+            "start": "2021-07-14 10:08:20",
+            "status": "COMPLETED",
+            "status_code": 5,
+            "status_color": "yellow",
+            "submit": "2021-07-14 10:08:20",
+            "sync": false,
+            "title": "t0cr_20081231_000_1_SIM <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:00 ) + 0:03:56",
+            "tree_parents": [
+                "t0cr_20081231_000"
+            ],
+            "wallclock": "01:00",
+            "wrapper": null,
+            "wrapper_code": null
+        },
+        {
+            "ASYPD": 0,
+            "SYPD": 1.21,
+            "children": 1,
+            "children_list": [
+                "t0cr_20081231_000_2_REDUCE"
+            ],
+            "chunk": 2,
+            "custom_directives": [],
+            "date": "2009 01 01",
+            "date_plus": "2009 01 02",
+            "err": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_2_SIM.20210714102153.err",
+            "finish": "2021-07-14 10:25:08",
+            "id": "t0cr_20081231_000_2_SIM",
+            "internal_id": "t0cr_20081231_000_2_SIM",
+            "label": "t0cr_20081231_000_2_SIM",
+            "member": "000",
+            "minutes": 195,
+            "minutes_queue": 502,
+            "out": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_2_SIM.20210714102153.out",
+            "parent_list": [
+                "t0cr_20081231_000_1_SIM",
+                "t0cr_20081231_000_2_PREPROCVAR"
+            ],
+            "parents": 2,
+            "platform_name": "marenostrum4",
+            "processors": "284",
+            "queue": "debug",
+            "rm_id": "16643415",
+            "section": "SIM",
+            "start": "2021-07-14 10:21:53",
+            "status": "COMPLETED",
+            "status_code": 5,
+            "status_color": "yellow",
+            "submit": "2021-07-14 10:13:31",
+            "sync": false,
+            "title": "t0cr_20081231_000_2_SIM <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:08:22 ) + 0:03:15",
+            "tree_parents": [
+                "t0cr_20081231_000"
+            ],
+            "wallclock": "01:00",
+            "wrapper": null,
+            "wrapper_code": null
+        },
+        {
+            "ASYPD": 0,
+            "SYPD": 0.93,
+            "children": 2,
+            "children_list": [
+                "t0cr_20081231_000_2_REDUCE",
+                "t0cr_20081231_000_1_ARCHIVE"
+            ],
+            "chunk": 1,
+            "custom_directives": [],
+            "date": "2008 12 31",
+            "date_plus": "2009 01 01",
+            "err": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_1_REDUCE.20210714113146.err",
+            "finish": "2021-07-14 11:35:55",
+            "id": "t0cr_20081231_000_1_REDUCE",
+            "internal_id": "t0cr_20081231_000_1_REDUCE",
+            "label": "t0cr_20081231_000_1_REDUCE",
+            "member": "000",
+            "minutes": 254,
+            "minutes_queue": 1930,
+            "out": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_1_REDUCE.20210714113146.out",
+            "parent_list": [
+                "t0cr_20081231_000_1_SIM"
+            ],
+            "parents": 1,
+            "platform_name": "marenostrum4",
+            "processors": "24",
+            "queue": "debug",
+            "rm_id": "16643713",
+            "section": "REDUCE",
+            "start": "2021-07-14 11:31:41",
+            "status": "COMPLETED",
+            "status_code": 5,
+            "status_color": "yellow",
+            "submit": "2021-07-14 10:59:31",
+            "sync": false,
+            "title": "t0cr_20081231_000_1_REDUCE <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:32:10 ) + 0:04:14",
+            "tree_parents": [
+                "t0cr_20081231_000"
+            ],
+            "wallclock": "01:00",
+            "wrapper": null,
+            "wrapper_code": null
+        },
+        {
+            "ASYPD": 0,
+            "SYPD": 0.88,
+            "children": 2,
+            "children_list": [
+                "t0cr_20081231_000_2_ARCHIVE",
+                "t0cr_20081231_000_1_CLEAN"
+            ],
+            "chunk": 2,
+            "custom_directives": [],
+            "date": "2009 01 01",
+            "date_plus": "2009 01 02",
+            "err": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_2_REDUCE.20210714120046.err",
+            "finish": "2021-07-14 12:05:04",
+            "id": "t0cr_20081231_000_2_REDUCE",
+            "internal_id": "t0cr_20081231_000_2_REDUCE",
+            "label": "t0cr_20081231_000_2_REDUCE",
+            "member": "000",
+            "minutes": 270,
+            "minutes_queue": 1465,
+            "out": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_2_REDUCE.20210714120046.out",
+            "parent_list": [
+                "t0cr_20081231_000_2_SIM",
+                "t0cr_20081231_000_1_REDUCE"
+            ],
+            "parents": 2,
+            "platform_name": "marenostrum4",
+            "processors": "24",
+            "queue": "debug",
+            "rm_id": "16644060",
+            "section": "REDUCE",
+            "start": "2021-07-14 12:00:34",
+            "status": "COMPLETED",
+            "status_code": 5,
+            "status_color": "yellow",
+            "submit": "2021-07-14 11:36:09",
+            "sync": false,
+            "title": "t0cr_20081231_000_2_REDUCE <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:24:25 ) + 0:04:30",
+            "tree_parents": [
+                "t0cr_20081231_000"
+            ],
+            "wallclock": "01:00",
+            "wrapper": null,
+            "wrapper_code": null
+        },
+        {
+            "ASYPD": 0,
+            "SYPD": 0.88,
+            "children": 2,
+            "children_list": [
+                "t0cr_20081231_000_2_ARCHIVE",
+                "t0cr_20081231_000_1_CLEAN"
+            ],
+            "chunk": 1,
+            "custom_directives": [],
+            "date": "2008 12 31",
+            "date_plus": "2009 01 01",
+            "err": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_1_ARCHIVE.20210714113622.err",
+            "finish": "2021-07-14 11:40:50",
+            "id": "t0cr_20081231_000_1_ARCHIVE",
+            "internal_id": "t0cr_20081231_000_1_ARCHIVE",
+            "label": "t0cr_20081231_000_1_ARCHIVE",
+            "member": "000",
+            "minutes": 268,
+            "minutes_queue": 12,
+            "out": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_1_ARCHIVE.20210714113622.out",
+            "parent_list": [
+                "t0cr_20081231_000_1_REDUCE"
+            ],
+            "parents": 1,
+            "platform_name": "bscearth000",
+            "processors": "1",
+            "queue": "",
+            "rm_id": 25567,
+            "section": "ARCHIVE",
+            "start": "2021-07-14 11:36:22",
+            "status": "COMPLETED",
+            "status_code": 5,
+            "status_color": "yellow",
+            "submit": "2021-07-14 11:36:10",
+            "sync": false,
+            "title": "t0cr_20081231_000_1_ARCHIVE <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:12 ) + 0:04:28",
+            "tree_parents": [
+                "t0cr_20081231_000"
+            ],
+            "wallclock": "00:10",
+            "wrapper": null,
+            "wrapper_code": null
+        },
+        {
+            "ASYPD": 0,
+            "SYPD": 0.89,
+            "children": 1,
+            "children_list": [
+                "t0cr_20081231_000_2_CLEAN"
+            ],
+            "chunk": 2,
+            "custom_directives": [],
+            "date": "2009 01 01",
+            "date_plus": "2009 01 02",
+            "err": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_2_ARCHIVE.20210714120523.err",
+            "finish": "2021-07-14 12:09:50",
+            "id": "t0cr_20081231_000_2_ARCHIVE",
+            "internal_id": "t0cr_20081231_000_2_ARCHIVE",
+            "label": "t0cr_20081231_000_2_ARCHIVE",
+            "member": "000",
+            "minutes": 267,
+            "minutes_queue": 14,
+            "out": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_2_ARCHIVE.20210714120523.out",
+            "parent_list": [
+                "t0cr_20081231_000_2_REDUCE",
+                "t0cr_20081231_000_1_ARCHIVE"
+            ],
+            "parents": 2,
+            "platform_name": "bscearth000",
+            "processors": "1",
+            "queue": "",
+            "rm_id": 18512,
+            "section": "ARCHIVE",
+            "start": "2021-07-14 12:05:23",
+            "status": "COMPLETED",
+            "status_code": 5,
+            "status_color": "yellow",
+            "submit": "2021-07-14 12:05:09",
+            "sync": false,
+            "title": "t0cr_20081231_000_2_ARCHIVE <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:14 ) + 0:04:27",
+            "tree_parents": [
+                "t0cr_20081231_000"
+            ],
+            "wallclock": "00:10",
+            "wrapper": null,
+            "wrapper_code": null
+        },
+        {
+            "ASYPD": 0,
+            "SYPD": 0,
+            "children": 0,
+            "children_list": [],
+            "chunk": 1,
+            "custom_directives": [],
+            "date": "2008 12 31",
+            "date_plus": "2009 01 01",
+            "err": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_1_CLEAN.20210714123327.err",
+            "finish": "2021-07-14 12:33:26",
+            "id": "t0cr_20081231_000_1_CLEAN",
+            "internal_id": "t0cr_20081231_000_1_CLEAN",
+            "label": "t0cr_20081231_000_1_CLEAN",
+            "member": "000",
+            "minutes": 0,
+            "minutes_queue": 1697,
+            "out": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_1_CLEAN.20210714123327.out",
+            "parent_list": [
+                "t0cr_20081231_000_2_REDUCE",
+                "t0cr_20081231_000_1_ARCHIVE"
+            ],
+            "parents": 2,
+            "platform_name": "marenostrum4",
+            "processors": "1",
+            "queue": "debug",
+            "rm_id": "16644372",
+            "section": "CLEAN",
+            "start": "2021-07-14 12:33:26",
+            "status": "COMPLETED",
+            "status_code": 5,
+            "status_color": "yellow",
+            "submit": "2021-07-14 12:05:09",
+            "sync": false,
+            "title": "t0cr_20081231_000_1_CLEAN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:28:17 ) + 0:00:00 <span class='badge' style='background-color:#99ff66'>TARGET</span>",
+            "tree_parents": [
+                "t0cr_20081231_000"
+            ],
+            "wallclock": "00:10",
+            "wrapper": null,
+            "wrapper_code": null
+        },
+        {
+            "ASYPD": 0,
+            "SYPD": 0,
+            "children": 0,
+            "children_list": [],
+            "chunk": 2,
+            "custom_directives": [],
+            "date": "2009 01 01",
+            "date_plus": "2009 01 02",
+            "err": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_2_CLEAN.20210714123338.err",
+            "finish": "2021-07-14 12:33:38",
+            "id": "t0cr_20081231_000_2_CLEAN",
+            "internal_id": "t0cr_20081231_000_2_CLEAN",
+            "label": "t0cr_20081231_000_2_CLEAN",
+            "member": "000",
+            "minutes": 0,
+            "minutes_queue": 1617,
+            "out": "/esarchive/autosubmit/t0cr/tmp/LOG_t0cr/t0cr_20081231_000_2_CLEAN.20210714123338.out",
+            "parent_list": [
+                "t0cr_20081231_000_2_ARCHIVE"
+            ],
+            "parents": 1,
+            "platform_name": "marenostrum4",
+            "processors": "1",
+            "queue": "debug",
+            "rm_id": "16644391",
+            "section": "CLEAN",
+            "start": "2021-07-14 12:33:38",
+            "status": "COMPLETED",
+            "status_code": 5,
+            "status_color": "yellow",
+            "submit": "2021-07-14 12:06:41",
+            "sync": false,
+            "title": "t0cr_20081231_000_2_CLEAN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:26:57 ) + 0:00:00 <span class='badge' style='background-color:#99ff66'>TARGET</span>",
+            "tree_parents": [
+                "t0cr_20081231_000"
+            ],
+            "wallclock": "00:10",
+            "wrapper": null,
+            "wrapper_code": null
+        }
+    ],
+    "pkl_timestamp": 10000000,
+    "reference": {
+        "check_mark": " <span class='badge' style='background-color:#4dffa6'>&#10004;</span>",
+        "chunk_size": 1,
+        "chunk_unit": "day",
+        "completed_tag": " <span class='badge' style='background-color:%B'> %C / %T COMPLETED</span>",
+        "failed_tag": " <span class='badge' style='background-color:red'>%F FAILED</span>",
+        "packages": [],
+        "queuing_tag": " <span class='badge' style='background-color:pink'>%Q QUEUING</span>",
+        "running_tag": " <span class='badge' style='background-color:green; color:white'>%R RUNNING</span>",
+        "t0cr_20081231_000": {
+            "completed": 12,
+            "failed": 0,
+            "queuing": 0,
+            "running": 0,
+            "total": 12
+        }
+    },
+    "total": 17,
+    "tree": [
+        {
+            "children": [
+                {
+                    "children": [
+                        {
+                            "children": [
+                                {
+                                    "children": [],
+                                    "data": "Empty",
+                                    "refKey": "t0cr_20081231_000_1_LOCAL_SEND_INITIAL",
+                                    "title": "t0cr_20081231_000_1_LOCAL_SEND_INITIAL <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:16 ) + 0:03:02"
+                                },
+                                {
+                                    "children": [],
+                                    "data": "Empty",
+                                    "refKey": "t0cr_20081231_000_2_LOCAL_SEND_INITIAL",
+                                    "title": "t0cr_20081231_000_2_LOCAL_SEND_INITIAL <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:15 ) + 0:03:03"
+                                }
+                            ],
+                            "data": "Empty",
+                            "expanded": false,
+                            "folder": true,
+                            "refKey": "t0cr_20081231_000_LOCAL_SEND_INITIAL",
+                            "title": "LOCAL_SEND_INITIAL"
+                        },
+                        {
+                            "children": [
+                                {
+                                    "children": [],
+                                    "data": "Empty",
+                                    "refKey": "t0cr_20081231_000_1_PREPROCVAR",
+                                    "title": "t0cr_20081231_000_1_PREPROCVAR <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:01:12 ) + 0:01:07"
+                                },
+                                {
+                                    "children": [],
+                                    "data": "Empty",
+                                    "refKey": "t0cr_20081231_000_2_PREPROCVAR",
+                                    "title": "t0cr_20081231_000_2_PREPROCVAR <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:06:26 ) + 0:00:57"
+                                }
+                            ],
+                            "data": "Empty",
+                            "expanded": false,
+                            "folder": true,
+                            "refKey": "t0cr_20081231_000_PREPROCVAR",
+                            "title": "PREPROCVAR"
+                        },
+                        {
+                            "children": [
+                                {
+                                    "children": [],
+                                    "data": "Empty",
+                                    "refKey": "t0cr_20081231_000_1_SIM",
+                                    "title": "t0cr_20081231_000_1_SIM <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:00 ) + 0:03:56"
+                                },
+                                {
+                                    "children": [],
+                                    "data": "Empty",
+                                    "refKey": "t0cr_20081231_000_2_SIM",
+                                    "title": "t0cr_20081231_000_2_SIM <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:08:22 ) + 0:03:15"
+                                }
+                            ],
+                            "data": "Empty",
+                            "expanded": false,
+                            "folder": true,
+                            "refKey": "t0cr_20081231_000_SIM",
+                            "title": "SIM"
+                        },
+                        {
+                            "children": [
+                                {
+                                    "children": [],
+                                    "data": "Empty",
+                                    "refKey": "t0cr_20081231_000_1_REDUCE",
+                                    "title": "t0cr_20081231_000_1_REDUCE <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:32:10 ) + 0:04:14"
+                                },
+                                {
+                                    "children": [],
+                                    "data": "Empty",
+                                    "refKey": "t0cr_20081231_000_2_REDUCE",
+                                    "title": "t0cr_20081231_000_2_REDUCE <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:24:25 ) + 0:04:30"
+                                }
+                            ],
+                            "data": "Empty",
+                            "expanded": false,
+                            "folder": true,
+                            "refKey": "t0cr_20081231_000_REDUCE",
+                            "title": "REDUCE"
+                        },
+                        {
+                            "children": [
+                                {
+                                    "children": [],
+                                    "data": "Empty",
+                                    "refKey": "t0cr_20081231_000_1_ARCHIVE",
+                                    "title": "t0cr_20081231_000_1_ARCHIVE <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:12 ) + 0:04:28"
+                                },
+                                {
+                                    "children": [],
+                                    "data": "Empty",
+                                    "refKey": "t0cr_20081231_000_2_ARCHIVE",
+                                    "title": "t0cr_20081231_000_2_ARCHIVE <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:14 ) + 0:04:27"
+                                }
+                            ],
+                            "data": "Empty",
+                            "expanded": false,
+                            "folder": true,
+                            "refKey": "t0cr_20081231_000_ARCHIVE",
+                            "title": "ARCHIVE"
+                        },
+                        {
+                            "children": [
+                                {
+                                    "children": [],
+                                    "data": "Empty",
+                                    "refKey": "t0cr_20081231_000_1_CLEAN",
+                                    "title": "t0cr_20081231_000_1_CLEAN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:28:17 ) + 0:00:00 <span class='badge' style='background-color:#99ff66'>TARGET</span>"
+                                },
+                                {
+                                    "children": [],
+                                    "data": "Empty",
+                                    "refKey": "t0cr_20081231_000_2_CLEAN",
+                                    "title": "t0cr_20081231_000_2_CLEAN <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:26:57 ) + 0:00:00 <span class='badge' style='background-color:#99ff66'>TARGET</span>"
+                                }
+                            ],
+                            "data": "Empty",
+                            "expanded": false,
+                            "folder": true,
+                            "refKey": "t0cr_20081231_000_CLEAN",
+                            "title": "CLEAN"
+                        }
+                    ],
+                    "data": "Empty",
+                    "expanded": false,
+                    "folder": true,
+                    "refKey": "t0cr_20081231_000",
+                    "title": "t0cr_20081231_000 <span class='badge' style='background-color:yellow'>12 / 12 COMPLETED</span> <span class='badge' style='background-color:#4dffa6'>&#10004;</span>"
+                }
+            ],
+            "data": "Empty",
+            "expanded": true,
+            "folder": true,
+            "refKey": "t0cr_20081231",
+            "title": "t0cr_20081231"
+        },
+        {
+            "children": [
+                {
+                    "children": [],
+                    "data": "Empty",
+                    "refKey": "t0cr_LOCAL_SETUP",
+                    "title": "t0cr_LOCAL_SETUP <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:13 ) + 0:03:04 <span class='badge' style='background-color:#80d4ff'>SOURCE</span>"
+                },
+                {
+                    "children": [],
+                    "data": "Empty",
+                    "refKey": "t0cr_LOCAL_SEND_SOURCE",
+                    "title": "t0cr_LOCAL_SEND_SOURCE <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:18 ) + 0:03:29"
+                },
+                {
+                    "children": [],
+                    "data": "Empty",
+                    "refKey": "t0cr_LOCAL_SEND_STATIC",
+                    "title": "t0cr_LOCAL_SEND_STATIC <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:14 ) + 0:03:08"
+                },
+                {
+                    "children": [],
+                    "data": "Empty",
+                    "refKey": "t0cr_REMOTE_COMPILE",
+                    "title": "t0cr_REMOTE_COMPILE <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:00 ) + 0:08:33"
+                },
+                {
+                    "children": [],
+                    "data": "Empty",
+                    "refKey": "t0cr_PREPROCFIX",
+                    "title": "t0cr_PREPROCFIX <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:01 ) + 0:06:42"
+                }
+            ],
+            "data": "Empty",
+            "expanded": true,
+            "folder": true,
+            "refKey": "Keys",
+            "title": "Keys"
+        }
+    ]
 }

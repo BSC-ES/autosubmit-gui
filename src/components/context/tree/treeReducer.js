@@ -36,7 +36,7 @@ import { DEBUG } from "../vars";
 /* eslint import/no-anonymous-default-export: ["error", {"allowArrowFunction": true}] */
 export default (state, action) => {
   switch (action.type) {
-    case GET_TREE:      
+    case GET_TREE:
       const { jobs, warningMessage } = action.payload;
       return {
         ...state,
@@ -125,6 +125,7 @@ export default (state, action) => {
               cjob.minutes !== ijob.minutes ||
               cjob.minutes_queue !== ijob.minutes_queue)
           ) {
+            // console.log(cjob);
             let is_change_status = false;
             let new_status = cjob.status;
             let old_status = ijob.status;
@@ -235,7 +236,7 @@ export default (state, action) => {
                     if (old_status === "FAILED") {
                       header_data.failed -= 1;
                     }
-                    if (old_status === "COMPLETED"){
+                    if (old_status === "COMPLETED") {
                       header_data.completed -= 1;
                     }
                   }
@@ -400,18 +401,18 @@ export default (state, action) => {
         const { jobs } = result;
         const completed_jobs = jobs !== null && jobs !== undefined ? jobs.filter(x => x.status === "COMPLETED") : [];
 
-        if (state.treedata && state.fancyTree){
+        if (state.treedata && state.fancyTree) {
           //updateTreeData(result, state.treedata, state.fancyTree);
           //updateFancyTree(runDetail, state.fancyTree);
 
         }
         return {
           ...state,
-          currentRunIdOnTree : {runId: runId, created: meta.created, message: buildRunTitle(runId, meta, completed_jobs.length)},
+          currentRunIdOnTree: { runId: runId, created: meta.created, message: buildRunTitle(runId, meta, completed_jobs.length) },
           treedata: result,
           loadingTree: false,
           enabledTreeSearch: true,
-          elapsedLoadingTree: 1,        
+          elapsedLoadingTree: 1,
           startAutoUpdateTreePkl: false,
           loadingPreviousRun: false,
           treeReady: getReadyJobs(jobs),
@@ -423,7 +424,7 @@ export default (state, action) => {
         let count = 0;
         const isNegation = string.indexOf('!') === 0;
         if (string.indexOf("*") > -1) {
-          const fields = isNegation === true ? string.substring(1).split('*') : string.split("*");          
+          const fields = isNegation === true ? string.substring(1).split('*') : string.split("*");
           count = state.fancyTree.filterNodes(function (node) {
             let result = false;
             let string_test = String(node.title).toUpperCase();
@@ -435,23 +436,23 @@ export default (state, action) => {
                     string_test.indexOf(fields[i]) + fields[i].length;
                   string_test = string_test.substring(found_index);
                   //debug && console.log(found_index + " in " + string_test);
-                  if (isNegation){
+                  if (isNegation) {
                     result = false;
                     break;
                   } else {
                     result = true;
                   }
-                  
+
                 } else {
                   // debug &&
                   //   console.log(fields[i] + " Not found in " + string_test);
-                  if (isNegation){
+                  if (isNegation) {
                     result = true;
                   } else {
                     result = false;
-                    break;         
+                    break;
                   }
-                           
+
                 }
               }
             }
@@ -462,14 +463,14 @@ export default (state, action) => {
           count = state.fancyTree.filterNodes(function (node) {
             let result = false;
             let stringTest = String(node.title).toUpperCase();
-            if (stringTest.indexOf(searchString) > -1){
-              if (isNegation){
+            if (stringTest.indexOf(searchString) > -1) {
+              if (isNegation) {
                 result = false;
               } else {
                 result = true;
               }
             } else {
-              if (isNegation){
+              if (isNegation) {
                 result = true;
               } else {
                 result = false;
@@ -530,7 +531,7 @@ export default (state, action) => {
     case UPDATE_SELECTION_TREE:
       DEBUG && console.log("Node");
       DEBUG && console.log(action.payload.node);
-      if (action.payload && action.payload.node && action.payload.node.folder){        
+      if (action.payload && action.payload.node && action.payload.node.folder) {
         DEBUG && console.log("Folder")
         return {
           ...state,
@@ -546,7 +547,7 @@ export default (state, action) => {
           currentCommandTree: null,
           currentTextCommandTree: null,
         };
-      }      
+      }
     case UPDATE_TREE_SELECTED_NODES:
       //const selectedNodes = action.payload;
       state.treeSelectedNodes = null;
@@ -556,7 +557,7 @@ export default (state, action) => {
         const currentSelectedNodes = state.fancyTree.getSelectedNodes();
         DEBUG && console.log(currentSelectedNodes);
         let arrayNames = [];
-        if (currentSelectedNodes.length > 0){
+        if (currentSelectedNodes.length > 0) {
           currentSelectedNodes.map((job) => arrayNames.push(job.refKey));
         }
         state.treeSelectedNodes = arrayNames;
@@ -585,12 +586,12 @@ export default (state, action) => {
     case SET_CURRENT_COMMAND:
       return {
         ...state,
-        currentCommandTree: action.payload,        
+        currentCommandTree: action.payload,
         //canCopyToClipboard: true,
       };
     case SET_CURRENT_TEXT_COMMAND:
       return {
-        ...state, 
+        ...state,
         currentTextCommandTree: action.payload,
         //canCopyToClipboard: true,
       };

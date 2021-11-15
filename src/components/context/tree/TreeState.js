@@ -22,7 +22,7 @@ import {
   SET_OFF_LOADING_TREE,
   INCREASE_LOADING_TREE,
   UPDATE_RUNDETAIL_ON_TREE,
-  GET_EXPERIMENT_RUN_JOBDATA,  
+  GET_EXPERIMENT_RUN_JOBDATA,
   LOADING_PREVIOUS_RUN,
   UPDATE_TREE_SELECTED_NODES,
   SET_CURRENT_COMMAND,
@@ -61,23 +61,23 @@ const TreeState = (props) => {
   const [state, dispatch] = useReducer(TreeReducer, initialState);
   const localserver = AUTOSUBMIT_API_SOURCE;
   const debug = DEBUG;
-  
+
   const getExperimentTree = async (expid, warningMessage = null) => {
     setLoadingTree();
     let result = null;
     //start();
     if (NOAPI) {
-      result = require("../data/tree_"+String(expid)+".json");
+      result = require("../data/tree_" + String(expid) + ".json");
     } else {
       const res = await axios
-      .get(`${localserver}/tree/${expid}`)
-      .catch((error) => {
-        alert(error.message);
-        setOffLoadingTree();
-      });
+        .get(`${localserver}/tree/${expid}`)
+        .catch((error) => {
+          alert(error.message);
+          setOffLoadingTree();
+        });
       result = res ? res.data : null;
     }
-  
+
     if (result) {
       debug && console.log(result);
       result.warningMessage = warningMessage;
@@ -97,7 +97,7 @@ const TreeState = (props) => {
     setLoadingTreeRefresh();
     let retrievedPklTree = null;
     if (NOAPI) {
-      retrievedPklTree = require("../data/pkltreeinfo_"+String(expid)+".json");
+      retrievedPklTree = require("../data/pkltreeinfo_" + String(expid) + ".json");
     } else {
       const res = await axios.get(
         `${localserver}/pkltreeinfo/${expid}/${timeStamp}`
@@ -105,7 +105,7 @@ const TreeState = (props) => {
       retrievedPklTree = res.data;
       debug && console.log(retrievedPklTree);
     }
-    
+
     dispatch({
       type: PKL_TREE_LOADED,
       payload: retrievedPklTree,
@@ -116,21 +116,26 @@ const TreeState = (props) => {
     setLoadingPreviousRun();
     let result = null;
     if (NOAPI) {
-      result = require("../data/rundetail_"+String(expid)+"_"+String(run_id)+".json");
+      try {
+        result = require("../data/rundetail_" + String(expid) + "_" + String(run_id) + ".json");
+      } catch (error) {
+        console.error(error);
+        result = { result: [], runId: run_id, meta: "" };
+      }
       // console.log(result);
     } else {
-      const res = await axios.get(`${localserver}/rundetail/${expid}/${run_id}`).catch((error) => { alert(error.message);});
+      const res = await axios.get(`${localserver}/rundetail/${expid}/${run_id}`).catch((error) => { alert(error.message); });
       debug && console.log(res.data);
       // console.log(res.data);
       result = res ? res.data : null;
     }
-    
+
     // console.log(result);
 
     dispatch({
       type: GET_EXPERIMENT_RUN_JOBDATA,
-      payload: {result: result, runId: run_id, meta: meta},
-    });    
+      payload: { result: result, runId: run_id, meta: meta },
+    });
     // setAutoUpdateTreePkl(false);
   }
 
@@ -140,7 +145,7 @@ const TreeState = (props) => {
     // setLoadingTree();
     dispatch({
       type: UPDATE_RUNDETAIL_ON_TREE,
-      payload: {runDetail: runDetail, runId: run_id},
+      payload: { runDetail: runDetail, runId: run_id },
     })
   }
 
@@ -241,7 +246,7 @@ const TreeState = (props) => {
         getExperimentRunJobData,
         updateTreeSelectedNodes,
         setCurrentCommandTree,
-        setCurrentTextCommandTree,        
+        setCurrentTextCommandTree,
       }}
     >
       {props.children}
