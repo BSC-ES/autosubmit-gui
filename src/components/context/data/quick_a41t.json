@@ -1,0 +1,1081 @@
+{
+  "completed": 62,
+  "error": false,
+  "error_message": "",
+  "failed": 0,
+  "queuing": 0,
+  "running": 0,
+  "total": 89,
+  "tree_view": [
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_9_SIM",
+      "title": "a41t_20100101_fc00_9_SIM <span class='badge' style='background-color: orange'>#SUSPENDED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_2_CMOROCE",
+      "title": "a41t_20100101_fc00_2_CMOROCE <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_4_CMOROCE",
+      "title": "a41t_20100101_fc00_4_CMOROCE <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_8_SIM",
+      "title": "a41t_20100101_fc00_8_SIM <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_8_MONITOR",
+      "title": "a41t_20100101_fc00_8_MONITOR <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_5_SIM",
+      "title": "a41t_20100101_fc00_5_SIM <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_3_SAVEIC",
+      "title": "a41t_20100101_fc00_3_SAVEIC <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_9_CMOROCE",
+      "title": "a41t_20100101_fc00_9_CMOROCE <span class='badge' style='background-color: gray'>#WAITING</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_6_POST",
+      "title": "a41t_20100101_fc00_6_POST <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_5_MONITOR",
+      "title": "a41t_20100101_fc00_5_MONITOR <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_9_POST",
+      "title": "a41t_20100101_fc00_9_POST <span class='badge' style='background-color: gray'>#WAITING</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_7_CMOROCE",
+      "title": "a41t_20100101_fc00_7_CMOROCE <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_4_SIM",
+      "title": "a41t_20100101_fc00_4_SIM <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_3_NCTIME",
+      "title": "a41t_20100101_fc00_3_NCTIME <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_4_SAVEIC",
+      "title": "a41t_20100101_fc00_4_SAVEIC <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_3_MONITOR",
+      "title": "a41t_20100101_fc00_3_MONITOR <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_10_EARTHDIAGS",
+      "title": "a41t_20100101_fc00_10_EARTHDIAGS <span class='badge' style='background-color: gray'>#WAITING</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_2_CLEAN",
+      "title": "a41t_20100101_fc00_2_CLEAN <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_9_CLEAN",
+      "title": "a41t_20100101_fc00_9_CLEAN <span class='badge' style='background-color: gray'>#WAITING</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_6_NCTIME",
+      "title": "a41t_20100101_fc00_6_NCTIME <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_1_POST",
+      "title": "a41t_20100101_fc00_1_POST <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_7_MONITOR",
+      "title": "a41t_20100101_fc00_7_MONITOR <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_3_EARTHDIAGS",
+      "title": "a41t_20100101_fc00_3_EARTHDIAGS <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_5_POST",
+      "title": "a41t_20100101_fc00_5_POST <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_REMOTE_SETUP",
+      "title": "a41t_REMOTE_SETUP <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_8_EARTHDIAGS",
+      "title": "a41t_20100101_fc00_8_EARTHDIAGS <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_1_CMOROCE",
+      "title": "a41t_20100101_fc00_1_CMOROCE <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_TRANSFER_MEMBER",
+      "title": "a41t_20100101_fc00_TRANSFER_MEMBER <span class='badge' style='background-color: gray'>#WAITING</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_3_SIM",
+      "title": "a41t_20100101_fc00_3_SIM <span class='badge' style='background-color: yellow'>#COMPLETED</span> <span class='badge' style='background-color:#94b8b8'>Wrapped 16355137846167</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_11_POST",
+      "title": "a41t_20100101_fc00_11_POST <span class='badge' style='background-color: gray'>#WAITING</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_SYNCHRONIZE",
+      "title": "a41t_SYNCHRONIZE <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_11_CLEAN",
+      "title": "a41t_20100101_fc00_11_CLEAN <span class='badge' style='background-color: gray'>#WAITING</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_8_CMOROCE",
+      "title": "a41t_20100101_fc00_8_CMOROCE <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_11_NCTIME",
+      "title": "a41t_20100101_fc00_11_NCTIME <span class='badge' style='background-color: gray'>#WAITING</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_7_EARTHDIAGS",
+      "title": "a41t_20100101_fc00_7_EARTHDIAGS <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_8_SAVEIC",
+      "title": "a41t_20100101_fc00_8_SAVEIC <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_2_SAVEIC",
+      "title": "a41t_20100101_fc00_2_SAVEIC <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_6_CMOROCE",
+      "title": "a41t_20100101_fc00_6_CMOROCE <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_1_MONITOR",
+      "title": "a41t_20100101_fc00_1_MONITOR <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_1_EARTHDIAGS",
+      "title": "a41t_20100101_fc00_1_EARTHDIAGS <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_9_SAVEIC",
+      "title": "a41t_20100101_fc00_9_SAVEIC <span class='badge' style='background-color: gray'>#WAITING</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_7_CLEAN",
+      "title": "a41t_20100101_fc00_7_CLEAN <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_9_MONITOR",
+      "title": "a41t_20100101_fc00_9_MONITOR <span class='badge' style='background-color: gray'>#WAITING</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_11_SAVEIC",
+      "title": "a41t_20100101_fc00_11_SAVEIC <span class='badge' style='background-color: gray'>#WAITING</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_1_CLEAN",
+      "title": "a41t_20100101_fc00_1_CLEAN <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_7_SAVEIC",
+      "title": "a41t_20100101_fc00_7_SAVEIC <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_10_CMOROCE",
+      "title": "a41t_20100101_fc00_10_CMOROCE <span class='badge' style='background-color: gray'>#WAITING</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_6_MONITOR",
+      "title": "a41t_20100101_fc00_6_MONITOR <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_8_CLEAN",
+      "title": "a41t_20100101_fc00_8_CLEAN <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_CLEAN_MEMBER",
+      "title": "a41t_20100101_fc00_CLEAN_MEMBER <span class='badge' style='background-color: gray'>#WAITING</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_6_EARTHDIAGS",
+      "title": "a41t_20100101_fc00_6_EARTHDIAGS <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_4_CLEAN",
+      "title": "a41t_20100101_fc00_4_CLEAN <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_LOCAL_SETUP",
+      "title": "a41t_LOCAL_SETUP <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_6_SIM",
+      "title": "a41t_20100101_fc00_6_SIM <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_5_CMOROCE",
+      "title": "a41t_20100101_fc00_5_CMOROCE <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_9_NCTIME",
+      "title": "a41t_20100101_fc00_9_NCTIME <span class='badge' style='background-color: gray'>#WAITING</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_2_MONITOR",
+      "title": "a41t_20100101_fc00_2_MONITOR <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_8_POST",
+      "title": "a41t_20100101_fc00_8_POST <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_4_MONITOR",
+      "title": "a41t_20100101_fc00_4_MONITOR <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_5_EARTHDIAGS",
+      "title": "a41t_20100101_fc00_5_EARTHDIAGS <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_2_SIM",
+      "title": "a41t_20100101_fc00_2_SIM <span class='badge' style='background-color: yellow'>#COMPLETED</span> <span class='badge' style='background-color:#94b8b8'>Wrapped 16355137846167</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_3_POST",
+      "title": "a41t_20100101_fc00_3_POST <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_11_SIM",
+      "title": "a41t_20100101_fc00_11_SIM <span class='badge' style='background-color: gray'>#WAITING</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_5_CLEAN",
+      "title": "a41t_20100101_fc00_5_CLEAN <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_4_POST",
+      "title": "a41t_20100101_fc00_4_POST <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_10_SIM",
+      "title": "a41t_20100101_fc00_10_SIM <span class='badge' style='background-color: gray'>#WAITING</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_1_SAVEIC",
+      "title": "a41t_20100101_fc00_1_SAVEIC <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_10_POST",
+      "title": "a41t_20100101_fc00_10_POST <span class='badge' style='background-color: gray'>#WAITING</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_7_POST",
+      "title": "a41t_20100101_fc00_7_POST <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_PERFORMANCE_METRICS",
+      "title": "a41t_PERFORMANCE_METRICS <span class='badge' style='background-color: gray'>#WAITING</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_1_SIM",
+      "title": "a41t_20100101_fc00_1_SIM <span class='badge' style='background-color: yellow'>#COMPLETED</span> <span class='badge' style='background-color:#94b8b8'>Wrapped 16355137846167</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_9_EARTHDIAGS",
+      "title": "a41t_20100101_fc00_9_EARTHDIAGS <span class='badge' style='background-color: gray'>#WAITING</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_10_SAVEIC",
+      "title": "a41t_20100101_fc00_10_SAVEIC <span class='badge' style='background-color: gray'>#WAITING</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_3_CLEAN",
+      "title": "a41t_20100101_fc00_3_CLEAN <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_6_SAVEIC",
+      "title": "a41t_20100101_fc00_6_SAVEIC <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_11_EARTHDIAGS",
+      "title": "a41t_20100101_fc00_11_EARTHDIAGS <span class='badge' style='background-color: gray'>#WAITING</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_10_MONITOR",
+      "title": "a41t_20100101_fc00_10_MONITOR <span class='badge' style='background-color: gray'>#WAITING</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_2_POST",
+      "title": "a41t_20100101_fc00_2_POST <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_4_EARTHDIAGS",
+      "title": "a41t_20100101_fc00_4_EARTHDIAGS <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_10_CLEAN",
+      "title": "a41t_20100101_fc00_10_CLEAN <span class='badge' style='background-color: gray'>#WAITING</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_2_EARTHDIAGS",
+      "title": "a41t_20100101_fc00_2_EARTHDIAGS <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_5_SAVEIC",
+      "title": "a41t_20100101_fc00_5_SAVEIC <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_6_CLEAN",
+      "title": "a41t_20100101_fc00_6_CLEAN <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_7_SIM",
+      "title": "a41t_20100101_fc00_7_SIM <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_CLEAN_EXPERIMENT",
+      "title": "a41t_CLEAN_EXPERIMENT <span class='badge' style='background-color: gray'>#WAITING</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_11_MONITOR",
+      "title": "a41t_20100101_fc00_11_MONITOR <span class='badge' style='background-color: gray'>#WAITING</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_INI",
+      "title": "a41t_20100101_fc00_INI <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_11_CMOROCE",
+      "title": "a41t_20100101_fc00_11_CMOROCE <span class='badge' style='background-color: gray'>#WAITING</span>"
+    },
+    {
+      "children": [],
+      "data": "Empty",
+      "refKey": "a41t_20100101_fc00_3_CMOROCE",
+      "title": "a41t_20100101_fc00_3_CMOROCE <span class='badge' style='background-color: yellow'>#COMPLETED</span>"
+    }
+  ],
+  "view_data": [
+    {
+      "err": "/a41t_20100101_fc00_2_CMOROCE.20211030234716.err",
+      "name": "a41t_20100101_fc00_2_CMOROCE",
+      "out": "/a41t_20100101_fc00_2_CMOROCE.20211030234716.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_4_CMOROCE.20211031121743.err",
+      "name": "a41t_20100101_fc00_4_CMOROCE",
+      "out": "/a41t_20100101_fc00_4_CMOROCE.20211031121743.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_8_SIM.20211105192611.err",
+      "name": "a41t_20100101_fc00_8_SIM",
+      "out": "/a41t_20100101_fc00_8_SIM.20211105192611.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_8_MONITOR.20211108172503.err",
+      "name": "a41t_20100101_fc00_8_MONITOR",
+      "out": "/a41t_20100101_fc00_8_MONITOR.20211108172503.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_5_SIM.20211031121633.err",
+      "name": "a41t_20100101_fc00_5_SIM",
+      "out": "/a41t_20100101_fc00_5_SIM.20211031121633.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_3_SAVEIC.20211031053135.err",
+      "name": "a41t_20100101_fc00_3_SAVEIC",
+      "out": "/a41t_20100101_fc00_3_SAVEIC.20211031053135.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/",
+      "name": "a41t_20100101_fc00_9_CMOROCE",
+      "out": "/",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_6_POST.20211101083215.err",
+      "name": "a41t_20100101_fc00_6_POST",
+      "out": "/a41t_20100101_fc00_6_POST.20211101083215.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_5_MONITOR.20211101021652.err",
+      "name": "a41t_20100101_fc00_5_MONITOR",
+      "out": "/a41t_20100101_fc00_5_MONITOR.20211101021652.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/",
+      "name": "a41t_20100101_fc00_9_POST",
+      "out": "/",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_7_CMOROCE.20211101083301.err",
+      "name": "a41t_20100101_fc00_7_CMOROCE",
+      "out": "/a41t_20100101_fc00_7_CMOROCE.20211101083301.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_4_SIM.20211031053205.err",
+      "name": "a41t_20100101_fc00_4_SIM",
+      "out": "/a41t_20100101_fc00_4_SIM.20211031053205.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_3_NCTIME.20211031122347.err",
+      "name": "a41t_20100101_fc00_3_NCTIME",
+      "out": "/a41t_20100101_fc00_3_NCTIME.20211031122347.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_4_SAVEIC.20211031121620.err",
+      "name": "a41t_20100101_fc00_4_SAVEIC",
+      "out": "/a41t_20100101_fc00_4_SAVEIC.20211031121620.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_3_MONITOR.20211031124931.err",
+      "name": "a41t_20100101_fc00_3_MONITOR",
+      "out": "/a41t_20100101_fc00_3_MONITOR.20211031124931.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/",
+      "name": "a41t_20100101_fc00_10_EARTHDIAGS",
+      "out": "/",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_2_CLEAN.20211031053230.err",
+      "name": "a41t_20100101_fc00_2_CLEAN",
+      "out": "/a41t_20100101_fc00_2_CLEAN.20211031053230.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/",
+      "name": "a41t_20100101_fc00_9_CLEAN",
+      "out": "/",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_6_NCTIME.20211101083905.err",
+      "name": "a41t_20100101_fc00_6_NCTIME",
+      "out": "/a41t_20100101_fc00_6_NCTIME.20211101083905.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_1_POST.20211030234638.err",
+      "name": "a41t_20100101_fc00_1_POST",
+      "out": "/a41t_20100101_fc00_1_POST.20211030234638.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_7_MONITOR.20211106050320.err",
+      "name": "a41t_20100101_fc00_7_MONITOR",
+      "out": "/a41t_20100101_fc00_7_MONITOR.20211106050320.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_3_EARTHDIAGS.20211031122349.err",
+      "name": "a41t_20100101_fc00_3_EARTHDIAGS",
+      "out": "/a41t_20100101_fc00_3_EARTHDIAGS.20211031122349.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_5_POST.20211101014417.err",
+      "name": "a41t_20100101_fc00_5_POST",
+      "out": "/a41t_20100101_fc00_5_POST.20211101014417.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_REMOTE_SETUP.20211029104001.err",
+      "name": "a41t_REMOTE_SETUP",
+      "out": "/a41t_REMOTE_SETUP.20211029104001.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_8_EARTHDIAGS.20211108165900.err",
+      "name": "a41t_20100101_fc00_8_EARTHDIAGS",
+      "out": "/a41t_20100101_fc00_8_EARTHDIAGS.20211108165900.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_1_CMOROCE.20211030170410.err",
+      "name": "a41t_20100101_fc00_1_CMOROCE",
+      "out": "/a41t_20100101_fc00_1_CMOROCE.20211030170410.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/",
+      "name": "a41t_20100101_fc00_TRANSFER_MEMBER",
+      "out": "/",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_3_SIM.20211030234602.err",
+      "name": "a41t_20100101_fc00_3_SIM",
+      "out": "/a41t_20100101_fc00_3_SIM.20211030234602.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/",
+      "name": "a41t_20100101_fc00_11_POST",
+      "out": "/",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_SYNCHRONIZE.20211029103758.err",
+      "name": "a41t_SYNCHRONIZE",
+      "out": "/a41t_SYNCHRONIZE.20211029103758.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/",
+      "name": "a41t_20100101_fc00_11_CLEAN",
+      "out": "/",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_8_CMOROCE.20211106043136.err",
+      "name": "a41t_20100101_fc00_8_CMOROCE",
+      "out": "/a41t_20100101_fc00_8_CMOROCE.20211106043136.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/",
+      "name": "a41t_20100101_fc00_11_NCTIME",
+      "out": "/",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_7_EARTHDIAGS.20211106043756.err",
+      "name": "a41t_20100101_fc00_7_EARTHDIAGS",
+      "out": "/a41t_20100101_fc00_7_EARTHDIAGS.20211106043756.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_8_SAVEIC.20211106043028.err",
+      "name": "a41t_20100101_fc00_8_SAVEIC",
+      "out": "/a41t_20100101_fc00_8_SAVEIC.20211106043028.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_2_SAVEIC.20211030234605.err",
+      "name": "a41t_20100101_fc00_2_SAVEIC",
+      "out": "/a41t_20100101_fc00_2_SAVEIC.20211030234605.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_6_CMOROCE.20211101014451.err",
+      "name": "a41t_20100101_fc00_6_CMOROCE",
+      "out": "/a41t_20100101_fc00_6_CMOROCE.20211101014451.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_1_MONITOR.20211031001630.err",
+      "name": "a41t_20100101_fc00_1_MONITOR",
+      "out": "/a41t_20100101_fc00_1_MONITOR.20211031001630.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_1_EARTHDIAGS.20211030235014.err",
+      "name": "a41t_20100101_fc00_1_EARTHDIAGS",
+      "out": "/a41t_20100101_fc00_1_EARTHDIAGS.20211030235014.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/",
+      "name": "a41t_20100101_fc00_9_SAVEIC",
+      "out": "/",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_7_CLEAN.20211106043120.err",
+      "name": "a41t_20100101_fc00_7_CLEAN",
+      "out": "/a41t_20100101_fc00_7_CLEAN.20211106043120.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/",
+      "name": "a41t_20100101_fc00_9_MONITOR",
+      "out": "/",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/",
+      "name": "a41t_20100101_fc00_11_SAVEIC",
+      "out": "/",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_1_CLEAN.20211030234655.err",
+      "name": "a41t_20100101_fc00_1_CLEAN",
+      "out": "/a41t_20100101_fc00_1_CLEAN.20211030234655.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_7_SAVEIC.20211101083203.err",
+      "name": "a41t_20100101_fc00_7_SAVEIC",
+      "out": "/a41t_20100101_fc00_7_SAVEIC.20211101083203.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/",
+      "name": "a41t_20100101_fc00_10_CMOROCE",
+      "out": "/",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_6_MONITOR.20211101090219.err",
+      "name": "a41t_20100101_fc00_6_MONITOR",
+      "out": "/a41t_20100101_fc00_6_MONITOR.20211101090219.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_8_CLEAN.20211108165208.err",
+      "name": "a41t_20100101_fc00_8_CLEAN",
+      "out": "/a41t_20100101_fc00_8_CLEAN.20211108165208.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/",
+      "name": "a41t_20100101_fc00_CLEAN_MEMBER",
+      "out": "/",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_6_EARTHDIAGS.20211101083908.err",
+      "name": "a41t_20100101_fc00_6_EARTHDIAGS",
+      "out": "/a41t_20100101_fc00_6_EARTHDIAGS.20211101083908.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_9_SIM.20211106024406.err",
+      "name": "a41t_20100101_fc00_9_SIM",
+      "out": "/a41t_20100101_fc00_9_SIM.20211106024406.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_4_CLEAN.20211031190055.err",
+      "name": "a41t_20100101_fc00_4_CLEAN",
+      "out": "/a41t_20100101_fc00_4_CLEAN.20211031190055.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_LOCAL_SETUP.20211029103745.err",
+      "name": "a41t_LOCAL_SETUP",
+      "out": "/a41t_LOCAL_SETUP.20211029103745.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_6_SIM.20211031190029.err",
+      "name": "a41t_20100101_fc00_6_SIM",
+      "out": "/a41t_20100101_fc00_6_SIM.20211031190029.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_5_CMOROCE.20211031190131.err",
+      "name": "a41t_20100101_fc00_5_CMOROCE",
+      "out": "/a41t_20100101_fc00_5_CMOROCE.20211031190131.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/",
+      "name": "a41t_20100101_fc00_9_NCTIME",
+      "out": "/",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_2_MONITOR.20211031060528.err",
+      "name": "a41t_20100101_fc00_2_MONITOR",
+      "out": "/a41t_20100101_fc00_2_MONITOR.20211031060528.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_8_POST.20211108162313.err",
+      "name": "a41t_20100101_fc00_8_POST",
+      "out": "/a41t_20100101_fc00_8_POST.20211108162313.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_4_MONITOR.20211031193211.err",
+      "name": "a41t_20100101_fc00_4_MONITOR",
+      "out": "/a41t_20100101_fc00_4_MONITOR.20211031193211.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_5_EARTHDIAGS.20211101015126.err",
+      "name": "a41t_20100101_fc00_5_EARTHDIAGS",
+      "out": "/a41t_20100101_fc00_5_EARTHDIAGS.20211101015126.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_2_SIM.20211030170101.err",
+      "name": "a41t_20100101_fc00_2_SIM",
+      "out": "/a41t_20100101_fc00_2_SIM.20211030170101.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_3_POST.20211031121633.err",
+      "name": "a41t_20100101_fc00_3_POST",
+      "out": "/a41t_20100101_fc00_3_POST.20211031121633.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/",
+      "name": "a41t_20100101_fc00_11_SIM",
+      "out": "/",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_5_CLEAN.20211101014444.err",
+      "name": "a41t_20100101_fc00_5_CLEAN",
+      "out": "/a41t_20100101_fc00_5_CLEAN.20211101014444.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_4_POST.20211031190030.err",
+      "name": "a41t_20100101_fc00_4_POST",
+      "out": "/a41t_20100101_fc00_4_POST.20211031190030.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/",
+      "name": "a41t_20100101_fc00_10_SIM",
+      "out": "/",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_1_SAVEIC.20211030170304.err",
+      "name": "a41t_20100101_fc00_1_SAVEIC",
+      "out": "/a41t_20100101_fc00_1_SAVEIC.20211030170304.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/",
+      "name": "a41t_20100101_fc00_10_POST",
+      "out": "/",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_7_POST.20211106043054.err",
+      "name": "a41t_20100101_fc00_7_POST",
+      "out": "/a41t_20100101_fc00_7_POST.20211106043054.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/",
+      "name": "a41t_PERFORMANCE_METRICS",
+      "out": "/",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_1_SIM.20211030101509.err",
+      "name": "a41t_20100101_fc00_1_SIM",
+      "out": "/a41t_20100101_fc00_1_SIM.20211030101509.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/",
+      "name": "a41t_20100101_fc00_9_EARTHDIAGS",
+      "out": "/",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/",
+      "name": "a41t_20100101_fc00_10_SAVEIC",
+      "out": "/",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_3_CLEAN.20211031121658.err",
+      "name": "a41t_20100101_fc00_3_CLEAN",
+      "out": "/a41t_20100101_fc00_3_CLEAN.20211031121658.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_6_SAVEIC.20211101014351.err",
+      "name": "a41t_20100101_fc00_6_SAVEIC",
+      "out": "/a41t_20100101_fc00_6_SAVEIC.20211101014351.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/",
+      "name": "a41t_20100101_fc00_11_EARTHDIAGS",
+      "out": "/",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/",
+      "name": "a41t_20100101_fc00_10_MONITOR",
+      "out": "/",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_2_POST.20211031053200.err",
+      "name": "a41t_20100101_fc00_2_POST",
+      "out": "/a41t_20100101_fc00_2_POST.20211031053200.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_4_EARTHDIAGS.20211031190721.err",
+      "name": "a41t_20100101_fc00_4_EARTHDIAGS",
+      "out": "/a41t_20100101_fc00_4_EARTHDIAGS.20211031190721.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/",
+      "name": "a41t_20100101_fc00_10_CLEAN",
+      "out": "/",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_2_EARTHDIAGS.20211031053916.err",
+      "name": "a41t_20100101_fc00_2_EARTHDIAGS",
+      "out": "/a41t_20100101_fc00_2_EARTHDIAGS.20211031053916.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_5_SAVEIC.20211031190017.err",
+      "name": "a41t_20100101_fc00_5_SAVEIC",
+      "out": "/a41t_20100101_fc00_5_SAVEIC.20211031190017.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_6_CLEAN.20211101083240.err",
+      "name": "a41t_20100101_fc00_6_CLEAN",
+      "out": "/a41t_20100101_fc00_6_CLEAN.20211101083240.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_7_SIM.20211101014350.err",
+      "name": "a41t_20100101_fc00_7_SIM",
+      "out": "/a41t_20100101_fc00_7_SIM.20211101014350.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/",
+      "name": "a41t_CLEAN_EXPERIMENT",
+      "out": "/",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/",
+      "name": "a41t_20100101_fc00_11_MONITOR",
+      "out": "/",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_INI.20211029110309.err",
+      "name": "a41t_20100101_fc00_INI",
+      "out": "/a41t_20100101_fc00_INI.20211029110309.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/",
+      "name": "a41t_20100101_fc00_11_CMOROCE",
+      "out": "/",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    },
+    {
+      "err": "/a41t_20100101_fc00_3_CMOROCE.20211031053300.err",
+      "name": "a41t_20100101_fc00_3_CMOROCE",
+      "out": "/a41t_20100101_fc00_3_CMOROCE.20211031053300.out",
+      "path_log": "/esarchive/autosubmit/a41t/tmp/LOG_a41t"
+    }
+  ]
+}

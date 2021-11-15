@@ -55,21 +55,21 @@
             "wrapper": null
         },
         {
-            "completed": 357,
-            "description": "[aerchemmip] ssp370 exp with 3.3.2.1 sources copy of a2vx",
+            "completed": 62,
+            "description": "HR reconstruction, same than the one I want but with ORAS5 3D-nudging. ORAS5 surface restoring updated Juan's method, ERA5-HR forcing, resto mask 15weak, strong surfresto, a2ye tuning, a3qa IC (2010) - copy of a40c",
             "failed": 0,
             "hpc": "marenostrum4",
-            "id": 6076,
-            "modified": "Tue, 29 Dec 2020 11:42:15 GMT",
-            "name": "a39t",
+            "id": 7417,
+            "modified": "Mon, 08 Nov 2021 17:37:21 GMT",
+            "name": "a41t",
             "queuing": 0,
             "running": 0,
-            "status": "RUNNING",
+            "status": "NOT RUNNING",
             "submitted": 0,
-            "suspended": 0,
-            "total": 375,
-            "user": "mariag",
-            "version": "3.12.0",
+            "suspended": 1,
+            "total": 89,
+            "user": "acarreri",
+            "version": "3.13.0",
             "wrapper": "VERTICAL"
         },
         {
@@ -89,6 +89,24 @@
             "user": "dbeltran",
             "version": "3.14.0b0",
             "wrapper": "HORIZONTAL-VERTICAL"
+        },
+        {
+            "completed": 91,
+            "description": "4C c-driven decadal re-forecasts 1980-2020 ",
+            "failed": 0,
+            "hpc": "marenostrum4",
+            "id": 7299,
+            "modified": "Mon, 15 Nov 2021 21:17:15 GMT",
+            "name": "a3z4",
+            "queuing": 73,
+            "running": 3,
+            "status": "RUNNING",
+            "submitted": 0,
+            "suspended": 31,
+            "total": 2028,
+            "user": "jacosta",
+            "version": "3.13.0",
+            "wrapper": "VERTICAL"
         }
     ]
 }

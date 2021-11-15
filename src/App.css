@@ -21,10 +21,14 @@ tbody tr:hover {
   -o-transition: 0.4s;
   transition: 0.4s;
 }
+
+
+
 /* 
 .bg-transition-div {
   background-color: rgb(110, 107, 107);
 }
+
 
 .bg-transition-div * {
   
