@@ -1,0 +1,21 @@
+{
+  "branch": "master",
+  "completed_jobs": 292,
+  "db_historic_version": 17,
+  "description": "[Testing Suite]/MONARCH/t0jd",
+  "error": false,
+  "error_message": "None",
+  "expid": "t0kx",
+  "hpc": "marenostrum4",
+  "model": "https://earth.bsc.es/gitlab/es/auto-monarch.git",
+  "owner": "dbeltran",
+  "owner_id": 2466,
+  "path": "/esarchive/autosubmit/t0kx",
+  "pkl_timestamp": 1636973711,
+  "running": false,
+  "time_last_access": "2021-11-14 18:03:03",
+  "time_last_mod": "2021-07-05 13:06:49",
+  "total_jobs": 385,
+  "updateTime": 10,
+  "version": "3.14.0b0"
+}

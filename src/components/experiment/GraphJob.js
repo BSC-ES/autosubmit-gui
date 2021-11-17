@@ -328,44 +328,44 @@ const GraphJob = () => {
                   <div className='row-hl d-flex flex-wrap pt-1'>
                     <div className='item-hl'>
                       <table>
-
-                        {selectedNode.submit !== null && (
-                          <tr>
-                            <td>
-                              <span>Submit:</span>
-                            </td>
-                            <td>
-                              <span className='bg-dark px-1 rounded'>
-                                {selectedNode.submit}
-                              </span>
-                            </td>
-                          </tr>
-                        )}
-                        {selectedNode.start !== null && (
-                          <tr>
-                            <td>
-                              <span>Start:</span>
-                            </td>
-                            <td>
-                              <span className='bg-dark px-1 rounded'>
-                                {selectedNode.start}
-                              </span>
-                            </td>
-                          </tr>
-                        )}
-                        {selectedNode.finish !== null && (
-                          <tr>
-                            <td>
-                              <span>Finish:</span>
-                            </td>
-                            <td>
-                              <span className='bg-dark px-1 rounded'>
-                                {selectedNode.finish}
-                              </span>
-                            </td>
-                          </tr>
-                        )}
-
+                        <tbody>
+                          {selectedNode.submit !== null && (
+                            <tr>
+                              <td>
+                                <span>Submit:</span>
+                              </td>
+                              <td>
+                                <span className='bg-dark px-1 rounded'>
+                                  {selectedNode.submit}
+                                </span>
+                              </td>
+                            </tr>
+                          )}
+                          {selectedNode.start !== null && (
+                            <tr>
+                              <td>
+                                <span>Start:</span>
+                              </td>
+                              <td>
+                                <span className='bg-dark px-1 rounded'>
+                                  {selectedNode.start}
+                                </span>
+                              </td>
+                            </tr>
+                          )}
+                          {selectedNode.finish !== null && (
+                            <tr>
+                              <td>
+                                <span>Finish:</span>
+                              </td>
+                              <td>
+                                <span className='bg-dark px-1 rounded'>
+                                  {selectedNode.finish}
+                                </span>
+                              </td>
+                            </tr>
+                          )}
+                        </tbody>
                       </table>
                     </div>
                     <div className="item-hl ml-1">

@@ -18,6 +18,7 @@ import {
   SET_FOUND_NODES,
   SET_LOADING_SEARCH_JOB,
   SET_LOADING_PKL,
+  SET_WARNING_ACTIVE,
   SHOULD_UPDATE_GRAPH,
   SET_LOADING_JOB_MONITOR,
   SET_CURRENT_COMMAND,
@@ -52,7 +53,7 @@ const GraphState = (props) => {
     shouldUpdateGraph: false,
     pklchanges: null,
     notificationTitleGraph: null,
-    //currentSelected: [],
+    warningActive: null,
     currentCommandGraph: null,
     currentTextCommandGraph: null,
     current_grouped: "none",
@@ -77,7 +78,7 @@ const GraphState = (props) => {
   // Get Experiment Graph
   const getExperimentGraph = async (
     expid,
-    grouped = "none",  
+    grouped = "none",
     layout = "standard",
     warningMessage = null
   ) => {
@@ -86,19 +87,19 @@ const GraphState = (props) => {
     let result = null;
     if (NOAPI) {
       //res = {data: null};
-      result = require("../data/graph_"+String(expid)+"_standard_"+String(grouped)+".json");
+      result = require("../data/graph_" + String(expid) + "_standard_" + String(grouped) + ".json");
       //console.log(res.data);
       await sleep(1000);
     } else {
       const res = await axios
-      .get(`${localserver}/graph/${expid}/${layout}/${grouped}`)
-      .catch((error) => {
-        alert(error.message);
-        setOffLoadingGraph();
-      });
+        .get(`${localserver}/graph/${expid}/${layout}/${grouped}`)
+        .catch((error) => {
+          alert(error.message);
+          setOffLoadingGraph();
+        });
       result = res ? res.data : null;
     }
-    
+
     if (result) {
       debug && console.log(result);
       //const resdata = res.data;
@@ -106,7 +107,7 @@ const GraphState = (props) => {
         type: GET_GRAPH,
         payload: { resdata: result, grouped, layout, warning: warningMessage },
       });
-    }    
+    }
   };
 
   // Get Experiment Pkl Data for Graph changes update
@@ -121,14 +122,14 @@ const GraphState = (props) => {
         "Exp: " + expid + "\t" + timeStamp + "\t" + experimentRunning
       );
     let retrievedPkl = null;
-    if (NOAPI){
-      retrievedPkl = require("../data/pklinfo_"+String(expid)+".json");
+    if (NOAPI) {
+      retrievedPkl = require("../data/pklinfo_" + String(expid) + ".json");
     } else {
       const res = await axios.get(`${localserver}/pklinfo/${expid}/${timeStamp}`);
       debug && console.log(res.data);
       retrievedPkl = res.data;
-    } 
-    
+    }
+
     dispatch({
       type: GET_PKL_DATA,
       payload: retrievedPkl,
@@ -211,9 +212,11 @@ const GraphState = (props) => {
     dispatch({ type: SET_LOADING_JOB_MONITOR });
 
   // Set Data
-  // const setWarningActive = (warning) => {      
-  //   dispatch({ type: SET_WARNING_ACTIVE, payload: warning });
-  // }
+  const setWarningActive = (warning = null) => {
+    if (warning !== null) {
+      dispatch({ type: SET_WARNING_ACTIVE, payload: warning });
+    }
+  }
   const setAutoUpdatePkl = (value) =>
     dispatch({ type: SET_AUTOUPDATE_PKL, payload: value });
   const setVisData = (value) =>
@@ -275,7 +278,8 @@ const GraphState = (props) => {
         setCurrentCommandGraph,
         setCurrentTextCommandGraph,
         setNotificationTitleGraph,
-        setJobInfoPanelVisibility,        
+        setJobInfoPanelVisibility,
+        setWarningActive,
       }}
     >
       {props.children}

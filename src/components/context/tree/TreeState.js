@@ -27,6 +27,7 @@ import {
   UPDATE_TREE_SELECTED_NODES,
   SET_CURRENT_COMMAND,
   SET_CURRENT_TEXT_COMMAND,
+  SET_WARNING_ACTIVE,
 } from "../types";
 
 // import { start, end } from "../utils";
@@ -197,9 +198,11 @@ const TreeState = (props) => {
   const setLoadingTreePkl = () => dispatch({ type: SET_LOADING_TREE_PKL });
   const setAutoUpdateTreePkl = (value) =>
     dispatch({ type: SET_AUTOUPDATE_TREE_PKL, payload: value });
-  // const setWarningActive = (warning) => {      
-  //     dispatch({ type: SET_WARNING_ACTIVE, payload: warning });
-  //  }
+  const setWarningActive = (warning = null) => {
+    if (warning !== null) {
+      dispatch({ type: SET_WARNING_ACTIVE, payload: warning });
+    }
+  }
   const setStartSelection = () => dispatch({ type: SET_START_TREE_SELECTION });
   const setNotificationTitleTree = (notification) =>
     dispatch({ type: SET_NOTIFICATION_TITLE_TREE, payload: notification });
@@ -247,6 +250,7 @@ const TreeState = (props) => {
         updateTreeSelectedNodes,
         setCurrentCommandTree,
         setCurrentTextCommandTree,
+        setWarningActive,
       }}
     >
       {props.children}

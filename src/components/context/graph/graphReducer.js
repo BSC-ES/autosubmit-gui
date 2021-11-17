@@ -10,6 +10,7 @@ import {
   SET_LOADING_SEARCH_JOB,
   SET_LOADING_JOB_MONITOR,
   SET_LOADING_PKL,
+  SET_WARNING_ACTIVE,
   CLEAN_GRAPH_DATA,
   UPDATE_NODES,
   SET_PKL_CHANGES,
@@ -592,11 +593,11 @@ export default (state, action) => {
         ...state,
         selection: action.payload,
       };
-    // case SET_WARNING_ACTIVE:
-    //   return {
-    //     ...state,
-    //     warningActive: action.payload,
-    //   }
+    case SET_WARNING_ACTIVE:
+      return {
+        ...state,
+        warningActive: action.payload,
+      }
     case UPDATE_GRAPH_SELECTED_NODES:
       //const selectedNodes = action.payload;
       state.graphSelectedNodes = null;

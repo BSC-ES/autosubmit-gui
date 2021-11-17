@@ -154,6 +154,8 @@ const ExperimentCentral = ({ match }) => {
     getExperiment(expid);
     // Get experiment running status 
     getRunningState(expid);
+    // Get current log status
+    getLogStatus(expid);
     if (expid && expid.length > 0) {
       // resolve_action depends on the URL call
       // Some type of switch might be useful here but more views are unlikely
@@ -169,9 +171,7 @@ const ExperimentCentral = ({ match }) => {
         getExperimentTree(expid, warningMessage);
       }
       // Get performance metrics 
-      // if (!performancedata) getExperimentPerformanceMetrics(expid);
-      // Get Current Log Status
-      getLogStatus(expid);
+      // if (!performancedata) getExperimentPerformanceMetrics(expid);      
       // Test token
       testToken();
       // console.log("Exp Central");

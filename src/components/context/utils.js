@@ -10,7 +10,7 @@ export const timeStampToDate = (value) => {
   let minutes = "0" + date.getMinutes();
   let seconds = "0" + date.getSeconds();
   let month = date.getMonth() + 1;
-  let day = date.getDate();  
+  let day = date.getDate();
   // console.log(date.toLocaleDateString())
   formattedDate =
     "[" +
@@ -60,7 +60,7 @@ export const commandGeneratorGraph = (expid, jobs, status) => {
 
 export const commandGeneratorUpdateDescrip = (expid, description) => {
   let command = "Not a valid experiment.";
-  if (expid){
+  if (expid) {
     command = "autosubmit updatedescrip " + expid + " '" + description + "'";
   }
   return command;
@@ -78,7 +78,7 @@ export const statusChangeTextGeneratorGraph = (jobs, status) => {
   let command = "You have to select at least one job.";
   //jobs.map((job) => arrayNames.push(job.name));
   if (jobs.length > 0) {
-    command = jobs.join(" " + String(status)+ "\n");
+    command = jobs.join(" " + String(status) + "\n");
     command = command + " " + String(status);
   }
   return command;
@@ -111,7 +111,7 @@ export const secondsToDelta = (SECONDS) => {
     if (seconds < 10) {
       seconds = "0" + seconds;
     }
-    
+
     return (days > 0 ? days + (days > 1 ? " days - " : " day - ") : "") + hours + ":" + minutes + ":" + seconds;
   } else {
     return "00:00:00";
@@ -150,16 +150,16 @@ export const approximateLoadingQuickView = (x) => {
 
 export const exportSummaryToCSV = (data, columnNames, title) => {
   let date = new Date();
-  title =  date.getFullYear().toString() + "-" + date.getMonth() + "-" + date.getDate() + "_" + date.getHours() + "-" + date.getMinutes() + "_" + title;
+  title = date.getFullYear().toString() + "-" + date.getMonth() + "-" + date.getDate() + "_" + date.getHours() + "-" + date.getMinutes() + "_" + title;
   let csvContent = "data:text/csv;charset=utf-8,";
   csvContent += columnNames.join(",") + "\n";
-  if (data){
+  if (data) {
     let mapped = []
-    if (columnNames.length === 4){
+    if (columnNames.length === 4) {
       data.map((item) => mapped.push([item[columnNames[0]], item[columnNames[1]], item[columnNames[2]], item[columnNames[3]]]));
     } else if (columnNames.length === 6) {
       data.map((item) => mapped.push([item[columnNames[0]], item[columnNames[1]], item[columnNames[2]], item[columnNames[3]], item[columnNames[4]], item[columnNames[5]]]));
-    }        
+    }
     csvContent += mapped.map((item) => item.join(",")).join("\n");
   }
   let encodedUri = encodeURI(csvContent);
@@ -171,14 +171,14 @@ export const exportSummaryToCSV = (data, columnNames, title) => {
 }
 
 export const exportHistoryToCSV = (data, columnNames, title) => {
-  
-  let date = new Date();  
-  title =  date.getFullYear().toString() + "-" + date.getMonth() + "-" + date.getDate() + "_" + date.getHours() + "-" + date.getMinutes() + "_" + title;
+
+  let date = new Date();
+  title = date.getFullYear().toString() + "-" + date.getMonth() + "-" + date.getDate() + "_" + date.getHours() + "-" + date.getMinutes() + "_" + title;
   let csvContent = "data:text/csv;charset=utf-8,";
   csvContent += columnNames.join(",") + "\n";
-  if (data){
+  if (data) {
     let mapped = []
-    data.map((item) => mapped.push([item.counter,item.job_id,item.submit,item.start,item.finish,item.queue_time,item.run_time, item.status, item.energy, item.wallclock, item.ncpus, item.nodes]));
+    data.map((item) => mapped.push([item.counter, item.job_id, item.submit, item.start, item.finish, item.queue_time, item.run_time, item.status, item.energy, item.wallclock, item.ncpus, item.nodes]));
     csvContent += mapped.map((item) => item.join(",")).join("\n");
   }
   let encodedUri = encodeURI(csvContent);
@@ -198,18 +198,17 @@ export const getReadyJobs = (jobs) => {
     const readyJobs = jobs.filter(x => x.status === 'READY');
     const jobArray = [];
     readyJobs.map((item) => jobArray.push({ name: item.id, status: item.status }));
-    if (jobArray.length > 0){
+    if (jobArray.length > 0) {
       return jobArray;
     } else {
       return null;
     }
-    
+
   }
   return null;
 }
 
-export const getIFActiveJobs = (jobs) =>
-{
+export const getIFActiveJobs = (jobs) => {
   if (jobs) {
     const activeJobs = jobs.filter(x => x.status === "QUEUING" || x.status === "SUBMITTED" || x.status === "RUNNING");
     if (activeJobs.length > 0) {
@@ -224,7 +223,7 @@ export const getIFActiveJobs = (jobs) =>
 
 
 export const groupBy = (arrayObjects, key) => {
-  return arrayObjects.reduce(function(result, currentObject) {
+  return arrayObjects.reduce(function (result, currentObject) {
     const val = currentObject[key];
     result[val] = result[val] || [];
     result[val].push(currentObject);
@@ -239,20 +238,20 @@ export const groupByAndAggregate = (arrayObjects, key) => {
   // console.log(typeof groupedBySection);
   // for (let section in groupedBySection)
   //   console.log(section);
-  if (groupedBySection){
-    for (let sectionName in groupedBySection){
+  if (groupedBySection) {
+    for (let sectionName in groupedBySection) {
       let queueSum = 0;
-      let runSum = 0;    
+      let runSum = 0;
       // console.log(sectionName);
       groupedBySection[sectionName].forEach((itemJob) => {
         queueSum += itemJob.Queue;
         runSum += itemJob.Run;
       })
-      let averageQueue = queueSum/groupedBySection[sectionName].length;
+      let averageQueue = queueSum / groupedBySection[sectionName].length;
       averageQueue = Math.round(averageQueue);
-      let averageRun = runSum/groupedBySection[sectionName].length;
+      let averageRun = runSum / groupedBySection[sectionName].length;
       averageRun = Math.round(averageRun);
-      result.push({ "Section": sectionName, "SumQueue": queueSum, "AverageQueue": averageQueue, "SumRun": runSum, "AverageRun": averageRun, "Count": groupedBySection[sectionName].length})
+      result.push({ "Section": sectionName, "SumQueue": queueSum, "AverageQueue": averageQueue, "SumRun": runSum, "AverageRun": averageRun, "Count": groupedBySection[sectionName].length })
     }
   }
   return result;
@@ -260,36 +259,38 @@ export const groupByAndAggregate = (arrayObjects, key) => {
 
 export const buildWarningInactiveMessageTree = (experimentRunning, timeDiff, logPath, jobs) => {
   let message = null;
-  //console.log("Running " + String(experimentRunning) + " - TimeDiff " + String(timeDiff) + " LogPath " + String(logPath));
+  // console.log("Running " + String(experimentRunning) + " - TimeDiff " + String(timeDiff) + " LogPath " + String(logPath));
   // NOT Active, and more than 10 minutes difference
-  if (!experimentRunning && timeDiff > 600 && jobs){
+  if (!experimentRunning && timeDiff > 600 && jobs) {
     const activeJobs = getIFActiveJobs(jobs);
-    //console.log("Active jobs " + String(activeJobs));
-    if (activeJobs){
+    // console.log("Active jobs " + String(activeJobs));
+    if (activeJobs) {
       message = "The log of your experiment has been inactive for an extended period of time while some jobs are still active. Verify that Autosubmit is still working. Review your log: " + String(logPath);
-    }    
+    }
   }
   return message;
 }
 
-export const errorEsarchiveStatus = { data: {
-  "avg_bandwidth": null,
-  "avg_latency": null,
-  "bandwidth_warning": null,
-  "current_bandwidth": null,
-  "current_latency": null,
-  "datetime": "2021-04-19-13:50:04",
-  "error": true,
-  "error_message": "The server couldn't reach esarchive in a reasonable time. Some simple operations might be completed, but complex requests are likely to fail.",
-  "latency_warning": null,
-  "reponse_time": 2,
-  "response_warning": null,
-  "status": "OFFLINE"}
+export const errorEsarchiveStatus = {
+  data: {
+    "avg_bandwidth": null,
+    "avg_latency": null,
+    "bandwidth_warning": null,
+    "current_bandwidth": null,
+    "current_latency": null,
+    "datetime": "2021-04-19-13:50:04",
+    "error": true,
+    "error_message": "The server couldn't reach esarchive in a reasonable time. Some simple operations might be completed, but complex requests are likely to fail.",
+    "latency_warning": null,
+    "reponse_time": 2,
+    "response_warning": null,
+    "status": "OFFLINE"
+  }
 }
 export const openIcon = <i className="far fa-square"></i>;
 export const openIconHistory = <i className="fas fa-history"></i>;
 
-export const generateArrayOfNumbers = (numbers) => {  
+export const generateArrayOfNumbers = (numbers) => {
   return [...Array(numbers).keys()].slice(1);
 }
 
@@ -300,9 +301,9 @@ export const normalizeString = (input) => {
 }
 
 export const normalizeInt = (input) => {
-  if (input && input !== "NA"){
+  if (input && input !== "NA") {
     return input;
-  } 
+  }
   return 0;
 }
 
@@ -316,7 +317,7 @@ export const creationDateToId = (strCreationDate, intRunId) => {
   // console.log(strCreationDate);
   const creationDate = strCreationDate.split("-");
   const timeDay = creationDate[3].split(":");
-  const code = creationDate[0].substr(2,2) + "" + creationDate[1] + "" + creationDate[2] + "" + timeDay[0] + "" + timeDay[1];
+  const code = creationDate[0].substr(2, 2) + "" + creationDate[1] + "" + creationDate[2] + "" + timeDay[0] + "" + timeDay[1];
   return code;
 }
 
@@ -325,7 +326,7 @@ Finds differences between configurations
 */
 export const differenceBetweenConfigurations = (historicalConf, currentConf) => {
   let differences = new Set();
-  if (historicalConf && currentConf) { 
+  if (historicalConf && currentConf) {
     // First Level
     Object.keys(currentConf).forEach(file => {
       const historicalFile = Object.keys(historicalConf) ? Object.keys(historicalConf) : [];
@@ -348,7 +349,7 @@ export const differenceBetweenConfigurations = (historicalConf, currentConf) => 
                 differences.add(file);
               }
             });
-          } else {           
+          } else {
             differences.add(`${file}+${header}`);
             differences.add(file);
           }
@@ -361,40 +362,40 @@ export const differenceBetweenConfigurations = (historicalConf, currentConf) => 
         });
       } else {
         differences.add(file);
-      }      
+      }
     });
   }
   // console.log(differences);
   return differences;
 }
 
-export const generateConfigFileHtml = (conf, confName = "name", differences = new Set(), alertSpan = "Differencia") => {  
-  if (conf){
+export const generateConfigFileHtml = (conf, confName = "name", differences = new Set(), alertSpan = "Differencia") => {
+  if (conf) {
     // console.log(conf);
     // console.log(differences);
     let htmlResult = <div className="row mx-2">
       <div className="col">
-      {Object.keys(conf).map(v => (
-        <div key={v}>
-          <p className="lead"><strong>[{v}]</strong> {differences.has(`${confName}+${v}`) && alertSpan}</p>
-          <table className="table table-sm table-fixed">
-            <thead className="thead-dark">
-              <tr>
-                <th scope="col">Setting</th>
-                <th scope="col">Value</th>
-              </tr>
-            </thead>
-            <tbody>
-              {Object.keys(conf[v]).map(w => (                
-                <tr key={w}>
-                  <td>{w} {differences.has(`${confName}+${v}+${w}`) && alertSpan}</td>
-                  <td>{conf[v][w]}</td>
+        {Object.keys(conf).map(v => (
+          <div key={v}>
+            <p className="lead"><strong>[{v}]</strong> {differences.has(`${confName}+${v}`) && alertSpan}</p>
+            <table className="table table-sm table-fixed">
+              <thead className="thead-dark">
+                <tr>
+                  <th scope="col">Setting</th>
+                  <th scope="col">Value</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      ))}
+              </thead>
+              <tbody>
+                {Object.keys(conf[v]).map(w => (
+                  <tr key={w}>
+                    <td>{w} {differences.has(`${confName}+${v}+${w}`) && alertSpan}</td>
+                    <td>{conf[v][w]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ))}
       </div>
     </div>;
     return htmlResult;
@@ -439,13 +440,13 @@ export const arrayMeanAbsoluteDeviationAroundMean = (arr) => {
 export const formatNumberMoney = (money, integerFormat = false, decimals = 2) => {
   const moneyToFormat = money && Number.isFinite(money) ? money : 0.00;
   const floatFormat = moneyToFormat.toFixed(integerFormat === true ? 2 : decimals).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-  if (integerFormat === false){
+  if (integerFormat === false) {
     return floatFormat;
-  } else {    
+  } else {
     // Does it hold?
     return floatFormat.substr(0, floatFormat.length - 3);
   }
-  
+
 }
 
 export const calculateStatistics = (jobs) => {
@@ -453,7 +454,7 @@ export const calculateStatistics = (jobs) => {
   let jobsRunCount = 0;
   let jobsCompletedCount = 0;
   let jobsFailedCount = 0;
-  
+
   let expectedConsumption = 0.00;
   let realConsumption = 0.00;
   let failedRealConsumption = 0.00;
@@ -483,22 +484,22 @@ export const calculateStatistics = (jobs) => {
   });
 
   if (expectedCpuConsumption > 0) {
-    cpuConsumptionPercentage = (cpuConsumption/expectedCpuConsumption) * 100;
-  }  
+    cpuConsumptionPercentage = (cpuConsumption / expectedCpuConsumption) * 100;
+  }
 
   return {
-     jobsSubmittedCount: formatNumberMoney(jobsSubmittedCount, true),
-     jobsRunCount: formatNumberMoney(jobsRunCount, true), 
-     jobsCompletedCount: formatNumberMoney(jobsCompletedCount, true), 
-     jobsFailedCount: formatNumberMoney(jobsFailedCount, true),     
-     expectedConsumption: formatNumberMoney(expectedConsumption),  
-     realConsumption: formatNumberMoney(realConsumption),
-     failedRealConsumption: formatNumberMoney(failedRealConsumption),  
-     expectedCpuConsumption: formatNumberMoney(expectedCpuConsumption),
-     cpuConsumption: formatNumberMoney(cpuConsumption), 
-     failedCpuConsumption: formatNumberMoney(failedCpuConsumption),
-     totalQueueTime: formatNumberMoney(totalQueueTime),
-     cpuConsumptionPercentage: formatNumberMoney(cpuConsumptionPercentage),
+    jobsSubmittedCount: formatNumberMoney(jobsSubmittedCount, true),
+    jobsRunCount: formatNumberMoney(jobsRunCount, true),
+    jobsCompletedCount: formatNumberMoney(jobsCompletedCount, true),
+    jobsFailedCount: formatNumberMoney(jobsFailedCount, true),
+    expectedConsumption: formatNumberMoney(expectedConsumption),
+    realConsumption: formatNumberMoney(realConsumption),
+    failedRealConsumption: formatNumberMoney(failedRealConsumption),
+    expectedCpuConsumption: formatNumberMoney(expectedCpuConsumption),
+    cpuConsumption: formatNumberMoney(cpuConsumption),
+    failedCpuConsumption: formatNumberMoney(failedCpuConsumption),
+    totalQueueTime: formatNumberMoney(totalQueueTime),
+    cpuConsumptionPercentage: formatNumberMoney(cpuConsumptionPercentage),
   }
 
 }

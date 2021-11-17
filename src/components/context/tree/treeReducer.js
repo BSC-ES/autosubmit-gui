@@ -22,7 +22,7 @@ import {
   LOADING_PREVIOUS_RUN,
   SET_CURRENT_COMMAND,
   SET_CURRENT_TEXT_COMMAND,
-  // SET_WARNING_ACTIVE,
+  SET_WARNING_ACTIVE,
   // CLEAR_RUNDETAIL_ON_TREE,
 } from "../types";
 
@@ -594,6 +594,11 @@ export default (state, action) => {
         ...state,
         currentTextCommandTree: action.payload,
         //canCopyToClipboard: true,
+      };
+    case SET_WARNING_ACTIVE:
+      return {
+        ...state,
+        warningActive: action.payload,
       };
     default:
       return null;

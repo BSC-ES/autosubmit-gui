@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
 import TreeContext from "../context/tree/treeContext";
 import SelectionControl from "./SelectionControl";
@@ -21,25 +21,20 @@ const TreeControl = () => {
     startAutoUpdateTreePkl,
     loadingTreePkl,
     currentRunIdOnTree,
-    warningActive,    
+    warningActive,
+    setWarningActive,
   } = treeContext;
-  
-  // useEffect(() => {
-  //   if (treedata){      
-  //     setWarningActive();
-  //   }
-  //   //}
-    
-  //   // return () => {
-  //   //   cleanup
-  //   // }
-  //   // eslint-disable-next-line
-  // }, [experimentRunning, treedata])
+
+  useEffect(() => {
+    const warningMessage = buildWarningInactiveMessageTree(experimentRunning, logTimeDiff, currentLog, treedata ? treedata.jobs : null);
+    setWarningActive(warningMessage);
+    // eslint-disable-next-line
+  }, [logTimeDiff, warningActive, currentLog, treedata])
 
   const onSubmitTree = (e) => {
     e.preventDefault();
     getLogStatus(experiment.expid);
-    getExperimentTree(experiment.expid, buildWarningInactiveMessageTree(experimentRunning, logTimeDiff, currentLog, treedata ? treedata.jobs : null));    
+    getExperimentTree(experiment.expid, buildWarningInactiveMessageTree(experimentRunning, logTimeDiff, currentLog, treedata ? treedata.jobs : null));
   };
 
   const onClearTree = (e) => {
@@ -64,14 +59,14 @@ const TreeControl = () => {
   };
 
   const disabledQuery = !enabledTreeSearch || loadingTreePkl;
-  
+
 
   return (
     <div className='card-header p-1'>
       <div className='d-flex flex-wrap row-hl'>
         {currentRunIdOnTree && (
           <div className="mr-auto item-hl" >{currentRunIdOnTree.message}</div>
-        )}        
+        )}
         {(loadingTreeRefresh || loadingTreePkl) && (
           <div className='mr-auto item-hl'>Querying...</div>
         )}
@@ -95,8 +90,8 @@ const TreeControl = () => {
                 value='Show'
                 className='btn btn-primary btn-block btn-sm'
                 disabled={disabledQuery}
-                data-toggle='tooltip' 
-                data-placement='bottom' 
+                data-toggle='tooltip'
+                data-placement='bottom'
                 title="Shows the Tree View representation of the experiment."
               />
             </form>
@@ -111,8 +106,8 @@ const TreeControl = () => {
                 id='bs-tooltip'
                 className='btn btn-dark btn-block btn-sm bs-tooltip'
                 disabled={disabledQuery || startAutoUpdateTreePkl}
-                data-toggle='tooltip' 
-                data-placement='bottom' 
+                data-toggle='tooltip'
+                data-placement='bottom'
                 title="Clears all the data from the Tree View."
               />
             </form>
@@ -121,9 +116,9 @@ const TreeControl = () => {
 
         {experiment && treedata && (
           <div className="item-hl pl-1">
-            <JobSummary source="tree"/>
+            <JobSummary source="tree" />
           </div>
-        )}  
+        )}
 
         {experiment && treedata && !currentRunIdOnTree && (
           <div className='item-hl px-1'>
@@ -141,33 +136,33 @@ const TreeControl = () => {
                   className='btn btn-success btn-sm'
                   disabled={disabledQuery}
                   onClick={onRequestUpdate}
-                  data-toggle='tooltip' 
-                  data-placement='bottom' 
+                  data-toggle='tooltip'
+                  data-placement='bottom'
                   title="Updates the Tree View job data (including status) with the most recent information."
                 >
                   Refresh
                 </button>
               )}
             {experimentRunning && treedata && !startAutoUpdateTreePkl && !currentRunIdOnTree && (
-                <button
-                  type='button'
-                  className='btn btn-success btn-sm'
-                  disabled={disabledQuery}
-                  onClick={onJobMonitor}
-                  data-toggle='tooltip' 
-                  data-placement='bottom' 
-                  title="Starts a worker that periodically updates the Tree View job data."
-                >
-                  Start Job Monitor
-                </button>
+              <button
+                type='button'
+                className='btn btn-success btn-sm'
+                disabled={disabledQuery}
+                onClick={onJobMonitor}
+                data-toggle='tooltip'
+                data-placement='bottom'
+                title="Starts a worker that periodically updates the Tree View job data."
+              >
+                Start Job Monitor
+              </button>
             )}
             {experimentRunning && treedata && startAutoUpdateTreePkl && !currentRunIdOnTree && (
-                  <button
-                    type='button'
-                    className='btn btn-danger btn-sm'
-                    disabled={disabledQuery}
-                    onClick={onNotJobMonitor}
-                  >Stop Job Monitor</button>
+              <button
+                type='button'
+                className='btn btn-danger btn-sm'
+                disabled={disabledQuery}
+                onClick={onNotJobMonitor}
+              >Stop Job Monitor</button>
             )}
           </div>
         </div>
