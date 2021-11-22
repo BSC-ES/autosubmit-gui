@@ -10,23 +10,11 @@ const Login = (props) => {
 
   useEffect(() => {
     const values = queryString.parse(props.location.search);
-    // console.log(loggedUser);
-    // if (loggedUser){
-    //   // console.log('Timeout');
-    //   setTimeout(() => {
-    //     props.history.push('/autosubmitapp/');
-    //   }, 5000)
-    // } else {
-    // if (user && token && !loggedUser){
-
-    // } else {
     if (values.ticket) {
       onVerify(values.ticket);
     } else {
       onCASLogin();
     }
-    //}      
-    // }    
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
