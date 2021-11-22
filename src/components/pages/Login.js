@@ -1,12 +1,13 @@
 import React, { useContext, useEffect } from 'react';
 import ExperimentContext from "../context/experiment/experimentContext";
 import queryString from 'query-string';
+import { rootAppName } from '../context/vars';
 
 const Login = (props) => {
-  
+
   const experimentContext = useContext(ExperimentContext);
   const { getVerifyTicket, loggedUser } = experimentContext;
-  
+
   useEffect(() => {
     const values = queryString.parse(props.location.search);
     // console.log(loggedUser);
@@ -19,24 +20,24 @@ const Login = (props) => {
     // if (user && token && !loggedUser){
 
     // } else {
-      if (values.ticket){      
-        onVerify(values.ticket);
-      } else {
-        onCASLogin();
-      }
+    if (values.ticket) {
+      onVerify(values.ticket);
+    } else {
+      onCASLogin();
+    }
     //}      
     // }    
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const actionAfter = () => {
-    if (loggedUser){      
+    if (loggedUser) {
       setTimeout(() => {
-        props.history.push(`/autosubmitapp/?user=${loggedUser}`);
-      }, 3000) 
+        props.history.push(`/${rootAppName}/?user=${loggedUser}`);
+      }, 3000)
     }
   }
-  
+
   const onVerify = (ticket) => {
     //e.preventDefault();
     //console.log('Attempt to verify ' + ticket)
@@ -44,7 +45,7 @@ const Login = (props) => {
     //e.preventDefault();
   }
   const onCASLogin = () => {
-    const _target = "https://cas.bsc.es/cas/login?service=https://earth.bsc.es/autosubmitapp/login";
+    const _target = `https://cas.bsc.es/cas/login?service=https://earth.bsc.es/${rootAppName}/login`;
     //console.log('On CAS Log')
     window.location.href = _target;
   }
@@ -52,7 +53,7 @@ const Login = (props) => {
   // console.log(values);
   if (loggedUser) {
     actionAfter();
-    if (loggedUser === 'Failed') {      
+    if (loggedUser === 'Failed') {
       return (
         <div>
           Oops! We couldn't authenticate you.
@@ -67,13 +68,13 @@ const Login = (props) => {
 
           <p>We are currently testing CAS login for Autosubmit GUI. Thanks for logging in.</p>
 
-          <p>You will be redirected after some seconds.</p>  
+          <p>You will be redirected after some seconds.</p>
         </div>
       );
-    }    
+    }
   };
-  
-  
+
+
   return null;
 }
 
