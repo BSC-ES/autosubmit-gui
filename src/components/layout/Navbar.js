@@ -110,7 +110,7 @@ const Navbar = ({ icon, title }) => {
             </button>
           )}
           {((!loggedUser || loggedUser === "Failed") && !NOAPI) && (
-            <Link title='Some features might require your credentials.' className='btn btn-sm btn-primary' to='/autosubmitapp/login'>Login</Link>
+            <Link title='Some features might require your credentials.' className='btn btn-sm btn-primary' to={`/${rootAppName}/login`}>Login</Link>
           )}
         </div>
       </div>
