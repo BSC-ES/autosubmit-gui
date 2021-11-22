@@ -62,7 +62,8 @@ import {
   orderByType,
   complexTypeExperimentToSimple,
   complexActiveStatusToSimple,
-  defaultPerformanceDisplaySettings
+  defaultPerformanceDisplaySettings,
+  rootAppName
 } from "../vars";
 
 import { timeStampToDate, errorEsarchiveStatus, sleep } from "../utils";
@@ -255,7 +256,7 @@ const ExperimentState = (props) => {
       return null;
     } else {
       //console.log('Attempt inside state of ' + ticket);
-      const res = await axios.get(`${localserver}/login?ticket=${ticket}`)
+      const res = await axios.get(`${localserver}/login?ticket=${ticket}&env=${rootAppName}`)
       // {authentication: bool, user: str}
       //console.log(res);
       authdata = res ? res.data : null;
