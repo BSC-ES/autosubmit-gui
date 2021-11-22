@@ -41,12 +41,12 @@ class App extends Component {
                           />
                           <Route
                             exact
-                            path={`/${rootAppName}/login/`}
+                            path={`/${rootAppName}/login`}
                             component={Login}
                           />
                           <Route
                             exact
-                            path={`/${rootAppName}/profile/`}
+                            path={`/${rootAppName}/profile`}
                             component={Profile}
                           />
                           <Route
