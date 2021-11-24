@@ -1,10 +1,11 @@
 export const AUTOSUBMIT_API_SOURCE = "https://earth.bsc.es/autosubmitapi";
 // export const AUTOSUBMIT_API_SOURCE = "http://84.88.185.94:8081";
 export const DEBUG = false;
-export const NOAPI = false;
-export const SHOW_PERFORMANCE_TAB = true;
-export const rootAppName = "autosubmittest"
-export const ERROR_MESSAGE = "Autosubmit API couldn't retrieve the requested information on time. It might be due to a network error or heavy traffic on the shared folders that Autosubmit uses to store experiment information (/esarchive/autosubmit/)."
+export const NOAPI = true;
+export const SHOW_PERFORMANCE_TAB = false;
+export const rootAppName = "presentation";
+export const ERROR_MESSAGE =
+  "Autosubmit API couldn't retrieve the requested information on time. It might be due to a network error or heavy traffic on the shared folders that Autosubmit uses to store experiment information (/esarchive/autosubmit/).";
 
 export const WaitingCode = 0;
 export const FailedCode = -1;
@@ -85,32 +86,19 @@ export const failedQueueColor = "lightSalmon";
 export const failedRunAttempts = "#ff6666";
 export const runStatColor = "#40bf40";
 
-
 export const statusCodeToStyle = (code) => {
-  if (code === WaitingCode)
-    return waitingColor;
-  if (code === FailedCode)
-    return failedColor;
-  if (code === CompletedCode)
-    return completedColor;
-  if (code === RunningCode)
-    return runningColor;
-  if (code === QueueCode)
-    return queueColor;
-  if (code === SubmittedCode)
-    return submittedColor;
-  if (code === UnknownCode)
-    return unknownColor;
-  if (code === SuspendedCode)
-    return suspendedColor;
-  if (code === HoldCode)
-    return holdColor;
-  if (code === ReadyCode)
-    return readyColor;
-  if (code === PreparedCode)
-    return preparedColor;
-  if (code === SkippedCode)
-    return skippedColor;
+  if (code === WaitingCode) return waitingColor;
+  if (code === FailedCode) return failedColor;
+  if (code === CompletedCode) return completedColor;
+  if (code === RunningCode) return runningColor;
+  if (code === QueueCode) return queueColor;
+  if (code === SubmittedCode) return submittedColor;
+  if (code === UnknownCode) return unknownColor;
+  if (code === SuspendedCode) return suspendedColor;
+  if (code === HoldCode) return holdColor;
+  if (code === ReadyCode) return readyColor;
+  if (code === PreparedCode) return preparedColor;
+  if (code === SkippedCode) return skippedColor;
   return unknownColor;
 };
 
@@ -135,18 +123,18 @@ export const orderByType = {
   radioExperiments: "Only Experiments",
   radioTests: "Only Tests",
   radioAll: "Experiments & Tests",
-}
+};
 
 export const simpleExperimentType = {
   Experiment: "experiment",
   Test: "test",
-  All: "all"
-}
+  All: "all",
+};
 
 export const simpleActiveStatus = {
   All: "all",
   Active: "active",
-}
+};
 
 export const complexTypeExperimentToSimple = (complex) => {
   switch (complex) {
@@ -158,7 +146,7 @@ export const complexTypeExperimentToSimple = (complex) => {
     default:
       return simpleExperimentType.All;
   }
-}
+};
 
 export const complexActiveStatusToSimple = (complex) => {
   switch (complex) {
@@ -168,7 +156,7 @@ export const complexActiveStatusToSimple = (complex) => {
     case orderByType.showOnlyActive:
       return simpleActiveStatus.Active;
   }
-}
+};
 
 export const simpleActiveStatusToComplex = (simple) => {
   switch (simple) {
@@ -179,7 +167,7 @@ export const simpleActiveStatusToComplex = (simple) => {
     default:
       return null;
   }
-}
+};
 
 export const simpleTypeToComplex = (simple) => {
   switch (simple) {
@@ -192,7 +180,7 @@ export const simpleTypeToComplex = (simple) => {
     default:
       return null;
   }
-}
+};
 
 export const defaultPerformanceDisplaySettings = {
   JPSYvsCHSY: false,
@@ -204,5 +192,4 @@ export const defaultPerformanceDisplaySettings = {
   RunVsSYPD: false,
   RunVsCHSY: false,
   QueueRunVsASYPD: false,
-}
-
+};

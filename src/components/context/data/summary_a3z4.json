@@ -1,0 +1,17 @@
+{
+  "avg_queue_time": "3:47:29",
+  "avg_run_time": "0:25:00",
+  "avg_sim_queue_time": "1:12:43",
+  "avg_sim_run_time": "1:36:14",
+  "error": false,
+  "error_message": "",
+  "failed_jobs": [],
+  "n_failed": 0,
+  "n_queuing": 73,
+  "n_running": 3,
+  "n_sim": 308,
+  "n_submitted": 0,
+  "n_suspended": 31,
+  "sim_queue_considered": 91,
+  "sim_run_considered": 18
+}

@@ -1,0 +1,610 @@
+{
+  "error": false,
+  "error_message": "",
+  "found": true,
+  "lastModified": "2021-11-15 10:53:51",
+  "logcontent": [
+    {
+      "content": "2021-11-15 11:52:57,552 Custom directives from platform.conf: None",
+      "index": 0
+    },
+    {
+      "content": "2021-11-15 11:52:57,554 Custom directives from platform.conf: None",
+      "index": 1
+    },
+    {
+      "content": "2021-11-15 11:52:57,657 Custom directives from platform.conf: None",
+      "index": 2
+    },
+    {
+      "content": "2021-11-15 11:52:57,658 Custom directives from platform.conf: None",
+      "index": 3
+    },
+    {
+      "content": "2021-11-15 11:52:58,874 Updating FAILED jobs",
+      "index": 4
+    },
+    {
+      "content": "2021-11-15 11:52:58,876 Updating WAITING jobs",
+      "index": 5
+    },
+    {
+      "content": "2021-11-15 11:52:58,878 Update finished",
+      "index": 6
+    },
+    {
+      "content": "2021-11-15 11:52:58,889 ",
+      "index": 7
+    },
+    {
+      "content": "Job Name                           Job Id         Job Status     Job Platform        Job Queue      ",
+      "index": 8
+    },
+    {
+      "content": "2021-11-15 11:52:59,008 t0kx_20120201_002_5_CLEAN          5969           COMPLETED      marenostrum_archive no-scheduler   ",
+      "index": 9
+    },
+    {
+      "content": "2021-11-15 11:52:59,082 t0kx_20120201_003_1_CLEAN          10005          COMPLETED      marenostrum_archive no-scheduler   ",
+      "index": 10
+    },
+    {
+      "content": "2021-11-15 11:52:59,184 t0kx_20120201_003_2_CLEAN          14383          COMPLETED      marenostrum_archive no-scheduler   ",
+      "index": 11
+    },
+    {
+      "content": "2021-11-15 11:52:59,279 t0kx_20120201_003_3_CLEAN          17429          COMPLETED      marenostrum_archive no-scheduler   ",
+      "index": 12
+    },
+    {
+      "content": "2021-11-15 11:52:59,390 t0kx_20120201_003_4_CLEAN          21374          COMPLETED      marenostrum_archive no-scheduler   ",
+      "index": 13
+    },
+    {
+      "content": "2021-11-15 11:52:59,495 t0kx_20120101_001_9_REDUCE         18426994       SUBMITTED      marenostrum4        debug          ",
+      "index": 14
+    },
+    {
+      "content": "2021-11-15 11:52:59,644 t0kx_20120201_003_7_REDUCE         18426995       SUBMITTED      marenostrum4        debug          ",
+      "index": 15
+    },
+    {
+      "content": "2021-11-15 11:52:59,771 t0kx_20120101_001_8_ARCHIVE        12486          SUBMITTED      marenostrum_archive no-scheduler   ",
+      "index": 16
+    },
+    {
+      "content": "2021-11-15 11:52:59,871 t0kx_20120201_003_6_ARCHIVE        12820          SUBMITTED      marenostrum_archive no-scheduler   ",
+      "index": 17
+    },
+    {
+      "content": "2021-11-15 11:52:59,974 t0kx_20120201_6_ARCHIVE_REDUCE     12266          SUBMITTED      marenostrum_archive no-scheduler   ",
+      "index": 18
+    },
+    {
+      "content": "2021-11-15 11:53:00,094 t0kx_20120101_001_7_CLEAN          13025          SUBMITTED      marenostrum_archive no-scheduler   ",
+      "index": 19
+    },
+    {
+      "content": "2021-11-15 11:53:00,216 t0kx_20120201_003_5_CLEAN          13214          SUBMITTED      marenostrum_archive no-scheduler   ",
+      "index": 20
+    },
+    {
+      "content": "2021-11-15 11:53:00,349 t0kx_20120101_000_9_REDUCE         18426983       QUEUING        marenostrum4        debug          ",
+      "index": 21
+    },
+    {
+      "content": "2021-11-15 11:53:00,448 t0kx_20120101_002_8_REDUCE         18426979       QUEUING        marenostrum4        debug          ",
+      "index": 22
+    },
+    {
+      "content": "2021-11-15 11:53:00,554 t0kx_20120101_003_8_REDUCE         18426984       QUEUING        marenostrum4        debug          ",
+      "index": 23
+    },
+    {
+      "content": "2021-11-15 11:53:00,649 t0kx_20120201_000_7_REDUCE         18426985       QUEUING        marenostrum4        debug          ",
+      "index": 24
+    },
+    {
+      "content": "2021-11-15 11:53:00,759 t0kx_20120201_001_7_REDUCE         18426989       QUEUING        marenostrum4        debug          ",
+      "index": 25
+    },
+    {
+      "content": "2021-11-15 11:53:00,858 t0kx_20120201_002_7_REDUCE         18426991       QUEUING        marenostrum4        debug          ",
+      "index": 26
+    },
+    {
+      "content": "2021-11-15 11:53:00,951 Saving JobList: /esarchive/autosubmit/t0kx/pkl/job_list_t0kx.pkl",
+      "index": 27
+    },
+    {
+      "content": "2021-11-15 11:53:00,983 Job list saved",
+      "index": 28
+    },
+    {
+      "content": "2021-11-15 11:53:11,049 Reloading parameters...",
+      "index": 29
+    },
+    {
+      "content": "2021-11-15 11:53:11,071 Loading parameters...",
+      "index": 30
+    },
+    {
+      "content": "2021-11-15 11:53:11,074 ",
+      "index": 31
+    },
+    {
+      "content": "",
+      "index": 32
+    },
+    {
+      "content": "98 of 385 jobs remaining (11:53)",
+      "index": 33
+    },
+    {
+      "content": "2021-11-15 11:53:11,075 Sleep: 10",
+      "index": 34
+    },
+    {
+      "content": "2021-11-15 11:53:11,076 Number of retrials: 2",
+      "index": 35
+    },
+    {
+      "content": "2021-11-15 11:53:11,077 WRAPPER CHECK TIME = 300",
+      "index": 36
+    },
+    {
+      "content": "2021-11-15 11:53:11,079 Saving JobList: /esarchive/autosubmit/t0kx/pkl/job_list_t0kx_backup.pkl",
+      "index": 37
+    },
+    {
+      "content": "2021-11-15 11:53:11,111 Job list saved",
+      "index": 38
+    },
+    {
+      "content": "2021-11-15 11:53:11,121 Checking jobs for platform=marenostrum_archive",
+      "index": 39
+    },
+    {
+      "content": "2021-11-15 11:53:13,292 Successful check job command: nohup kill -0 13025 > /dev/null 2>&1; echo $?",
+      "index": 40
+    },
+    {
+      "content": "2021-11-15 11:53:13,294 t0kx_20120101_001_7_CLEAN job seems to have completed: checking...",
+      "index": 41
+    },
+    {
+      "content": "2021-11-15 11:53:13,316 Job t0kx_20120101_001_7_CLEAN is COMPLETED",
+      "index": 42
+    },
+    {
+      "content": "2021-11-15 11:53:13,329 t0kx_20120101_001_7_CLEAN_STAT file have been transfered",
+      "index": 43
+    },
+    {
+      "content": "2021-11-15 11:53:13,419 t0kx_20120101_001_7_CLEAN_STAT file have been transfered",
+      "index": 44
+    },
+    {
+      "content": "2021-11-15 11:53:15,652 Successful check job command: nohup kill -0 12266 > /dev/null 2>&1; echo $?",
+      "index": 45
+    },
+    {
+      "content": "2021-11-15 11:53:15,654 t0kx_20120201_6_ARCHIVE_REDUCE job seems to have completed: checking...",
+      "index": 46
+    },
+    {
+      "content": "2021-11-15 11:53:15,665 Job t0kx_20120201_6_ARCHIVE_REDUCE is COMPLETED",
+      "index": 47
+    },
+    {
+      "content": "2021-11-15 11:53:15,679 t0kx_20120201_6_ARCHIVE_REDUCE_STAT file have been transfered",
+      "index": 48
+    },
+    {
+      "content": "2021-11-15 11:53:15,782 t0kx_20120201_6_ARCHIVE_REDUCE_STAT file have been transfered",
+      "index": 49
+    },
+    {
+      "content": "2021-11-15 11:53:18,023 Successful check job command: nohup kill -0 12820 > /dev/null 2>&1; echo $?",
+      "index": 50
+    },
+    {
+      "content": "2021-11-15 11:53:18,024 t0kx_20120201_003_6_ARCHIVE job seems to have completed: checking...",
+      "index": 51
+    },
+    {
+      "content": "2021-11-15 11:53:18,034 Job t0kx_20120201_003_6_ARCHIVE is COMPLETED",
+      "index": 52
+    },
+    {
+      "content": "2021-11-15 11:53:18,048 t0kx_20120201_003_6_ARCHIVE_STAT file have been transfered",
+      "index": 53
+    },
+    {
+      "content": "2021-11-15 11:53:18,160 t0kx_20120201_003_6_ARCHIVE_STAT file have been transfered",
+      "index": 54
+    },
+    {
+      "content": "2021-11-15 11:53:18,434 Custom directives from platform.conf: None",
+      "index": 55
+    },
+    {
+      "content": "2021-11-15 11:53:18,436 Custom directives from platform.conf: None",
+      "index": 56
+    },
+    {
+      "content": "2021-11-15 11:53:20,413 Successful check job command: nohup kill -0 13214 > /dev/null 2>&1; echo $?",
+      "index": 57
+    },
+    {
+      "content": "2021-11-15 11:53:20,415 t0kx_20120201_003_5_CLEAN job seems to have completed: checking...",
+      "index": 58
+    },
+    {
+      "content": "2021-11-15 11:53:20,426 Job t0kx_20120201_003_5_CLEAN is COMPLETED",
+      "index": 59
+    },
+    {
+      "content": "2021-11-15 11:53:20,441 t0kx_20120201_003_5_CLEAN_STAT file have been transfered",
+      "index": 60
+    },
+    {
+      "content": "2021-11-15 11:53:20,569 t0kx_20120201_003_5_CLEAN_STAT file have been transfered",
+      "index": 61
+    },
+    {
+      "content": "2021-11-15 11:53:20,797 Custom directives from platform.conf: None",
+      "index": 62
+    },
+    {
+      "content": "2021-11-15 11:53:20,799 Custom directives from platform.conf: None",
+      "index": 63
+    },
+    {
+      "content": "2021-11-15 11:53:22,871 Successful check job command: nohup kill -0 12486 > /dev/null 2>&1; echo $?",
+      "index": 64
+    },
+    {
+      "content": "2021-11-15 11:53:22,872 t0kx_20120101_001_8_ARCHIVE job seems to have completed: checking...",
+      "index": 65
+    },
+    {
+      "content": "2021-11-15 11:53:22,886 Job t0kx_20120101_001_8_ARCHIVE is COMPLETED",
+      "index": 66
+    },
+    {
+      "content": "2021-11-15 11:53:22,903 t0kx_20120101_001_8_ARCHIVE_STAT file have been transfered",
+      "index": 67
+    },
+    {
+      "content": "2021-11-15 11:53:22,999 t0kx_20120101_001_8_ARCHIVE_STAT file have been transfered",
+      "index": 68
+    },
+    {
+      "content": "2021-11-15 11:53:23,077 Checking jobs for platform=marenostrum4",
+      "index": 69
+    },
+    {
+      "content": "2021-11-15 11:53:23,079 Checking all jobs at once",
+      "index": 70
+    },
+    {
+      "content": "2021-11-15 11:53:23,173 Custom directives from platform.conf: None",
+      "index": 71
+    },
+    {
+      "content": "2021-11-15 11:53:23,175 Custom directives from platform.conf: None",
+      "index": 72
+    },
+    {
+      "content": "2021-11-15 11:53:24,231 Successful check job command",
+      "index": 73
+    },
+    {
+      "content": "2021-11-15 11:53:25,352 Job t0kx_20120201_001_7_REDUCE is QUEUING",
+      "index": 74
+    },
+    {
+      "content": "2021-11-15 11:53:25,353 Job t0kx_20120201_003_7_REDUCE is QUEUING",
+      "index": 75
+    },
+    {
+      "content": "2021-11-15 11:53:25,354 Job t0kx_20120101_001_9_REDUCE is QUEUING",
+      "index": 76
+    },
+    {
+      "content": "2021-11-15 11:53:25,355 Job t0kx_20120101_002_8_REDUCE is QUEUING",
+      "index": 77
+    },
+    {
+      "content": "2021-11-15 11:53:25,356 Job t0kx_20120201_002_7_REDUCE is QUEUING",
+      "index": 78
+    },
+    {
+      "content": "2021-11-15 11:53:25,357 Job t0kx_20120101_003_8_REDUCE is QUEUING",
+      "index": 79
+    },
+    {
+      "content": "2021-11-15 11:53:25,357 Job t0kx_20120201_000_7_REDUCE is QUEUING",
+      "index": 80
+    },
+    {
+      "content": "2021-11-15 11:53:25,358 Job t0kx_20120101_000_9_REDUCE is QUEUING",
+      "index": 81
+    },
+    {
+      "content": "2021-11-15 11:53:25,359 End of checking",
+      "index": 82
+    },
+    {
+      "content": "2021-11-15 11:53:25,361 Updating FAILED jobs",
+      "index": 83
+    },
+    {
+      "content": "2021-11-15 11:53:25,362 Updating WAITING jobs",
+      "index": 84
+    },
+    {
+      "content": "2021-11-15 11:53:25,365 Update finished",
+      "index": 85
+    },
+    {
+      "content": "2021-11-15 11:53:25,377 ",
+      "index": 86
+    },
+    {
+      "content": "Job Name                           Job Id         Job Status     Job Platform        Job Queue      ",
+      "index": 87
+    },
+    {
+      "content": "2021-11-15 11:53:25,555 t0kx_20120201_003_1_CLEAN          10005          COMPLETED      marenostrum_archive no-scheduler   ",
+      "index": 88
+    },
+    {
+      "content": "2021-11-15 11:53:25,583 Custom directives from platform.conf: None",
+      "index": 89
+    },
+    {
+      "content": "2021-11-15 11:53:25,584 Custom directives from platform.conf: None",
+      "index": 90
+    },
+    {
+      "content": "2021-11-15 11:53:25,721 t0kx_20120201_003_2_CLEAN          14383          COMPLETED      marenostrum_archive no-scheduler   ",
+      "index": 91
+    },
+    {
+      "content": "2021-11-15 11:53:25,832 t0kx_20120201_003_3_CLEAN          17429          COMPLETED      marenostrum_archive no-scheduler   ",
+      "index": 92
+    },
+    {
+      "content": "2021-11-15 11:53:25,984 t0kx_20120201_003_4_CLEAN          21374          COMPLETED      marenostrum_archive no-scheduler   ",
+      "index": 93
+    },
+    {
+      "content": "2021-11-15 11:53:26,140 t0kx_20120201_003_5_CLEAN          13214          COMPLETED      marenostrum_archive no-scheduler   ",
+      "index": 94
+    },
+    {
+      "content": "2021-11-15 11:53:26,268 t0kx_20120101_000_9_REDUCE         18426983       QUEUING        marenostrum4        debug          ",
+      "index": 95
+    },
+    {
+      "content": "2021-11-15 11:53:26,378 t0kx_20120101_001_9_REDUCE         18426994       QUEUING        marenostrum4        debug          ",
+      "index": 96
+    },
+    {
+      "content": "2021-11-15 11:53:26,517 t0kx_20120101_002_8_REDUCE         18426979       QUEUING        marenostrum4        debug          ",
+      "index": 97
+    },
+    {
+      "content": "2021-11-15 11:53:26,623 t0kx_20120101_003_8_REDUCE         18426984       QUEUING        marenostrum4        debug          ",
+      "index": 98
+    },
+    {
+      "content": "2021-11-15 11:53:26,720 t0kx_20120201_000_7_REDUCE         18426985       QUEUING        marenostrum4        debug          ",
+      "index": 99
+    },
+    {
+      "content": "2021-11-15 11:53:26,839 t0kx_20120201_001_7_REDUCE         18426989       QUEUING        marenostrum4        debug          ",
+      "index": 100
+    },
+    {
+      "content": "2021-11-15 11:53:26,932 t0kx_20120201_002_7_REDUCE         18426991       QUEUING        marenostrum4        debug          ",
+      "index": 101
+    },
+    {
+      "content": "2021-11-15 11:53:27,051 t0kx_20120201_003_7_REDUCE         18426995       QUEUING        marenostrum4        debug          ",
+      "index": 102
+    },
+    {
+      "content": "2021-11-15 11:53:27,159 Saving JobList: /esarchive/autosubmit/t0kx/pkl/job_list_t0kx.pkl",
+      "index": 103
+    },
+    {
+      "content": "2021-11-15 11:53:27,192 Job list saved",
+      "index": 104
+    },
+    {
+      "content": "2021-11-15 11:53:28,011 Custom directives from platform.conf: None",
+      "index": 105
+    },
+    {
+      "content": "2021-11-15 11:53:28,013 Custom directives from platform.conf: None",
+      "index": 106
+    },
+    {
+      "content": "2021-11-15 11:53:37,287 Reloading parameters...",
+      "index": 107
+    },
+    {
+      "content": "2021-11-15 11:53:37,306 Loading parameters...",
+      "index": 108
+    },
+    {
+      "content": "2021-11-15 11:53:37,308 ",
+      "index": 109
+    },
+    {
+      "content": "",
+      "index": 110
+    },
+    {
+      "content": "93 of 385 jobs remaining (11:53)",
+      "index": 111
+    },
+    {
+      "content": "2021-11-15 11:53:37,310 Sleep: 10",
+      "index": 112
+    },
+    {
+      "content": "2021-11-15 11:53:37,310 Number of retrials: 2",
+      "index": 113
+    },
+    {
+      "content": "2021-11-15 11:53:37,311 WRAPPER CHECK TIME = 300",
+      "index": 114
+    },
+    {
+      "content": "2021-11-15 11:53:37,314 Saving JobList: /esarchive/autosubmit/t0kx/pkl/job_list_t0kx_backup.pkl",
+      "index": 115
+    },
+    {
+      "content": "2021-11-15 11:53:37,346 Job list saved",
+      "index": 116
+    },
+    {
+      "content": "2021-11-15 11:53:37,357 Checking jobs for platform=marenostrum_archive",
+      "index": 117
+    },
+    {
+      "content": "2021-11-15 11:53:37,365 Checking jobs for platform=marenostrum4",
+      "index": 118
+    },
+    {
+      "content": "2021-11-15 11:53:37,366 Checking all jobs at once",
+      "index": 119
+    },
+    {
+      "content": "2021-11-15 11:53:40,690 Successful check job command",
+      "index": 120
+    },
+    {
+      "content": "2021-11-15 11:53:42,412 Job t0kx_20120201_001_7_REDUCE is QUEUING",
+      "index": 121
+    },
+    {
+      "content": "2021-11-15 11:53:42,413 Job t0kx_20120201_003_7_REDUCE is QUEUING",
+      "index": 122
+    },
+    {
+      "content": "2021-11-15 11:53:42,414 Job t0kx_20120101_000_9_REDUCE is QUEUING",
+      "index": 123
+    },
+    {
+      "content": "2021-11-15 11:53:42,415 Job t0kx_20120101_002_8_REDUCE is QUEUING",
+      "index": 124
+    },
+    {
+      "content": "2021-11-15 11:53:42,415 Job t0kx_20120201_002_7_REDUCE is QUEUING",
+      "index": 125
+    },
+    {
+      "content": "2021-11-15 11:53:42,416 Job t0kx_20120101_003_8_REDUCE is QUEUING",
+      "index": 126
+    },
+    {
+      "content": "2021-11-15 11:53:42,417 Job t0kx_20120201_000_7_REDUCE is QUEUING",
+      "index": 127
+    },
+    {
+      "content": "2021-11-15 11:53:42,418 Job t0kx_20120101_001_9_REDUCE is QUEUING",
+      "index": 128
+    },
+    {
+      "content": "2021-11-15 11:53:42,419 End of checking",
+      "index": 129
+    },
+    {
+      "content": "2021-11-15 11:53:42,420 Updating FAILED jobs",
+      "index": 130
+    },
+    {
+      "content": "2021-11-15 11:53:42,422 Updating WAITING jobs",
+      "index": 131
+    },
+    {
+      "content": "2021-11-15 11:53:42,424 Update finished",
+      "index": 132
+    },
+    {
+      "content": "2021-11-15 11:53:42,437 ",
+      "index": 133
+    },
+    {
+      "content": "Job Name                           Job Id         Job Status     Job Platform        Job Queue      ",
+      "index": 134
+    },
+    {
+      "content": "2021-11-15 11:53:42,597 t0kx_20120201_003_1_CLEAN          10005          COMPLETED      marenostrum_archive no-scheduler   ",
+      "index": 135
+    },
+    {
+      "content": "2021-11-15 11:53:42,663 t0kx_20120201_003_2_CLEAN          14383          COMPLETED      marenostrum_archive no-scheduler   ",
+      "index": 136
+    },
+    {
+      "content": "2021-11-15 11:53:42,757 t0kx_20120201_003_3_CLEAN          17429          COMPLETED      marenostrum_archive no-scheduler   ",
+      "index": 137
+    },
+    {
+      "content": "2021-11-15 11:53:42,857 t0kx_20120201_003_4_CLEAN          21374          COMPLETED      marenostrum_archive no-scheduler   ",
+      "index": 138
+    },
+    {
+      "content": "2021-11-15 11:53:42,990 t0kx_20120201_003_5_CLEAN          13214          COMPLETED      marenostrum_archive no-scheduler   ",
+      "index": 139
+    },
+    {
+      "content": "2021-11-15 11:53:43,098 t0kx_20120101_000_9_REDUCE         18426983       QUEUING        marenostrum4        debug          ",
+      "index": 140
+    },
+    {
+      "content": "2021-11-15 11:53:43,204 t0kx_20120101_001_9_REDUCE         18426994       QUEUING        marenostrum4        debug          ",
+      "index": 141
+    },
+    {
+      "content": "2021-11-15 11:53:43,310 t0kx_20120101_002_8_REDUCE         18426979       QUEUING        marenostrum4        debug          ",
+      "index": 142
+    },
+    {
+      "content": "2021-11-15 11:53:43,425 t0kx_20120101_003_8_REDUCE         18426984       QUEUING        marenostrum4        debug          ",
+      "index": 143
+    },
+    {
+      "content": "2021-11-15 11:53:43,543 t0kx_20120201_000_7_REDUCE         18426985       QUEUING        marenostrum4        debug          ",
+      "index": 144
+    },
+    {
+      "content": "2021-11-15 11:53:43,663 t0kx_20120201_001_7_REDUCE         18426989       QUEUING        marenostrum4        debug          ",
+      "index": 145
+    },
+    {
+      "content": "2021-11-15 11:53:43,782 t0kx_20120201_002_7_REDUCE         18426991       QUEUING        marenostrum4        debug          ",
+      "index": 146
+    },
+    {
+      "content": "2021-11-15 11:53:43,906 t0kx_20120201_003_7_REDUCE         18426995       QUEUING        marenostrum4        debug          ",
+      "index": 147
+    },
+    {
+      "content": "2021-11-15 11:53:44,053 Saving JobList: /esarchive/autosubmit/t0kx/pkl/job_list_t0kx.pkl",
+      "index": 148
+    },
+    {
+      "content": "2021-11-15 11:53:44,090 Job list saved",
+      "index": 149
+    }
+  ],
+  "logfile": "20211115_112130_run.log",
+  "timeStamp": 1636973631.807215
+}
