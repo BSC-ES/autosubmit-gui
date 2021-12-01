@@ -14,7 +14,7 @@ const Home = (props) => {
     if (user && token && loggedUser) {
       testToken();
     }
-  });
+  }, [loggedUser]);
   //let specificSearchUser = null;
   const values = queryString.parse(props.location.search);
   // if (values.user){
