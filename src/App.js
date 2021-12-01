@@ -35,7 +35,7 @@ class App extends Component {
                       <div className='container' style={{ height: "100%" }}>
                         <Alert />
                         <Switch>
-                          <Route
+                          <ProtectedRoute
                             exact
                             path={`/${rootAppName}/`}
                             component={Home}
