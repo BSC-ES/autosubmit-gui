@@ -12,7 +12,8 @@ import {
 const Search = ({ specificSearch }) => {
   const alertContext = useContext(AlertContext);
   const experimentContext = useContext(ExperimentContext);
-  const { searchExperimentsByOwner, experiments } = experimentContext;
+  const { searchExperimentsByOwner, experiments, loggedUser } =
+    experimentContext;
   const currentExpTypeChoice = localStorage.getItem(
     localStorageExperimentTypeSearch
   );
@@ -214,6 +215,7 @@ const Search = ({ specificSearch }) => {
               data-toggle='tooltip'
               data-placement='bottom'
               title='Shows a summary of the current progress of each experiment in the result.'
+              disabled={loggedUser ? "True" : "False"}
             >
               Show Detailed Data
             </button>

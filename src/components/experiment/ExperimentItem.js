@@ -2,7 +2,15 @@ import React, { Component } from "react";
 //import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 //import ExperimentContext from "../context/experiment/experimentContext";
-import { quickThreshold, completedColor, runningColor, failedColor, queueColor, NOAPI, rootAppName } from "../context/vars";
+import {
+  quickThreshold,
+  completedColor,
+  runningColor,
+  failedColor,
+  queueColor,
+  NOAPI,
+  rootAppName,
+} from "../context/vars";
 //import { render } from "react-dom";
 
 export class ExperimentItem extends Component {
@@ -11,28 +19,48 @@ export class ExperimentItem extends Component {
   // const experimentContext = useContext(ExperimentContext);
   // const { getExperimentSummary, summaries, loadingSummary } = experimentContext;
 
-
   // const disabledMore = total >= quickThreshold ? true : false;
 
   shouldComponentUpdate(nextProps) {
-    // console.log(nextProps.experiment.name);    
+    // console.log(nextProps.experiment.name);
     // console.log('Next loading has name ' + nextProps.isLoading);
     // console.log(this.props.experiment.name);
     // console.log('Current loading has name ' + this.props.isLoading);
-    const shouldUpdate = (nextProps.experiment !== this.props.experiment
-      || nextProps.isLoading !== this.props.isLoading || NOAPI);
+    const shouldUpdate =
+      nextProps.experiment !== this.props.experiment ||
+      nextProps.isLoading !== this.props.isLoading ||
+      NOAPI;
     // console.log(shouldUpdate);
     return shouldUpdate;
   }
 
   render() {
-    const { experiment, getExperimentSummary, summaries, isLoading } = this.props;
+    const {
+      experiment,
+      getExperimentSummary,
+      summaries,
+      isLoading,
+      loggedUser,
+    } = this.props;
 
     if (!experiment) {
       return null;
     }
 
-    const { name, description, user, hpc, status, completed, total, version, wrapper, queuing, failed, running } = experiment;
+    const {
+      name,
+      description,
+      user,
+      hpc,
+      status,
+      completed,
+      total,
+      version,
+      wrapper,
+      queuing,
+      failed,
+      running,
+    } = experiment;
 
     const onGetSummary = (name) => (e) => {
       e.preventDefault();
@@ -49,14 +77,30 @@ export class ExperimentItem extends Component {
               <h3 className='font-weight-bold'>{name}</h3>
             </div>
             <div className='col-md-6 text-center'>
-              <div className="row-hl d-flex flex-wrap">
-                <div className="item-hl">
-                  {queuing > 0 && <span className="badge" style={queueColor}>{queuing}</span>}
-                  {running > 0 && <span className="badge" style={runningColor}>{running}</span>}
-                  {failed > 0 && <span className="badge" style={failedColor}>{failed}</span>}
-                  {completed > 0 && <span className='badge' style={completedColor}>{completed}</span>}
+              <div className='row-hl d-flex flex-wrap'>
+                <div className='item-hl'>
+                  {queuing > 0 && (
+                    <span className='badge' style={queueColor}>
+                      {queuing}
+                    </span>
+                  )}
+                  {running > 0 && (
+                    <span className='badge' style={runningColor}>
+                      {running}
+                    </span>
+                  )}
+                  {failed > 0 && (
+                    <span className='badge' style={failedColor}>
+                      {failed}
+                    </span>
+                  )}
+                  {completed > 0 && (
+                    <span className='badge' style={completedColor}>
+                      {completed}
+                    </span>
+                  )}
                 </div>
-                <div className="item-hl ml-auto">
+                <div className='item-hl ml-auto'>
                   {completed} / {total}
                 </div>
               </div>
@@ -66,14 +110,22 @@ export class ExperimentItem extends Component {
                     completed === total
                       ? "progress-bar bg-completed"
                       : status === "RUNNING"
-                        ? ((summaries[name] && summaries[name].n_failed > 0) || failed > 0)
-                          ? "progress-bar progress-bar-striped progress-bar-animated bg-danger"
-                          : running > 0 ? "progress-bar progress-bar-striped progress-bar-animated bg-success"
-                            : queuing > 0 ? "progress-bar progress-bar-striped progress-bar-animated bg-queue" : "progress-bar bg-success"
-                        : ((summaries[name] && summaries[name].n_failed > 0) || failed > 0)
-                          ? "progress-bar bg-danger"
-                          : running > 0 ? "progress-bar bg-success"
-                            : queuing > 0 ? "progress-bar bg-queue" : "progress-bar bg-info"
+                      ? (summaries[name] && summaries[name].n_failed > 0) ||
+                        failed > 0
+                        ? "progress-bar progress-bar-striped progress-bar-animated bg-danger"
+                        : running > 0
+                        ? "progress-bar progress-bar-striped progress-bar-animated bg-success"
+                        : queuing > 0
+                        ? "progress-bar progress-bar-striped progress-bar-animated bg-queue"
+                        : "progress-bar bg-success"
+                      : (summaries[name] && summaries[name].n_failed > 0) ||
+                        failed > 0
+                      ? "progress-bar bg-danger"
+                      : running > 0
+                      ? "progress-bar bg-success"
+                      : queuing > 0
+                      ? "progress-bar bg-queue"
+                      : "progress-bar bg-info"
                   }
                   role='progressbar'
                   style={{
@@ -104,7 +156,7 @@ export class ExperimentItem extends Component {
         </div>
         <div className='card-body py-1'>
           {/* <h4 className="card-title"></h4> */}
-          <div className="d-flex justify-content-between">
+          <div className='d-flex justify-content-between'>
             <div>
               <h6 className='card-subtitle text-muted pt-2'>
                 <span>Owner:</span> {user}
@@ -115,7 +167,7 @@ export class ExperimentItem extends Component {
             </div>
           </div>
           <p className='card-text mb-0'>
-            <span>{description}</span>
+            {loggedUser && <span>{description}</span>}
           </p>
 
           <div className='row row-in-card'>
@@ -129,13 +181,19 @@ export class ExperimentItem extends Component {
                       : "btn btn-primary btn-block btn-sm"
                   }
                   type='button'
+                  disabled={loggedUser ? "True" : "False"}
                   onClick={onGetSummary(name)}
                   aria-controls={name}
                   data-toggle='tooltip'
                   data-placement='bottom'
-                  title={summaries[name] ? "Updates the summary information." : "Shows a summary of the current progress of the experiment."}
-                >{summaries[name] ? "Refresh" : "Summary"}</button>
-
+                  title={
+                    summaries[name]
+                      ? "Updates the summary information."
+                      : "Shows a summary of the current progress of the experiment."
+                  }
+                >
+                  {summaries[name] ? "Refresh" : "Summary"}
+                </button>
               )}
               {isLoading && (
                 <button
@@ -164,9 +222,9 @@ export class ExperimentItem extends Component {
                 </Link>
               )}
             </div>
-            <div className="col-md-3 px-1">
+            <div className='col-md-3 px-1'>
               {disabledMore === true && (
-                <button className="btn btn-sm btn-block" disabled='True'>
+                <button className='btn btn-sm btn-block' disabled='True'>
                   Graph &#8594;
                 </button>
               )}
@@ -195,7 +253,7 @@ export class ExperimentItem extends Component {
             </div>
           </div>
           {summaries[name] && (
-            <div className="row">
+            <div className='row'>
               {summaries[name] && summaries[name].error === true && (
                 <div className='col scroll-x' id={name}>
                   <div className='row text-left'>
@@ -291,11 +349,16 @@ export class ExperimentItem extends Component {
             </div>
           )}
           <p className='card-text text-center'>
-            <span className='text-muted'>{version}</span>{wrapper && (<span className="px-1 ml-1 bg-secondary text-dark rounded">{wrapper} wrapper</span>)}
+            <span className='text-muted'>{version}</span>
+            {wrapper && (
+              <span className='px-1 ml-1 bg-secondary text-dark rounded'>
+                {wrapper} wrapper
+              </span>
+            )}
           </p>
         </div>
       </div>
-    )
+    );
   }
 }
 

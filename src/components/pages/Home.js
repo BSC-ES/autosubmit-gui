@@ -14,6 +14,7 @@ const Home = (props) => {
     if (user && token && loggedUser) {
       testToken();
     }
+    // eslint-disable-next-line
   }, [loggedUser]);
   //let specificSearchUser = null;
   const values = queryString.parse(props.location.search);
