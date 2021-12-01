@@ -5,7 +5,10 @@ import ExperimentContext from "../context/experiment/experimentContext";
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
   const experimentContext = useContext(ExperimentContext);
-  const { loggedUser } = experimentContext;
+  const { loggedUser, setLoggedUser } = experimentContext;
+  const user = localStorage.getItem("user");
+  const token = localStorage.getItem("token");
+  setLoggedUser(user, token);
   return (
     <Route
       {...rest}
