@@ -181,7 +181,7 @@ export class ExperimentItem extends Component {
                       : "btn btn-primary btn-block btn-sm"
                   }
                   type='button'
-                  disabled={loggedUser ? "True" : "False"}
+                  disabled={loggedUser ? "False" : "True"}
                   onClick={onGetSummary(name)}
                   aria-controls={name}
                   data-toggle='tooltip'
