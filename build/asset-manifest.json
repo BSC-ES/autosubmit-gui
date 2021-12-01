@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/presentation/static/css/main.223f5e23.chunk.css",
-    "main.js": "/presentation/static/js/main.87f9ffce.chunk.js",
-    "main.js.map": "/presentation/static/js/main.87f9ffce.chunk.js.map",
-    "runtime-main.js": "/presentation/static/js/runtime-main.e846712f.js",
-    "runtime-main.js.map": "/presentation/static/js/runtime-main.e846712f.js.map",
-    "static/js/2.3525fa8e.chunk.js": "/presentation/static/js/2.3525fa8e.chunk.js",
-    "static/js/2.3525fa8e.chunk.js.map": "/presentation/static/js/2.3525fa8e.chunk.js.map",
-    "index.html": "/presentation/index.html",
-    "static/css/main.223f5e23.chunk.css.map": "/presentation/static/css/main.223f5e23.chunk.css.map",
-    "static/js/2.3525fa8e.chunk.js.LICENSE.txt": "/presentation/static/js/2.3525fa8e.chunk.js.LICENSE.txt",
-    "static/media/catload.d22d6312.gif": "/presentation/static/media/catload.d22d6312.gif",
-    "static/media/dogload.7fd39847.gif": "/presentation/static/media/dogload.7fd39847.gif",
-    "static/media/platyload.ad32cb95.gif": "/presentation/static/media/platyload.ad32cb95.gif"
+    "main.css": "/autosubmittest/static/css/main.223f5e23.chunk.css",
+    "main.js": "/autosubmittest/static/js/main.0fbed5c1.chunk.js",
+    "main.js.map": "/autosubmittest/static/js/main.0fbed5c1.chunk.js.map",
+    "runtime-main.js": "/autosubmittest/static/js/runtime-main.c125d10d.js",
+    "runtime-main.js.map": "/autosubmittest/static/js/runtime-main.c125d10d.js.map",
+    "static/js/2.e9eebe2e.chunk.js": "/autosubmittest/static/js/2.e9eebe2e.chunk.js",
+    "static/js/2.e9eebe2e.chunk.js.map": "/autosubmittest/static/js/2.e9eebe2e.chunk.js.map",
+    "index.html": "/autosubmittest/index.html",
+    "static/css/main.223f5e23.chunk.css.map": "/autosubmittest/static/css/main.223f5e23.chunk.css.map",
+    "static/js/2.e9eebe2e.chunk.js.LICENSE.txt": "/autosubmittest/static/js/2.e9eebe2e.chunk.js.LICENSE.txt",
+    "static/media/catload.d22d6312.gif": "/autosubmittest/static/media/catload.d22d6312.gif",
+    "static/media/dogload.7fd39847.gif": "/autosubmittest/static/media/dogload.7fd39847.gif",
+    "static/media/platyload.ad32cb95.gif": "/autosubmittest/static/media/platyload.ad32cb95.gif"
   },
   "entrypoints": [
-    "static/js/runtime-main.e846712f.js",
-    "static/js/2.3525fa8e.chunk.js",
+    "static/js/runtime-main.c125d10d.js",
+    "static/js/2.e9eebe2e.chunk.js",
     "static/css/main.223f5e23.chunk.css",
-    "static/js/main.87f9ffce.chunk.js"
+    "static/js/main.0fbed5c1.chunk.js"
   ]
 }

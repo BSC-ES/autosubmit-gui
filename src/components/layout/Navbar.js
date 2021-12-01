@@ -9,15 +9,36 @@ import FileStatus from "../experiment/FileStatus";
 const Navbar = ({ icon, title }) => {
   const history = useHistory();
   const experimentContext = useContext(ExperimentContext);
-  const { searchExperiments, experiment, cleanFileStatusData, getFileStatus, esarchiveStatus, loggedUser, setLoggedUser } = experimentContext;
+  const {
+    searchExperiments,
+    experiment,
+    cleanFileStatusData,
+    getFileStatus,
+    esarchiveStatus,
+    loggedUser,
+    setLoggedUser,
+    testToken,
+  } = experimentContext;
   const haveIReadTheNews = localStorage.getItem(latestNewsLabel);
   useEffect(() => {
     const user = localStorage.getItem("user");
     const token = localStorage.getItem("token");
+    // console.log(user);
+    // console.log(token);
+    // console.log(loggedUser);
     if (user && token && !loggedUser) {
       setLoggedUser(user, token);
     }
-  }, [loggedUser, setLoggedUser])
+
+    if (user && token && loggedUser) {
+      testToken();
+    }
+    // eslint-disable-next-line
+  }, [loggedUser, setLoggedUser]);
+
+  // useEffect(() => {
+  //   testToken();
+  // });
 
   const [text, setText] = useState("");
   // const expid = match.params.expid;
@@ -35,11 +56,11 @@ const Navbar = ({ icon, title }) => {
   const onChange = (e) => setText(e.target.value);
 
   const onLogout = (e) => {
-    e.preventDefault()
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
+    e.preventDefault();
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
     setLoggedUser(null, null);
-  }
+  };
 
   return (
     <nav className='navbar navbar-expand-lg navbar-dark bg-dark mb-1 p-1'>
@@ -47,10 +68,18 @@ const Navbar = ({ icon, title }) => {
         <Link className='navbar-brand' to={`/${rootAppName}/`}>
           <i className={icon} /> {title}
         </Link>
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainMenuContent" aria-controls="mainMenuContent" aria-expanded="false" aria-label="Toggle main menu">
-          <span className="navbar-toggler-icon"></span>
+        <button
+          className='navbar-toggler'
+          type='button'
+          data-toggle='collapse'
+          data-target='#mainMenuContent'
+          aria-controls='mainMenuContent'
+          aria-expanded='false'
+          aria-label='Toggle main menu'
+        >
+          <span className='navbar-toggler-icon'></span>
         </button>
-        <div className="collapse navbar-collapse" id="mainMenuContent">
+        <div className='collapse navbar-collapse' id='mainMenuContent'>
           <ul className='navbar-nav mr-auto mt-2 mt-lg-0'>
             <li className='nav-item'>
               <Link className='nav-link' to={`/${rootAppName}/`}>
@@ -62,23 +91,37 @@ const Navbar = ({ icon, title }) => {
                 <u>About</u>
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to={`/${rootAppName}/news`}>
-                <u className="text-decoration-none">News {haveIReadTheNews === null ? <span className="badge badge-warning">!</span> : ""}</u>
+            <li className='nav-item'>
+              <Link className='nav-link' to={`/${rootAppName}/news`}>
+                <u className='text-decoration-none'>
+                  News{" "}
+                  {haveIReadTheNews === null ? (
+                    <span className='badge badge-warning'>!</span>
+                  ) : (
+                    ""
+                  )}
+                </u>
               </Link>
             </li>
             <li className='nav-item'>
               {expid && <Experiment expidToken={expid} />}
             </li>
             <li>
-              <FileStatus getFileStatus={getFileStatus} cleanFileStatusData={cleanFileStatusData} esarchiveStatus={esarchiveStatus} />
+              <FileStatus
+                getFileStatus={getFileStatus}
+                cleanFileStatusData={cleanFileStatusData}
+                esarchiveStatus={esarchiveStatus}
+              />
             </li>
           </ul>
           {history &&
             history.location.pathname !== `/${rootAppName}/` &&
             history.location.pathname !== `/${rootAppName}` && (
-              <form className='form-inline my-2 my-lg-0' onSubmit={submitSearch}>
-                <div className="input-group input-group-sm">
+              <form
+                className='form-inline my-2 my-lg-0'
+                onSubmit={submitSearch}
+              >
+                <div className='input-group input-group-sm'>
                   <input
                     type='search'
                     className='form-control py-0'
@@ -102,15 +145,23 @@ const Navbar = ({ icon, title }) => {
               </form>
             )}
           {loggedUser && loggedUser !== "Failed" && (
-            <span className="bg-secondary rounded text-dark px-2 mx-1">{loggedUser}</span>
+            <span className='bg-secondary rounded text-dark px-2 mx-1'>
+              {loggedUser}
+            </span>
           )}
           {loggedUser && loggedUser !== "Failed" && (
-            <button className="btn btn-sm btn-dark" onClick={onLogout}>
+            <button className='btn btn-sm btn-dark' onClick={onLogout}>
               Logout
             </button>
           )}
-          {((!loggedUser || loggedUser === "Failed") && !NOAPI) && (
-            <Link title='Some features might require your credentials.' className='btn btn-sm btn-primary' to={`/${rootAppName}/login`}>Login</Link>
+          {(!loggedUser || loggedUser === "Failed") && !NOAPI && (
+            <Link
+              title='Some features might require your credentials.'
+              className='btn btn-sm btn-primary'
+              to={`/${rootAppName}/login`}
+            >
+              Login
+            </Link>
           )}
         </div>
       </div>

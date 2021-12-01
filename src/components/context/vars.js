@@ -1,9 +1,9 @@
 export const AUTOSUBMIT_API_SOURCE = "https://earth.bsc.es/autosubmitapi";
 // export const AUTOSUBMIT_API_SOURCE = "http://84.88.185.94:8081";
 export const DEBUG = false;
-export const NOAPI = true;
-export const SHOW_PERFORMANCE_TAB = false;
-export const rootAppName = "presentation";
+export const NOAPI = false;
+export const SHOW_PERFORMANCE_TAB = true;
+export const rootAppName = "autosubmittest";
 export const ERROR_MESSAGE =
   "Autosubmit API couldn't retrieve the requested information on time. It might be due to a network error or heavy traffic on the shared folders that Autosubmit uses to store experiment information (/esarchive/autosubmit/).";
 

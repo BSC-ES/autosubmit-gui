@@ -63,7 +63,7 @@ import {
   complexTypeExperimentToSimple,
   complexActiveStatusToSimple,
   defaultPerformanceDisplaySettings,
-  rootAppName
+  rootAppName,
 } from "../vars";
 
 import { timeStampToDate, errorEsarchiveStatus, sleep } from "../utils";
@@ -115,18 +115,18 @@ const ExperimentState = (props) => {
     currentSearchString: null,
     currentConfiguration: null,
     configDifferences: new Set(),
-    performanceDisplayPlots: defaultPerformanceDisplaySettings
+    performanceDisplayPlots: defaultPerformanceDisplaySettings,
   };
 
   const [state, dispatch] = useReducer(ExperimentReducer, initialState);
 
   const localserver = AUTOSUBMIT_API_SOURCE;
-  //const localserver = "http://84.88.185.94:8081";
+  // const localserver = "http://84.88.185.94:8081";
   const debug = DEBUG;
 
   // Search Experiments
   const searchExperiments = async (text, expType, activeCheck) => {
-    //console.log(text + " || " + expType + " || " + activeCheck);
+    const token = localStorage.getItem("token");
     localStorage.setItem(localStorageExperimentTypeSearch, expType);
     localStorage.setItem(localStorageExperimentActiveCheck, activeCheck);
     setLoading();
@@ -136,13 +136,25 @@ const ExperimentState = (props) => {
     } else {
       const simpleExpType = complexTypeExperimentToSimple(expType);
       const simpleActiveStatus = complexActiveStatusToSimple(activeCheck);
-      const res = await axios.get(`${localserver}/search/${text}/${simpleExpType}/${simpleActiveStatus}`).catch(error => alert(ERROR_MESSAGE + "\n" + error.message));
+      const res = await axios
+        .get(
+          `${localserver}/search/${text}/${simpleExpType}/${simpleActiveStatus}`,
+          {
+            headers: { Authorization: token },
+          }
+        )
+        .catch((error) => alert(ERROR_MESSAGE + "\n" + error.message));
       debug && console.log(res.data);
       result = res ? res.data.experiment : [];
     }
     dispatch({
       type: SEARCH_EXPERIMENTS,
-      payload: { result: result, searchText: text, expType: expType, activeCheck: activeCheck },
+      payload: {
+        result: result,
+        searchText: text,
+        expType: expType,
+        activeCheck: activeCheck,
+      },
     });
     setPaginatedResult();
   };
@@ -156,26 +168,46 @@ const ExperimentState = (props) => {
     if (NOAPI) {
       result = require("../data/search.json").experiment;
     } else {
+      const token = localStorage.getItem("token");
       const simpleExpType = complexTypeExperimentToSimple(expType);
       const simpleActiveStatus = complexActiveStatusToSimple(activeCheck);
-      const res = await axios.get(`${localserver}/searchowner/${owner}/${simpleExpType}/${simpleActiveStatus}`).catch(error => alert(ERROR_MESSAGE + "\n" + error.message));
+      const res = await axios
+        .get(
+          `${localserver}/searchowner/${owner}/${simpleExpType}/${simpleActiveStatus}`,
+          {
+            headers: { Authorization: token },
+          }
+        )
+        .catch((error) => alert(ERROR_MESSAGE + "\n" + error.message));
       debug && console.log(res.data);
       result = res ? res.data.experiment : [];
     }
 
     dispatch({
       type: SEARCH_BY_OWNER,
-      payload: { result: result, searchText: owner, expType: expType, activeCheck: activeCheck },
+      payload: {
+        result: result,
+        searchText: owner,
+        expType: expType,
+        activeCheck: activeCheck,
+      },
     });
     setPaginatedResult();
-  }
+  };
 
   const getLogStatus = async (expid) => {
     let result = null;
     if (NOAPI) {
-      result = { timeDiff: 0, error: false, error_message: "NO API", log_path: "/none/none" }
+      result = {
+        timeDiff: 0,
+        error: false,
+        error_message: "NO API",
+        log_path: "/none/none",
+      };
     } else {
-      const res = await axios.get(`${localserver}/logrun/${expid}`).catch(error => alert(ERROR_MESSAGE + "\n" + error.message));
+      const res = await axios
+        .get(`${localserver}/logrun/${expid}`)
+        .catch((error) => alert(ERROR_MESSAGE + "\n" + error.message));
       debug && console.log(res.data);
       result = res ? res.data : {};
     }
@@ -183,8 +215,8 @@ const ExperimentState = (props) => {
     dispatch({
       type: GET_LOG_RUNNING_DATA,
       payload: result,
-    })
-  }
+    });
+  };
 
   const getSummaries = () => {
     const experiments = state.experiments;
@@ -221,7 +253,11 @@ const ExperimentState = (props) => {
     if (NOAPI) {
       result = require("../data/runs_" + String(expid) + ".json");
     } else {
-      const res = await axios.get(`${localserver}/runs/${expid}`).catch((error) => { alert(error.message); });
+      const res = await axios
+        .get(`${localserver}/runs/${expid}`)
+        .catch((error) => {
+          alert(error.message);
+        });
       result = res ? res.data : null;
       debug && console.log(result);
     }
@@ -229,25 +265,30 @@ const ExperimentState = (props) => {
     dispatch({
       type: GET_EXPERIMENT_RUNS,
       payload: result,
-    })
-  }
+    });
+  };
 
   const getJobLog = async (logfile) => {
     let result = null;
-    const logcontent = logfile && logfile.length > 0 ? logfile.split('/') : [''];
-    const last = logcontent.pop()
+    const logcontent =
+      logfile && logfile.length > 0 ? logfile.split("/") : [""];
+    const last = logcontent.pop();
     if (NOAPI) {
       result = require("../data/joblog.json");
     } else {
-      const res = await axios.get(`${localserver}/joblog/${last}`).catch((error) => { alert(error.message); });
+      const res = await axios
+        .get(`${localserver}/joblog/${last}`)
+        .catch((error) => {
+          alert(error.message);
+        });
       result = res ? res.data : null;
       debug && console.log(result);
     }
     dispatch({
       type: GET_JOB_LOG,
       payload: result,
-    })
-  }
+    });
+  };
 
   // CAS Login
   const getVerifyTicket = async (ticket) => {
@@ -256,7 +297,9 @@ const ExperimentState = (props) => {
       return null;
     } else {
       //console.log('Attempt inside state of ' + ticket);
-      const res = await axios.get(`${localserver}/login?ticket=${ticket}&env=${rootAppName}`)
+      const res = await axios.get(
+        `${localserver}/login?ticket=${ticket}&env=${rootAppName}`
+      );
       // {authentication: bool, user: str}
       //console.log(res);
       authdata = res ? res.data : null;
@@ -266,9 +309,9 @@ const ExperimentState = (props) => {
       dispatch({
         type: VERIFY_TOKEN_DATA,
         payload: authdata,
-      })
+      });
     }
-  }
+  };
 
   // Get Summary for Search item
   const getExperimentSummary = async (expid) => {
@@ -279,7 +322,11 @@ const ExperimentState = (props) => {
       summary = require("../data/summary_" + String(expid) + ".json");
       sleep(3000);
     } else {
-      const res = await axios.get(`${localserver}/summary/${expid}`).catch((error) => { alert(ERROR_MESSAGE + "\n" + error.message); });
+      const res = await axios
+        .get(`${localserver}/summary/${expid}`)
+        .catch((error) => {
+          alert(ERROR_MESSAGE + "\n" + error.message);
+        });
       summary = res ? res.data : null;
       debug && console.log(summary);
     }
@@ -300,7 +347,9 @@ const ExperimentState = (props) => {
     if (NOAPI) {
       metrics = require("../data/performance_" + String(expid) + ".json");
     } else {
-      const res = await axios.get(`${localserver}/performance/${expid}`).catch(error => alert(ERROR_MESSAGE + "\n" + error.message));
+      const res = await axios
+        .get(`${localserver}/performance/${expid}`)
+        .catch((error) => alert(ERROR_MESSAGE + "\n" + error.message));
       metrics = res ? res.data : null;
       debug && console.log(metrics);
     }
@@ -318,14 +367,22 @@ const ExperimentState = (props) => {
   };
 
   const getCurrentRunning = async () => {
-    localStorage.setItem(localStorageExperimentTypeSearch, orderByType.radioAll);
-    localStorage.setItem(localStorageExperimentActiveCheck, orderByType.showOnlyActive);
+    localStorage.setItem(
+      localStorageExperimentTypeSearch,
+      orderByType.radioAll
+    );
+    localStorage.setItem(
+      localStorageExperimentActiveCheck,
+      orderByType.showOnlyActive
+    );
     setLoading();
     let result = null;
     if (NOAPI) {
       result = require("../data/search.json").experiment;
     } else {
-      const res = await axios.get(`${localserver}/running/`).catch(error => alert(ERROR_MESSAGE + "\n" + error.message));
+      const res = await axios
+        .get(`${localserver}/running/`)
+        .catch((error) => alert(ERROR_MESSAGE + "\n" + error.message));
       result = res ? res.data.experiment : null;
       debug && console.log(result);
     }
@@ -347,7 +404,9 @@ const ExperimentState = (props) => {
     if (NOAPI) {
       result = require("../data/expinfo_" + String(expid) + ".json");
     } else {
-      const res = await axios.get(`${localserver}/expinfo/${expid}`).catch(error => alert(ERROR_MESSAGE + "\n" + error.message));
+      const res = await axios
+        .get(`${localserver}/expinfo/${expid}`)
+        .catch((error) => alert(ERROR_MESSAGE + "\n" + error.message));
       result = res ? res.data : null;
       debug && console.log(result);
     }
@@ -365,7 +424,9 @@ const ExperimentState = (props) => {
     if (NOAPI) {
       result = require("../data/exprun_" + String(expid) + ".json");
     } else {
-      const res = await axios.get(`${localserver}/exprun/${expid}`).catch(error => alert(ERROR_MESSAGE + "\n" + error.message));
+      const res = await axios
+        .get(`${localserver}/exprun/${expid}`)
+        .catch((error) => alert(ERROR_MESSAGE + "\n" + error.message));
       result = res ? res.data : null;
       debug && console.log(result);
     }
@@ -384,7 +445,7 @@ const ExperimentState = (props) => {
     if (NOAPI) {
       result = require("../data/filestatus.json");
     } else {
-      res = await axios.get(`${localserver}/filestatus/`).catch(error => {
+      res = await axios.get(`${localserver}/filestatus/`).catch((error) => {
         // alert(ERROR_MESSAGE + "\n" + error.message);
         // ;
         iserror = true;
@@ -400,17 +461,19 @@ const ExperimentState = (props) => {
       type: GET_FILE_STATUS,
       payload: result,
     });
-  }
+  };
 
   // Get Running State
   const getRunningState = async (expid) => {
     setLoadingState();
-    let defaultResult = { "result": false }
+    let defaultResult = { result: false };
     let result = null;
     if (NOAPI) {
       result = require("../data/ifrun_" + String(expid) + ".json");
     } else {
-      const res = await axios.get(`${localserver}/ifrun/${expid}`).catch(error => alert(ERROR_MESSAGE + "\n" + error.message));
+      const res = await axios
+        .get(`${localserver}/ifrun/${expid}`)
+        .catch((error) => alert(ERROR_MESSAGE + "\n" + error.message));
       result = res ? res.data : defaultResult;
       debug && console.log(result);
     }
@@ -424,27 +487,31 @@ const ExperimentState = (props) => {
   const requestCurrentConfiguration = async (expid) => {
     const token = localStorage.getItem("token");
     const defaultResponse = {
-      "are_equal": false,
-      "configuration_current_run": {
-        "contains_nones": true,
+      are_equal: false,
+      configuration_current_run: {
+        contains_nones: true,
       },
-      "configuration_filesystem": {
-        "contains_nones": true,
+      configuration_filesystem: {
+        contains_nones: true,
       },
-      "error": true,
-      "error_message": "Request failed.",
-      "warning": false,
-      "warning_message": ""
-    }
+      error: true,
+      error_message: "Request failed.",
+      warning: false,
+      warning_message: "",
+    };
     let result = null;
     if (NOAPI) {
       result = require("../data/config_a2h6.json");
     } else {
       let isError = false;
-      const res = await axios.get(`${localserver}/cconfig/${expid}`, { headers: { "Authorization": token } }).catch(error => {
-        alert(ERROR_MESSAGE + "\n" + error.message);
-        isError = true;
-      });
+      const res = await axios
+        .get(`${localserver}/cconfig/${expid}`, {
+          headers: { Authorization: token },
+        })
+        .catch((error) => {
+          alert(ERROR_MESSAGE + "\n" + error.message);
+          isError = true;
+        });
       if (isError === false) {
         //console.log(res);
         result = res ? res.data : null;
@@ -465,22 +532,29 @@ const ExperimentState = (props) => {
         configurationCurrentRun: result.configuration_current_run,
         configurationFileSystem: result.configuration_filesystem,
       },
-    })
-  }
+    });
+  };
 
   const testToken = async () => {
     const token = localStorage.getItem("token");
     const body = {};
     const defaultResponse = {
-      "isValid": false,
-      "message": "Session Expired",
-    }
+      isValid: false,
+      message: "Session Expired",
+    };
     let result = null;
     if (NOAPI) {
       result = defaultResponse;
     } else {
       let isError = false;
-      const res = await axios.post(`${localserver}/tokentest`, body, { headers: { "Authorization": token } }).catch(error => { alert(ERROR_MESSAGE + "\n" + error.message); isError = true; });
+      const res = await axios
+        .post(`${localserver}/tokentest`, body, {
+          headers: { Authorization: token },
+        })
+        .catch((error) => {
+          alert(ERROR_MESSAGE + "\n" + error.message);
+          isError = true;
+        });
       if (isError === false) {
         result = res ? res.data : null;
       } else {
@@ -492,27 +566,33 @@ const ExperimentState = (props) => {
       type: TEST_TOKEN,
       payload: result,
     });
-
-  }
+  };
 
   const updateDescription = async (expid, new_description) => {
     const token = localStorage.getItem("token");
     const defaultResponse = {
-      'error': true,
-      'auth': false,
-      'message': 'Not a valid user',
-      "description": null
-    }
+      error: true,
+      auth: false,
+      message: "Not a valid user",
+      description: null,
+    };
     let result = null;
     const body = {
-      'expid': expid,
-      'description': new_description,
+      expid: expid,
+      description: new_description,
     };
     if (NOAPI) {
       result = defaultResponse;
     } else {
       let isError = false;
-      const res = await axios.post(`${localserver}/updatedesc`, body, { headers: { "Authorization": token } }).catch(error => { alert(ERROR_MESSAGE + "\n" + error.message); isError = true; });
+      const res = await axios
+        .post(`${localserver}/updatedesc`, body, {
+          headers: { Authorization: token },
+        })
+        .catch((error) => {
+          alert(ERROR_MESSAGE + "\n" + error.message);
+          isError = true;
+        });
       if (isError === false) {
         result = res ? res.data : null;
       } else {
@@ -526,11 +606,11 @@ const ExperimentState = (props) => {
     dispatch({
       type: UPDATE_DESCRIPTION_OWN_EXP,
       payload: result,
-    })
+    });
 
     const { message } = result;
     alert(message);
-  }
+  };
 
   const setCurrentCommand = async (command) => {
     // for change status
@@ -546,41 +626,41 @@ const ExperimentState = (props) => {
       type: SET_CURRENT_UPDATE_DESCRIP_COMMAND,
       payload: command,
     });
-  }
+  };
 
   const setCurrentTextCommand = async (command) => {
     dispatch({
       type: SET_CURRENT_TEXT_COMMAND,
       payload: command,
     });
-  }
+  };
 
   const setLoggedUser = async (user, token) => {
     dispatch({
       type: SET_LOGGED_USER,
       payload: { user: user, token: token },
     });
-  }
+  };
 
   const setPaginatedResult = () => {
     dispatch({
-      type: SET_PAGINATED_RESULT
-    })
-  }
+      type: SET_PAGINATED_RESULT,
+    });
+  };
 
   const setCurrentPage = (pageNumber) => {
     dispatch({
       type: SET_CURRENT_PAGE,
       payload: pageNumber,
-    })
+    });
     setPaginatedResult();
-  }
+  };
 
   // Cleaning
   const clearExperiments = () => dispatch({ type: CLEAR_EXPERIMENTS });
   //const cleanGraphData = () => dispatch({ type: CLEAN_GRAPH_DATA });
 
-  const cleanFileStatusData = () => dispatch({ type: CLEAN_FILE_STATUS_DATA })
+  const cleanFileStatusData = () => dispatch({ type: CLEAN_FILE_STATUS_DATA });
 
   const cleanRunData = () => dispatch({ type: CLEAN_RUN_DATA });
 
@@ -588,7 +668,8 @@ const ExperimentState = (props) => {
     dispatch({ type: CLEAN_PERFORMANCE_METRICS });
 
   const cleanExperimentData = () => dispatch({ type: CLEAN_EXPERIMENT_DATA });
-  const clearCurrentConfigurationData = () => dispatch({ type: CLEAR_CURRENT_CONFIGURATION_DATA });
+  const clearCurrentConfigurationData = () =>
+    dispatch({ type: CLEAR_CURRENT_CONFIGURATION_DATA });
   // Set Loading
   const setLoading = () => dispatch({ type: SET_LOADING });
   const setLoadingRun = () => dispatch({ type: SET_LOADING_RUN });
@@ -599,7 +680,8 @@ const ExperimentState = (props) => {
   const setLoadingPerformanceMetrics = () =>
     dispatch({ type: LOADING_PERFORMANCE_METRICS });
   const setLoadingJobHistory = () => dispatch({ type: LOADING_JOB_HISTORY });
-  const setLoadingExperimentRuns = () => dispatch({ type: LOADING_EXPERIMENT_RUNS });
+  const setLoadingExperimentRuns = () =>
+    dispatch({ type: LOADING_EXPERIMENT_RUNS });
   // Action Things
   const updateExperimentTimeStamp = (timeStamp) => {
     //console.log(timeStamp);
@@ -627,9 +709,9 @@ const ExperimentState = (props) => {
     dispatch({
       type: ORDER_EXPERIMENTS_RESULT,
       payload: orderType,
-    })
+    });
     setPaginatedResult();
-  }
+  };
 
   const updateCurrentSelectedGraph = (selectedJob, data) => {
     // console.log(data);
@@ -650,9 +732,9 @@ const ExperimentState = (props) => {
   const setPerformanceDisplay = (key, value) => {
     dispatch({
       type: SET_PERFORMANCE_DISPLAY,
-      payload: { plot: key, checked: value }
-    })
-  }
+      payload: { plot: key, checked: value },
+    });
+  };
 
   const activateSelectionMode = () =>
     dispatch({ type: ACTIVATE_SELECTION_MODE });

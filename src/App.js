@@ -8,7 +8,7 @@ import NotFound from "./components/pages/NotFound";
 import ExperimentCentral from "./components/pages/ExperimentCentral";
 import Home from "./components/pages/Home";
 import Login from "./components/pages/Login";
-import Profile from './components/pages/Profile';
+import Profile from "./components/pages/Profile";
 import Footer from "./components/layout/Footer";
 import ExperimentState from "./components/context/experiment/ExperimentState";
 import GraphState from "./components/context/graph/GraphState";
@@ -16,6 +16,7 @@ import TreeState from "./components/context/tree/TreeState";
 import AlertState from "./components/context/alert/AlertState";
 import StatsState from "./components/context/statistics/StatsState";
 import LightState from "./components/context/lighter/LighterState";
+import ProtectedRoute from "./components/layout/ProtectedRoute";
 import { rootAppName } from "./components/context/vars";
 import "./App.css";
 
@@ -59,12 +60,17 @@ class App extends Component {
                             path={`/${rootAppName}/news`}
                             component={News}
                           />
-                          <Route
+                          {/* <Route
+                            exact
+                            path={`/${rootAppName}/experiment/:expid`}
+                            component={ExperimentCentral}
+                          /> */}
+                          <ProtectedRoute
                             exact
                             path={`/${rootAppName}/experiment/:expid`}
                             component={ExperimentCentral}
                           />
-                          <Route
+                          <ProtectedRoute
                             exact
                             path={`/${rootAppName}/experiment/:expid/:action`}
                             component={ExperimentCentral}

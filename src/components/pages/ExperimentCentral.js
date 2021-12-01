@@ -1,4 +1,5 @@
 import React, { Fragment, useContext, useEffect } from "react";
+import { withRouter } from "react-router";
 //import Experiment from "../experiment/Experiment";
 import ExperimentColumn from "../experiment/ExperimentColumn";
 // import GraphRepresentation from '../experiment/GraphRepresentation';
@@ -86,7 +87,7 @@ const ExperimentCentral = ({ match }) => {
     getLogStatus,
     logTimeDiff,
     currentLog,
-    testToken,
+    // testToken,
     // performancedata,
   } = experimentContext;
 
@@ -144,15 +145,15 @@ const ExperimentCentral = ({ match }) => {
   } = lighterContext;
 
   // if (experimentRunDetailForTree && currentRunId !== currentRunIdOnTree) {
-  //   // If there is a run detected.        
-  //   updateTreeContent(experimentRunDetailForTree, currentRunId);    
+  //   // If there is a run detected.
+  //   updateTreeContent(experimentRunDetailForTree, currentRunId);
   // }
   // console.log(treeReady);
   // console.log(treeReady);
   useEffect(() => {
     // Get experiment header data
     getExperiment(expid);
-    // Get experiment running status 
+    // Get experiment running status
     getRunningState(expid);
     // Get current log status
     getLogStatus(expid);
@@ -161,19 +162,29 @@ const ExperimentCentral = ({ match }) => {
       // Some type of switch might be useful here but more views are unlikely
       if (resolve_action) {
         if (resolve_action === "graph") {
-          const warningMessage = buildWarningInactiveMessageTree(experimentRunning, logTimeDiff, currentLog, data ? data.nodes : null);
+          const warningMessage = buildWarningInactiveMessageTree(
+            experimentRunning,
+            logTimeDiff,
+            currentLog,
+            data ? data.nodes : null
+          );
           getExperimentGraph(expid, "none", "standard", warningMessage);
         } else if (resolve_action === "light") {
           getLighterView(expid);
         }
       } else {
-        const warningMessage = buildWarningInactiveMessageTree(experimentRunning, logTimeDiff, currentLog, treedata ? treedata.jobs : null)
+        const warningMessage = buildWarningInactiveMessageTree(
+          experimentRunning,
+          logTimeDiff,
+          currentLog,
+          treedata ? treedata.jobs : null
+        );
         getExperimentTree(expid, warningMessage);
       }
-      // Get performance metrics 
-      // if (!performancedata) getExperimentPerformanceMetrics(expid);      
+      // Get performance metrics
+      // if (!performancedata) getExperimentPerformanceMetrics(expid);
       // Test token
-      testToken();
+      // testToken();
       // console.log("Exp Central");
     }
     // getExperimentTree(expid);
@@ -229,15 +240,16 @@ const ExperimentCentral = ({ match }) => {
                 Log
               </a>
             </li>
-            <li className="nav-item">
+            <li className='nav-item'>
               <a
-                href="#config"
-                className="nav-link"
-                id="config-tab"
-                data-toggle="tab"
-                role="tab"
-                aria-controls="config"
-                aria-selected="false">
+                href='#config'
+                className='nav-link'
+                id='config-tab'
+                data-toggle='tab'
+                role='tab'
+                aria-controls='config'
+                aria-selected='false'
+              >
                 Configuration
               </a>
             </li>
@@ -283,15 +295,16 @@ const ExperimentCentral = ({ match }) => {
                 Quick View
               </a>
             </li>
-            <li className="nav-item">
+            <li className='nav-item'>
               <a
-                href="#faq"
-                className="nav-link"
-                id="faq-tab"
-                data-toggle="tab"
+                href='#faq'
+                className='nav-link'
+                id='faq-tab'
+                data-toggle='tab'
                 role='tab'
                 aria-controls='faq'
-                aria-selected='false'>
+                aria-selected='false'
+              >
                 FAQ
               </a>
             </li>
@@ -310,7 +323,7 @@ const ExperimentCentral = ({ match }) => {
                     <JobSearcher />
                   </div>
                 )}
-                <div className="container">
+                <div className='container'>
                   <div className='row'>
                     <div className='col px-0'>
                       <GraphNativeRep
@@ -334,11 +347,15 @@ const ExperimentCentral = ({ match }) => {
                     </div>
                     {data && (
                       <div
-                        className="col-lg-3 px-0"
+                        className='col-lg-3 px-0'
                         style={{ display: displayJobInfoPanel }}
                       >
-                        <div className="col-12 px-0">
-                          <ul className='nav nav-tabs' id='myTabSide' role='tablist'>
+                        <div className='col-12 px-0'>
+                          <ul
+                            className='nav nav-tabs'
+                            id='myTabSide'
+                            role='tablist'
+                          >
                             <li className='nav-item'>
                               <a
                                 className='nav-link active'
@@ -376,11 +393,18 @@ const ExperimentCentral = ({ match }) => {
                               {data && <GraphJob />}
                               {(startAutoUpdatePkl || graphReady) && (
                                 <div>
-                                  <ul className="nav nav-tabs" id="downTabSideGraph" role="tablist">
+                                  <ul
+                                    className='nav nav-tabs'
+                                    id='downTabSideGraph'
+                                    role='tablist'
+                                  >
                                     {startAutoUpdatePkl && (
-                                      <li className="nav-item">
+                                      <li className='nav-item'>
                                         <a
-                                          className={'nav-link ' + (!graphReady ? "active" : "")}
+                                          className={
+                                            "nav-link " +
+                                            (!graphReady ? "active" : "")
+                                          }
                                           id='monitor-tab-graph'
                                           data-toggle='tab'
                                           href='#monitor-graph'
@@ -394,7 +418,12 @@ const ExperimentCentral = ({ match }) => {
                                     {graphReady && (
                                       <li className='nav-item'>
                                         <a
-                                          className={'nav-link ' + (!startAutoUpdatePkl ? "active" : "")}
+                                          className={
+                                            "nav-link " +
+                                            (!startAutoUpdatePkl
+                                              ? "active"
+                                              : "")
+                                          }
                                           id='readyjobs-tab-graph'
                                           data-toggle='tab'
                                           href='#readyjobs-graph'
@@ -406,13 +435,16 @@ const ExperimentCentral = ({ match }) => {
                                       </li>
                                     )}
                                   </ul>
-                                  <div className="tab-content" id="graphDownSide">
+                                  <div
+                                    className='tab-content'
+                                    id='graphDownSide'
+                                  >
                                     {startAutoUpdatePkl && (
                                       <div
-                                        className="tab-pane fade show active"
-                                        id="monitor-graph"
-                                        role="tabpanel"
-                                        aria-labelledby="monitor-tab-graph"
+                                        className='tab-pane fade show active'
+                                        id='monitor-graph'
+                                        role='tabpanel'
+                                        aria-labelledby='monitor-tab-graph'
                                       >
                                         <JobMonitor
                                           experiment={experiment}
@@ -420,7 +452,9 @@ const ExperimentCentral = ({ match }) => {
                                           cleanPklData={cleanPklData}
                                           pklchanges={pklchanges}
                                           experimentRunning={experimentRunning}
-                                          notificationTitleGraph={notificationTitleGraph}
+                                          notificationTitleGraph={
+                                            notificationTitleGraph
+                                          }
                                           setNotificationTitleGraph={
                                             setNotificationTitleGraph
                                           }
@@ -429,16 +463,21 @@ const ExperimentCentral = ({ match }) => {
                                     )}
                                     {graphReady && (
                                       <div
-                                        className={"tab-pane fade show " + (!startAutoUpdatePkl ? "active" : "")}
-                                        id="readyjobs-graph"
-                                        role="tabpanel"
-                                        aria-labelledby="readyjobs-tab-graph"
+                                        className={
+                                          "tab-pane fade show " +
+                                          (!startAutoUpdatePkl ? "active" : "")
+                                        }
+                                        id='readyjobs-graph'
+                                        role='tabpanel'
+                                        aria-labelledby='readyjobs-tab-graph'
                                       >
-                                        <ReadyJobs readyJobs={graphReady} source="graph" />
+                                        <ReadyJobs
+                                          readyJobs={graphReady}
+                                          source='graph'
+                                        />
                                       </div>
                                     )}
                                   </div>
-
                                 </div>
                               )}
                             </div>
@@ -482,10 +521,10 @@ const ExperimentCentral = ({ match }) => {
                     <JobFilter />
                   </div>
                 )}
-                <div className="card-body p-0">
-                  <div className="container">
+                <div className='card-body p-0'>
+                  <div className='container'>
                     <div className='row'>
-                      <div className="col px-0">
+                      <div className='col px-0'>
                         <TreeNativeRep
                           treedata={treedata}
                           loadingTree={loadingTree}
@@ -498,15 +537,22 @@ const ExperimentCentral = ({ match }) => {
                         />
                       </div>
                       {treedata && (
-                        <div className="col-lg-3 px-0">
+                        <div className='col-lg-3 px-0'>
                           <TreeJob />
                           {(startAutoUpdateTreePkl || treeReady) && (
                             <div>
-                              <ul className="nav nav-tabs" id="downTabSideTree" role="tablist">
+                              <ul
+                                className='nav nav-tabs'
+                                id='downTabSideTree'
+                                role='tablist'
+                              >
                                 {startAutoUpdateTreePkl && (
                                   <li className='nav-item'>
                                     <a
-                                      className={'nav-link ' + (!treeReady ? "active" : "")}
+                                      className={
+                                        "nav-link " +
+                                        (!treeReady ? "active" : "")
+                                      }
                                       id='monitor-tab-tree'
                                       data-toggle='tab'
                                       href='#monitor-tree'
@@ -520,7 +566,12 @@ const ExperimentCentral = ({ match }) => {
                                 {treeReady && (
                                   <li className='nav-item'>
                                     <a
-                                      className={'nav-link ' + (!startAutoUpdateTreePkl ? "active" : "")}
+                                      className={
+                                        "nav-link " +
+                                        (!startAutoUpdateTreePkl
+                                          ? "active"
+                                          : "")
+                                      }
                                       id='readyjobs-tab-tree'
                                       data-toggle='tab'
                                       href='#readyjobs-tree'
@@ -531,41 +582,50 @@ const ExperimentCentral = ({ match }) => {
                                     </a>
                                   </li>
                                 )}
-
                               </ul>
 
-                              <div className="tab-content" id="treeDownSide">
+                              <div className='tab-content' id='treeDownSide'>
                                 {startAutoUpdateTreePkl && (
                                   <div
-                                    className="tab-pane fade show active"
-                                    id="monitor-tree"
-                                    role="tabpanel"
-                                    aria-labelledby="monitor-tab-tree"
+                                    className='tab-pane fade show active'
+                                    id='monitor-tree'
+                                    role='tabpanel'
+                                    aria-labelledby='monitor-tab-tree'
                                   >
                                     <JobMonitorTree
                                       experiment={experiment}
-                                      getExperimentTreePkl={getExperimentTreePkl}
+                                      getExperimentTreePkl={
+                                        getExperimentTreePkl
+                                      }
                                       cleanPklTreeData={cleanPklTreeData}
                                       pkltreechanges={pkltreechanges}
                                       experimentRunning={experimentRunning}
-                                      notificationTitleTree={notificationTitleTree}
-                                      setNotificationTitleTree={setNotificationTitleTree}
+                                      notificationTitleTree={
+                                        notificationTitleTree
+                                      }
+                                      setNotificationTitleTree={
+                                        setNotificationTitleTree
+                                      }
                                     />
                                   </div>
                                 )}
                                 {treeReady && (
                                   <div
-                                    className={"tab-pane fade show " + (!startAutoUpdateTreePkl ? "active" : "")}
-                                    id="readyjobs-tree"
-                                    role="tabpanel"
-                                    aria-labelledby="readyjobs-tab-tree"
+                                    className={
+                                      "tab-pane fade show " +
+                                      (!startAutoUpdateTreePkl ? "active" : "")
+                                    }
+                                    id='readyjobs-tree'
+                                    role='tabpanel'
+                                    aria-labelledby='readyjobs-tab-tree'
                                   >
-                                    <ReadyJobs readyJobs={treeReady} source="tree" />
+                                    <ReadyJobs
+                                      readyJobs={treeReady}
+                                      source='tree'
+                                    />
                                   </div>
                                 )}
-
                               </div>
-
                             </div>
                           )}
                         </div>
@@ -669,27 +729,28 @@ const ExperimentCentral = ({ match }) => {
                 </div>
               </div>
             </div>
-            <div className="tab-pane fade"
+            <div
+              className='tab-pane fade'
               id='faq'
               role='tabpanel'
-              aria-labelledby='faq-tab'>
-              <div className="card mt-2">
-                <div className="card-header">
-                  Frequently Asked Questions
-                </div>
-                <div className="card-body p-1">
+              aria-labelledby='faq-tab'
+            >
+              <div className='card mt-2'>
+                <div className='card-header'>Frequently Asked Questions</div>
+                <div className='card-body p-1'>
                   <FAQ />
                 </div>
               </div>
-
             </div>
-            <div className="tab-pane fade"
-              id="config"
-              role="tabpanel"
-              aria-labelledby="config-tab">
-              <div className="card">
+            <div
+              className='tab-pane fade'
+              id='config'
+              role='tabpanel'
+              aria-labelledby='config-tab'
+            >
+              <div className='card'>
                 <ConfigurationControl />
-                <div className="card-body p-1">
+                <div className='card-body p-1'>
                   <CurrentConfiguration />
                 </div>
               </div>
@@ -706,4 +767,4 @@ const experimentMinStyle = {
   minHeight: "100%",
 };
 
-export default ExperimentCentral;
+export default withRouter(ExperimentCentral);
