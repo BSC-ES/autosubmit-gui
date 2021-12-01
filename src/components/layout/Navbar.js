@@ -60,6 +60,7 @@ const Navbar = ({ icon, title }) => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
     setLoggedUser(null, null);
+    history.push(`/${rootAppName}/about`);
   };
 
   return (
