@@ -51,7 +51,7 @@ const Login = (props) => {
       return (
         <div>
           Welcome {loggedUser}
-          <p>You have authenticated through CAS.</p>
+          <p>You've been authenticated through CAS.</p>
           <p>You will be redirected after some seconds.</p>
         </div>
       );
