@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect, useContext } from "react";
+import { withRouter } from "react-router";
 import Search from "../experiment/Search";
 import Experiments from "../experiment/Experiments";
 import queryString from "query-string";
@@ -29,4 +30,4 @@ const Home = (props) => {
   );
 };
 
-export default Home;
+export default withRouter(Home);
