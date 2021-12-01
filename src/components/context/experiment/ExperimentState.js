@@ -536,6 +536,7 @@ const ExperimentState = (props) => {
   };
 
   const testToken = async () => {
+    console.log("testToken");
     const token = localStorage.getItem("token");
     const body = {};
     const defaultResponse = {

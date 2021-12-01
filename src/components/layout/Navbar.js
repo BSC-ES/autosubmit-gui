@@ -17,7 +17,7 @@ const Navbar = ({ icon, title }) => {
     esarchiveStatus,
     loggedUser,
     setLoggedUser,
-    testToken,
+    // testToken,
   } = experimentContext;
   const haveIReadTheNews = localStorage.getItem(latestNewsLabel);
   useEffect(() => {
@@ -30,9 +30,9 @@ const Navbar = ({ icon, title }) => {
       setLoggedUser(user, token);
     }
 
-    if (user && token && loggedUser) {
-      testToken();
-    }
+    // if (user && token && loggedUser) {
+    //   testToken();
+    // }
     // eslint-disable-next-line
   }, [loggedUser, setLoggedUser]);
 
