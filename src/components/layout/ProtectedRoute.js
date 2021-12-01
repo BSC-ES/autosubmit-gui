@@ -5,15 +5,15 @@ import ExperimentContext from "../context/experiment/experimentContext";
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
   const experimentContext = useContext(ExperimentContext);
-  const { loggedUser, setLoggedUser } = experimentContext;
+  const { loggedUser } = experimentContext;
   const user = localStorage.getItem("user");
   const token = localStorage.getItem("token");
-  setLoggedUser(user, token);
+  // setLoggedUser(user, token);
   return (
     <Route
       {...rest}
       render={(props) => {
-        if (loggedUser && loggedUser !== "Failed") {
+        if ((loggedUser && loggedUser !== "Failed") || (user && token)) {
           return <Component />;
         } else {
           return (
