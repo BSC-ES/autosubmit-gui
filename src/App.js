@@ -17,7 +17,7 @@ import AlertState from "./components/context/alert/AlertState";
 import StatsState from "./components/context/statistics/StatsState";
 import LightState from "./components/context/lighter/LighterState";
 import ProtectedRoute from "./components/layout/ProtectedRoute";
-import { rootAppName } from "./components/context/vars";
+import { rootAppName, AUTHENTICATION } from "./components/context/vars";
 import "./App.css";
 
 class App extends Component {
@@ -35,11 +35,20 @@ class App extends Component {
                       <div className='container' style={{ height: "100%" }}>
                         <Alert />
                         <Switch>
-                          <ProtectedRoute
-                            exact
-                            path={`/${rootAppName}/`}
-                            component={Home}
-                          />
+                          {AUTHENTICATION === true ? (
+                            <ProtectedRoute
+                              exact
+                              path={`/${rootAppName}/`}
+                              component={Home}
+                            />
+                          ) : (
+                            <Route
+                              exact
+                              path={`/${rootAppName}/`}
+                              component={Home}
+                            />
+                          )}
+
                           <Route
                             exact
                             path={`/${rootAppName}/login/`}
@@ -65,16 +74,33 @@ class App extends Component {
                             path={`/${rootAppName}/experiment/:expid`}
                             component={ExperimentCentral}
                           /> */}
-                          <ProtectedRoute
-                            exact
-                            path={`/${rootAppName}/experiment/:expid`}
-                            component={ExperimentCentral}
-                          />
-                          <ProtectedRoute
-                            exact
-                            path={`/${rootAppName}/experiment/:expid/:action`}
-                            component={ExperimentCentral}
-                          />
+                          {AUTHENTICATION === true ? (
+                            <ProtectedRoute
+                              exact
+                              path={`/${rootAppName}/experiment/:expid`}
+                              component={ExperimentCentral}
+                            />
+                          ) : (
+                            <Route
+                              exact
+                              path={`/${rootAppName}/experiment/:expid`}
+                              component={ExperimentCentral}
+                            />
+                          )}
+                          {AUTHENTICATION === true ? (
+                            <ProtectedRoute
+                              exact
+                              path={`/${rootAppName}/experiment/:expid/:action`}
+                              component={ExperimentCentral}
+                            />
+                          ) : (
+                            <Route
+                              exact
+                              path={`/${rootAppName}/experiment/:expid`}
+                              component={ExperimentCentral}
+                            />
+                          )}
+
                           <Route component={NotFound} />
                         </Switch>
                         <Footer />
