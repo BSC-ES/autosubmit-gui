@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 export const timeStampToDate = (value) => {
   //console.log('Setting new format: ' + value);
   let formattedDate = "";
   let date = new Date(value * 1000);
-  //const offsetAtBSC = -3600; 
+  //const offsetAtBSC = -3600;
   //const timezoneFixedValue = value + (date.getTimezoneOffset()* 60) - offsetAtBSC;
   // date = new Date(timezoneFixedValue * 1000)
   let hours = date.getHours();
@@ -64,7 +64,7 @@ export const commandGeneratorUpdateDescrip = (expid, description) => {
     command = "autosubmit updatedescrip " + expid + " '" + description + "'";
   }
   return command;
-}
+};
 
 export const commandGenerator = (expid, jobs, status) => {
   let arrayNames = [];
@@ -82,20 +82,22 @@ export const statusChangeTextGeneratorGraph = (jobs, status) => {
     command = command + " " + String(status);
   }
   return command;
-}
+};
 
 export const statusChangeTextGenerator = (jobs, status) => {
   let arrayNames = [];
   jobs.map((job) => arrayNames.push(job.name));
   return statusChangeTextGeneratorGraph(arrayNames, status);
-}
+};
 
 export const secondsToDelta = (SECONDS) => {
   if (SECONDS > 0) {
     let sec_num = SECONDS; // don't forget the second param
     let days = Math.floor(sec_num / (3600 * 24));
     let hours = Math.floor((sec_num - days * (3600 * 24)) / 3600);
-    let minutes = Math.floor((sec_num - days * (3600 * 24) - hours * 3600) / 60);
+    let minutes = Math.floor(
+      (sec_num - days * (3600 * 24) - hours * 3600) / 60
+    );
     let seconds = sec_num - days * (3600 * 24) - hours * 3600 - minutes * 60;
 
     // if (days < 10){
@@ -112,7 +114,14 @@ export const secondsToDelta = (SECONDS) => {
       seconds = "0" + seconds;
     }
 
-    return (days > 0 ? days + (days > 1 ? " days - " : " day - ") : "") + hours + ":" + minutes + ":" + seconds;
+    return (
+      (days > 0 ? days + (days > 1 ? " days - " : " day - ") : "") +
+      hours +
+      ":" +
+      minutes +
+      ":" +
+      seconds
+    );
   } else {
     return "00:00:00";
   }
@@ -150,15 +159,42 @@ export const approximateLoadingQuickView = (x) => {
 
 export const exportSummaryToCSV = (data, columnNames, title) => {
   let date = new Date();
-  title = date.getFullYear().toString() + "-" + date.getMonth() + "-" + date.getDate() + "_" + date.getHours() + "-" + date.getMinutes() + "_" + title;
+  title =
+    date.getFullYear().toString() +
+    "-" +
+    date.getMonth() +
+    "-" +
+    date.getDate() +
+    "_" +
+    date.getHours() +
+    "-" +
+    date.getMinutes() +
+    "_" +
+    title;
   let csvContent = "data:text/csv;charset=utf-8,";
   csvContent += columnNames.join(",") + "\n";
   if (data) {
-    let mapped = []
+    let mapped = [];
     if (columnNames.length === 4) {
-      data.map((item) => mapped.push([item[columnNames[0]], item[columnNames[1]], item[columnNames[2]], item[columnNames[3]]]));
+      data.map((item) =>
+        mapped.push([
+          item[columnNames[0]],
+          item[columnNames[1]],
+          item[columnNames[2]],
+          item[columnNames[3]],
+        ])
+      );
     } else if (columnNames.length === 6) {
-      data.map((item) => mapped.push([item[columnNames[0]], item[columnNames[1]], item[columnNames[2]], item[columnNames[3]], item[columnNames[4]], item[columnNames[5]]]));
+      data.map((item) =>
+        mapped.push([
+          item[columnNames[0]],
+          item[columnNames[1]],
+          item[columnNames[2]],
+          item[columnNames[3]],
+          item[columnNames[4]],
+          item[columnNames[5]],
+        ])
+      );
     }
     csvContent += mapped.map((item) => item.join(",")).join("\n");
   }
@@ -168,17 +204,42 @@ export const exportSummaryToCSV = (data, columnNames, title) => {
   link.setAttribute("download", title);
   document.body.appendChild(link); // Required for FF
   link.click();
-}
+};
 
 export const exportHistoryToCSV = (data, columnNames, title) => {
-
   let date = new Date();
-  title = date.getFullYear().toString() + "-" + date.getMonth() + "-" + date.getDate() + "_" + date.getHours() + "-" + date.getMinutes() + "_" + title;
+  title =
+    date.getFullYear().toString() +
+    "-" +
+    date.getMonth() +
+    "-" +
+    date.getDate() +
+    "_" +
+    date.getHours() +
+    "-" +
+    date.getMinutes() +
+    "_" +
+    title;
   let csvContent = "data:text/csv;charset=utf-8,";
   csvContent += columnNames.join(",") + "\n";
   if (data) {
-    let mapped = []
-    data.map((item) => mapped.push([item.counter, item.job_id, item.submit, item.start, item.finish, item.queue_time, item.run_time, item.status, item.energy, item.wallclock, item.ncpus, item.nodes]));
+    let mapped = [];
+    data.map((item) =>
+      mapped.push([
+        item.counter,
+        item.job_id,
+        item.submit,
+        item.start,
+        item.finish,
+        item.queue_time,
+        item.run_time,
+        item.status,
+        item.energy,
+        item.wallclock,
+        item.ncpus,
+        item.nodes,
+      ])
+    );
     csvContent += mapped.map((item) => item.join(",")).join("\n");
   }
   let encodedUri = encodeURI(csvContent);
@@ -187,30 +248,36 @@ export const exportHistoryToCSV = (data, columnNames, title) => {
   link.setAttribute("download", title);
   document.body.appendChild(link); // Required for FF
   link.click();
-}
+};
 
 export const sleep = (ms) => {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
 
 export const getReadyJobs = (jobs) => {
   if (jobs) {
-    const readyJobs = jobs.filter(x => x.status === 'READY');
+    const readyJobs = jobs.filter((x) => x.status === "READY");
     const jobArray = [];
-    readyJobs.map((item) => jobArray.push({ name: item.id, status: item.status }));
+    readyJobs.map((item) =>
+      jobArray.push({ name: item.id, status: item.status })
+    );
     if (jobArray.length > 0) {
       return jobArray;
     } else {
       return null;
     }
-
   }
   return null;
-}
+};
 
 export const getIFActiveJobs = (jobs) => {
   if (jobs) {
-    const activeJobs = jobs.filter(x => x.status === "QUEUING" || x.status === "SUBMITTED" || x.status === "RUNNING");
+    const activeJobs = jobs.filter(
+      (x) =>
+        x.status === "QUEUING" ||
+        x.status === "SUBMITTED" ||
+        x.status === "RUNNING"
+    );
     if (activeJobs.length > 0) {
       return true;
     } else {
@@ -218,9 +285,7 @@ export const getIFActiveJobs = (jobs) => {
     }
   }
   return false;
-}
-
-
+};
 
 export const groupBy = (arrayObjects, key) => {
   return arrayObjects.reduce(function (result, currentObject) {
@@ -228,12 +293,12 @@ export const groupBy = (arrayObjects, key) => {
     result[val] = result[val] || [];
     result[val].push(currentObject);
     return result;
-  }, {})
-}
+  }, {});
+};
 
 export const groupByAndAggregate = (arrayObjects, key) => {
   const groupedBySection = groupBy(arrayObjects, key);
-  let result = []
+  let result = [];
   // console.log(groupedBySection);
   // console.log(typeof groupedBySection);
   // for (let section in groupedBySection)
@@ -246,18 +311,30 @@ export const groupByAndAggregate = (arrayObjects, key) => {
       groupedBySection[sectionName].forEach((itemJob) => {
         queueSum += itemJob.Queue;
         runSum += itemJob.Run;
-      })
+      });
       let averageQueue = queueSum / groupedBySection[sectionName].length;
       averageQueue = Math.round(averageQueue);
       let averageRun = runSum / groupedBySection[sectionName].length;
       averageRun = Math.round(averageRun);
-      result.push({ "Section": sectionName, "SumQueue": queueSum, "AverageQueue": averageQueue, "SumRun": runSum, "AverageRun": averageRun, "Count": groupedBySection[sectionName].length })
+      result.push({
+        Section: sectionName,
+        SumQueue: queueSum,
+        AverageQueue: averageQueue,
+        SumRun: runSum,
+        AverageRun: averageRun,
+        Count: groupedBySection[sectionName].length,
+      });
     }
   }
   return result;
-}
+};
 
-export const buildWarningInactiveMessageTree = (experimentRunning, timeDiff, logPath, jobs) => {
+export const buildWarningInactiveMessageTree = (
+  experimentRunning,
+  timeDiff,
+  logPath,
+  jobs
+) => {
   let message = null;
   // console.log("Running " + String(experimentRunning) + " - TimeDiff " + String(timeDiff) + " LogPath " + String(logPath));
   // NOT Active, and more than 10 minutes difference
@@ -265,80 +342,110 @@ export const buildWarningInactiveMessageTree = (experimentRunning, timeDiff, log
     const activeJobs = getIFActiveJobs(jobs);
     // console.log("Active jobs " + String(activeJobs));
     if (activeJobs) {
-      message = "The log of your experiment has been inactive for an extended period of time while some jobs are still active. Verify that Autosubmit is still working. Review your log: " + String(logPath);
+      message =
+        "The log of your experiment has been inactive for an extended period of time while some jobs are still active. Verify that Autosubmit is still working. Review your log: " +
+        String(logPath);
     }
   }
   return message;
-}
+};
 
 export const errorEsarchiveStatus = {
   data: {
-    "avg_bandwidth": null,
-    "avg_latency": null,
-    "bandwidth_warning": null,
-    "current_bandwidth": null,
-    "current_latency": null,
-    "datetime": "2021-04-19-13:50:04",
-    "error": true,
-    "error_message": "The server couldn't reach esarchive in a reasonable time. Some simple operations might be completed, but complex requests are likely to fail.",
-    "latency_warning": null,
-    "reponse_time": 2,
-    "response_warning": null,
-    "status": "OFFLINE"
-  }
-}
-export const openIcon = <i className="far fa-square"></i>;
-export const openIconHistory = <i className="fas fa-history"></i>;
+    avg_bandwidth: null,
+    avg_latency: null,
+    bandwidth_warning: null,
+    current_bandwidth: null,
+    current_latency: null,
+    datetime: "2021-04-19-13:50:04",
+    error: true,
+    error_message:
+      "The server couldn't reach esarchive in a reasonable time. Some simple operations might be completed, but complex requests are likely to fail.",
+    latency_warning: null,
+    reponse_time: 2,
+    response_warning: null,
+    status: "OFFLINE",
+  },
+};
+export const openIcon = <i className='far fa-square'></i>;
+export const openIconHistory = <i className='fas fa-history'></i>;
 
 export const generateArrayOfNumbers = (numbers) => {
   return [...Array(numbers).keys()].slice(1);
-}
-
+};
 
 export const normalizeString = (input) => {
   if (input) return String(input);
   return "";
-}
+};
 
 export const normalizeInt = (input) => {
   if (input && input !== "NA") {
     return input;
   }
   return 0;
-}
+};
 
 export const creationDateToId = (strCreationDate, intRunId) => {
   // 2021-07-07-10:36:37
   // console.log(strCreationDate);
   // console.log(intRunId);
-  if (strCreationDate === null || strCreationDate === undefined || strCreationDate.length === 0 || strCreationDate === "NA") {
+  if (
+    strCreationDate === null ||
+    strCreationDate === undefined ||
+    strCreationDate.length === 0 ||
+    strCreationDate === "NA"
+  ) {
     return "NA";
   }
   // console.log(strCreationDate);
   const creationDate = strCreationDate.split("-");
   const timeDay = creationDate[3].split(":");
-  const code = creationDate[0].substr(2, 2) + "" + creationDate[1] + "" + creationDate[2] + "" + timeDay[0] + "" + timeDay[1];
+  const code =
+    creationDate[0].substr(2, 2) +
+    "" +
+    creationDate[1] +
+    "" +
+    creationDate[2] +
+    "" +
+    timeDay[0] +
+    "" +
+    timeDay[1];
   return code;
-}
+};
 
 /* 
 Finds differences between configurations
 */
-export const differenceBetweenConfigurations = (historicalConf, currentConf) => {
+export const differenceBetweenConfigurations = (
+  historicalConf,
+  currentConf
+) => {
   let differences = new Set();
   if (historicalConf && currentConf) {
     // First Level
-    Object.keys(currentConf).forEach(file => {
-      const historicalFile = Object.keys(historicalConf) ? Object.keys(historicalConf) : [];
+    Object.keys(currentConf).forEach((file) => {
+      const historicalFile = Object.keys(historicalConf)
+        ? Object.keys(historicalConf)
+        : [];
       if (historicalFile.includes(file)) {
         // Second Level
-        Object.keys(currentConf[file]).forEach(header => {
-          const historicalFileHeader = Object.keys(historicalConf[file]) ? Object.keys(historicalConf[file]) : [];
+        Object.keys(currentConf[file]).forEach((header) => {
+          const historicalFileHeader = Object.keys(historicalConf[file])
+            ? Object.keys(historicalConf[file])
+            : [];
           if (historicalFileHeader.includes(header)) {
-            Object.keys(currentConf[file][header]).forEach(field => {
-              const historicalFileHeaderField = Object.keys(historicalConf[file][header]) ? Object.keys(historicalConf[file][header]) : [];
+            Object.keys(currentConf[file][header]).forEach((field) => {
+              const historicalFileHeaderField = Object.keys(
+                historicalConf[file][header]
+              )
+                ? Object.keys(historicalConf[file][header])
+                : [];
               if (historicalFileHeaderField.includes(field)) {
-                if (currentConf[file][header][field] !== historicalConf[file][header][field]) {
+                if (
+                  currentConf[file][header][field] !==
+                  historicalConf[file][header][field]
+                ) {
                   differences.add(`${file}+${header}+${field}`);
                   differences.add(`${file}+${header}`);
                   differences.add(file);
@@ -353,11 +460,14 @@ export const differenceBetweenConfigurations = (historicalConf, currentConf) => 
             differences.add(`${file}+${header}`);
             differences.add(file);
           }
-          const fileFileHeader = Object.keys(currentConf[file]) ? Object.keys(currentConf[file]) : [];
+          const fileFileHeader = Object.keys(currentConf[file])
+            ? Object.keys(currentConf[file])
+            : [];
           // console.log(fileFileHeader);
-          // console.log(historicalFileHeader); 
-          historicalFileHeader.forEach(head => {
-            if (!fileFileHeader.includes(head)) differences.add(`${file}+${head}`);
+          // console.log(historicalFileHeader);
+          historicalFileHeader.forEach((head) => {
+            if (!fileFileHeader.includes(head))
+              differences.add(`${file}+${head}`);
           });
         });
       } else {
@@ -367,87 +477,109 @@ export const differenceBetweenConfigurations = (historicalConf, currentConf) => 
   }
   // console.log(differences);
   return differences;
-}
+};
 
-export const generateConfigFileHtml = (conf, confName = "name", differences = new Set(), alertSpan = "Differencia") => {
+export const generateConfigFileHtml = (
+  conf,
+  confName = "name",
+  differences = new Set(),
+  alertSpan = "Differencia"
+) => {
   if (conf) {
     // console.log(conf);
     // console.log(differences);
-    let htmlResult = <div className="row mx-2">
-      <div className="col">
-        {Object.keys(conf).map(v => (
-          <div key={v}>
-            <p className="lead"><strong>[{v}]</strong> {differences.has(`${confName}+${v}`) && alertSpan}</p>
-            <table className="table table-sm table-fixed">
-              <thead className="thead-dark">
-                <tr>
-                  <th scope="col">Setting</th>
-                  <th scope="col">Value</th>
-                </tr>
-              </thead>
-              <tbody>
-                {Object.keys(conf[v]).map(w => (
-                  <tr key={w}>
-                    <td>{w} {differences.has(`${confName}+${v}+${w}`) && alertSpan}</td>
-                    <td>{conf[v][w]}</td>
+    let htmlResult = (
+      <div className='row mx-2'>
+        <div className='col'>
+          {Object.keys(conf).map((v) => (
+            <div key={v}>
+              <p className='lead'>
+                <strong>[{v}]</strong>{" "}
+                {differences.has(`${confName}+${v}`) && alertSpan}
+              </p>
+              <table className='table table-sm table-fixed'>
+                <thead className='thead-dark'>
+                  <tr>
+                    <th scope='col'>Setting</th>
+                    <th scope='col'>Value</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        ))}
+                </thead>
+                <tbody>
+                  {Object.keys(conf[v]).map((w) => (
+                    <tr key={w}>
+                      <td>
+                        {w}{" "}
+                        {differences.has(`${confName}+${v}+${w}`) && alertSpan}
+                      </td>
+                      <td>{conf[v][w]}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>;
+    );
     return htmlResult;
   }
   return null;
-}
+};
 
 export const arrayAverage = (arr) => {
-  if (!arr || arr.length === 0) return 0.00;
+  if (!arr || arr.length === 0) return 0.0;
   const sumArr = arr.reduce((accum, x) => {
     accum += x;
     return accum;
-  })
-  return arr.length > 0 ? (sumArr / arr.length) : 0.00;
-}
+  });
+  return arr.length > 0 ? sumArr / arr.length : 0.0;
+};
 
 export const arrayVariance = (arr) => {
   const average = arrayAverage(arr);
   // console.log(arr.map(x => {
   //   return Math.pow(x - average, 2);
   // }));
-  const variance = arrayAverage(arr.map(x => {
-    return Math.pow(x - average, 2);
-  }));
+  const variance = arrayAverage(
+    arr.map((x) => {
+      return Math.pow(x - average, 2);
+    })
+  );
   // console.log(variance);
   return variance;
-}
+};
 
 export const arrayStandardDeviation = (arr) => {
   return Math.sqrt(arrayVariance(arr));
-}
+};
 
 export const arrayMeanAbsoluteDeviationAroundMean = (arr) => {
-  if (!arr || arr.length === 0) return 0.00;
+  if (!arr || arr.length === 0) return 0.0;
   const mean = arrayAverage(arr);
-  const madam = arrayAverage(arr.map(x => {
-    return Math.abs(x - mean);
-  }));
+  const madam = arrayAverage(
+    arr.map((x) => {
+      return Math.abs(x - mean);
+    })
+  );
   return madam;
-}
+};
 
-export const formatNumberMoney = (money, integerFormat = false, decimals = 2) => {
-  const moneyToFormat = money && Number.isFinite(money) ? money : 0.00;
-  const floatFormat = moneyToFormat.toFixed(integerFormat === true ? 2 : decimals).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+export const formatNumberMoney = (
+  money,
+  integerFormat = false,
+  decimals = 2
+) => {
+  const moneyToFormat = money && Number.isFinite(money) ? money : 0.0;
+  const floatFormat = moneyToFormat
+    .toFixed(integerFormat === true ? 2 : decimals)
+    .replace(/\d(?=(\d{3})+\.)/g, "$&,");
   if (integerFormat === false) {
     return floatFormat;
   } else {
     // Does it hold?
     return floatFormat.substr(0, floatFormat.length - 3);
   }
-
-}
+};
 
 export const calculateStatistics = (jobs) => {
   let jobsSubmittedCount = 0;
@@ -455,21 +587,21 @@ export const calculateStatistics = (jobs) => {
   let jobsCompletedCount = 0;
   let jobsFailedCount = 0;
 
-  let expectedConsumption = 0.00;
-  let realConsumption = 0.00;
-  let failedRealConsumption = 0.00;
+  let expectedConsumption = 0.0;
+  let realConsumption = 0.0;
+  let failedRealConsumption = 0.0;
 
-  let expectedCpuConsumption = 0.00;
-  let cpuConsumption = 0.00;
-  let failedCpuConsumption = 0.00;
+  let expectedCpuConsumption = 0.0;
+  let cpuConsumption = 0.0;
+  let failedCpuConsumption = 0.0;
 
-  let totalQueueTime = 0.00;
-  let cpuConsumptionPercentage = 0.00;
+  let totalQueueTime = 0.0;
+  let cpuConsumptionPercentage = 0.0;
 
-  jobs.forEach(job => {
+  jobs.forEach((job) => {
     jobsSubmittedCount += job.submittedCount;
     jobsRunCount += job.retrialCount;
-    jobsCompletedCount += job.completedCount;;
+    jobsCompletedCount += job.completedCount;
     jobsFailedCount += job.failedCount;
 
     expectedConsumption += job.expectedConsumption;
@@ -480,7 +612,7 @@ export const calculateStatistics = (jobs) => {
     cpuConsumption += job.cpuConsumption;
     failedCpuConsumption += job.failedCpuConsumption;
 
-    totalQueueTime += job.completedRunTime + job.failedRunTime;
+    totalQueueTime += job.completedQueueTime + job.failedQueueTime;
   });
 
   if (expectedCpuConsumption > 0) {
@@ -500,6 +632,5 @@ export const calculateStatistics = (jobs) => {
     failedCpuConsumption: formatNumberMoney(failedCpuConsumption),
     totalQueueTime: formatNumberMoney(totalQueueTime),
     cpuConsumptionPercentage: formatNumberMoney(cpuConsumptionPercentage),
-  }
-
-}
+  };
+};
