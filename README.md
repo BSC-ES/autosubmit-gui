@@ -35,7 +35,7 @@ Make sure to have npm installed in your local environment.
 
 Execute:
 
-`git clone https://earth.bsc.es/gitlab/wuruchi/autosubmitreact/`
+`git clone https://earth.bsc.es/gitlab/es/autosubmitreact/`
 
 As default, the GUI will request data from the `Autosubmit API`, which is inacessible from outside the Barcelona Supercomputing Center internal network.
 So, we should open the file:
