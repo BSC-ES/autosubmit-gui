@@ -43,11 +43,13 @@ So, we should open the file:
 And change the lines:
 
 `export const NOAPI = false;`
+
 `export const AUTHENTICATION = true;`
 
 to:
 
 `export const NOAPI = true;`
+
 `export const AUTHENTICATION = false;`
 
 This will effectively set the API calls to be redirected towards an internal data samples folder `/autosubmitreact/src/components/context/data/` implemented for testing purposes.
