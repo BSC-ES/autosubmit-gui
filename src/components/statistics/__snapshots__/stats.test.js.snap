@@ -2,76 +2,321 @@
 
 exports[`ExperimentItem renders with content 1`] = `
 <div
-  className="row"
+  className="container"
 >
   <div
-    className="col-md-4 offset-md-4 text-center"
+    className="container border rounded my-1 py-2"
   >
-    <form
-      className="form"
-      onSubmit={[Function]}
+    <div
+      className="row"
     >
       <div
-        className=""
+        className="col text-center"
       >
-        <input
-          className="btn btn-dark btn-sm"
-          type="submit"
-          value="Clear Statistics"
-        />
+        <p
+          className="h3"
+        >
+          <span>
+            Statistics from the time frame: 
+            <span
+              className="bg-secondary rounded px-1"
+            >
+              Start of experiment
+            </span>
+             to 
+            <span
+              className="bg-secondary rounded px-1"
+            >
+              2022-03-16 14:18:00
+            </span>
+          </span>
+        </p>
+        <p
+          className="lead"
+        >
+          <span>
+            CPU Consumption 
+            <span
+              className="bg-secondary rounded px-1"
+            >
+              1.66 %
+            </span>
+             
+          </span>
+          <span
+            className="pl-3"
+          >
+            Total Queue Time 
+            <span
+              className="bg-secondary rounded px-1"
+            >
+              2.56 hours
+            </span>
+             
+          </span>
+        </p>
       </div>
-    </form>
-  </div>
-  <div
-    className="col-md-12"
-  >
-    <div>
-      Loading Chart
     </div>
     <div
-      className="col-md-8 offset-md-4 mt-2"
+      className="row "
     >
-      <ul
-        style={
-          Object {
-            "listStyleType": "none",
-          }
-        }
+      <div
+        className="col"
       >
-        <li>
-          Period: 2020-11-03 16:49:00 ~ 2020-11-03 18:49:00
-        </li>
-        <li>
-          Submitted (#): 14
-        </li>
-        <li>
-          Run  (#): 14
-        </li>
-        <li>
-          Failed  (#): 0
-        </li>
-        <li>
-          Completed (#): 14
-        </li>
-        <li>
-          Queueing time (h): 7.49
-        </li>
-        <li>
-          Expected consumption real (h): 13.33
-        </li>
-        <li>
-          Expected consumption CPU time (h): 366.33
-        </li>
-        <li>
-          Consumption real (h): 0.24
-        </li>
-        <li>
-          Consumption CPU time (h): 35.07
-        </li>
-        <li>
-          Consumption (%): 9.57
-        </li>
-      </ul>
+        <table
+          className="table table-sm table-bordered mb-0"
+        >
+          <caption>
+            Considers number of jobs and retrials.
+          </caption>
+          <thead
+            className="thead-dark"
+          >
+            <tr>
+              <th
+                className="pl-2"
+                scope="col"
+              >
+                Description
+              </th>
+              <th
+                className="text-right pr-2"
+                scope="col"
+              >
+                Count
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th
+                className="pl-2"
+                scope="row"
+              >
+                Jobs Submitted
+              </th>
+              <td
+                className="text-right pr-2"
+              >
+                11
+              </td>
+            </tr>
+            <tr>
+              <th
+                className="pl-2"
+                scope="row"
+              >
+                Jobs Run
+              </th>
+              <td
+                className="text-right pr-2"
+              >
+                11
+              </td>
+            </tr>
+            <tr>
+              <th
+                className="pl-2"
+                scope="row"
+              >
+                Jobs Completed
+              </th>
+              <td
+                className="text-right pr-2"
+              >
+                11
+              </td>
+            </tr>
+            <tr>
+              <th
+                className="pl-2"
+                scope="row"
+              >
+                Jobs Failed
+              </th>
+              <td
+                className="text-right pr-2"
+              >
+                0
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div
+        className="col"
+      >
+        <table
+          className="table table-sm table-bordered mb-0"
+        >
+          <caption>
+            Considers the running time of the jobs and retrials.
+          </caption>
+          <thead
+            className="thead-dark"
+          >
+            <tr>
+              <th
+                className="pl-2"
+                scope="col"
+              >
+                Description
+              </th>
+              <th
+                className="text-right pr-2"
+                scope="col"
+              >
+                Hours
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th
+                className="pl-2"
+                scope="row"
+              >
+                Expected Consumption
+              </th>
+              <td
+                className="text-right pr-2"
+              >
+                8.08
+              </td>
+            </tr>
+            <tr>
+              <th
+                className="pl-2"
+                scope="row"
+              >
+                Real Consumption
+              </th>
+              <td
+                className="text-right pr-2"
+              >
+                0.13
+              </td>
+            </tr>
+            <tr>
+              <th
+                className="pl-2"
+                scope="row"
+              >
+                Failed Real Consumption
+              </th>
+              <td
+                className="text-right pr-2"
+              >
+                0.00
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div
+        className="col"
+      >
+        <table
+          className="table table-sm table-bordered mb-0"
+        >
+          <caption>
+            Considers the number of processors requested by the job (and retrials) multiplied by the corresponding running time.
+          </caption>
+          <thead
+            className="thead-dark"
+          >
+            <tr>
+              <th
+                className="pl-2"
+                scope="col"
+              >
+                Description
+              </th>
+              <th
+                className="text-right pr-2"
+                scope="col"
+              >
+                Hours
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th
+                className="pl-2"
+                scope="row"
+              >
+                Expected CPU Consumption
+              </th>
+              <td
+                className="text-right pr-2"
+              >
+                83.58
+              </td>
+            </tr>
+            <tr>
+              <th
+                className="pl-2"
+                scope="row"
+              >
+                CPU Consumption
+              </th>
+              <td
+                className="text-right pr-2"
+              >
+                1.39
+              </td>
+            </tr>
+            <tr>
+              <th
+                className="pl-2"
+                scope="row"
+              >
+                Failed CPU Consumption
+              </th>
+              <td
+                className="text-right pr-2"
+              >
+                0.00
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div
+    className="row py-4"
+  >
+    <div
+      className="col-md-6 scroll-x text-right"
+    >
+      <div>
+        <div
+          className="row"
+        >
+          <div
+            className="col"
+          >
+            No data
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="col-md-6 scroll-x"
+    >
+      <div>
+        <div
+          className="row"
+        >
+          <div
+            className="col"
+          >
+            No data
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

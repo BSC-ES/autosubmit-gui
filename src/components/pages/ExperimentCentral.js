@@ -144,12 +144,6 @@ const ExperimentCentral = ({ match }) => {
     getLighterView,
   } = lighterContext;
 
-  // if (experimentRunDetailForTree && currentRunId !== currentRunIdOnTree) {
-  //   // If there is a run detected.
-  //   updateTreeContent(experimentRunDetailForTree, currentRunId);
-  // }
-  // console.log(treeReady);
-  // console.log(treeReady);
   useEffect(() => {
     // Get experiment header data
     getExperiment(expid);
@@ -181,13 +175,7 @@ const ExperimentCentral = ({ match }) => {
         );
         getExperimentTree(expid, warningMessage);
       }
-      // Get performance metrics
-      // if (!performancedata) getExperimentPerformanceMetrics(expid);
-      // Test token
-      // testToken();
-      // console.log("Exp Central");
     }
-    // getExperimentTree(expid);
     const interval = setInterval(() => getRunningState(expid), 300000); // Every 5 minutes
     return () => {
       clearInterval(interval);

@@ -532,7 +532,7 @@ export default (state, action) => {
       currentPerformanceDisplaySettings.JPSYvsCHSY = true;
       currentPerformanceDisplaySettings.JPSYvsSYPD = true;
       currentPerformanceDisplaySettings.JPSYvsASYPD = true;
-      // console.log(performanceData);
+      // console.log(performanceData);      
       return {
         ...state,
         performancedata: performanceData,

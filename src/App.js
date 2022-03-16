@@ -96,7 +96,7 @@ class App extends Component {
                           ) : (
                             <Route
                               exact
-                              path={`/${rootAppName}/experiment/:expid`}
+                              path={`/${rootAppName}/experiment/:expid/:action`}
                               component={ExperimentCentral}
                             />
                           )}

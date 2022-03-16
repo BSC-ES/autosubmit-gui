@@ -1,10 +1,10 @@
-export const AUTOSUBMIT_API_SOURCE = "https://earth.bsc.es/autosubmitapi";
-// export const AUTOSUBMIT_API_SOURCE = "http://84.88.185.94:8081";
+export const AUTOSUBMIT_API_SOURCE = "https://earth.bsc.es/autosubmitapi"; // BSC API
+//export const AUTOSUBMIT_API_SOURCE = "http://84.88.185.94:8081"; // Local API, set your IP if you're running the API locally
 export const DEBUG = false;
-export const NOAPI = false;
-export const AUTHENTICATION = true;
-export const SHOW_PERFORMANCE_TAB = true;
-export const rootAppName = "autosubmitapp";
+export const NOAPI = false; // If true -> API requests are replaced by local data
+export const AUTHENTICATION = true; // If false -> The authentication requirement is disabled. Some API calls require a valid token, though.
+export const SHOW_PERFORMANCE_TAB = true; // If false -> The performance tab an all its references are not shown
+export const rootAppName = "autosubmitapp"; // Name of the app
 export const ERROR_MESSAGE =
   "Autosubmit API couldn't retrieve the requested information on time. It might be due to a network error or heavy traffic on the shared folders that Autosubmit uses to store experiment information (/esarchive/autosubmit/).";
 

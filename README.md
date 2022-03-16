@@ -5,16 +5,14 @@
 ### Overview:
 
 Autosubmit GUI is a front-end software developed using [ReactJS](https://reactjs.org/docs/getting-started.html) as the main framework, and JavaScript in general.
-This front-end software consumes most of the information it needs from [Autosubmit API](https://earth.bsc.es/gitlab/es/autosubmitreact/-/wikis/Autosubmit-API), an API that retrieves information from an internal file system that
-results from the execution of [Autosubmit](https://earth.bsc.es/gitlab/es/autosubmit) to execute experiments on a High Performance Computing environment.
+This front-end software consumes most of the information it needs from [Autosubmit API](https://earth.bsc.es/gitlab/wuruchi/autosubmit_api/-/wikis/home), an API that retrieves information from an internal file system that results from the execution of [Autosubmit](https://earth.bsc.es/gitlab/es/autosubmit) to execute experiments on a High Performance Computing environment.
 
-These two systems, the API and the GUI, are tightly coupled. However, it is possible to adapt the API calls to other sources of information you might prefer, and for
-that purpose we provide with response examples (more details in the installation section) that can help the developer understand how the information is used in
+These two systems, the API and the GUI, are independent of each other. It is possible to replace Autosubmit API for another API that provides similar information. For
+that purpose, we provide with response examples (more details in the installation section) that can help the developer understand how the information is used in
 the components of the GUI.
 
-Autosubmit GUI uses [FancyTree](https://github.com/mar10/fancytree/) and [vis.js](https://visjs.org/), two popular and very useful libraries, to show the experiment
-information in a graphical and comprehensive way. The GUI implements creative ways to use these libraries to dynamically display information without losing performance.
-Some of the expermients in our environment can include more than `10000` items, and showing this information in a web format without significant loss of performance is
+Autosubmit GUI uses [FancyTree](https://github.com/mar10/fancytree/), [vis.js](https://visjs.org/), and [d3js](https://d3js.org/); these are popular and very useful libraries that help us show the experiment information in a graphical and comprehensive way. The GUI implements creative ways to use these libraries to dynamically display information without losing performance.
+Some of the expermients in our environment can include more than `10000` jobs, and showing this information in a web format without significant loss of performance is
 by itself an achievement.
 
 ### General Knowledge Requirements:
@@ -42,15 +40,19 @@ So, we should open the file:
 
 `/autosubmitreact/src/components/context/vars.js`
 
-And change the line:
+And change the lines:
 
 `export const NOAPI = false;`
+`export const AUTHENTICATION = true;`
 
 to:
 
 `export const NOAPI = true;`
+`export const AUTHENTICATION = false;`
 
 This will effectively set the API calls to be redirected towards an internal data samples folder `/autosubmitreact/src/components/context/data/` implemented for testing purposes.
+In the case of `AUTHENTICATION`, you set it to `false` to avoid the requirement of an authentication token, because you won't be able to get one from BSC internal Central Authentication Service.
+However, some API calls might require that you have a valid token, but if you are using the internal data, it shouldn't be a problem.
 
 Then, you can run:
 
