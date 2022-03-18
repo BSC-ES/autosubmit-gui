@@ -123,7 +123,6 @@ export default (state, action) => {
         jobHistory: null,
       };
     case GET_JOB_HISTORY:
-      console.log(action.payload);
       return {
         ...state,
         jobHistory: action.payload,
@@ -146,7 +145,6 @@ export default (state, action) => {
         loadingExperimentRuns: false,
       };
     case UPDATE_EXPERIMENT_TS:
-      //const { experiment } = state;
       const pkl_timestamp = action.payload;
       state.experiment.pkl_timestamp = pkl_timestamp;
       return {
@@ -532,7 +530,7 @@ export default (state, action) => {
       currentPerformanceDisplaySettings.JPSYvsCHSY = true;
       currentPerformanceDisplaySettings.JPSYvsSYPD = true;
       currentPerformanceDisplaySettings.JPSYvsASYPD = true;
-      // console.log(performanceData);      
+      // console.log(performanceData);
       return {
         ...state,
         performancedata: performanceData,

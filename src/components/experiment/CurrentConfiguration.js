@@ -12,11 +12,9 @@ const CurrentConfiguration = () => {
       return (
         <div className='row header-information-space'>
           <div className='m-auto'>
-            <div className='text-danger'>
-              <span className='configuration-alert-message'>
-                {currentConfiguration.errorMessage}
-              </span>
-            </div>
+            <span className='error-message'>
+              {currentConfiguration.errorMessage}
+            </span>
           </div>
         </div>
       );
@@ -36,7 +34,7 @@ const CurrentConfiguration = () => {
       const messageNoInformation = (
         <div className='row header-information-space'>
           <div className='m-auto'>
-            <span className='configuration-alert-message'>
+            <span className='error-message'>
               Not Available or Autosubmit API couldn't access the necessary
               files.
             </span>
@@ -72,18 +70,14 @@ const CurrentConfiguration = () => {
             (messageAreEqual && (
               <div className='row header-information-space'>
                 <div className='m-auto'>
-                  <div className='text-danger'>
-                    {currentConfiguration.warning === true && (
-                      <span className='configuration-alert-message'>
-                        {currentConfiguration.warningMessage}
-                      </span>
-                    )}
-                    {messageAreEqual && (
-                      <span className='configuration-alert-message'>
-                        {messageAreEqual}
-                      </span>
-                    )}
-                  </div>
+                  {currentConfiguration.warning === true && (
+                    <span className='error-message'>
+                      {currentConfiguration.warningMessage}
+                    </span>
+                  )}
+                  {messageAreEqual && (
+                    <span className='error-message'>{messageAreEqual}</span>
+                  )}
                 </div>
               </div>
             ))}

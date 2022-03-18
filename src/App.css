@@ -42,6 +42,12 @@
   z-index: 1020;
 }
 
+.error-message {
+  color: #ff4136;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
 /* PERFORMANCE TAB */
 
 .performance-table-header {
@@ -58,11 +64,6 @@
 }
 
 /* CONFIGURATION TAB */
-
-.configuration-alert-message {
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
 
 .configuration-nav-pill {
   font-size: 1.2rem;

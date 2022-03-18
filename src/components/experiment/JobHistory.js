@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
 import GraphContext from "../context/graph/graphContext";
 import TreeContext from "../context/tree/treeContext";
@@ -6,6 +6,9 @@ import {
   exportHistoryToCSV,
   openIconHistory,
   creationDateToId,
+  logIconLeft,
+  logIconRight,
+  formatNumberMoney,
 } from "../context/utils";
 import { SHOW_PERFORMANCE_TAB } from "../context/vars";
 
@@ -16,6 +19,12 @@ const JobHistory = ({ source }) => {
   const { experiment, jobHistory, getJobHistory } = experimentContext;
   const { selection } = graphContext;
   const { selectedTreeNode } = treeContext;
+
+  const currentPath = useRef("");
+
+  const setCurrentPath = (path) => {
+    currentPath.current.innerHTML = path;
+  };
 
   if (experiment) {
     var { db_historic_version, expid } = experiment;
@@ -71,6 +80,7 @@ const JobHistory = ({ source }) => {
     db_historic_version &&
     db_historic_version >= 12
   ) {
+    setCurrentPath("");
     return (
       <span>
         <span
@@ -103,13 +113,13 @@ const JobHistory = ({ source }) => {
                 <h5 className='modal-title' id={dataTarget + "Title"}>
                   Historical data for <strong>{selectedJob}</strong>
                 </h5>
-                &nbsp;
+
                 {jobHistory &&
                   jobHistory.history &&
                   jobHistory.history.length > 0 && (
                     <button
                       type='button'
-                      className='btn btn-sm btn-primary'
+                      className='btn btn-sm btn-primary ml-2'
                       onClick={onExport(selectedJob)}
                       data-toggle='tooltip'
                       data-placement='right'
@@ -127,6 +137,8 @@ const JobHistory = ({ source }) => {
                   <span aria-hidden='true'>&times;</span>
                 </button>
               </div>
+              &nbsp;
+              <div ref={currentPath}></div>
               <div className='modal-body scroll-x'>
                 {jobHistory && jobHistory.history && (
                   <table className='table table-sm table-bordered list-table'>
@@ -148,6 +160,8 @@ const JobHistory = ({ source }) => {
                         <th scope='col'>Wallclock</th>
                         <th scope='col'>NCpus</th>
                         <th scope='col'>NNodes</th>
+                        <th scope='col'>out</th>
+                        <th scope='col'>err</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -183,7 +197,7 @@ const JobHistory = ({ source }) => {
                             )}
                           </td>
                           <td>{item.status}</td>
-                          <td>{item.energy}</td>
+                          <td>{formatNumberMoney(item.energy, true)}</td>
                           {SHOW_PERFORMANCE_TAB && (
                             <td>
                               {item.run_id ? (
@@ -217,19 +231,54 @@ const JobHistory = ({ source }) => {
                             </td>
                           )}
                           <td>{item.wallclock}</td>
-                          <td>{item.ncpus}</td>
-                          <td>{item.nodes}</td>
+                          <td>{formatNumberMoney(item.ncpus, true)}</td>
+                          <td>{formatNumberMoney(item.nodes, true)}</td>
+                          <td>
+                            {item.out && item.out.length > 0 && (
+                              <button
+                                className='btn btn-sm btn-info'
+                                onClick={() => {
+                                  setCurrentPath(
+                                    jobHistory.path_to_logs + "/" + item.out
+                                  );
+                                }}
+                              >
+                                {logIconLeft}
+                              </button>
+                            )}
+                          </td>
+                          <td>
+                            {item.err && item.err.length > 0 && (
+                              <button
+                                className='btn btn-sm btn-warning'
+                                onClick={() => {
+                                  setCurrentPath(
+                                    jobHistory.path_to_logs + "/" + item.err
+                                  );
+                                }}
+                              >
+                                {logIconRight}
+                              </button>
+                            )}
+                          </td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
                 )}
-                {jobHistory && jobHistory.history.length === 0 && (
-                  <p>
-                    There is no historic data for this job. Are you running the
-                    latest version of Autosubmit that implements the historic
-                    database?
-                  </p>
+                {jobHistory &&
+                  ((jobHistory.history && jobHistory.history.length === 0) ||
+                    !jobHistory.history) && (
+                    <p>
+                      There is no historic data for this job. Are you running
+                      the latest version of Autosubmit that implements the
+                      historic database?
+                    </p>
+                  )}
+                {jobHistory && jobHistory.error === true && (
+                  <span className='error-message text-danger'>
+                    {jobHistory.error_message}
+                  </span>
                 )}
               </div>
               <div className='modal-footer'>
