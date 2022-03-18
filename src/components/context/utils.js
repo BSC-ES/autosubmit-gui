@@ -489,15 +489,15 @@ export const generateConfigFileHtml = (
     // console.log(conf);
     // console.log(differences);
     let htmlResult = (
-      <div className='row mx-2'>
+      <div className='row'>
         <div className='col'>
           {Object.keys(conf).map((v) => (
-            <div key={v}>
-              <p className='lead'>
+            <div key={v} className='configuration-section'>
+              <div className='configuration-section-title'>
                 <strong>[{v}]</strong>{" "}
                 {differences.has(`${confName}+${v}`) && alertSpan}
-              </p>
-              <table className='table table-sm table-fixed'>
+              </div>
+              <table className='table table-sm table-fixed list-table'>
                 <thead className='thead-dark'>
                   <tr>
                     <th scope='col'>Setting</th>

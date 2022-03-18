@@ -15,14 +15,76 @@
   padding: 0;
 } */
 
-tbody tr:hover {
+/* GENERAL CUSTOM STYLES */
+
+.header-information-space {
+  padding: 2.4rem 0;
+}
+
+.header-information-space-sm {
+  padding: 1.8rem 0;
+}
+
+.list-table tbody tr:hover {
   background-color: #f4f4f4;
   -webkit-transition: 0.4s;
   -o-transition: 0.4s;
   transition: 0.4s;
 }
 
+.sticky-wrapper {
+  position: relative;
+}
 
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+}
+
+/* PERFORMANCE TAB */
+
+.performance-table-header {
+  font-size: 1.05rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.performance-main-info {
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* CONFIGURATION TAB */
+
+.configuration-alert-message {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.configuration-nav-pill {
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+}
+
+.configuration-source-info {
+  font-size: 1.05rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.configuration-section {
+  padding: 0 1.2rem 2.4rem 1.2rem;
+}
+
+.configuration-section-title {
+  font-size: 1.4rem;
+  letter-spacing: 1.5px;
+  font-weight: 600;
+}
 
 /* 
 .bg-transition-div {

@@ -8,8 +8,6 @@ import {
   SET_LOADING,
   CLEAR_EXPERIMENTS,
   GET_EXPERIMENT,
-  //GET_TREE,
-  //SET_LOADING_TREE,
   GET_EXPERIMENT_RUN,
   SET_LOADING_RUN,
   CLEAN_RUN_DATA,
@@ -121,7 +119,6 @@ const ExperimentState = (props) => {
   const [state, dispatch] = useReducer(ExperimentReducer, initialState);
 
   const localserver = AUTOSUBMIT_API_SOURCE;
-  // const localserver = "http://84.88.185.94:8081";
   const debug = DEBUG;
 
   // Search Experiments
@@ -484,6 +481,9 @@ const ExperimentState = (props) => {
     });
   };
 
+  /* This request requires a valid token (JWT).
+    You can set your own token if you know the secret word that is set in the API server.    
+  */
   const requestCurrentConfiguration = async (expid) => {
     const token = localStorage.getItem("token");
     const defaultResponse = {
@@ -520,7 +520,6 @@ const ExperimentState = (props) => {
       }
     }
 
-    // console.log(result);
     dispatch({
       type: GET_CURRENT_CONFIGURATION,
       payload: {
@@ -536,7 +535,6 @@ const ExperimentState = (props) => {
   };
 
   const testToken = async () => {
-    console.log("testToken");
     const token = localStorage.getItem("token");
     const body = {};
     const defaultResponse = {

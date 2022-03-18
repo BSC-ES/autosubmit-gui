@@ -1,13 +1,14 @@
 export const AUTOSUBMIT_API_SOURCE = "https://earth.bsc.es/autosubmitapi"; // BSC API
 //export const AUTOSUBMIT_API_SOURCE = "http://84.88.185.94:8081"; // Local API, set your IP if you're running the API locally
 export const DEBUG = false;
-export const NOAPI = false; // If true -> API requests are replaced by local data
-export const AUTHENTICATION = true; // If false -> The authentication requirement is disabled. Some API calls require a valid token, though.
-export const SHOW_PERFORMANCE_TAB = true; // If false -> The performance tab an all its references are not shown
-export const rootAppName = "autosubmitapp"; // Name of the app
+export const NOAPI = false; // If true -> API requests are replaced by demo data
+export const AUTHENTICATION = true; // If false -> The authentication requirement is disabled. Some API calls require a valid token though.
+export const SHOW_PERFORMANCE_TAB = true; // If false -> The performance tab an all its references are hidden.
+export const rootAppName = "autosubmitapp"; // Name of the app. It can be changed to publish the GUI in another environment, for example for testing in a new server.
 export const ERROR_MESSAGE =
-  "Autosubmit API couldn't retrieve the requested information on time. It might be due to a network error or heavy traffic on the shared folders that Autosubmit uses to store experiment information (/esarchive/autosubmit/).";
+  "Autosubmit API couldn't retrieve the requested information on time. It might be due to a network error or heavy traffic on the shared folders that Autosubmit uses to store experiment information (/esarchive/autosubmit/)."; // Default error message
 
+// Job status codes. Sames a in Autosubmit and Autosubmit API.
 export const WaitingCode = 0;
 export const FailedCode = -1;
 export const CompletedCode = 5;
@@ -21,7 +22,7 @@ export const ReadyCode = 1;
 export const PreparedCode = 7;
 export const SkippedCode = 8;
 
-export const UpperLimitQuickView = 200;
+export const UpperLimitQuickView = 200; // Maximum time to spend waiting for the quick view to load
 
 export const maxReponseTimeThreshold = 240; // 4 minutes
 export const quickThreshold = 12000;

@@ -285,18 +285,20 @@ const Performance = () => {
       <div className='row'>
         <div className='col'>
           <p className='lead'>
-            <span className='mr-4'>
+            <span className='mr-4 performance-main-info'>
               Parallelization:{" "}
-              <span className='badge badge-secondary'>{Parallelization}</span>
+              <span className='rounded px-1 bg-secondary'>
+                {Parallelization}
+              </span>
             </span>
-            <span>
-              RSYPD: <span className='badge badge-secondary'>{RSYPD}</span>
+            <span className='performance-main-info'>
+              RSYPD: <span className='rounded px-1 bg-secondary'>{RSYPD}</span>
             </span>
           </p>
           <div className='scroll-x'>
-            <table className='table table-sm table-bordered'>
-              <thead className='thead-dark'>
-                <tr>
+            <table className='table table-sm table-bordered list-table'>
+              <thead className='thead'>
+                <tr className='table-primary performance-table-header'>
                   <th scope='col'>Metric</th>
                   <th scope='col' className='text-right pr-2'>
                     Value
@@ -442,12 +444,21 @@ const Performance = () => {
           </span>
         </div>
         <div className='col'>
-          <p className='lead'>Considered: ({considered.length})</p>
-          <div className='scroll-y-jobs'>
-            <table className='table table-sm table-bordered'>
-              <thead className='thead-dark'>
-                <tr>
-                  <th scope='col'>#</th>
+          <p className='lead'>
+            <span className='performance-main-info'>
+              Number of Jobs Considered:{" "}
+              <span className='rounded px-1 bg-secondary'>
+                {considered.length}
+              </span>
+            </span>
+          </p>
+          <div className='scroll-y-jobs sticky-wrapper'>
+            <table className='table table-sm table-bordered list-table'>
+              <thead className='thead'>
+                <tr className='table-primary performance-table-header sticky-header'>
+                  <th className='' scope='col'>
+                    #
+                  </th>
                   <th scope='col' className='pl-2'>
                     Job Name
                   </th>
