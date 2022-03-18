@@ -23,7 +23,7 @@ const JobHistory = ({ source }) => {
   const currentPath = useRef("");
 
   const setCurrentPath = (path) => {
-    currentPath.current.innerHTML = path;
+    if (currentPath.current) currentPath.current.innerHTML = path;
   };
 
   if (experiment) {
