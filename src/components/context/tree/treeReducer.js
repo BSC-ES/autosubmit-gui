@@ -16,14 +16,12 @@ import {
   SET_NOTIFICATION_TITLE_TREE,
   SET_OFF_LOADING_TREE,
   INCREASE_LOADING_TREE,
-  // UPDATE_RUNDETAIL_ON_TREE,
   UPDATE_TREE_SELECTED_NODES,
   GET_EXPERIMENT_RUN_JOBDATA,
   LOADING_PREVIOUS_RUN,
   SET_CURRENT_COMMAND,
   SET_CURRENT_TEXT_COMMAND,
   SET_WARNING_ACTIVE,
-  // CLEAR_RUNDETAIL_ON_TREE,
 } from "../types";
 
 // updateTreeData
@@ -84,8 +82,6 @@ export default (state, action) => {
       };
     case PKL_TREE_LOADED: {
       const retrievedPklTree = action.payload;
-      //console.log(retrievedPklTree);
-      //console.log(state.treedata);
       let jobs = {};
       if (
         state.treedata !== null &&
@@ -96,20 +92,18 @@ export default (state, action) => {
         let changes = "";
         let changesSummarized = "";
         let currentJobs = state.treedata.jobs;
-        //console.log(currentJobs);
         let referenceHeaders = state.treedata.reference;
         let currentPackages = referenceHeaders["packages"];
         const completed_tag = referenceHeaders["completed_tag"];
         const running_tag = referenceHeaders["running_tag"];
         const queuing_tag = referenceHeaders["queuing_tag"];
         const failed_tag = referenceHeaders["failed_tag"];
-        const check_mark = referenceHeaders["check_mark"];
+        const check_mark = referenceHeaders["checkmark"];
 
         // Building dictionary of retrieved jobs
         for (let j = 0, job; j < retrievedPklTree.pkl_content.length; j++) {
           job = retrievedPklTree.pkl_content[j];
           jobs[job.name] = job;
-          //console.log(job.name);
         }
         // Updating current jobs
         for (let i = 0, cjob, ijob; i < currentJobs.length; i++) {
@@ -167,47 +161,47 @@ export default (state, action) => {
             // Assign wrapper code to current job
             cjob.wrapper_code = ijob.wrapper_id;
             // Building title according to retrieved data
-            let newTitle =
-              ijob.title +
-              " " +
-              (cjob.parents === 0 ? retrievedPklTree.source_tag : "") +
-              (cjob.children === 0 ? retrievedPklTree.target_tag : "") +
-              (cjob.sync === true ? retrievedPklTree.sync_tag : "") +
-              (ijob.wrapper_id !== 0 ? ijob.wrapper_tag : "");
-            cjob.title = newTitle;
+            // let newTitle =
+            //   ijob.title +
+            //   " " +
+            //   (cjob.parents === 0 ? retrievedPklTree.source_tag : "") +
+            //   (cjob.children === 0 ? retrievedPklTree.target_tag : "") +
+            //   (cjob.sync === true ? retrievedPklTree.sync_tag : "") +
+            //   (ijob.wrapper_id !== 0 ? ijob.wrapper_tag : "");
+            cjob.title = ijob.title;
             // Find the corresponding node in the existing tree
             let thenode = state.fancyTree.getNodesByRef(cjob.id);
             if (thenode) {
               // Update title of all node ocurrences
               for (let thenode_i in thenode) {
-                thenode[thenode_i].setTitle(newTitle);
+                thenode[thenode_i].setTitle(ijob.title);
               }
               // Find all parents of node
               const parents = cjob.tree_parents;
               // Make sure parents contain the children
-              let wrapper_parent = state.fancyTree.getNodesByRef(
-                tree_parent_wrapper
-              );
+              let wrapper_parent =
+                state.fancyTree.getNodesByRef(tree_parent_wrapper);
               //console.log(wrapper_parent);
               if (wrapper_parent && wrapper_parent.length > 0) {
                 let children = wrapper_parent[0].children;
-                //console.log(children);
-                let found_child = false;
-                for (let index_j in children) {
-                  let current_name = children[index_j].refKey;
-                  //console.log(current_name);
-                  if (current_name === cjob.id) {
-                    found_child = true;
+                if (children) {
+                  let found_child = false;
+                  for (let index_j in children) {
+                    let current_name = children[index_j].refKey;
+                    //console.log(current_name);
+                    if (current_name === cjob.id) {
+                      found_child = true;
+                    }
                   }
-                }
-                // If the job is not present in the wrapper folder, add it.
-                if (found_child === false) {
-                  wrapper_parent[0].children.push({
-                    title: cjob.title,
-                    refKey: cjob.id,
-                    data: "Empty",
-                    children: [],
-                  });
+                  // If the job is not present in the wrapper folder, add it.
+                  if (found_child === false) {
+                    wrapper_parent[0].children.push({
+                      title: cjob.title,
+                      refKey: cjob.id,
+                      data: "Empty",
+                      children: [],
+                    });
+                  }
                 }
               }
               // Traverse parents to update title
@@ -395,36 +389,44 @@ export default (state, action) => {
         loadingTreePkl: false,
       };
     }
-    case GET_EXPERIMENT_RUN_JOBDATA:
-      {
-        const { result, runId, meta } = action.payload;
-        const { jobs } = result;
-        const completed_jobs = jobs !== null && jobs !== undefined ? jobs.filter(x => x.status === "COMPLETED") : [];
+    case GET_EXPERIMENT_RUN_JOBDATA: {
+      const { result, runId, meta } = action.payload;
+      const { jobs } = result;
+      const completed_jobs =
+        jobs !== null && jobs !== undefined
+          ? jobs.filter((x) => x.status === "COMPLETED")
+          : [];
 
-        if (state.treedata && state.fancyTree) {
-          //updateTreeData(result, state.treedata, state.fancyTree);
-          //updateFancyTree(runDetail, state.fancyTree);
-
-        }
-        return {
-          ...state,
-          currentRunIdOnTree: { runId: runId, created: meta.created, message: buildRunTitle(runId, meta, completed_jobs.length) },
-          treedata: result,
-          loadingTree: false,
-          enabledTreeSearch: true,
-          elapsedLoadingTree: 1,
-          startAutoUpdateTreePkl: false,
-          loadingPreviousRun: false,
-          treeReady: getReadyJobs(jobs),
-        }
+      if (state.treedata && state.fancyTree) {
+        //updateTreeData(result, state.treedata, state.fancyTree);
+        //updateFancyTree(runDetail, state.fancyTree);
       }
+      return {
+        ...state,
+        currentRunIdOnTree: {
+          runId: runId,
+          created: meta.created,
+          message: buildRunTitle(runId, meta, completed_jobs.length),
+        },
+        treedata: result,
+        loadingTree: false,
+        enabledTreeSearch: true,
+        elapsedLoadingTree: 1,
+        startAutoUpdateTreePkl: false,
+        loadingPreviousRun: false,
+        treeReady: getReadyJobs(jobs),
+      };
+    }
     case FILTER_TREEVIEW:
       const string = String(action.payload).toUpperCase();
       if (state.treedata && state.fancyTree) {
         let count = 0;
-        const isNegation = string.indexOf('!') === 0;
+        const isNegation = string.indexOf("!") === 0;
         if (string.indexOf("*") > -1) {
-          const fields = isNegation === true ? string.substring(1).split('*') : string.split("*");
+          const fields =
+            isNegation === true
+              ? string.substring(1).split("*")
+              : string.split("*");
           count = state.fancyTree.filterNodes(function (node) {
             let result = false;
             let string_test = String(node.title).toUpperCase();
@@ -442,7 +444,6 @@ export default (state, action) => {
                   } else {
                     result = true;
                   }
-
                 } else {
                   // debug &&
                   //   console.log(fields[i] + " Not found in " + string_test);
@@ -452,14 +453,14 @@ export default (state, action) => {
                     result = false;
                     break;
                   }
-
                 }
               }
             }
             return result;
           });
         } else {
-          const searchString = isNegation === true ? string.substring(1) : string;
+          const searchString =
+            isNegation === true ? string.substring(1) : string;
           count = state.fancyTree.filterNodes(function (node) {
             let result = false;
             let stringTest = String(node.title).toUpperCase();
@@ -532,15 +533,15 @@ export default (state, action) => {
       DEBUG && console.log("Node");
       DEBUG && console.log(action.payload.node);
       if (action.payload && action.payload.node && action.payload.node.folder) {
-        DEBUG && console.log("Folder")
+        DEBUG && console.log("Folder");
         return {
           ...state,
           selectedTreeNode: null,
           currentCommandTree: null,
           currentTextCommandTree: null,
-        }
+        };
       } else {
-        DEBUG && console.log("Node Child")
+        DEBUG && console.log("Node Child");
         return {
           ...state,
           selectedTreeNode: action.payload,

@@ -23,7 +23,13 @@ export const addFakeEdge = (source, target, state) => {
   DEBUG && console.log("Adding fake edge from " + source + " to " + target);
   if (state.visNetwork) {
     const nodesIn = Object.keys(state.visNetwork.body.data.nodes._data);
-    if (nodesIn.includes(source) && nodesIn.includes(target)){
+    let edgesSet = new Set();
+    state.visNetwork.body.data.edges.map((item) => edgesSet.add(item.id));
+    if (
+      nodesIn.includes(source) &&
+      nodesIn.includes(target) &&
+      !edgesSet.has(id_edge)
+    ) {
       state.visNetwork.body.data.edges.add([
         {
           id: id_edge,
@@ -34,7 +40,7 @@ export const addFakeEdge = (source, target, state) => {
           arrows: { to: { enabled: false } },
         },
       ]);
-    }    
+    }
   }
 };
 
