@@ -5,11 +5,12 @@
 # Table of Contents
 
 1. [Overview](#Overview)
-2. [General Knowledge Requirements](#general-knowledge-requirements)
-3. [Installation](#installation)
-4. [Testing](#testing)
-5. [User Guide](#user-guide)
-6. [Contributing](#contributing)
+2. [Autosubmit Big Picture](#autosubmit-big-picture)
+3. [General Knowledge Requirements](#general-knowledge-requirements)
+4. [Installation](#installation)
+5. [Testing](#testing)
+6. [User Guide](#user-guide)
+7. [Contributing](#contributing)
 
 ## Overview:
 
@@ -18,6 +19,10 @@
 These two systems, the **API** and the **GUI**, are independent. It is possible to replace **Autosubmit API** for another API that provides similar information. For that purpose, we provide with response examples (more details in the installation section) that can help the developer understand how the information is used in the components of the GUI. Furthermore, you can find the current list of available requests in the [Autosubmit API Wiki](https://earth.bsc.es/gitlab/es/autosubmit_api/-/wikis/home).
 
 **Autosubmit GUI** uses [FancyTree](https://github.com/mar10/fancytree/), [vis.js](https://visjs.org/), and [d3js](https://d3js.org/); these are popular and very useful libraries that help us show the experiment information in a graphical and comprehensive way. The **GUI** implements creative ways to use these libraries to dynamically display information without losing performance. Some of the expermients in our environment can include more than `10000` jobs, and showing this information in a web format without significant loss of performance is by itself an achievement.
+
+## Autosubmit Big Picture
+
+![Total_Autosubmit_Diagram](uploads/ae6c4baf6d68b7db30ca94b65c376394/Total_Autosubmit_Diagram.png)
 
 ## General Knowledge Requirements:
 
