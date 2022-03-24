@@ -1,6 +1,9 @@
-import { DEBUG } from "./vars";
+/*
+Utilities for the Graph Representation of an experiment.
+Tests are provided in GraphNativeRep.test.js
+*/
 
-// graphutils.js tests are provided in GraphNativeRep.test.js
+import { DEBUG } from "./vars";
 
 export const navigateGraph = (Id, posx, posy, cScale = 0.9, visNetwork) => {
   DEBUG && console.log(posx + " " + posy);
@@ -9,7 +12,6 @@ export const navigateGraph = (Id, posx, posy, cScale = 0.9, visNetwork) => {
     visNetwork.moveTo({
       position: { x: posx, y: posy },
       scale: cScale,
-      //offset: {x: 30, y: 30},
       animation: false,
     });
     if (Id) {
@@ -92,17 +94,13 @@ export const navToLatest = (
 ) => {
   var currentLevel = 0;
   DEBUG && console.log("Nav to Latest.");
-  //var currentNode = null;
   var latestId = "not found";
-  //console.log(state.data.nodes);
   if (data && data.nodes) {
-    //console.log("Iterate")
     if (latest === true) {
       for (const node of data.nodes) {
         if (node.status_code === statusCode) {
           if (node.level >= currentLevel) {
             currentLevel = node.level;
-            //currentNode = node;
             latestId = node.id;
           }
         }
@@ -113,7 +111,6 @@ export const navToLatest = (
         if (node.status_code === statusCode) {
           if (node.level <= currentLevel) {
             currentLevel = node.level;
-            //currentNode = node;
             latestId = node.id;
           }
         }
@@ -121,12 +118,10 @@ export const navToLatest = (
     }
   }
 
-  //console.log(latestId);
   let currentPosition;
   if (visNetwork) {
     currentPosition = visNetwork.getPositions([latestId]);
     if (currentPosition[latestId]) {
-      //console.log("So good so far")
       navigateGraph(
         latestId,
         currentPosition[latestId].x,
@@ -155,17 +150,3 @@ export const findIdinGraph = (Id, state) => {
   }
   return { x: null, y: null };
 };
-
-// export const searchJobInGraph = async (string, state) => {
-//   if (state.data && state.data.nodes) {
-//     const foundNodes = await state.data.nodes.filter(
-//       (node) => node.id.toUpperCase().indexOf(string) >= 0
-//     );
-//     // console.log(foundNodes);
-//     // console.log(foundNodes.length);
-//     if (foundNodes && foundNodes.length > 0) {
-//       state.foundNodes = foundNodes;
-//       state.selection = [foundNodes[0].id]
-//     }
-//   }
-// }

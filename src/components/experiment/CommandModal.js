@@ -3,8 +3,12 @@ import GraphContext from "../context/graph/graphContext";
 import TreeContext from "../context/tree/treeContext";
 import ExperimentContext from "../context/experiment/experimentContext";
 import { DEBUG } from "../context/vars";
-import { commandGenerator, commandGeneratorGraph, statusChangeTextGeneratorGraph, statusChangeTextGenerator } from "../context/utils";
-//import treeContext from "../context/tree/treeContext";
+import {
+  commandGenerator,
+  commandGeneratorGraph,
+  statusChangeTextGeneratorGraph,
+  statusChangeTextGenerator,
+} from "../context/utils";
 
 const CommandModal = ({ source, target }) => {
   const graphContext = useContext(GraphContext);
@@ -20,7 +24,13 @@ const CommandModal = ({ source, target }) => {
     currentTextCommand,
   } = experimentContext;
 
-  const { treeSelectedNodes, currentCommandTree, currentTextCommandTree, setCurrentTextCommandTree, setCurrentCommandTree } = treeContext;
+  const {
+    treeSelectedNodes,
+    currentCommandTree,
+    currentTextCommandTree,
+    setCurrentTextCommandTree,
+    setCurrentCommandTree,
+  } = treeContext;
 
   const {
     graphSelectedNodes,
@@ -34,10 +44,23 @@ const CommandModal = ({ source, target }) => {
     expid = experiment.expid;
   }
   const sourceSelection =
-    source === "graph-only" ? graphSelectedNodes : (source === "tree-only" ? treeSelectedNodes : currentSelected);
+    source === "graph-only"
+      ? graphSelectedNodes
+      : source === "tree-only"
+      ? treeSelectedNodes
+      : currentSelected;
   const sourceCommand =
-    source === "graph-only" ? currentCommandGraph : (source === "tree-only" ? currentCommandTree : currentCommand);
-  const sourceTextCommand = source === "graph-only" ? currentTextCommandGraph : (source === "tree-only" ? currentTextCommandTree : currentTextCommand);
+    source === "graph-only"
+      ? currentCommandGraph
+      : source === "tree-only"
+      ? currentCommandTree
+      : currentCommand;
+  const sourceTextCommand =
+    source === "graph-only"
+      ? currentTextCommandGraph
+      : source === "tree-only"
+      ? currentTextCommandTree
+      : currentTextCommand;
 
   const invalidMessage =
     source === "graph-only"
@@ -48,29 +71,28 @@ const CommandModal = ({ source, target }) => {
     e.preventDefault();
     let command = "";
     if (source === "graph-only") {
-      command = statusChangeTextGeneratorGraph(sourceSelection, status);      
+      command = statusChangeTextGeneratorGraph(sourceSelection, status);
       copyContent(command);
       setCurrentTextCommandGraph(command);
-    } else if (source === "tree-only"){      
+    } else if (source === "tree-only") {
       command = statusChangeTextGeneratorGraph(sourceSelection, status);
       copyContent(command);
       setCurrentTextCommandTree(command);
-    } else {      
+    } else {
       command = statusChangeTextGenerator(sourceSelection, status);
       copyContent(command);
       setCurrentTextCommand(command);
     }
   };
 
-
   const setStatusCommand = (status) => (e) => {
     e.preventDefault();
     let command = "";
-    if (source === "graph-only") {      
+    if (source === "graph-only") {
       command = commandGeneratorGraph(expid, sourceSelection, status);
       copyContent(command);
       setCurrentCommandGraph(command);
-    } else if (source === "tree-only"){      
+    } else if (source === "tree-only") {
       command = commandGeneratorGraph(expid, sourceSelection, status);
       copyContent(command);
       setCurrentCommandTree(command);
@@ -133,44 +155,44 @@ const CommandModal = ({ source, target }) => {
     );
 
     modalHeader2 = (
-      <div className="col-12">
-      Generate file text:{" "}
-      <div className='btn-group' role='group' aria-label='Status'>
-        <button
-          className='btn btn-sm btn-secondary'
-          style={{ background: "lightblue" }}
-          onClick={setStatusTextCommand("READY")}
-        >
-          Ready
-        </button>
-        <button
-          className='btn btn-sm btn-secondary'
-          onClick={setStatusTextCommand("WAITING")}
-        >
-          Waiting
-        </button>
-        <button
-          className='btn btn-sm btn-secondary'
-          style={{ background: "yellow" }}
-          onClick={setStatusTextCommand("COMPLETED")}
-        >
-          Completed
-        </button>
-        <button
-          className='btn btn-sm btn-secondary'
-          style={{ background: "orange" }}
-          onClick={setStatusTextCommand("SUSPENDED")}
-        >
-          Suspended
-        </button>
-        <button
-          className='btn btn-sm btn-danger'
-          onClick={setStatusTextCommand("FAILED")}
-        >
-          Failed
-        </button>
+      <div className='col-12'>
+        Generate file text:{" "}
+        <div className='btn-group' role='group' aria-label='Status'>
+          <button
+            className='btn btn-sm btn-secondary'
+            style={{ background: "lightblue" }}
+            onClick={setStatusTextCommand("READY")}
+          >
+            Ready
+          </button>
+          <button
+            className='btn btn-sm btn-secondary'
+            onClick={setStatusTextCommand("WAITING")}
+          >
+            Waiting
+          </button>
+          <button
+            className='btn btn-sm btn-secondary'
+            style={{ background: "yellow" }}
+            onClick={setStatusTextCommand("COMPLETED")}
+          >
+            Completed
+          </button>
+          <button
+            className='btn btn-sm btn-secondary'
+            style={{ background: "orange" }}
+            onClick={setStatusTextCommand("SUSPENDED")}
+          >
+            Suspended
+          </button>
+          <button
+            className='btn btn-sm btn-danger'
+            onClick={setStatusTextCommand("FAILED")}
+          >
+            Failed
+          </button>
+        </div>
       </div>
-    </div>
     );
   }
   return (
@@ -224,10 +246,9 @@ const CommandModal = ({ source, target }) => {
               >
                 {sourceTextCommand && (
                   <div className='p-2'>
-                    {/* {JSON.parse(JSON.stringify(sourceTextCommand))} */}
                     {sourceTextCommand.split("\n").map((item, index) => (
-                      <p key={index}>{item}</p>)
-                    )}
+                      <p key={index}>{item}</p>
+                    ))}
                   </div>
                 )}
               </div>
@@ -236,7 +257,8 @@ const CommandModal = ({ source, target }) => {
           {sourceTextCommand && sourceTextCommand.length > 0 && (
             <div className='row mx-1 mb-2 float-left'>
               <div className='col-12'>
-                The text has been copied to the clipboard. Paste it in your status change file.
+                The text has been copied to the clipboard. Paste it in your
+                status change file.
               </div>
             </div>
           )}

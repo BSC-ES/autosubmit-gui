@@ -1,17 +1,12 @@
 import React from "react";
 export const timeStampToDate = (value) => {
-  //console.log('Setting new format: ' + value);
   let formattedDate = "";
   let date = new Date(value * 1000);
-  //const offsetAtBSC = -3600;
-  //const timezoneFixedValue = value + (date.getTimezoneOffset()* 60) - offsetAtBSC;
-  // date = new Date(timezoneFixedValue * 1000)
   let hours = date.getHours();
   let minutes = "0" + date.getMinutes();
   let seconds = "0" + date.getSeconds();
   let month = date.getMonth() + 1;
   let day = date.getDate();
-  // console.log(date.toLocaleDateString())
   formattedDate =
     "[" +
     day +
@@ -23,8 +18,6 @@ export const timeStampToDate = (value) => {
     minutes.substr(-2) +
     ":" +
     seconds.substr(-2);
-  // formattedDate = date.toISOString();
-  // console.log(formattedDate);
   return formattedDate;
 };
 
@@ -38,7 +31,6 @@ export const hashCode = (value) => {
     hash = (hash << 5) - hash + chr;
     hash |= 0; // Convert to 32bit integer
   }
-  // console.log(hash);
   return hash;
 };
 
@@ -68,15 +60,12 @@ export const commandGeneratorUpdateDescrip = (expid, description) => {
 
 export const commandGenerator = (expid, jobs, status) => {
   let arrayNames = [];
-  //let command = "Invalid Command: You have to select at least one job.";
   jobs.map((job) => arrayNames.push(job.name));
-
   return commandGeneratorGraph(expid, arrayNames, status);
 };
 
 export const statusChangeTextGeneratorGraph = (jobs, status) => {
   let command = "You have to select at least one job.";
-  //jobs.map((job) => arrayNames.push(job.name));
   if (jobs.length > 0) {
     command = jobs.join(" " + String(status) + "\n");
     command = command + " " + String(status);
@@ -99,11 +88,6 @@ export const secondsToDelta = (SECONDS) => {
       (sec_num - days * (3600 * 24) - hours * 3600) / 60
     );
     let seconds = sec_num - days * (3600 * 24) - hours * 3600 - minutes * 60;
-
-    // if (days < 10){
-    //   days = "0" + days;
-    // }
-    //console.log(days + "-" + hou);
     if (hours < 10) {
       hours = "0" + hours;
     }
@@ -299,15 +283,11 @@ export const groupBy = (arrayObjects, key) => {
 export const groupByAndAggregate = (arrayObjects, key) => {
   const groupedBySection = groupBy(arrayObjects, key);
   let result = [];
-  // console.log(groupedBySection);
-  // console.log(typeof groupedBySection);
-  // for (let section in groupedBySection)
-  //   console.log(section);
+
   if (groupedBySection) {
     for (let sectionName in groupedBySection) {
       let queueSum = 0;
       let runSum = 0;
-      // console.log(sectionName);
       groupedBySection[sectionName].forEach((itemJob) => {
         queueSum += itemJob.Queue;
         runSum += itemJob.Run;
@@ -336,7 +316,6 @@ export const buildWarningInactiveMessageTree = (
   jobs
 ) => {
   let message = null;
-  // console.log("Running " + String(experimentRunning) + " - TimeDiff " + String(timeDiff) + " LogPath " + String(logPath));
   // NOT Active, and more than 10 minutes difference
   if (!experimentRunning && timeDiff > 600 && jobs) {
     const activeJobs = getIFActiveJobs(jobs);
@@ -390,8 +369,6 @@ export const normalizeInt = (input) => {
 
 export const creationDateToId = (strCreationDate, intRunId) => {
   // 2021-07-07-10:36:37
-  // console.log(strCreationDate);
-  // console.log(intRunId);
   if (
     strCreationDate === null ||
     strCreationDate === undefined ||
@@ -416,9 +393,6 @@ export const creationDateToId = (strCreationDate, intRunId) => {
   return code;
 };
 
-/* 
-Finds differences between configurations
-*/
 export const differenceBetweenConfigurations = (
   historicalConf,
   currentConf
@@ -465,8 +439,7 @@ export const differenceBetweenConfigurations = (
           const fileFileHeader = Object.keys(currentConf[file])
             ? Object.keys(currentConf[file])
             : [];
-          // console.log(fileFileHeader);
-          // console.log(historicalFileHeader);
+
           historicalFileHeader.forEach((head) => {
             if (!fileFileHeader.includes(head))
               differences.add(`${file}+${head}`);
@@ -477,7 +450,6 @@ export const differenceBetweenConfigurations = (
       }
     });
   }
-  // console.log(differences);
   return differences;
 };
 
@@ -488,8 +460,6 @@ export const generateConfigFileHtml = (
   alertSpan = "Differencia"
 ) => {
   if (conf) {
-    // console.log(conf);
-    // console.log(differences);
     let htmlResult = (
       <div className='row'>
         <div className='col'>
@@ -539,15 +509,11 @@ export const arrayAverage = (arr) => {
 
 export const arrayVariance = (arr) => {
   const average = arrayAverage(arr);
-  // console.log(arr.map(x => {
-  //   return Math.pow(x - average, 2);
-  // }));
   const variance = arrayAverage(
     arr.map((x) => {
       return Math.pow(x - average, 2);
     })
   );
-  // console.log(variance);
   return variance;
 };
 

@@ -106,8 +106,6 @@ export default (state, action) => {
       } else {
         switch (target) {
           case "queue":
-            //let backup = state.backupdata;
-            // console.log(state.backupdata);
             newStatData = state.backupdata;
             newStatData.forEach((element) => {
               element.queue = 0;

@@ -158,16 +158,7 @@ export default (state, action) => {
             if (!cjob.tree_parents.includes(tree_parent_wrapper)) {
               cjob.tree_parents.push(tree_parent_wrapper);
             }
-            // Assign wrapper code to current job
             cjob.wrapper_code = ijob.wrapper_id;
-            // Building title according to retrieved data
-            // let newTitle =
-            //   ijob.title +
-            //   " " +
-            //   (cjob.parents === 0 ? retrievedPklTree.source_tag : "") +
-            //   (cjob.children === 0 ? retrievedPklTree.target_tag : "") +
-            //   (cjob.sync === true ? retrievedPklTree.sync_tag : "") +
-            //   (ijob.wrapper_id !== 0 ? ijob.wrapper_tag : "");
             cjob.title = ijob.title;
             // Find the corresponding node in the existing tree
             let thenode = state.fancyTree.getNodesByRef(cjob.id);

@@ -27,7 +27,7 @@ import {
   SET_CURRENT_COMMAND,
   SET_NOTIFICATION_TITLE_GRAPH,
   SET_CURRENT_TEXT_COMMAND,
-  SET_JOB_INFO_PANEL_VISIBILITY
+  SET_JOB_INFO_PANEL_VISIBILITY,
 } from "../types";
 
 import { DEBUG } from "../vars";
@@ -104,19 +104,12 @@ export default (state, action) => {
         for (let pkl_package in pkl_packages) {
           if (!Object.keys(current_packages).includes(pkl_package)) {
             current_packages[pkl_package] = pkl_packages[pkl_package];
-            //console.log(pkl_packages[pkl_package]);
             for (let index in pkl_packages[pkl_package]) {
               let index_i = parseInt(index);
               let job_name = pkl_packages[pkl_package][index_i];
-              //console.log(job_name);
               shapeChanges[job_name] = "hexagon";
-              //console.log(index_i);
-              //console.log(pkl_packages[pkl_package].length);
               let next = index_i + 1;
-              //console.log(next);
               if (next < pkl_packages[pkl_package].length) {
-                //console.log(pkl_packages[pkl_package][index_i]);
-                //console.log(pkl_packages[pkl_package][next]);
                 if (
                   current_jobs[pkl_packages[pkl_package][index_i]].level ===
                   current_jobs[pkl_packages[pkl_package][next]].level
@@ -134,9 +127,6 @@ export default (state, action) => {
 
         if (state.data.nodes) {
           for (let i = 0; i < state.data.nodes.length; i++) {
-            // console.log(newNodes[i].id);
-            //console.log(state.data.nodes[i]);
-            // console.log(jobs[ newNodes[i].id ]);
             let jobPkl = jobs[state.data.nodes[i].id];
             if (
               jobPkl &&
@@ -145,7 +135,6 @@ export default (state, action) => {
                 state.data.nodes[i].minutes !== jobPkl.minutes ||
                 state.data.nodes[i].minutes_queue !== jobPkl.minutes_queue)
             ) {
-              // changes += state.data.nodes[i].id + " from " + state.data.nodes[i].status + " to " + jobs[ state.data.nodes[i].id ].status + " || ";
               if (
                 state.data.nodes[i].status_code !==
                 jobs[state.data.nodes[i].id].status_code
@@ -224,7 +213,9 @@ export default (state, action) => {
               state.data.nodes[i].rm_id = jobs[state.data.nodes[i].id].rm_id;
               // Updating the SYPD field if it exists
               if (state.data.nodes[i].SYPD !== undefined) {
-                state.data.nodes[i].SYPD = jobs[state.data.nodes[i].id].SYPD ?? jobs[state.data.nodes[i].id].SYPD;
+                state.data.nodes[i].SYPD =
+                  jobs[state.data.nodes[i].id].SYPD ??
+                  jobs[state.data.nodes[i].id].SYPD;
               }
 
               requireUpdate = true;
@@ -276,7 +267,6 @@ export default (state, action) => {
         var found = false;
         const cScale = 0.5;
         if (running === true) {
-          //console.log("Search Running")
           found = navToLatest(
             RunningCode,
             true,
@@ -416,10 +406,13 @@ export default (state, action) => {
     case SET_FOUND_NODES:
       const string = String(action.payload).toUpperCase();
       if (state.data && state.data.nodes) {
-        const isNegation = string.indexOf('!') === 0;
+        const isNegation = string.indexOf("!") === 0;
         let foundNodes = null;
-        if (string.indexOf('*') > -1) {
-          const fields = isNegation === true ? string.substring(1).split('*') : string.split("*");
+        if (string.indexOf("*") > -1) {
+          const fields =
+            isNegation === true
+              ? string.substring(1).split("*")
+              : string.split("*");
           foundNodes = state.data.nodes.filter(function (node) {
             let stringTest = String(node.id).toUpperCase();
             let result = false;
@@ -436,24 +429,20 @@ export default (state, action) => {
                   } else {
                     result = true;
                   }
-
                 } else {
-                  // debug &&
-                  //   console.log(fields[i] + " Not found in " + string_test);
                   if (isNegation) {
                     result = true;
                   } else {
                     return false;
                   }
-
                 }
               }
             }
             return result;
-          }
-          );
+          });
         } else {
-          const searchString = isNegation === true ? string.substring(1) : string;
+          const searchString =
+            isNegation === true ? string.substring(1) : string;
           foundNodes = state.data.nodes.filter(function (node) {
             //console.log(searchString);
             let stringTest = String(node.id).toUpperCase();
@@ -470,10 +459,8 @@ export default (state, action) => {
                 return false;
               }
             }
-          }
-          );
+          });
         }
-
 
         if (foundNodes && foundNodes.length > 0) {
           state.foundNodes = foundNodes;
@@ -597,7 +584,7 @@ export default (state, action) => {
       return {
         ...state,
         warningActive: action.payload,
-      }
+      };
     case UPDATE_GRAPH_SELECTED_NODES:
       //const selectedNodes = action.payload;
       state.graphSelectedNodes = null;
@@ -622,7 +609,7 @@ export default (state, action) => {
         ...state,
         currentTextCommandGraph: action.payload,
         canCopyToClipboard: true,
-      }
+      };
     case SET_NOTIFICATION_TITLE_GRAPH:
       return {
         ...state,
@@ -632,7 +619,7 @@ export default (state, action) => {
       return {
         ...state,
         displayJobInfoPanel: action.payload,
-      }
+      };
     default:
       return null;
   }

@@ -656,7 +656,7 @@ export default (state, action) => {
     }
     case TEST_TOKEN: {
       const { isValid, message } = action.payload;
-      // console.log(action.payload);
+
       if (state.loggedUser && isValid === false) {
         localStorage.removeItem("user");
         localStorage.removeItem("token");
@@ -706,8 +706,6 @@ export default (state, action) => {
         ? Math.ceil(experiments.length / pageSize)
         : 1;
       const currentPage = numberPages === 1 ? 1 : state.currentPage;
-      // console.log("NumberPages " + numberPages);
-      // console.log("CurrentPage " + currentPage);
       const experimentsInPage = [];
       let resultCount = 0;
       experiments
@@ -722,8 +720,6 @@ export default (state, action) => {
           }
           return null;
         });
-      // console.log("Experiments In Page");
-      // console.log(experimentsInPage);
       return {
         ...state,
         experimentsInPage: experimentsInPage,
