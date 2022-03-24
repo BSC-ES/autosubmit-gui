@@ -1,3 +1,5 @@
+**var.js**: Main settings of the app.
+
 This folder contains the state management of the `ReactJS` app.
 
 These folders contain state management logic:
