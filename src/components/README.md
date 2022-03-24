@@ -1,4 +1,4 @@
-These are the main components of the application:
+These are the main components of the application. Here is a list of what you're expected to find in each subfolder:
 
 - **context**: Contains the `state` (in the `ReactJS` sense) management files of the app.
 - **experiment**: `ReactJS` components that are used in the `main views`.
