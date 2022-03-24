@@ -26,6 +26,23 @@ These two systems, the **API** and the **GUI**, are independent. It is possible 
 
 In this image you can see the flow of information in the **Autosubmit environment**.
 
+* **Autosubmit**: Machines running Autosubmit.
+* **Remote Platforms**: Platforms (HPCs in most cases) to which Autosubmit connects to run jobs. 
+* **Experiment Database**: Starting from Autosubmit `3.13.0`, each experiment generates a set of databases that save important (reusable) information about it. We have the `historical database`, `graph database`, `structures database`.
+* **File System**: The file system where the experiment files are stored.
+* **Data Process Workers**: **Autosubmit API** implements a set of workers that periodically collect information from the experiments or complement that information. In the current **BSC** implementation, these workers are running no `bscesweb04` under `webadmin` user.
+* **Main Database**: **Autosubmit API** uses a centralized database to keep track of important experiment information. The **workers** fill this information. **Autosubmit** also writes into this database.
+* **Autosubmit API**: See [Autosubmit API](https://earth.bsc.es/gitlab/es/autosubmit_api). Currently, under **BSC** implementation, this API is running on `bscesweb04` under `webadmin` user. This API exposes a set of requests that **Autosubmit GUI** consumes and serves to the users through the front end.
+* **Autosubmit GUI**: This project.
+* **Authentication Server**: **BSC Central Authentication Service**.
+* **Users**: Users that access the GUI through their web browsers from any device. The current implementation requires that an user generates a token using the Authentication server once every 5 days.
+
+Dynamic:
+
+Here is a simple example of what happens when a user gets into the App to visualize one of her experiments:
+
+The user opens the App and searches for an experiment or just pushes the RUNNING button. The App fires a request to the API service, the API processes the request and returns a JSON object as response. The App receives the JSON object, processes it and shows the data on the corresponding page. The user chooses to visualize the Tree View representation of her experiment, the App fires a request to the API, the API processes the request, collecting job information, sequence, dependencies, etc; most of this information is in the file system. It also queries the database for the completion times of the jobs. All that information is served in the form of a JSON object. The App receives that response, processes it, and shows it in the corresponding page or object.
+
 ## General Knowledge Requirements:
 
 - npm
