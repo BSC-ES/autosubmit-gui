@@ -6,6 +6,10 @@
 
 1. [Overview](#Overview)
 2. [General Knowledge Requirements](#general-knowledge-requirements)
+3. [Installation](#installation)
+4. [Testing](#testing)
+5. [User Guide](#user-guide)
+6. [Contributing](#contributing)
 
 ## Overview:
 
