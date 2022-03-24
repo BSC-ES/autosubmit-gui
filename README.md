@@ -37,12 +37,6 @@ In this image you can see the flow of information in the **Autosubmit environmen
 * **Authentication Server**: **BSC Central Authentication Service**.
 * **Users**: Users that access the GUI through their web browsers from any device. The current implementation requires that an user generates a token using the Authentication server once every 5 days.
 
-Dynamic:
-
-Here is a simple example of what happens when a user gets into the App to visualize one of her experiments:
-
-The user opens the App and searches for an experiment or just pushes the RUNNING button. The App fires a request to the API service, the API processes the request and returns a JSON object as response. The App receives the JSON object, processes it and shows the data on the corresponding page. The user chooses to visualize the Tree View representation of her experiment, the App fires a request to the API, the API processes the request, collecting job information, sequence, dependencies, etc; most of this information is in the file system. It also queries the database for the completion times of the jobs. All that information is served in the form of a JSON object. The App receives that response, processes it, and shows it in the corresponding page or object.
-
 ## General Knowledge Requirements:
 
 - npm
