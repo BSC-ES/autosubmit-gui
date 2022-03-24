@@ -53,6 +53,9 @@ to:
 `export const AUTHENTICATION = false;`
 
 This will effectively set the API calls to be redirected towards an internal data samples folder `/autosubmitreact/src/components/context/data/` implemented for testing purposes.
+
+**IMPORTANT**: The static data required by `NOAPI = true` is stored in [/autosubmitreact/data](https://earth.bsc.es/gitlab/es/autosubmitreact/-/tree/master/data) because we don't want that the package sent for deployment includes all this information that will only increase the size of the package. Therefore, in forder for `NOAPI = true` to work, you should copy the contents of `/autosubmitreact/data/` into `/autosubmitreact/src/components/context/data/`.
+
 In the case of `AUTHENTICATION`, you set it to `false` to avoid the requirement of an authentication token, because you won't be able to get one from BSC internal Central Authentication Service.
 However, some API calls might require that you have a valid token, but if you are using the internal data, it shouldn't be a problem.
 
