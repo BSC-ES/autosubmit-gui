@@ -1,8 +1,13 @@
-## Autosubmit GUI
+# Autosubmit GUI
 
 [![status](https://joss.theoj.org/papers/a8ac17f6c02fdf76098ac97ed3e09b22/status.svg)](https://joss.theoj.org/papers/a8ac17f6c02fdf76098ac97ed3e09b22)
 
-### Overview:
+# Table of Contents
+
+1. [Overview](#Overview)
+2. [General Knowledge Requirements](#general-knowledge-requirements)
+
+## Overview:
 
 Autosubmit GUI is a front-end software developed using [ReactJS](https://reactjs.org/docs/getting-started.html) as the main framework, and JavaScript in general.
 This front-end software consumes most of the information it needs from [Autosubmit API](https://earth.bsc.es/gitlab/wuruchi/autosubmit_api/-/wikis/home), an API that retrieves information from an internal file system that results from the execution of [Autosubmit](https://earth.bsc.es/gitlab/es/autosubmit) to execute experiments on a High Performance Computing environment.
@@ -15,7 +20,7 @@ Autosubmit GUI uses [FancyTree](https://github.com/mar10/fancytree/), [vis.js](h
 Some of the expermients in our environment can include more than `10000` jobs, and showing this information in a web format without significant loss of performance is
 by itself an achievement.
 
-### General Knowledge Requirements:
+## General Knowledge Requirements:
 
 - npm
 - Javascript: asynchronous functions, promises, event handling, etc.
@@ -24,7 +29,7 @@ by itself an achievement.
 - JSON
 - ReactJS
 
-### Installation
+## Installation
 
 The main development framework is **npm**, we are currently using version `6.9.0`. You can find the main **npm** dependencies in the file: [package.json](package.json).
 Refer to: [npm documentation](https://docs.npmjs.com/) for more information about installation and first steps on this platform.
@@ -71,7 +76,7 @@ After that, you will be able to run:
 
 Then, the GUI should open in your default browser, and the information displayed should correspond to that of the data samples folder.
 
-### Testing
+## Testing
 
 The testing suite has been developed using [JEST](https://jestjs.io/en/).
 
@@ -85,12 +90,12 @@ Make sure that you have installed the dependencies before running the tests.
 
 Note: It could happen that `jest` fails to run or is not automatically installed along the other dependencies on a Windows machine, please install it manually.
 
-### User Guide
+## User Guide
 
 A user guide has been developed and published at [https://autosubmit.readthedocs.io/en/latest/autosubmit-gui.html](https://autosubmit.readthedocs.io/en/latest/autosubmit-gui.html).
 Although a little outdated, we are constantly working on updating it considering the latest features.
 
-### Contributing
+## Contributing
 
 Currently, the development of this software is under the `Autosubmit team` that belongs to the `Earth Science Department` of the `Barcelona Supercomputing Center`.
 
