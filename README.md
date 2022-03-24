@@ -24,6 +24,8 @@ These two systems, the **API** and the **GUI**, are independent. It is possible 
 
 ![Autosubmit Big Picture](/docs/Total_Autosubmit_Diagram.png)
 
+In this image you can see the flow of information in the **Autosubmit environment**.
+
 ## General Knowledge Requirements:
 
 - npm
