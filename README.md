@@ -22,7 +22,7 @@ These two systems, the **API** and the **GUI**, are independent. It is possible 
 
 ## Autosubmit Big Picture
 
-![Total_Autosubmit_Diagram](uploads/ae6c4baf6d68b7db30ca94b65c376394/Total_Autosubmit_Diagram.png)
+
 
 ## General Knowledge Requirements:
 
