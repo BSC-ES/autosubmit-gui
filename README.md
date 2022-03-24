@@ -9,6 +9,7 @@
 3. [General Knowledge Requirements](#general-knowledge-requirements)
 4. [Installation](#installation)
 5. [Testing](#testing)
+6. [Deployment](#deployment)
 6. [User Guide](#user-guide)
 7. [Contributing](#contributing)
 
@@ -106,6 +107,17 @@ Almost all tests can be found at `/autosubmitreact/src/components/experiment/tes
 Make sure that you have installed the dependencies before running the tests.
 
 Note: It could happen that `jest` fails to run or is not automatically installed along the other dependencies on a Windows machine, please install it manually.
+
+## Deployment
+
+1. Generate a deployment package using `npm run build`. The deployment package is generated inside the `build` folder.
+2. `commit` and `push` the repository including the newly created deployment package.
+1. In `bscesweb04`, the path `/srv/www/htdocs/autosubmitapp` should exist. It is a folder served using apache app server.
+4. Copy the contents from the `build` folder into `/srv/www/htdocs/autosubmitapp`.
+2. Try `http://bscesweb04.bsc.es/autosubmitapp/`, the App home page should be displayed.
+3. Press the green **RUNNING** button, if it does not return anything, try entering the name of an experiment you know exists in the search textbox and press SEARCH. If even then there are no results, then it is most likely that there is some problem with the API. 
+
+**IMPORTANT**: The files under `/srv/www/htdocs/autosubmitapp` are the same files in [the build folder](https://earth.bsc.es/gitlab/wuruchi/autosubmitreact/-/tree/master/build).
 
 ## User Guide
 
