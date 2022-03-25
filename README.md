@@ -12,6 +12,7 @@
 6. [Deployment](#deployment)
 6. [User Guide](#user-guide)
 7. [Contributing](#contributing)
+8. [Common Problems](#common-problems)
 
 ## Overview:
 
@@ -139,3 +140,10 @@ You can open issues in this repository using the `Email a new issue to this proj
 Most issues have been centralized in the [Autosubmit repository](https://earth.bsc.es/gitlab/es/autosubmit/-/issues), and you can check them there.
 
 You are free (and encouraged) to clone this software and modify it to fit your needs. Moreover, the `BSC` is always looking for collaboration, so feel free to request support.
+
+## Common Problems
+
+Although a clean install using `npm install` should work without problems, some issues might arise according to your local settings. Here is a list of common problems:
+
+- (Deprecated vis.js)[https://earth.bsc.es/gitlab/es/autosubmitreact/-/issues/5#note_163057]: A permanent solution will required updating our `vis.js` dependency. We will test it.
+- (Problems with chokidar package)[https://earth.bsc.es/gitlab/es/autosubmitreact/-/issues/5#note_163109]: Delete `node_modules` folder, run `npm install` and then `npm install chokidar`.
