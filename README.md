@@ -145,5 +145,5 @@ You are free (and encouraged) to clone this software and modify it to fit your n
 
 Although a clean install using `npm install` should work without problems, some issues might arise according to your local settings. Here is a list of common problems:
 
-- Deprecated vis.js https://earth.bsc.es/gitlab/es/autosubmitreact/-/issues/5#note_163057: A permanent solution will required updating our `vis.js` dependency. We will test it.
+- Deprecated vis.js https://earth.bsc.es/gitlab/es/autosubmitreact/-/issues/5#note_163057: A permanent solution will required updating our `vis.js` dependency. We will test it; meanwhile, you can ignore this warning.
 - Problems with chokidar package https://earth.bsc.es/gitlab/es/autosubmitreact/-/issues/5#note_163109: Delete `node_modules` folder, run `npm install` and then `npm install chokidar`.
