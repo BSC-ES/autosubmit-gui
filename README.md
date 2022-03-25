@@ -110,9 +110,16 @@ Note: It could happen that `jest` fails to run or is not automatically installed
 
 ## Deployment
 
-1. Generate a deployment package using `npm run build`. The deployment package is generated inside the `build` folder.
+1. Make sure that the settings in the `var.js` file are correct, pay special attention to the address of the **API**. Generate a deployment package using `npm run build`. The deployment package is generated inside the `build` folder.
 2. `commit` and `push` the repository including the newly created deployment package.
-1. In `bscesweb04`, the path `/srv/www/htdocs/autosubmitapp` should exist. It is a folder served using apache app server.
+1. In `bscesweb04`, the path `/srv/www/htdocs/autosubmitapp` should exist. It is a folder served using apache app server. Inside this folder, you should also find the hidden file `.htaccess`, this file allows apache app server to correctly route the `ReactJS` app. `.htaccess` contains:
+
+```
+    Options -MultiViews
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.html [QSA,L]
+```
 4. Copy the contents from the `build` folder into `/srv/www/htdocs/autosubmitapp`.
 2. Try `http://bscesweb04.bsc.es/autosubmitapp/`, the App home page should be displayed.
 3. Press the green **RUNNING** button, if it does not return anything, try entering the name of an experiment you know exists in the search textbox and press SEARCH. If even then there are no results, then it is most likely that there is some problem with the API. 
