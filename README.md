@@ -123,7 +123,7 @@ Note: It could happen that `jest` fails to run or is not automatically installed
 ```
 4. Copy the contents from the `build` folder into `/srv/www/htdocs/autosubmitapp`.
 2. Try `http://bscesweb04.bsc.es/autosubmitapp/`, the App home page should be displayed.
-3. Press the green **RUNNING** button, if it does not return anything, try entering the name of an experiment you know exists in the search textbox and press SEARCH. If even then there are no results, then it is most likely that there is some problem with the API. 
+3. Press the green **ACTIVE EXPS** button, if it does not return anything, try entering the name of an experiment you know exists in the search textbox and press `SEARCH`. If even then, there are no results, it is most likely that there is some problem with the **API**. 
 
 **IMPORTANT**: The files under `/srv/www/htdocs/autosubmitapp` are the same files in [the build folder](https://earth.bsc.es/gitlab/wuruchi/autosubmitreact/-/tree/master/build).
 
