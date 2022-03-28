@@ -741,7 +741,7 @@ const Performance = () => {
           <p>
             Visit{" "}
             <a
-              href='https://earth.bsc.es/gitlab/wuruchi/autosubmitreact/-/wikis/Performance-Metrics'
+              href='https://earth.bsc.es/gitlab/es/autosubmit_api/-/wikis/Performance-Metrics'
               target='_blank'
               rel='noopener noreferrer'
             >
