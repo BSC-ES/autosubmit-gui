@@ -18,16 +18,17 @@ const TreeNodeSelection = ({ target = "manual-tree" }) => {
     return (
       <Fragment>
         <button
-          className='btn btn-sm btn-primary'
+          className='btn btn-sm btn-primary menu-btn'
           type='button'
           data-toggle='modal'
           data-target={"#command" + target}
           onClick={onChangeStatus}
         >
           <span
-          data-toggle='tooltip' 
-          data-placement='bottom' 
-          title="Generate a command/text to change the status of the selected jobs on the Tree View.">
+            data-toggle='tooltip'
+            data-placement='bottom'
+            title='Generate a command/text to change the status of the selected jobs on the Tree View.'
+          >
             <strong>Change Status</strong>
           </span>
         </button>

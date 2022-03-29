@@ -48,6 +48,22 @@
   letter-spacing: 1px;
 }
 
+.menu-btn {
+  letter-spacing: 1.5px;
+  font-size: 0.8rem !important;
+}
+
+.menu-input-append {
+  font-size: 0.9rem !important;
+}
+
+/* LOG TAB */
+
+.file-info {
+  font-size: 1.05rem;
+  letter-spacing: 1.5px;
+}
+
 /* PERFORMANCE TAB */
 
 .performance-table-header {
@@ -191,16 +207,26 @@
   border: 0px !important;
 }
 
+/* BASH STYLE */
 pre.bash {
   background-color: black;
   color: white;
-  font-size: medium;
-  font-family: Consolas, Monaco, Lucida Console, Liberation Mono,
-    DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+  font-size: 1.2rem;
+  font-family: "Lucida Console", Courier, monospace;
   width: 100%;
   display: inline-block;
+  text-align: left;
+  /* letter-spacing: 0.9px; */
   line-height: 1 !important;
   /* padding: 5px; */
+}
+
+pre.bash-joblog {
+  font-size: 0.9rem;
+}
+
+.bash-joblog li {
+  padding: 0.1rem 0;
 }
 
 .page-footer {

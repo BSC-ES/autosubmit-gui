@@ -48,6 +48,8 @@ import {
   CLEAR_CURRENT_CONFIGURATION_DATA,
   SET_PERFORMANCE_DISPLAY,
   TEST_TOKEN,
+  GET_JOB_HISTORY_LOG,
+  CLEAR_JOB_HISTORY_LOG,
 } from "../types";
 
 import {
@@ -84,6 +86,7 @@ const ExperimentState = (props) => {
     loadingPerformance: false,
     experimentRunning: false,
     joblog: null,
+    jobHistoryLog: { path: null, joblog: null },
     rundata: null,
     performancedata: null,
     activeInactiveFilter: null,
@@ -208,7 +211,6 @@ const ExperimentState = (props) => {
       debug && console.log(res.data);
       result = res ? res.data : {};
     }
-    //console.log(result);
     dispatch({
       type: GET_LOG_RUNNING_DATA,
       payload: result,
@@ -265,16 +267,43 @@ const ExperimentState = (props) => {
     });
   };
 
-  const getJobLog = async (logfile) => {
+  const getJobHistoryLog = async (logfile) => {
     let result = null;
-    const logcontent =
+    const logPathSplit =
       logfile && logfile.length > 0 ? logfile.split("/") : [""];
-    const last = logcontent.pop();
+    const logFileName = logPathSplit.pop();
     if (NOAPI) {
       result = require("../data/joblog.json");
     } else {
       const res = await axios
-        .get(`${localserver}/joblog/${last}`)
+        .get(`${localserver}/joblog/${logFileName}`)
+        .catch((error) => {
+          alert(error.message);
+        });
+      result = res ? res.data : null;
+    }
+    dispatch({
+      type: GET_JOB_HISTORY_LOG,
+      payload: { path: logfile, joblog: result },
+    });
+  };
+
+  const clearJobHistoryLog = async () => {
+    dispatch({
+      type: CLEAR_JOB_HISTORY_LOG,
+    });
+  };
+
+  const getJobLog = async (logfile) => {
+    let result = null;
+    const logPathSplit =
+      logfile && logfile.length > 0 ? logfile.split("/") : [""];
+    const logFileName = logPathSplit.pop();
+    if (NOAPI) {
+      result = require("../data/joblog.json");
+    } else {
+      const res = await axios
+        .get(`${localserver}/joblog/${logFileName}`)
         .catch((error) => {
           alert(error.message);
         });
@@ -293,14 +322,10 @@ const ExperimentState = (props) => {
     if (NOAPI) {
       return null;
     } else {
-      //console.log('Attempt inside state of ' + ticket);
       const res = await axios.get(
         `${localserver}/login?ticket=${ticket}&env=${rootAppName}`
       );
-      // {authentication: bool, user: str}
-      //console.log(res);
       authdata = res ? res.data : null;
-      //console.log(authdata);
     }
     if (authdata) {
       dispatch({
@@ -327,13 +352,9 @@ const ExperimentState = (props) => {
       summary = res ? res.data : null;
       debug && console.log(summary);
     }
-    // console.log(summary);
-    // console.log(state.summaries);
-    // state.summaries.push({ key: expid, value: summary });
     dispatch({
       type: GET_EXPERIMENT_SUMMARY,
       payload: { expid: expid, summary: summary },
-      //payload: { currentSummaries, summary, expid }
     });
   };
 
@@ -713,8 +734,6 @@ const ExperimentState = (props) => {
   };
 
   const updateCurrentSelectedGraph = (selectedJob, data) => {
-    // console.log(data);
-    // console.log(selectedJob);
     if (data) {
       let currentNode = { name: selectedJob, color: "yellow" };
       const selectedNode = data.nodes.find((node) => {
@@ -748,6 +767,7 @@ const ExperimentState = (props) => {
         experiments: state.experiments,
         experiment: state.experiment,
         summaries: state.summaries,
+        jobHistoryLog: state.jobHistoryLog,
         loadingSummary: state.loadingSummary,
         loading: state.loading,
         loadingRun: state.loadingRun,
@@ -828,6 +848,8 @@ const ExperimentState = (props) => {
         clearCurrentConfigurationData,
         testToken,
         setPerformanceDisplay,
+        getJobHistoryLog,
+        clearJobHistoryLog,
       }}
     >
       {props.children}

@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
 import GraphContext from "../context/graph/graphContext";
 import TreeContext from "../context/tree/treeContext";
@@ -16,15 +16,25 @@ const JobHistory = ({ source }) => {
   const experimentContext = useContext(ExperimentContext);
   const graphContext = useContext(GraphContext);
   const treeContext = useContext(TreeContext);
-  const { experiment, jobHistory, getJobHistory } = experimentContext;
+  const {
+    experiment,
+    jobHistory,
+    getJobHistory,
+    getJobHistoryLog,
+    jobHistoryLog,
+  } = experimentContext;
   const { selection } = graphContext;
   const { selectedTreeNode } = treeContext;
 
-  const currentPath = useRef("");
+  const { path, joblog } = jobHistoryLog;
 
-  const setCurrentPath = (path) => {
-    if (currentPath.current) currentPath.current.innerHTML = path;
-  };
+  // const currentPath = useRef("");
+
+  // const setCurrentPath = (path) => {
+  //   if (currentPath.current) {
+  //     currentPath.current.innerHTML = path;
+  //   }
+  // };
 
   if (experiment) {
     var { db_historic_version, expid } = experiment;
@@ -80,7 +90,6 @@ const JobHistory = ({ source }) => {
     db_historic_version &&
     db_historic_version >= 12
   ) {
-    setCurrentPath("");
     return (
       <span>
         <span
@@ -138,7 +147,33 @@ const JobHistory = ({ source }) => {
                 </button>
               </div>
               &nbsp;
-              <div ref={currentPath}></div>
+              <div>{path}</div>
+              {joblog && (
+                <div>
+                  {joblog.error === true && (
+                    <div className='error-message'>{joblog.error_message}</div>
+                  )}
+                  {joblog.error === false && joblog.found === false && (
+                    <div className='error-message'>File not found</div>
+                  )}
+                  {joblog.error === false && joblog.found === true && (
+                    <div>
+                      <pre className='bash bash-joblog mb-0 scroll'>
+                        <ul style={pStyle} className='p-1 mb-0 ul-2'>
+                          {joblog.logcontent.map((item) => (
+                            <li key={item.index}>
+                              <span>{item.content}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </pre>
+                      <div className='text-center'>
+                        <span>Showing last 150 lines</span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
               <div className='modal-body scroll-x'>
                 {jobHistory && jobHistory.history && (
                   <table className='table table-sm table-bordered list-table'>
@@ -147,7 +182,6 @@ const JobHistory = ({ source }) => {
                         <th scope='col'>RunId</th>
                         <th scope='col'>Counter</th>
                         <th scope='col'>JobId</th>
-                        {/* <th scope='col'>Created</th> */}
                         <th scope='col'>Submit</th>
                         <th scope='col'>Start</th>
                         <th scope='col'>Finish</th>
@@ -178,7 +212,6 @@ const JobHistory = ({ source }) => {
                           </td>
                           <td>{item.counter}</td>
                           <td>{item.job_id}</td>
-                          {/* <td>{item.created}</td> */}
                           <td>{item.submit}</td>
                           <td>{item.start}</td>
                           <td>{item.finish}</td>
@@ -238,7 +271,7 @@ const JobHistory = ({ source }) => {
                               <button
                                 className='btn btn-sm btn-info'
                                 onClick={() => {
-                                  setCurrentPath(
+                                  getJobHistoryLog(
                                     jobHistory.path_to_logs + "/" + item.out
                                   );
                                 }}
@@ -252,7 +285,7 @@ const JobHistory = ({ source }) => {
                               <button
                                 className='btn btn-sm btn-warning'
                                 onClick={() => {
-                                  setCurrentPath(
+                                  getJobHistoryLog(
                                     jobHistory.path_to_logs + "/" + item.err
                                   );
                                 }}
@@ -298,6 +331,10 @@ const JobHistory = ({ source }) => {
   } else {
     return null;
   }
+};
+
+const pStyle = {
+  listStyleType: "none",
 };
 
 export default JobHistory;

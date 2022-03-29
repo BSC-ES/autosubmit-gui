@@ -44,6 +44,8 @@ import {
   CLEAR_CURRENT_CONFIGURATION_DATA,
   TEST_TOKEN,
   SET_PERFORMANCE_DISPLAY,
+  GET_JOB_HISTORY_LOG,
+  CLEAR_JOB_HISTORY_LOG,
 } from "../types";
 
 import {
@@ -126,6 +128,7 @@ export default (state, action) => {
       return {
         ...state,
         jobHistory: action.payload,
+        jobHistoryLog: { path: null, joblog: null },
       };
     case GET_FILE_STATUS:
       return {
@@ -744,6 +747,17 @@ export default (state, action) => {
         ...state,
         currentConfiguration: action.payload,
         configDifferences: currentDifferences,
+      };
+    case GET_JOB_HISTORY_LOG:
+      const { path, joblog } = action.payload;
+      return {
+        ...state,
+        jobHistoryLog: { path: path, joblog: joblog },
+      };
+    case CLEAR_JOB_HISTORY_LOG:
+      return {
+        ...state,
+        jobHistoryLog: { path: null, joblog: null },
       };
     default:
       return null;

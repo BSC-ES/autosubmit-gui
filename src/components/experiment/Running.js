@@ -1,3 +1,6 @@
+/* 
+  Component that shows the log of the experiment.
+*/
 import React, { Component, Fragment } from "react";
 
 class Running extends Component {
@@ -9,7 +12,6 @@ class Running extends Component {
   }
 
   componentDidMount() {
-    //console.log(this.props.experimentRunning)
     this.props.getExperimentRun(this.props.experiment.expid);
     if (this.props.experimentRunning) {
       this.interval = setInterval(
@@ -17,8 +19,6 @@ class Running extends Component {
         this.props.experiment.updateTime * 1000
       );
     }
-    //console.log(this.messagesEndRef);
-    //this.scrollTo();
   }
 
   componentWillUnmount() {
@@ -59,23 +59,15 @@ class Running extends Component {
     ));
 
     if (error) {
-      return (
-        <Fragment>
-          <div>{error_message}</div>
-          <br></br>
-          <hr></hr>
-        </Fragment>
-      );
+      return <div className='error-message'>{error_message}</div>;
     }
     if (!found) {
       return (
         <Fragment>
-          <div>
+          <div className='error-message'>
             Running log not found. This experiment might not be currently
             running on Autosubmit.
           </div>
-          <br></br>
-          <hr></hr>
         </Fragment>
       );
     }
@@ -83,13 +75,13 @@ class Running extends Component {
     return (
       <div className='row'>
         <div className='col-12'>
-          <div className='row px-1'>
+          <div className='row px-1 file-info'>
             <div className='col-6 text-left'>
-              <small>Logfile: {logfile}</small>{" "}
-              <small className='text-muted'>({timeStamp})</small>
+              <span>LOG FILE: {logfile}</span>{" "}
+              <span className='text-muted'>({timeStamp})</span>
             </div>
-            <div className='col-6 text-right'>
-              <small>Last Modified: {lastModified}</small>
+            <div className='col-6 text-right text-muted'>
+              LAST MODIFIED: {lastModified}
             </div>
           </div>
 
@@ -103,8 +95,8 @@ class Running extends Component {
                         </div>            */}
           </pre>
 
-          <div className='text-muted text-center'>
-            <small>Showing last 150 lines.</small>
+          <div className='text-muted text-center file-info'>
+            Showing last 150 lines
           </div>
         </div>
       </div>

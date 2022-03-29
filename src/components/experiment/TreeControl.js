@@ -8,7 +8,13 @@ import { buildWarningInactiveMessageTree } from "../context/utils";
 const TreeControl = () => {
   const experimentContext = useContext(ExperimentContext);
   const treeContext = useContext(TreeContext);
-  const { experiment, experimentRunning, getLogStatus, logTimeDiff, currentLog } = experimentContext;
+  const {
+    experiment,
+    experimentRunning,
+    getLogStatus,
+    logTimeDiff,
+    currentLog,
+  } = experimentContext;
 
   const {
     treedata,
@@ -26,15 +32,28 @@ const TreeControl = () => {
   } = treeContext;
 
   useEffect(() => {
-    const warningMessage = buildWarningInactiveMessageTree(experimentRunning, logTimeDiff, currentLog, treedata ? treedata.jobs : null);
+    const warningMessage = buildWarningInactiveMessageTree(
+      experimentRunning,
+      logTimeDiff,
+      currentLog,
+      treedata ? treedata.jobs : null
+    );
     setWarningActive(warningMessage);
     // eslint-disable-next-line
-  }, [logTimeDiff, warningActive, currentLog, treedata])
+  }, [logTimeDiff, warningActive, currentLog, treedata]);
 
   const onSubmitTree = (e) => {
     e.preventDefault();
     getLogStatus(experiment.expid);
-    getExperimentTree(experiment.expid, buildWarningInactiveMessageTree(experimentRunning, logTimeDiff, currentLog, treedata ? treedata.jobs : null));
+    getExperimentTree(
+      experiment.expid,
+      buildWarningInactiveMessageTree(
+        experimentRunning,
+        logTimeDiff,
+        currentLog,
+        treedata ? treedata.jobs : null
+      )
+    );
   };
 
   const onClearTree = (e) => {
@@ -60,18 +79,17 @@ const TreeControl = () => {
 
   const disabledQuery = !enabledTreeSearch || loadingTreePkl;
 
-
   return (
     <div className='card-header p-1'>
       <div className='d-flex flex-wrap row-hl'>
         {currentRunIdOnTree && (
-          <div className="mr-auto item-hl" >{currentRunIdOnTree.message}</div>
+          <div className='mr-auto item-hl'>{currentRunIdOnTree.message}</div>
         )}
         {(loadingTreeRefresh || loadingTreePkl) && (
           <div className='mr-auto item-hl'>Querying...</div>
         )}
         {warningActive && (
-          <div className="mr-auto item-hl">
+          <div className='mr-auto item-hl'>
             <span
               className='px-2 bg-warning text-white rounded text-center ml-1'
               style={{ width: "100%" }}
@@ -88,11 +106,11 @@ const TreeControl = () => {
               <input
                 type='submit'
                 value='Show'
-                className='btn btn-primary btn-block btn-sm'
+                className='btn btn-primary btn-block btn-sm menu-btn'
                 disabled={disabledQuery}
                 data-toggle='tooltip'
                 data-placement='bottom'
-                title="Shows the Tree View representation of the experiment."
+                title='Shows the Tree View representation of the experiment.'
               />
             </form>
           </div>
@@ -104,19 +122,19 @@ const TreeControl = () => {
                 type='submit'
                 value='Clear Tree'
                 id='bs-tooltip'
-                className='btn btn-dark btn-block btn-sm bs-tooltip'
+                className='btn btn-dark btn-block btn-sm bs-tooltip menu-btn'
                 disabled={disabledQuery || startAutoUpdateTreePkl}
                 data-toggle='tooltip'
                 data-placement='bottom'
-                title="Clears all the data from the Tree View."
+                title='Clears all the data from the Tree View.'
               />
             </form>
           </div>
         )}
 
         {experiment && treedata && (
-          <div className="item-hl pl-1">
-            <JobSummary source="tree" />
+          <div className='item-hl pl-1'>
+            <JobSummary source='tree' />
           </div>
         )}
 
@@ -125,45 +143,54 @@ const TreeControl = () => {
             <SelectionControl />
           </div>
         )}
-        <div className="item-hl">
-          <div className="btn-group" role="group" aria-label="workflow-tree">
+        <div className='item-hl'>
+          <div className='btn-group' role='group' aria-label='workflow-tree'>
             {experiment &&
               treedata &&
               experimentRunning &&
-              !startAutoUpdateTreePkl && !currentRunIdOnTree && (
+              !startAutoUpdateTreePkl &&
+              !currentRunIdOnTree && (
                 <button
                   type='button'
-                  className='btn btn-success btn-sm'
+                  className='btn btn-success btn-sm menu-btn'
                   disabled={disabledQuery}
                   onClick={onRequestUpdate}
                   data-toggle='tooltip'
                   data-placement='bottom'
-                  title="Updates the Tree View job data (including status) with the most recent information."
+                  title='Updates the Tree View job data (including status) with the most recent information.'
                 >
                   Refresh
                 </button>
               )}
-            {experimentRunning && treedata && !startAutoUpdateTreePkl && !currentRunIdOnTree && (
-              <button
-                type='button'
-                className='btn btn-success btn-sm'
-                disabled={disabledQuery}
-                onClick={onJobMonitor}
-                data-toggle='tooltip'
-                data-placement='bottom'
-                title="Starts a worker that periodically updates the Tree View job data."
-              >
-                Start Job Monitor
-              </button>
-            )}
-            {experimentRunning && treedata && startAutoUpdateTreePkl && !currentRunIdOnTree && (
-              <button
-                type='button'
-                className='btn btn-danger btn-sm'
-                disabled={disabledQuery}
-                onClick={onNotJobMonitor}
-              >Stop Job Monitor</button>
-            )}
+            {experimentRunning &&
+              treedata &&
+              !startAutoUpdateTreePkl &&
+              !currentRunIdOnTree && (
+                <button
+                  type='button'
+                  className='btn btn-success btn-sm menu-btn'
+                  disabled={disabledQuery}
+                  onClick={onJobMonitor}
+                  data-toggle='tooltip'
+                  data-placement='bottom'
+                  title='Starts a worker that periodically updates the Tree View job data.'
+                >
+                  Start Job Monitor
+                </button>
+              )}
+            {experimentRunning &&
+              treedata &&
+              startAutoUpdateTreePkl &&
+              !currentRunIdOnTree && (
+                <button
+                  type='button'
+                  className='btn btn-danger btn-sm menu-btn'
+                  disabled={disabledQuery}
+                  onClick={onNotJobMonitor}
+                >
+                  Stop Job Monitor
+                </button>
+              )}
           </div>
         </div>
       </div>

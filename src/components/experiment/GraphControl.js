@@ -30,19 +30,31 @@ const GraphControl = () => {
   } = graphContext;
 
   useEffect(() => {
-    const warningMessage = buildWarningInactiveMessageTree(experimentRunning, logTimeDiff, currentLog, data ? data.nodes : null);
+    const warningMessage = buildWarningInactiveMessageTree(
+      experimentRunning,
+      logTimeDiff,
+      currentLog,
+      data ? data.nodes : null
+    );
     setWarningActive(warningMessage);
     // eslint-disable-next-line
-  }, [logTimeDiff, warningActive, currentLog, data])
+  }, [logTimeDiff, warningActive, currentLog, data]);
 
   const disableQuery = !enabledGraphSearch || loadingPkl;
 
-  const onSubmitGraph = (grouped = "none", layout = "standard") => (e) => {
-    e.preventDefault();
-    getLogStatus(experiment.expid);
-    const warningMessage = buildWarningInactiveMessageTree(experimentRunning, logTimeDiff, currentLog, data ? data.nodes : null);
-    getExperimentGraph(experiment.expid, grouped, layout, warningMessage);
-  };
+  const onSubmitGraph =
+    (grouped = "none", layout = "standard") =>
+    (e) => {
+      e.preventDefault();
+      getLogStatus(experiment.expid);
+      const warningMessage = buildWarningInactiveMessageTree(
+        experimentRunning,
+        logTimeDiff,
+        currentLog,
+        data ? data.nodes : null
+      );
+      getExperimentGraph(experiment.expid, grouped, layout, warningMessage);
+    };
 
   const onJobMonitor = (e) => {
     e.preventDefault();
@@ -63,10 +75,11 @@ const GraphControl = () => {
   return (
     <div className='card-header p-1'>
       <div className='d-flex flex-wrap row-hl'>
-
-        {(loadingJobMonitor || loadingPkl) && <div className='mr-auto item-hl'>Querying...</div>}
+        {(loadingJobMonitor || loadingPkl) && (
+          <div className='mr-auto item-hl'>Querying...</div>
+        )}
         {warningActive && (
-          <div className="mr-auto item-hl">
+          <div className='mr-auto item-hl'>
             <span
               className='px-2 bg-warning text-white rounded text-center ml-1'
               style={{ width: "100%" }}
@@ -78,42 +91,45 @@ const GraphControl = () => {
         )}
 
         <div className='item-hl ml-auto'>
-          <div className="btn-group" role="group" aria-label="Group By">
+          <div className='btn-group' role='group' aria-label='Group By'>
             <button
-              className="btn btn-primary btn-sm"
+              className='btn btn-primary btn-sm menu-btn'
               disabled={disableQuery}
               onClick={onSubmitGraph()}
               data-toggle='tooltip'
               data-placement='bottom'
-              title="Shows the default Graph Representation of the experiment."
+              title='Shows the default Graph Representation of the experiment.'
             >
               Classic
             </button>
             <button
-              className="btn btn-primary btn-sm"
+              className='btn btn-primary btn-sm menu-btn'
               disabled={disableQuery}
               onClick={onSubmitGraph("none", "laplacian")}
               data-toggle='tooltip'
               data-placement='bottom'
-              title="Shows Graph Laplacian representation of the experiment.">
-              <i className="fas fa-chess-board"></i>
+              title='Shows Graph Laplacian representation of the experiment.'
+            >
+              <i className='fas fa-chess-board'></i>
             </button>
             <button
-              className="btn btn-primary btn-sm"
+              className='btn btn-primary btn-sm menu-btn'
               onClick={onSubmitGraph("date-member")}
               disabled={disableQuery}
               data-toggle='tooltip'
               data-placement='bottom'
-              title="Similar to Classic, but the nodes are grouped by date-member.">
+              title='Similar to Classic, but the nodes are grouped by date-member.'
+            >
               Date-Member
             </button>
             <button
-              className="btn btn-primary btn-sm"
+              className='btn btn-primary btn-sm menu-btn'
               onClick={onSubmitGraph("status")}
               disabled={disableQuery}
               data-toggle='tooltip'
               data-placement='bottom'
-              title="Similar to Classic, but the nodes are grouped by status.">
+              title='Similar to Classic, but the nodes are grouped by status.'
+            >
               Status
             </button>
           </div>
@@ -121,7 +137,7 @@ const GraphControl = () => {
 
         {experiment && data && (
           <div className='item-hl pl-1'>
-            <JobSummary source="graph" />
+            <JobSummary source='graph' />
           </div>
         )}
 
@@ -131,12 +147,12 @@ const GraphControl = () => {
           </div>
         )}
 
-        <div className="item-hl">
-          <div className="btn-group" role="group" aria-label="workflow">
+        <div className='item-hl'>
+          <div className='btn-group' role='group' aria-label='workflow'>
             {experiment && data && experimentRunning && !startAutoUpdatePkl && (
               <button
                 type='button'
-                className='btn btn-success btn-sm'
+                className='btn btn-success btn-sm menu-btn'
                 disabled={disableQuery}
                 onClick={onRequestUpdate}
                 data-toggle='tooltip'
@@ -149,7 +165,7 @@ const GraphControl = () => {
             {experimentRunning && data && !startAutoUpdatePkl && (
               <button
                 type='button'
-                className='btn btn-success btn-sm'
+                className='btn btn-success btn-sm menu-btn'
                 disabled={disableQuery}
                 onClick={onJobMonitor}
                 data-toggle='tooltip'
@@ -162,14 +178,15 @@ const GraphControl = () => {
             {experimentRunning && data && startAutoUpdatePkl && (
               <button
                 type='button'
-                className='btn btn-danger btn-sm'
+                className='btn btn-danger btn-sm menu-btn'
                 disabled={disableQuery}
                 onClick={onNotJobMonitor}
-              >Stop Job Monitor</button>
+              >
+                Stop Job Monitor
+              </button>
             )}
           </div>
         </div>
-
       </div>
     </div>
   );

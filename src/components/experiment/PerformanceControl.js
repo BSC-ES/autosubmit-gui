@@ -21,19 +21,23 @@ const PerformanceControl = () => {
 
   return (
     <div className='card-header p-1 text-right'>
-          {experiment && (
-            <form onSubmit={onSubmitRequest} className='form'>
-              <input
-                type='submit'
-                value={performancedata ? 'Refresh' : 'Show'}
-                className={performancedata ? 'btn btn-success btn-sm' : 'btn btn-primary btn-sm'}
-                disabled={!enabledTreeSearch || loadingPerformance}
-                data-toggle='tooltip' 
-                data-placement='bottom' 
-                title="Updates the performance metrics using the latest job data information."
-              />
-            </form>
-          )}
+      {experiment && (
+        <form onSubmit={onSubmitRequest} className='form'>
+          <input
+            type='submit'
+            value={performancedata ? "Refresh" : "Show"}
+            className={
+              performancedata
+                ? "btn btn-success btn-sm menu-btn"
+                : "btn btn-primary btn-sm menu-btn"
+            }
+            disabled={!enabledTreeSearch || loadingPerformance}
+            data-toggle='tooltip'
+            data-placement='bottom'
+            title='Updates the performance metrics using the latest job data information.'
+          />
+        </form>
+      )}
     </div>
   );
 };

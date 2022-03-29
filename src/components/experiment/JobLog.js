@@ -9,7 +9,7 @@ const JobLog = ({ source, tab }) => {
     source !== null
       ? source.substring(source.lastIndexOf(".") + 1)
       : "undefined";
-  //console.log(pathid);
+
   const onGetJobLog = (e) => {
     e.preventDefault();
     getJobLog(source);
@@ -46,7 +46,7 @@ const JobLog = ({ source, tab }) => {
             <div className='modal-content'>
               <div className='modal-header'>
                 <h5 className='modal-title' id='joblogTitle'>
-                  Log {source}
+                  LOG FILE {source}
                 </h5>
               </div>
               <div className='modal-body'>
@@ -54,7 +54,7 @@ const JobLog = ({ source, tab }) => {
                   joblog.found === true &&
                   joblog.logcontent &&
                   joblog.logcontent.length > 0 && (
-                    <pre className='bash mb-0 scroll'>
+                    <pre className='bash bash-joblog mb-0 scroll'>
                       <ul style={pStyle} className='p-1 mb-0 ul-2'>
                         {joblog.logcontent.map((item) => (
                           <li key={item.index}>
@@ -71,7 +71,7 @@ const JobLog = ({ source, tab }) => {
                 {joblog && joblog.found === false && (
                   <p>The log was not found.</p>
                 )}
-                <div className='text-muted text-center'>
+                <div className='text-center'>
                   <span>Showing last 150 lines.</span>
                 </div>
               </div>

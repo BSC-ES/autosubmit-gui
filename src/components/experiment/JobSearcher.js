@@ -1,11 +1,12 @@
+/* 
+  Component that provides the tools to search jobs in the Graph Representation
+*/
 import React, { useContext, useState } from "react";
-//import ExperimentContext from "../context/experiment/experimentContext";
 import GraphContext from "../context/graph/graphContext";
 import GraphNodeSelection from "./GraphNodeSelection";
 import AlertTotal from "./AlertTotal";
 
 const JobSearcher = () => {
-  //const experimentContext = useContext(ExperimentContext);
   const graphContext = useContext(GraphContext);
   const {
     searchJobInGraph,
@@ -30,7 +31,7 @@ const JobSearcher = () => {
   const onSetDisplayPanel = (value) => (e) => {
     e.preventDefault();
     setJobInfoPanelVisibility(value);
-  }
+  };
 
   const onNext = (index) => (e) => {
     e.preventDefault();
@@ -61,7 +62,7 @@ const JobSearcher = () => {
         <form onSubmit={onSubmit} className='form'>
           <div className='input-group input-group-sm'>
             <input
-              className='form-control'
+              className='form-control menu-input-append'
               type='text'
               name='section'
               placeholder='Job Name (e.g. fc0_1_CLEAN)'
@@ -80,7 +81,7 @@ const JobSearcher = () => {
                 <input
                   type='submit'
                   value='Search by Job Name'
-                  className='btn btn-dark btn-sm'
+                  className='btn btn-dark btn-sm menu-btn'
                 />
               </div>
             )}
@@ -91,14 +92,14 @@ const JobSearcher = () => {
         {foundNodes && foundNodes.length > 1 && (
           <div className='ml-2'>
             <button
-              className='btn btn-sm btn-primary'
+              className='btn btn-sm btn-primary menu-btn'
               type='button'
               onClick={onNext(-1)}
             >
               Previous
             </button>
             <button
-              className='btn btn-sm btn-primary'
+              className='btn btn-sm btn-primary menu-btn'
               type='button'
               onClick={onNext(1)}
             >
@@ -107,53 +108,44 @@ const JobSearcher = () => {
             <small className='text-muted ml-2'>
               {currentIndex + 1} of {foundNodes.length}
             </small>
-            {/* <form onSubmit={onNext(-1)} className='form'>
-                            <input          
-                            type='submit'
-                            value='Prev'
-                            className='btn btn-info btn-sm'                            
-                            />
-                        </form>
-
-                        <form onSubmit={onNext(1)} className='form'>
-                            <input          
-                            type='submit'
-                            value='Next'
-                            className='btn btn-info btn-sm'                            
-                            />
-                        </form> */}
           </div>
         )}
       </div>
       <div className='item-hl ml-2'>
         <GraphNodeSelection />
-      </div>    
-      <div className="item-hl ml-auto">
-      {displayJobInfoPanel === "none" ? 
-        <button 
-          className="btn btn-sm btn-primary" 
-          data-toggle='tooltip' 
-          data-placement='bottom' 
-          title="Show the Job Information Panel."
-          onClick={onSetDisplayPanel("block")}>Show Panel</button> 
-        : 
-        <button 
-        className="btn btn-sm btn-secondary"
-        data-toggle='tooltip' 
-        data-placement='bottom' 
-        title="Hide the Job Information Panel."
-        onClick={onSetDisplayPanel("none")}>Hide Panel</button>
-      }  
       </div>
-      
-        {data && (
-          <div className='ml-2 item-hl text-right'>
-            Max out: {data.max_children} | Max in: {data.max_parents} | Total
-            #Jobs: {data.total_jobs} <AlertTotal source={"graph"} /> | Chunk
-            unit: <strong>{data.chunk_unit}</strong> | Chunk size{" "}
-            <strong>{data.chunk_size}</strong>{" "}
-          </div>
-        )}      
+      <div className='item-hl ml-auto'>
+        {displayJobInfoPanel === "none" ? (
+          <button
+            className='btn btn-sm btn-primary'
+            data-toggle='tooltip'
+            data-placement='bottom'
+            title='Show the Job Information Panel.'
+            onClick={onSetDisplayPanel("block")}
+          >
+            Show Panel
+          </button>
+        ) : (
+          <button
+            className='btn btn-sm btn-secondary'
+            data-toggle='tooltip'
+            data-placement='bottom'
+            title='Hide the Job Information Panel.'
+            onClick={onSetDisplayPanel("none")}
+          >
+            Hide Panel
+          </button>
+        )}
+      </div>
+
+      {data && (
+        <div className='ml-2 item-hl text-right'>
+          Max out: {data.max_children} | Max in: {data.max_parents} | Total
+          #Jobs: {data.total_jobs} <AlertTotal source={"graph"} /> | Chunk unit:{" "}
+          <strong>{data.chunk_unit}</strong> | Chunk size{" "}
+          <strong>{data.chunk_size}</strong>{" "}
+        </div>
+      )}
     </div>
   );
 };

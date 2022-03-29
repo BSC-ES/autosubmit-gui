@@ -76,7 +76,7 @@ const JobSummary = ({ source }) => {
     return (
       <div>
         <button
-          className='btn btn-sm btn-primary'
+          className='btn btn-sm btn-primary menu-btn'
           type='button'
           data-toggle='modal'
           data-target={"#" + dataTarget}

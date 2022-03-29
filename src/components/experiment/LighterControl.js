@@ -68,7 +68,7 @@ const LighterControl = () => {
         {isValid && (
           <div className='item-hl'>
             <button
-              className='btn btn-sm btn-secondary'
+              className='btn btn-sm btn-secondary menu-btn'
               type='button'
               style={completedColor}
               onClick={onFilterStatus("#COMPLETED")}
@@ -80,7 +80,7 @@ const LighterControl = () => {
               {completedCount} completed
             </button>
             <button
-              className='btn btn-sm btn-secondary'
+              className='btn btn-sm btn-secondary menu-btn'
               type='button'
               style={failedColor}
               onClick={onFilterStatus("#FAILED")}
@@ -92,7 +92,7 @@ const LighterControl = () => {
               {failedCount} failed
             </button>
             <button
-              className='btn btn-sm btn-secondary'
+              className='btn btn-sm btn-secondary menu-btn'
               type='button'
               style={runningColor}
               onClick={onFilterStatus("#RUNNING")}
@@ -104,7 +104,7 @@ const LighterControl = () => {
               {runCount} running
             </button>
             <button
-              className='btn btn-sm btn-secondary'
+              className='btn btn-sm btn-secondary menu-btn'
               type='button'
               style={queueColor}
               onClick={onFilterStatus("#QUEUING")}
@@ -125,7 +125,7 @@ const LighterControl = () => {
               {!loadingFilterTreeView && (
                 <div className='input-group input-group-sm'>
                   <input
-                    className='form-control'
+                    className='form-control menu-input-append'
                     type='text'
                     name='section'
                     placeholder='Filter string'
@@ -135,7 +135,7 @@ const LighterControl = () => {
                     <input
                       type='submit'
                       value='Filter'
-                      className='btn btn-dark btn-sm'
+                      className='btn btn-dark btn-sm menu-btn'
                       data-toggle='tooltip'
                       data-placement='bottom'
                       title="Use the Filter string to filter the contents of the list, you can use '*' as a wildcard."
@@ -160,7 +160,7 @@ const LighterControl = () => {
               <input
                 type='submit'
                 value={clearText}
-                className='btn btn-sm btn-primary'
+                className='btn btn-sm btn-primary menu-btn'
                 data-toggle='tooltip'
                 data-placement='bottom'
                 title='Returns the list to its original content if a filter has been applied.'
@@ -174,7 +174,7 @@ const LighterControl = () => {
               <input
                 type='submit'
                 value={labelButton}
-                className='btn btn-success btn-block btn-sm'
+                className='btn btn-success btn-block btn-sm menu-btn'
                 disabled={loadingView}
                 data-toggle='tooltip'
                 data-placement='bottom'
