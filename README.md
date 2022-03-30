@@ -109,23 +109,6 @@ Make sure that you have installed the dependencies before running the tests.
 
 Note: It could happen that `jest` fails to run or is not automatically installed along the other dependencies on a Windows machine, please install it manually.
 
-## Deployment
-
-1. Make sure that the settings in the `var.js` file are correct, pay special attention to the address of the **API**. Generate a deployment package using `npm run build`. The deployment package is generated inside the `build` folder.
-2. `commit` and `push` the repository including the newly created deployment package.
-1. In `bscesweb04`, the path `/srv/www/htdocs/autosubmitapp` should exist. It is a folder served using apache app server. Inside this folder, you should also find the hidden file `.htaccess`, this file allows apache app server to correctly route the `ReactJS` app. `.htaccess` contains:
-
-```
-    Options -MultiViews
-    RewriteEngine On
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^ index.html [QSA,L]
-```
-4. Copy the contents from the `build` folder into `/srv/www/htdocs/autosubmitapp`.
-2. Try `http://bscesweb04.bsc.es/autosubmitapp/`, the App home page should be displayed.
-3. Press the green **ACTIVE EXPS** button, if it does not return anything, try entering the name of an experiment you know exists in the search textbox and press `SEARCH`. If even then, there are no results, it is most likely that there is some problem with the **API**. 
-
-**IMPORTANT**: The files under `/srv/www/htdocs/autosubmitapp` are the same files in [the build folder](https://earth.bsc.es/gitlab/wuruchi/autosubmitreact/-/tree/master/build).
 
 ## User Guide
 
