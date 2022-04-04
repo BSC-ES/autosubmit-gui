@@ -9,7 +9,6 @@
 3. [General Knowledge Requirements](#general-knowledge-requirements)
 4. [Installation](#installation)
 5. [Testing](#testing)
-6. [Deployment](#deployment)
 6. [User Guide](#user-guide)
 7. [Contributing](#contributing)
 8. [Common Problems](#common-problems)

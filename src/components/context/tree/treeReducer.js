@@ -82,7 +82,7 @@ export default (state, action) => {
       };
     case PKL_TREE_LOADED: {
       const retrievedPklTree = action.payload;
-      let jobs = {};
+      const nameToIncomingJob = new Map();
       if (
         state.treedata !== null &&
         retrievedPklTree.has_changed === true &&
@@ -91,88 +91,79 @@ export default (state, action) => {
         // Jobs currently on state
         let changes = "";
         let changesSummarized = "";
-        let currentJobs = state.treedata.jobs;
-        let referenceHeaders = state.treedata.reference;
-        let currentPackages = referenceHeaders["packages"];
+        const currentJobs = state.treedata.jobs;
+        const referenceHeaders = state.treedata.reference;
+        const currentPackages = Object.keys(referenceHeaders["packages"]);
         const completed_tag = referenceHeaders["completed_tag"];
         const running_tag = referenceHeaders["running_tag"];
         const queuing_tag = referenceHeaders["queuing_tag"];
         const failed_tag = referenceHeaders["failed_tag"];
+        const held_tag = referenceHeaders["held_tag"];
         const check_mark = referenceHeaders["checkmark"];
-
         // Building dictionary of retrieved jobs
-        for (let j = 0, job; j < retrievedPklTree.pkl_content.length; j++) {
-          job = retrievedPklTree.pkl_content[j];
-          jobs[job.name] = job;
-        }
+        retrievedPklTree.pkl_content.forEach((job) =>
+          nameToIncomingJob.set(job.name, job)
+        );
+
         // Updating current jobs
-        for (let i = 0, cjob, ijob; i < currentJobs.length; i++) {
-          // Job from current jobs
-          cjob = currentJobs[i];
-          // Job from pkl. Name is id in treedata.
-          ijob = jobs[cjob.id];
-          //console.log(ijob);
+        for (let currentJob of currentJobs) {
+          const incomingJob = nameToIncomingJob.get(currentJob.id);
           // If there is a difference
           if (
-            ijob &&
-            (cjob.status_code !== ijob.status_code ||
-              cjob.minutes !== ijob.minutes ||
-              cjob.minutes_queue !== ijob.minutes_queue)
+            incomingJob &&
+            (currentJob.status_code !== incomingJob.status_code ||
+              currentJob.minutes !== incomingJob.minutes ||
+              currentJob.minutes_queue !== incomingJob.minutes_queue)
           ) {
-            // console.log(cjob);
-            let is_change_status = false;
-            let new_status = cjob.status;
-            let old_status = ijob.status;
+            let isStatusChanged = false;
+            let newStatus = currentJob.status;
+            let old_status = incomingJob.status;
             // Detecting status change
-            if (cjob.status_code !== ijob.status_code) {
-              is_change_status = true;
-              new_status = ijob.status;
-              old_status = cjob.status;
+            if (currentJob.status_code !== incomingJob.status_code) {
+              isStatusChanged = true;
+              newStatus = incomingJob.status;
+              old_status = currentJob.status;
               changes +=
                 timeStampToDate(retrievedPklTree.pkl_timestamp) +
                 ": " +
-                cjob.id +
+                currentJob.id +
                 " to " +
-                new_status +
+                newStatus +
                 "\n";
-              changesSummarized += new_status + " : " + cjob.id + "\n";
+              changesSummarized += newStatus + " : " + currentJob.id + "\n";
             }
-            cjob.status_code = ijob.status_code;
-            cjob.status = ijob.status;
-            cjob.status_color = ijob.status_color;
-            cjob.minutes = ijob.minutes;
-            cjob.minutes_queue = ijob.minutes_queue;
-            cjob.wrapper = ijob.wrapper;
-            cjob.out = ijob.out;
-            cjob.err = ijob.err;
-            cjob.submit = ijob.submit;
-            cjob.start = ijob.start;
-            cjob.finish = ijob.finish;
-            cjob.rm_id = ijob.rm_id;
-            // Update SYPD is exists
-            if (cjob.SYPD !== undefined) {
-              cjob.SYPD = ijob.SYPD;
-            }
+            currentJob.status_code = incomingJob.status_code;
+            currentJob.status = incomingJob.status;
+            currentJob.status_color = incomingJob.status_color;
+            currentJob.minutes = incomingJob.minutes; // The right meaning is TIME RUNNING IN SECONDS
+            currentJob.minutes_queue = incomingJob.minutes_queue; // The right meaning is TIME QUEUEING IN SECONDS
+            currentJob.wrapper = incomingJob.wrapper;
+            currentJob.out = incomingJob.out;
+            currentJob.err = incomingJob.err;
+            currentJob.submit = incomingJob.submit;
+            currentJob.start = incomingJob.start;
+            currentJob.finish = incomingJob.finish;
+            currentJob.rm_id = incomingJob.rm_id; // Id in the remote machine
+            currentJob.SYPD = incomingJob.SYPD;
+
             // Parents are those groups to which a job belongs in the tree
-            let tree_parent_wrapper = "Wrapper: " + ijob.wrapper;
-            if (!cjob.tree_parents.includes(tree_parent_wrapper)) {
-              cjob.tree_parents.push(tree_parent_wrapper);
+            let tree_parent_wrapper = "Wrapper: " + incomingJob.wrapper;
+            if (!currentJob.tree_parents.includes(tree_parent_wrapper)) {
+              currentJob.tree_parents.push(tree_parent_wrapper);
             }
-            cjob.wrapper_code = ijob.wrapper_id;
-            cjob.title = ijob.title;
+            currentJob.wrapper_code = incomingJob.wrapper_id;
+            currentJob.title = incomingJob.title;
             // Find the corresponding node in the existing tree
-            let thenode = state.fancyTree.getNodesByRef(cjob.id);
-            if (thenode) {
+            let existentNode = state.fancyTree.getNodesByRef(currentJob.id);
+            if (existentNode) {
               // Update title of all node ocurrences
-              for (let thenode_i in thenode) {
-                thenode[thenode_i].setTitle(ijob.title);
+              for (let thenode_i in existentNode) {
+                existentNode[thenode_i].setTitle(incomingJob.title);
               }
-              // Find all parents of node
-              const parents = cjob.tree_parents;
-              // Make sure parents contain the children
+
+              // Make sure wrapper parent contains the children
               let wrapper_parent =
                 state.fancyTree.getNodesByRef(tree_parent_wrapper);
-              //console.log(wrapper_parent);
               if (wrapper_parent && wrapper_parent.length > 0) {
                 let children = wrapper_parent[0].children;
                 if (children) {
@@ -180,37 +171,42 @@ export default (state, action) => {
                   for (let index_j in children) {
                     let current_name = children[index_j].refKey;
                     //console.log(current_name);
-                    if (current_name === cjob.id) {
+                    if (current_name === currentJob.id) {
                       found_child = true;
                     }
                   }
                   // If the job is not present in the wrapper folder, add it.
                   if (found_child === false) {
                     wrapper_parent[0].children.push({
-                      title: cjob.title,
-                      refKey: cjob.id,
+                      title: currentJob.title,
+                      refKey: currentJob.id,
                       data: "Empty",
                       children: [],
                     });
                   }
                 }
               }
+              // Find all parents of node
+              const parents = currentJob.tree_parents;
               // Traverse parents to update title
               for (let parent in parents) {
                 let header_data = referenceHeaders[parents[parent]];
                 if (header_data) {
-                  if (is_change_status === true) {
-                    if (new_status === "COMPLETED") {
+                  if (isStatusChanged === true) {
+                    if (newStatus === "COMPLETED") {
                       header_data.completed += 1;
                     }
-                    if (new_status === "RUNNING") {
+                    if (newStatus === "RUNNING") {
                       header_data.running += 1;
                     }
-                    if (new_status === "QUEUING") {
+                    if (newStatus === "QUEUING") {
                       header_data.queuing += 1;
                     }
-                    if (new_status === "FAILED") {
+                    if (newStatus === "FAILED") {
                       header_data.failed += 1;
+                    }
+                    if (newStatus === "HELD") {
+                      header_data.held += 1;
                     }
                     if (old_status === "RUNNING") {
                       header_data.running -= 1;
@@ -224,9 +220,12 @@ export default (state, action) => {
                     if (old_status === "COMPLETED") {
                       header_data.completed -= 1;
                     }
+                    if (old_status === "HELD") {
+                      header_data.held -= 1;
+                    }
                   }
                   // Setting new title
-                  const new_completed_tag = completed_tag
+                  const newCompletedTag = completed_tag
                     .replace("%C", header_data.completed)
                     .replace("%T", header_data.total)
                     .replace(
@@ -235,35 +234,39 @@ export default (state, action) => {
                         ? "yellow"
                         : "#ffffb3"
                     );
-                  const new_check_mark =
+                  const newCheckMark =
                     header_data.completed === header_data.total
                       ? check_mark
                       : "";
-                  const new_running_tag =
+                  const newRunningTag =
                     header_data.running > 0
                       ? running_tag.replace("%R", header_data.running)
                       : "";
-                  const new_queuing_tag =
+                  const newQueuingTag =
                     header_data.queuing > 0
                       ? queuing_tag.replace("%Q", header_data.queuing)
                       : "";
-                  const new_failed_tag =
+                  const newFailedTag =
                     header_data.failed > 0
                       ? failed_tag.replace("%F", header_data.failed)
+                      : "";
+                  const newHeldTag =
+                    header_data.held > 0
+                      ? held_tag.replace("%H", header_data.held)
                       : "";
                   let theparent = state.fancyTree.getNodesByRef(
                     parents[parent]
                   );
-                  //console.log(parent);
                   if (theparent) {
                     //Sets new title
                     let new_title =
                       parents[parent] +
-                      new_completed_tag +
-                      new_failed_tag +
-                      new_running_tag +
-                      new_queuing_tag +
-                      new_check_mark;
+                      newCompletedTag +
+                      newFailedTag +
+                      newRunningTag +
+                      newQueuingTag +
+                      newHeldTag +
+                      newCheckMark;
                     theparent[0].setTitle(new_title);
                   }
                 }
@@ -271,9 +274,16 @@ export default (state, action) => {
             }
           }
         }
-        const packages_from_pkl = retrievedPklTree["packages"];
+
+        const packages_from_pkl = Object.keys(retrievedPklTree["packages"]);
         for (let package_pkl of packages_from_pkl) {
-          if (!currentPackages.includes(package_pkl)) {
+          const wrapper_pre_title = "Wrapper: " + package_pkl;
+          const packagesInTree =
+            state.fancyTree.getNodesByRef(wrapper_pre_title);
+          if (
+            !currentPackages.includes(package_pkl) &&
+            packagesInTree === null
+          ) {
             changes +=
               timeStampToDate(retrievedPklTree.pkl_timestamp) +
               ": " +
@@ -284,13 +294,13 @@ export default (state, action) => {
             // If a new wrapper has been found in the pkl
             // debug && console.log("New wrapper found: " + package_pkl);
             currentPackages.push(package_pkl);
-            //console.log(currentPackages);
-            let wrapper_pre_title = "Wrapper: " + package_pkl;
+
             referenceHeaders[wrapper_pre_title] = {
               completed: 0,
               failed: 0,
               queuing: 0,
               running: 0,
+              held: 0,
               total: 0,
             };
             let header_wrapper = referenceHeaders[wrapper_pre_title];
@@ -299,26 +309,28 @@ export default (state, action) => {
               return x.wrapper === package_pkl;
             });
             let children_list = [];
-            for (let k = 0; k < children_jobs.length; k++) {
-              if (children_jobs[k].status === "COMPLETED") {
+            for (let wrappedJob in children_jobs) {
+              if (wrappedJob.status === "COMPLETED") {
                 header_wrapper.completed += 1;
-              } else if (children_jobs[k].status === "FAILED") {
+              } else if (wrappedJob.status === "FAILED") {
                 header_wrapper.failed += 1;
-              } else if (children_jobs[k].status === "QUEUING") {
+              } else if (wrappedJob.status === "QUEUING") {
                 header_wrapper.queuing += 1;
-              } else if (children_jobs[k].status === "RUNNING") {
+              } else if (wrappedJob.status === "RUNNING") {
                 header_wrapper.running += 1;
+              } else if (wrappedJob.status === "HELD") {
+                header_wrapper.held += 1;
               }
               children_list.push({
-                title: children_jobs[k].title,
-                refKey: children_jobs[k].id,
+                title: wrappedJob.title,
+                refKey: wrappedJob.id,
                 data: "Empty",
                 children: [],
               });
             }
             header_wrapper.total = children_jobs.length;
 
-            const new_completed_tag = completed_tag
+            const newCompletedTag = completed_tag
               .replace("%C", header_wrapper.completed)
               .replace("%T", header_wrapper.total)
               .replace(
@@ -327,33 +339,39 @@ export default (state, action) => {
                   ? "yellow"
                   : "#ffffb3"
               );
-            const new_check_mark =
+            const newCheckMark =
               header_wrapper.completed === header_wrapper.total
                 ? check_mark
                 : "";
-            const new_running_tag =
+            const newRunningTag =
               header_wrapper.running > 0
                 ? running_tag.replace("%R", header_wrapper.running)
                 : "";
-            const new_queuing_tag =
+            const newQueuingTag =
               header_wrapper.queuing > 0
                 ? queuing_tag.replace("%Q", header_wrapper.queuing)
                 : "";
-            const new_failed_tag =
+            const newFailedTag =
               header_wrapper.failed > 0
                 ? failed_tag.replace("%F", header_wrapper.failed)
                 : "";
-            const wrapper_title =
+            const newHeldTag =
+              header_wrapper.held > 0
+                ? held_tag.replace("%H", header_wrapper.held)
+                : "";
+
+            const wrapperTitle =
               wrapper_pre_title +
-              new_completed_tag +
-              new_failed_tag +
-              new_running_tag +
-              new_queuing_tag +
-              new_check_mark;
+              newCompletedTag +
+              newFailedTag +
+              newRunningTag +
+              newQueuingTag +
+              newHeldTag +
+              newCheckMark;
             let rootNode = state.fancyTree.getRootNode();
             // eslint-disable-next-line no-unused-vars
             let wrapper_branch_root = rootNode.addChildren({
-              title: wrapper_title,
+              title: wrapperTitle,
               folder: true,
               refKey: wrapper_pre_title,
               expanded: false,

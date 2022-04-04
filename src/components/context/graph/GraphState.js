@@ -87,7 +87,11 @@ const GraphState = (props) => {
     let result = null;
     if (NOAPI) {
       //res = {data: null};
-      result = require("../data/graph_" + String(expid) + "_standard_" + String(grouped) + ".json");
+      result = require("../data/graph_" +
+        String(expid) +
+        "_standard_" +
+        String(grouped) +
+        ".json");
       //console.log(res.data);
       await sleep(1000);
     } else {
@@ -125,9 +129,13 @@ const GraphState = (props) => {
     if (NOAPI) {
       retrievedPkl = require("../data/pklinfo_" + String(expid) + ".json");
     } else {
-      const res = await axios.get(`${localserver}/pklinfo/${expid}/${timeStamp}`);
+      const res = await axios.get(
+        `${localserver}/pklinfo/${expid}/${timeStamp}`
+      );
       debug && console.log(res.data);
       retrievedPkl = res.data;
+      const { error, error_message } = retrievedPkl;
+      if (error === true) console.log(error_message);
     }
 
     dispatch({
@@ -188,15 +196,15 @@ const GraphState = (props) => {
       type: SET_CURRENT_TEXT_COMMAND,
       payload: command,
     });
-  }
+  };
 
   // value: block or none
   const setJobInfoPanelVisibility = (value) => {
     dispatch({
       type: SET_JOB_INFO_PANEL_VISIBILITY,
       payload: value,
-    })
-  }
+    });
+  };
 
   // Clean state data
   const cleanOnlyGraphData = () => dispatch({ type: CLEAN_ONLY_GRAH_DATA });
@@ -216,7 +224,7 @@ const GraphState = (props) => {
     if (warning !== null) {
       dispatch({ type: SET_WARNING_ACTIVE, payload: warning });
     }
-  }
+  };
   const setAutoUpdatePkl = (value) =>
     dispatch({ type: SET_AUTOUPDATE_PKL, payload: value });
   const setVisData = (value) =>

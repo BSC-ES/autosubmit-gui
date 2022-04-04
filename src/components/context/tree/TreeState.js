@@ -98,12 +98,16 @@ const TreeState = (props) => {
     setLoadingTreeRefresh();
     let retrievedPklTree = null;
     if (NOAPI) {
-      retrievedPklTree = require("../data/pkltreeinfo_" + String(expid) + ".json");
+      retrievedPklTree = require("../data/pkltreeinfo_" +
+        String(expid) +
+        ".json");
     } else {
       const res = await axios.get(
         `${localserver}/pkltreeinfo/${expid}/${timeStamp}`
       );
       retrievedPklTree = res.data;
+      const { error, error_message } = retrievedPklTree;
+      if (error === true) console.log(error_message);
       debug && console.log(retrievedPklTree);
     }
 
@@ -118,14 +122,22 @@ const TreeState = (props) => {
     let result = null;
     if (NOAPI) {
       try {
-        result = require("../data/rundetail_" + String(expid) + "_" + String(run_id) + ".json");
+        result = require("../data/rundetail_" +
+          String(expid) +
+          "_" +
+          String(run_id) +
+          ".json");
       } catch (error) {
         console.error(error);
         result = { result: [], runId: run_id, meta: "" };
       }
       // console.log(result);
     } else {
-      const res = await axios.get(`${localserver}/rundetail/${expid}/${run_id}`).catch((error) => { alert(error.message); });
+      const res = await axios
+        .get(`${localserver}/rundetail/${expid}/${run_id}`)
+        .catch((error) => {
+          alert(error.message);
+        });
       debug && console.log(res.data);
       // console.log(res.data);
       result = res ? res.data : null;
@@ -138,7 +150,7 @@ const TreeState = (props) => {
       payload: { result: result, runId: run_id, meta: meta },
     });
     // setAutoUpdateTreePkl(false);
-  }
+  };
 
   const updateTreeContent = async (runDetail, run_id) => {
     // setLoadingTreePkl();
@@ -147,8 +159,8 @@ const TreeState = (props) => {
     dispatch({
       type: UPDATE_RUNDETAIL_ON_TREE,
       payload: { runDetail: runDetail, runId: run_id },
-    })
-  }
+    });
+  };
 
   const filterTreeView = (string) => {
     setLoadingFilter();
@@ -170,7 +182,7 @@ const TreeState = (props) => {
       type: SET_CURRENT_TEXT_COMMAND,
       payload: command,
     });
-  }
+  };
 
   const setFancyTree = (value) =>
     dispatch({ type: SET_FANCYTREE, payload: value });
@@ -202,7 +214,7 @@ const TreeState = (props) => {
     if (warning !== null) {
       dispatch({ type: SET_WARNING_ACTIVE, payload: warning });
     }
-  }
+  };
   const setStartSelection = () => dispatch({ type: SET_START_TREE_SELECTION });
   const setNotificationTitleTree = (notification) =>
     dispatch({ type: SET_NOTIFICATION_TITLE_TREE, payload: notification });
