@@ -6,7 +6,6 @@ import "jquery.fancytree/dist/modules/jquery.fancytree.filter";
 import "jquery.fancytree/dist/modules/jquery.fancytree.childcounter";
 import "jquery.fancytree/dist/modules/jquery.fancytree.edit";
 import "jquery.fancytree/dist/modules/jquery.fancytree.multi";
-// import 'jquery.fancytree/dist/skin-lion/ui.fancytree.less';  // CSS or LESS
 import { createTree } from "jquery.fancytree";
 import { DEBUG } from "../context/vars";
 
@@ -75,25 +74,9 @@ export class TreeNativeRep extends Component {
       componentDidMount() {
         let tree = new createTree("#tree", {
           activate: (event, data) => {
-            //console.log(event)
-            //console.log(data)
-            //console.log(tree)
-            //console.log(data);
-            if (data) {
-              // var thenode = tree.getNodesByRef("a2a7_20170427_1")
-              // console.log(thenode)
-              // if (thenode){
-              //     for (var i = 0; i < thenode.length;i++){
-              //         thenode[i].setTitle("a2a7_20170417_1 <span class='badge badge-warning'> Honked </span>")
-              //     }
 
-              // }
-              // console.log(tree.activeNode.getParent())
-              // console.log(tree.activeNode)
-              //data.node.title = "Honk";
-              // console.log("Node data");
-              // console.log(data);
-              //console.log(this);
+            if (data) {
+
               this.props.updateSelectionTree(data);
               //console.log(this.props.canSelect);
               //if (this.props.canSelect === true) {
