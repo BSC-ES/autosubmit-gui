@@ -6574,7 +6574,12 @@ it("SelectionNode renders from graph data", () => {
   const selectedTreeNode = { node: { refKey: "a34f_19600101_fc0000_1_SIM" } };
   act(() => {
     render(
-      <ExperimentContext.Provider value={{ experiment: { expid: "a34f" } }}>
+      <ExperimentContext.Provider
+        value={{
+          experiment: { expid: "a34f" },
+          jobHistoryLog: { path: "", joblog: [] },
+        }}
+      >
         <TreeContext.Provider value={{ selectedTreeNode: selectedTreeNode }}>
           <GraphContext.Provider
             value={{ selection: selectedNode, data: data }}

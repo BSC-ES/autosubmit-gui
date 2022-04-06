@@ -1,527 +1,458 @@
 {
-    "error":false,
-    "error_message":"",
-    "jobs":[
-       {
-          "ASYPD":null,
-          "SYPD":null,
-          "children":1,
-          "children_list":[
-             "a3ux_REMOTE_SETUP"
-          ],
-          "chunk":null,
-          "custom_directives":null,
-          "date":null,
-          "date_plus":null,
-          "err":"/esarchive/autosubmit/a3ux/tmp/LOG_a3ux/a3ux_LOCAL_SETUP.20220405101552.err",
-          "finish":"2022-04-05 10:16:41",
-          "id":"a3ux_LOCAL_SETUP",
-          "internal_id":"a3ux_LOCAL_SETUP",
-          "label":"a3ux_LOCAL_SETUP",
-          "member":null,
-          "minutes":61,
-          "minutes_queue":0,
-          "out":"/esarchive/autosubmit/a3ux/tmp/LOG_a3ux/a3ux_LOCAL_SETUP.20220405101552.out",
-          "parent_list":[
-             
-          ],
-          "parents":0,
-          "platform_name":"transfer_node",
-          "processors":1,
-          "queue":"",
-          "rm_id":31860,
-          "section":"LOCAL_SETUP",
-          "start":"2022-04-05 10:15:40",
-          "status":"COMPLETED",
-          "status_code":5,
-          "status_color":"yellow",
-          "submit":"2022-04-05 10:15:40",
-          "title":"a3ux_LOCAL_SETUP <span class='badge' style='background-color: yellow; color:black;'>#COMPLETED</span> ~ ( 0:00:00 ) + 0:01:01 <span class='badge' style='background-color:#80d4ff'>SOURCE</span>",
-          "tree_parents":[
-             
-          ],
-          "wallclock":"",
-          "wrapper":null,
-          "wrapper_code":null
-       },
-       {
-          "ASYPD":null,
-          "SYPD":null,
-          "children":1,
-          "children_list":[
-             "a3ux_19500101_fc0_INI"
-          ],
-          "chunk":null,
-          "custom_directives":null,
-          "date":null,
-          "date_plus":null,
-          "err":null,
-          "finish":null,
-          "id":"a3ux_REMOTE_SETUP",
-          "internal_id":"a3ux_REMOTE_SETUP",
-          "label":"a3ux_REMOTE_SETUP",
-          "member":null,
-          "minutes":0,
-          "minutes_queue":8049,
-          "out":null,
-          "parent_list":[
-             "a3ux_LOCAL_SETUP"
-          ],
-          "parents":1,
-          "platform_name":"marenostrum4",
-          "processors":4,
-          "queue":"bsc_es",
-          "rm_id":"21800687",
-          "section":"REMOTE_SETUP",
-          "start":null,
-          "status":"QUEUING",
-          "status_code":3,
-          "status_color":"lightpink",
-          "submit":"2022-04-05 10:16:45",
-          "title":"a3ux_REMOTE_SETUP <span class='badge' style='background-color: lightpink; color:black;'>#QUEUING</span> ~ ( 2:14:09 )",
-          "tree_parents":[
-             
-          ],
-          "wallclock":"02:00",
-          "wrapper":null,
-          "wrapper_code":null
-       },
-       {
-          "ASYPD":null,
-          "SYPD":null,
-          "children":1,
-          "children_list":[
-             "a3ux_19500101_fc0_1_SIM"
-          ],
-          "chunk":null,
-          "custom_directives":null,
-          "date":"1950 01 01",
-          "date_plus":"1950 01 01",
-          "err":null,
-          "finish":null,
-          "id":"a3ux_19500101_fc0_INI",
-          "internal_id":"a3ux_19500101_fc0_INI",
-          "label":"a3ux_19500101_fc0_INI",
-          "member":"fc0",
-          "minutes":0,
-          "minutes_queue":0,
-          "out":null,
-          "parent_list":[
-             "a3ux_REMOTE_SETUP"
-          ],
-          "parents":1,
-          "platform_name":"marenostrum4",
-          "processors":1,
-          "queue":"bsc_es",
-          "rm_id":0,
-          "section":"INI",
-          "start":null,
-          "status":"WAITING",
-          "status_code":0,
-          "status_color":"#aaa",
-          "submit":null,
-          "title":"a3ux_19500101_fc0_INI <span class='badge' style='background-color: #aaa; color:black;'>#WAITING</span>",
-          "tree_parents":[
-             "a3ux_19500101_fc0"
-          ],
-          "wallclock":"02:00",
-          "wrapper":null,
-          "wrapper_code":null
-       },
-       {
-          "ASYPD":null,
-          "SYPD":null,
-          "children":2,
-          "children_list":[
-             "a3ux_19500101_fc0_1_SAVE_IC",
-             "a3ux_19500101_fc0_2_SIM"
-          ],
-          "chunk":1,
-          "custom_directives":null,
-          "date":"1950 01 01",
-          "date_plus":"1950 02 01",
-          "err":null,
-          "finish":null,
-          "id":"a3ux_19500101_fc0_1_SIM",
-          "internal_id":"a3ux_19500101_fc0_1_SIM",
-          "label":"a3ux_19500101_fc0_1_SIM",
-          "member":"fc0",
-          "minutes":0,
-          "minutes_queue":0,
-          "out":null,
-          "parent_list":[
-             "a3ux_19500101_fc0_INI"
-          ],
-          "parents":1,
-          "platform_name":"marenostrum4",
-          "processors":2400,
-          "queue":"bsc_es",
-          "rm_id":0,
-          "section":"SIM",
-          "start":null,
-          "status":"WAITING",
-          "status_code":0,
-          "status_color":"#aaa",
-          "submit":null,
-          "title":"a3ux_19500101_fc0_1_SIM <span class='badge' style='background-color: #aaa; color:black;'>#WAITING</span>",
-          "tree_parents":[
-             "a3ux_19500101_fc0"
-          ],
-          "wallclock":"2:00",
-          "wrapper":null,
-          "wrapper_code":null
-       },
-       {
-          "ASYPD":null,
-          "SYPD":null,
-          "children":2,
-          "children_list":[
-             "a3ux_19500101_fc0_3_SIM",
-             "a3ux_19500101_fc0_2_SAVE_IC"
-          ],
-          "chunk":2,
-          "custom_directives":null,
-          "date":"1950 02 01",
-          "date_plus":"1950 03 01",
-          "err":null,
-          "finish":null,
-          "id":"a3ux_19500101_fc0_2_SIM",
-          "internal_id":"a3ux_19500101_fc0_2_SIM",
-          "label":"a3ux_19500101_fc0_2_SIM",
-          "member":"fc0",
-          "minutes":0,
-          "minutes_queue":0,
-          "out":null,
-          "parent_list":[
-             "a3ux_19500101_fc0_1_SIM"
-          ],
-          "parents":1,
-          "platform_name":"marenostrum4",
-          "processors":2400,
-          "queue":"bsc_es",
-          "rm_id":0,
-          "section":"SIM",
-          "start":null,
-          "status":"SUSPENDED",
-          "status_code":-3,
-          "status_color":"orange",
-          "submit":null,
-          "title":"a3ux_19500101_fc0_2_SIM <span class='badge' style='background-color: orange; color:black;'>#SUSPENDED</span>",
-          "tree_parents":[
-             "a3ux_19500101_fc0"
-          ],
-          "wallclock":"2:00",
-          "wrapper":null,
-          "wrapper_code":null
-       },
-       {
-          "ASYPD":null,
-          "SYPD":null,
-          "children":1,
-          "children_list":[
-             "a3ux_19500101_fc0_3_SAVE_IC"
-          ],
-          "chunk":3,
-          "custom_directives":null,
-          "date":"1950 03 01",
-          "date_plus":"1950 04 01",
-          "err":null,
-          "finish":null,
-          "id":"a3ux_19500101_fc0_3_SIM",
-          "internal_id":"a3ux_19500101_fc0_3_SIM",
-          "label":"a3ux_19500101_fc0_3_SIM",
-          "member":"fc0",
-          "minutes":0,
-          "minutes_queue":0,
-          "out":null,
-          "parent_list":[
-             "a3ux_19500101_fc0_2_SIM"
-          ],
-          "parents":1,
-          "platform_name":"marenostrum4",
-          "processors":2400,
-          "queue":"bsc_es",
-          "rm_id":0,
-          "section":"SIM",
-          "start":null,
-          "status":"WAITING",
-          "status_code":0,
-          "status_color":"#aaa",
-          "submit":null,
-          "title":"a3ux_19500101_fc0_3_SIM <span class='badge' style='background-color: #aaa; color:black;'>#WAITING</span>",
-          "tree_parents":[
-             "a3ux_19500101_fc0"
-          ],
-          "wallclock":"2:00",
-          "wrapper":null,
-          "wrapper_code":null
-       },
-       {
-          "ASYPD":null,
-          "SYPD":null,
-          "children":0,
-          "children_list":[
-             
-          ],
-          "chunk":1,
-          "custom_directives":null,
-          "date":"1950 01 01",
-          "date_plus":"1950 02 01",
-          "err":null,
-          "finish":null,
-          "id":"a3ux_19500101_fc0_1_SAVE_IC",
-          "internal_id":"a3ux_19500101_fc0_1_SAVE_IC",
-          "label":"a3ux_19500101_fc0_1_SAVE_IC",
-          "member":"fc0",
-          "minutes":0,
-          "minutes_queue":0,
-          "out":null,
-          "parent_list":[
-             "a3ux_19500101_fc0_1_SIM"
-          ],
-          "parents":1,
-          "platform_name":"marenostrum4",
-          "processors":1,
-          "queue":"debug",
-          "rm_id":0,
-          "section":"SAVE_IC",
-          "start":null,
-          "status":"SUSPENDED",
-          "status_code":-3,
-          "status_color":"orange",
-          "submit":null,
-          "title":"a3ux_19500101_fc0_1_SAVE_IC <span class='badge' style='background-color: orange; color:black;'>#SUSPENDED</span> <span class='badge' style='background-color:#99ff66'>TARGET</span>",
-          "tree_parents":[
-             "a3ux_19500101_fc0"
-          ],
-          "wallclock":"02:00",
-          "wrapper":null,
-          "wrapper_code":null
-       },
-       {
-          "ASYPD":null,
-          "SYPD":null,
-          "children":0,
-          "children_list":[
-             
-          ],
-          "chunk":2,
-          "custom_directives":null,
-          "date":"1950 02 01",
-          "date_plus":"1950 03 01",
-          "err":null,
-          "finish":null,
-          "id":"a3ux_19500101_fc0_2_SAVE_IC",
-          "internal_id":"a3ux_19500101_fc0_2_SAVE_IC",
-          "label":"a3ux_19500101_fc0_2_SAVE_IC",
-          "member":"fc0",
-          "minutes":0,
-          "minutes_queue":0,
-          "out":null,
-          "parent_list":[
-             "a3ux_19500101_fc0_2_SIM"
-          ],
-          "parents":1,
-          "platform_name":"marenostrum4",
-          "processors":1,
-          "queue":"debug",
-          "rm_id":0,
-          "section":"SAVE_IC",
-          "start":null,
-          "status":"WAITING",
-          "status_code":0,
-          "status_color":"#aaa",
-          "submit":null,
-          "title":"a3ux_19500101_fc0_2_SAVE_IC <span class='badge' style='background-color: #aaa; color:black;'>#WAITING</span> <span class='badge' style='background-color:#99ff66'>TARGET</span>",
-          "tree_parents":[
-             "a3ux_19500101_fc0"
-          ],
-          "wallclock":"02:00",
-          "wrapper":null,
-          "wrapper_code":null
-       },
-       {
-          "ASYPD":null,
-          "SYPD":null,
-          "children":0,
-          "children_list":[
-             
-          ],
-          "chunk":3,
-          "custom_directives":null,
-          "date":"1950 03 01",
-          "date_plus":"1950 04 01",
-          "err":null,
-          "finish":null,
-          "id":"a3ux_19500101_fc0_3_SAVE_IC",
-          "internal_id":"a3ux_19500101_fc0_3_SAVE_IC",
-          "label":"a3ux_19500101_fc0_3_SAVE_IC",
-          "member":"fc0",
-          "minutes":0,
-          "minutes_queue":0,
-          "out":null,
-          "parent_list":[
-             "a3ux_19500101_fc0_3_SIM"
-          ],
-          "parents":1,
-          "platform_name":"marenostrum4",
-          "processors":1,
-          "queue":"debug",
-          "rm_id":0,
-          "section":"SAVE_IC",
-          "start":null,
-          "status":"WAITING",
-          "status_code":0,
-          "status_color":"#aaa",
-          "submit":null,
-          "title":"a3ux_19500101_fc0_3_SAVE_IC <span class='badge' style='background-color: #aaa; color:black;'>#WAITING</span> <span class='badge' style='background-color:#99ff66'>TARGET</span>",
-          "tree_parents":[
-             "a3ux_19500101_fc0"
-          ],
-          "wallclock":"02:00",
-          "wrapper":null,
-          "wrapper_code":null
-       }
-    ],
-    "pkl_timestamp":1649154654,
-    "reference":{
-       "a3ux_19500101_fc0":{
-          "completed":0,
-          "failed":0,
-          "queuing":0,
-          "running":0,
-          "total":7
-       },
-       "checkmark":" <span class='badge' style='background-color:#4dffa6'>&#10004;</span>",
-       "chunk_size":1,
-       "chunk_unit":"month",
-       "completed_tag":" <span class='badge' style='background-color:%B'> %C / %T COMPLETED</span>",
-       "held_tag": " <span class='badge' style='background-color:salmon'>%H HELD</span>",
-       "failed_tag":" <span class='badge' style='background-color:red'>%F FAILED</span>",
-       "packages":[
-          
-       ],
-       "queuing_tag":" <span class='badge' style='background-color:pink'>%Q QUEUING</span>",
-       "running_tag":" <span class='badge' style='background-color:green; color:white'>%R RUNNING</span>"
+  "error": false,
+  "error_message": "",
+  "jobs": [
+    {
+      "ASYPD": null,
+      "SYPD": null,
+      "children": 1,
+      "children_list": ["a3ux_REMOTE_SETUP"],
+      "chunk": null,
+      "custom_directives": null,
+      "date": null,
+      "date_plus": null,
+      "err": "/esarchive/autosubmit/a3ux/tmp/LOG_a3ux/a3ux_LOCAL_SETUP.20220405101552.err",
+      "finish": "2022-04-05 10:16:41",
+      "id": "a3ux_LOCAL_SETUP",
+      "internal_id": "a3ux_LOCAL_SETUP",
+      "label": "a3ux_LOCAL_SETUP",
+      "member": null,
+      "minutes": 61,
+      "minutes_queue": 0,
+      "out": "/esarchive/autosubmit/a3ux/tmp/LOG_a3ux/a3ux_LOCAL_SETUP.20220405101552.out",
+      "parent_list": [],
+      "parents": 0,
+      "platform_name": "transfer_node",
+      "processors": 1,
+      "queue": "",
+      "rm_id": 31860,
+      "section": "LOCAL_SETUP",
+      "start": "2022-04-05 10:15:40",
+      "status": "COMPLETED",
+      "status_code": 5,
+      "status_color": "yellow",
+      "submit": "2022-04-05 10:15:40",
+      "title": "a3ux_LOCAL_SETUP <span class='badge' style='background-color: yellow; color:black;'>#COMPLETED</span> ~ ( 0:00:00 ) + 0:01:01 <span class='badge' style='background-color:#80d4ff'>SOURCE</span>",
+      "tree_parents": [],
+      "wallclock": "",
+      "wrapper": null,
+      "wrapper_code": null
     },
-    "total":9,
-    "tree":[
-       {
-          "children":[
-             {
-                "children":[
-                   {
-                      "children":[
-                         
-                      ],
-                      "data":"Empty",
-                      "refKey":"a3ux_19500101_fc0_INI",
-                      "title":"a3ux_19500101_fc0_INI <span class='badge' style='background-color: #aaa; color:black;'>#WAITING</span>"
-                   },
-                   {
-                      "children":[
-                         {
-                            "children":[
-                               
-                            ],
-                            "data":"Empty",
-                            "refKey":"a3ux_19500101_fc0_2_SIM",
-                            "title":"a3ux_19500101_fc0_2_SIM <span class='badge' style='background-color: orange; color:black;'>#SUSPENDED</span>"
-                         },
-                         {
-                            "children":[
-                               
-                            ],
-                            "data":"Empty",
-                            "refKey":"a3ux_19500101_fc0_1_SIM",
-                            "title":"a3ux_19500101_fc0_1_SIM <span class='badge' style='background-color: #aaa; color:black;'>#WAITING</span>"
-                         },
-                         {
-                            "children":[
-                               
-                            ],
-                            "data":"Empty",
-                            "refKey":"a3ux_19500101_fc0_3_SIM",
-                            "title":"a3ux_19500101_fc0_3_SIM <span class='badge' style='background-color: #aaa; color:black;'>#WAITING</span>"
-                         }
-                      ],
-                      "data":"Empty",
-                      "expanded":true,
-                      "folder":true,
-                      "refKey":"a3ux_19500101_fc0_SIM",
-                      "title":"SIM"
-                   },
-                   {
-                      "children":[
-                         {
-                            "children":[
-                               
-                            ],
-                            "data":"Empty",
-                            "refKey":"a3ux_19500101_fc0_1_SAVE_IC",
-                            "title":"a3ux_19500101_fc0_1_SAVE_IC <span class='badge' style='background-color: orange; color:black;'>#SUSPENDED</span> <span class='badge' style='background-color:#99ff66'>TARGET</span>"
-                         },
-                         {
-                            "children":[
-                               
-                            ],
-                            "data":"Empty",
-                            "refKey":"a3ux_19500101_fc0_2_SAVE_IC",
-                            "title":"a3ux_19500101_fc0_2_SAVE_IC <span class='badge' style='background-color: #aaa; color:black;'>#WAITING</span> <span class='badge' style='background-color:#99ff66'>TARGET</span>"
-                         },
-                         {
-                            "children":[
-                               
-                            ],
-                            "data":"Empty",
-                            "refKey":"a3ux_19500101_fc0_3_SAVE_IC",
-                            "title":"a3ux_19500101_fc0_3_SAVE_IC <span class='badge' style='background-color: #aaa; color:black;'>#WAITING</span> <span class='badge' style='background-color:#99ff66'>TARGET</span>"
-                         }
-                      ],
-                      "data":"Empty",
-                      "expanded":true,
-                      "folder":true,
-                      "refKey":"a3ux_19500101_fc0_SAVE_IC",
-                      "title":"SAVE_IC"
-                   }
-                ],
-                "data":"Empty",
-                "expanded":false,
-                "folder":true,
-                "refKey":"a3ux_19500101_fc0",
-                "title":"a3ux_19500101_fc0 <span class='badge' style='background-color:#ffffb3'> 0 / 7 COMPLETED</span>"
-             }
+    {
+      "ASYPD": null,
+      "SYPD": null,
+      "children": 1,
+      "children_list": ["a3ux_19500101_fc0_INI"],
+      "chunk": null,
+      "custom_directives": null,
+      "date": null,
+      "date_plus": null,
+      "err": null,
+      "finish": null,
+      "id": "a3ux_REMOTE_SETUP",
+      "internal_id": "a3ux_REMOTE_SETUP",
+      "label": "a3ux_REMOTE_SETUP",
+      "member": null,
+      "minutes": 0,
+      "minutes_queue": 8049,
+      "out": null,
+      "parent_list": ["a3ux_LOCAL_SETUP"],
+      "parents": 1,
+      "platform_name": "marenostrum4",
+      "processors": 4,
+      "queue": "bsc_es",
+      "rm_id": "21800687",
+      "section": "REMOTE_SETUP",
+      "start": null,
+      "status": "QUEUING",
+      "status_code": 3,
+      "status_color": "lightpink",
+      "submit": "2022-04-05 10:16:45",
+      "title": "a3ux_REMOTE_SETUP <span class='badge' style='background-color: lightpink; color:black;'>#QUEUING</span> ~ ( 2:14:09 )",
+      "tree_parents": [],
+      "wallclock": "02:00",
+      "wrapper": null,
+      "wrapper_code": null
+    },
+    {
+      "ASYPD": null,
+      "SYPD": null,
+      "children": 1,
+      "children_list": ["a3ux_19500101_fc0_1_SIM"],
+      "chunk": null,
+      "custom_directives": null,
+      "date": "1950 01 01",
+      "date_plus": "1950 01 01",
+      "err": null,
+      "finish": null,
+      "id": "a3ux_19500101_fc0_INI",
+      "internal_id": "a3ux_19500101_fc0_INI",
+      "label": "a3ux_19500101_fc0_INI",
+      "member": "fc0",
+      "minutes": 0,
+      "minutes_queue": 0,
+      "out": null,
+      "parent_list": ["a3ux_REMOTE_SETUP"],
+      "parents": 1,
+      "platform_name": "marenostrum4",
+      "processors": 1,
+      "queue": "bsc_es",
+      "rm_id": 0,
+      "section": "INI",
+      "start": null,
+      "status": "WAITING",
+      "status_code": 0,
+      "status_color": "#aaa",
+      "submit": null,
+      "title": "a3ux_19500101_fc0_INI <span class='badge' style='background-color: #aaa; color:black;'>#WAITING</span>",
+      "tree_parents": ["a3ux_19500101_fc0"],
+      "wallclock": "02:00",
+      "wrapper": null,
+      "wrapper_code": null
+    },
+    {
+      "ASYPD": null,
+      "SYPD": null,
+      "children": 2,
+      "children_list": [
+        "a3ux_19500101_fc0_1_SAVE_IC",
+        "a3ux_19500101_fc0_2_SIM"
+      ],
+      "chunk": 1,
+      "custom_directives": null,
+      "date": "1950 01 01",
+      "date_plus": "1950 02 01",
+      "err": null,
+      "finish": null,
+      "id": "a3ux_19500101_fc0_1_SIM",
+      "internal_id": "a3ux_19500101_fc0_1_SIM",
+      "label": "a3ux_19500101_fc0_1_SIM",
+      "member": "fc0",
+      "minutes": 0,
+      "minutes_queue": 0,
+      "out": null,
+      "parent_list": ["a3ux_19500101_fc0_INI"],
+      "parents": 1,
+      "platform_name": "marenostrum4",
+      "processors": 2400,
+      "queue": "bsc_es",
+      "rm_id": 0,
+      "section": "SIM",
+      "start": null,
+      "status": "WAITING",
+      "status_code": 0,
+      "status_color": "#aaa",
+      "submit": null,
+      "title": "a3ux_19500101_fc0_1_SIM <span class='badge' style='background-color: #aaa; color:black;'>#WAITING</span>",
+      "tree_parents": ["a3ux_19500101_fc0"],
+      "wallclock": "2:00",
+      "wrapper": null,
+      "wrapper_code": null
+    },
+    {
+      "ASYPD": null,
+      "SYPD": null,
+      "children": 2,
+      "children_list": [
+        "a3ux_19500101_fc0_3_SIM",
+        "a3ux_19500101_fc0_2_SAVE_IC"
+      ],
+      "chunk": 2,
+      "custom_directives": null,
+      "date": "1950 02 01",
+      "date_plus": "1950 03 01",
+      "err": null,
+      "finish": null,
+      "id": "a3ux_19500101_fc0_2_SIM",
+      "internal_id": "a3ux_19500101_fc0_2_SIM",
+      "label": "a3ux_19500101_fc0_2_SIM",
+      "member": "fc0",
+      "minutes": 0,
+      "minutes_queue": 0,
+      "out": null,
+      "parent_list": ["a3ux_19500101_fc0_1_SIM"],
+      "parents": 1,
+      "platform_name": "marenostrum4",
+      "processors": 2400,
+      "queue": "bsc_es",
+      "rm_id": 0,
+      "section": "SIM",
+      "start": null,
+      "status": "SUSPENDED",
+      "status_code": -3,
+      "status_color": "orange",
+      "submit": null,
+      "title": "a3ux_19500101_fc0_2_SIM <span class='badge' style='background-color: orange; color:black;'>#SUSPENDED</span>",
+      "tree_parents": ["a3ux_19500101_fc0"],
+      "wallclock": "2:00",
+      "wrapper": null,
+      "wrapper_code": null
+    },
+    {
+      "ASYPD": null,
+      "SYPD": null,
+      "children": 1,
+      "children_list": ["a3ux_19500101_fc0_3_SAVE_IC"],
+      "chunk": 3,
+      "custom_directives": null,
+      "date": "1950 03 01",
+      "date_plus": "1950 04 01",
+      "err": null,
+      "finish": null,
+      "id": "a3ux_19500101_fc0_3_SIM",
+      "internal_id": "a3ux_19500101_fc0_3_SIM",
+      "label": "a3ux_19500101_fc0_3_SIM",
+      "member": "fc0",
+      "minutes": 0,
+      "minutes_queue": 0,
+      "out": null,
+      "parent_list": ["a3ux_19500101_fc0_2_SIM"],
+      "parents": 1,
+      "platform_name": "marenostrum4",
+      "processors": 2400,
+      "queue": "bsc_es",
+      "rm_id": 0,
+      "section": "SIM",
+      "start": null,
+      "status": "WAITING",
+      "status_code": 0,
+      "status_color": "#aaa",
+      "submit": null,
+      "title": "a3ux_19500101_fc0_3_SIM <span class='badge' style='background-color: #aaa; color:black;'>#WAITING</span>",
+      "tree_parents": ["a3ux_19500101_fc0"],
+      "wallclock": "2:00",
+      "wrapper": null,
+      "wrapper_code": null
+    },
+    {
+      "ASYPD": null,
+      "SYPD": null,
+      "children": 0,
+      "children_list": [],
+      "chunk": 1,
+      "custom_directives": null,
+      "date": "1950 01 01",
+      "date_plus": "1950 02 01",
+      "err": null,
+      "finish": null,
+      "id": "a3ux_19500101_fc0_1_SAVE_IC",
+      "internal_id": "a3ux_19500101_fc0_1_SAVE_IC",
+      "label": "a3ux_19500101_fc0_1_SAVE_IC",
+      "member": "fc0",
+      "minutes": 0,
+      "minutes_queue": 0,
+      "out": null,
+      "parent_list": ["a3ux_19500101_fc0_1_SIM"],
+      "parents": 1,
+      "platform_name": "marenostrum4",
+      "processors": 1,
+      "queue": "debug",
+      "rm_id": 0,
+      "section": "SAVE_IC",
+      "start": null,
+      "status": "SUSPENDED",
+      "status_code": -3,
+      "status_color": "orange",
+      "submit": null,
+      "title": "a3ux_19500101_fc0_1_SAVE_IC <span class='badge' style='background-color: orange; color:black;'>#SUSPENDED</span> <span class='badge' style='background-color:#99ff66'>TARGET</span>",
+      "tree_parents": ["a3ux_19500101_fc0"],
+      "wallclock": "02:00",
+      "wrapper": null,
+      "wrapper_code": null
+    },
+    {
+      "ASYPD": null,
+      "SYPD": null,
+      "children": 0,
+      "children_list": [],
+      "chunk": 2,
+      "custom_directives": null,
+      "date": "1950 02 01",
+      "date_plus": "1950 03 01",
+      "err": null,
+      "finish": null,
+      "id": "a3ux_19500101_fc0_2_SAVE_IC",
+      "internal_id": "a3ux_19500101_fc0_2_SAVE_IC",
+      "label": "a3ux_19500101_fc0_2_SAVE_IC",
+      "member": "fc0",
+      "minutes": 0,
+      "minutes_queue": 0,
+      "out": null,
+      "parent_list": ["a3ux_19500101_fc0_2_SIM"],
+      "parents": 1,
+      "platform_name": "marenostrum4",
+      "processors": 1,
+      "queue": "debug",
+      "rm_id": 0,
+      "section": "SAVE_IC",
+      "start": null,
+      "status": "WAITING",
+      "status_code": 0,
+      "status_color": "#aaa",
+      "submit": null,
+      "title": "a3ux_19500101_fc0_2_SAVE_IC <span class='badge' style='background-color: #aaa; color:black;'>#WAITING</span> <span class='badge' style='background-color:#99ff66'>TARGET</span>",
+      "tree_parents": ["a3ux_19500101_fc0"],
+      "wallclock": "02:00",
+      "wrapper": null,
+      "wrapper_code": null
+    },
+    {
+      "ASYPD": null,
+      "SYPD": null,
+      "children": 0,
+      "children_list": [],
+      "chunk": 3,
+      "custom_directives": null,
+      "date": "1950 03 01",
+      "date_plus": "1950 04 01",
+      "err": null,
+      "finish": null,
+      "id": "a3ux_19500101_fc0_3_SAVE_IC",
+      "internal_id": "a3ux_19500101_fc0_3_SAVE_IC",
+      "label": "a3ux_19500101_fc0_3_SAVE_IC",
+      "member": "fc0",
+      "minutes": 0,
+      "minutes_queue": 0,
+      "out": null,
+      "parent_list": ["a3ux_19500101_fc0_3_SIM"],
+      "parents": 1,
+      "platform_name": "marenostrum4",
+      "processors": 1,
+      "queue": "debug",
+      "rm_id": 0,
+      "section": "SAVE_IC",
+      "start": null,
+      "status": "WAITING",
+      "status_code": 0,
+      "status_color": "#aaa",
+      "submit": null,
+      "title": "a3ux_19500101_fc0_3_SAVE_IC <span class='badge' style='background-color: #aaa; color:black;'>#WAITING</span> <span class='badge' style='background-color:#99ff66'>TARGET</span>",
+      "tree_parents": ["a3ux_19500101_fc0"],
+      "wallclock": "02:00",
+      "wrapper": null,
+      "wrapper_code": null
+    }
+  ],
+  "pkl_timestamp": 1649154654,
+  "reference": {
+    "a3ux_19500101_fc0": {
+      "completed": 1,
+      "failed": 0,
+      "queuing": 1,
+      "running": 0,
+      "held": 0,
+      "total": 7
+    },
+    "checkmark": " <span class='badge' style='background-color:#4dffa6'>&#10004;</span>",
+    "chunk_size": 1,
+    "chunk_unit": "month",
+    "completed_tag": " <span class='badge' style='background-color:%B'> %C / %T COMPLETED</span>",
+    "held_tag": " <span class='badge' style='background-color:salmon'>%H HELD</span>",
+    "failed_tag": " <span class='badge' style='background-color:red'>%F FAILED</span>",
+    "packages": [],
+    "queuing_tag": " <span class='badge' style='background-color:pink'>%Q QUEUING</span>",
+    "running_tag": " <span class='badge' style='background-color:green; color:white'>%R RUNNING</span>"
+  },
+  "total": 9,
+  "tree": [
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [],
+              "data": "Empty",
+              "refKey": "a3ux_19500101_fc0_INI",
+              "title": "a3ux_19500101_fc0_INI <span class='badge' style='background-color: #aaa; color:black;'>#WAITING</span>"
+            },
+            {
+              "children": [
+                {
+                  "children": [],
+                  "data": "Empty",
+                  "refKey": "a3ux_19500101_fc0_2_SIM",
+                  "title": "a3ux_19500101_fc0_2_SIM <span class='badge' style='background-color: orange; color:black;'>#SUSPENDED</span>"
+                },
+                {
+                  "children": [],
+                  "data": "Empty",
+                  "refKey": "a3ux_19500101_fc0_1_SIM",
+                  "title": "a3ux_19500101_fc0_1_SIM <span class='badge' style='background-color: #aaa; color:black;'>#WAITING</span>"
+                },
+                {
+                  "children": [],
+                  "data": "Empty",
+                  "refKey": "a3ux_19500101_fc0_3_SIM",
+                  "title": "a3ux_19500101_fc0_3_SIM <span class='badge' style='background-color: #aaa; color:black;'>#WAITING</span>"
+                }
+              ],
+              "data": "Empty",
+              "expanded": true,
+              "folder": true,
+              "refKey": "a3ux_19500101_fc0_SIM",
+              "title": "SIM"
+            },
+            {
+              "children": [
+                {
+                  "children": [],
+                  "data": "Empty",
+                  "refKey": "a3ux_19500101_fc0_1_SAVE_IC",
+                  "title": "a3ux_19500101_fc0_1_SAVE_IC <span class='badge' style='background-color: orange; color:black;'>#SUSPENDED</span> <span class='badge' style='background-color:#99ff66'>TARGET</span>"
+                },
+                {
+                  "children": [],
+                  "data": "Empty",
+                  "refKey": "a3ux_19500101_fc0_2_SAVE_IC",
+                  "title": "a3ux_19500101_fc0_2_SAVE_IC <span class='badge' style='background-color: #aaa; color:black;'>#WAITING</span> <span class='badge' style='background-color:#99ff66'>TARGET</span>"
+                },
+                {
+                  "children": [],
+                  "data": "Empty",
+                  "refKey": "a3ux_19500101_fc0_3_SAVE_IC",
+                  "title": "a3ux_19500101_fc0_3_SAVE_IC <span class='badge' style='background-color: #aaa; color:black;'>#WAITING</span> <span class='badge' style='background-color:#99ff66'>TARGET</span>"
+                }
+              ],
+              "data": "Empty",
+              "expanded": true,
+              "folder": true,
+              "refKey": "a3ux_19500101_fc0_SAVE_IC",
+              "title": "SAVE_IC"
+            }
           ],
-          "data":"Empty",
-          "expanded":true,
-          "folder":true,
-          "refKey":"a3ux_19500101",
-          "title":"a3ux_19500101"
-       },
-       {
-          "children":[
-             {
-                "children":[
-                   
-                ],
-                "data":"Empty",
-                "refKey":"a3ux_LOCAL_SETUP",
-                "title":"a3ux_LOCAL_SETUP <span class='badge' style='background-color: yellow; color:black;'>#COMPLETED</span> ~ ( 0:00:00 ) + 0:01:01 <span class='badge' style='background-color:#80d4ff'>SOURCE</span>"
-             },
-             {
-                "children":[
-                   
-                ],
-                "data":"Empty",
-                "refKey":"a3ux_REMOTE_SETUP",
-                "title":"a3ux_REMOTE_SETUP <span class='badge' style='background-color: lightpink; color:black;'>#QUEUING</span> ~ ( 2:14:09 )"
-             }
-          ],
-          "data":"Empty",
-          "expanded":true,
-          "folder":true,
-          "refKey":"Keys",
-          "title":"Keys"
-       }
-    ]
- }
+          "data": "Empty",
+          "expanded": false,
+          "folder": true,
+          "refKey": "a3ux_19500101_fc0",
+          "title": "a3ux_19500101_fc0 <span class='badge' style='background-color:#ffffb3'> 0 / 7 COMPLETED</span>"
+        }
+      ],
+      "data": "Empty",
+      "expanded": true,
+      "folder": true,
+      "refKey": "a3ux_19500101",
+      "title": "a3ux_19500101"
+    },
+    {
+      "children": [
+        {
+          "children": [],
+          "data": "Empty",
+          "refKey": "a3ux_LOCAL_SETUP",
+          "title": "a3ux_LOCAL_SETUP <span class='badge' style='background-color: yellow; color:black;'>#COMPLETED</span> ~ ( 0:00:00 ) + 0:01:01 <span class='badge' style='background-color:#80d4ff'>SOURCE</span>"
+        },
+        {
+          "children": [],
+          "data": "Empty",
+          "refKey": "a3ux_REMOTE_SETUP",
+          "title": "a3ux_REMOTE_SETUP <span class='badge' style='background-color: lightpink; color:black;'>#QUEUING</span> ~ ( 2:14:09 )"
+        }
+      ],
+      "data": "Empty",
+      "expanded": true,
+      "folder": true,
+      "refKey": "Keys",
+      "title": "Keys"
+    }
+  ]
+}

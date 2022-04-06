@@ -8,6 +8,7 @@ import ExperimentContext from "../../context/experiment/experimentContext";
 import TreeContext from "../../context/tree/treeContext";
 import GraphContext from "../../context/graph/graphContext";
 import experimentContext from "../../context/experiment/experimentContext";
+import { treemapBinary } from "d3";
 
 let container = null;
 const experiment = {
@@ -192,6 +193,10 @@ it("TreeControl renders with content using source tree", () => {
             summaries: new Map(),
             loadingSummary: new Map(),
             experimentRunning: true,
+            jobHistoryLog: {
+              path: "",
+              joblog: null,
+            },
             jobHistory: jobHistory,
             getJobHistory: () => null,
           }}
@@ -228,6 +233,10 @@ it("TreeControl renders with content using source graph", () => {
             summaries: new Map(),
             loadingSummary: new Map(),
             experimentRunning: true,
+            jobHistoryLog: {
+              path: "",
+              joblog: null,
+            },
             jobHistory: jobHistory,
             getJobHistory: () => null,
           }}
@@ -247,9 +256,7 @@ it("TreeControl renders with content using source graph", () => {
     );
   });
   // console.log(container.textContent);
-  historyContent.forEach((item) =>
-    expect(container.textContent).toContain(item)
-  );
+  historyContent.forEach((item) => expect(container.innerHTML).toContain(item));
   // expect(container.innerHTML).toContain("Start Job Monitor");
   // expect(container.innerHTML).toContain("Refresh");
 });

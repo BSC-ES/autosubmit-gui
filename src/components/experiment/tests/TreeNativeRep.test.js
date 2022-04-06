@@ -686,7 +686,12 @@ it("SelectionTreeNode renders from treedata", () => {
   const selectedTreeNode = { node: { refKey: "a2tl_20200511_000_1_REDUCE" } };
   act(() => {
     render(
-      <ExperimentContext.Provider value={{ experiment: experiment }}>
+      <ExperimentContext.Provider
+        value={{
+          experiment: experiment,
+          jobHistoryLog: { path: "", joblog: [] },
+        }}
+      >
         <TreeContext.Provider
           value={{ selectedTreeNode: selectedTreeNode, treedata: treedata }}
         >

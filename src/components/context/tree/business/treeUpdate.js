@@ -1,38 +1,28 @@
 import { timeStampToDate } from "../../utils";
 
 export default class TreeContentHandler {
-  currentJobs;
-  referenceHeaders;
-  pklInfo;
-  fancyTree;
-  constructor(currentJobs, referenceHeaders, pklInfo, fancyTree) {
+  constructor(currentJobs, referenceHeaders, pklInfo) {
     this.currentJobs = currentJobs;
     this.referenceHeaders = referenceHeaders;
     this.pklInfo = pklInfo;
-    this.fancyTree = fancyTree;    
   }
 
   validate() {
-    if (
-      !this.currentJobs ||
-      !this.referenceHeaders ||
-      !this.pklInfo ||
-      !this.fancyTree
-    ) {
+    if (!this.currentJobs || !this.referenceHeaders || !this.pklInfo) {
       return false;
     }
     return true;
   }
 
-  processChanges() {
+  processChanges(fancyTree) {
     const { has_changed, pkl_timestamp, pkl_content } = this.pklInfo;
     let changes = "";
     let changesSummarized = "";
     const nameToIncomingJob = new Map();
-    pkl_content.forEach(job => nameToIncomingJob.set(job.name, job));    
-    for (let currentJob of this.currentJobs) {      
-      const incomingJob = nameToIncomingJob.get(currentJob.id);      
-      if (has_changed && this.hasJobDataChanged(currentJob, incomingJob)) {        
+    pkl_content.forEach((job) => nameToIncomingJob.set(job.name, job));
+    for (let currentJob of this.currentJobs) {
+      const incomingJob = nameToIncomingJob.get(currentJob.id);
+      if (has_changed && this.hasJobDataChanged(currentJob, incomingJob)) {
         const hasStatusChanged = this.hasJobDataStatusChanged(
           currentJob,
           incomingJob
@@ -52,38 +42,64 @@ export default class TreeContentHandler {
             currentJob,
             incomingJob
           );
-        this.updateTitleOfAllFancyTreeNodesOf(currentJob, incomingJob);        
+        this.updateTitleOfAllFancyTreeNodesOf(
+          currentJob,
+          incomingJob,
+          fancyTree
+        );
         if (wrapperFolderName) {
-          const wrapperFolder = this.fancyTree.getNodesByRef(wrapperFolderName);
+          const wrapperFolder = fancyTree.getNodesByRef(wrapperFolderName);
           if (wrapperFolder) {
-            if (!wrapperFolder[0].children.map((node) => node.refKey).includes(currentJob.id)) {
+            if (
+              !wrapperFolder[0].children
+                .map((node) => node.refKey)
+                .includes(currentJob.id)
+            ) {
               this.addChildNodeToFancyTreeWrapperFolder(
                 currentJob,
                 wrapperFolder[0]
-              );              
-            }              
+              );
+            }
           } else {
-            // Add Wrapper Folder            
+            // Add Wrapper Folder
             this.createHeaderInfo(wrapperFolderName);
-            let newWrapperFolder = this.addNewWrapperFolderFor(wrapperFolderName);
-            this.addChildNodeToFancyTreeWrapperFolder(currentJob, newWrapperFolder);
-            const wrapperChanges = this.getNewWrapperMessages(currentJob.wrapper_code, pkl_timestamp);
+            const rootNode = fancyTree.getRootNode();
+            let newWrapperFolder = this.addNewWrapperFolderFor(
+              wrapperFolderName,
+              rootNode
+            );
+            this.addChildNodeToFancyTreeWrapperFolder(
+              currentJob,
+              newWrapperFolder
+            );
+            const wrapperChanges = this.getNewWrapperMessages(
+              currentJob.wrapper_code,
+              pkl_timestamp
+            );
             changes += wrapperChanges.change;
             changesSummarized += wrapperChanges.changeShort;
-          }          
-        }  
+          }
+        }
 
         for (let folderName of currentJob.tree_parents) {
-          let headerInfo = this.referenceHeaders[folderName];          
-          const parentFolder = this.fancyTree.getNodesByRef(folderName)[0];
-          headerInfo.total = parentFolder.getChildren().length;
-          this.updateHeaderInfoStatusCounters(headerInfo, hasStatusChanged);          
-          parentFolder.setTitle(this.getNewFolderTitle(folderName, headerInfo));          
+          let headerInfo = this.referenceHeaders[folderName];
+          const parentFolder = fancyTree.getNodesByRef(folderName)[0];
+          if (folderName.startsWith("Wrapper")) {
+            headerInfo.total = parentFolder.getChildren().length;
+          }
+          this.updateHeaderInfoStatusCounters(headerInfo, hasStatusChanged);
+          parentFolder.setTitle(this.getNewFolderTitle(folderName, headerInfo));
         }
       }
     }
 
-    return {changes, changesSummarized, currentJobs: this.currentJobs, currentReference: this.referenceHeaders, treeRep: this.fancyTree}
+    return {
+      changes,
+      changesSummarized,
+      currentJobs: this.currentJobs,
+      currentReference: this.referenceHeaders,
+      treeRep: this.fancyTree,
+    };
   }
 
   createHeaderInfo(parentFolderName) {
@@ -102,30 +118,40 @@ export default class TreeContentHandler {
       switch (hasStatusChanged.newStatus) {
         case "COMPLETED":
           headerInfo.completed += 1;
+          break;
         case "RUNNING":
           headerInfo.running += 1;
+          break;
         case "QUEUING":
           headerInfo.queuing += 1;
+          break;
         case "FAILED":
           headerInfo.failed += 1;
+          break;
         case "HELD":
           headerInfo.held += 1;
+          break;
         default:
-          null;
+          break;
       }
       switch (hasStatusChanged.oldStatus) {
         case "COMPLETED":
           headerInfo.completed -= 1;
+          break;
         case "RUNNING":
           headerInfo.running -= 1;
+          break;
         case "QUEUING":
           headerInfo.queuing -= 1;
+          break;
         case "FAILED":
           headerInfo.failed -= 1;
+          break;
         case "HELD":
           headerInfo.held -= 1;
+          break;
         default:
-          null;
+          break;
       }
     }
   }
@@ -137,7 +163,7 @@ export default class TreeContentHandler {
       queuing_tag,
       failed_tag,
       held_tag,
-      check_mark,
+      checkmark,
     } = this.referenceHeaders;
     const newCompletedTag = completed_tag
       .replace("%C", headerInfo.completed)
@@ -147,7 +173,7 @@ export default class TreeContentHandler {
         headerInfo.completed === headerInfo.total ? "yellow" : "#ffffb3"
       );
     const newCheckMark =
-      headerInfo.completed === headerInfo.total ? check_mark : "";
+      headerInfo.completed === headerInfo.total ? checkmark : "";
     const newRunningTag =
       headerInfo.running > 0
         ? running_tag.replace("%R", headerInfo.running)
@@ -173,13 +199,13 @@ export default class TreeContentHandler {
     return newTitle;
   }
 
-  updateTitleOfAllFancyTreeNodesOf(currentJob, sameJobFromPkl) {
-    let foundFancyTreeNodes = this.fancyTree.getNodesByRef(currentJob.id);
+  updateTitleOfAllFancyTreeNodesOf(currentJob, sameJobFromPkl, fancyTree) {
+    const foundFancyTreeNodes = fancyTree.getNodesByRef(currentJob.id);
     if (foundFancyTreeNodes) {
       for (let i in foundFancyTreeNodes) {
-        foundFancyTreeNodes[i].setTitle(sameJobFromPkl.title);        
+        foundFancyTreeNodes[i].setTitle(sameJobFromPkl.title);
       }
-    } else {      
+    } else {
       /* 
         The job doesn't exist in the tree and we should add it, but where?
         This sceneario implies that the structure of the experiment has changed.
@@ -190,10 +216,7 @@ export default class TreeContentHandler {
     }
   }
 
-  addChildNodeToFancyTreeWrapperFolder(
-    currentJob,
-    wrapperFolder
-  ) {
+  addChildNodeToFancyTreeWrapperFolder(currentJob, wrapperFolder) {
     wrapperFolder.addChildren({
       title: currentJob.title,
       refKey: currentJob.id,
@@ -202,15 +225,17 @@ export default class TreeContentHandler {
     });
   }
 
-  addNewWrapperFolderFor(parentFolderName) {    
-    const rootNode = this.fancyTree.getRootNode();
+  addNewWrapperFolderFor(parentFolderName, rootNode) {
     return rootNode.addChildren({
-      title: this.getNewFolderTitle(parentFolderName, this.referenceHeaders[parentFolderName]),
+      title: this.getNewFolderTitle(
+        parentFolderName,
+        this.referenceHeaders[parentFolderName]
+      ),
       folder: true,
       refKey: parentFolderName,
       expanded: true,
       children: [],
-    })
+    });
   }
 
   ifWrapperReceivedAddTreeParentAndReturnWrapperParentName(
@@ -224,7 +249,7 @@ export default class TreeContentHandler {
         currentJob.tree_parents.push(jobParentWrapperFolder);
       }
     }
-  
+
     return jobParentWrapperFolder;
   }
 
@@ -241,7 +266,8 @@ export default class TreeContentHandler {
   }
 
   getNewWrapperMessages(packageName, pklTimeStamp) {
-    let change = timeStampToDate(pklTimeStamp) + ": " + packageName + " has been added.\n";
+    let change =
+      timeStampToDate(pklTimeStamp) + ": " + packageName + " has been added.\n";
     let changeShort = "Wrapper " + packageName + " added.\n";
     return { change, changeShort };
   }
@@ -260,7 +286,6 @@ export default class TreeContentHandler {
   }
 
   hasJobDataStatusChanged(currentJob, sameJobFromPkl) {
-    let hasChanged = false;
     if (currentJob.status_code !== sameJobFromPkl.status_code) {
       return {
         hasChanged: true,
@@ -268,7 +293,7 @@ export default class TreeContentHandler {
         newStatus: sameJobFromPkl.status,
       };
     }
-    return { hasChanged };
+    return { hasChanged: false };
   }
 
   assignNewJobData(currentJob, sameJobWithNewData) {
