@@ -243,6 +243,14 @@ export default (state, action) => {
             );
             orderedByDescription = orderByType.wrapper;
             break;
+          case orderByType.updated_asc:
+            currentResult.sort((a,b) => normalizeString(a.modified) > normalizeString(b.modified) ? 1 : -1);
+            orderedByDescription = orderByType.updated_asc;
+            break;
+          case orderByType.updated:
+            currentResult.sort((a,b) => normalizeString(a.modified) < normalizeString(b.modified) ? 1 : -1);
+            orderedByDescription = orderByType.updated;
+            break;
           case orderByType.name_asc:
             currentResult.sort(function (a, b) {
               return ("" + a.name).localeCompare(b.name);

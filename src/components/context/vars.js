@@ -110,12 +110,14 @@ export const localStorageExperimentActiveCheck = "activeCheckSearch";
 export const pageSize = 12;
 
 export const orderByType = {
-  total: "Total Number of Jobs",
+  total: "Total Number of Jobs (Desc)",
   total_asc: "Total Number of Jobs (Asc)",
-  completed: "Number of Completed Jobs",
+  completed: "Number of Completed Jobs (Desc)",
   completed_asc: "Number of Completed Jobs (Asc)",
-  name: "Name of Experiment",
+  name: "Name of Experiment (Desc)",
   name_asc: "Name of Experiments (Asc)",
+  updated: "Update Time (Desc)",
+  updated_asc: "Update Time (Asc)",
   queuing: "Number of Queuing Jobs",
   running: "Number of Running Jobs",
   failed: "Number of Failed Jobs",

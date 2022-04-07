@@ -53,9 +53,27 @@
   font-size: 0.8rem !important;
 }
 
+.menu-btn-md {
+  letter-spacing: 1.2px;
+  font-size: 0.8rem !important;
+}
+
 .menu-input-append {
   font-size: 0.9rem !important;
 }
+
+.important-info {
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.badge-font {
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+}
+
+
 
 /* LOG TAB */
 

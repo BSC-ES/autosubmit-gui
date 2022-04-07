@@ -69,11 +69,12 @@ const Experiments = () => {
           <Pagination />
           {experimentsInPage && experimentsInPage.length > 0 && (
             <div className='item-hl ml-auto mb-1'>
-              Order By:{" "}
-              <div className='btn-group' role='group' aria-label='OrderSwitch'>
+              <span className='mr-2'>ORDER BY:</span>
+              <div className='btn-group mr-1' role='group' aria-label='OrderSwitch'>
                 <button
                   type='button'
-                  className='btn btn-primary btn-sm'
+                  className='btn btn-primary btn-sm menu-btn'
+                  title="Order by the total number of jobs in the experiment."
                   onClick={onOrderBy(
                     currentOrderType === orderByType.total
                       ? orderByType.total_asc
@@ -89,7 +90,8 @@ const Experiments = () => {
                 </button>
                 <button
                   type='button'
-                  className='btn btn-primary btn-sm'
+                  className='btn btn-primary btn-sm menu-btn'
+                  title="Order by the number of completed jobs in the experiment."
                   onClick={onOrderBy(
                     currentOrderType === orderByType.completed
                       ? orderByType.completed_asc
@@ -105,7 +107,8 @@ const Experiments = () => {
                 </button>
                 <button
                   type='button'
-                  className='btn btn-primary btn-sm'
+                  className='btn btn-primary btn-sm menu-btn'
+                  title="Order by the name of the experiment. When Descending (Desc), the experiments are effectively ordered in creation datetime order from recent to older."
                   onClick={onOrderBy(
                     currentOrderType === orderByType.name
                       ? orderByType.name_asc
@@ -119,32 +122,41 @@ const Experiments = () => {
                     <span>&#8593;</span>
                   )}
                 </button>
+                <button
+                  type='button'
+                  className='btn btn-primary btn-sm menu-btn'
+                  title="Order by the datetime of the last update on the pkl (persistence) file of your experiment. The pkl is updated when the status of a job changes. Autosubmit can also update it under other circumstances."
+                  onClick={onOrderBy(currentOrderType === orderByType.updated ? orderByType.updated_asc : orderByType.updated)}
+                >
+                  Update Time{" "}
+                  {currentOrderType === orderByType.updated ? (<span>&#8595;</span>) : (<span>&#8593;</span>)}
+                </button>
               </div>
               <div className='btn-group' role='group' aria-label='Order'>
                 <button
                   type='button'
-                  className='btn btn-primary btn-sm'
+                  className='btn btn-primary btn-sm menu-btn'
                   onClick={onOrderBy(orderByType.queuing)}
                 >
                   Queuing Jobs
                 </button>
                 <button
                   type='button'
-                  className='btn btn-primary btn-sm'
+                  className='btn btn-primary btn-sm menu-btn'
                   onClick={onOrderBy(orderByType.running)}
                 >
                   Running Jobs
                 </button>
                 <button
                   type='button'
-                  className='btn btn-primary btn-sm'
+                  className='btn btn-primary btn-sm menu-btn'
                   onClick={onOrderBy(orderByType.failed)}
                 >
                   Failed Jobs
                 </button>
                 <button
                   type='button'
-                  className='btn btn-primary btn-sm'
+                  className='btn btn-primary btn-sm menu-btn'
                   onClick={onOrderBy(orderByType.wrapper)}
                 >
                   Wrapper
