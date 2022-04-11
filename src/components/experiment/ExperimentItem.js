@@ -60,6 +60,7 @@ export class ExperimentItem extends Component {
       queuing,
       failed,
       running,
+      modified,
     } = experiment;
 
     const onGetSummary = (name) => (e) => {
@@ -80,27 +81,27 @@ export class ExperimentItem extends Component {
               <div className='row-hl d-flex flex-wrap'>
                 <div className='item-hl'>
                   {queuing > 0 && (
-                    <span className='badge' style={queueColor}>
+                    <span className='badge badge-font' style={queueColor}>
                       {queuing}
                     </span>
                   )}
                   {running > 0 && (
-                    <span className='badge' style={runningColor}>
+                    <span className='badge badge-font' style={runningColor}>
                       {running}
                     </span>
                   )}
                   {failed > 0 && (
-                    <span className='badge' style={failedColor}>
+                    <span className='badge badge-font' style={failedColor}>
                       {failed}
                     </span>
                   )}
                   {completed > 0 && (
-                    <span className='badge' style={completedColor}>
+                    <span className='badge badge-font' style={completedColor}>
                       {completed}
                     </span>
                   )}
                 </div>
-                <div className='item-hl ml-auto'>
+                <div className='item-hl ml-auto important-info'>
                   {completed} / {total}
                 </div>
               </div>
@@ -136,17 +137,13 @@ export class ExperimentItem extends Component {
                   aria-valuemax={total}
                 ></div>
               </div>
-              {/* <span className='badge badge-default'>
-              {" "}
-              
-            </span> */}
             </div>
             <div className='col-md-3 text-right'>
               {status && status === "RUNNING" && (
-                <span className='badge badge-success text-right'>ACTIVE</span>
+                <span className='badge badge-success text-right badge-font'>ACTIVE</span>
               )}
               {status && status !== "RUNNING" && (
-                <span className='badge badge-secondary text-right'>
+                <span className='badge badge-secondary text-right badge-font'>
                   INACTIVE
                 </span>
               )}
@@ -158,12 +155,12 @@ export class ExperimentItem extends Component {
           {/* <h4 className="card-title"></h4> */}
           <div className='d-flex justify-content-between'>
             <div>
-              <h6 className='card-subtitle text-muted pt-2'>
-                <span>Owner:</span> {user}
+              <h6 className='card-subtitle pt-2'>
+                <span className='text-muted'>Owner:</span> {user}
               </h6>
             </div>
             <div>
-              <span className='text-muted'>HPC: {hpc}</span>
+              <span><span className='text-muted'>HPC:</span> {hpc}</span>
             </div>
           </div>
           <p className='card-text mb-0'>
@@ -177,8 +174,8 @@ export class ExperimentItem extends Component {
                 <button
                   className={
                     summaries[name]
-                      ? "btn btn-info btn-block btn-sm"
-                      : "btn btn-primary btn-block btn-sm"
+                      ? "btn btn-info btn-block btn-sm menu-btn-md"
+                      : "btn btn-primary btn-block btn-sm menu-btn-md"
                   }
                   type='button'
                   disabled={loggedUser ? false : true}
@@ -197,7 +194,7 @@ export class ExperimentItem extends Component {
               )}
               {isLoading && (
                 <button
-                  className='btn btn-sm btn-secondary btn-block disabled'
+                  className='btn btn-sm btn-secondary btn-block disabled menu-btn-md'
                   disabled='True'
                 >
                   Loading...
@@ -206,14 +203,14 @@ export class ExperimentItem extends Component {
             </div>
             <div className='col-md-3 px-1'>
               {disabledMore === true && (
-                <button className='btn btn-sm btn-block' disabled='True'>
+                <button className='btn btn-sm btn-block menu-btn-md' disabled='True'>
                   Tree &#8594;
                 </button>
               )}
               {disabledMore === false && (
                 <Link
                   to={`/${rootAppName}/experiment/${name}`}
-                  className='btn btn-primary btn-block btn-sm'
+                  className='btn btn-primary btn-block btn-sm menu-btn-md'
                   data-toggle='tooltip'
                   data-placement='bottom'
                   title='Opens the experiment page where the Tree View representation is loaded by default.'
@@ -224,14 +221,14 @@ export class ExperimentItem extends Component {
             </div>
             <div className='col-md-3 px-1'>
               {disabledMore === true && (
-                <button className='btn btn-sm btn-block' disabled='True'>
+                <button className='btn btn-sm btn-block menu-btn-md' disabled='True'>
                   Graph &#8594;
                 </button>
               )}
               {disabledMore === false && (
                 <Link
                   to={`/${rootAppName}/experiment/${name}/graph`}
-                  className='btn btn-primary btn-block btn-sm'
+                  className='btn btn-primary btn-block btn-sm menu-btn-md'
                   data-toggle='tooltip'
                   data-placement='bottom'
                   title='Opens the experiment page where the Graph View representation is loaded by default.'
@@ -243,7 +240,7 @@ export class ExperimentItem extends Component {
             <div className='col-md-3 px-1'>
               <Link
                 to={`/${rootAppName}/experiment/${name}/light`}
-                className='btn btn-primary btn-block btn-sm'
+                className='btn btn-primary btn-block btn-sm menu-btn-md'
                 data-toggle='tooltip'
                 data-placement='bottom'
                 title='Opens the experiment page where a simple list of jobs and their status is presented. Loads quicker than the Tree View.'
@@ -348,14 +345,19 @@ export class ExperimentItem extends Component {
               )}
             </div>
           )}
-          <p className='card-text text-center'>
-            <span className='text-muted'>{version}</span>
-            {wrapper && (
-              <span className='px-1 ml-1 bg-secondary text-dark rounded'>
-                {wrapper} wrapper
-              </span>
-            )}
-          </p>
+          <div className='d-flex justify-content-between'>            
+            <div>
+              <span className='px-1 bg-secondary rounded important-info'>{version}</span>
+              {wrapper && (
+                <span className='px-1 ml-1 bg-secondary rounded important-info'>
+                  {wrapper}
+                </span>
+              )}
+            </div>
+            <div>
+              <span><span className='text-muted'>Last Update:</span> <span className='important-info'>{modified}</span></span>
+            </div>
+          </div>
         </div>
       </div>
     );
