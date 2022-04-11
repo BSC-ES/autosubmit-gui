@@ -1,3 +1,4 @@
+export const thirdPartyLoginURL = "https://cas.bsc.es/cas/login";
 export const AUTOSUBMIT_API_SOURCE = "https://earth.bsc.es/autosubmitapi"; // BSC API
 // export const AUTOSUBMIT_API_SOURCE = "http://84.88.185.94:8081"; // Local API, set your IP if you're running the API locally
 export const DEBUG = false; // If true, some calls print their response to the console. However, it pollutes the console. Leave it at false.
