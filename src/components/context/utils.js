@@ -549,6 +549,24 @@ export const formatNumberMoney = (
   }
 };
 
+export const statusAlertInHistory = (submit, start, finish, status) => {
+  if (["READY", "WAITING"].includes(status)) {
+    if (submit || start || finish) {
+      return (
+        <span
+          className='badge badge-warning ml-1'
+          data-toggle='tooltip'
+          data-placement='bottom'
+          title={`It seems that the original status of this job was not '${status}'.`}
+        >
+          !
+        </span>
+      );
+    }
+  }
+  return null;
+};
+
 export const calculateStatistics = (jobs) => {
   let jobsSubmittedCount = 0;
   let jobsRunCount = 0;

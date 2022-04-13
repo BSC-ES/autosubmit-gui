@@ -9,6 +9,7 @@ import {
   logIconLeft,
   logIconRight,
   formatNumberMoney,
+  statusAlertInHistory,
 } from "../context/utils";
 import { SHOW_PERFORMANCE_TAB } from "../context/vars";
 
@@ -229,7 +230,15 @@ const JobHistory = ({ source }) => {
                               </span>
                             )}
                           </td>
-                          <td>{item.status}</td>
+                          <td>
+                            {item.status}
+                            {statusAlertInHistory(
+                              item.submit,
+                              item.start,
+                              item.finish,
+                              item.status
+                            )}
+                          </td>
                           <td>{formatNumberMoney(item.energy, true)}</td>
                           {SHOW_PERFORMANCE_TAB && (
                             <td>
