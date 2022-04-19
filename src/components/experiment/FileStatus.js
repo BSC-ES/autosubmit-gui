@@ -33,7 +33,7 @@ class FileStatus extends Component {
 
       // let badge_style = status === "ONLINE" ? "badge badge-success" : "badge badge-secondary";
       // let show_alert = false;
-      const metrics_text = !error ? current_bandwidth.toFixed(2) + " MB/s " + current_latency.toFixed(2) + " s" : "";
+      const metrics_text = (!error && status !== "OFFLINE") ? current_bandwidth.toFixed(2) + " MB/s " + current_latency.toFixed(2) + " s" : "";
       let span_alert = <span>esarchive {metrics_text}</span>;
       if (error || status !== "ONLINE"){
         const message_pop = error ? error_message : "Access to esarchive seems to be unstable at the moment.";
