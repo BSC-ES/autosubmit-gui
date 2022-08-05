@@ -29,7 +29,7 @@ exports[`ExperimentItem renders correctly 1`] = `
             className="item-hl"
           >
             <span
-              className="badge"
+              className="badge badge-font"
               style={
                 Object {
                   "background": "yellow",
@@ -41,7 +41,7 @@ exports[`ExperimentItem renders correctly 1`] = `
             </span>
           </div>
           <div
-            className="item-hl ml-auto"
+            className="item-hl ml-auto important-info"
           >
             10
              / 
@@ -69,7 +69,7 @@ exports[`ExperimentItem renders correctly 1`] = `
         className="col-md-3 text-right"
       >
         <span
-          className="badge badge-success text-right"
+          className="badge badge-success text-right badge-font"
         >
           ACTIVE
         </span>
@@ -84,9 +84,11 @@ exports[`ExperimentItem renders correctly 1`] = `
     >
       <div>
         <h6
-          className="card-subtitle text-muted pt-2"
+          className="card-subtitle pt-2"
         >
-          <span>
+          <span
+            className="text-muted"
+          >
             Owner:
           </span>
            
@@ -94,10 +96,13 @@ exports[`ExperimentItem renders correctly 1`] = `
         </h6>
       </div>
       <div>
-        <span
-          className="text-muted"
-        >
-          HPC: 
+        <span>
+          <span
+            className="text-muted"
+          >
+            HPC:
+          </span>
+           
           LOCAL
         </span>
       </div>
@@ -113,7 +118,7 @@ exports[`ExperimentItem renders correctly 1`] = `
       >
         <button
           aria-controls="a2h6"
-          className="btn btn-primary btn-block btn-sm"
+          className="btn btn-primary btn-block btn-sm menu-btn-md"
           data-placement="bottom"
           data-toggle="tooltip"
           disabled={true}
@@ -128,7 +133,7 @@ exports[`ExperimentItem renders correctly 1`] = `
         className="col-md-3 px-1"
       >
         <a
-          className="btn btn-primary btn-block btn-sm"
+          className="btn btn-primary btn-block btn-sm menu-btn-md"
           data-placement="bottom"
           data-toggle="tooltip"
           href="/autosubmitapp/experiment/a2h6"
@@ -142,7 +147,7 @@ exports[`ExperimentItem renders correctly 1`] = `
         className="col-md-3 px-1"
       >
         <a
-          className="btn btn-primary btn-block btn-sm"
+          className="btn btn-primary btn-block btn-sm menu-btn-md"
           data-placement="bottom"
           data-toggle="tooltip"
           href="/autosubmitapp/experiment/a2h6/graph"
@@ -156,7 +161,7 @@ exports[`ExperimentItem renders correctly 1`] = `
         className="col-md-3 px-1"
       >
         <a
-          className="btn btn-primary btn-block btn-sm"
+          className="btn btn-primary btn-block btn-sm menu-btn-md"
           data-placement="bottom"
           data-toggle="tooltip"
           href="/autosubmitapp/experiment/a2h6/light"
@@ -167,15 +172,30 @@ exports[`ExperimentItem renders correctly 1`] = `
         </a>
       </div>
     </div>
-    <p
-      className="card-text text-center"
+    <div
+      className="d-flex justify-content-between"
     >
-      <span
-        className="text-muted"
-      >
-        3.11.0
-      </span>
-    </p>
+      <div>
+        <span
+          className="px-1 bg-secondary rounded important-info"
+        >
+          3.11.0
+        </span>
+      </div>
+      <div>
+        <span>
+          <span
+            className="text-muted"
+          >
+            Last Update:
+          </span>
+           
+          <span
+            className="important-info"
+          />
+        </span>
+      </div>
+    </div>
   </div>
 </div>
 `;

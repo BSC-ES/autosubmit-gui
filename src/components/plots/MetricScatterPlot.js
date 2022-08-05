@@ -81,7 +81,7 @@ export class MetricScatterPlot extends Component {
         .attr("dy", "1.5em")
         .style("text-anchor", "middle")
         .style("font-weight", "bold")
-        .text(mainTitle ?? mainTitle)
+        .text(mainTitle || mainTitle)
 
     d3.select(this.svgElement)
       .append("text")

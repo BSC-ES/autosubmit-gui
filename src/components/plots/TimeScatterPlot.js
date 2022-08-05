@@ -189,7 +189,7 @@ class TimeScatterPlot extends Component {
         .attr("dy", "1.5em")
         .style("text-anchor", "middle")
         .style("font-weight", "bold")
-        .text(mainTitle ?? mainTitle);
+        .text(mainTitle || mainTitle);
 
     function showTooltip(d) {
       tooltip
