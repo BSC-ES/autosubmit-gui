@@ -211,11 +211,23 @@ const Search = ({ specificSearch }) => {
           <div className='col-md-3'>
             <button
               className='btn btn-primary btn-block'
-              onClick={experimentContext.getSummaries}
+              onClick={ async(event) => {
+                  // Disable the button
+                  const btn_instance = event.currentTarget;
+                  btn_instance.disabled = true;
+                  btn_instance.classList.add("disabled");
+
+                  await experimentContext.getSummaries()
+
+                  // Able the button
+                  btn_instance.classList.remove("disabled");
+                  btn_instance.disabled = false;
+                }
+              }
               data-toggle='tooltip'
               data-placement='bottom'
               title='Shows a summary of the current progress of each experiment in the result.'
-              disabled={loggedUser ? false : true}
+              // disabled={loggedUser ? false : true}
             >
               Show Detailed Data
             </button>
