@@ -217,12 +217,12 @@ const ExperimentState = (props) => {
     });
   };
 
-  const getSummaries = () => {
+  const getSummaries = async() => {
     const experiments = state.experiments;
-    for (var exp in experiments) {
-      var exp_name = experiments[exp].name;
-      getExperimentSummary(exp_name);
-    }
+    const all_promises = experiments.map(exp =>
+      getExperimentSummary(exp.name)
+    )
+    await Promise.all(all_promises)
   };
 
   const getJobHistory = async (expid, job_name) => {
@@ -503,7 +503,7 @@ const ExperimentState = (props) => {
   };
 
   /* This request requires a valid token (JWT).
-    You can set your own token if you know the secret word that is set in the API server.    
+    You can set your own token if you know the secret word that is set in the API server.
   */
   const requestCurrentConfiguration = async (expid) => {
     const token = localStorage.getItem("token");
