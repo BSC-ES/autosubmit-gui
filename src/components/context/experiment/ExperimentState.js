@@ -348,7 +348,7 @@ const ExperimentState = (props) => {
         payload: { expid: expid, summary: summary },
       });
     } else {
-      const res = await axios
+      await axios
         .get(`${localserver}/summary/${expid}`)
         .catch((error) => {
           alert(ERROR_MESSAGE + "\n" + error.message);
