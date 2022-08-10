@@ -343,10 +343,6 @@ const ExperimentState = (props) => {
     if (NOAPI) {
       summary = require("../data/summary_" + String(expid) + ".json");
       sleep(3000);
-      dispatch({
-        type: GET_EXPERIMENT_SUMMARY,
-        payload: { expid: expid, summary: summary },
-      });
     } else {
       await axios
         .get(`${localserver}/summary/${expid}`)
@@ -355,13 +351,13 @@ const ExperimentState = (props) => {
         }
         ).then((res) => {
           summary = res ? res.data : null;
-          dispatch({
-            type: GET_EXPERIMENT_SUMMARY,
-            payload: { expid: expid, summary: summary },
-          });
         });
       debug && console.log(summary);
     }
+    dispatch({
+      type: GET_EXPERIMENT_SUMMARY,
+      payload: { expid: expid, summary: summary },
+    });
   };
 
   const getExperimentPerformanceMetrics = async (expid) => {
