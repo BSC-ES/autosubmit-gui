@@ -227,7 +227,7 @@ const Search = ({ specificSearch }) => {
               data-toggle='tooltip'
               data-placement='bottom'
               title='Shows a summary of the current progress of each experiment in the result.'
-              // disabled={loggedUser ? false : true}
+              disabled={loggedUser ? false : true}
             >
               Show Detailed Data
             </button>
