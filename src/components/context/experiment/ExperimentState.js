@@ -225,6 +225,14 @@ const ExperimentState = (props) => {
     await Promise.all(all_promises)
   };
 
+  const getSummariesInPage = async() => {
+    const experiments = state.experimentsInPage;
+    const all_promises = experiments.map(exp =>
+      getExperimentSummary(exp.name)
+    )
+    await Promise.all(all_promises)
+  };
+
   const getJobHistory = async (expid, job_name) => {
     setLoadingJobHistory();
     let result = null;
@@ -824,6 +832,7 @@ const ExperimentState = (props) => {
         getExperimentSummary,
         clearSummary,
         getSummaries,
+        getSummariesInPage,
         activateSelectionMode,
         deactivateSelectionMode,
         removeSelectedJob,

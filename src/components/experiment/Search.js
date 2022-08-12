@@ -54,6 +54,7 @@ const Search = ({ specificSearch }) => {
     experiments,
   ]);
 
+
   const [text, setText] = useState("");
   const [typeExperiment, setTypeExperiment] = useState("");
   const [activeChoice, setActiveChoice] = useState("");
@@ -215,19 +216,19 @@ const Search = ({ specificSearch }) => {
                   // Disable the button
                   const btn_instance = event.currentTarget;
                   btn_instance.disabled = true;
-                  btn_instance.classList.add("disabled");
+                  // btn_instance.classList.add("disabled");
 
-                  await experimentContext.getSummaries()
+                  await experimentContext.getSummariesInPage()
 
                   // Able the button
-                  btn_instance.classList.remove("disabled");
+                  // btn_instance.classList.remove("disabled");
                   btn_instance.disabled = false;
                 }
               }
               data-toggle='tooltip'
               data-placement='bottom'
               title='Shows a summary of the current progress of each experiment in the result.'
-              disabled={loggedUser ? false : true}
+              // disabled={loggedUser ? false : true}
             >
               Show Detailed Data
             </button>
