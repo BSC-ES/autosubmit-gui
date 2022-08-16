@@ -9,6 +9,8 @@ import {
   NOAPI,
 } from "../context/vars";
 
+let controller = new AbortController();
+
 const Search = ({ specificSearch }) => {
   const alertContext = useContext(AlertContext);
   const experimentContext = useContext(ExperimentContext);
@@ -24,9 +26,11 @@ const Search = ({ specificSearch }) => {
   const btnRef = useRef()
 
   useEffect( () => {
+    //
     if(btnRef.current && loggedUser === true) {
-      console.log("useEffect called")
       btnRef.current.disabled = false
+      controller.abort()
+      controller = new AbortController()
     }
   }, [experimentContext.currentPage])
 
@@ -225,7 +229,7 @@ const Search = ({ specificSearch }) => {
                   const btn_instance = event.currentTarget;
                   btn_instance.disabled = true;
 
-                  await experimentContext.getSummariesInPage()
+                  await experimentContext.getSummariesInPage(controller)
 
                   btn_instance.disabled = false;
                 }

@@ -225,10 +225,10 @@ const ExperimentState = (props) => {
     await Promise.all(all_promises)
   };
 
-  const getSummariesInPage = async() => {
+  const getSummariesInPage = async(controller) => {
     const experiments = state.experimentsInPage;
     const all_promises = experiments.map(exp =>
-      getExperimentSummary(exp.name)
+      getExperimentSummary(exp.name, controller)
     )
     await Promise.all(all_promises)
   };
@@ -344,7 +344,7 @@ const ExperimentState = (props) => {
   };
 
   // Get Summary for Search item
-  const getExperimentSummary = async (expid) => {
+  const getExperimentSummary = async (expid, controller) => {
     clearSummary(expid);
     setLoadingSummary(expid);
     let summary = null;
@@ -353,9 +353,11 @@ const ExperimentState = (props) => {
       sleep(3000);
     } else {
       await axios
-        .get(`${localserver}/summary/${expid}`)
+        .get(`${localserver}/summary/${expid}`, {signal: controller.signal})
         .catch((error) => {
-          alert(ERROR_MESSAGE + "\n" + error.message);
+          if(error.message !== "canceled") {
+            alert(ERROR_MESSAGE + "\n" + error.message);
+          }
         }
         ).then((res) => {
           summary = res ? res.data : null;
