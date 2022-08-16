@@ -26,13 +26,12 @@ const Search = ({ specificSearch }) => {
   const btnRef = useRef()
 
   useEffect( () => {
-    //
     if(btnRef.current && loggedUser === true) {
       btnRef.current.disabled = false
       controller.abort()
-      controller = new AbortController()
+      controller = new AbortController();
     }
-  }, [experimentContext.currentPage])
+  }, [experimentContext.experimentsInPage])
 
   useEffect(() => {
     if (currentExpTypeChoice) {
