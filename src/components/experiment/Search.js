@@ -24,7 +24,8 @@ const Search = ({ specificSearch }) => {
   const btnRef = useRef()
 
   useEffect( () => {
-    if(btnRef.current) {
+    if(btnRef.current && loggedUser === true) {
+      console.log("useEffect called")
       btnRef.current.disabled = false
     }
   }, [experimentContext.currentPage])
