@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
 import AlertContext from "../context/alert/alertContext";
 import {
@@ -20,6 +20,14 @@ const Search = ({ specificSearch }) => {
   const currentActiveCheck = localStorage.getItem(
     localStorageExperimentActiveCheck
   );
+
+  const btnRef = useRef()
+
+  useEffect( () => {
+    if(btnRef.current) {
+      btnRef.current.disabled = false
+    }
+  }, [experimentContext.currentPage])
 
   useEffect(() => {
     if (currentExpTypeChoice) {
@@ -213,15 +221,11 @@ const Search = ({ specificSearch }) => {
             <button
               className='btn btn-primary btn-block'
               onClick={ async(event) => {
-                  // Disable the button
                   const btn_instance = event.currentTarget;
                   btn_instance.disabled = true;
-                  // btn_instance.classList.add("disabled");
 
                   await experimentContext.getSummariesInPage()
 
-                  // Able the button
-                  // btn_instance.classList.remove("disabled");
                   btn_instance.disabled = false;
                 }
               }
@@ -229,6 +233,7 @@ const Search = ({ specificSearch }) => {
               data-placement='bottom'
               title='Shows a summary of the current progress of each experiment in the result.'
               // disabled={loggedUser ? false : true}
+              ref = {btnRef}
             >
               Show Detailed Data
             </button>
