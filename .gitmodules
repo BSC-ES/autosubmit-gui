@@ -1,0 +1,3 @@
+[submodule "autosubmit-gui-docs"]
+	path = autosubmit-gui-docs
+	url = https://earth.bsc.es/gitlab/es/autosubmit-gui-docs/
