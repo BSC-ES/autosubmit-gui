@@ -7,8 +7,8 @@ export const AUTHENTICATION = true; // If false -> The authentication requiremen
 export const SHOW_PERFORMANCE_TAB = true; // If false -> The performance tab an all its references are hidden.
 export const rootAppName = "autosubmitapp"; // Name of the app. It can be changed to publish the GUI in another environment, for example for testing in a new server.
 // Main external url of the app. It can be changed to publish the GUI in another environment, for example for testing in a new server.
-// current possible values: "https://earth.bsc.es/" , "https://bscesvmtests.bsc.es/"
-export const rootAppUrl  = "https://bscesvmtests.bsc.es/";
+// current possible values: "https://earth.bsc.es" , "https://bscesvmtests.bsc.es"
+export const rootAppUrl  = "https://bscesvmtests.bsc.es";
 export const ERROR_MESSAGE =
   "Autosubmit API couldn't retrieve the requested information on time. It might be due to a network error or heavy traffic on the shared folders that Autosubmit uses to store experiment information (/esarchive/autosubmit/)."; // Default error message
 
