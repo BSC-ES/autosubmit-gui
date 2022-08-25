@@ -33,7 +33,7 @@ const Login = (props) => {
   };
   const onCASLogin = () => {
     //const _target = `${thirdPartyLoginURL}?service=https://earth.bsc.es/${rootAppName}/login`;
-    /const _target = `${thirdPartyLoginURL}?service=${rootAppUrl}/${rootAppName}/login`;
+    const _target = `${thirdPartyLoginURL}?service=${rootAppUrl}/${rootAppName}/login`;
 
     window.location.href = _target;
   };
