@@ -1,7 +1,15 @@
 #!/bin/bash
-echo "Updating autosubmit_api and restarting gunicorn"
 source /srv/www/htdocs/AutosubmitAPI/venv27/bin/activate
-pip install autosubmit_api --upgrade
+if [ $# -gt 0 ]
+then
+  if [ "$1" == "--update" ]
+  then
+    pip install autosubmit_api --upgrade
+  else
+    echo "Wrong option. Use --update to update the system before launch."
+    exit 0
+  fi
+fi
 ps aux | grep gunicorn | awk '{print $2}' | xargs -r kill
 ps aux | grep gunicorn
 echo "Set SECRET KEY"
