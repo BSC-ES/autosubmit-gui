@@ -26,12 +26,26 @@ const Search = ({ specificSearch }) => {
   const btnRef = useRef()
 
   useEffect( () => {
-    if(btnRef.current && loggedUser === true) {
+    if(btnRef.current && loggedUser && loggedUser !== "Failed") {
       btnRef.current.disabled = false
       controller.abort()
+      experimentContext.shutdown("summary", loggedUser)
       controller = new AbortController();
     }
   }, [experimentContext.experimentsInPage])
+
+  useEffect(() => {
+    const unloadCallback = (event) => {
+      event.preventDefault()
+      controller.abort()
+      experimentContext.shutdown("summary", loggedUser);
+      controller = new AbortController();
+      return;
+    };
+
+    window.addEventListener("beforeunload", unloadCallback);
+      return () => window.removeEventListener("beforeunload", unloadCallback);
+  }, []);
 
   useEffect(() => {
     if (currentExpTypeChoice) {
