@@ -370,6 +370,22 @@ const ExperimentState = (props) => {
     });
   };
 
+  const shutdown = async (route, loggedUser) => {
+    if (NOAPI) {
+      sleep(3000);
+    } else {
+      await axios
+        .get(`${localserver}/shutdown/${route}`, {
+          params: {
+            loggedUser: loggedUser
+          }
+        }).catch((error) => {
+            alert("shutdown: " + ERROR_MESSAGE + "\n" + error.message);
+          }
+        )
+    }
+  };
+
   const getExperimentPerformanceMetrics = async (expid) => {
     cleanPerformanceMetrics();
     setLoadingPerformanceMetrics();
@@ -832,6 +848,7 @@ const ExperimentState = (props) => {
         getRunningState,
         getExperimentPerformanceMetrics,
         getExperimentSummary,
+        shutdown,
         clearSummary,
         getSummaries,
         getSummariesInPage,
