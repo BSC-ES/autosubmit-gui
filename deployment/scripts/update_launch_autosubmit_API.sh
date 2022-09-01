@@ -1,8 +1,12 @@
 #!/bin/bash
-source /srv/www/htdocs/AutosubmitAPI/venv27/bin/activate
-if [ $# -gt 0 ]
+
+# first parameter to specify the path to the  virtual environment
+VIRTUAL_ENV="$1"
+source ${VIRTUAL_ENV}
+
+if [ $# -gt 1 ]
 then
-  if [ "$1" == "--update" ]
+  if [ "$2" == "--update" ]
   then
     pip install autosubmit_api --upgrade
   else
