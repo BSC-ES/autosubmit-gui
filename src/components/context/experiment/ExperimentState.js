@@ -217,12 +217,20 @@ const ExperimentState = (props) => {
     });
   };
 
-  const getSummaries = () => {
+  const getSummaries = async() => {
     const experiments = state.experiments;
-    for (var exp in experiments) {
-      var exp_name = experiments[exp].name;
-      getExperimentSummary(exp_name);
-    }
+    const all_promises = experiments.map(exp =>
+      getExperimentSummary(exp.name)
+    )
+    await Promise.all(all_promises)
+  };
+
+  const getSummariesInPage = async(controller) => {
+    const experiments = state.experimentsInPage;
+    const all_promises = experiments.map(exp =>
+      getExperimentSummary(exp.name, controller)
+    )
+    await Promise.all(all_promises)
   };
 
   const getJobHistory = async (expid, job_name) => {
@@ -336,7 +344,7 @@ const ExperimentState = (props) => {
   };
 
   // Get Summary for Search item
-  const getExperimentSummary = async (expid) => {
+  const getExperimentSummary = async (expid, controller) => {
     clearSummary(expid);
     setLoadingSummary(expid);
     let summary = null;
@@ -344,18 +352,38 @@ const ExperimentState = (props) => {
       summary = require("../data/summary_" + String(expid) + ".json");
       sleep(3000);
     } else {
-      const res = await axios
-        .get(`${localserver}/summary/${expid}`)
+      await axios
+        .get(`${localserver}/summary/${expid}`, {signal: controller.signal})
         .catch((error) => {
-          alert(ERROR_MESSAGE + "\n" + error.message);
+          if(error.message !== "canceled") {
+            alert(ERROR_MESSAGE + "\n" + error.message);
+          }
+        }
+        ).then((res) => {
+          summary = res ? res.data : null;
         });
-      summary = res ? res.data : null;
       debug && console.log(summary);
     }
     dispatch({
       type: GET_EXPERIMENT_SUMMARY,
       payload: { expid: expid, summary: summary },
     });
+  };
+
+  const shutdown = async (route, loggedUser) => {
+    if (NOAPI) {
+      sleep(3000);
+    } else {
+      await axios
+        .get(`${localserver}/shutdown/${route}`, {
+          params: {
+            loggedUser: loggedUser
+          }
+        }).catch((error) => {
+            alert("shutdown: " + ERROR_MESSAGE + "\n" + error.message);
+          }
+        )
+    }
   };
 
   const getExperimentPerformanceMetrics = async (expid) => {
@@ -503,7 +531,7 @@ const ExperimentState = (props) => {
   };
 
   /* This request requires a valid token (JWT).
-    You can set your own token if you know the secret word that is set in the API server.    
+    You can set your own token if you know the secret word that is set in the API server.
   */
   const requestCurrentConfiguration = async (expid) => {
     const token = localStorage.getItem("token");
@@ -820,8 +848,10 @@ const ExperimentState = (props) => {
         getRunningState,
         getExperimentPerformanceMetrics,
         getExperimentSummary,
+        shutdown,
         clearSummary,
         getSummaries,
+        getSummariesInPage,
         activateSelectionMode,
         deactivateSelectionMode,
         removeSelectedJob,

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
 import AlertContext from "../context/alert/alertContext";
 import {
@@ -8,6 +8,8 @@ import {
   simpleActiveStatusToComplex,
   NOAPI,
 } from "../context/vars";
+
+let controller = new AbortController();
 
 const Search = ({ specificSearch }) => {
   const alertContext = useContext(AlertContext);
@@ -20,6 +22,30 @@ const Search = ({ specificSearch }) => {
   const currentActiveCheck = localStorage.getItem(
     localStorageExperimentActiveCheck
   );
+
+  const btnRef = useRef()
+
+  useEffect( () => {
+    if(btnRef.current && loggedUser && loggedUser !== "Failed") {
+      btnRef.current.disabled = false
+      controller.abort()
+      experimentContext.shutdown("summary", loggedUser)
+      controller = new AbortController();
+    }
+  }, [experimentContext.experimentsInPage])
+
+  useEffect(() => {
+    const unloadCallback = (event) => {
+      event.preventDefault()
+      controller.abort()
+      experimentContext.shutdown("summary", loggedUser);
+      controller = new AbortController();
+      return;
+    };
+
+    window.addEventListener("beforeunload", unloadCallback);
+      return () => window.removeEventListener("beforeunload", unloadCallback);
+  }, []);
 
   useEffect(() => {
     if (currentExpTypeChoice) {
@@ -53,6 +79,7 @@ const Search = ({ specificSearch }) => {
     currentActiveCheck,
     experiments,
   ]);
+
 
   const [text, setText] = useState("");
   const [typeExperiment, setTypeExperiment] = useState("");
@@ -211,11 +238,20 @@ const Search = ({ specificSearch }) => {
           <div className='col-md-3'>
             <button
               className='btn btn-primary btn-block'
-              onClick={experimentContext.getSummaries}
+              onClick={ async(event) => {
+                  const btn_instance = event.currentTarget;
+                  btn_instance.disabled = true;
+
+                  await experimentContext.getSummariesInPage(controller)
+
+                  btn_instance.disabled = false;
+                }
+              }
               data-toggle='tooltip'
               data-placement='bottom'
               title='Shows a summary of the current progress of each experiment in the result.'
               disabled={loggedUser ? false : true}
+              ref = {btnRef}
             >
               Show Detailed Data
             </button>
