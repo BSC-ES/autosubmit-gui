@@ -2,3 +2,5 @@ node_modules/.cache/
 ./node_modules
 node_modules
 .vscode
+/build/
+/.idea/
