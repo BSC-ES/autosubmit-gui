@@ -63,12 +63,26 @@ const TreeState = (props) => {
   const localserver = AUTOSUBMIT_API_SOURCE;
   const debug = DEBUG;
 
-  const getExperimentTree = async (expid, warningMessage = null) => {
+  const getExperimentTree = async (expid, warningMessage = null, controller) => {
     setLoadingTree();
     let result = null;
     //start();
     if (NOAPI) {
       result = require("../data/tree_" + String(expid) + ".json");
+    } else if (controller !== undefined) {
+      const res = await axios
+        .get(`${localserver}/tree/${expid}`, {
+          signal: controller.signal
+        })
+        .catch((error) => {
+          if(error.message !== "canceled") {
+            alert(error.message);
+            setOffLoadingTree();
+          } else {
+            cleanTreeData()
+          }
+        });
+      result = res ? res.data : null;
     } else {
       const res = await axios
         .get(`${localserver}/tree/${expid}`)

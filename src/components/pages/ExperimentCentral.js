@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import { withRouter } from "react-router";
 //import Experiment from "../experiment/Experiment";
 import ExperimentColumn from "../experiment/ExperimentColumn";
@@ -36,17 +36,27 @@ import CurrentConfiguration from "../experiment/CurrentConfiguration";
 import { buildWarningInactiveMessageTree } from "../context/utils";
 import { SHOW_PERFORMANCE_TAB } from "../context/vars";
 
+let controller = new AbortController();
+
 // Main render component. Calls other component and supplies props if necessary.
 const ExperimentCentral = ({ match }) => {
   // Focus Logic
   const expid = match.params.expid;
   // From custom URL
-  const resolve_action = match.params.action;
+  let resolve_action = match.params.action;
+  const location = useLocation()
+  if(location.params && location.params.tab) {
+    resolve_action = location.params.tab
+  }
+  if (resolve_action === undefined) {
+    resolve_action = "tree"
+  }
+  const [currentTab, setCurrentTab] = useState(resolve_action)
+
   const focus_graph =
     resolve_action && resolve_action === "graph" ? true : false;
   const focus_lighter =
     resolve_action && resolve_action === "light" ? true : false;
-  //console.log("Focus: " + focus_graph);
   const classTree =
     focus_graph === true || focus_lighter === true
       ? "nav-link"
@@ -156,24 +166,24 @@ const ExperimentCentral = ({ match }) => {
       // Some type of switch might be useful here but more views are unlikely
       if (resolve_action) {
         if (resolve_action === "graph") {
-          const warningMessage = buildWarningInactiveMessageTree(
-            experimentRunning,
-            logTimeDiff,
-            currentLog,
-            data ? data.nodes : null
-          );
-          getExperimentGraph(expid, "none", "standard", warningMessage);
+          // const warningMessage = buildWarningInactiveMessageTree(
+          //   experimentRunning,
+          //   logTimeDiff,
+          //   currentLog,
+          //   data ? data.nodes : null
+          // );
+          // getExperimentGraph(expid, "none", "standard", warningMessage);
         } else if (resolve_action === "light") {
           getLighterView(expid);
         }
       } else {
-        const warningMessage = buildWarningInactiveMessageTree(
-          experimentRunning,
-          logTimeDiff,
-          currentLog,
-          treedata ? treedata.jobs : null
-        );
-        getExperimentTree(expid, warningMessage);
+        // const warningMessage = buildWarningInactiveMessageTree(
+        //   experimentRunning,
+        //   logTimeDiff,
+        //   currentLog,
+        //   treedata ? treedata.jobs : null
+        // );
+        // getExperimentTree(expid, warningMessage);
       }
     }
     const interval = setInterval(() => getRunningState(expid), 300000); // Every 5 minutes
@@ -183,6 +193,49 @@ const ExperimentCentral = ({ match }) => {
     };
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    console.log(currentTab)
+    // experimentContext.shutdown("summary", loggedUser);
+    controller.abort()
+    controller = new AbortController();
+
+    function fetchTree() {
+      getLogStatus(expid, controller);
+      getExperimentTree(
+        expid,
+        buildWarningInactiveMessageTree(
+          experimentRunning,
+          logTimeDiff,
+          currentLog,
+          treedata ? treedata.jobs : null
+        ),
+        controller
+      )
+    }
+
+    function fetchGraph() {
+      getLogStatus(expid, controller);
+      const warningMessage = buildWarningInactiveMessageTree(
+        experimentRunning,
+        logTimeDiff,
+        currentLog,
+        data ? data.nodes : null
+      );
+      // By default we load the classic view
+      getExperimentGraph(expid, "none", "standard", warningMessage, controller);
+    }
+
+    switch (currentTab) {
+      case "tree":
+        if (!treedata) fetchTree()
+        break;
+      case "graph":
+        if (!data) fetchGraph()
+        break;
+    }
+
+  }, [currentTab])
 
   return (
     <Fragment>
@@ -198,6 +251,7 @@ const ExperimentCentral = ({ match }) => {
                 role='tab'
                 aria-controls='treeview'
                 aria-selected='false'
+                onClick={() => setCurrentTab("tree")}
               >
                 Tree View
               </a>
@@ -211,6 +265,7 @@ const ExperimentCentral = ({ match }) => {
                 role='tab'
                 aria-controls='graph'
                 aria-selected='true'
+                onClick={() => setCurrentTab("graph")}
               >
                 Graph
               </a>
@@ -224,6 +279,7 @@ const ExperimentCentral = ({ match }) => {
                 role='tab'
                 aria-controls='log'
                 aria-selected='false'
+                onClick={() => setCurrentTab("log")}
               >
                 Log
               </a>
@@ -237,6 +293,7 @@ const ExperimentCentral = ({ match }) => {
                 role='tab'
                 aria-controls='config'
                 aria-selected='false'
+                onClick={() => setCurrentTab("configuration")}
               >
                 Configuration
               </a>
@@ -250,6 +307,7 @@ const ExperimentCentral = ({ match }) => {
                 role='tab'
                 aria-controls='stats'
                 aria-selected='false'
+                onClick={() => setCurrentTab("statistics")}
               >
                 Statistics
               </a>
@@ -264,6 +322,7 @@ const ExperimentCentral = ({ match }) => {
                   role='tab'
                   aria-controls='performance'
                   aria-selected='false'
+                  onClick={() => setCurrentTab("performance")}
                 >
                   Performance
                 </a>
@@ -279,6 +338,7 @@ const ExperimentCentral = ({ match }) => {
                 role='tab'
                 aria-controls='lightview'
                 aria-selected='false'
+                onClick={() => setCurrentTab("quick")}
               >
                 Quick View
               </a>
@@ -292,6 +352,7 @@ const ExperimentCentral = ({ match }) => {
                 role='tab'
                 aria-controls='faq'
                 aria-selected='false'
+                onClick={() => setCurrentTab("faq")}
               >
                 FAQ
               </a>

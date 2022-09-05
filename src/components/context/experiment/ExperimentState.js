@@ -195,7 +195,7 @@ const ExperimentState = (props) => {
     setPaginatedResult();
   };
 
-  const getLogStatus = async (expid) => {
+  const getLogStatus = async (expid, controller) => {
     let result = null;
     if (NOAPI) {
       result = {
@@ -204,6 +204,19 @@ const ExperimentState = (props) => {
         error_message: "NO API",
         log_path: "/none/none",
       };
+    } else if (controller !== undefined) {
+      const res = await axios
+        .get(`${localserver}/logrun/${expid}`, {
+            signal: controller.signal
+          }
+        )
+        .catch((error) => {
+          if(error.message !== "canceled") {
+            alert(ERROR_MESSAGE + "\n" + error.message)
+          }
+        });
+      debug && console.log(res.data);
+      result = res ? res.data : {};
     } else {
       const res = await axios
         .get(`${localserver}/logrun/${expid}`)
@@ -225,10 +238,10 @@ const ExperimentState = (props) => {
     await Promise.all(all_promises)
   };
 
-  const getSummariesInPage = async(controller) => {
+  const getSummariesInPage = async(controller, loggedUser) => {
     const experiments = state.experimentsInPage;
     const all_promises = experiments.map(exp =>
-      getExperimentSummary(exp.name, controller)
+      getExperimentSummary(exp.name, controller, loggedUser)
     )
     await Promise.all(all_promises)
   };
@@ -344,7 +357,7 @@ const ExperimentState = (props) => {
   };
 
   // Get Summary for Search item
-  const getExperimentSummary = async (expid, controller) => {
+  const getExperimentSummary = async (expid, controller, loggedUser) => {
     clearSummary(expid);
     setLoadingSummary(expid);
     let summary = null;
@@ -353,7 +366,10 @@ const ExperimentState = (props) => {
       sleep(3000);
     } else {
       await axios
-        .get(`${localserver}/summary/${expid}`, {signal: controller.signal})
+        .get(`${localserver}/summary/${expid}`, {
+          signal: controller.signal,
+          params: { loggedUser: loggedUser }
+        })
         .catch((error) => {
           if(error.message !== "canceled") {
             alert(ERROR_MESSAGE + "\n" + error.message);
