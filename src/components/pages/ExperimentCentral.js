@@ -196,8 +196,6 @@ const ExperimentCentral = ({ match }) => {
   }, []);
 
   useEffect(() => {
-    console.log(currentTab)
-    // experimentContext.shutdown("summary", loggedUser);
     controller.abort()
     controller = new AbortController();
 
@@ -211,7 +209,8 @@ const ExperimentCentral = ({ match }) => {
           currentLog,
           treedata ? treedata.jobs : null
         ),
-        controller
+        controller,
+        experimentContext.loggedUser
       )
     }
 
@@ -224,19 +223,42 @@ const ExperimentCentral = ({ match }) => {
         data ? data.nodes : null
       );
       // By default we load the classic view
-      getExperimentGraph(expid, "none", "standard", warningMessage, controller);
+      getExperimentGraph(expid, "none", "standard", warningMessage, controller, experimentContext.loggedUser);
     }
 
     switch (currentTab) {
       case "tree":
-        if (!treedata) fetchTree()
+        if (!treedata) {
+          experimentContext.shutdown("graph", experimentContext.loggedUser);
+          fetchTree()
+        }
         break;
       case "graph":
-        if (!data) fetchGraph()
+        if (!data) {
+          experimentContext.shutdown("tree", experimentContext.loggedUser);
+          fetchGraph()
+        }
         break;
+      default:
+        experimentContext.shutdown("tree", experimentContext.loggedUser);
+        experimentContext.shutdown("graph", experimentContext.loggedUser);
     }
 
   }, [currentTab])
+
+  useEffect(() => {
+    const unloadCallback = (event) => {
+      event.preventDefault()
+      controller.abort()
+      controller = new AbortController();
+      experimentContext.shutdown("tree", experimentContext.loggedUser);
+      experimentContext.shutdown("graph", experimentContext.loggedUser);
+      return;
+    };
+
+    window.addEventListener("beforeunload", unloadCallback);
+      return () => window.removeEventListener("beforeunload", unloadCallback);
+  }, []);
 
   return (
     <Fragment>

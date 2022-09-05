@@ -81,7 +81,8 @@ const GraphState = (props) => {
     grouped = "none",
     layout = "standard",
     warningMessage = null,
-    controller
+    controller,
+    loggedUser
   ) => {
     cleanOnlyGraphData();
     setLoadingGraph();
@@ -95,10 +96,11 @@ const GraphState = (props) => {
         ".json");
       //console.log(res.data);
       await sleep(1000);
-    } else if (controller !== undefined) {
+    } else if(controller !== undefined && loggedUser !== undefined) {
       const res = await axios
         .get(`${localserver}/graph/${expid}/${layout}/${grouped}`, {
-          signal: controller.signal
+          signal: controller.signal,
+          params: { loggedUser: loggedUser }
         })
         .catch((error) => {
           if(error.message !== "canceled") {

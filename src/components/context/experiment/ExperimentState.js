@@ -364,7 +364,7 @@ const ExperimentState = (props) => {
     if (NOAPI) {
       summary = require("../data/summary_" + String(expid) + ".json");
       sleep(3000);
-    } else {
+    } else if(controller !== undefined && loggedUser !== undefined) {
       await axios
         .get(`${localserver}/summary/${expid}`, {
           signal: controller.signal,
@@ -378,6 +378,14 @@ const ExperimentState = (props) => {
         ).then((res) => {
           summary = res ? res.data : null;
         });
+      debug && console.log(summary);
+    } else {
+      const res = await axios
+          .get(`${localserver}/summary/${expid}`)
+          .catch((error) => {
+            alert(ERROR_MESSAGE + "\n" + error.message);
+          });
+      summary = res ? res.data : null;
       debug && console.log(summary);
     }
     dispatch({
