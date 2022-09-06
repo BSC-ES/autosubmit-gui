@@ -212,7 +212,7 @@ const ExperimentState = (props) => {
         )
         .catch((error) => {
           if(error.message !== "canceled") {
-            alert(ERROR_MESSAGE + "\n" + error.message)
+            alert("getLogStatus: " + ERROR_MESSAGE + "\n" + error.message)
           }
         });
       debug && console.log(res.data);
@@ -372,7 +372,7 @@ const ExperimentState = (props) => {
         })
         .catch((error) => {
           if(error.message !== "canceled") {
-            alert(ERROR_MESSAGE + "\n" + error.message);
+            alert("getExperimentSummary: " + ERROR_MESSAGE + "\n" + error.message);
           }
         }
         ).then((res) => {

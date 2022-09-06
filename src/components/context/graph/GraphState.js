@@ -104,7 +104,7 @@ const GraphState = (props) => {
         })
         .catch((error) => {
           if(error.message !== "canceled") {
-            alert(error.message);
+            alert("getExperimentGraph: " + error.message);
             setOffLoadingGraph();
           } else {
             cleanGraphData()

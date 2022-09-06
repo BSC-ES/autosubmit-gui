@@ -76,7 +76,7 @@ const TreeState = (props) => {
         })
         .catch((error) => {
           if(error.message !== "canceled") {
-            alert(error.message);
+            alert("getExperimentTree: ", error.message);
             setOffLoadingTree();
           } else {
             cleanTreeData()

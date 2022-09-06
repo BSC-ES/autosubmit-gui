@@ -226,22 +226,14 @@ const ExperimentCentral = ({ match }) => {
       getExperimentGraph(expid, "none", "standard", warningMessage, controller, experimentContext.loggedUser);
     }
 
-    switch (currentTab) {
-      case "tree":
-        if (!treedata) {
-          experimentContext.shutdown("graph", experimentContext.loggedUser);
-          fetchTree()
-        }
-        break;
-      case "graph":
-        if (!data) {
-          experimentContext.shutdown("tree", experimentContext.loggedUser);
-          fetchGraph()
-        }
-        break;
-      default:
-        experimentContext.shutdown("tree", experimentContext.loggedUser);
-        experimentContext.shutdown("graph", experimentContext.loggedUser);
+    if (currentTab == "tree" && !treedata) {
+      experimentContext.shutdown("graph", experimentContext.loggedUser);
+      fetchTree()
+    }
+
+    if (currentTab == "graph" && !data) {
+      experimentContext.shutdown("tree", experimentContext.loggedUser);
+      fetchGraph()
     }
 
   }, [currentTab])
@@ -251,8 +243,8 @@ const ExperimentCentral = ({ match }) => {
       event.preventDefault()
       controller.abort()
       controller = new AbortController();
-      experimentContext.shutdown("tree", experimentContext.loggedUser);
-      experimentContext.shutdown("graph", experimentContext.loggedUser);
+      if (!treedata) experimentContext.shutdown("tree", experimentContext.loggedUser);
+      if (!data) experimentContext.shutdown("graph", experimentContext.loggedUser);
       return;
     };
 
