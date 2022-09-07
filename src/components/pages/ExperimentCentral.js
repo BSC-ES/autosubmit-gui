@@ -226,6 +226,10 @@ const ExperimentCentral = ({ match }) => {
       getExperimentGraph(expid, "none", "standard", warningMessage, controller, experimentContext.loggedUser);
     }
 
+    function fetchQuickView() {
+      getLighterView(expid);
+    }
+
     if (currentTab === "tree" && !treedata) {
       experimentContext.shutdown("graph", experimentContext.loggedUser, expid);
       fetchTree()
@@ -234,6 +238,10 @@ const ExperimentCentral = ({ match }) => {
     if (currentTab === "graph" && !data) {
       experimentContext.shutdown("tree", experimentContext.loggedUser, expid);
       fetchGraph()
+    }
+
+    if (currentTab === "quick" && !isValid) {
+      fetchQuickView()
     }
 
   // eslint-disable-next-line
@@ -253,13 +261,6 @@ const ExperimentCentral = ({ match }) => {
     window.addEventListener("beforeunload", unloadCallback);
       return () => window.removeEventListener("beforeunload", unloadCallback);
   });
-
-  // `componentWillUnmount`
-  // When this component is soon to be destroyed we kill possible active workers remaining.
-  useLayoutEffect(() => () => {
-    if (!treedata) experimentContext.shutdown("tree", experimentContext.loggedUser, expid);
-    if (!data) experimentContext.shutdown("graph", experimentContext.loggedUser, expid);
-  })
 
   return (
     <Fragment>
