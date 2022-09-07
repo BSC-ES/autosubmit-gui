@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState, useLayoutEffect } from "react";
 import { useLocation } from 'react-router-dom'
 import { withRouter } from "react-router";
 //import Experiment from "../experiment/Experiment";
@@ -226,31 +226,40 @@ const ExperimentCentral = ({ match }) => {
       getExperimentGraph(expid, "none", "standard", warningMessage, controller, experimentContext.loggedUser);
     }
 
-    if (currentTab == "tree" && !treedata) {
-      experimentContext.shutdown("graph", experimentContext.loggedUser);
+    if (currentTab === "tree" && !treedata) {
+      experimentContext.shutdown("graph", experimentContext.loggedUser, expid);
       fetchTree()
     }
 
-    if (currentTab == "graph" && !data) {
-      experimentContext.shutdown("tree", experimentContext.loggedUser);
+    if (currentTab === "graph" && !data) {
+      experimentContext.shutdown("tree", experimentContext.loggedUser, expid);
       fetchGraph()
     }
 
+  // eslint-disable-next-line
   }, [currentTab])
 
+  // Window close
   useEffect(() => {
     const unloadCallback = (event) => {
       event.preventDefault()
       controller.abort()
       controller = new AbortController();
-      if (!treedata) experimentContext.shutdown("tree", experimentContext.loggedUser);
-      if (!data) experimentContext.shutdown("graph", experimentContext.loggedUser);
+      if (!treedata) experimentContext.shutdown("tree", experimentContext.loggedUser, expid);
+      if (!data) experimentContext.shutdown("graph", experimentContext.loggedUser, expid);
       return;
     };
 
     window.addEventListener("beforeunload", unloadCallback);
       return () => window.removeEventListener("beforeunload", unloadCallback);
-  }, []);
+  });
+
+  // `componentWillUnmount`
+  // When this component is soon to be destroyed we kill possible active workers remaining.
+  useLayoutEffect(() => () => {
+    if (!treedata) experimentContext.shutdown("tree", experimentContext.loggedUser, expid);
+    if (!data) experimentContext.shutdown("graph", experimentContext.loggedUser, expid);
+  })
 
   return (
     <Fragment>

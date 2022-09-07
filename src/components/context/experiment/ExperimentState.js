@@ -368,7 +368,9 @@ const ExperimentState = (props) => {
       await axios
         .get(`${localserver}/summary/${expid}`, {
           signal: controller.signal,
-          params: { loggedUser: loggedUser }
+          params: {
+            loggedUser: loggedUser
+          }
         })
         .catch((error) => {
           if(error.message !== "canceled") {
@@ -394,14 +396,15 @@ const ExperimentState = (props) => {
     });
   };
 
-  const shutdown = async (route, loggedUser) => {
+  const shutdown = async (route, loggedUser, expid=null) => {
     if (NOAPI) {
       sleep(3000);
     } else {
       await axios
         .get(`${localserver}/shutdown/${route}`, {
           params: {
-            loggedUser: loggedUser
+            loggedUser: loggedUser,
+            expid: expid
           }
         }).catch((error) => {
             alert("shutdown: " + ERROR_MESSAGE + "\n" + error.message);

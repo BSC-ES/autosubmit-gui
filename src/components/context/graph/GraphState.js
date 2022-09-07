@@ -100,7 +100,10 @@ const GraphState = (props) => {
       const res = await axios
         .get(`${localserver}/graph/${expid}/${layout}/${grouped}`, {
           signal: controller.signal,
-          params: { loggedUser: loggedUser }
+          params: {
+            loggedUser: loggedUser,
+            expid: expid
+          }
         })
         .catch((error) => {
           if(error.message !== "canceled") {

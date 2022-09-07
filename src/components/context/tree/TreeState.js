@@ -72,7 +72,11 @@ const TreeState = (props) => {
     } else if (controller !== undefined && loggedUser !== undefined) {
       const res = await axios
         .get(`${localserver}/tree/${expid}`, {
-          signal: controller.signal
+          signal: controller.signal,
+          params: {
+            loggedUser: loggedUser,
+            expid: expid
+          }
         })
         .catch((error) => {
           if(error.message !== "canceled") {

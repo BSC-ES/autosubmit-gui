@@ -30,24 +30,25 @@ const Search = ({ specificSearch }) => {
     if(btnRef.current) {
       btnRef.current.disabled = false
       controller.abort()
-      experimentContext.shutdown("summary", loggedUser)
+      experimentContext.shutdown("summary", loggedUser, experimentContext.expid)
       controller = new AbortController();
     }
   // eslint-disable-next-line
   }, [experimentContext.experimentsInPage])
 
+  // Window close
   useEffect(() => {
     const unloadCallback = (event) => {
       event.preventDefault()
       controller.abort()
-      experimentContext.shutdown("summary", loggedUser);
+      experimentContext.shutdown("summary", loggedUser, experimentContext.expid);
       controller = new AbortController();
       return;
     };
 
     window.addEventListener("beforeunload", unloadCallback);
       return () => window.removeEventListener("beforeunload", unloadCallback);
-  }, []);
+  });
 
   useEffect(() => {
     if (currentExpTypeChoice) {
