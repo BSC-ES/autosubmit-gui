@@ -75,7 +75,6 @@ const TreeState = (props) => {
           signal: controller.signal,
           params: {
             loggedUser: loggedUser,
-            expid: expid
           }
         })
         .catch((error) => {

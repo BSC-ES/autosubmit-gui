@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect, useState, useLayoutEffect } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import { useLocation } from 'react-router-dom'
 import { withRouter } from "react-router";
 //import Experiment from "../experiment/Experiment";
@@ -156,46 +156,6 @@ const ExperimentCentral = ({ match }) => {
   } = lighterContext;
 
   useEffect(() => {
-    // Get experiment header data
-    getExperiment(expid);
-    // Get experiment running status
-    getRunningState(expid);
-    // Get current log status
-    getLogStatus(expid);
-    if (expid && expid.length > 0) {
-      // resolve_action depends on the URL call
-      // Some type of switch might be useful here but more views are unlikely
-      if (resolve_action) {
-        if (resolve_action === "graph") {
-          // const warningMessage = buildWarningInactiveMessageTree(
-          //   experimentRunning,
-          //   logTimeDiff,
-          //   currentLog,
-          //   data ? data.nodes : null
-          // );
-          // getExperimentGraph(expid, "none", "standard", warningMessage);
-        } else if (resolve_action === "light") {
-          getLighterView(expid);
-        }
-      } else {
-        // const warningMessage = buildWarningInactiveMessageTree(
-        //   experimentRunning,
-        //   logTimeDiff,
-        //   currentLog,
-        //   treedata ? treedata.jobs : null
-        // );
-        // getExperimentTree(expid, warningMessage);
-      }
-    }
-    const interval = setInterval(() => getRunningState(expid), 300000); // Every 5 minutes
-    return () => {
-      clearInterval(interval);
-      cleanExperimentData();
-    };
-    // eslint-disable-next-line
-  }, []);
-
-  useEffect(() => {
     controller.abort()
     controller = new AbortController();
 
@@ -241,6 +201,7 @@ const ExperimentCentral = ({ match }) => {
     }
 
     if (currentTab === "quick" && !isValid) {
+      // No need to shutdown because quickView is not time consuming
       fetchQuickView()
     }
 
@@ -261,6 +222,35 @@ const ExperimentCentral = ({ match }) => {
     window.addEventListener("beforeunload", unloadCallback);
       return () => window.removeEventListener("beforeunload", unloadCallback);
   });
+
+  useEffect(() => {
+    // Get experiment header data
+    getExperiment(expid);
+    // Get experiment running status
+    getRunningState(expid);
+    // Get current log status
+    getLogStatus(expid);
+
+    const interval = setInterval(() => getRunningState(expid), 300000); // Every 5 minutes
+
+    // componentWillUnmount cleanup
+    return (() => {
+      clearInterval(interval);
+      cleanExperimentData();
+
+      controller.abort()
+      controller = new AbortController();
+
+      if (!treedata) {
+        experimentContext.shutdown("graph", experimentContext.loggedUser, expid);
+      }
+
+      if (!data) {
+        experimentContext.shutdown("tree", experimentContext.loggedUser, expid);
+      }
+    })
+  // eslint-disable-next-line
+  }, [])
 
   return (
     <Fragment>

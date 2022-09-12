@@ -50,6 +50,16 @@ const Search = ({ specificSearch }) => {
       return () => window.removeEventListener("beforeunload", unloadCallback);
   });
 
+  // componentWillUnmount: cleanup
+  useEffect( () => {
+    return (() => {
+      controller.abort()
+      experimentContext.shutdown("summary", loggedUser, experimentContext.expid)
+      controller = new AbortController();
+    })
+  // eslint-disable-next-line
+  }, [])
+
   useEffect(() => {
     if (currentExpTypeChoice) {
       setTypeExperiment(currentExpTypeChoice);
