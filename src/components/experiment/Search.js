@@ -52,6 +52,11 @@ const Search = ({ specificSearch }) => {
 
   // componentWillUnmount: cleanup
   useEffect( () => {
+    // initial load of running exp
+    if (experimentContext.experimentsInPage.length === 0) {
+      experimentContext.getCurrentRunning();
+    }
+
     return (() => {
       controller.abort()
       experimentContext.shutdown("summary", loggedUser, experimentContext.expid)
