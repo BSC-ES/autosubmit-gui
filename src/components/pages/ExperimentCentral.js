@@ -241,13 +241,8 @@ const ExperimentCentral = ({ match }) => {
       controller.abort()
       controller = new AbortController();
 
-      if (!treedata) {
-        experimentContext.shutdown("graph", experimentContext.loggedUser, expid);
-      }
-
-      if (!data) {
-        experimentContext.shutdown("tree", experimentContext.loggedUser, expid);
-      }
+      if (!treedata) experimentContext.shutdown("tree", experimentContext.loggedUser, expid);
+      if (!data) experimentContext.shutdown("graph", experimentContext.loggedUser, expid);
     })
   // eslint-disable-next-line
   }, [])
