@@ -1,3 +1,6 @@
+# note you may need root privileges for stopping and starting the Apache/Web server
+# positioned in the root where is the script
+
 cd autosubmitreact/
 echo "deleting old build folder"
 rm -rf build
