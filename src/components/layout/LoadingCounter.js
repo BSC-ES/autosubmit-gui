@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from "react";
 import TreeContext from "../context/tree/treeContext";
 import LighterContext from "../context/lighter/lighterContext";
 import ExperimentContext from "../context/experiment/experimentContext";
-import { maxReponseTimeThreshold } from "../context/vars";
+import { maxResponseTimeThreshold } from "../context/vars";
 
 const LoadingCounter = ({ loadsource }) => {
   //const { source_load } = source;
@@ -48,7 +48,7 @@ const LoadingCounter = ({ loadsource }) => {
 
   return (
     <div className='pb-4 text-center'>
-      {approximatedTime > maxReponseTimeThreshold && (
+      {approximatedTime > maxResponseTimeThreshold && (
         <p>
           This experiment might be too heavy to fetch in due time. If an error
           message is prompted, try the <b>Quick View</b>.
