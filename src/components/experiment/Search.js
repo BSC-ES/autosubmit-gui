@@ -94,7 +94,7 @@ const Search = ({ specificSearch }) => {
     specificSearch,
     searchExperimentsByOwner,
     currentExpTypeChoice,
-    currentActiveCheck,
+    // currentActiveCheck,
     experiments,
   ]);
 
@@ -209,7 +209,7 @@ const Search = ({ specificSearch }) => {
                   : "active"
               }
               onChange={onChangeActiveCheck}
-              checked={
+              checked = {
                 activeChoice === orderByType.showOnlyActive ? true : false
               }
             />
