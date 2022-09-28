@@ -26,7 +26,6 @@ const Search = ({ specificSearch }) => {
   const btnRef = useRef()
 
   useEffect( () => {
-    // if(btnRef.current && loggedUser && loggedUser !== "Failed") {
     if(btnRef.current) {
       btnRef.current.disabled = false
       controller.abort()
