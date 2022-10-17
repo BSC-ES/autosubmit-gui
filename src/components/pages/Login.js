@@ -8,6 +8,12 @@ const Login = (props) => {
   const { getVerifyTicket, loggedUser } = experimentContext;
 
   useEffect(() => {
+    if (props.location && props.location.state) {
+      localStorage.setItem("previousPath", props.location.state.from.pathname)
+    }
+  }, [])
+
+  useEffect(() => {
     const values = queryString.parse(props.location.search);
     if (values.ticket) {
       onVerify(values.ticket);
@@ -19,9 +25,17 @@ const Login = (props) => {
 
   const actionAfter = () => {
     if (loggedUser) {
-      setTimeout(() => {
-        props.history.push(`/${rootAppName}/?user=${loggedUser}`);
-      }, 3000);
+      let previousPath = localStorage.getItem("previousPath")
+      if (previousPath) {
+        localStorage.removeItem("previousPath")
+        setTimeout(() => {
+          props.history.push(`${previousPath}`);
+        }, 3000);
+      } else {
+        setTimeout(() => {
+          props.history.push(`/${rootAppName}/?user=${loggedUser}`);
+        }, 3000);
+      }
     }
   };
 
