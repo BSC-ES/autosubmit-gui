@@ -20,6 +20,7 @@ import {
   DEACTIVATE_SELECTION_MODE,
   UPDATE_SELECTED_JOBS,
   REMOVE_SELECTED_JOB,
+  SET_SELECTED_JOBS,
   SET_CURRENT_COMMAND,
   SET_LOADING_SUMMARY,
   CLEAN_EXPERIMENT_DATA,
@@ -71,7 +72,7 @@ export default (state, action) => {
       return {
         ...state,
         canSelect: true,
-        currentSelected: [],
+        // currentSelected: [],
         currentCommand: null,
         currentTextCommand: null,
       };
@@ -79,7 +80,7 @@ export default (state, action) => {
       return {
         ...state,
         canSelect: false,
-        currentSelected: [],
+        // currentSelected: [],
         currentCommand: null,
         currentTextCommand: null,
       };
@@ -629,6 +630,11 @@ export default (state, action) => {
         currentSelected: current,
         currentCommand: null,
         currentTextCommand: null,
+      };
+    case SET_SELECTED_JOBS:
+      return {
+        ...state,
+        currentSelected: action.payload,
       };
     case GET_JOB_LOG:
       return {

@@ -11,6 +11,7 @@ const Login = (props) => {
     if (props.location && props.location.state) {
       localStorage.setItem("previousPath", props.location.state.from.pathname)
     }
+    // eslint-disable-next-line
   }, [])
 
   useEffect(() => {

@@ -23,6 +23,7 @@ import {
   ACTIVATE_SELECTION_MODE,
   DEACTIVATE_SELECTION_MODE,
   REMOVE_SELECTED_JOB,
+  SET_SELECTED_JOBS,
   SET_CURRENT_COMMAND,
   SET_CURRENT_TEXT_COMMAND,
   UPDATE_SELECTED_JOBS,
@@ -407,7 +408,8 @@ const ExperimentState = (props) => {
             expid: expid
           }
         }).catch((error) => {
-            alert("shutdown: " + ERROR_MESSAGE + "\n" + error.message);
+            DEBUG && console.log("shutdown: " + ERROR_MESSAGE + "\n" + error.message)
+            // alert("shutdown: " + ERROR_MESSAGE + "\n" + error.message);
           }
         )
     }
@@ -588,6 +590,8 @@ const ExperimentState = (props) => {
           alert(ERROR_MESSAGE + "\n" + error.message);
           isError = true;
         });
+
+        console.log(res.data)
       if (isError === false) {
         //console.log(res);
         result = res ? res.data : null;
@@ -686,6 +690,7 @@ const ExperimentState = (props) => {
     const { message } = result;
     alert(message);
   };
+
 
   const setCurrentCommand = async (command) => {
     // for change status
@@ -815,6 +820,8 @@ const ExperimentState = (props) => {
     dispatch({ type: DEACTIVATE_SELECTION_MODE });
   const removeSelectedJob = (name) =>
     dispatch({ type: REMOVE_SELECTED_JOB, payload: name });
+  const setSelectedJobs = (value) =>
+    dispatch({ type: SET_SELECTED_JOBS, payload: value });
 
   return (
     <ExperimentContext.Provider
@@ -882,6 +889,7 @@ const ExperimentState = (props) => {
         activateSelectionMode,
         deactivateSelectionMode,
         removeSelectedJob,
+        setSelectedJobs,
         setCurrentCommand,
         setCurrentTextCommand,
         updateCurrentSelectedGraph,

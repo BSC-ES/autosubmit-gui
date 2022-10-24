@@ -3,25 +3,11 @@ import ExperimentContext from "../context/experiment/experimentContext";
 import CommandModal from "./CommandModal";
 
 const SelectedJobs = ({ source, target }) => {
-  //const util = require("util");
   const experimentContext = useContext(ExperimentContext);
   const { currentSelected, removeSelectedJob, canSelect } = experimentContext;
 
-  // const onSelectionMode = (e) => {
-  //   e.preventDefault();
-  //   activateSelectionMode();
-  //   //console.log("Sending " + boolValue);
-  // };
-
-  // const offSelectionMode = (e) => {
-  //   e.preventDefault();
-  //   deactivateSelectionMode();
-  //   //console.log("Sending " + boolValue);
-  // };
-
   const removeSelected = (name) => (e) => {
     e.preventDefault();
-    //console.log("Sending " + inputname);
     removeSelectedJob(name);
   };
 
@@ -51,6 +37,7 @@ const SelectedJobs = ({ source, target }) => {
                     onClick={removeSelected(job.name)}
                   >
                     <span>{job.name}</span>
+                    <span></span>
                   </button>
                 ))}
           </div>
