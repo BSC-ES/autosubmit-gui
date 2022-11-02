@@ -25,6 +25,10 @@ import {
   GET_EXPERIMENT_RUN_JOBDATA,
   LOADING_PREVIOUS_RUN,
   UPDATE_TREE_SELECTED_NODES,
+  EXPAND_ALL_TREE_DATA,
+  COLLAPSE_ALL_TREE_DATA,
+  SAVE_TREE_LAYOUT,
+  RESET_TREE_LAYOUT,
   SET_CURRENT_COMMAND,
   SET_CURRENT_TEXT_COMMAND,
   SET_WARNING_ACTIVE,
@@ -237,6 +241,14 @@ const TreeState = (props) => {
     dispatch({ type: SET_NOTIFICATION_TITLE_TREE, payload: notification });
   const updateTreeSelectedNodes = () =>
     dispatch({ type: UPDATE_TREE_SELECTED_NODES });
+  const expandAllTree = () =>
+    dispatch({ type: EXPAND_ALL_TREE_DATA });
+  const collapseAllTree = () =>
+    dispatch({ type: COLLAPSE_ALL_TREE_DATA });
+  const saveTreeLayout = () =>
+    dispatch({ type: SAVE_TREE_LAYOUT });
+  const resetTreeLayout = () =>
+    dispatch({ type: RESET_TREE_LAYOUT });
 
   return (
     <TreeContext.Provider
@@ -267,6 +279,10 @@ const TreeState = (props) => {
         filterTreeView,
         setFancyTree,
         cleanTreeData,
+        expandAllTree,
+        collapseAllTree,
+        saveTreeLayout,
+        resetTreeLayout,
         cleanPklTreeData,
         updateSelectionTree,
         setAutoUpdateTreePkl,

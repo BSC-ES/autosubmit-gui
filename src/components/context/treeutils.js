@@ -161,6 +161,19 @@ const traverseUpdate = (
   }
 };
 
+export const expandTreeRecurisvely = (treedata, condition) => {
+  function iter(level) {
+    return function (node)  {
+        if (Object.hasOwn(node, 'expanded')) {
+          node["expanded"] = condition
+        }
+        (node.children || []).forEach(iter(level + 1));
+    };
+  }
+  treedata.tree.forEach(iter(0));
+  return treedata;
+}
+
 export const buildRunTitle = (runId, meta, jobs_number_completed) => {
   let runTitle = "Run " + creationDateToId(String(meta.created), runId);
   if (meta) {

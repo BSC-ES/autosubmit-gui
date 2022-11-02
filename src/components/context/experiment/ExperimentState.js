@@ -590,8 +590,6 @@ const ExperimentState = (props) => {
           alert(ERROR_MESSAGE + "\n" + error.message);
           isError = true;
         });
-
-        console.log(res.data)
       if (isError === false) {
         //console.log(res);
         result = res ? res.data : null;
@@ -690,7 +688,6 @@ const ExperimentState = (props) => {
     const { message } = result;
     alert(message);
   };
-
 
   const setCurrentCommand = async (command) => {
     // for change status
@@ -822,7 +819,6 @@ const ExperimentState = (props) => {
     dispatch({ type: REMOVE_SELECTED_JOB, payload: name });
   const setSelectedJobs = (value) =>
     dispatch({ type: SET_SELECTED_JOBS, payload: value });
-
   return (
     <ExperimentContext.Provider
       value={{
