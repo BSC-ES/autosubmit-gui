@@ -1,7 +1,6 @@
 import { useRef, useEffect, useState, useContext } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
 
-
 const drawRect = (info, ctx, style = {}) => {
   const { x, y, w, h } = info;
   const { backgroundColor = 'black' } = style;
@@ -20,8 +19,6 @@ const getMousePos = (canvas, evt) => {
 }
 
 const SelectionCanvas = (props) => {
-  console.log(props)
-
   const canvasRef = useRef(null)
   const experimentContext = useContext(ExperimentContext);
   const { setSelectedJobs, canSelect } = experimentContext;
@@ -45,7 +42,6 @@ const SelectionCanvas = (props) => {
   // Square drawing
   const [rect, setRect] = useState({ x: null, y: null, w: null, h:null } )
   useEffect(() => {
-    console.log("useeffect rect")
     const canvas = canvasRef.current
     const context = canvas.getContext('2d')
     context.clearRect(0, 0, context.canvas.width, context.canvas.height)
@@ -62,12 +58,12 @@ const SelectionCanvas = (props) => {
   const [go, setGo] = useState(false)
   useEffect(() => {
     const { currentSelected } = experimentContext;
-    console.log("useeffect go: ", currentSelected)
     if (go === true) {
       const canvas = canvasRef.current
       if (rect.x !== null ) {
         var rect_c = canvas.getBoundingClientRect();
         let res = []
+        // Loop through all nodes and get those who are within the selection square
         props.net.state.stateNet.selectNodes(props.net.state.stateNet.body.data.nodes.get().reduce(
           (selected, {id, color}) => {
             const { x, y } = props.net.state.stateNet.getPositions(id)[id];
@@ -75,7 +71,6 @@ const SelectionCanvas = (props) => {
             test = {
               x: ((test.x - rect_c.left) / (rect_c.right - rect_c.left) * canvas.width)+25,
               y: ((test.y - rect_c.top) / (rect_c.bottom - rect_c.top) * canvas.height)+217
-              // y: test.y-100
             }
             if (rect.x <= test.x && test.x <= rect.w + rect.x && rect.y <= test.y && test.y <= rect.h + rect.y) {
               res.push({name: id, color: color.background})
@@ -95,27 +90,26 @@ const SelectionCanvas = (props) => {
   const [init_Point, setInitPoint] = useState({x: null, y: null})
   const [fi_Point, setFiPoint] = useState({x: null, y: null})
   useEffect(() => {
-    let bb = document.getElementById("canva").getBoundingClientRect();
+    let selectCanvas = document.getElementById("canva").getBoundingClientRect();
 
     const handleRightClick = (e) => {
       if (!canSelect) {
         props.net.state.stateNet.unselectAll()
         setSelectedJobs([])
       }
-
-        let p = getMousePos(document.getElementById("canva"), e)
-        if(p.x <= bb.x + bb.width && p.x >= bb.x && p.y <= bb.y + bb.height && p.y >= bb.y) {
-            e.preventDefault();
-            setGo(false)
-            setRightClick(true)
-            setInitPoint({x: p.x, y: p.y})
-        }
+      let p = getMousePos(document.getElementById("canva"), e)
+      if(p.x <= selectCanvas.x + selectCanvas.width && p.x >= selectCanvas.x && p.y <= selectCanvas.y + selectCanvas.height && p.y >= selectCanvas.y) {
+        e.preventDefault();
+        setGo(false)
+        setRightClick(true)
+        setInitPoint({x: p.x, y: p.y})
+      }
     };
 
     const handleMouseMove = (e) => {
         if (rightClick === true) {
           let p = getMousePos(document.getElementById("canva"), e)
-          if(p.x <= bb.x + bb.width && p.x >= bb.x && p.y <= bb.y + bb.height && p.y >= bb.y) {
+          if(p.x <= selectCanvas.x + selectCanvas.width && p.x >= selectCanvas.x && p.y <= selectCanvas.y + selectCanvas.height && p.y >= selectCanvas.y) {
               e.preventDefault();
               if (rightClick === true) {
                   e.preventDefault()
@@ -127,13 +121,13 @@ const SelectionCanvas = (props) => {
 
     const handleRightClickUp = (e) => {
         let p = getMousePos(document.getElementById("canva"), e)
-        if(p.x <= bb.x + bb.width && p.x >= bb.x && p.y <= bb.y + bb.height && p.y >= bb.y) {
-            e.preventDefault();
-            if (rightClick === true) {
-                e.preventDefault()
-                setFiPoint({x: p.x, y: p.y})
-                setGo(true)
-            }
+        if(p.x <= selectCanvas.x + selectCanvas.width && p.x >= selectCanvas.x && p.y <= selectCanvas.y + selectCanvas.height && p.y >= selectCanvas.y) {
+          e.preventDefault();
+          if (rightClick === true) {
+            e.preventDefault()
+            setFiPoint({x: p.x, y: p.y})
+            setGo(true)
+          }
         }
         clearSquare()
         setRightClick(false)
@@ -157,8 +151,6 @@ const SelectionCanvas = (props) => {
 
   useEffect(() => {
     if (fi_Point.x !== null) {
-      console.log("Punto inicial: ", init_Point)
-      console.log("Punto final: ", fi_Point)
       setRect( { x: Math.min(init_Point.x, fi_Point.x), y: Math.min(init_Point.y, fi_Point.y), w: (Math.max(init_Point.x, fi_Point.x) - Math.min(init_Point.x, fi_Point.x)), h: (Math.max(init_Point.y, fi_Point.y) - Math.min(init_Point.y, fi_Point.y)) })
     }
   // eslint-disable-next-line
