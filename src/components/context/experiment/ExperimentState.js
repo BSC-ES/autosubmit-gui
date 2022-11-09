@@ -23,6 +23,7 @@ import {
   ACTIVATE_SELECTION_MODE,
   DEACTIVATE_SELECTION_MODE,
   REMOVE_SELECTED_JOB,
+  SET_SELECTED_JOBS,
   SET_CURRENT_COMMAND,
   SET_CURRENT_TEXT_COMMAND,
   UPDATE_SELECTED_JOBS,
@@ -195,7 +196,7 @@ const ExperimentState = (props) => {
     setPaginatedResult();
   };
 
-  const getLogStatus = async (expid) => {
+  const getLogStatus = async (expid, controller) => {
     let result = null;
     if (NOAPI) {
       result = {
@@ -204,6 +205,19 @@ const ExperimentState = (props) => {
         error_message: "NO API",
         log_path: "/none/none",
       };
+    } else if (controller !== undefined) {
+      const res = await axios
+        .get(`${localserver}/logrun/${expid}`, {
+            signal: controller.signal
+          }
+        )
+        .catch((error) => {
+          if(error.message !== "canceled") {
+            alert("getLogStatus: " + ERROR_MESSAGE + "\n" + error.message)
+          }
+        });
+      debug && console.log(res.data);
+      result = res ? res.data : {};
     } else {
       const res = await axios
         .get(`${localserver}/logrun/${expid}`)
@@ -225,10 +239,10 @@ const ExperimentState = (props) => {
     await Promise.all(all_promises)
   };
 
-  const getSummariesInPage = async(controller) => {
+  const getSummariesInPage = async(controller, loggedUser) => {
     const experiments = state.experimentsInPage;
     const all_promises = experiments.map(exp =>
-      getExperimentSummary(exp.name, controller)
+      getExperimentSummary(exp.name, controller, loggedUser)
     )
     await Promise.all(all_promises)
   };
@@ -344,24 +358,37 @@ const ExperimentState = (props) => {
   };
 
   // Get Summary for Search item
-  const getExperimentSummary = async (expid, controller) => {
+  const getExperimentSummary = async (expid, controller, loggedUser) => {
     clearSummary(expid);
     setLoadingSummary(expid);
     let summary = null;
     if (NOAPI) {
       summary = require("../data/summary_" + String(expid) + ".json");
       sleep(3000);
-    } else {
+    } else if(controller !== undefined && loggedUser !== undefined) {
       await axios
-        .get(`${localserver}/summary/${expid}`, {signal: controller.signal})
+        .get(`${localserver}/summary/${expid}`, {
+          signal: controller.signal,
+          params: {
+            loggedUser: loggedUser
+          }
+        })
         .catch((error) => {
           if(error.message !== "canceled") {
-            alert(ERROR_MESSAGE + "\n" + error.message);
+            alert("getExperimentSummary: " + ERROR_MESSAGE + "\n" + error.message);
           }
         }
         ).then((res) => {
           summary = res ? res.data : null;
         });
+      debug && console.log(summary);
+    } else {
+      const res = await axios
+          .get(`${localserver}/summary/${expid}`)
+          .catch((error) => {
+            alert(ERROR_MESSAGE + "\n" + error.message);
+          });
+      summary = res ? res.data : null;
       debug && console.log(summary);
     }
     dispatch({
@@ -370,17 +397,19 @@ const ExperimentState = (props) => {
     });
   };
 
-  const shutdown = async (route, loggedUser) => {
+  const shutdown = async (route, loggedUser, expid=null) => {
     if (NOAPI) {
       sleep(3000);
     } else {
       await axios
         .get(`${localserver}/shutdown/${route}`, {
           params: {
-            loggedUser: loggedUser
+            loggedUser: loggedUser,
+            expid: expid
           }
         }).catch((error) => {
-            alert("shutdown: " + ERROR_MESSAGE + "\n" + error.message);
+            DEBUG && console.log("shutdown: " + ERROR_MESSAGE + "\n" + error.message)
+            // alert("shutdown: " + ERROR_MESSAGE + "\n" + error.message);
           }
         )
     }
@@ -788,7 +817,8 @@ const ExperimentState = (props) => {
     dispatch({ type: DEACTIVATE_SELECTION_MODE });
   const removeSelectedJob = (name) =>
     dispatch({ type: REMOVE_SELECTED_JOB, payload: name });
-
+  const setSelectedJobs = (value) =>
+    dispatch({ type: SET_SELECTED_JOBS, payload: value });
   return (
     <ExperimentContext.Provider
       value={{
@@ -855,6 +885,7 @@ const ExperimentState = (props) => {
         activateSelectionMode,
         deactivateSelectionMode,
         removeSelectedJob,
+        setSelectedJobs,
         setCurrentCommand,
         setCurrentTextCommand,
         updateCurrentSelectedGraph,

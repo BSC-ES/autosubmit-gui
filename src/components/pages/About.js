@@ -1,34 +1,32 @@
-import React, { Fragment } from "react";
+import React from "react";
 
 const About = () => {
   return (
-    <Fragment>
-      <h3>User Information</h3>
-      {/* <p>
-        For user instructions visit our user guide{" "}
-        <a href='https://autosubmit.readthedocs.io/en/latest/autosubmit-gui.html'>
-          User Guide
-        </a>
-        .
-      </p> */}
-      <p>
-        To request more information make a post in the issue{" "}
-        <a href='https://earth.bsc.es/gitlab/es/autosubmit/issues/506'>
-          Autosubmit User Documentation
-        </a>
-        .
-      </p>
-      <h3>Bugs and Requests</h3>
-      <p>
-        If you find a bug or want to request some important feature, please open
-        an issue at{" "}
-        <a href='https://earth.bsc.es/gitlab/es/autosubmit/issues'>
-          Autosubmit Issues
-        </a>
-        .
-      </p>
-      <p>Version: 1.0.0-beta</p>
-    </Fragment>
+      <div className="my-2 mx-2">
+        <h2>User Information</h2>
+        <p>
+          For user instructions visit our {" "}
+          <a href='https://autosubmit.readthedocs.io/en/latest/autosubmit-gui.html'>
+            User Guide
+          </a>
+          .<br></br>
+          To request more information make a post in the issue{" "}
+          <a href='https://earth.bsc.es/gitlab/es/autosubmit/issues/506'>
+            Autosubmit User Documentation
+          </a>
+          .
+        </p>
+        <h2>Bugs and Requests</h2>
+        <p>
+          If you find a bug or want to request some important feature, please open
+          an issue at{" "}
+          <a href='https://earth.bsc.es/gitlab/es/autosubmitreact/issues'>
+            Autosubmit GUI Issues page
+          </a>
+          .
+        </p>
+        <figcaption className="blockquote-footer">Version: 1.0.0-beta</figcaption>
+      </div>
   );
 };
 
