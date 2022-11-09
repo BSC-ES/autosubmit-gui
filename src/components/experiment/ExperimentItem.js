@@ -209,7 +209,7 @@ export class ExperimentItem extends Component {
               )}
               {disabledMore === false && (
                 <Link
-                  to={`/${rootAppName}/experiment/${name}`}
+                  to={{ pathname: `/${rootAppName}/experiment/${name}`, params: { tab: 'tree' } }}
                   className='btn btn-primary btn-block btn-sm menu-btn-md'
                   data-toggle='tooltip'
                   data-placement='bottom'
@@ -227,7 +227,7 @@ export class ExperimentItem extends Component {
               )}
               {disabledMore === false && (
                 <Link
-                  to={`/${rootAppName}/experiment/${name}/graph`}
+                  to={{ pathname: `/${rootAppName}/experiment/${name}`, params: { tab: 'graph' } }}
                   className='btn btn-primary btn-block btn-sm menu-btn-md'
                   data-toggle='tooltip'
                   data-placement='bottom'
@@ -239,7 +239,7 @@ export class ExperimentItem extends Component {
             </div>
             <div className='col-md-3 px-1'>
               <Link
-                to={`/${rootAppName}/experiment/${name}/light`}
+                to={{ pathname: `/${rootAppName}/experiment/${name}`, params: { tab: 'light' } }}
                 className='btn btn-primary btn-block btn-sm menu-btn-md'
                 data-toggle='tooltip'
                 data-placement='bottom'
@@ -345,7 +345,7 @@ export class ExperimentItem extends Component {
               )}
             </div>
           )}
-          <div className='d-flex justify-content-between'>            
+          <div className='d-flex justify-content-between'>
             <div>
               <span className='px-1 bg-secondary rounded important-info'>{version}</span>
               {wrapper && (

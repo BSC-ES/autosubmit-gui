@@ -26,26 +26,43 @@ const Search = ({ specificSearch }) => {
   const btnRef = useRef()
 
   useEffect( () => {
-    if(btnRef.current && loggedUser && loggedUser !== "Failed") {
+    if(btnRef.current) {
       btnRef.current.disabled = false
       controller.abort()
-      experimentContext.shutdown("summary", loggedUser)
+      experimentContext.shutdown("summary", loggedUser, experimentContext.expid)
       controller = new AbortController();
     }
+  // eslint-disable-next-line
   }, [experimentContext.experimentsInPage])
 
+  // Window close
   useEffect(() => {
     const unloadCallback = (event) => {
       event.preventDefault()
       controller.abort()
-      experimentContext.shutdown("summary", loggedUser);
+      experimentContext.shutdown("summary", loggedUser, experimentContext.expid);
       controller = new AbortController();
       return;
     };
 
     window.addEventListener("beforeunload", unloadCallback);
       return () => window.removeEventListener("beforeunload", unloadCallback);
-  }, []);
+  });
+
+  // componentWillUnmount: cleanup
+  useEffect( () => {
+    // initial load of running exp
+    if (experimentContext.experimentsInPage.length === 0) {
+      experimentContext.getCurrentRunning();
+    }
+
+    return (() => {
+      controller.abort()
+      experimentContext.shutdown("summary", loggedUser, experimentContext.expid)
+      controller = new AbortController();
+    })
+  // eslint-disable-next-line
+  }, [])
 
   useEffect(() => {
     if (currentExpTypeChoice) {
@@ -76,7 +93,7 @@ const Search = ({ specificSearch }) => {
     specificSearch,
     searchExperimentsByOwner,
     currentExpTypeChoice,
-    currentActiveCheck,
+    // currentActiveCheck,
     experiments,
   ]);
 
@@ -191,7 +208,7 @@ const Search = ({ specificSearch }) => {
                   : "active"
               }
               onChange={onChangeActiveCheck}
-              checked={
+              checked = {
                 activeChoice === orderByType.showOnlyActive ? true : false
               }
             />
@@ -242,15 +259,15 @@ const Search = ({ specificSearch }) => {
                   const btn_instance = event.currentTarget;
                   btn_instance.disabled = true;
 
-                  await experimentContext.getSummariesInPage(controller)
+                  await experimentContext.getSummariesInPage(controller, loggedUser)
 
                   btn_instance.disabled = false;
                 }
-              }
+              }u
               data-toggle='tooltip'
               data-placement='bottom'
               title='Shows a summary of the current progress of each experiment in the result.'
-              disabled={loggedUser ? false : true}
+              // disabled={loggedUser ? false : true}
               ref = {btnRef}
             >
               Show Detailed Data

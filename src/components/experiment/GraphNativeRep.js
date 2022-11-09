@@ -3,9 +3,12 @@ import React, { Component } from "react";
 import Spinner from "../layout/Spinner";
 import vis from "vis-network";
 import { DEBUG } from "../context/vars";
+import SelectionCanvas from "./SelectionCanvas";
+import { Fragment } from "react/cjs/react.production.min";
+
 class GraphNativeRep extends Component {
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.props.shouldUpdateGraph === true) {
+     if (this.props.shouldUpdateGraph === true) {
       //console.log("should Rerender")
       return true;
     } else if (
@@ -224,6 +227,12 @@ class GraphNativeRep extends Component {
 
     class VisNetwork extends Component {
 
+      constructor(props) {
+        super(props);
+        this.state = {stateNet: null, selectedNodes: []};
+      }
+
+
       shouldComponentUpdate(nextProps, nextState) {
         if (this.props.shouldUpdateGraph === true) {
           DEBUG && console.log("Should rerender form inside");
@@ -240,13 +249,13 @@ class GraphNativeRep extends Component {
           this.refs.myRef,
           this.props.graph,
           this.props.options
-        );
+          )
         const groups_data = this.props.groups_data;
         const current_grouped = this.props.current_grouped;
-
         this.props.setVisNetwork(network);
-
+        this.setState({stateNet: network})
         network.on("select", (params) => {
+          DEBUG && console.log("on select")
           if (params.nodes) {
             if (params.nodes.length === 1) {
               if (network.isCluster(params.nodes[0])) {
@@ -266,11 +275,8 @@ class GraphNativeRep extends Component {
           }
         });
 
-        // network.on("stabilized", () => {
-        //   this.props.navigateAfterLoadGraph(this.props.experimentRunning);
-        // });
-
         network.on("doubleClick", (params) => {
+          DEBUG && console.log("SELECTED NODES PARENT: ", this.state.selectedNodes)
           if (params.nodes) {
             if (params.nodes.length === 1) {
               if (network.isCluster(params.nodes[0])) {
@@ -328,7 +334,7 @@ class GraphNativeRep extends Component {
               };
               network.clustering.cluster(clusterOptionsByDateMember);
             }
-          } else if (current_grouped === "date-member-chunk") { 
+          } else if (current_grouped === "date-member-chunk") {
             let clusterOptionsByDateMemberChunk;
             for (let k = 0; k < groups.length; k++) {
               let startingName = groups[k];
@@ -409,9 +415,12 @@ class GraphNativeRep extends Component {
         this.props.cleanNavData();
       }
 
+
+
       render() {
         return (
-          <div className='card-body p-01'>
+          <div className='card-body p-01'i>
+            <SelectionCanvas net={this} ref='myRef' updateCurrentSelection={this.props.updateCurrentSelection}/>
             <div id="graphrep" ref='myRef' style={experimentStyle}></div>
           </div>
         );
@@ -419,23 +428,25 @@ class GraphNativeRep extends Component {
     }
 
     return (
-      <VisNetwork
-        data={this.props.data}
-        graph={graph}
-        options={options}
-        updateSelection={this.props.updateSelection}
-        shouldUpdateGraph={this.props.shouldUpdateGraph}
-        setVisNetwork={this.props.setVisNetwork}
-        cleanNavData={this.props.cleanNavData}
-        isGraphViz={graphviz}
-        clusterGroups={groups}
-        groups_data={groups_data}
-        current_grouped={current_grouped}
-        experimentRunning={this.props.experimentRunning}
-        navigateAfterLoadGraph={this.props.navigateAfterLoadGraph}
-        updateCurrentSelected={this.props.updateCurrentSelected}
-        updateGraphSelectedNodes={this.props.updateGraphSelectedNodes}
-      />
+      <Fragment>
+        <VisNetwork
+          data={this.props.data}
+          graph={graph}
+          options={options}
+          updateSelection={this.props.updateSelection}
+          shouldUpdateGraph={this.props.shouldUpdateGraph}
+          setVisNetwork={this.props.setVisNetwork}
+          cleanNavData={this.props.cleanNavData}
+          isGraphViz={graphviz}
+          clusterGroups={groups}
+          groups_data={groups_data}
+          current_grouped={current_grouped}
+          experimentRunning={this.props.experimentRunning}
+          navigateAfterLoadGraph={this.props.navigateAfterLoadGraph}
+          updateCurrentSelected={this.props.updateCurrentSelected}
+          updateGraphSelectedNodes={this.props.updateGraphSelectedNodes}
+        />
+      </Fragment>
     );
   }
 }
