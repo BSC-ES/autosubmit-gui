@@ -10,7 +10,7 @@ const News = () => {
       <h3>Updates <small></small></h3>
       <div className="row">
         <div className="col">
-          <h4>21-10-2021</h4>
+          <h4>xx-11-2022</h4>
           <div>
             <strong>Performance improvements</strong>
             <ul>
@@ -24,17 +24,16 @@ const News = () => {
               <li>An early initial load of the Active experiments at the homepage has been implemented without requiring the user to click on the button each time.</li>
               <li>UI/UX of the graph view improved: Tasks without dependencies are displayed correctly in the Graph View in a single row now.</li>
             </ul>
+            <strong>Bug fixes</strong>
             <ul>
-               <strong>Bug fixes</strong>
                <li>Fixed bug when Added redirection support after logging in.</li>
                <li>Fixed a bug in the tree generation that was making the load more tedious.</li>
                <li>Fixed a visual bug regarding the close button in the pop-up windows.</li>
             </ul>
           </div>
-                  
         </div>
       </div>
-    </div>    
+    </div>
   )
 }
 

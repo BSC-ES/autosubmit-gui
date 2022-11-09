@@ -17,6 +17,10 @@ import {
   SET_OFF_LOADING_TREE,
   INCREASE_LOADING_TREE,
   UPDATE_TREE_SELECTED_NODES,
+  EXPAND_ALL_TREE_DATA,
+  SAVE_TREE_LAYOUT,
+  RESET_TREE_LAYOUT,
+  COLLAPSE_ALL_TREE_DATA,
   GET_EXPERIMENT_RUN_JOBDATA,
   LOADING_PREVIOUS_RUN,
   SET_CURRENT_COMMAND,
@@ -25,7 +29,7 @@ import {
 } from "../types";
 
 // updateTreeData
-import { buildRunTitle } from "../treeutils";
+import { buildRunTitle, collapseTree, expandTreeRecurisvely } from "../treeutils";
 import { getReadyJobs } from "../utils";
 import { DEBUG } from "../vars";
 import TreeContentHandler from "./business/treeUpdate";
@@ -278,6 +282,33 @@ export default (state, action) => {
         state.treeSelectedNodes = arrayNames;
         DEBUG && console.log(arrayNames);
       }
+      return {
+        ...state,
+      };
+    case EXPAND_ALL_TREE_DATA:
+      let td_expanded = expandTreeRecurisvely(state.treedata, true)
+      state.fancyTree.reload(td_expanded.tree)
+      // state.fancyTree.setExpanded(true)
+      return {
+        ...state,
+        treedata: td_expanded
+      };
+    case COLLAPSE_ALL_TREE_DATA:
+      let td_collapsed = expandTreeRecurisvely(state.treedata, false)
+      state.fancyTree.reload(td_collapsed.tree)
+      // state.fancyTree.setExpanded(true)
+      return {
+        ...state,
+        treedata: td_collapsed
+      };
+    case SAVE_TREE_LAYOUT:
+      state.initialTreeLayout = JSON.parse(JSON.stringify(state.treedata));
+      return {
+        ...state,
+      };
+    case RESET_TREE_LAYOUT:
+      state.treedata = JSON.parse(JSON.stringify(state.initialTreeLayout));
+      state.fancyTree.reload(state.treedata.tree)
       return {
         ...state,
       };

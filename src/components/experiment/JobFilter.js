@@ -1,20 +1,30 @@
-/* 
+/*
   Component that provides the tools to search jobs in the Tree Representation
 */
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import TreeContext from "../context/tree/treeContext";
 import AlertTotal from "./AlertTotal";
 import TreeNodeSelection from "./TreeNodeSelection";
 
 const JobFilter = () => {
   const treeContext = useContext(TreeContext);
+  const refInput = useRef("");
   const {
     filterTreeView,
     treedata,
     loadingFilterTree,
     clearFilterTreeView,
+    expandAllTree,
+    collapseAllTree,
+    saveTreeLayout,
+    resetTreeLayout,
     returnFilter,
   } = treeContext;
+
+  useEffect(() => {
+    // this will run only on load
+    saveTreeLayout()
+  }, [])
 
   const [filterString, setFilterString] = useState("");
   const onSubmit = (e) => {
@@ -23,15 +33,29 @@ const JobFilter = () => {
   };
 
   const onChangeFilter = (e) => setFilterString(e.target.value);
+
   const onClearFilter = (e) => {
     e.preventDefault();
+    resetTreeLayout();
     clearFilterTreeView();
+    setFilterString("");
+    refInput.current.value=""
   };
 
-  var clearText = "Clear";
+  var clearText = "Reset";
   if (returnFilter && returnFilter >= 0) {
-    clearText = "Clear Result";
+    clearText = "Reset Result";
   }
+
+  const onExpandFilter = (e) => {
+    e.preventDefault();
+    expandAllTree();
+  };
+
+  const onCollapseFilter = (e) => {
+    e.preventDefault();
+    collapseAllTree();
+  };
 
   return (
     <div className='row-hl flex-wrap d-flex'>
@@ -41,6 +65,7 @@ const JobFilter = () => {
             <input
               className='form-control menu-input-append'
               type='text'
+              ref={refInput}
               name='section'
               placeholder='Filter string'
               onChange={onChangeFilter}
@@ -70,6 +95,30 @@ const JobFilter = () => {
             data-toggle='tooltip'
             data-placement='bottom'
             title='Returns the Tree View to its original content if a filter has been applied.'
+          />
+        </form>
+      </div>
+      <div className='item-hl ml-2'>
+        <form onSubmit={onExpandFilter} className='form'>
+          <input
+            type='submit'
+            value="Expand"
+            className='btn btn-warning btn-sm menu-btn'
+            data-toggle='tooltip'
+            data-placement='bottom'
+            title='Expands recursively all the tree folders.'
+          />
+        </form>
+      </div>
+      <div className='item-hl ml-2'>
+        <form onSubmit={onCollapseFilter} className='form'>
+          <input
+            type='submit'
+            value="Collapse"
+            className='btn btn-warning btn-sm menu-btn'
+            data-toggle='tooltip'
+            data-placement='bottom'
+            title='Collapse all the tree folders.'
           />
         </form>
       </div>
