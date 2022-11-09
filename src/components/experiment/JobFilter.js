@@ -7,6 +7,7 @@ import AlertTotal from "./AlertTotal";
 import TreeNodeSelection from "./TreeNodeSelection";
 
 const JobFilter = () => {
+  const [expand, setExpand] = useState(true)
   const treeContext = useContext(TreeContext);
   const refInput = useRef("");
   const {
@@ -99,28 +100,44 @@ const JobFilter = () => {
         </form>
       </div>
       <div className='item-hl ml-2'>
-        <form onSubmit={onExpandFilter} className='form'>
+        {expand
+        ?
+        <form onSubmit={onCollapseFilter} className='form'>
           <input
             type='submit'
-            value="Expand"
+            value="+"
+            onClick={() => setExpand(!expand)}
+            style={{padding: '0 10px', fontSize: '20px !important'}}
+            ref={(node) => {
+                if (node) {
+                    node.style.setProperty("font-size", "18.2px", "important");
+                }
+            }}
             className='btn btn-warning btn-sm menu-btn'
             data-toggle='tooltip'
             data-placement='bottom'
             title='Expands recursively all the tree folders.'
           />
         </form>
-      </div>
-      <div className='item-hl ml-2'>
-        <form onSubmit={onCollapseFilter} className='form'>
+        :
+        <form onSubmit={onExpandFilter} className='form'>
           <input
             type='submit'
-            value="Collapse"
+            value="﹣"
+            style={{padding: '0 6px', fontSize: '20px !important'}}
+            onClick={() => setExpand(!expand)}
+            ref={(node) => {
+                if (node) {
+                    node.style.setProperty("font-size", "18.2px", "important");
+                }
+            }}
             className='btn btn-warning btn-sm menu-btn'
             data-toggle='tooltip'
             data-placement='bottom'
             title='Collapse all the tree folders.'
           />
         </form>
+      }
       </div>
       <div className='item-hl ml-2'>
         <TreeNodeSelection />
