@@ -99,24 +99,6 @@ const JobFilter = () => {
           />
         </form>
       </div>
-      {/* <div className='item-hl ml-2'>
-        <form onSubmit={onExpandFilter} className='form'>
-          <input
-            type='submit'
-            value="+"
-            style={{padding: '0 10px', fontSize: '20px !important'}}
-            ref={(node) => {
-                if (node) {
-                    node.style.setProperty("font-size", "18.2px", "important");
-                }
-            }}
-            className='btn btn-warning btn-sm menu-btn'
-            data-toggle='tooltip'
-            data-placement='bottom'
-            title='Expands recursively all the tree folders.'
-          />
-        </form>
-      </div> */}
       <div className='item-hl ml-2'>
         {expand
         ?
