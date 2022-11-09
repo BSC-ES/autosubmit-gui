@@ -677,7 +677,6 @@ export default (state, action) => {
       if (state.loggedUser && isValid === false) {
         localStorage.removeItem("user");
         localStorage.removeItem("token");
-        console.log(message);
         return {
           ...state,
           loggedUser: null,

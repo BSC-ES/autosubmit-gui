@@ -255,7 +255,7 @@ class GraphNativeRep extends Component {
         this.props.setVisNetwork(network);
         this.setState({stateNet: network})
         network.on("select", (params) => {
-          console.log("on select")
+          DEBUG && console.log("on select")
           if (params.nodes) {
             if (params.nodes.length === 1) {
               if (network.isCluster(params.nodes[0])) {
@@ -276,7 +276,7 @@ class GraphNativeRep extends Component {
         });
 
         network.on("doubleClick", (params) => {
-          console.log("SELECTED NODES PARENT: ", this.state.selectedNodes)
+          DEBUG && console.log("SELECTED NODES PARENT: ", this.state.selectedNodes)
           if (params.nodes) {
             if (params.nodes.length === 1) {
               if (network.isCluster(params.nodes[0])) {
