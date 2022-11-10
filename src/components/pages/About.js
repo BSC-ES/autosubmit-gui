@@ -6,7 +6,7 @@ const About = () => {
         <h2>User Information</h2>
         <p>
           For user instructions visit our {" "}
-          <a href='https://autosubmit.readthedocs.io/en/latest/autosubmit-gui.html'>
+          <a href='https://autosubmit-gui.readthedocs.io/en/latest/'>
             User Guide
           </a>
           .<br></br>
