@@ -10,7 +10,7 @@ const News = () => {
       <h3>Updates <small></small></h3>
       <div className="row">
         <div className="col">
-          <h4>xx-11-2022</h4>
+          <h4>31-11-2022</h4>
           <div>
             <strong>Performance improvements</strong>
             <ul>
