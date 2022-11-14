@@ -105,14 +105,8 @@ const JobFilter = () => {
         <form onSubmit={onCollapseFilter} className='form'>
           <input
             type='submit'
-            value="+"
+            value="Expand ＋"
             onClick={() => setExpand(!expand)}
-            style={{padding: '0 10px', fontSize: '20px !important'}}
-            ref={(node) => {
-                if (node) {
-                    node.style.setProperty("font-size", "18.2px", "important");
-                }
-            }}
             className='btn btn-warning btn-sm menu-btn'
             data-toggle='tooltip'
             data-placement='bottom'
@@ -123,14 +117,8 @@ const JobFilter = () => {
         <form onSubmit={onExpandFilter} className='form'>
           <input
             type='submit'
-            value="﹣"
-            style={{padding: '0 6px', fontSize: '20px !important'}}
+            value="Collapse －"
             onClick={() => setExpand(!expand)}
-            ref={(node) => {
-                if (node) {
-                    node.style.setProperty("font-size", "18.2px", "important");
-                }
-            }}
             className='btn btn-warning btn-sm menu-btn'
             data-toggle='tooltip'
             data-placement='bottom'
