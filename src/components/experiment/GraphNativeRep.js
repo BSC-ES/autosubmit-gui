@@ -420,7 +420,7 @@ class GraphNativeRep extends Component {
       render() {
         return (
           <div className='card-body p-01'i>
-            <SelectionCanvas net={this} ref='myRef' updateCurrentSelection={this.props.updateCurrentSelection}/>
+            <SelectionCanvas net={this} updateCurrentSelection={this.props.updateCurrentSelection}/>
             <div id="graphrep" ref='myRef' style={experimentStyle}></div>
           </div>
         );
