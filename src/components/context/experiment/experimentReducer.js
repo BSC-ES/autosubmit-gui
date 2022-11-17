@@ -673,7 +673,7 @@ export default (state, action) => {
       };
     }
     case TEST_TOKEN: {
-      const { isValid, message } = action.payload;
+      const { isValid } = action.payload;
 
       if (state.loggedUser && isValid === false) {
         localStorage.removeItem("user");

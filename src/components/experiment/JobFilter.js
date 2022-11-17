@@ -24,6 +24,7 @@ const JobFilter = () => {
   useEffect(() => {
     // this will run only on load
     saveTreeLayout()
+  // eslint-disable-next-line
   }, [])
 
   const [filterString, setFilterString] = useState("");
