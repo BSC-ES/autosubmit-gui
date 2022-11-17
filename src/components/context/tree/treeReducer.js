@@ -29,7 +29,7 @@ import {
 } from "../types";
 
 // updateTreeData
-import { buildRunTitle, collapseTree, expandTreeRecurisvely } from "../treeutils";
+import { buildRunTitle, expandTreeRecurisvely } from "../treeutils";
 import { getReadyJobs } from "../utils";
 import { DEBUG } from "../vars";
 import TreeContentHandler from "./business/treeUpdate";

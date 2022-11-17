@@ -52,12 +52,12 @@ const SelectionCanvas = (props) => {
     context.fillStyle = '#FFFFFF'
     context.fillRect(0, 0, context.canvas.width, context.canvas.height)
     context.stroke()
+  // eslint-disable-next-line
   }, [rect]);
 
   // Nodes final selection
   const [go, setGo] = useState(false)
   useEffect(() => {
-    const { currentSelected } = experimentContext;
     if (go === true) {
       const canvas = canvasRef.current
       if (rect.x !== null ) {
