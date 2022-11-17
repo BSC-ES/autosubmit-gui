@@ -180,6 +180,7 @@ export default (state, action) => {
       const experiments = action.payload;
       if (experiments) {
         experiments.sort((a, b) => (a.status > b.status ? -1 : 1));
+        experiments.sort((a,b) => { return new Date(b.modified) - new Date(a.modified);});
         experiments.forEach(function (element) {
           element.hidden = false;
         });
