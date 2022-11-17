@@ -197,7 +197,9 @@ const ExperimentCentral = ({ match }) => {
 
     if (currentTab === "graph" && !data) {
       experimentContext.shutdown("tree", experimentContext.loggedUser, expid);
-      fetchGraph()
+      setTimeout(() => {
+        fetchGraph()
+      }, 100);
     }
 
     if (currentTab === "quick" && !isValid) {
