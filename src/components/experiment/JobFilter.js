@@ -24,6 +24,7 @@ const JobFilter = () => {
   useEffect(() => {
     // this will run only on load
     saveTreeLayout()
+  // eslint-disable-next-line
   }, [])
 
   const [filterString, setFilterString] = useState("");
@@ -86,42 +87,46 @@ const JobFilter = () => {
           </div>
         </form>
       </div>
-      <div className='item-hl ml-2'>
-        <form onSubmit={onClearFilter} className='form'>
-          <input
-            type='submit'
-            value={clearText}
-            className='btn btn-primary btn-sm menu-btn'
-            data-toggle='tooltip'
-            data-placement='bottom'
-            title='Returns the Tree View to its original content if a filter has been applied.'
-          />
-        </form>
-      </div>
-      <div className='item-hl ml-2'>
-        <form onSubmit={onExpandFilter} className='form'>
-          <input
-            type='submit'
-            value="Expand ＋"
-            className='btn btn-warning btn-sm menu-btn'
-            data-toggle='tooltip'
-            data-placement='bottom'
-            title='Expands recursively all the tree folders.'
-          />
-        </form>
-      </div>
-      <div className='item-hl ml-2'> 
-        <form onSubmit={onCollapseFilter} className='form'>
-          <input
-            type='submit'
-            value="Collapse －"
-            className='btn btn-warning btn-sm menu-btn'
-            data-toggle='tooltip'
-            data-placement='bottom'
-            title='Collapse all the tree folders.'
-          />
-        </form>
-      </div>
+      {treedata && treedata.jobs.length > 0 && (
+      <>
+          <div className='item-hl ml-2'>
+            <form onSubmit={onClearFilter} className='form'>
+              <input
+                type='submit'
+                value={clearText}
+                className='btn btn-primary btn-sm menu-btn'
+                data-toggle='tooltip'
+                data-placement='bottom'
+                title='Returns the Tree View to its original content if a filter has been applied.'
+              />
+            </form>
+          </div>
+          <div className='item-hl ml-2'>
+            <form onSubmit={onExpandFilter} className='form'>
+              <input
+                type='submit'
+                value="Expand ＋"
+                className='btn btn-warning btn-sm menu-btn'
+                data-toggle='tooltip'
+                data-placement='bottom'
+                title='Expands recursively all the tree folders.'
+              />
+            </form>
+          </div>
+          <div className='item-hl ml-2'> 
+            <form onSubmit={onCollapseFilter} className='form'>
+              <input
+                type='submit'
+                value="Collapse －"
+                className='btn btn-warning btn-sm menu-btn'
+                data-toggle='tooltip'
+                data-placement='bottom'
+                title='Collapse all the tree folders.'
+              />
+            </form>
+          </div>
+      </>
+      )}
       <div className='item-hl ml-2'>
         <TreeNodeSelection />
       </div>
