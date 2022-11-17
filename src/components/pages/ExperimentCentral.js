@@ -199,7 +199,7 @@ const ExperimentCentral = ({ match }) => {
       experimentContext.shutdown("tree", experimentContext.loggedUser, expid);
       setTimeout(() => {
         fetchGraph()
-      }, 0);
+      }, 100);
     }
 
     if (currentTab === "quick" && !isValid) {
