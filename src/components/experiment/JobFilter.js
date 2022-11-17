@@ -7,7 +7,6 @@ import AlertTotal from "./AlertTotal";
 import TreeNodeSelection from "./TreeNodeSelection";
 
 const JobFilter = () => {
-  const [expand, setExpand] = useState(true)
   const treeContext = useContext(TreeContext);
   const refInput = useRef("");
   const {
@@ -100,32 +99,28 @@ const JobFilter = () => {
         </form>
       </div>
       <div className='item-hl ml-2'>
-        {expand
-        ?
-        <form onSubmit={onCollapseFilter} className='form'>
+        <form onSubmit={onExpandFilter} className='form'>
           <input
             type='submit'
             value="Expand ＋"
-            onClick={() => setExpand(!expand)}
             className='btn btn-warning btn-sm menu-btn'
             data-toggle='tooltip'
             data-placement='bottom'
             title='Expands recursively all the tree folders.'
           />
         </form>
-        :
-        <form onSubmit={onExpandFilter} className='form'>
+      </div>
+      <div className='item-hl ml-2'> 
+        <form onSubmit={onCollapseFilter} className='form'>
           <input
             type='submit'
             value="Collapse －"
-            onClick={() => setExpand(!expand)}
             className='btn btn-warning btn-sm menu-btn'
             data-toggle='tooltip'
             data-placement='bottom'
             title='Collapse all the tree folders.'
           />
         </form>
-      }
       </div>
       <div className='item-hl ml-2'>
         <TreeNodeSelection />
