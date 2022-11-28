@@ -22,13 +22,14 @@ const News = () => {
               <li>Treeview UI/UX improved by adding new folders for the wrappers, and inside these, we added a sorting to display the proper execution sequence, collapse all/Expand all buttons were added</li>
               <li>New tab icon was added to replace generic React.js icon that was previously being displayed</li>
               <li>An early initial load of the Active experiments at the homepage has been implemented without requiring the user to click on the button each time.</li>
-              <li>UI/UX of the graph view improved: Tasks without dependencies are displayed correctly in the Graph View in a single row now.</li>
+              <li>UI/UX of the graph view improved: Tasks without dependencies are displayed correctly in the Graph View in a single row now. now also is possible to select a group of nodes by keeping pressed the right button of the mouse and hover the rectangle over these.</li>
             </ul>
             <strong>Bug fixes</strong>
             <ul>
                <li>Fixed bug when Added redirection support after logging in.</li>
                <li>Fixed a bug in the tree generation that was making the load more tedious.</li>
                <li>Fixed a visual bug regarding the close button in the pop-up windows.</li>
+               <li>Fixed bug concerning the sorting of the experiments mismatch between Chrome and Firefox</li>
             </ul>
           </div>
         </div>
