@@ -6126,10 +6126,6 @@ a.close.disabled {
   border-bottom-left-radius: calc(0.3rem - 1px);
 }
 
-.modal-footer > * {
-  margin: 0.25rem;
-}
-
 .modal-scrollbar-measure {
   position: absolute;
   top: -9999px;
