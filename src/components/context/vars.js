@@ -1,6 +1,6 @@
 export const thirdPartyLoginURL = "https://cas.bsc.es/cas/login";
-// export const AUTOSUBMIT_API_SOURCE = "https://earth.bsc.es/autosubmitapi"; // BSC API
-export const AUTOSUBMIT_API_SOURCE = "https://bscesautosubmitdev01.bsc.es/autosubmitapi"; // VM API
+export const AUTOSUBMIT_API_SOURCE = "https://earth.bsc.es/autosubmitapi"; // BSC API
+//export const AUTOSUBMIT_API_SOURCE = "https://bscesautosubmitdev01.bsc.es/autosubmitapi"; // VM API
 //export const AUTOSUBMIT_API_SOURCE = "http://192.168.11.42:8081";
 export const DEBUG = false; // If true, some calls print their response to the console. However, it pollutes the console. Leave it at false.
 export const NOAPI = false; // If true -> API requests are replaced by demo data.
