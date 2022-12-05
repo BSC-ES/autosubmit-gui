@@ -164,7 +164,7 @@ const traverseUpdate = (
 export const expandTreeRecurisvely = (treedata, condition) => {
   function iter(level) {
     return function (node)  {
-        if (Object.hasOwn(node, 'expanded')) {
+        if (node.hasOwnProperty('expanded')) {
           node["expanded"] = condition
         }
         (node.children || []).forEach(iter(level + 1));
