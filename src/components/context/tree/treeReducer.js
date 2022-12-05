@@ -119,6 +119,7 @@ export default (state, action) => {
         //updateTreeData(result, state.treedata, state.fancyTree);
         //updateFancyTree(runDetail, state.fancyTree);
       }
+      state.initialTreeLayout = JSON.parse(JSON.stringify(result));
       return {
         ...state,
         currentRunIdOnTree: {
