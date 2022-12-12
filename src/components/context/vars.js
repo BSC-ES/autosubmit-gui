@@ -30,7 +30,7 @@ export const SkippedCode = 8;
 
 export const UpperLimitQuickView = 200; // Maximum time to spend waiting for the quick view to load
 
-export const maxReponseTimeThreshold = 240; // 4 minutes
+export const maxResponseTimeThreshold = 240; // 4 minutes
 export const quickThreshold = 12000;
 
 export const latestNewsLabel = "new-11-10-2021";
