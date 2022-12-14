@@ -1,5 +1,5 @@
 import React, { Fragment, useContext, useEffect, useState } from "react";
-import { useLocation } from 'react-router-dom'
+import { useLocation, useHistory, useRouteMatch } from 'react-router-dom'
 import { withRouter } from "react-router";
 //import Experiment from "../experiment/Experiment";
 import ExperimentColumn from "../experiment/ExperimentColumn";
@@ -41,38 +41,49 @@ let controller = new AbortController();
 
 // Main render component. Calls other component and supplies props if necessary.
 const ExperimentCentral = ({ match }) => {
+  const location = useLocation()
+  const history = useHistory()
+  const { url } = useRouteMatch();
+
   // Focus Logic
   const expid = match.params.expid;
   // From custom URL
   let resolve_action = match.params.action;
-  const location = useLocation()
+  // Param
   if(location.params && location.params.tab) {
     resolve_action = location.params.tab
   }
+  // Default param = Tree
   if (resolve_action === undefined) {
     resolve_action = "tree"
   }
+
   const [currentTab, setCurrentTab] = useState(resolve_action)
 
-  const focus_graph =
-    resolve_action && resolve_action === "graph" ? true : false;
-  const focus_lighter =
-    resolve_action && resolve_action === "light" ? true : false;
-  const classTree =
-    focus_graph === true || focus_lighter === true
-      ? "nav-link"
-      : "nav-link active";
-  const classGraph = focus_graph === true ? "nav-link active" : "nav-link";
-  const classLighter = focus_lighter === true ? "nav-link active" : "nav-link";
-  const classTabTree =
-    focus_graph === true || focus_lighter === true
-      ? "tab-pane fade"
-      : "tab-pane fade show active";
-  const classTabGraph =
-    focus_graph === true ? "tab-pane fade show active" : "tab-pane fade";
-  const classTabLighter =
-    focus_lighter === true ? "tab-pane fade show active" : "tab-pane fade";
-  //const isGraph = this.props.isGraph;
+  const classTree = currentTab === "tree" ? "nav-link active" : "nav-link";
+  const classTabTree = currentTab === "tree" ? "tab-pane fade show active" : "tab-pane fade";
+
+  const classGraph = currentTab === "graph" ? "nav-link active" : "nav-link";
+  const classTabGraph = currentTab === "graph" ? "tab-pane fade show active" : "tab-pane fade";
+
+  const classLighter = currentTab === "light" ? "nav-link active" : "nav-link";
+  const classTabLighter = currentTab === "light" ? "tab-pane fade show active" : "tab-pane fade";
+
+  const classLog = currentTab === "log" ? "nav-link active" : "nav-link";
+  const classTabLog = currentTab === "log" ? "tab-pane fade show active" : "tab-pane fade";
+
+  const classConfig = currentTab === "cofiguration" ? "nav-link active" : "nav-link ";
+  const classTabConfig = currentTab === "configuration" ? "tab-pane fade show active" : "tab-pane fade";
+
+  const classStats = currentTab === "stats" ? "nav-link active" : "nav-link ";
+  const classTabStats = currentTab === "stats" ? "tab-pane fade show active" : "tab-pane fade";
+
+  const classPerformance = currentTab === "performance" ? "nav-link active" : "nav-link ";
+  const classTabPerformance = currentTab === "performance" ? "tab-pane fade show active" : "tab-pane fade";
+
+  const classFaq = currentTab === "faq" ? "nav-link active" : "nav-link ";
+  const classTabFaq = currentTab === "faq" ? "tab-pane fade show active" : "tab-pane fade";
+    
   const experimentContext = useContext(ExperimentContext);
   const graphContext = useContext(GraphContext);
   const treeContext = useContext(TreeContext);
@@ -207,6 +218,10 @@ const ExperimentCentral = ({ match }) => {
       fetchQuickView()
     }
 
+    url.lastIndexOf("/");
+    var newUrl = url.substring(0, url.lastIndexOf("/"));
+    history.replace(newUrl + "/" + currentTab, {params: { tab: currentTab }})
+
   // eslint-disable-next-line
   }, [currentTab])
 
@@ -284,7 +299,7 @@ const ExperimentCentral = ({ match }) => {
             </li>
             <li className='nav-item'>
               <a
-                className='nav-link'
+                className={classLog}
                 id='log-tab'
                 data-toggle='tab'
                 href='#log'
@@ -298,10 +313,10 @@ const ExperimentCentral = ({ match }) => {
             </li>
             <li className='nav-item'>
               <a
-                href='#config'
-                className='nav-link'
+                className={classConfig}
                 id='config-tab'
                 data-toggle='tab'
+                href='#config'
                 role='tab'
                 aria-controls='config'
                 aria-selected='false'
@@ -312,7 +327,7 @@ const ExperimentCentral = ({ match }) => {
             </li>
             <li className='nav-item'>
               <a
-                className='nav-link'
+                className={classStats}
                 id='stats-tab'
                 data-toggle='tab'
                 href='#stats'
@@ -327,7 +342,7 @@ const ExperimentCentral = ({ match }) => {
             {SHOW_PERFORMANCE_TAB && (
               <li className='nav-item'>
                 <a
-                  className='nav-link'
+                  className={classPerformance}
                   id='performance-tab'
                   data-toggle='tab'
                   href='#performance'
@@ -350,17 +365,17 @@ const ExperimentCentral = ({ match }) => {
                 role='tab'
                 aria-controls='lightview'
                 aria-selected='false'
-                onClick={() => setCurrentTab("quick")}
+                onClick={() => setCurrentTab("light")}
               >
                 Quick View
               </a>
             </li>
             <li className='nav-item'>
               <a
-                href='#faq'
-                className='nav-link'
+                className={classFaq}
                 id='faq-tab'
                 data-toggle='tab'
+                href='#faq'
                 role='tab'
                 aria-controls='faq'
                 aria-selected='false'
@@ -702,7 +717,7 @@ const ExperimentCentral = ({ match }) => {
               </div>
             </div>
             <div
-              className='tab-pane fade'
+              className={classTabLog}
               id='log'
               role='tabpanel'
               aria-labelledby='log-tab'
@@ -741,7 +756,7 @@ const ExperimentCentral = ({ match }) => {
               </div>
             </div>
             <div
-              className='tab-pane fade'
+              className={classTabStats}
               id='stats'
               role='tabpanel'
               aria-labelledby='stats-tab'
@@ -755,7 +770,7 @@ const ExperimentCentral = ({ match }) => {
             </div>
             {SHOW_PERFORMANCE_TAB && (
               <div
-                className='tab-pane fade'
+                className={classTabPerformance}
                 id='performance'
                 role='tabpanel'
                 aria-labelledby='performance-tab'
@@ -791,7 +806,7 @@ const ExperimentCentral = ({ match }) => {
               </div>
             </div>
             <div
-              className='tab-pane fade'
+              className={classTabFaq}
               id='faq'
               role='tabpanel'
               aria-labelledby='faq-tab'
@@ -804,7 +819,7 @@ const ExperimentCentral = ({ match }) => {
               </div>
             </div>
             <div
-              className='tab-pane fade'
+              className={classTabConfig}
               id='config'
               role='tabpanel'
               aria-labelledby='config-tab'

@@ -209,7 +209,7 @@ export class ExperimentItem extends Component {
               )}
               {disabledMore === false && (
                 <Link
-                  to={{ pathname: `/${rootAppName}/experiment/${name}`, params: { tab: 'tree' } }}
+                  to={{ pathname: `/${rootAppName}/experiment/${name}/tree`, params: { tab: 'tree' } }}
                   className='btn btn-primary btn-block btn-sm menu-btn-md'
                   data-toggle='tooltip'
                   data-placement='bottom'
@@ -227,7 +227,7 @@ export class ExperimentItem extends Component {
               )}
               {disabledMore === false && (
                 <Link
-                  to={{ pathname: `/${rootAppName}/experiment/${name}`, params: { tab: 'graph' } }}
+                  to={{ pathname: `/${rootAppName}/experiment/${name}/graph`, params: { tab: 'graph' } }}
                   className='btn btn-primary btn-block btn-sm menu-btn-md'
                   data-toggle='tooltip'
                   data-placement='bottom'
@@ -239,7 +239,7 @@ export class ExperimentItem extends Component {
             </div>
             <div className='col-md-3 px-1'>
               <Link
-                to={{ pathname: `/${rootAppName}/experiment/${name}`, params: { tab: 'light' } }}
+                to={{ pathname: `/${rootAppName}/experiment/${name}/light`, params: { tab: 'light' } }}
                 className='btn btn-primary btn-block btn-sm menu-btn-md'
                 data-toggle='tooltip'
                 data-placement='bottom'
