@@ -218,8 +218,10 @@ const ExperimentCentral = ({ match }) => {
       fetchQuickView()
     }
 
-    url.lastIndexOf("/");
-    var newUrl = url.substring(0, url.lastIndexOf("/"));
+    var newUrl = url
+    if (url.lastIndexOf("/") == 30) {
+        newUrl = url.substring(0, url.lastIndexOf("/"));
+    }
     history.replace(newUrl + "/" + currentTab, {params: { tab: currentTab }})
 
   // eslint-disable-next-line
