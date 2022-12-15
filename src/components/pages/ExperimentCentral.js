@@ -72,7 +72,7 @@ const ExperimentCentral = ({ match }) => {
   const classLog = currentTab === "log" ? "nav-link active" : "nav-link";
   const classTabLog = currentTab === "log" ? "tab-pane fade show active" : "tab-pane fade";
 
-  const classConfig = currentTab === "cofiguration" ? "nav-link active" : "nav-link ";
+  const classConfig = currentTab === "configuration" ? "nav-link active" : "nav-link ";
   const classTabConfig = currentTab === "configuration" ? "tab-pane fade show active" : "tab-pane fade";
 
   const classStats = currentTab === "stats" ? "nav-link active" : "nav-link ";
