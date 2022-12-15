@@ -76,7 +76,7 @@ const ExperimentCentral = ({ match }) => {
   const classTabConfig = currentTab === "configuration" ? "tab-pane fade show active" : "tab-pane fade";
 
   const classStats = currentTab === "stats" ? "nav-link active" : "nav-link ";
-  const classTabStats = currentTab === "stats" ? "tab-pane fade show active" : "tab-pane fade";
+  const classTabStats = currentTab === "stats" ? "tab-pane show active" : "tab-pane fade";
 
   const classPerformance = currentTab === "performance" ? "nav-link active" : "nav-link ";
   const classTabPerformance = currentTab === "performance" ? "tab-pane fade show active" : "tab-pane fade";
@@ -219,7 +219,7 @@ const ExperimentCentral = ({ match }) => {
     }
 
     var newUrl = url
-    if (url.lastIndexOf("/") == 30) {
+    if (url.lastIndexOf("/") === 30) {
         newUrl = url.substring(0, url.lastIndexOf("/"));
     }
     history.replace(newUrl + "/" + currentTab, {params: { tab: currentTab }})
@@ -336,7 +336,7 @@ const ExperimentCentral = ({ match }) => {
                 role='tab'
                 aria-controls='stats'
                 aria-selected='false'
-                onClick={() => setCurrentTab("statistics")}
+                onClick={() => setCurrentTab("stats")}
               >
                 Statistics
               </a>
