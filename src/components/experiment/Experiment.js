@@ -39,7 +39,7 @@ const Experiment = ({ expidToken }) => {
   return (
     <span className='navbar-brand ml-4'>
       <strong>{expid}</strong> {/* {description}{" "} */}
-      {error && <pre className='text-danger'>{error_message}</pre>}{" "}
+      {/* {error && <span className='text-right text-danger'>{error_message}</span>}{" "} */}
       {loadingState && (
         <span className='badge badge-dark text-right'>LOADING...</span>
       )}
