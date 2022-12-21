@@ -3,7 +3,7 @@ import ExperimentItem from "./ExperimentItem";
 import Spinner from "../layout/Spinner";
 import ExperimentContext from "../context/experiment/experimentContext";
 import Pagination from "./Pagination";
-import { orderByType } from "../context/vars";
+import { localStorageExperimentActiveCheck, orderByType } from "../context/vars";
 
 const Experiments = () => {
   const experimentContext = useContext(ExperimentContext);
@@ -216,7 +216,7 @@ const Experiments = () => {
             )}
             {activeInactiveFilter && (
               <span className='px-1 ml-1 bg-secondary text-dark rounded'>
-                Status: <strong>{activeInactiveFilter}</strong>
+                Status: <strong>{localStorage.getItem(localStorageExperimentActiveCheck)}</strong>
               </span>
             )}
             {currentOrderType && (

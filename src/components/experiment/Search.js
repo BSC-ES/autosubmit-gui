@@ -12,18 +12,20 @@ import {
 
 let controller = new AbortController();
 
+function getComplexType(onlyActive) {
+  return onlyActive === true ? 'Only Active' : 'Active & Inactive'
+}
+
 const Search = ({ specificSearch }) => {
   const alertContext = useContext(AlertContext);
   const experimentContext = useContext(ExperimentContext);
-  const { searchExperimentsByOwner, experiments, loggedUser } =
-    experimentContext;
-  const currentExpTypeChoice = localStorage.getItem(
-    localStorageExperimentTypeSearch
-  );
-  const currentActiveCheck = localStorage.getItem(
-    localStorageExperimentActiveCheck
-  );
+  const { searchExperimentsByOwner, experiments, loggedUser } = experimentContext;
+
+  const currentExpTypeChoice = localStorage.getItem(localStorageExperimentTypeSearch);
+
   const [onlyActive, setOnlyActive] = useLocalStorage("onlyact", true)
+  localStorage.setItem(localStorageExperimentActiveCheck, getComplexType(onlyActive))
+  const currentActiveCheck = localStorage.getItem(getComplexType(onlyActive));
 
   const btnRef = useRef()
 
@@ -73,11 +75,8 @@ const Search = ({ specificSearch }) => {
       setTypeExperiment(orderByType.radioAll);
     }
 
-    if (currentActiveCheck) {
-      setActiveChoice(currentActiveCheck);
-    } else {
-      setActiveChoice(orderByType.showAllActiveInactive);
-    }
+    setActiveChoice(getComplexType(!onlyActive))
+    localStorage.setItem(localStorageExperimentActiveCheck, activeChoice)
 
     if (specificSearch && !experiments) {
       searchExperimentsByOwner(
@@ -95,7 +94,7 @@ const Search = ({ specificSearch }) => {
     specificSearch,
     searchExperimentsByOwner,
     currentExpTypeChoice,
-    // currentActiveCheck,
+    onlyActive,
     experiments,
   ]);
 
@@ -109,7 +108,7 @@ const Search = ({ specificSearch }) => {
     if (text === "") {
       alertContext.setAlert("Please enter something", "light");
     } else {
-      let actChoice = onlyActive === true ? 'Only Active' : 'Active & Inactive'
+      let actChoice = getComplexType(onlyActive)
       experimentContext.searchExperiments(text, typeExperiment, actChoice);
     }
   };
@@ -140,12 +139,9 @@ const Search = ({ specificSearch }) => {
   };
 
   const onChangeActiveCheck = (e) => {
-    const nextValue = onlyActive === true ? "active" : "all";
     setOnlyActive(!onlyActive)
-    const complexInput = simpleActiveStatusToComplex(nextValue);
-    experimentContext.orderExperimentsInResult(complexInput);
-    setActiveChoice(complexInput);
-    localStorage.setItem(localStorageExperimentActiveCheck, complexInput);
+    experimentContext.orderExperimentsInResult(getComplexType(!onlyActive));
+    localStorage.setItem(localStorageExperimentActiveCheck, getComplexType(onlyActive));
   };
 
   return (
