@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
 import AlertContext from "../context/alert/alertContext";
+import useLocalStorage from "../hooks/useLocalStorage";
 import {
   localStorageExperimentTypeSearch,
   localStorageExperimentActiveCheck,
@@ -22,6 +23,7 @@ const Search = ({ specificSearch }) => {
   const currentActiveCheck = localStorage.getItem(
     localStorageExperimentActiveCheck
   );
+  const [onlyActive, setOnlyActive] = useLocalStorage("onlyact", true)
 
   const btnRef = useRef()
 
@@ -107,8 +109,8 @@ const Search = ({ specificSearch }) => {
     if (text === "") {
       alertContext.setAlert("Please enter something", "light");
     } else {
-      experimentContext.searchExperiments(text, typeExperiment, activeChoice);
-      //setText('');
+      let actChoice = onlyActive === true ? 'Only Active' : 'Active & Inactive'
+      experimentContext.searchExperiments(text, typeExperiment, actChoice);
     }
   };
 
@@ -138,8 +140,8 @@ const Search = ({ specificSearch }) => {
   };
 
   const onChangeActiveCheck = (e) => {
-    const simpleInput = e.target.value;
-    const nextValue = simpleInput === "all" ? "active" : "all";
+    const nextValue = onlyActive === true ? "active" : "all";
+    setOnlyActive(!onlyActive)
     const complexInput = simpleActiveStatusToComplex(nextValue);
     experimentContext.orderExperimentsInResult(complexInput);
     setActiveChoice(complexInput);
@@ -209,7 +211,7 @@ const Search = ({ specificSearch }) => {
               }
               onChange={onChangeActiveCheck}
               checked = {
-                activeChoice === orderByType.showOnlyActive ? true : false
+                  onlyActive
               }
             />
             <label className='form-check-label' htmlFor='switchActive'>
