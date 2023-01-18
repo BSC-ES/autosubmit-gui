@@ -3,6 +3,7 @@
 exp_id=$1
 
 rm -rf /tmp/TO_SEND/*
+mkdir -p /tmp/TO_SEND
 
 scp -r \
     bscesautosubmit01:/esarchive/autosubmit/as_metadata/data/job_data_${exp_id}.db \
@@ -15,7 +16,7 @@ scp -r \
     bscesautosubmit01:/esarchive/autosubmit/${exp_id}/tmp\
     /tmp/TO_SEND/
 
-path="/tmp/TO_SEND/"
+path="/tmp/TO_SEND/."
 
 scp -r ${path}conf ${path}pkl ${path}plot ${path}status ${path}tmp rocky@bscesautosubmitdev01.bsc.es:/home/rocky/development/autosubmit/${exp_id}/
 scp -r ${path}job_data_${exp_id}.db rocky@bscesautosubmitdev01.bsc.es:/home/rocky/development/autosubmit/as_metadata/data/
