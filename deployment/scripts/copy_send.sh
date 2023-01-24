@@ -1,3 +1,17 @@
+#####################################################################################################
+# This script is for grabbing real experiments from /esarchive/ and deploy them into Autosubmit's developer environment.
+# It MUST be executed locally from your machine and it will create a subdirectory in the /tmp/ partition.
+# Check out the Autosubmit Developers Guide under the section `Deploy Real Experiments to the Dev Machine`.
+# The Host address `rocky@bscesautosubmitdev01.bsc.es` should be configured as SSH passwordless. Check out the Autosubmit Developers Guide under the Introduction section for more.
+#
+# Usage Example:
+# (before this command we should execute `createDir.sh a49k` at the dev env.
+# cgutierr@bsces108127:~$ bash copy_send.sh a49k
+#
+# Author: Cristian Gutiérrez, BSC
+######################################################################################################
+
+
 #!/bin/sh
 
 exp_id=$1

@@ -1,7 +1,16 @@
-#!/bin/sh
-
+######################################################################################################
 # This script will insert an experiment into `ecearth.db/experiment` and `as_times.db/experiment` tables so that they can be visualized in the GUI.
-# to set the experiment as active it will insert it into `as_times.db/experiment_times` as well as `as_times.db/experiment_status`!
+# To set the experiment as active it will insert it into `as_times.db/experiment_times` as well as `as_times.db/experiment_status`!
+# It is intended to be used in an environment with Autosubmit data.
+# 
+# Usage Example:
+# [rocky@vm ~]$ bash insertNewExperiment <expid> <as_version> <desc> <total_jobs> <completed_jobs>
+# [rocky@vm ~]$ bash insertNewExperiment a49s 3.14.0 "Hello World" 10 2
+# 
+# Author: Cristian Gutiérrez, BSC
+######################################################################################################
+
+#!/bin/sh
 
 exp_id=$1
 vers=$2

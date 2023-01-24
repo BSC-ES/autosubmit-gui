@@ -1,6 +1,16 @@
+#####################################################################################################
+# This script will kill the current running instance of Autosubmit API (Python 2) and run it again.
+# Note the importante of the variables imported from the .bashrc file.
+# It is recommended to be ran with the root user to be able to kill processes.
+#
+# Usage Example:
+# [rocky@vm ~]$ bash update_launch_autosubmit_API.sh
+#
+# Author: Autosubmit Team, BSC
+######################################################################################################
+
 #!/bin/bash
 . ~/.bashrc
-
 
 # PVE_PATH is an env var defined in the .bashrc for the virtual environment to be loaded for the API
 # VM environment /var/www/html/autosubmitapi/venv27/bin/activate

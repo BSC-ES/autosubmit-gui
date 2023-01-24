@@ -1,3 +1,14 @@
+#####################################################################################################
+# This script is intended to be used in /autosubmit/ path where the experiments are stored.
+# It will create a new experiment folder with the default set of folders needed for Autosubmit 3.14.0 experiments.
+# Doesn't supports Autosubmit 4 custom extensions.
+#
+# Usage Example:
+# [rocky@vm ~]$ bash createdir.sh <expid>
+#
+# Author: Cristian Gutiérrez, BSC
+######################################################################################################
+
 #!/bin/sh
 
 dir=$1

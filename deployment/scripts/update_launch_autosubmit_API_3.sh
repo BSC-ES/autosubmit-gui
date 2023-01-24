@@ -1,3 +1,15 @@
+######################################################################################################
+# This script will kill the current running instance of Autosubmit API (Python 3.7.3) and run it again.
+# Note the importante of the variables imported from the .bashrc file.
+# It is recommended to be ran with the root user to be able to kill processes.
+#
+# Usage Example:
+# [rocky@vm ~]$ sudo su
+# [root@vm ~]$ bash update_launch_autosubmit_API_3.sh
+#
+# Author: Autosubmit Team, BSC
+######################################################################################################
+
 #!/bin/bash
 . ~/.bashrc
 
