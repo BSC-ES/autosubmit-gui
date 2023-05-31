@@ -6,7 +6,7 @@ export const DEBUG = false; // If true, some calls print their response to the c
 export const NOAPI = true; // If true -> API requests are replaced by demo data.
 export const AUTHENTICATION = false; // If false -> The authentication requirement is disabled. Some API calls require a valid token though.
 export const SHOW_PERFORMANCE_TAB = true; // If false -> The performance tab an all its references are hidden.
-export const SHOW_CONFIGURATION_TAB = false; // If false -> The configuration tab an all its references are hidden (for AS4 experiments).
+export const SHOW_CONFIGURATION_TAB = true; // If false -> The configuration tab an all its references are hidden (for AS4 experiments).
 export const rootAppName = "autosubmitapp"; // Name of the app. It can be changed to publish the GUI in another environment, for example for testing in a new server.
 // Main external url of the app. It can be changed to publish the GUI in another environment, for example for testing in a new server.
 // current possible values: "https://earth.bsc.es" , "https://bscesautosubmitdev01.bsc.es"

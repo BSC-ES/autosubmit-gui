@@ -34,7 +34,7 @@ import Performance from "../experiment/Performance";
 import ReadyJobs from "../experiment/ReadyJobs";
 import ConfigurationControl from "../experiment/ConfigurationControl";
 import CurrentConfiguration from "../experiment/CurrentConfiguration";
-import { buildWarningInactiveMessageTree } from "../context/utils";
+import { buildWarningInactiveMessageTree , getExperimentAutosubmitVersion} from "../context/utils";
 import { SHOW_PERFORMANCE_TAB, SHOW_CONFIGURATION_TAB } from "../context/vars";
 
 let controller = new AbortController();
@@ -296,7 +296,7 @@ const ExperimentCentral = ({ match }) => {
                 Log
               </a>
             </li>
-            {SHOW_CONFIGURATION_TAB && (
+            {getExperimentAutosubmitVersion(experiment.version)["major"] < 4  && SHOW_CONFIGURATION_TAB && (
                 <li className='nav-item'>
                   <a
                     href='#config'
