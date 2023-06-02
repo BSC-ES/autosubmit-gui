@@ -296,7 +296,7 @@ const ExperimentCentral = ({ match }) => {
                 Log
               </a>
             </li>
-            {getExperimentAutosubmitVersion(experiment.version)["major"] < 4  && SHOW_CONFIGURATION_TAB && (
+            {experiment && getExperimentAutosubmitVersion(experiment.version)["major"] < 4  && SHOW_CONFIGURATION_TAB && (
                 <li className='nav-item'>
                   <a
                     href='#config'
