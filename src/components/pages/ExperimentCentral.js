@@ -34,8 +34,8 @@ import Performance from "../experiment/Performance";
 import ReadyJobs from "../experiment/ReadyJobs";
 import ConfigurationControl from "../experiment/ConfigurationControl";
 import CurrentConfiguration from "../experiment/CurrentConfiguration";
-import { buildWarningInactiveMessageTree } from "../context/utils";
-import { SHOW_PERFORMANCE_TAB } from "../context/vars";
+import { buildWarningInactiveMessageTree , getExperimentAutosubmitVersion} from "../context/utils";
+import { SHOW_PERFORMANCE_TAB, SHOW_CONFIGURATION_TAB } from "../context/vars";
 
 let controller = new AbortController();
 
@@ -296,20 +296,22 @@ const ExperimentCentral = ({ match }) => {
                 Log
               </a>
             </li>
-            <li className='nav-item'>
-              <a
-                href='#config'
-                className='nav-link'
-                id='config-tab'
-                data-toggle='tab'
-                role='tab'
-                aria-controls='config'
-                aria-selected='false'
-                onClick={() => setCurrentTab("configuration")}
-              >
-                Configuration
-              </a>
-            </li>
+            {experiment && getExperimentAutosubmitVersion(experiment.version)["major"] < 4  && SHOW_CONFIGURATION_TAB && (
+                <li className='nav-item'>
+                  <a
+                    href='#config'
+                    className='nav-link'
+                    id='config-tab'
+                    data-toggle='tab'
+                    role='tab'
+                    aria-controls='config'
+                    aria-selected='false'
+                    onClick={() => setCurrentTab("configuration")}
+                  >
+                    Configuration
+                  </a>
+                </li>
+            )}
             <li className='nav-item'>
               <a
                 className='nav-link'
@@ -803,19 +805,21 @@ const ExperimentCentral = ({ match }) => {
                 </div>
               </div>
             </div>
-            <div
-              className='tab-pane fade'
-              id='config'
-              role='tabpanel'
-              aria-labelledby='config-tab'
-            >
-              <div className='card'>
-                <ConfigurationControl />
-                <div className='card-body p-1'>
-                  <CurrentConfiguration />
+            {SHOW_CONFIGURATION_TAB && (
+                <div
+                  className='tab-pane fade'
+                  id='config'
+                  role='tabpanel'
+                  aria-labelledby='config-tab'
+                >
+                  <div className='card'>
+                    <ConfigurationControl />
+                    <div className='card-body p-1'>
+                      <CurrentConfiguration />
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
