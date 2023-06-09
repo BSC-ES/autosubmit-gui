@@ -58,6 +58,21 @@ export const commandGeneratorUpdateDescrip = (expid, description) => {
   return command;
 };
 
+export const getExperimentAutosubmitVersion = (version) => {
+    if (typeof(version) != 'string') { return false; }
+
+    var arr = version.split('.');
+    // parse int or default to 0
+    var maj = parseInt(arr[0]) || 0;
+    var min = parseInt(arr[1]) || 0;
+    var rest = parseInt(arr[2]) || 0;
+    return {
+        major: maj,
+        minor: min,
+        build: rest
+    }
+}
+
 export const commandGenerator = (expid, jobs, status) => {
   let arrayNames = [];
   jobs.map((job) => arrayNames.push(job.name));

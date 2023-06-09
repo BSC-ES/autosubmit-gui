@@ -10,26 +10,17 @@ const News = () => {
       <h3>Updates <small></small></h3>
       <div className="row">
         <div className="col">
-          <h4>30-11-2022</h4>
+          <h4>09-06-2023</h4>
           <div>
-            <strong>Performance improvements</strong>
-            <ul>
-              <li>Performance improvement in the experiment dashboard, we increased the retrieval speed for the experiments when user clicks on 'Detailed Data' button. Now only experiments on the current page will be refreshed.</li>
-              <li>General performance improvement by the addition of a new endpoint for stopping current background API jobs (on the API side). Alongside this, we have a clean-up hook to use in all the required situations, The new endpoint allows discarding expensive, non-relevant petitions and dispatching new user demands on time. Thus, proving a better user experience. Graph, Tree and QuickView start loading automatically, and the transition between them is improved due to the mentioned task canceling mechanism.</li>
-            </ul>
              <strong>UI/UX improvements</strong>
             <ul>
-              <li>Treeview UI/UX improved by adding new folders for the wrappers, and inside these, we added a sorting to display the proper execution sequence, collapse all/Expand all buttons were added</li>
-              <li>New tab icon was added to replace generic React.js icon that was previously being displayed</li>
-              <li>An early initial load of the Active experiments at the homepage has been implemented without requiring the user to click on the button each time.</li>
-              <li>UI/UX of the graph view improved: Tasks without dependencies are displayed correctly in the Graph View in a single row now. now also is possible to select a group of nodes by keeping pressed the right button of the mouse and hover the rectangle over these.</li>
+              <li>Improved compatibility for Autosubmit 4.0 and above experiments</li>
+              <li>Improved robustness and maintainability of the API</li>
+              <li>For Autosubmit 4.0 configuration tab will be disabled until a full redesign is carried out.</li>
             </ul>
             <strong>Bug fixes</strong>
             <ul>
-               <li>Fixed bug when Added redirection support after logging in.</li>
-               <li>Fixed a bug in the tree generation that was making the load more tedious.</li>
-               <li>Fixed a visual bug regarding the close button in the pop-up windows.</li>
-               <li>Fixed bug concerning the sorting of the experiments mismatch between Chrome and Firefox</li>
+               <li>Graph and Treeview fixes on issues detected after migration to Python 3.7.</li>
             </ul>
           </div>
         </div>
