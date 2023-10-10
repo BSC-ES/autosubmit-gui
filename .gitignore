@@ -4,3 +4,16 @@ node_modules
 .vscode
 /build/
 /.idea/
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+
+# config
+.env
+.env.*
