@@ -10,6 +10,7 @@ import {
   queueColor,
   NOAPI,
   rootAppName,
+  AUTHENTICATION,
 } from "../context/vars";
 //import { render } from "react-dom";
 
@@ -178,7 +179,7 @@ export class ExperimentItem extends Component {
                       : "btn btn-primary btn-block btn-sm menu-btn-md"
                   }
                   type='button'
-                  disabled={loggedUser ? false : true}
+                  disabled={ (!AUTHENTICATION || loggedUser) ? false : true}
                   onClick={onGetSummary(name)}
                   aria-controls={name}
                   data-toggle='tooltip'

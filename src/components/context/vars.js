@@ -6,6 +6,8 @@ export const AUTOSUBMIT_API_SOURCE = process.env.REACT_APP_AUTOSUBMIT_API_SOURCE
 
 export const DEBUG = ["true", "T"].includes(process.env.REACT_APP_DEBUG); ; // Default: false. If true, some calls print their response to the console. However, it pollutes the console. Leave it at false.
 export const NOAPI = ["true", "T"].includes(process.env.REACT_APP_NOAPI); ; // Default: false. If true -> API requests are replaced by demo data.
+
+export const TRACK_ESARCHIVE = ["true", "T"].includes(process.env.REACT_APP_TRACK_ESARCHIVE); // Default false. For BSC internal use. Show esarchive status on Navbar.
 export const SHOW_PERFORMANCE_TAB = ["false", "F"].includes(process.env.REACT_APP_SHOW_PERFORMANCE_TAB); ; // Default: true. If false -> The performance tab an all its references are hidden.
 export const SHOW_CONFIGURATION_TAB = ["false", "F"].includes(process.env.REACT_APP_SHOW_CONFIGURATION_TAB); ; // Default: true. If false -> The configuration tab an all its references are hidden (for AS4 experiments).
 
