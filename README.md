@@ -49,8 +49,8 @@ In this image you can see the flow of information in the **Autosubmit environmen
 
 ## Installation
 
-[!NOTE]
-This project has been created by using [Create React App (CRA)](https://create-react-app.dev/), so it is important to check CRA documentation to do changes on its deployment process.
+> **NOTE**
+> This project has been created by using [Create React App (CRA)](https://create-react-app.dev/), so it is important to check CRA documentation to do changes on its deployment process.
 
 First, clone the repository:
 
@@ -74,8 +74,8 @@ However, some API calls might require that you have a valid token, but if you ar
 * **REACT_APP_AUTOSUBMIT_API_SOURCE**: Defines the API URI. For more information check [autosubmit_api](https://earth.bsc.es/gitlab/es/autosubmit_api).
 * **REACT_APP_DEBUG**: Default `false`. Set it to `true` if you want to enable the DEBUG features.
 
-[!IMPORTANT]
-The static data required by `NOAPI = true` is stored in [/autosubmitreact/data](https://earth.bsc.es/gitlab/es/autosubmitreact/-/tree/master/data) because we don't want that the package sent for deployment includes all this information that will only increase the size of the package. Therefore, in forder for `NOAPI = true` to work, you should copy the contents of `/autosubmitreact/data/` into `/autosubmitreact/src/components/context/data/`.
+> **IMPORTANT**
+> The static data required by `NOAPI = true` is stored in [/autosubmitreact/data](https://earth.bsc.es/gitlab/es/autosubmitreact/-/tree/master/data) because we don't want that the package sent for deployment includes all this information that will only increase the size of the package. Therefore, in forder for `NOAPI = true` to work, you should copy the contents of `/autosubmitreact/data/` into `/autosubmitreact/src/components/context/data/`.
 
 Here is an example content of a `.env` file:
 
@@ -90,8 +90,8 @@ REACT_APP_AUTOSUBMIT_API_SOURCE=https://earth.bsc.es/autosubmitapi
 REACT_APP_DEBUG=false
 ```
 
-[!NOTE]
-If you want to have different sets of `.env` files for different purposes (production, development, testing, etc), refer to the [Enviroment variables CRA documentation](https://create-react-app.dev/docs/adding-custom-environment-variables).
+> **NOTE**
+> If you want to have different sets of `.env` files for different purposes (production, development, testing, etc), refer to the [Enviroment variables CRA documentation](https://create-react-app.dev/docs/adding-custom-environment-variables).
 
 
 Now you are able to run the GUI locally using:
