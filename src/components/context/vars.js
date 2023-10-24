@@ -8,8 +8,8 @@ export const DEBUG = ["true", "T"].includes(process.env.REACT_APP_DEBUG); ; // D
 export const NOAPI = ["true", "T"].includes(process.env.REACT_APP_NOAPI); ; // Default: false. If true -> API requests are replaced by demo data.
 
 export const TRACK_ESARCHIVE = ["true", "T"].includes(process.env.REACT_APP_TRACK_ESARCHIVE); // Default false. For BSC internal use. Show esarchive status on Navbar.
-export const SHOW_PERFORMANCE_TAB = ["false", "F"].includes(process.env.REACT_APP_SHOW_PERFORMANCE_TAB); ; // Default: true. If false -> The performance tab an all its references are hidden.
-export const SHOW_CONFIGURATION_TAB = ["false", "F"].includes(process.env.REACT_APP_SHOW_CONFIGURATION_TAB); ; // Default: true. If false -> The configuration tab an all its references are hidden (for AS4 experiments).
+export const SHOW_PERFORMANCE_TAB = !["false", "F"].includes(process.env.REACT_APP_SHOW_PERFORMANCE_TAB); ; // Default: true. If false -> The performance tab an all its references are hidden.
+export const SHOW_CONFIGURATION_TAB = !["false", "F"].includes(process.env.REACT_APP_SHOW_CONFIGURATION_TAB); ; // Default: true. If false -> The configuration tab an all its references are hidden (for AS4 experiments).
 
 export const rootAppName = "autosubmitapp"; // Name of the app. It can be changed to publish the GUI in another environment, for example for testing in a new server.
 // Main external url of the app. It can be changed to publish the GUI in another environment, for example for testing in a new server.
