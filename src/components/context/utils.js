@@ -437,18 +437,18 @@ export const differenceBetweenConfigurations = (
                   currentConf[file][header][field] !==
                   historicalConf[file][header][field]
                 ) {
-                  differences.add(`${file}+${header}+${field}`);
-                  differences.add(`${file}+${header}`);
+                  differences.add(`${file}.${header}.${field}`);
+                  differences.add(`${file}.${header}`);
                   differences.add(file);
                 }
               } else {
-                differences.add(`${file}+${header}+${field}`);
-                differences.add(`${file}+${header}`);
+                differences.add(`${file}.${header}.${field}`);
+                differences.add(`${file}.${header}`);
                 differences.add(file);
               }
             });
           } else {
-            differences.add(`${file}+${header}`);
+            differences.add(`${file}.${header}`);
             differences.add(file);
           }
           const fileFileHeader = Object.keys(currentConf[file])
@@ -457,7 +457,7 @@ export const differenceBetweenConfigurations = (
 
           historicalFileHeader.forEach((head) => {
             if (!fileFileHeader.includes(head))
-              differences.add(`${file}+${head}`);
+              differences.add(`${file}.${head}`);
           });
         });
       } else {
@@ -482,7 +482,7 @@ export const generateConfigFileHtml = (
             <div key={v} className='configuration-section'>
               <div className='configuration-section-title'>
                 <strong>[{v}]</strong>{" "}
-                {differences.has(`${confName}+${v}`) && alertSpan}
+                {differences.has(`${confName}.${v}`) && alertSpan}
               </div>
               <table className='table table-sm table-fixed list-table'>
                 <thead className='thead-dark'>
@@ -496,7 +496,7 @@ export const generateConfigFileHtml = (
                     <tr key={w}>
                       <td>
                         {w}{" "}
-                        {differences.has(`${confName}+${v}+${w}`) && alertSpan}
+                        {differences.has(`${confName}.${v}.${w}`) && alertSpan}
                       </td>
                       <td>{conf[v][w]}</td>
                     </tr>

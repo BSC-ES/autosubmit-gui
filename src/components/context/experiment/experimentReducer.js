@@ -53,8 +53,7 @@ import {
   approximateLoadingTreeTime,
   approximateLoadingQuickView,
   normalizeString,
-  normalizeInt,
-  differenceBetweenConfigurations,
+  normalizeInt
 } from "../utils";
 
 import {
@@ -751,16 +750,21 @@ export default (state, action) => {
         currentPage: action.payload,
       };
     case GET_CURRENT_CONFIGURATION:
-      const { configurationCurrentRun, configurationFileSystem } =
-        action.payload;
-      const currentDifferences = differenceBetweenConfigurations(
-        configurationCurrentRun,
-        configurationFileSystem
-      );
+      // const { configurationCurrentRun, configurationFileSystem } =
+      //   action.payload;
+      // const currentDifferences = []
+      // try {
+      //   currentDifferences = differenceBetweenConfigurations(
+      //     configurationCurrentRun,
+      //     configurationFileSystem
+      //   );
+      // } catch (error) {
+        
+      // }
       return {
         ...state,
         currentConfiguration: action.payload,
-        configDifferences: currentDifferences,
+        configDifferences: new Set(action.payload.differences),
       };
     case GET_JOB_HISTORY_LOG:
       const { path, joblog } = action.payload;
