@@ -1,7 +1,7 @@
 {
   "homepage": "https://earth.bsc.es/autosubmitapp/",
   "name": "autosubmitgui",
-  "version": "1.0.0",
+  "version": "4.0.0-beta.2",
   "private": true,
   "dependencies": {
     "axios": "^0.22.0",

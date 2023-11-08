@@ -7,12 +7,14 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
   const experimentContext = useContext(ExperimentContext);
   const { loggedUser } = experimentContext;
   const [credential, setCredential] = useState({
-    user: localStorage.getItem("user"),
-    token: localStorage.getItem("token")
+    loading: true,
+    user: null,
+    token: null
   })
 
   useEffect(() => {
     setCredential({
+      loading: false,
       user: localStorage.getItem("user"),
       token: localStorage.getItem("token")
     })
@@ -22,18 +24,26 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={(props) => {
-        if ((loggedUser && loggedUser !== "Failed") || (credential.user && credential.token)) {
-          return <Component />;
-        } else {
-          return (
-            <Redirect
-              to={{
-                pathname: `/${rootAppName}/login/`,
-                state: { from: props.location },
-              }}
-            />
-          );
-        }
+        return (
+          <>
+            {
+              !credential.loading &&
+              <>
+                {
+                  ((loggedUser && loggedUser !== "Failed") || (credential.user && credential.token)) ?
+                    <Component />
+                    :
+                    <Redirect
+                      to={{
+                        pathname: `/${rootAppName}/login/`,
+                        state: { from: props.location },
+                      }}
+                    />
+                }
+              </>
+            }
+          </>
+        )
       }}
     />
   );
