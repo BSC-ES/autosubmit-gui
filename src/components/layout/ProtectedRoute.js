@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { rootAppName } from "../context/vars";
 import ExperimentContext from "../context/experiment/experimentContext";
@@ -6,14 +6,23 @@ import ExperimentContext from "../context/experiment/experimentContext";
 const ProtectedRoute = ({ component: Component, ...rest }) => {
   const experimentContext = useContext(ExperimentContext);
   const { loggedUser } = experimentContext;
-  const user = localStorage.getItem("user");
-  const token = localStorage.getItem("token");
-  // setLoggedUser(user, token);
+  const [credential, setCredential] = useState({
+    user: localStorage.getItem("user"),
+    token: localStorage.getItem("token")
+  })
+
+  useEffect(() => {
+    setCredential({
+      user: localStorage.getItem("user"),
+      token: localStorage.getItem("token")
+    })
+  }, [loggedUser])
+
   return (
     <Route
       {...rest}
       render={(props) => {
-        if ((loggedUser && loggedUser !== "Failed") || (user && token)) {
+        if ((loggedUser && loggedUser !== "Failed") || (credential.user && credential.token)) {
           return <Component />;
         } else {
           return (
