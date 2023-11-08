@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { rootAppName } from "../context/vars";
 import ExperimentContext from "../context/experiment/experimentContext";
+import { setAuthInLocalStorage, unsetAuthInLocalStorage } from "../context/utils";
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
   const experimentContext = useContext(ExperimentContext);
@@ -13,11 +14,17 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
   })
 
   useEffect(() => {
-    setCredential({
+    let newCredential = {
       loading: false,
       user: localStorage.getItem("user"),
       token: localStorage.getItem("token")
-    })
+    }
+    if(newCredential.user && newCredential.token){
+      setAuthInLocalStorage(newCredential.user, newCredential.token)
+    }else{
+      unsetAuthInLocalStorage()
+    }
+    setCredential(newCredential)
   }, [loggedUser])
 
   return (
