@@ -53,7 +53,9 @@ import {
   approximateLoadingTreeTime,
   approximateLoadingQuickView,
   normalizeString,
-  normalizeInt
+  normalizeInt,
+  setAuthInLocalStorage,
+  unsetAuthInLocalStorage
 } from "../utils";
 
 import {
@@ -651,11 +653,9 @@ export default (state, action) => {
     case VERIFY_TOKEN_DATA: {
       const { authenticated, user, token } = action.payload;
       if (authenticated === true) {
-        localStorage.setItem("user", user);
-        localStorage.setItem("token", token);
+        setAuthInLocalStorage(user, token)
       } else {
-        localStorage.removeItem("user");
-        localStorage.removeItem("token");
+        unsetAuthInLocalStorage()
       }
       return {
         ...state,
@@ -675,8 +675,7 @@ export default (state, action) => {
       const { isValid } = action.payload;
 
       if (state.loggedUser && isValid === false) {
-        localStorage.removeItem("user");
-        localStorage.removeItem("token");
+        unsetAuthInLocalStorage()
         return {
           ...state,
           loggedUser: null,
@@ -696,8 +695,7 @@ export default (state, action) => {
         experiment.description = description;
       }
       if (auth === false) {
-        localStorage.removeItem("user");
-        localStorage.removeItem("token");
+        unsetAuthInLocalStorage()
       }
       if (state.experiments) {
         state.experiments.find((exp) => {

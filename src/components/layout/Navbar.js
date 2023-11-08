@@ -5,6 +5,7 @@ import { AUTHENTICATION, latestNewsLabel, NOAPI, rootAppName, TRACK_ESARCHIVE } 
 import ExperimentContext from "../context/experiment/experimentContext";
 import Experiment from "../experiment/Experiment";
 import FileStatus from "../experiment/FileStatus";
+import { unsetAuthInLocalStorage } from "../context/utils";
 
 const Navbar = ({ icon, title }) => {
   const history = useHistory();
@@ -57,8 +58,7 @@ const Navbar = ({ icon, title }) => {
 
   const onLogout = (e) => {
     e.preventDefault();
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
+    unsetAuthInLocalStorage();
     setLoggedUser(null, null);
     history.push(`/${rootAppName}/about`);
   };

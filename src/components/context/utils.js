@@ -1,3 +1,4 @@
+import axios from "axios";
 import React from "react";
 export const timeStampToDate = (value) => {
   let formattedDate = "";
@@ -635,3 +636,16 @@ export const calculateStatistics = (jobs) => {
     cpuConsumptionPercentage: formatNumberMoney(cpuConsumptionPercentage),
   };
 };
+
+
+export const setAuthInLocalStorage = (user, token) => {
+  localStorage.setItem("user", user);
+  localStorage.setItem("token", token);
+  axios.defaults.headers.common['Authorization'] = token;
+}
+
+export const unsetAuthInLocalStorage = () => {
+  localStorage.removeItem("user");
+  localStorage.removeItem("token");
+  axios.defaults.headers.common['Authorization'] = null;
+} 
