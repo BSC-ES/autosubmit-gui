@@ -16,7 +16,7 @@ export const rootAppName = "autosubmitapp"; // Name of the app. It can be change
 // current possible values: "https://earth.bsc.es" , "https://bscesautosubmitdev01.bsc.es"
 // export const rootAppUrl  = "https://earth.bsc.es"; DEPRECATED could use window.location.origin instead
 export const ERROR_MESSAGE =
-  "Autosubmit API couldn't retrieve the requested information on time. It might be due to a network error or heavy traffic on the shared folders that Autosubmit uses to store experiment information (/esarchive/autosubmit/)."; // Default error message
+  "Autosubmit API couldn't retrieve the requested information on time. It might be due to a network error or heavy traffic on the shared folders that Autosubmit uses to store experiment information."; // Default error message
 
 // Job status codes. Sames a in Autosubmit and Autosubmit API.
 export const WaitingCode = 0;
