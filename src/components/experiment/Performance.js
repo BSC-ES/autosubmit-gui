@@ -285,15 +285,21 @@ const Performance = () => {
       <div className='row'>
         <div className='col'>
           <p className='lead'>
-            <span className='mr-4 performance-main-info'>
+            <span className='performance-main-info'>
               Parallelization:{" "}
               <span className='rounded px-1 bg-secondary'>
                 {Parallelization}
               </span>
             </span>
-            <span className='performance-main-info'>
+            <span className='ml-4 performance-main-info'>
               RSYPD: <span className='rounded px-1 bg-secondary'>{RSYPD}</span>
             </span>
+            {
+              performancedata.PE &&
+              <span className='ml-4 performance-main-info'>
+                PE: <span className='rounded px-1 bg-secondary'>{performancedata.PE}</span>
+              </span>
+            }
           </p>
           <div className='scroll-x'>
             <table className='table table-sm table-bordered list-table'>
@@ -682,6 +688,12 @@ const Performance = () => {
           <p>
             <strong>Parallelization</strong>: Total number of cores allocated
             for the run, per SIM.
+          </p>
+          <p>
+            <strong>PE</strong>: Estimated requested Processing Elements. Usually 
+            equals to Parallelization. This value considers the <strong>PROCESSORS_PER_NODE
+              </strong> and <strong>NODES</strong>. If needed, it estimates 
+              the <strong>NODES</strong> based on the number of <strong>TASKS</strong>.
           </p>
           <p>
             <strong>JPSY</strong>: Energy cost of a simulation, measured in
