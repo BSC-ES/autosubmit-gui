@@ -165,7 +165,7 @@ export class ExperimentItem extends Component {
             </div>
           </div>
           <p className='card-text mb-0'>
-            {loggedUser && <span>{description}</span>}
+            <span>{description}</span>
           </p>
 
           <div className='row row-in-card'>

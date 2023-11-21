@@ -3,6 +3,7 @@
 ### Pre-release v4.0.0-beta.2 - Release date: TBD
 
 * Supports `autosubmit_api==4.0.0b2`
+* Configuration updated to support dotenv files.
 * Experiment configuration tab is enabled and supported for Autosubmit 4.0 experiments
 * Fixed redirections on not Unauthorized responses from the API
 
