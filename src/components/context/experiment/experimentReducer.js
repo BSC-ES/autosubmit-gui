@@ -54,7 +54,8 @@ import {
   approximateLoadingQuickView,
   normalizeString,
   normalizeInt,
-  differenceBetweenConfigurations,
+  setAuthInLocalStorage,
+  unsetAuthInLocalStorage
 } from "../utils";
 
 import {
@@ -652,11 +653,9 @@ export default (state, action) => {
     case VERIFY_TOKEN_DATA: {
       const { authenticated, user, token } = action.payload;
       if (authenticated === true) {
-        localStorage.setItem("user", user);
-        localStorage.setItem("token", token);
+        setAuthInLocalStorage(user, token)
       } else {
-        localStorage.removeItem("user");
-        localStorage.removeItem("token");
+        unsetAuthInLocalStorage()
       }
       return {
         ...state,
@@ -676,8 +675,7 @@ export default (state, action) => {
       const { isValid } = action.payload;
 
       if (state.loggedUser && isValid === false) {
-        localStorage.removeItem("user");
-        localStorage.removeItem("token");
+        unsetAuthInLocalStorage()
         return {
           ...state,
           loggedUser: null,
@@ -697,8 +695,7 @@ export default (state, action) => {
         experiment.description = description;
       }
       if (auth === false) {
-        localStorage.removeItem("user");
-        localStorage.removeItem("token");
+        unsetAuthInLocalStorage()
       }
       if (state.experiments) {
         state.experiments.find((exp) => {
@@ -751,16 +748,21 @@ export default (state, action) => {
         currentPage: action.payload,
       };
     case GET_CURRENT_CONFIGURATION:
-      const { configurationCurrentRun, configurationFileSystem } =
-        action.payload;
-      const currentDifferences = differenceBetweenConfigurations(
-        configurationCurrentRun,
-        configurationFileSystem
-      );
+      // const { configurationCurrentRun, configurationFileSystem } =
+      //   action.payload;
+      // const currentDifferences = []
+      // try {
+      //   currentDifferences = differenceBetweenConfigurations(
+      //     configurationCurrentRun,
+      //     configurationFileSystem
+      //   );
+      // } catch (error) {
+        
+      // }
       return {
         ...state,
         currentConfiguration: action.payload,
-        configDifferences: currentDifferences,
+        configDifferences: new Set(action.payload.differences),
       };
     case GET_JOB_HISTORY_LOG:
       const { path, joblog } = action.payload;

@@ -1,4 +1,5 @@
 import React from "react";
+import packageJson from "../../../package.json";
 
 const About = () => {
   return (
@@ -25,7 +26,7 @@ const About = () => {
           </a>
           .
         </p>
-        <figcaption className="blockquote-footer">Version: 1.0.0-beta</figcaption>
+        <figcaption className="blockquote-footer">Version: {packageJson.version}</figcaption>
       </div>
   );
 };

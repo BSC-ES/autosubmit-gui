@@ -1,30 +1,56 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { rootAppName } from "../context/vars";
 import ExperimentContext from "../context/experiment/experimentContext";
+import { setAuthInLocalStorage, unsetAuthInLocalStorage } from "../context/utils";
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
   const experimentContext = useContext(ExperimentContext);
   const { loggedUser } = experimentContext;
-  const user = localStorage.getItem("user");
-  const token = localStorage.getItem("token");
-  // setLoggedUser(user, token);
+  const [credential, setCredential] = useState({
+    loading: true,
+    user: null,
+    token: null
+  })
+
+  useEffect(() => {
+    let newCredential = {
+      loading: false,
+      user: localStorage.getItem("user"),
+      token: localStorage.getItem("token")
+    }
+    if(newCredential.user && newCredential.token){
+      setAuthInLocalStorage(newCredential.user, newCredential.token)
+    }else{
+      unsetAuthInLocalStorage()
+    }
+    setCredential(newCredential)
+  }, [loggedUser])
+
   return (
     <Route
       {...rest}
       render={(props) => {
-        if ((loggedUser && loggedUser !== "Failed") || (user && token)) {
-          return <Component />;
-        } else {
-          return (
-            <Redirect
-              to={{
-                pathname: `/${rootAppName}/login/`,
-                state: { from: props.location },
-              }}
-            />
-          );
-        }
+        return (
+          <>
+            {
+              !credential.loading &&
+              <>
+                {
+                  ((loggedUser && loggedUser !== "Failed") || (credential.user && credential.token)) ?
+                    <Component />
+                    :
+                    <Redirect
+                      to={{
+                        pathname: `/${rootAppName}/login/`,
+                        state: { from: props.location },
+                      }}
+                    />
+                }
+              </>
+            }
+          </>
+        )
       }}
     />
   );
