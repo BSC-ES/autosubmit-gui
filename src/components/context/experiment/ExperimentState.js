@@ -606,6 +606,7 @@ const ExperimentState = (props) => {
         warning: result.warning,
         warningMessage: result.warning_message,
         areEqual: result.are_equal,
+        differences: result.differences,
         configurationCurrentRun: result.configuration_current_run,
         configurationFileSystem: result.configuration_filesystem,
       },

@@ -1,10 +1,11 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link, useHistory } from "react-router-dom";
-import { latestNewsLabel, NOAPI, rootAppName } from "../context/vars";
+import { AUTHENTICATION, latestNewsLabel, NOAPI, rootAppName, TRACK_ESARCHIVE } from "../context/vars";
 import ExperimentContext from "../context/experiment/experimentContext";
 import Experiment from "../experiment/Experiment";
 import FileStatus from "../experiment/FileStatus";
+import { unsetAuthInLocalStorage } from "../context/utils";
 
 const Navbar = ({ icon, title }) => {
   const history = useHistory();
@@ -57,8 +58,7 @@ const Navbar = ({ icon, title }) => {
 
   const onLogout = (e) => {
     e.preventDefault();
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
+    unsetAuthInLocalStorage();
     setLoggedUser(null, null);
     history.push(`/${rootAppName}/about`);
   };
@@ -108,11 +108,15 @@ const Navbar = ({ icon, title }) => {
               {expid && <Experiment expidToken={expid} />}
             </li>
             <li>
-              <FileStatus
-                getFileStatus={getFileStatus}
-                cleanFileStatusData={cleanFileStatusData}
-                esarchiveStatus={esarchiveStatus}
-              />
+              {
+                TRACK_ESARCHIVE &&
+                <FileStatus
+                  getFileStatus={getFileStatus}
+                  cleanFileStatusData={cleanFileStatusData}
+                  esarchiveStatus={esarchiveStatus}
+                />
+              }
+
             </li>
           </ul>
           {history &&
@@ -145,25 +149,30 @@ const Navbar = ({ icon, title }) => {
                 </div>
               </form>
             )}
-          {loggedUser && loggedUser !== "Failed" && (
-            <span className='bg-secondary rounded text-dark px-2 mx-1'>
-              {loggedUser}
-            </span>
-          )}
-          {loggedUser && loggedUser !== "Failed" && (
-            <button className='btn btn-sm btn-dark' onClick={onLogout}>
-              Logout
-            </button>
-          )}
-          {(!loggedUser || loggedUser === "Failed") && !NOAPI && (
-            <Link
-              title='Some features might require your credentials.'
-              className='btn btn-sm btn-primary'
-              to={`/${rootAppName}/login`}
-            >
-              Login
-            </Link>
-          )}
+          {
+            AUTHENTICATION &&
+            <>
+              {loggedUser && loggedUser !== "Failed" && (
+                <>
+                  <span className='bg-secondary rounded text-dark px-2 mx-1'>
+                    {loggedUser}
+                  </span>
+                  <button className='btn btn-sm btn-dark' onClick={onLogout}>
+                    Logout
+                  </button>
+                </>
+              )}
+              {(!loggedUser || loggedUser === "Failed") && !NOAPI && (
+                <Link
+                  title='Some features might require your credentials.'
+                  className='btn btn-sm btn-primary'
+                  to={`/${rootAppName}/login`}
+                >
+                  Login
+                </Link>
+              )}
+            </>
+          }  
         </div>
       </div>
     </nav>

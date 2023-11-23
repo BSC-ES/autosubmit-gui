@@ -1,19 +1,22 @@
-export const thirdPartyLoginURL = "https://cas.bsc.es/cas/login";
-export const AUTOSUBMIT_API_SOURCE = "https://earth.bsc.es/autosubmitapi"; // BSC API
-//export const AUTOSUBMIT_API_SOURCE = "https://bscesautosubmitdev01.bsc.es/autosubmitapi"; // VM API
-//export const AUTOSUBMIT_API_SOURCE = "http://192.168.11.42:8081";
-export const DEBUG = false; // If true, some calls print their response to the console. However, it pollutes the console. Leave it at false.
-export const NOAPI = false; // If true -> API requests are replaced by demo data.
-export const AUTHENTICATION = true; // If false -> The authentication requirement is disabled. Some API calls require a valid token though.
-export const SHOW_PERFORMANCE_TAB = true; // If false -> The performance tab an all its references are hidden.
-export const SHOW_CONFIGURATION_TAB = true; // If false -> The configuration tab an all its references are hidden (for AS4 experiments).
+export const AUTHENTICATION = ["true", "T"].includes(process.env.REACT_APP_AUTHENTICATION); // Default: false. If false -> The authentication requirement is disabled. Some API calls require a valid token though.
+export const CAS_THIRD_PARTY_LOGIN_URL = process.env.REACT_APP_CAS_THIRD_PARTY_LOGIN_URL;
+export const CAS_SERVICE_ID = process.env.REACT_APP_CAS_SERVICE_ID; // Service ID required in the CAS protocol
+
+export const AUTOSUBMIT_API_SOURCE = process.env.REACT_APP_AUTOSUBMIT_API_SOURCE; // BSC API
+
+export const DEBUG = ["true", "T"].includes(process.env.REACT_APP_DEBUG); ; // Default: false. If true, some calls print their response to the console. However, it pollutes the console. Leave it at false.
+export const NOAPI = ["true", "T"].includes(process.env.REACT_APP_NOAPI); ; // Default: false. If true -> API requests are replaced by demo data.
+
+export const TRACK_ESARCHIVE = ["true", "T"].includes(process.env.REACT_APP_TRACK_ESARCHIVE); // Default false. For BSC internal use. Show esarchive status on Navbar.
+export const SHOW_PERFORMANCE_TAB = !["false", "F"].includes(process.env.REACT_APP_SHOW_PERFORMANCE_TAB); ; // Default: true. If false -> The performance tab an all its references are hidden.
+export const SHOW_CONFIGURATION_TAB = !["false", "F"].includes(process.env.REACT_APP_SHOW_CONFIGURATION_TAB); ; // Default: true. If false -> The configuration tab an all its references are hidden (for AS4 experiments).
+
 export const rootAppName = "autosubmitapp"; // Name of the app. It can be changed to publish the GUI in another environment, for example for testing in a new server.
 // Main external url of the app. It can be changed to publish the GUI in another environment, for example for testing in a new server.
 // current possible values: "https://earth.bsc.es" , "https://bscesautosubmitdev01.bsc.es"
-//export const rootAppUrl  = "https://bscesautosubmitdev01.bsc.es";
-export const rootAppUrl  = "https://earth.bsc.es";
+// export const rootAppUrl  = "https://earth.bsc.es"; DEPRECATED could use window.location.origin instead
 export const ERROR_MESSAGE =
-  "Autosubmit API couldn't retrieve the requested information on time. It might be due to a network error or heavy traffic on the shared folders that Autosubmit uses to store experiment information (/esarchive/autosubmit/)."; // Default error message
+  "Autosubmit API couldn't retrieve the requested information on time. It might be due to a network error or heavy traffic on the shared folders that Autosubmit uses to store experiment information."; // Default error message
 
 // Job status codes. Sames a in Autosubmit and Autosubmit API.
 export const WaitingCode = 0;

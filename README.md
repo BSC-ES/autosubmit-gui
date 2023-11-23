@@ -15,7 +15,7 @@
 
 ## Overview:
 
-**Autosubmit GUI** is a front-end software developed using [ReactJS](https://reactjs.org/docs/getting-started.html) as the main framework, and JavaScript in general. This front-end software consumes most of the information it needs from [Autosubmit API](https://earth.bsc.es/gitlab/es/autosubmit_api), an API that retrieves information from an internal file system and databases that result from the execution experiments under [Autosubmit](https://earth.bsc.es/gitlab/es/autosubmit) on a High Performance Computing environment.
+**Autosubmit GUI** is a front-end software developed using [ReactJS](https://react.dev/) as the main framework, and JavaScript in general. This front-end software consumes most of the information it needs from [Autosubmit API](https://earth.bsc.es/gitlab/es/autosubmit_api), an API that retrieves information from an internal file system and databases that result from the execution experiments under [Autosubmit](https://earth.bsc.es/gitlab/es/autosubmit) on a High Performance Computing environment.
 
 These two systems, the **API** and the **GUI**, are independent. It is possible to replace **Autosubmit API** for another API that provides similar information. For that purpose, we provide with response examples (more details in the installation section) that can help the developer understand how the information is used in the components of the GUI. Furthermore, you can find the current list of available requests in the [Autosubmit API Wiki](https://earth.bsc.es/gitlab/es/autosubmit_api/-/wikis/home).
 
@@ -49,50 +49,57 @@ In this image you can see the flow of information in the **Autosubmit environmen
 
 ## Installation
 
-The main development framework is **npm**, we are currently using version `6.9.0`. You can find the main **npm** dependencies in the file: [package.json](package.json).
-Refer to: [npm documentation](https://docs.npmjs.com/) for more information about installation and first steps on this platform.
+> **NOTE**
+> This project has been created by using [Create React App (CRA)](https://create-react-app.dev/), so it is important to check CRA documentation to do changes on its deployment process.
 
-Make sure to have npm installed in your local environment.
-
-Execute:
+First, clone the repository:
 
 `git clone https://earth.bsc.es/gitlab/es/autosubmitreact/`
 
-As default, the GUI will request data from the `Autosubmit API`, which is inacessible from outside the Barcelona Supercomputing Center internal network.
-So, we should open the file:
+Then, check if you are using the right recommended Node.js version of this project to be sure there is no conflict in its dependencies. This could be easily done by using the [Node Version Manager](https://github.com/nvm-sh/nvm) using: 
 
-`/autosubmitreact/src/components/context/vars.js`
+`nvm use`
 
-And change the lines:
-
-`export const NOAPI = false;`
-
-`export const AUTHENTICATION = true;`
-
-to:
-
-`export const NOAPI = true;`
-
-`export const AUTHENTICATION = false;`
-
-This will effectively set the API calls to be redirected towards an internal data samples folder `/autosubmitreact/src/components/context/data/` implemented for testing purposes.
-
-**IMPORTANT**: The static data required by `NOAPI = true` is stored in [/autosubmitreact/data](https://earth.bsc.es/gitlab/es/autosubmitreact/-/tree/master/data) because we don't want that the package sent for deployment includes all this information that will only increase the size of the package. Therefore, in forder for `NOAPI = true` to work, you should copy the contents of `/autosubmitreact/data/` into `/autosubmitreact/src/components/context/data/`.
-
-In the case of `AUTHENTICATION`, you set it to `false` to avoid the requirement of an authentication token, because you won't be able to get one from BSC internal Central Authentication Service.
-However, some API calls might require that you have a valid token, but if you are using the internal data, it shouldn't be a problem.
-
-Then, you can run:
+Install the needed dependencies using the [Node Package Manager](https://www.npmjs.com/):
 
 `npm install`
 
-And all the necessary dependencies will be installed.
+It's important that you configure this project before using it by using Enviroment variables. This can be easily done by creating a `.env` file on the project root directory with the following variables:
 
-After that, you will be able to run:
+* **REACT_APP_AUTHENTICATION**: Default `false`. You can set it to `false` to avoid the requirement of an authentication token, because you won't be able to get one from BSC internal Central Authentication Service (CAS).
+However, some API calls might require that you have a valid token, but if you are using the internal data, it shouldn't be a problem. In case is set to `true`, you have to specify `REACT_APP_CAS_THIRD_PARTY_LOGIN_URL` and `REACT_APP_CAS_SERVICE_ID`.
+* **REACT_APP_CAS_THIRD_PARTY_LOGIN_URL**: This is the login endpoint to request credentials to the user according to the [CAS protocol](https://apereo.github.io/cas/6.6.x/protocol/CAS-Protocol.html).
+* **REACT_APP_CAS_SERVICE_ID**: This will specify the `service` parameter during the request of credentials according to the [CAS protocol](https://apereo.github.io/cas/6.6.x/protocol/CAS-Protocol.html).
+* **REACT_APP_NOAPI**: Default `false`. Set it to `true` if you want to try the GUI without a backend. This will effectively set the API calls to be redirected towards an internal data samples folder `/autosubmitreact/src/components/context/data/` implemented for testing purposes.
+* **REACT_APP_AUTOSUBMIT_API_SOURCE**: Defines the API URI. For more information check [autosubmit_api](https://earth.bsc.es/gitlab/es/autosubmit_api).
+* **REACT_APP_DEBUG**: Default `false`. Set it to `true` if you want to enable the DEBUG features.
+
+> **IMPORTANT**
+> The static data required by `NOAPI = true` is stored in [/autosubmitreact/data](https://earth.bsc.es/gitlab/es/autosubmitreact/-/tree/master/data) because we don't want that the package sent for deployment includes all this information that will only increase the size of the package. Therefore, in forder for `NOAPI = true` to work, you should copy the contents of `/autosubmitreact/data/` into `/autosubmitreact/src/components/context/data/`.
+
+Here is an example content of a `.env` file:
+
+```bash
+REACT_APP_AUTHENTICATION=true
+REACT_APP_CAS_THIRD_PARTY_LOGIN_URL=https://cas.bsc.es/cas/login
+REACT_APP_CAS_SERVICE_ID=https://earth.bsc.es/autosubmitapp/login
+
+REACT_APP_NOAPI=false
+REACT_APP_AUTOSUBMIT_API_SOURCE=https://earth.bsc.es/autosubmitapi
+
+REACT_APP_DEBUG=false
+```
+
+> **NOTE**
+> If you want to have different sets of `.env` files for different purposes (production, development, testing, etc), refer to the [Enviroment variables CRA documentation](https://create-react-app.dev/docs/adding-custom-environment-variables).
+
+
+Now you are able to run the GUI locally using:
 
 `npm start`
 
-Then, the GUI should open in your default browser, and the information displayed should correspond to that of the data samples folder.
+Furthermore, if you want to set up it for production, please refere to the [Deployment CRA documentation](https://create-react-app.dev/docs/deployment).
+
 
 ## Testing
 

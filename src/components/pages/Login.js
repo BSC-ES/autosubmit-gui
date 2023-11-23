@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import ExperimentContext from "../context/experiment/experimentContext";
 import queryString from "query-string";
-import { rootAppUrl, rootAppName, thirdPartyLoginURL } from "../context/vars";
+import { rootAppName, CAS_THIRD_PARTY_LOGIN_URL, CAS_SERVICE_ID } from "../context/vars";
 
 const Login = (props) => {
   const experimentContext = useContext(ExperimentContext);
@@ -47,7 +47,7 @@ const Login = (props) => {
     //e.preventDefault();
   };
   const onCASLogin = () => {
-    const _target = `${thirdPartyLoginURL}?service=${rootAppUrl}/${rootAppName}/login`;
+    const _target = `${CAS_THIRD_PARTY_LOGIN_URL}?service=${CAS_SERVICE_ID}`;
     window.location.href = _target;
   };
   // console.log(loggedUser);
