@@ -1,4 +1,21 @@
-@import url("https://fonts.googleapis.com/css?family=Roboto");
+@font-face {
+  font-family: 'Source Sans 3';
+  src: url('../public/fonts/SourceSans3-VariableFont_wght.ttf') format('truetype-variations');
+}
+
+$primary: #4E8490;
+$secondary: #FF511C;
+
+@import 'bootstrap/scss/bootstrap';
+@import 'bootstrap-icons/font/bootstrap-icons';
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+// TODO import vis-network.min.js and vis-network.min.css
+// TODO import jquery ui.fancytree.min.css
+
+
+body {
+  font-family: 'Source Sans 3', sans-serif;
+}
 
 /* Global Styles */
 /* :root {

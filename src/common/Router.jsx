@@ -1,38 +1,58 @@
-import React, { Component } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Navbar from "./components/layout/Navbar";
-import Alert from "./components/layout/Alert";
-import About from "./components/pages/About";
-import News from "./components/pages/News";
-import NotFound from "./components/pages/NotFound";
-import ExperimentCentral from "./components/pages/ExperimentCentral";
-import Home from "./components/pages/Home";
-import Login from "./components/pages/Login";
-import Profile from "./components/pages/Profile";
-import Footer from "./components/layout/Footer";
-import ExperimentState from "./components/context/experiment/ExperimentState";
-import GraphState from "./components/context/graph/GraphState";
-import TreeState from "./components/context/tree/TreeState";
-import AlertState from "./components/context/alert/AlertState";
-import StatsState from "./components/context/statistics/StatsState";
-import LightState from "./components/context/lighter/LighterState";
-import ProtectedRoute from "./components/layout/ProtectedRoute";
-import { rootAppName, AUTHENTICATION } from "./components/context/vars";
-import "./App.css";
+import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
+import Home from '../pages/Home'
+import Navbar from './Navbar'
+import About from '../pages/About';
 
-class App extends Component {
-  render() {
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: (
+            <>
+                <Navbar />
+                {/* <Alert /> */}
+                <Outlet />
+                {/* <Footer /> */}
+            </>
+        ),
+        children: [
+            {
+                path: "/",
+                element: <Home />
+            },
+            {
+                path: "/about",
+                element: <About />
+            },
+            {
+                path: "/experiment/:expid",
+                element: <div>
+                    Hola experiment
+                    <Outlet></Outlet>
+                </div>,
+                children: [
+                    {
+                        path: "/experiment/:expid",
+                        element: <div>Hola exp home</div>
+                    },
+                    {
+                        path: "/experiment/:expid/tree",
+                        element: <div>Hola tree</div>
+                    }
+                ]
+            }
+        ]
+    },
+]);
+
+
+export default function Router() {
+
     return (
-      <ExperimentState>
-        <GraphState>
-          <TreeState>
-            <LightState>
-              <AlertState>
-                <StatsState>
-                  <Router>
-                    <div className='App'>
-                      <Navbar />
-                      <div className='container' style={{ height: "100%" }}>
+        <RouterProvider router={router} />
+    );
+}
+
+/* <div className='container' style={{ height: "100%" }}>
                         <Alert />
                         <Switch>
                           {AUTHENTICATION === true ? (
@@ -69,11 +89,6 @@ class App extends Component {
                             path={`/${rootAppName}/news`}
                             component={News}
                           />
-                          {/* <Route
-                            exact
-                            path={`/${rootAppName}/experiment/:expid`}
-                            component={ExperimentCentral}
-                          /> */}
                           {AUTHENTICATION === true ? (
                             <ProtectedRoute
                               exact
@@ -104,17 +119,4 @@ class App extends Component {
                           <Route component={NotFound} />
                         </Switch>
                         <Footer />
-                      </div>
-                    </div>
-                  </Router>
-                </StatsState>
-              </AlertState>
-            </LightState>
-          </TreeState>
-        </GraphState>
-      </ExperimentState>
-    );
-  }
-}
-
-export default App;
+                      </div> */
