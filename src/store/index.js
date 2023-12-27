@@ -1,9 +1,19 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authSlice from "./auth-slice";
+import authSlice from "./authSlice";
+import { autosubmitApiV3 } from "../services/autosubmitApiV3";
+import { autosubmitApiV4 } from "../services/autosubmitApiV4";
 
 const store = configureStore({
     reducer: {
-        auth: authSlice.reducer
+        auth: authSlice.reducer,
+        [autosubmitApiV4.reducerPath]: autosubmitApiV4.reducer,
+        [autosubmitApiV3.reducerPath]: autosubmitApiV3.reducer
     },
+    middleware: (getDefaultMiddleware) => {
+        return getDefaultMiddleware().concat([
+            autosubmitApiV4.middleware,
+            autosubmitApiV3.middleware
+        ])
+    }
 });
 export default store;

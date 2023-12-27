@@ -2,17 +2,21 @@ import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import Home from '../pages/Home'
 import Navbar from './Navbar'
 import About from '../pages/About';
+import ExperimentWrapper from './ExperimentWrapper';
+import ExperimentTree from '../pages/ExperimentTree';
+import ExperimentDetail from '../pages/ExperimentDetail';
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: (
-            <>
+            <main className='container-fluid min-vh-100 d-flex flex-column'>
                 <Navbar />
                 {/* <Alert /> */}
                 <Outlet />
+
                 {/* <Footer /> */}
-            </>
+            </main>
         ),
         children: [
             {
@@ -25,18 +29,18 @@ const router = createBrowserRouter([
             },
             {
                 path: "/experiment/:expid",
-                element: <div>
-                    Hola experiment
-                    <Outlet></Outlet>
-                </div>,
+                element:
+                    <ExperimentWrapper>
+                        <Outlet />
+                    </ExperimentWrapper>,
                 children: [
                     {
                         path: "/experiment/:expid",
-                        element: <div>Hola exp home</div>
+                        element: <ExperimentDetail />
                     },
                     {
                         path: "/experiment/:expid/tree",
-                        element: <div>Hola tree</div>
+                        element: <ExperimentTree />
                     }
                 ]
             }
