@@ -5,16 +5,20 @@ import About from '../pages/About';
 import ExperimentWrapper from './ExperimentWrapper';
 import ExperimentTree from '../pages/ExperimentTree';
 import ExperimentDetail from '../pages/ExperimentDetail';
+import ExperimentGraph from '../pages/ExperimentGraph';
+import Breadcrumb from './Breadcrumb';
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: (
-            <main className='container-fluid min-vh-100 d-flex flex-column'>
+            <main className='container-fluid min-vh-100 d-flex flex-column gx-5'>
                 <Navbar />
+                <Breadcrumb />
                 {/* <Alert /> */}
                 <Outlet />
 
+                <div style={{height: "3rem"}}></div>
                 {/* <Footer /> */}
             </main>
         ),
@@ -41,6 +45,10 @@ const router = createBrowserRouter([
                     {
                         path: "/experiment/:expid/tree",
                         element: <ExperimentTree />
+                    },
+                    {
+                        path: "/experiment/:expid/graph",
+                        element: <ExperimentGraph />
                     }
                 ]
             }

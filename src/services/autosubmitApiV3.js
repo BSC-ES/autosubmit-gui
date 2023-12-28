@@ -10,11 +10,15 @@ export const autosubmitApiV3 = createApi({
         }),
         getExperimentTreeView: builder.query({
             query: (expid) => `tree/${expid}`
-        })
+        }),
+        getExperimentGraphView: builder.query({
+            query: ({expid, layout, grouped}) => `graph/${expid}/${layout}/${grouped}`
+        }),
     }),
 })
 
 export const {
     useGetRunningExperimentsQuery,
-    useGetExperimentTreeViewQuery
+    useGetExperimentTreeViewQuery,
+    useGetExperimentGraphViewQuery,
 } = autosubmitApiV3

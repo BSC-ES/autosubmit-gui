@@ -20,12 +20,11 @@ const ExperimentTree = () => {
     return (
         <div>
             {
-                isLoading
+                isLoading ?
+                    <div className="spinner-border" role="status"></div>
+                    :
+                    <FancyTree treeData={treeData}></FancyTree>
             }
-                <FancyTree treeData={treeData}></FancyTree>
-
-            {/* <div>{JSON.stringify(treeData)}</div>
-            <button onClick={() => { setReload(!reload) }}>refresh</button> */}
         </div>
     )
 }

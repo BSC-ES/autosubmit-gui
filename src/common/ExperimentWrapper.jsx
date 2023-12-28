@@ -9,7 +9,17 @@ const EXPERIMENT_MENU_ITEMS = [
     {
         name: "GRAPH VIEW",
         iconClass: "fa-solid fa-network-wired",
-        route: ""
+        route: "/graph"
+    },
+    {
+        name: "RUN LOG",
+        iconClass: "fa-solid fa-terminal",
+        route: "/log"
+    },
+    {
+        name: "CONFIGURATION",
+        iconClass: "fa-solid fa-gear",
+        route: "/config"
     },
 ]
 
@@ -20,16 +30,17 @@ const ExperimentWrapper = ({ children }) => {
     const navigate = useNavigate()
 
     return (
-        <div className="d-flex gap-4">
-            <div className="d-flex flex-column gap-3 bg-info p-4 rounded">
+        <div className="d-flex gap-4 flex-fill">
+            <div className="d-flex flex-column gap-4 bg-info p-4 rounded-4" 
+                style={{minWidth: "16rem"}}>
                 {EXPERIMENT_MENU_ITEMS.map(item => {
                     const expRoute = `/experiment/${routeParams.expid}${item.route}`
                     return (
                         <div key={item.route} style={{ cursor: "pointer" }}
-                            className={"d-flex align-items-center fw-bold " + (location.pathname === expRoute ? ' text-secondary' : '')}
+                            className={"d-flex align-items-center fw-bold p-1 " + (location.pathname === expRoute ? ' text-secondary' : '')}
                             onClick={() => navigate(expRoute)}>
-                            <i style={{ fontSize: "1.5rem" }}
-                                className={"me-2 " + item.iconClass}></i>
+                            <i style={{ fontSize: "1.5rem", width: "2rem" }}
+                                className={"me-4 text-center " + item.iconClass}></i>
                             <span>
                                 {item.name}
                             </span>
