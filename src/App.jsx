@@ -1,5 +1,5 @@
 import { Provider } from 'react-redux'
-import Router from './common/Router'
+import Router from './layout/Router'
 import ContextProvider from './components/context/ContextProvider'
 import store from './store'
 

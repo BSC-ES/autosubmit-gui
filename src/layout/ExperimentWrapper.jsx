@@ -14,12 +14,22 @@ const EXPERIMENT_MENU_ITEMS = [
     {
         name: "RUN LOG",
         iconClass: "fa-solid fa-terminal",
-        route: "/log"
+        route: "/runlog"
     },
     {
         name: "CONFIGURATION",
         iconClass: "fa-solid fa-gear",
         route: "/config"
+    },
+    {
+        name: "STATISTICS",
+        iconClass: "fa-solid fa-chart-simple",
+        route: "/stats"
+    },
+    {
+        name: "PERFORMANCE",
+        iconClass: "fa-solid fa-stopwatch",
+        route: "/performance"
     },
 ]
 

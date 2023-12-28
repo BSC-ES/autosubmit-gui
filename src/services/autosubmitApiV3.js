@@ -8,17 +8,29 @@ export const autosubmitApiV3 = createApi({
         getRunningExperiments: builder.query({
             query: () => `running`
         }),
+        getExperimentInfo: builder.query({
+            query: (expid) => `expinfo/${expid}`
+        }),
         getExperimentTreeView: builder.query({
             query: (expid) => `tree/${expid}`
         }),
         getExperimentGraphView: builder.query({
             query: ({expid, layout, grouped}) => `graph/${expid}/${layout}/${grouped}`
         }),
+        getExperimentRunLog: builder.query({
+            query: (expid) => `exprun/${expid}`
+        }),
+        getExperimentConfiguration: builder.query({
+            query: (expid) => `cconfig/${expid}`
+        }),
     }),
 })
 
 export const {
     useGetRunningExperimentsQuery,
+    useGetExperimentInfoQuery,
     useGetExperimentTreeViewQuery,
     useGetExperimentGraphViewQuery,
+    useGetExperimentRunLogQuery,
+    useGetExperimentConfigurationQuery,
 } = autosubmitApiV3

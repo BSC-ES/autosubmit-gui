@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import AuthBadge from "./AuthBadge";
+import AuthBadge from "../common/AuthBadge";
 
 const NAVBAR_ITEMS = [
     {

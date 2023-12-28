@@ -6,7 +6,9 @@ import ExperimentWrapper from './ExperimentWrapper';
 import ExperimentTree from '../pages/ExperimentTree';
 import ExperimentDetail from '../pages/ExperimentDetail';
 import ExperimentGraph from '../pages/ExperimentGraph';
-import Breadcrumb from './Breadcrumb';
+import Breadcrumb from '../common/Breadcrumb';
+import ExperimentRunLog from '../pages/ExperimentRunLog';
+import ExperimentConfiguration from '../pages/ExperimentConfiguration';
 
 const router = createBrowserRouter([
     {
@@ -18,7 +20,7 @@ const router = createBrowserRouter([
                 {/* <Alert /> */}
                 <Outlet />
 
-                <div style={{height: "3rem"}}></div>
+                <div style={{ height: "3rem" }}></div>
                 {/* <Footer /> */}
             </main>
         ),
@@ -49,6 +51,14 @@ const router = createBrowserRouter([
                     {
                         path: "/experiment/:expid/graph",
                         element: <ExperimentGraph />
+                    },
+                    {
+                        path: "/experiment/:expid/runlog",
+                        element: <ExperimentRunLog />
+                    },
+                    {
+                        path: "/experiment/:expid/config",
+                        element: <ExperimentConfiguration />
                     }
                 ]
             }

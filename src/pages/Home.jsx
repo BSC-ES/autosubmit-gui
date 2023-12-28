@@ -18,8 +18,8 @@ const Home = () => {
 
     return (
         <>
-            <div className="d-flex flex-fill py-4">
-                <div className="rounded bg-info" style={{ width: "250px" }}>Sidebar placeholder</div>
+            <div className="d-flex flex-fill gap-4">
+                <div className="rounded-4 bg-info" style={{ width: "16rem" }}>Sidebar placeholder</div>
                 <div className="d-flex flex-column">
                     {
                         experiments && experiments.experiments &&
