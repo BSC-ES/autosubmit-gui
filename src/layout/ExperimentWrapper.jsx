@@ -2,6 +2,11 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 const EXPERIMENT_MENU_ITEMS = [
     {
+        name: "QUICK VIEW",
+        iconClass: "fa-solid fa-list",
+        route: "/quick"
+    },
+    {
         name: "TREE VIEW",
         iconClass: "fa-solid fa-folder-tree",
         route: "/tree"

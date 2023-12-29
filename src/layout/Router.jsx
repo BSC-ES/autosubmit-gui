@@ -9,6 +9,7 @@ import ExperimentGraph from '../pages/ExperimentGraph';
 import Breadcrumb from '../common/Breadcrumb';
 import ExperimentRunLog from '../pages/ExperimentRunLog';
 import ExperimentConfiguration from '../pages/ExperimentConfiguration';
+import ExperimentQuick from '../pages/ExperimentQuick';
 
 const router = createBrowserRouter([
     {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
                         path: "/experiment/:expid",
                         element: <ExperimentDetail />
                     },
+                    {
+                      path: "/experiment/:expid/quick",
+                      element: <ExperimentQuick />
+                  },
                     {
                         path: "/experiment/:expid/tree",
                         element: <ExperimentTree />

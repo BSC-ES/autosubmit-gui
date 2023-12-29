@@ -21,7 +21,9 @@ const ExperimentRunLog = () => {
     <div className="card rounded-4 p-4 w-100">
       {
         isLoading ?
-          <div className="spinner-border" role="status"></div>
+          <div className="w-100 h-100 d-flex align-items-center justify-content-center">
+            <div className="spinner-border" role="status"></div>
+          </div>
           :
           <>
             <div className='row px-1 file-info'>

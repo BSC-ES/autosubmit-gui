@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { AUTOSUBMIT_API_SOURCE } from '../components/context/vars'
+import { AUTOSUBMIT_API_SOURCE } from '../consts'
 
 export const autosubmitApiV3 = createApi({
     reducerPath: 'autosubmitApiV3',
@@ -10,6 +10,9 @@ export const autosubmitApiV3 = createApi({
         }),
         getExperimentInfo: builder.query({
             query: (expid) => `expinfo/${expid}`
+        }),
+        getExperimentQuickView: builder.query({
+            query: (expid) => `quick/${expid}`
         }),
         getExperimentTreeView: builder.query({
             query: (expid) => `tree/${expid}`
@@ -29,6 +32,7 @@ export const autosubmitApiV3 = createApi({
 export const {
     useGetRunningExperimentsQuery,
     useGetExperimentInfoQuery,
+    useGetExperimentQuickViewQuery,
     useGetExperimentTreeViewQuery,
     useGetExperimentGraphViewQuery,
     useGetExperimentRunLogQuery,

@@ -18,10 +18,12 @@ const ExperimentTree = () => {
     }, [data])
 
     return (
-        <div>
+        <div className="w-100">
             {
                 isLoading ?
-                    <div className="spinner-border" role="status"></div>
+                    <div className="w-100 h-100 d-flex align-items-center justify-content-center">
+                        <div className="spinner-border" role="status"></div>
+                    </div>
                     :
                     <FancyTree treeData={treeData}></FancyTree>
             }

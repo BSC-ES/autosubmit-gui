@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { AUTOSUBMIT_API_SOURCE } from '../components/context/vars'
+import { AUTOSUBMIT_API_SOURCE } from '../consts'
 
 export const autosubmitApiV4 = createApi({
     reducerPath: 'autosubmitApiV4',
