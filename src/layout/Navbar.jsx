@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import AuthBadge from "../common/AuthBadge";
+import { ReactComponent as Logo } from "../common/Logo.svg"
 
 const NAVBAR_ITEMS = [
     {
@@ -20,13 +21,9 @@ const Navbar = () => {
 
     return (
         <nav className="px-4 py-3 d-flex gap-5">
-            <div className="">
-                <img style={{ height: "2.5rem", cursor: "pointer" }}
-                    onClick={() => navigate("/")}
-                    src="/img/as_gui.png"
-                    alt="logo" />
-            </div>
-            <div className="flex-fill d-flex align-items-center gap-5">
+            <Logo style={{ height: "2.5rem", cursor: "pointer" }}
+                    onClick={() => navigate("/")}/>
+            <div className="flex-fill d-flex align-items-center gap-5 mx-4">
                 {
                     NAVBAR_ITEMS.map(item =>
                         <div key={item.route} style={{ cursor: "pointer" }}

@@ -4,6 +4,7 @@ import FancyTree from "../common/FancyTree"
 import { useEffect, useState } from "react"
 import { MAX_ITEMS_QUICK_VIEW } from '../consts'
 import useASTitle from "../hooks/useASTitle"
+import useBreadcrumb from "../hooks/useBreadcrumb"
 
 /**
  * Filter the jobs received in the Quick View
@@ -60,6 +61,16 @@ const filterQuickView = (baseData, filterText, filterStatus) => {
 const ExperimentQuick = () => {
     const routeParams = useParams()
     useASTitle(`Experiment ${routeParams.expid} quick view`)
+    useBreadcrumb([
+        {
+          name: `Experiment ${routeParams.expid}`,
+          route: `/experiment/${routeParams.expid}`
+        },
+        {
+          name: `Quick View`,
+          route: `/experiment/${routeParams.expid}/quick`
+        }
+      ])
     const [filters, setFilters] = useState({
         status: "ANY",
         filter: ""

@@ -3,11 +3,22 @@ import { useGetExperimentTreeViewQuery } from "../services/autosubmitApiV3";
 import { useParams } from "react-router-dom";
 import FancyTree from "../common/FancyTree";
 import useASTitle from "../hooks/useASTitle";
+import useBreadcrumb from "../hooks/useBreadcrumb";
 
 
 const ExperimentTree = () => {
     const routeParams = useParams()
     useASTitle(`Experiment ${routeParams.expid} tree`)
+    useBreadcrumb([
+        {
+            name: `Experiment ${routeParams.expid}`,
+            route: `/experiment/${routeParams.expid}`
+        },
+        {
+            name: `Tree View`,
+            route: `/experiment/${routeParams.expid}/tree`
+        }
+    ])
 
     const [treeData, setTreeData] = useState(null)
 

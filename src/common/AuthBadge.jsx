@@ -9,11 +9,12 @@ const AuthBadge = () => {
 
     useEffect(()=>{
         dispatch(authActions.reset())
+        // eslint-disable-next-line
     }, [])
 
     return (
         <>
-            <div className='bg-info py-2 px-3 rounded-pill fw-bold'>
+            <button className='btn btn-info py-2 px-3 rounded-pill fw-bold shadow-sm'>
                 {authState.user_id ?
                     <div>
                         {authState.user_id}
@@ -23,7 +24,7 @@ const AuthBadge = () => {
                         Login
                     </div>
                 }
-            </div>
+            </button>
         </>
     )
 }

@@ -2,11 +2,22 @@ import { useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useGetExperimentInfoQuery, useGetExperimentRunLogQuery } from "../services/autosubmitApiV3";
 import useASTitle from "../hooks/useASTitle";
+import useBreadcrumb from "../hooks/useBreadcrumb";
 
 
 const ExperimentRunLog = () => {
   const routeParams = useParams()
   useASTitle(`Experiment ${routeParams.expid} run log`)
+  useBreadcrumb([
+    {
+      name: `Experiment ${routeParams.expid}`,
+      route: `/experiment/${routeParams.expid}`
+    },
+    {
+      name: `Run Log`,
+      route: `/experiment/${routeParams.expid}/runlog`
+    }
+  ])
   const logRef = useRef()
   const { data: expData } = useGetExperimentInfoQuery(routeParams.expid)
   const { data: logData, isLoading } = useGetExperimentRunLogQuery(routeParams.expid, {
