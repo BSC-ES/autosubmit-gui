@@ -2,10 +2,12 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom";
 import VisNetwork from "../common/VisNetwork";
 import { useGetExperimentGraphViewQuery } from "../services/autosubmitApiV3";
+import useASTitle from "../hooks/useASTitle";
 
 
 const ExperimentGraph = () => {
     const routeParams = useParams()
+    useASTitle(`Experiment ${routeParams.expid} graph`)
     const { data, isLoading } = useGetExperimentGraphViewQuery({
         expid: routeParams.expid,
         layout: "standard",

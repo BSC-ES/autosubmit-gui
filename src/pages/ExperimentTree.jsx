@@ -2,10 +2,12 @@ import { useEffect, useState } from "react"
 import { useGetExperimentTreeViewQuery } from "../services/autosubmitApiV3";
 import { useParams } from "react-router-dom";
 import FancyTree from "../common/FancyTree";
+import useASTitle from "../hooks/useASTitle";
 
 
 const ExperimentTree = () => {
     const routeParams = useParams()
+    useASTitle(`Experiment ${routeParams.expid} tree`)
 
     const [treeData, setTreeData] = useState(null)
 

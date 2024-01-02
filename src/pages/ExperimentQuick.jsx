@@ -3,9 +3,17 @@ import { useGetExperimentQuickViewQuery } from "../services/autosubmitApiV3"
 import FancyTree from "../common/FancyTree"
 import { useEffect, useState } from "react"
 import { MAX_ITEMS_QUICK_VIEW } from '../consts'
+import useASTitle from "../hooks/useASTitle"
 
-
+/**
+ * Filter the jobs received in the Quick View
+ * @param {Array} baseData - Base Data
+ * @param {string} filterText - Filter text. It can include ! at the begining for negation and * as a wildcard
+ * @param {string} filterStatus - Posible values: ANY|COMPLETED|FAILED|RUNNING|QUEUING
+ * @returns {Array}
+ */
 const filterQuickView = (baseData, filterText, filterStatus) => {
+
     let filterNorm = String(filterText).toUpperCase()
 
     const isNegation = filterNorm.indexOf('!') === 0;
@@ -51,6 +59,7 @@ const filterQuickView = (baseData, filterText, filterStatus) => {
 
 const ExperimentQuick = () => {
     const routeParams = useParams()
+    useASTitle(`Experiment ${routeParams.expid} quick view`)
     const [filters, setFilters] = useState({
         status: "ANY",
         filter: ""
