@@ -12,7 +12,6 @@ const Breadcrumb = () => {
             <i className="fa-solid fa-house" style={{ cursor: "pointer" }} onClick={() => navigate("/")} />
             {
                 breadcrumb_items.map(item => {
-                    console.log(item)
                     return (
                         <Fragment key={item.name}>
                             <i className="fa-solid fa-chevron-right text-black"></i>

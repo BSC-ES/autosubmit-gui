@@ -15,17 +15,6 @@ class BarChart extends Component {
     
     
   }
-  
-
-  shouldComponentUpdate(nextProps, nextState) {
-    //console.log(`next ${nextProps.filterCount} past ${this.props.filterCount}`)
-    if (nextProps.loading !== this.props.loading || nextProps.filterCount !== this.props.filterCount){
-      // console.log("Should rerender");
-      return true;
-    } else {
-      return false;
-    }
-  }
 
   handleBarChart() {
     const data = this.props.data;
@@ -224,12 +213,12 @@ class BarChart extends Component {
         .style("text-anchor", "middle")
         .text("Job Name");
     
-    function showTooltip(d) {
+    function showTooltip(event, d) {
       
       tooltip
         .style("opacity", 1)
-        .style("left", d3.event.pageX + "px")
-        .style("top", d3.event.pageY + "px")
+        .style("left", event.pageX + "px")
+        .style("top", event.pageY + "px")
         .html(
           (metrics[0] === "failedCount" ? 
           `
@@ -329,30 +318,30 @@ class BarChart extends Component {
 
     // Actions
     d3.select(`#queueTimeChart-${helperId}`)
-      .on("click", function() {
-        const currentChecked = d3.event.target.checked;
-        const currentValue = d3.event.target.value;
+      .on("click", function(event) {
+        const currentChecked = event.target.checked;
+        const currentValue = event.target.value;
         onClickFilter(currentChecked, currentValue);
       });
     
     d3.select(`#runTimeChart-${helperId}`)
-      .on("click", function() {
-        const currentChecked = d3.event.target.checked;
-        const currentValue = d3.event.target.value;
+      .on("click", function(event) {
+        const currentChecked = event.target.checked;
+        const currentValue = event.target.value;
         onClickFilter(currentChecked, currentValue);
       })
     
     d3.select(`#failedQueueTimeChart-${helperId}`)
-      .on("click", function() {
-        const currentChecked = d3.event.target.checked;
-        const currentValue = d3.event.target.value;
+      .on("click", function(event) {
+        const currentChecked = event.target.checked;
+        const currentValue = event.target.value;
         onClickFilter(currentChecked, currentValue);
       })
 
     d3.select(`#failedRunTimeChart-${helperId}`)
-      .on("click", function() {
-        const currentChecked = d3.event.target.checked;
-        const currentValue = d3.event.target.value;
+      .on("click", function(event) {
+        const currentChecked = event.target.checked;
+        const currentValue = event.target.value;
         onClickFilter(currentChecked, currentValue);
       })
   }
