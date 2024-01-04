@@ -230,7 +230,7 @@ const ExperimentStats = () => {
 
   const sectionRef = useRef()
   const hourRef = useRef()
-  useASTitle(`Experiment ${routeParams.expid}`)
+  useASTitle(`Experiment ${routeParams.expid} statistics`)
   useBreadcrumb([
     {
       name: `Experiment ${routeParams.expid}`,

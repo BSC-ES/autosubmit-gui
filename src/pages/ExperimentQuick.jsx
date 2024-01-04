@@ -123,7 +123,7 @@ const ExperimentQuick = () => {
                 </div>
                 <button className="btn btn-success fw-bold text-white px-5" onClick={() => { refetch() }}>REFRESH</button>
             </div>
-            <div className="card rounded-4 p-3 flex-fill">
+            <div className="border rounded-4 p-3 flex-fill">
                 {
                     isFetching ?
                         <div className="w-100 h-100 d-flex align-items-center justify-content-center">

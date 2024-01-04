@@ -16,7 +16,7 @@ const ExperimentDetail = () => {
 
     return (
         <div>
-            Hola detail
+            
         </div>
     )
 }

@@ -11,6 +11,8 @@ import ExperimentRunLog from '../pages/ExperimentRunLog';
 import ExperimentConfiguration from '../pages/ExperimentConfiguration';
 import ExperimentQuick from '../pages/ExperimentQuick';
 import ExperimentStats from '../pages/ExperimentStats';
+import NotFound from '../pages/NotFound';
+import ExperimentPerformance from '../pages/ExperimentPerformance';
 
 const router = createBrowserRouter([
   {
@@ -26,12 +28,7 @@ const router = createBrowserRouter([
         {/* <Footer /> */}
       </main>
     ),
-    errorElement: <div className='vw-100 vh-100 d-flex flex-column align-items-center justify-content-center'>
-      <h1 className='fw-bolder'>
-        404 Not Found
-      </h1>
-      <button className='btn btn-primary text-white' onClick={() => window.history.back()} href=''>Go back</button>
-    </div>,
+    errorElement: <Navigate to={"/404"} replace />,
     children: [
       {
         path: "/",
@@ -75,11 +72,19 @@ const router = createBrowserRouter([
           {
             path: "/experiment/:expid/stats",
             element: <ExperimentStats />
-          }
+          },
+          {
+            path: "/experiment/:expid/performance",
+            element: <ExperimentPerformance />
+          },
         ]
       }
     ]
-  }
+  },
+  {
+    path: "/404",
+    element: <NotFound />
+  },
 ]);
 
 

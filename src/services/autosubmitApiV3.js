@@ -29,6 +29,9 @@ export const autosubmitApiV3 = createApi({
         getExperimentStats: builder.query({
             query: ({expid, hours, section}) => `stats/${expid}/${hours}/${section}`
         }),
+        getExperimentPerformance: builder.query({
+            query: (expid) => `performance/${expid}`
+        }),
     }),
 })
 
@@ -41,4 +44,5 @@ export const {
     useGetExperimentRunLogQuery,
     useGetExperimentConfigurationQuery,
     useGetExperimentStatsQuery,
+    useGetExperimentPerformanceQuery,
 } = autosubmitApiV3

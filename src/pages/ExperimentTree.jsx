@@ -22,7 +22,7 @@ const ExperimentTree = () => {
 
     const [treeData, setTreeData] = useState(null)
 
-    const { data, isLoading } = useGetExperimentTreeViewQuery(routeParams.expid)
+    const { data, isFetching, refetch } = useGetExperimentTreeViewQuery(routeParams.expid)
 
     useEffect(() => {
         if (data && Array.isArray(data.tree)) {
@@ -31,14 +31,26 @@ const ExperimentTree = () => {
     }, [data])
 
     return (
-        <div className="w-100">
+        <div className="w-100 d-flex flex-column">
+            <div className="d-flex mb-3 gap-3 align-items-center">
+
+                <div className="flex-fill input-group">
+                    <input 
+                        className="form-control" placeholder="Filter job..." />
+                    {/* <button className="btn btn-dark fw-bold px-4">Filter</button> */}
+                </div>
+                <button className="btn btn-success fw-bold text-white px-5" onClick={() => { refetch() }}>REFRESH</button>
+            </div>
             {
-                isLoading ?
+                isFetching ?
                     <div className="w-100 h-100 d-flex align-items-center justify-content-center">
                         <div className="spinner-border" role="status"></div>
                     </div>
                     :
+                    <div className="border rounded-4 p-3 flex-fill">
                     <FancyTree treeData={treeData}></FancyTree>
+                    
+                    </div>
             }
         </div>
     )

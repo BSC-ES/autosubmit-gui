@@ -18,7 +18,7 @@ const Home = () => {
     //     totalPages: 1
     // })
 
-    const { data: experiments, isLoading } = useGetExperimentsQuery()
+    const { data: experiments, isFetching } = useGetExperimentsQuery()
 
     useEffect(() => {
         console.log(experiments)
@@ -27,14 +27,16 @@ const Home = () => {
     return (
         <>
             <div className="d-flex flex-fill gap-4">
-                <div className="rounded-4 bg-info" style={{ width: "16rem" }}>Sidebar placeholder</div>
-                <div className="d-flex flex-column">
+                <div className="rounded-4 bg-info" style={{ width: "16rem" }}>
+
+                </div>
+                <div className="d-flex flex-column gap-2 w-100">
                     {
                         experiments && experiments.experiments &&
                         experiments.experiments.map(exp => {
                             return (
-                                <div key={exp.name}>
-                                    <Link to={`/experiment/${exp.name}`}>{exp.name}</Link>
+                                <div key={exp.name} className="bg-dark px-5 py-3 rounded-4">
+                                    <Link to={`/experiment/${exp.name}`} className="text-white fs-3 fw-bold">{exp.name}</Link>
                                 </div>
                             )
                         })

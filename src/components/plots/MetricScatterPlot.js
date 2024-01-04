@@ -19,9 +19,9 @@ export class MetricScatterPlot extends Component {
     const titleX = this.props.titleX;
     const mainTitle = this.props.mainTitle;  
     const uniqueId = this.props.uniqueId;  
-    const height = 550;
-    const width = 550;
-    const padding = 30;
+    const height = 480;
+    const width = 480;
+    const padding = 40;
     const paddingLeft = 40;
 
     const yScale = d3.scaleLinear()
@@ -136,11 +136,11 @@ export class MetricScatterPlot extends Component {
         .attr("height", 10)
         .style("fill", colorScale(d3.max(data, d => d.running)));
 
-    function showTooltip(d) {
+    function showTooltip(event, d) {
       tooltip
         .style("opacity", 1)
-        .style("left", (d3.event.pageX - 60) + "px")
-        .style("top", d3.event.pageY + "px")
+        .style("left", (event.pageX - 60) + "px")
+        .style("top", event.pageY + "px")
         .html(
           `
           <p>${d.name} </p>
@@ -181,7 +181,7 @@ export class MetricScatterPlot extends Component {
     }
 
     return (
-      <div className="scroll-x">
+      <div>
         <svg
           version="1.1"
           baseProfile="full"
