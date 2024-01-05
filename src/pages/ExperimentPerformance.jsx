@@ -11,6 +11,7 @@ import {
   arrayMeanAbsoluteDeviationAroundMean,
   formatNumberMoney,
 } from "../components/context/utils"
+import { Modal } from "react-bootstrap"
 
 
 const PerformancePlots = () => {
@@ -37,7 +38,7 @@ const PerformanceConsideredJobs = ({ considered }) => {
 
   return (
     <table className='table table-sm table-bordered list-table'>
-      <thead className='thead'>
+      <thead>
         <tr className='table-primary performance-table-header sticky-header'>
           <th scope='col'>
             #
@@ -109,7 +110,7 @@ const PerformanceSummary = ({ data }) => {
 
   return (
     <table className='table table-sm table-bordered list-table'>
-      <thead className='thead'>
+      <thead>
         <tr className='table-primary performance-table-header'>
           <th scope='col'>Metric</th>
           {
@@ -159,6 +160,7 @@ const PerformanceSummary = ({ data }) => {
 
 const ExperimentPerformance = () => {
   const routeParams = useParams()
+  const [showWarnings, setShowWarnings] = useState(false)
   useASTitle(`Experiment ${routeParams.expid} performance`)
   useBreadcrumb([
     {
@@ -170,83 +172,114 @@ const ExperimentPerformance = () => {
       route: `/experiment/${routeParams.expid}/performance`
     }
   ])
-
   const { data, isFetching, refetch } = useGetExperimentPerformanceQuery(routeParams.expid)
 
-  useEffect(() => {
+  const toggleShowWarning = () => setShowWarnings(!showWarnings);
 
-  }, [data])
+
 
   return (
-    <div className="w-100 flex-fill d-flex flex-column gap-3" style={{ minWidth: 0 }}>
+    <>
+      <Modal show={showWarnings} onHide={toggleShowWarning} centered>
+        <Modal.Header closeButton
+          bsPrefix="modal-header bg-warning text-white">
+          <Modal.Title>
+            <i className="fa-solid fa-triangle-exclamation mx-2"></i> Warnings
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <ol>
+            {
+              data && Array.isArray(data.warnings_job_data) &&
+              data.warnings_job_data.map(warning => <li key={warning}>
+                {warning}
+              </li>)
+            }
+          </ol>
+        </Modal.Body>
+      </Modal>
 
-      <div className="d-flex justify-content-between align-items-center">
-        <h2 className="fw-bold">PERFORMANCE METRICS</h2>
-        <div className="d-flex gap-2">
-          {/* <button className="btn btn-warning fw-bold text-white px-5" onClick={() => { refetch() }}>WARNING (0)</button> */}
-          <button className="btn btn-success fw-bold text-white px-5" onClick={() => { refetch() }}>REFRESH</button>
-        </div>
-      </div>
-      {
-        isFetching ?
-          <div className="w-100 h-100 d-flex align-items-center justify-content-center">
-            <div className="spinner-border" role="status"></div>
+      <div className="w-100 flex-fill d-flex flex-column gap-3" style={{ minWidth: 0 }}>
+
+        <div className="d-flex justify-content-between align-items-center flex-wrap">
+          <h2 className="fw-bold">PERFORMANCE METRICS</h2>
+          <div className="d-flex gap-2 flex-wrap">
+            {
+              data && Array.isArray(data.warnings_job_data) && data.warnings_job_data.length > 0 &&
+              <button className="btn btn-warning fw-bold text-white px-5"
+                onClick={() => { toggleShowWarning() }}>
+                WARNINGS ({data.warnings_job_data.length})
+              </button>
+            }
+            <button className="btn btn-success fw-bold text-white px-5" onClick={() => { refetch() }}>REFRESH</button>
           </div>
-          :
-          <>
-            <div className="d-flex flex-wrap gap-3">
+        </div>
+        {
+          isFetching ?
+            <div className="w-100 h-100 d-flex align-items-center justify-content-center">
+              <div className="spinner-border" role="status"></div>
+            </div>
+            :
+            <>
+              <div className="d-flex flex-wrap gap-3">
 
-              <div className="rounded-4 border flex-fill" style={{ minWidth: "40rem" }}>
-                <div className="bg-dark rounded-top-4 d-flex gap-3 justify-content-between align-items-center text-white px-4 py-3 mb-2">
-                  <label className="fw-bold fs-5">SUMMARY</label>
+                <div className="rounded-4 border flex-fill mw-100">
+                  <div className="bg-dark rounded-top-4 d-flex gap-3 justify-content-between align-items-center text-white px-4 py-3 mb-2">
+                    <label className="fw-bold fs-5">SUMMARY</label>
+                  </div>
+                  <div className="p-3">
+                    <div className="overflow-auto">
+                      <PerformanceSummary data={data} />
+                      <div className="d-flex flex-column">
+                        <span>
+                          <strong>Value</strong>: Value of the metric calculated at the experiment level.
+                        </span>
+                        <span>
+                          <strong>SD</strong>: Standard Deviation.
+                        </span>
+                        <span>
+                          <strong>MAD</strong>: Mean Absolute Deviation Around the Mean.
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="p-3">
-                  <PerformanceSummary data={data} />
-                  <div className="d-flex flex-column">
-                    <span>
-                      <strong>Value</strong>: Value of the metric calculated at the experiment level.
-                    </span>
-                    <span>
-                      <strong>SD</strong>: Standard Deviation.
-                    </span>
-                    <span>
-                      <strong>MAD</strong>: Mean Absolute Deviation Around the Mean.
-                    </span>
+
+                <div className="rounded-4 border flex-fill mw-100">
+                  <div className="bg-dark rounded-top-4 d-flex gap-3 justify-content-between align-items-center text-white px-4 py-3 mb-2">
+                    <label className="fw-bold fs-5">CONSIDERED JOBS</label>
+                  </div>
+                  <div className="p-3">
+                    <div className="overflow-auto" style={{ maxHeight: "50vh" }}>
+                      <PerformanceConsideredJobs considered={data.considered} />
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <div className="rounded-4 border flex-fill" style={{ minWidth: "40rem" }}>
-                <div className="bg-dark rounded-top-4 d-flex gap-3 justify-content-between align-items-center text-white px-4 py-3 mb-2">
-                  <label className="fw-bold fs-5">CONSIDERED JOBS</label>
-                </div>
-                <div className="p-3">
-                  <PerformanceConsideredJobs considered={data.considered} />
-                </div>
-              </div>
-            </div>
 
+              {/* <div className="rounded-4 border flex-fill">
+        <div className="bg-dark rounded-top-4 d-flex gap-3 justify-content-between align-items-center text-white px-4 py-3 mb-4">
+          <label className="fw-bold fs-5">COMPARATIVE PLOTS</label>
+        </div>
 
-            {/* <div className="rounded-4 border flex-fill">
-              <div className="bg-dark rounded-top-4 d-flex gap-3 justify-content-between align-items-center text-white px-4 py-3 mb-4">
-                <label className="fw-bold fs-5">COMPARATIVE PLOTS</label>
-              </div>
+        <div className="px-4 py-2 d-flex gap-4 flex-wrap justify-content-around">
+          <MetricScatterPlot
+            data={data.considered}
+            attributeX={"CHSY"}
+            attributeY={"SYPD"}
+            mainTitle={"CHSY vs SYPD"}
+            uniqueId={"8"}
+          />
+        </div>
 
-              <div className="px-4 py-2 d-flex gap-4 flex-wrap justify-content-around">
-                <MetricScatterPlot
-                  data={data.considered}
-                  attributeX={"CHSY"}
-                  attributeY={"SYPD"}
-                  mainTitle={"CHSY vs SYPD"}
-                  uniqueId={"8"}
-                />
-              </div>
+      </div> */}
+            </>
+        }
 
-            </div> */}
-          </>
-      }
+      </div>
+    </>
 
-    </div>
   )
 }
 
