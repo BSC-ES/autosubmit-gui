@@ -12,9 +12,9 @@ class TimeScatterPlot extends Component {
       this.svgElement = element;
     };
     this.data = this.props.data;
-    this.height = 550;
-    this.width = 550;
-    this.padding = 30;
+    this.height = 480;
+    this.width = 480;
+    this.padding = 40;
     this.colorScale = 
     d3.scaleLinear()
       .domain(d3.extent(this.data, d => {
@@ -191,11 +191,11 @@ class TimeScatterPlot extends Component {
         .style("font-weight", "bold")
         .text(mainTitle || mainTitle);
 
-    function showTooltip(d) {
+    function showTooltip(event, d) {
       tooltip
         .style("opacity", 1)
-        .style("left", (d3.event.pageX - 60) + "px")
-        .style("top", d3.event.pageY + "px")
+        .style("left", (event.pageX - 60) + "px")
+        .style("top", event.pageY + "px")
         .html(
           `
           <p>${d.name} </p>

@@ -12,9 +12,82 @@ import {
   formatNumberMoney,
 } from "../components/context/utils"
 import { Modal } from "react-bootstrap"
+import TimeScatterPlot from "../components/plots/TimeScatterPlot"
 
 
-const PerformancePlots = () => {
+const PERFORMANCE_PLOTS = [
+  {
+    key: "JPSYvsCHSY",
+    title: "JPSY vs CHSY",
+    disabled: (d) => (d.maxJPSY <= 0),
+    type: "Scatter2D",
+    attributeX: "JPSY",
+    attributeY: "CHSY",
+  },
+  {
+    key: "JPSYvsSYPD",
+    title: "JPSY vs SYPD",
+    disabled: (d) => (d.maxJPSY <= 0),
+    type: "Scatter2D",
+    attributeX: "JPSY",
+    attributeY: "SYPD",
+  },
+  {
+    key: "JPSYvsASYPD",
+    title: "JPSY vs ASYPD",
+    disabled: (d) => (d.maxJPSY <= 0),
+    type: "Scatter2D",
+    attributeX: "JPSY",
+    attributeY: "ASYPD",
+  },
+  {
+    key: "SYPDvsASYPD",
+    title: "SYPD vs ASYPD",
+    disabled: (d) => (d.maxASYPD <= 0),
+    type: "Scatter2D",
+    attributeX: "SYPD",
+    attributeY: "ASYPD",
+  },
+  {
+    key: "CHSYvsSYPD",
+    title: "CHSY vs SYPD",
+    disabled: (d) => (false),
+    type: "Scatter2D",
+    attributeX: "CHSY",
+    attributeY: "SYPD",
+  },
+  {
+    key: "CHSYvsASYPD",
+    title: "CHSY vs ASYPD",
+    disabled: (d) => (d.maxASYPD <= 0),
+    type: "Scatter2D",
+    attributeX: "CHSY",
+    attributeY: "ASYPD",
+  },
+  {
+    key: "RunVsSYPD",
+    title: "Runtime vs SYPD",
+    disabled: (d) => (false),
+    type: "TimeScatter",
+    attribute: "SYPD"
+  },
+  {
+    key: "RunVsCHSY",
+    title: "Runtime vs CHSY",
+    disabled: (d) => (false),
+    type: "TimeScatter",
+    attribute: "CHSY"
+  },
+  {
+    key: "QueueRunVsASYPD",
+    title: "Queue+Runtime vs ASYPD",
+    disabled: (d) => (d.maxASYPD <= 0),
+    type: "TimeScatter",
+    attribute: "ASYPD"
+  },
+]
+
+const PerformancePlots = ({ considered }) => {
   const [displayPlots, setDisplayPlots] = useState({
     JPSYvsCHSY: false,
     JPSYvsSYPD: false,
@@ -27,9 +100,115 @@ const PerformancePlots = () => {
     QueueRunVsASYPD: false,
   })
 
-  return (
-    <div>
+  const [auxStats, setAuxStats] = useState({
+    consideredJPSY: [],
+    maxJPSY: 0,
+    maxASYPD: 0,
+    JPSYdivisor: 1000,
+    JPSYtitleX: "JPSY (thousands)"
+  })
 
+  useEffect(() => {
+    if (Array.isArray(considered)) {
+      const maxJPSY = Math.max(...Array.from(
+        considered.map(item => { return parseInt(item.JPSY) })
+      ))
+      const maxASYPD = Math.max(...Array.from(
+        considered.map(item => Number.parseFloat(item.ASYPD))
+      ))
+      const JPSYdivisor = maxJPSY > 999999999 ? 1000000 : 1000
+      const JPSYtitleX =
+        maxJPSY > 999999999 ? "JPSY (millions)" : "JPSY (thousands)";
+      const consideredJPSY = considered.map(item => {
+        return {
+          ...item,
+          JPSY: item.JPSY / JPSYdivisor
+        }
+      })
+
+      const newAux = {
+        consideredJPSY: consideredJPSY,
+        maxJPSY: maxJPSY,
+        maxASYPD: maxASYPD,
+        JPSYdivisor: JPSYdivisor,
+        JPSYtitleX: JPSYtitleX
+      }
+      setAuxStats(newAux)
+
+      const newDisplay = {}
+      PERFORMANCE_PLOTS.forEach(item => {
+        newDisplay[item.key] = !item.disabled(newAux)
+      })
+      setDisplayPlots(newDisplay)
+    }
+  }, [considered])
+
+  const handleCheckbox = (selector) => {
+    setDisplayPlots({
+      ...displayPlots,
+      [selector]: !displayPlots[selector]
+    })
+  }
+
+  return (
+    <div className="d-flex flex-column gap-3 align-items-center">
+      <div className="d-flex gap-3 flex-wrap justify-content-around">
+        {
+          PERFORMANCE_PLOTS.map(item => {
+            return (
+              <div className='form-check form-check-inline'>
+                <input
+                  type='checkbox'
+                  className='form-check-input'
+                  checked={displayPlots[item.key]}
+                  onChange={() => handleCheckbox(item.key)}
+                  disabled={item.disabled(auxStats)}
+                />
+                <label className='px-1 mx-1 form-check-label'>
+                  {item.title}
+                </label>
+              </div>
+            )
+          })
+        }
+      </div>
+      <div className="d-flex gap-3 flex-wrap justify-content-around" style={{ minHeight: 480 }}>
+        {
+          PERFORMANCE_PLOTS.map(item => {
+            let plot = <></>
+            if (displayPlots[item.key]) {
+              if (item.type === "Scatter2D") {
+                if (["JPSYvsCHSY", "JPSYvsSYPD", "JPSYvsASYPD"].includes(item.key)) {
+                  plot = <MetricScatterPlot
+                    data={auxStats.consideredJPSY}
+                    attributeX={item.attributeX}
+                    attributeY={item.attributeY}
+                    titleX={auxStats.JPSYtitleX}
+                    mainTitle={item.title}
+                    uniqueId={item.title}
+                  />
+                } else {
+                  plot = <MetricScatterPlot
+                    data={considered}
+                    attributeX={item.attributeX}
+                    attributeY={item.attributeY}
+                    mainTitle={item.title}
+                    uniqueId={item.title}
+                  />
+                }
+              } else if (item.type === "TimeScatter") {
+                plot = <TimeScatterPlot
+                  data={considered}
+                  attribute={item.attribute}
+                  mainTitle={item.title}
+                  uniqueId={item.title}
+                />
+              }
+            }
+            return plot;
+          })
+        }
+      </div>
     </div>
   )
 }
@@ -214,6 +393,7 @@ const ExperimentPerformance = () => {
             <button className="btn btn-success fw-bold text-white px-5" onClick={() => { refetch() }}>REFRESH</button>
           </div>
         </div>
+
         {
           isFetching ?
             <div className="w-100 h-100 d-flex align-items-center justify-content-center">
@@ -258,22 +438,15 @@ const ExperimentPerformance = () => {
               </div>
 
 
-              {/* <div className="rounded-4 border flex-fill">
-        <div className="bg-dark rounded-top-4 d-flex gap-3 justify-content-between align-items-center text-white px-4 py-3 mb-4">
-          <label className="fw-bold fs-5">COMPARATIVE PLOTS</label>
-        </div>
+              <div className="rounded-4 border flex-fill">
+                <div className="bg-dark rounded-top-4 d-flex gap-3 justify-content-between align-items-center text-white px-4 py-3 mb-4">
+                  <label className="fw-bold fs-5">COMPARATIVE PLOTS</label>
+                </div>
 
-        <div className="px-4 py-2 d-flex gap-4 flex-wrap justify-content-around">
-          <MetricScatterPlot
-            data={data.considered}
-            attributeX={"CHSY"}
-            attributeY={"SYPD"}
-            mainTitle={"CHSY vs SYPD"}
-            uniqueId={"8"}
-          />
-        </div>
-
-      </div> */}
+                <div className="p-3">
+                  <PerformancePlots considered={data.considered} />
+                </div>
+              </div>
             </>
         }
 
