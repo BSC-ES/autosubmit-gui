@@ -340,6 +340,8 @@ const PerformanceSummary = ({ data }) => {
 const ExperimentPerformance = () => {
   const routeParams = useParams()
   const [showWarnings, setShowWarnings] = useState(false)
+  const [showHelp, setShowHelp] = useState(false)
+
   useASTitle(`Experiment ${routeParams.expid} performance`)
   useBreadcrumb([
     {
@@ -354,8 +356,7 @@ const ExperimentPerformance = () => {
   const { data, isFetching, refetch } = useGetExperimentPerformanceQuery(routeParams.expid)
 
   const toggleShowWarning = () => setShowWarnings(!showWarnings);
-
-
+  const toggleShowHelp = () => setShowHelp(!showHelp);
 
   return (
     <>
@@ -378,10 +379,91 @@ const ExperimentPerformance = () => {
         </Modal.Body>
       </Modal>
 
+      <Modal show={showHelp} onHide={toggleShowHelp} centered size="xl">
+        <Modal.Header closeButton
+          bsPrefix="modal-header bg-dark text-white">
+          <Modal.Title>
+            <i className="fa-solid fa-circle-info mx-2"></i> Metrics description
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>
+            <strong>Parallelization</strong>: Total number of cores allocated
+            for the run, per SIM.
+          </p>
+          <p>
+            <strong>JPSY</strong>: Energy cost of a simulation, measured in
+            Joules per simulated year. The JPSY <strong>value</strong> at the
+            experiment level is the mean of the values calculated at the job
+            level. Energy values are only collected for jobs running on{" "}
+            <strong>Marenostrum4</strong>. In rare occassions the query that
+            retrieves the energy information fails and the value stays at 0.
+            Jobs with <strong>0</strong> energy value are not considered for the
+            calculation.
+          </p>
+          <p>
+            <strong>SYPD</strong>: Simulated Years Per Day for the model in a
+            24h period. The <strong>value</strong> at the experiment level is
+            the mean of the values calculated at the job level.
+          </p>
+          <p>
+            <strong>ASYPD</strong>: Actual Simulated Years Per Day, this number
+            should be lower than SYPD due to interruptions, queue wait time,{" "}
+            <strong>POST</strong> jobs, data transfer, or issues with the model
+            workflow. The ASYPD <strong>value</strong> calculated at the job
+            level uses a generalization of the formula applied at the experiment
+            level. As a consequence, the ASYPD value at the experiment level can
+            be different that the mean of the values calculated at the job
+            level.
+          </p>
+          <p>
+            <strong>CHSY</strong>: Core Hours Per Simulated Year. This metric is
+            the product of the model runtime for 1 Simulated Year and the number
+            of processors (Parallelization) allocated. The CHSY{" "}
+            <strong>value</strong> at the experiment level is the mean of the
+            values calculated at the job level.
+          </p>
+          <p>
+            <strong>RSYPD</strong>: "Real" Simulated Years Per Day. This
+            variation of SYPD has been defined only at the experiment level. It
+            depends on the existences of <strong>TRANSFER</strong> or{" "}
+            <strong>CLEAN</strong> jobs. Then, it uses the finish time of the
+            last TRANSFER or CLEAN job and the start time of the first SIM job
+            in the experiment to calculate an approximation of the total
+            duration of the simulation.
+          </p>
+          <p>
+            <strong>Considered</strong>: Scrollable list where each item in the
+            list represents job information showing <strong>Job Name</strong>,{" "}
+            <strong>QUEUE</strong> and <strong>RUNNING</strong> time in{" "}
+            <i>HH:mm:ss</i> format, <strong>CHSY</strong>, <strong>JPSY</strong>
+            , and raw <strong>Energy</strong> consumption for that job.{" "}
+            <i>
+              Note: Energy values are only collected for those jobs running on
+              MareNostrum4 and using the latest version of Autosubmit.
+              Subsequent development will expand this feature for other
+              platforms.
+            </i>
+          </p>
+
+          <p>
+            Visit{" "}
+            <a
+              href='https://earth.bsc.es/gitlab/es/autosubmit_api/-/wikis/Performance-Metrics'
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              Performance Metrics Documentation
+            </a>{" "}
+            for more details.
+          </p>
+        </Modal.Body>
+      </Modal>
+
       <div className="w-100 flex-fill d-flex flex-column gap-3" style={{ minWidth: 0 }}>
 
         <div className="d-flex justify-content-between align-items-center flex-wrap">
-          <h2 className="fw-bold">PERFORMANCE METRICS</h2>
+          <h2 className="fw-semibold">PERFORMANCE METRICS</h2>
           <div className="d-flex gap-2 flex-wrap">
             {
               data && Array.isArray(data.warnings_job_data) && data.warnings_job_data.length > 0 &&
@@ -404,8 +486,14 @@ const ExperimentPerformance = () => {
               <div className="d-flex flex-wrap gap-3">
 
                 <div className="rounded-4 border flex-fill mw-100">
-                  <div className="bg-dark rounded-top-4 d-flex gap-3 justify-content-between align-items-center text-white px-4 py-3 mb-2">
-                    <label className="fw-bold fs-5">SUMMARY</label>
+                  <div className="bg-dark rounded-top-4 d-flex gap-3 justify-content-between align-items-center text-white px-4 py-2 mb-2">
+                    <label className="fw-bold fs-6">SUMMARY</label>
+                    <div>
+                      <button className="btn btn-dark rounded-circle"
+                      onClick={toggleShowHelp}>
+                        <i className="fa-solid fa-circle-question"></i>
+                      </button>
+                    </div>
                   </div>
                   <div className="p-3">
                     <div className="overflow-auto">
@@ -426,8 +514,14 @@ const ExperimentPerformance = () => {
                 </div>
 
                 <div className="rounded-4 border flex-fill mw-100">
-                  <div className="bg-dark rounded-top-4 d-flex gap-3 justify-content-between align-items-center text-white px-4 py-3 mb-2">
-                    <label className="fw-bold fs-5">CONSIDERED JOBS</label>
+                  <div className="bg-dark rounded-top-4 d-flex gap-3 justify-content-between align-items-center text-white px-4 py-2 mb-2">
+                    <label className="fw-bold fs-6">CONSIDERED JOBS</label>
+                    <div>
+                      <button className="btn btn-dark rounded-circle"
+                      onClick={toggleShowHelp}>
+                        <i className="fa-solid fa-circle-question"></i>
+                      </button>
+                    </div>
                   </div>
                   <div className="p-3">
                     <div className="overflow-auto" style={{ maxHeight: "50vh" }}>
@@ -440,7 +534,7 @@ const ExperimentPerformance = () => {
 
               <div className="rounded-4 border flex-fill">
                 <div className="bg-dark rounded-top-4 d-flex gap-3 justify-content-between align-items-center text-white px-4 py-3 mb-4">
-                  <label className="fw-bold fs-5">COMPARATIVE PLOTS</label>
+                  <label className="fw-bold fs-6">COMPARATIVE PLOTS</label>
                 </div>
 
                 <div className="p-3">
