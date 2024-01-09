@@ -47,7 +47,7 @@ const FancyTree = ({ treeData, onActivateNode, treeCallback }) => {
             setTree(newtree)
             if(treeCallback) treeCallback(newtree)
         }
-    }, [treeData, tree])
+    }, [treeData])
 
     return (
         <div id='fancy-tree'></div>
