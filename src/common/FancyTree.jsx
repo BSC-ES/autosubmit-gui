@@ -8,7 +8,7 @@ import "jquery.fancytree/dist/modules/jquery.fancytree.multi";
 import "jquery.fancytree/dist/modules/jquery.fancytree.glyph";
 import "jquery.fancytree/dist/skin-bootstrap/ui.fancytree.min.css"
 
-const FancyTree = ({ treeData }) => {
+const FancyTree = ({ treeData, onActivateNode, treeCallback }) => {
     const [tree, setTree] = useState(null)
 
     useEffect(() => {
@@ -17,6 +17,7 @@ const FancyTree = ({ treeData }) => {
             tree.reload(newSource)
         } else {
             const newtree = createTree("#fancy-tree", {
+                activate: onActivateNode,
                 extensions: ["filter", "glyph", "childcounter"],
                 filter: {
                     autoApply: true, // Re-apply last filter if lazy data is loaded
@@ -44,6 +45,7 @@ const FancyTree = ({ treeData }) => {
                 source: newSource
             });
             setTree(newtree)
+            if(treeCallback) treeCallback(newtree)
         }
     }, [treeData, tree])
 

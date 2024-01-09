@@ -1,59 +1,123 @@
-import { useEffect, useState } from "react"
+import { useRef, useState } from "react"
 import { useGetExperimentTreeViewQuery } from "../services/autosubmitApiV3";
 import { useParams } from "react-router-dom";
 import FancyTree from "../common/FancyTree";
 import useASTitle from "../hooks/useASTitle";
 import useBreadcrumb from "../hooks/useBreadcrumb";
+import JobDetailCard from "../common/JobDetailCard";
 
 
 const ExperimentTree = () => {
-    const routeParams = useParams()
-    useASTitle(`Experiment ${routeParams.expid} tree`)
-    useBreadcrumb([
-        {
-            name: `Experiment ${routeParams.expid}`,
-            route: `/experiment/${routeParams.expid}`
-        },
-        {
-            name: `Tree View`,
-            route: `/experiment/${routeParams.expid}/tree`
-        }
-    ])
+  const routeParams = useParams()
+  useASTitle(`Experiment ${routeParams.expid} tree`)
+  useBreadcrumb([
+    {
+      name: `Experiment ${routeParams.expid}`,
+      route: `/experiment/${routeParams.expid}`
+    },
+    {
+      name: `Tree View`,
+      route: `/experiment/${routeParams.expid}/tree`
+    }
+  ])
 
-    const [treeData, setTreeData] = useState(null)
+  const [tree, setTree] = useState(null)
 
-    const { data, isFetching, refetch } = useGetExperimentTreeViewQuery(routeParams.expid)
+  const filterRef = useRef()
 
-    useEffect(() => {
-        if (data && Array.isArray(data.tree)) {
-            setTreeData(data.tree)
-        }
-    }, [data])
+  const [selectedJob, setSelectedJob] = useState(null)
+  const { data, isFetching, refetch } = useGetExperimentTreeViewQuery(routeParams.expid)
 
-    return (
-        <div className="w-100 d-flex flex-column">
-            <div className="d-flex mb-3 gap-3 align-items-center">
+  const handleOnActivateNode = (e, d) => {
+    if (data && Array.isArray(data.jobs) && d && d.node && d.node.folder === undefined) {
+      const newSelectedJob = data.jobs.find(item => item.label === d.node.refKey)
+      if (newSelectedJob) setSelectedJob(newSelectedJob)
+    }
+  }
 
-                <div className="flex-fill input-group">
-                    <input 
-                        className="form-control" placeholder="Filter job..." />
-                    {/* <button className="btn btn-dark fw-bold px-4">Filter</button> */}
-                </div>
-                <button className="btn btn-success fw-bold text-white px-5" onClick={() => { refetch() }}>REFRESH</button>
-            </div>
-            {
-                isFetching ?
-                    <div className="w-100 h-100 d-flex align-items-center justify-content-center">
-                        <div className="spinner-border" role="status"></div>
-                    </div>
-                    :
-                    <div className="border rounded-4 p-3 flex-fill">
-                    <FancyTree treeData={treeData}></FancyTree>
-                    
-                    </div>
-            }
+  const handleTreeCallback = (tree) => {
+    setTree(tree)
+  }
+
+  const handleExpand = () => {
+    if (tree) tree.expandAll()
+  }
+  const handleCollapse = () => {
+    if (tree) tree.expandAll(false)
+  }
+
+  const handleFilter = (e) => {
+    e.preventDefault();
+    console.log(filterRef.current.value)
+    if (tree) {
+      if (filterRef.current.value) {
+        tree.filterNodes(filterRef.current.value)
+      } else {
+        tree.clearFilter()
+      }
+    }
+  }
+
+  const handleClear = () => {
+    filterRef.current.value = ""
+    if (tree) tree.clearFilter()
+  }
+
+  const handleCloseJobDetail = () => {
+    setSelectedJob(null)
+  }
+
+  return (
+    <div className="w-100 d-flex flex-column">
+      <div className="d-flex mb-3 gap-2 align-items-center flex-wrap">
+        <div className="flex-fill">
+          <form className="input-group" onSubmit={handleFilter}>
+            <input ref={filterRef}
+              className="form-control" placeholder="Filter job..." />
+            <button type="submit" className="btn btn-dark fw-bold px-4">Filter</button>
+            <button type="button" className="btn btn-info fw-bold px-4" onClick={handleClear}>Clear</button>
+          </form>
         </div>
-    )
+        <button className="btn btn-success fw-bold text-white px-4 text-nowrap">
+          START MONITORING
+        </button>
+        <button className="btn btn-success fw-bold text-white"
+          title="Refresh data"
+          onClick={() => { refetch() }}>
+          <i className="fa-solid fa-rotate-right"></i>
+        </button>
+      </div>
+      {
+        isFetching ?
+          <div className="w-100 h-100 d-flex align-items-center justify-content-center">
+            <div className="spinner-border" role="status"></div>
+          </div>
+          :
+          <div className="d-flex w-100 gap-3 flex-fill flex-wrap d-flex flex-fill gap-3 justify-content-center">
+
+            <div className="flex-fill d-flex flex-column gap-3 flex-wrap">
+              <div className="d-flex gap-2 align-items-center justify-content-between">
+                <span className="mx-2 small">Total #Jobs: {data.total} | Chunk unit: {data.reference && data.reference.chunk_unit} | Chunk size: {data.reference && data.reference.chunk_size}</span>
+                <div className="d-flex gap-2">
+                  <button className="btn btn-sm btn-primary text-white fw-bold px-4" onClick={handleExpand}>Expand All +</button>
+                  <button className="btn btn-sm btn-secondary text-white fw-bold px-4" onClick={handleCollapse}>Collapse All -</button>
+                </div>
+              </div>
+              <div className="border rounded-4 p-3 flex-fill">
+                <div className="overflow-auto" style={{ maxHeight: "75vh", maxWidth: "80vw" }}>
+                  <FancyTree treeData={data.tree}
+                    onActivateNode={handleOnActivateNode}
+                    treeCallback={handleTreeCallback} />
+                </div>
+
+              </div>
+            </div>
+
+              <JobDetailCard jobData={selectedJob} jobs={data.jobs} onClose={handleCloseJobDetail} />
+          </div>
+      }
+    </div>
+  )
 }
 
 export default ExperimentTree

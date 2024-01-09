@@ -349,7 +349,7 @@ const ExperimentPerformance = () => {
       route: `/experiment/${routeParams.expid}`
     },
     {
-      name: `Statistics`,
+      name: `Performance`,
       route: `/experiment/${routeParams.expid}/performance`
     }
   ])
@@ -467,12 +467,16 @@ const ExperimentPerformance = () => {
           <div className="d-flex gap-2 flex-wrap">
             {
               data && Array.isArray(data.warnings_job_data) && data.warnings_job_data.length > 0 &&
-              <button className="btn btn-warning fw-bold text-white px-5"
+              <button className="btn btn-warning fw-bold text-white px-4"
                 onClick={() => { toggleShowWarning() }}>
                 WARNINGS ({data.warnings_job_data.length})
               </button>
             }
-            <button className="btn btn-success fw-bold text-white px-5" onClick={() => { refetch() }}>REFRESH</button>
+            <button className="btn btn-success fw-bold text-white"
+              title="Refresh data"
+              onClick={() => { refetch() }}>
+              <i className="fa-solid fa-rotate-right"></i>
+            </button>
           </div>
         </div>
 
@@ -490,7 +494,7 @@ const ExperimentPerformance = () => {
                     <label className="fw-bold fs-6">SUMMARY</label>
                     <div>
                       <button className="btn btn-dark rounded-circle"
-                      onClick={toggleShowHelp}>
+                        onClick={toggleShowHelp}>
                         <i className="fa-solid fa-circle-question"></i>
                       </button>
                     </div>
@@ -518,7 +522,7 @@ const ExperimentPerformance = () => {
                     <label className="fw-bold fs-6">CONSIDERED JOBS</label>
                     <div>
                       <button className="btn btn-dark rounded-circle"
-                      onClick={toggleShowHelp}>
+                        onClick={toggleShowHelp}>
                         <i className="fa-solid fa-circle-question"></i>
                       </button>
                     </div>

@@ -32,6 +32,9 @@ export const autosubmitApiV3 = createApi({
         getExperimentPerformance: builder.query({
             query: (expid) => `performance/${expid}`
         }),
+        getJobLog: builder.query({
+            query: (logFile) => `joblog/${logFile}`
+        }),
     }),
 })
 
@@ -45,4 +48,5 @@ export const {
     useGetExperimentConfigurationQuery,
     useGetExperimentStatsQuery,
     useGetExperimentPerformanceQuery,
+    useGetJobLogQuery,
 } = autosubmitApiV3

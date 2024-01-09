@@ -36,7 +36,7 @@ const Home = () => {
                         experiments.experiments.map(exp => {
                             return (
                                 <div key={exp.name} className="bg-dark px-5 py-3 rounded-4">
-                                    <Link to={`/experiment/${exp.name}`} className="text-white fs-3 fw-bold">{exp.name}</Link>
+                                    <Link to={`/experiment/${exp.name}/quick`} className="text-white fs-3 fw-bold">{exp.name}</Link>
                                 </div>
                             )
                         })

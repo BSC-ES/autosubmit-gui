@@ -63,14 +63,14 @@ const ExperimentQuick = () => {
     useASTitle(`Experiment ${routeParams.expid} quick view`)
     useBreadcrumb([
         {
-          name: `Experiment ${routeParams.expid}`,
-          route: `/experiment/${routeParams.expid}`
+            name: `Experiment ${routeParams.expid}`,
+            route: `/experiment/${routeParams.expid}`
         },
         {
-          name: `Quick View`,
-          route: `/experiment/${routeParams.expid}/quick`
+            name: `Quick View`,
+            route: `/experiment/${routeParams.expid}/quick`
         }
-      ])
+    ])
     const [filters, setFilters] = useState({
         status: "ANY",
         filter: ""
@@ -121,17 +121,24 @@ const ExperimentQuick = () => {
                 <div className="small" style={{ whiteSpace: "nowrap" }}>
                     Showing {jobs.length} of <strong>{data && data.tree_view && data.tree_view.length} total jobs</strong>
                 </div>
-                <button className="btn btn-success fw-bold text-white px-5" onClick={() => { refetch() }}>REFRESH</button>
+                <button className="btn btn-success fw-bold text-white"
+                    title="Refresh data"
+                    onClick={() => { refetch() }}>
+                    <i className="fa-solid fa-rotate-right"></i>
+                </button>
             </div>
             <div className="border rounded-4 p-3 flex-fill">
-                {
-                    isFetching ?
-                        <div className="w-100 h-100 d-flex align-items-center justify-content-center">
-                            <div className="spinner-border" role="status"></div>
-                        </div>
-                        :
-                        <FancyTree treeData={jobs}></FancyTree>
-                }
+                <div className="overflow-y-auto h-100" style={{ maxHeight: "75vh" }}>
+                    {
+                        isFetching ?
+                            <div className="w-100 h-100 d-flex align-items-center justify-content-center">
+                                <div className="spinner-border" role="status"></div>
+                            </div>
+                            :
+                            <FancyTree treeData={jobs}></FancyTree>
+
+                    }
+                </div>
             </div>
         </div>
     )
