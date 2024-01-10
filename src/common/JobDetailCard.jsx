@@ -63,7 +63,7 @@ const JobDetailCard = ({ jobData, jobs, onClose }) => {
               {
                 onClose &&
                 <div style={{ cursor: "pointer" }} onClick={onClose}>
-                  <i class="fa-solid fa-xmark"></i>
+                  <i className="fa-solid fa-xmark"></i>
                 </div>
               }
             </div>
@@ -210,10 +210,13 @@ const JobDetailCard = ({ jobData, jobs, onClose }) => {
                     readOnly disabled
                   />
                   <button className="btn btn-info border"
+                    disabled={!jobData.out}
                     onClick={() => copyToClipboard(jobData.out || "")}>
                     COPY
                   </button>
-                  <button className="btn btn-dark" onClick={() => toggleModal("outlog")}>
+                  <button className="btn btn-dark"
+                    disabled={!jobData.out}
+                    onClick={() => toggleModal("outlog")}>
                     <i className="fa-solid fa-terminal mx-1 small"></i>
                   </button>
                 </div>
@@ -232,10 +235,13 @@ const JobDetailCard = ({ jobData, jobs, onClose }) => {
                     readOnly disabled
                   />
                   <button className="btn btn-info border"
+                    disabled={!jobData.err}
                     onClick={() => copyToClipboard(jobData.err || "")}>
                     COPY
                   </button>
-                  <button className="btn btn-dark" onClick={() => toggleModal("errlog")}>
+                  <button className="btn btn-dark"
+                    disabled={!jobData.err}
+                    onClick={() => toggleModal("errlog")}>
                     <i className="fa-solid fa-terminal mx-1 small"></i>
                   </button>
                 </div>

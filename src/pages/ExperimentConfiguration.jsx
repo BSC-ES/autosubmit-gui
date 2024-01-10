@@ -88,9 +88,7 @@ const ConfigTableGen = ({ config, prefix, differences }) => {
         config && Object.keys(configChilds).map(key => {
           let title = (prefix ? prefix + "." : "") + key
           return (
-            <>
-              <ConfigTableGen key={title} config={config[key]} prefix={title} differences={differences} />
-            </>
+            <ConfigTableGen key={title} config={config[key]} prefix={title} differences={differences} />
           )
         })
       }
@@ -103,14 +101,14 @@ const ExperimentConfiguration = () => {
   useASTitle(`Experiment ${routeParams.expid} configuration`)
   useBreadcrumb([
     {
-        name: `Experiment ${routeParams.expid}`,
-        route: `/experiment/${routeParams.expid}`
+      name: `Experiment ${routeParams.expid}`,
+      route: `/experiment/${routeParams.expid}`
     },
     {
-        name: `Configuration`,
-        route: `/experiment/${routeParams.expid}/config`
+      name: `Configuration`,
+      route: `/experiment/${routeParams.expid}/config`
     }
-])
+  ])
   const { data, isFetching } = useGetExperimentConfigurationQuery(routeParams.expid)
 
   return (

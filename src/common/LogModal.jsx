@@ -3,7 +3,9 @@ import { useGetJobLogQuery } from "../services/autosubmitApiV3"
 
 const LogModal = ({ logFile, show, onHide }) => {
 
-    const { data } = useGetJobLogQuery(logFile);
+    const { data } = useGetJobLogQuery(logFile, {
+        skip: !show
+    });
 
     return (
         <Modal show={show} onHide={onHide} centered size="xl">

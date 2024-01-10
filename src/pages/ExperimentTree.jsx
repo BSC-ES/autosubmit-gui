@@ -35,20 +35,13 @@ const ExperimentTree = () => {
     }
   }
 
-  const handleTreeCallback = (tree) => {
-    setTree(tree)
-  }
+  const handleTreeCallback = (tree) => { setTree(tree) }
 
-  const handleExpand = () => {
-    if (tree) tree.expandAll()
-  }
-  const handleCollapse = () => {
-    if (tree) tree.expandAll(false)
-  }
+  const handleExpand = () => { if (tree) tree.expandAll() }
+  const handleCollapse = () => { if (tree) tree.expandAll(false) }
 
   const handleFilter = (e) => {
     e.preventDefault();
-    console.log(filterRef.current.value)
     if (tree) {
       if (filterRef.current.value) {
         tree.filterNodes(filterRef.current.value)
@@ -63,9 +56,7 @@ const ExperimentTree = () => {
     if (tree) tree.clearFilter()
   }
 
-  const handleCloseJobDetail = () => {
-    setSelectedJob(null)
-  }
+  const handleCloseJobDetail = () => { setSelectedJob(null) }
 
   return (
     <div className="w-100 d-flex flex-column">
@@ -78,9 +69,9 @@ const ExperimentTree = () => {
             <button type="button" className="btn btn-info fw-bold px-4" onClick={handleClear}>Clear</button>
           </form>
         </div>
-        <button className="btn btn-success fw-bold text-white px-4 text-nowrap">
+        {/* <button className="btn btn-success fw-bold text-white px-4 text-nowrap">
           START MONITORING
-        </button>
+        </button> */}
         <button className="btn btn-success fw-bold text-white"
           title="Refresh data"
           onClick={() => { refetch() }}>
@@ -93,7 +84,7 @@ const ExperimentTree = () => {
             <div className="spinner-border" role="status"></div>
           </div>
           :
-          <div className="d-flex w-100 gap-3 flex-fill flex-wrap d-flex flex-fill gap-3 justify-content-center">
+          <div className="d-flex w-100 gap-3 flex-wrap d-flex flex-fill gap-3 justify-content-center">
 
             <div className="flex-fill d-flex flex-column gap-3 flex-wrap">
               <div className="d-flex gap-2 align-items-center justify-content-between">
@@ -113,7 +104,7 @@ const ExperimentTree = () => {
               </div>
             </div>
 
-              <JobDetailCard jobData={selectedJob} jobs={data.jobs} onClose={handleCloseJobDetail} />
+            <JobDetailCard jobData={selectedJob} jobs={data.jobs} onClose={handleCloseJobDetail} />
           </div>
       }
     </div>

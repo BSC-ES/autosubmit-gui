@@ -3,7 +3,7 @@ import useASTitle from "../hooks/useASTitle"
 import useBreadcrumb from "../hooks/useBreadcrumb"
 import { useGetExperimentPerformanceQuery } from "../services/autosubmitApiV3"
 import MetricScatterPlot from "../components/plots/MetricScatterPlot"
-import { useEffect, useState } from "react"
+import { Fragment, useEffect, useState } from "react"
 import {
   secondsToDelta,
   arrayAverage,
@@ -156,7 +156,7 @@ const PerformancePlots = ({ considered }) => {
         {
           PERFORMANCE_PLOTS.map(item => {
             return (
-              <div className='form-check form-check-inline'>
+              <div key={item.key} className='form-check form-check-inline'>
                 <input
                   type='checkbox'
                   className='form-check-input'
@@ -205,7 +205,9 @@ const PerformancePlots = ({ considered }) => {
                 />
               }
             }
-            return plot;
+            return <Fragment key={item.key}>
+              {plot}
+            </Fragment>;
           })
         }
       </div>
