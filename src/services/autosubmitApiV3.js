@@ -4,6 +4,7 @@ import { AUTOSUBMIT_API_SOURCE } from '../consts'
 export const autosubmitApiV3 = createApi({
     reducerPath: 'autosubmitApiV3',
     baseQuery: fetchBaseQuery({ baseUrl: AUTOSUBMIT_API_SOURCE + "/v3" }),
+    keepUnusedDataFor: 5,
     endpoints: (builder) => ({
         getRunningExperiments: builder.query({
             query: () => `running`
@@ -18,7 +19,7 @@ export const autosubmitApiV3 = createApi({
             query: (expid) => `tree/${expid}`
         }),
         getExperimentGraphView: builder.query({
-            query: ({expid, layout, grouped}) => `graph/${expid}/${layout}/${grouped}`
+            query: ({ expid, layout, grouped }) => `graph/${expid}/${layout}/${grouped}`
         }),
         getExperimentRunLog: builder.query({
             query: (expid) => `exprun/${expid}`
@@ -27,7 +28,7 @@ export const autosubmitApiV3 = createApi({
             query: (expid) => `cconfig/${expid}`
         }),
         getExperimentStats: builder.query({
-            query: ({expid, hours, section}) => `stats/${expid}/${hours}/${section}`
+            query: ({ expid, hours, section }) => `stats/${expid}/${hours}/${section}`
         }),
         getExperimentPerformance: builder.query({
             query: (expid) => `performance/${expid}`
@@ -36,7 +37,7 @@ export const autosubmitApiV3 = createApi({
             query: (logFile) => `joblog/${logFile}`
         }),
         showdownRoute: builder.query({
-            keepUnusedDataFor: 0, // disable cache
+            keepUnusedDataFor: 1, // reduce cache time
             query: ({
                 route,
                 loggedUser,

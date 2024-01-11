@@ -1,13 +1,16 @@
-import { useRef, useState } from "react"
-import { useGetExperimentTreeViewQuery } from "../services/autosubmitApiV3";
+import { useEffect, useRef, useState } from "react"
+import { autosubmitApiV3, useGetExperimentTreeViewQuery } from "../services/autosubmitApiV3";
 import { useParams } from "react-router-dom";
 import FancyTree from "../common/FancyTree";
 import useASTitle from "../hooks/useASTitle";
 import useBreadcrumb from "../hooks/useBreadcrumb";
 import JobDetailCard from "../common/JobDetailCard";
+import { useDispatch, useSelector } from "react-redux";
 
 
 const ExperimentTree = () => {
+  const dispatch = useDispatch()
+  const authState = useSelector(state => state.auth)
   const routeParams = useParams()
   useASTitle(`Experiment ${routeParams.expid} tree`)
   useBreadcrumb([
@@ -22,11 +25,24 @@ const ExperimentTree = () => {
   ])
 
   const [tree, setTree] = useState(null)
-
+  const [selectedJob, setSelectedJob] = useState(null)
   const filterRef = useRef()
 
-  const [selectedJob, setSelectedJob] = useState(null)
   const { data, isFetching, refetch } = useGetExperimentTreeViewQuery(routeParams.expid)
+
+  useEffect(() => {
+    // Unmount component
+    return () => {
+      console.log("unmount")
+      const promise = dispatch(autosubmitApiV3.endpoints.showdownRoute.initiate({
+        route: "tree",
+        loggedUser: authState.user_id,
+        expid: routeParams.expid
+      }, { forceRefetch: true }))
+      promise.unsubscribe()
+    }
+  }, [])
+
 
   const handleOnActivateNode = (e, d) => {
     if (data && Array.isArray(data.jobs) && d && d.node && d.node.folder === undefined) {

@@ -5,11 +5,12 @@ import { autosubmitApiV3, useGetExperimentGraphViewQuery } from "../services/aut
 import useASTitle from "../hooks/useASTitle";
 import useBreadcrumb from "../hooks/useBreadcrumb";
 import JobDetailCard from "../common/JobDetailCard";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 
 const ExperimentGraph = () => {
   const dispatch = useDispatch()
+  const authState = useSelector(state => state.auth)
   const routeParams = useParams()
   useASTitle(`Experiment ${routeParams.expid} graph`)
   useBreadcrumb([
@@ -40,14 +41,14 @@ const ExperimentGraph = () => {
 
   useEffect(() => {
     // Unmount component
-    // return () => {
-    //   const promise = dispatch(autosubmitApiV3.endpoints.showdownRoute.initiate({
-    //     route: "graph",
-    //     loggedUser: "",
-    //     expid: routeParams.expid
-    //   }))
-    //   promise.unsubscribe()
-    // }
+    return () => {
+      const promise = dispatch(autosubmitApiV3.endpoints.showdownRoute.initiate({
+        route: "graph",
+        loggedUser: authState.user_id,
+        expid: routeParams.expid
+      }, { forceRefetch: true }))
+      promise.unsubscribe()
+    }
   }, [])
 
   useEffect(() => {
