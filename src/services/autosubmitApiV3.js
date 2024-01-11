@@ -35,6 +35,22 @@ export const autosubmitApiV3 = createApi({
         getJobLog: builder.query({
             query: (logFile) => `joblog/${logFile}`
         }),
+        showdownRoute: builder.query({
+            keepUnusedDataFor: 0, // disable cache
+            query: ({
+                route,
+                loggedUser,
+                expid = null
+            }) => {
+                return ({
+                    url: `shutdown/${route}`,
+                    params: {
+                        loggedUser: loggedUser,
+                        expid: expid
+                    }
+                })
+            }
+        }),
     }),
 })
 
@@ -48,5 +64,5 @@ export const {
     useGetExperimentConfigurationQuery,
     useGetExperimentStatsQuery,
     useGetExperimentPerformanceQuery,
-    useGetJobLogQuery,
+    useGetJobLogQuery
 } = autosubmitApiV3

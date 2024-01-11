@@ -1,4 +1,4 @@
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import useWindowSize from "../hooks/useWindowSize";
 
 const EXPERIMENT_MENU_ITEMS = [
@@ -42,7 +42,6 @@ const EXPERIMENT_MENU_ITEMS = [
 const ExperimentMenu = () => {
     const routeParams = useParams()
     const location = useLocation()
-    const navigate = useNavigate()
 
     return (
         <div className="d-flex flex-column gap-4 bg-info p-4 rounded-4"
@@ -50,15 +49,15 @@ const ExperimentMenu = () => {
             {EXPERIMENT_MENU_ITEMS.map(item => {
                 const expRoute = `/experiment/${routeParams.expid}${item.route}`
                 return (
-                    <div key={item.route} style={{ cursor: "pointer" }}
-                        className={"d-flex align-items-center fw-bold p-1 " + (location.pathname === expRoute ? ' text-secondary' : '')}
-                        onClick={() => navigate(expRoute)}>
+                    <Link key={item.route}
+                        className={"d-flex align-items-center fw-bold p-1 " + (location.pathname === expRoute ? ' text-secondary' : 'text-black')}
+                        to={expRoute}>
                         <i style={{ fontSize: "1.5rem", width: "2rem" }}
                             className={"me-4 text-center " + item.iconClass}></i>
                         <span>
                             {item.name}
                         </span>
-                    </div>
+                    </Link>
                 )
             })}
         </div>

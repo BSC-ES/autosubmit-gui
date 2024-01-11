@@ -6,7 +6,18 @@ export const autosubmitApiV4 = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: AUTOSUBMIT_API_SOURCE + "/v4" }),
     endpoints: (builder) => ({
         getExperiments: builder.query({
-            query: () => `experiments`
+            query: ({
+                page = 1,
+                page_size = 8
+            }) => {
+                return ({
+                    url: `experiments`,
+                    params: {
+                        page,
+                        page_size
+                    }
+                })
+            }
         }),
     }),
 })

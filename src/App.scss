@@ -10,6 +10,8 @@ $dark: #333333;
 $success: #43A373;
 $warning: #F0AD4E;
 
+$enable-cssgrid: true;
+
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
 @import '@fortawesome/fontawesome-free/css/all.min.css';
@@ -19,6 +21,10 @@ $warning: #F0AD4E;
 
 body {
   font-family: 'Source Sans 3', sans-serif;
+}
+
+a {
+  text-decoration: none;
 }
 
 /* Global Styles */

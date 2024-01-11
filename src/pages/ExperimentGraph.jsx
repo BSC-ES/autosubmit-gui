@@ -1,13 +1,15 @@
 import { useEffect, useRef, useState } from "react"
 import { useParams } from "react-router-dom";
 import VisNetwork from "../common/VisNetwork";
-import { useGetExperimentGraphViewQuery } from "../services/autosubmitApiV3";
+import { autosubmitApiV3, useGetExperimentGraphViewQuery } from "../services/autosubmitApiV3";
 import useASTitle from "../hooks/useASTitle";
 import useBreadcrumb from "../hooks/useBreadcrumb";
 import JobDetailCard from "../common/JobDetailCard";
+import { useDispatch } from "react-redux";
 
 
 const ExperimentGraph = () => {
+  const dispatch = useDispatch()
   const routeParams = useParams()
   useASTitle(`Experiment ${routeParams.expid} graph`)
   useBreadcrumb([
@@ -37,6 +39,18 @@ const ExperimentGraph = () => {
   })
 
   useEffect(() => {
+    // Unmount component
+    // return () => {
+    //   const promise = dispatch(autosubmitApiV3.endpoints.showdownRoute.initiate({
+    //     route: "graph",
+    //     loggedUser: "",
+    //     expid: routeParams.expid
+    //   }))
+    //   promise.unsubscribe()
+    // }
+  }, [])
+
+  useEffect(() => {
     if (data && Array.isArray(data.nodes) && Array.isArray(data.edges)) {
       const newNodes = data.nodes.map(node => {
         return {
@@ -60,7 +74,6 @@ const ExperimentGraph = () => {
   const handleNetworkCallback = (newNetwork) => { setNetwork(newNetwork) }
 
   const handleOnSelectNode = (nodeId) => {
-    console.log(nodeId)
     const newSelected = data.nodes.find(rawNode => rawNode.id === nodeId)
     setSelectedJob(newSelected)
   }
@@ -70,11 +83,14 @@ const ExperimentGraph = () => {
     const searchValue = filterRef.current.value
     if (network) {
       if (searchValue) {
-        const selectedNodes = graphData.nodes.filter( item => item.id.includes(searchValue)).map(item => item.id)
-        network.selectNodes(selectedNodes)
+        const selectedNodesIds = graphData.nodes.filter(
+          item => item.id.toUpperCase().includes(searchValue.toUpperCase())
+        ).map(item => item.id)
+        network.selectNodes(selectedNodesIds)
         network.fit({
-          nodes: selectedNodes
+          nodes: selectedNodesIds
         })
+        if (selectedNodesIds.length > 0) handleOnSelectNode(selectedNodesIds[0])
       } else {
         handleClear()
       }

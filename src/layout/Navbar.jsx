@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import AuthBadge from "../common/AuthBadge";
 import { ReactComponent as Logo } from "../common/Logo.svg"
 import useWindowSize from "../hooks/useWindowSize";
@@ -18,34 +18,34 @@ const NAVBAR_ITEMS = [
 
 const Navbar = () => {
     const location = useLocation()
-    const navigate = useNavigate()
     const { width } = useWindowSize()
 
     return (
         <nav className="px-4 py-3 d-flex gap-5 justify-content-between">
-            <Logo style={{ height: "2.5rem", cursor: "pointer" }}
-                onClick={() => navigate("/")} />
+            <Link to={"/"}>
+                <Logo style={{ height: "2.5rem" }} />
+            </Link>
             {
                 width > 992 &&
                 <div className="flex-fill d-flex align-items-center gap-5 mx-4">
                     {
                         NAVBAR_ITEMS.map(item =>
-                            <div key={item.route} style={{ cursor: "pointer" }}
-                                className={"d-flex align-items-center " + (location.pathname === item.route ? ' text-secondary' : '')}
-                                onClick={() => navigate(item.route)}>
+                            <Link key={item.route}
+                                className={"d-flex align-items-center " + (location.pathname === item.route ? ' text-secondary' : 'text-dark')}
+                                to={item.route}>
                                 <i style={{ fontSize: "1.5rem" }}
                                     className={"me-4 " + item.iconClass}></i>
                                 <span>
                                     {item.name}
                                 </span>
-                            </div>
+                            </Link>
                         )
                     }
                 </div>
             }
 
             <div>
-                <AuthBadge></AuthBadge>
+                {/* <AuthBadge></AuthBadge> */}
             </div>
         </nav>
     )
