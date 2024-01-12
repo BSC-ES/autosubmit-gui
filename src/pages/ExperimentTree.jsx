@@ -28,12 +28,16 @@ const ExperimentTree = () => {
   const [selectedJob, setSelectedJob] = useState(null)
   const filterRef = useRef()
 
-  const { data, isFetching, refetch } = useGetExperimentTreeViewQuery(routeParams.expid)
+  const abortController = new AbortController()
+  const { data, isFetching, refetch } = useGetExperimentTreeViewQuery({
+    expid: routeParams.expid,
+    signal: abortController.signal
+  })
 
   useEffect(() => {
     // Unmount component
     return () => {
-      console.log("unmount")
+      abortController.abort()
       const promise = dispatch(autosubmitApiV3.endpoints.showdownRoute.initiate({
         route: "tree",
         loggedUser: authState.user_id,
@@ -100,6 +104,7 @@ const ExperimentTree = () => {
             <div className="spinner-border" role="status"></div>
           </div>
           :
+          data &&
           <div className="d-flex w-100 gap-3 flex-wrap d-flex flex-fill gap-3 justify-content-center">
 
             <div className="flex-fill d-flex flex-column gap-3 flex-wrap">

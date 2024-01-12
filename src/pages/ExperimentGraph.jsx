@@ -33,15 +33,18 @@ const ExperimentGraph = () => {
     edges: []
   })
 
+  const abortController = new AbortController()
   const { data, isFetching, refetch } = useGetExperimentGraphViewQuery({
     expid: routeParams.expid,
     layout: "standard",
-    grouped: "none"
+    grouped: "none",
+    signal: abortController.signal
   })
 
   useEffect(() => {
     // Unmount component
     return () => {
+      abortController.abort()
       const promise = dispatch(autosubmitApiV3.endpoints.showdownRoute.initiate({
         route: "graph",
         loggedUser: authState.user_id,
@@ -137,6 +140,7 @@ const ExperimentGraph = () => {
             <div className="spinner-border" role="status"></div>
           </div>
           :
+          data &&
           <div className="d-flex w-100 gap-3 justify-content-center flex-wrap">
 
             <div className="col d-flex flex-column gap-3 flex-wrap" style={{ minWidth: "min(30rem,90vw)" }}>
