@@ -9,13 +9,23 @@ export const autosubmitApiV4 = createApi({
         getExperiments: builder.query({
             query: ({
                 page = 1,
-                page_size = 8
+                page_size = 8,
+                query,
+                only_active,
+                exp_type,
+                order_by,
+                order_desc
             }) => {
                 return ({
                     url: `experiments`,
                     params: {
                         page,
-                        page_size
+                        page_size,
+                        query,
+                        only_active,
+                        exp_type,
+                        order_by,
+                        order_desc
                     }
                 })
             }
@@ -23,6 +33,6 @@ export const autosubmitApiV4 = createApi({
     }),
 })
 
-export const { 
+export const {
     useGetExperimentsQuery
 } = autosubmitApiV4

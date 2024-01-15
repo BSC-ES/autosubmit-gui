@@ -55,6 +55,7 @@ const ExperimentGraph = () => {
   }, [])
 
   useEffect(() => {
+    handleCloseJobDetail()
     if (data && Array.isArray(data.nodes) && Array.isArray(data.edges)) {
       const newNodes = data.nodes.map(node => {
         return {

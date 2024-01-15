@@ -47,6 +47,10 @@ const ExperimentTree = () => {
     }
   }, [])
 
+  useEffect(()=>{
+    handleCloseJobDetail()
+  }, [data])
+
 
   const handleOnActivateNode = (e, d) => {
     if (data && Array.isArray(data.jobs) && d && d.node && d.node.folder === undefined) {
