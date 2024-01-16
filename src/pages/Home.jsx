@@ -1,9 +1,9 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useGetExperimentsQuery } from "../services/autosubmitApiV4";
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import useASTitle from "../hooks/useASTitle";
 import useBreadcrumb from "../hooks/useBreadcrumb";
-import { ProgressBar } from "react-bootstrap";
+import ExperimentCard from "../common/ExperimentCard";
 
 const searchParamsToKeyValue = (searchParams) => {
   let searchParamsObj = {};
@@ -13,114 +13,19 @@ const searchParamsToKeyValue = (searchParams) => {
   return searchParamsObj;
 }
 
-const ExperimentCard = forwardRef(({ experiment }, ref) => {
-  const [show, setShow] = useState(true)
-
-  const expand = () => { setShow(true) }
-  const collapse = () => { setShow(false) }
-  const toggle = () => { setShow(!show) }
-
-  useImperativeHandle(ref, () => {
-    return {
-      expand,
-      collapse
-    }
-  })
-
-  return (
-    <div className="d-flex flex-column w-100 h-100">
-      <div className={"d-flex gap-4 align-items-center justify-content-between bg-dark px-5 py-3 " + (show ? "rounded-top-4" : "rounded-4")}>
-        <Link to={`/experiment/${experiment.name}/quick`}
-          className="text-white fs-3 fw-bold"
-          style={{ cursor: "pointer" }}
-        >
-          {experiment.name}
-        </Link>
-        <div className="flex-fill">
-          <span className="text-white">{experiment.description}</span>
-        </div>
-        <ProgressBar className="bg-info rounded-pill p-0" style={{ width: "12rem" }}>
-          <ProgressBar max={experiment?.total} now={experiment?.completed}
-            animated={experiment?.status === "RUNNING"}
-            className={
-              (experiment?.failed > 0) ? "bg-danger" : (
-                (experiment?.queuing > 0 && !(experiment?.running > 0)) ? "bg-queue" : "bg-success"
-              )} />
-        </ProgressBar>
-        <div style={{ width: "1.5rem", height: "1.5rem", minWidth: "1.5rem" }}
-          className={"rounded-circle " + (experiment?.status === "RUNNING" ? "bg-success" : "bg-info")}
-          title={(experiment?.status === "RUNNING" ? "ACTIVE" : "INACTIVE")}
-        />
-        <div className="text-white" onClick={toggle}
-          style={{ cursor: "pointer" }}>
-          <i className={"fs-2 fa-solid " + (show ? "fa-angle-up" : "fa-angle-down")}></i>
-        </div>
-      </div>
-      {
-        show &&
-        <div className="flex-fill border rounded-bottom-4 py-3 px-4 w-100 d-flex flex-column gap-3">
-          <div className="px-4 grid">
-            <div className="g-col-3" title="User">
-              <i className="fa-solid fa-user me-4" /> {experiment.user || "-"}
-            </div>
-            <div className="g-col-3" title="HPC">
-              <i className="fa-solid fa-computer me-4" /> {experiment.hpc || "-"}
-            </div>
-            <div className="g-col-3" title="Autosubmit version">
-              <i className="fa-solid fa-code-branch me-4" /> {experiment.version || "-"}
-            </div>
-            <div className="g-col-3" title="Last modified date">
-              <i className="fa-solid fa-calendar me-4" /> {experiment.modified || "-"}
-            </div>
-          </div>
-          <div className="grid">
-            <Link to={`/experiment/${experiment.name}/quick`}
-              className="g-col-4">
-              <button type="button"
-                className="w-100 btn btn-primary fw-bold px-4 text-white text-nowrap">
-                QUICK
-              </button>
-            </Link>
-            <Link to={`/experiment/${experiment.name}/tree`}
-              className="g-col-4">
-              <button type="button"
-                className="w-100 btn btn-primary fw-bold px-4 text-white text-nowrap">
-                TREE
-              </button>
-            </Link>
-            <Link to={`/experiment/${experiment.name}/graph`}
-              className="g-col-4">
-              <button type="button"
-                className="w-100 btn btn-primary fw-bold px-4 text-white text-nowrap">
-                GRAPH
-              </button>
-            </Link>
-          </div>
-          {/* <button type="button"
-            className="btn btn-primary fw-bold px-4 text-white text-nowrap">
-            SUMMARY
-          </button> */}
-        </div>
-      }
-
-    </div>
-
-  )
-})
-
 
 const EXP_ORDER_BY = [
-  {
-    key: "created_asc",
-    name: "Created (asc)",
-    order_by: "created",
-    order_desc: false,
-  },
   {
     key: "created_desc",
     name: "Created (desc)",
     order_by: "created",
     order_desc: true,
+  },
+  {
+    key: "created_asc",
+    name: "Created (asc)",
+    order_by: "created",
+    order_desc: false,
   },
 ]
 
@@ -218,6 +123,26 @@ const Home = () => {
       delete newParams.order_desc;
     }
     setSearchParams(newParams)
+  }
+
+  const handlePrevPage = () => {
+    const prevPage = parseInt(searchParams.get("page") || 1) - 1
+    if (prevPage > 0) {
+      setSearchParams({
+        ...searchParamsToKeyValue(searchParams),
+        page: prevPage
+      })
+    }
+  }
+
+  const handleNextPage = () => {
+    const nextPage = parseInt(searchParams.get("page") || 1) + 1
+    if (nextPage <= data?.pagination?.total_pages) {
+      setSearchParams({
+        ...searchParamsToKeyValue(searchParams),
+        page: nextPage
+      })
+    }
   }
 
   // Ref Children
@@ -340,19 +265,35 @@ const Home = () => {
             }
           </div>
 
-          <div className="d-flex gap-3 justify-content-center">
+          <div className="d-flex gap-3 justify-content-center align-items-center">
             {
               data?.pagination?.total_pages > 0 &&
-              [...(Array(data.pagination.total_pages).keys())].map(item => {
-                return (
-                  <button key={item} type="button"
-                    className={"btn rounded-circle " + (((searchParams.get("page") || 1) == item + 1) ? "btn-primary text-white" : "btn-outline-light text-primary border-primary")}
-                    style={{ height: "2.5rem", width: "2.5rem" }}
-                    onClick={() => setSearchParams({ ...searchParamsToKeyValue(searchParams), page: item + 1 })}>
-                    {item + 1}
-                  </button>
-                )
-              })
+              <>
+                <button
+                  className={"btn rounded-circle border-0 btn-outline-light text-dark " + ((parseInt(searchParams.get("page") || 1) <= 1)?"disabled":"") }
+                  style={{ height: "2.5rem", width: "2.5rem" }}
+                  onClick={handlePrevPage}>
+                  <i className="fa-solid fa-angle-left"></i>
+                </button>
+                {
+                  [...(Array(data.pagination.total_pages).keys())].map(item => {
+                    return (
+                      <button key={item} type="button"
+                        className={"btn rounded-circle " + (((searchParams.get("page") || 1) == item + 1) ? "btn-primary text-white" : "btn-outline-light text-primary border-primary")}
+                        style={{ height: "2.5rem", width: "2.5rem" }}
+                        onClick={() => setSearchParams({ ...searchParamsToKeyValue(searchParams), page: item + 1 })}>
+                        {item + 1}
+                      </button>
+                    )
+                  })
+                }
+                <button
+                  className={"btn rounded-circle border-0 btn-outline-light text-dark " + ((parseInt(searchParams.get("page") || 1) >= data.pagination.total_pages)?"disabled":"")}
+                  style={{ height: "2.5rem", width: "2.5rem" }}
+                  onClick={handleNextPage}>
+                  <i className="fa-solid fa-angle-right"></i>
+                </button>
+              </>
             }
           </div>
 
