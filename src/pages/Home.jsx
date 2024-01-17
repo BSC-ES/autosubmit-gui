@@ -48,11 +48,17 @@ const Home = () => {
 
   const filterRef = useRef()
 
+  // State Transforms
   const isOnlyActive = ["true", null].includes(searchParams.get("only_active"))
+  const currentPage = parseInt(searchParams.get("page") || 1)
+
+  // Search Params to Query Filter
   useEffect(() => {
-    if (searchParams.get("query")) {
-      filterRef.current.value = searchParams.get("query")
-    }
+    filterRef.current.value = searchParams.get("query")
+
+    let selectedOrder = EXP_ORDER_BY.find(
+      item => item.key === searchParams.get("order")
+    )
 
     setFilters({
       page: searchParams.get("page") || undefined,
@@ -60,22 +66,21 @@ const Home = () => {
       query: searchParams.get("query") || undefined,
       only_active: isOnlyActive,
       exp_type: searchParams.get("exp_type") || undefined,
-      order_by: searchParams.get("order_by") || undefined,
-      order_desc: searchParams.get("order_desc") !== null ?
-        searchParams.get("order_desc") : undefined
+      order_by: selectedOrder?.order_by || undefined,
+      order_desc: selectedOrder?.order_desc || undefined
     })
     if (!isInitialized) setIsInitialized(true)
   }, [searchParams])
 
+  // Form Handlers
   const handleSubmit = (e) => {
     e?.preventDefault()
     const newParams = {
       ...searchParamsToKeyValue(searchParams),
-      page: 1
+      page: 1,
+      query: filterRef.current.value
     }
-    if (filterRef.current.value) {
-      newParams["query"] = filterRef.current.value
-    }
+    if (!filterRef.current.value) delete newParams.query;
     setSearchParams(newParams)
   }
 
@@ -109,24 +114,19 @@ const Home = () => {
   }
 
   const handleChangeOrder = (e) => {
-    const selectedOrder = EXP_ORDER_BY.find(
-      item => item.key === e.target.value
-    )
     const newParams = {
       ...searchParamsToKeyValue(searchParams),
       page: 1,
-      order_by: selectedOrder?.order_by,
-      order_desc: selectedOrder?.order_desc,
+      order: e.target.value
     }
-    if (!selectedOrder) {
-      delete newParams.order_by;
-      delete newParams.order_desc;
+    if (!e.target.value) {
+      delete newParams.order;
     }
     setSearchParams(newParams)
   }
 
   const handlePrevPage = () => {
-    const prevPage = parseInt(searchParams.get("page") || 1) - 1
+    const prevPage = currentPage - 1
     if (prevPage > 0) {
       setSearchParams({
         ...searchParamsToKeyValue(searchParams),
@@ -136,7 +136,7 @@ const Home = () => {
   }
 
   const handleNextPage = () => {
-    const nextPage = parseInt(searchParams.get("page") || 1) + 1
+    const nextPage = currentPage + 1
     if (nextPage <= data?.pagination?.total_pages) {
       setSearchParams({
         ...searchParamsToKeyValue(searchParams),
@@ -212,7 +212,7 @@ const Home = () => {
           <div className="d-flex column-gap-5 row-gap-3 align-items-center flex-wrap">
             <div className="d-flex gap-3 align-items-center mx-3">
               <label className="text-nowrap">Type:</label>
-              <select value={searchParams.get("exp_type")} onChange={handleChangeType}
+              <select value={searchParams.get("exp_type") || ""} onChange={handleChangeType}
                 className="form-select bg-primary text-white border-0 fw-bold text-center select-white-caret">
                 <option value="">All</option>
                 <option value="experiment">Experiment</option>
@@ -230,7 +230,7 @@ const Home = () => {
 
             <div className="d-flex gap-3 align-items-center mx-3">
               <label className="text-nowrap">Order by:</label>
-              <select onChange={handleChangeOrder}
+              <select onChange={handleChangeOrder} value={searchParams.get("order") || ""}
                 className="form-select bg-primary text-white border-0 fw-bold text-center select-white-caret">
                 <option value="">Default</option>
                 {
@@ -270,7 +270,7 @@ const Home = () => {
               data?.pagination?.total_pages > 0 &&
               <>
                 <button
-                  className={"btn rounded-circle border-0 btn-outline-light text-dark " + ((parseInt(searchParams.get("page") || 1) <= 1)?"disabled":"") }
+                  className={"btn rounded-circle border-0 btn-outline-light text-primary " + ((currentPage <= 1)?"disabled":"") }
                   style={{ height: "2.5rem", width: "2.5rem" }}
                   onClick={handlePrevPage}>
                   <i className="fa-solid fa-angle-left"></i>
@@ -288,7 +288,7 @@ const Home = () => {
                   })
                 }
                 <button
-                  className={"btn rounded-circle border-0 btn-outline-light text-dark " + ((parseInt(searchParams.get("page") || 1) >= data.pagination.total_pages)?"disabled":"")}
+                  className={"btn rounded-circle border-0 btn-outline-light text-primary " + ((currentPage >= data.pagination.total_pages)?"disabled":"")}
                   style={{ height: "2.5rem", width: "2.5rem" }}
                   onClick={handleNextPage}>
                   <i className="fa-solid fa-angle-right"></i>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import showdown from 'showdown'
 import useASTitle from '../hooks/useASTitle';
 import useBreadcrumb from '../hooks/useBreadcrumb';
+import { PUBLIC_URL } from '../consts';
 
 const About = () => {
     useASTitle("About")
@@ -11,9 +12,10 @@ const About = () => {
         }
     ])
     const [markdown, setMarkdown] = useState("")
+    console.log(process.env.PUBLIC_URL)
 
     useEffect(() => {
-        fetch("./CHANGELOG.md")
+        fetch(`${PUBLIC_URL}/CHANGELOG.md`)
             .then((r) => r.text())
             .then(text => {
                 const converter = new showdown.Converter()

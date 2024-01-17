@@ -13,6 +13,7 @@ import ExperimentQuick from '../pages/ExperimentQuick';
 import ExperimentStats from '../pages/ExperimentStats';
 import NotFound from '../pages/NotFound';
 import ExperimentPerformance from '../pages/ExperimentPerformance';
+import { PUBLIC_URL } from '../consts';
 
 const router = createBrowserRouter([
   {
@@ -85,7 +86,9 @@ const router = createBrowserRouter([
     path: "/404",
     element: <NotFound />
   },
-]);
+], {
+  basename: `${PUBLIC_URL||""}`
+});
 
 
 export default function Router() {
