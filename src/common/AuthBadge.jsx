@@ -14,7 +14,7 @@ const AuthBadge = () => {
 
     return (
         <>
-            <button className='btn btn-info py-2 px-3 rounded-pill fw-bold shadow-sm'>
+            <button className='btn btn-light py-2 px-3 rounded-pill fw-bold shadow-sm'>
                 {authState.user_id ?
                     <div>
                         {authState.user_id}

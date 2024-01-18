@@ -209,7 +209,7 @@ const JobDetailCard = ({ jobData, jobs, onClose }) => {
                     id='g_out_t'
                     readOnly disabled
                   />
-                  <button className="btn btn-info border"
+                  <button className="btn btn-light border"
                     disabled={!jobData.out}
                     onClick={() => copyToClipboard(jobData.out || "")}>
                     COPY
@@ -234,7 +234,7 @@ const JobDetailCard = ({ jobData, jobs, onClose }) => {
                     id='g_err_t'
                     readOnly disabled
                   />
-                  <button className="btn btn-info border"
+                  <button className="btn btn-light border"
                     disabled={!jobData.err}
                     onClick={() => copyToClipboard(jobData.err || "")}>
                     COPY
@@ -253,21 +253,21 @@ const JobDetailCard = ({ jobData, jobs, onClose }) => {
                   jobData.submit &&
                   <div className="d-flex align-items-center">
                     <strong className="me-2">Submit: </strong>
-                    <span className="badge bg-info">{jobData.submit}</span>
+                    <span className="badge bg-light">{jobData.submit}</span>
                   </div>
                 }
                 {
                   jobData.start &&
                   <div className="d-flex align-items-center">
                     <strong className="me-2">Start: </strong>
-                    <span className="badge bg-info">{jobData.start}</span>
+                    <span className="badge bg-light">{jobData.start}</span>
                   </div>
                 }
                 {
                   jobData.finish &&
                   <div className="d-flex align-items-center">
                     <strong className="me-2">Finish: </strong>
-                    <span className="badge bg-info">{jobData.finish}</span>
+                    <span className="badge bg-light">{jobData.finish}</span>
                   </div>
                 }
               </div>
@@ -301,7 +301,7 @@ const JobDetailCard = ({ jobData, jobs, onClose }) => {
                 jobData.wrapper &&
                 <div className="d-flex gap-3">
                   <span>
-                    <strong>Wrapper:</strong> <span className="badge bg-info">{jobData.wrapper}</span>
+                    <strong>Wrapper:</strong> <span className="badge bg-light">{jobData.wrapper}</span>
                   </span>
                 </div>
               }
@@ -312,7 +312,7 @@ const JobDetailCard = ({ jobData, jobs, onClose }) => {
             <Modal.Header closeButton
               bsPrefix="modal-header bg-dark text-white">
               <Modal.Title>
-                <i className="fa-solid fa-circle-info mx-2"></i> Children List
+                <i className="fa-solid fa-circle-light mx-2"></i> Children List
               </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -336,7 +336,7 @@ const JobDetailCard = ({ jobData, jobs, onClose }) => {
             <Modal.Header closeButton
               bsPrefix="modal-header bg-dark text-white">
               <Modal.Title>
-                <i className="fa-solid fa-circle-info mx-2"></i> Parents List
+                <i className="fa-solid fa-circle-light mx-2"></i> Parents List
               </Modal.Title>
             </Modal.Header>
             <Modal.Body>

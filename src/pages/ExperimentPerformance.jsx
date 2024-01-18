@@ -309,7 +309,7 @@ const PerformanceSummary = ({ data }) => {
               <tr key={key}>
                 <th scope='row'>{key}</th>
                 <td className={'text-end pe-1' + (key === "ASYPD" ? " fw-bold" : "")}>
-                  <span className='rounded px-1 bg-info'>
+                  <span className='rounded px-1 bg-light'>
                     {formatNumberMoney(data[key], true)}
                   </span>
                 </td>
@@ -385,7 +385,7 @@ const ExperimentPerformance = () => {
         <Modal.Header closeButton
           bsPrefix="modal-header bg-dark text-white">
           <Modal.Title>
-            <i className="fa-solid fa-circle-info mx-2"></i> Metrics description
+            <i className="fa-solid fa-circle-light mx-2"></i> Metrics description
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>

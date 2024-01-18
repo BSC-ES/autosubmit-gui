@@ -126,10 +126,10 @@ const StatsReport = ({ data, selectedSection }) => {
           <>
             <div className="d-flex px-3 mb-3 gap-4 justify-content-center">
               <span>
-                CPU Consumption <span className="bg-info rounded px-1">{`${stats.cpuConsumptionPercentage} %`}</span> {Object.keys(filteredStats).length > 0 && <span className="bg-info rounded px-1">{`${filteredStats.cpuConsumptionPercentage} %`}<sup>(*)</sup></span>}
+                CPU Consumption <span className="bg-light rounded px-1">{`${stats.cpuConsumptionPercentage} %`}</span> {Object.keys(filteredStats).length > 0 && <span className="bg-light rounded px-1">{`${filteredStats.cpuConsumptionPercentage} %`}<sup>(*)</sup></span>}
               </span>
               <span>
-                Total Queue Time <span className="bg-info rounded px-1">{`${stats.totalQueueTime} hours`}</span> {Object.keys(filteredStats).length > 0 && <span className="bg-info rounded px-1">{`${filteredStats.totalQueueTime} hours`}<sup>(*)</sup></span>}
+                Total Queue Time <span className="bg-light rounded px-1">{`${stats.totalQueueTime} hours`}</span> {Object.keys(filteredStats).length > 0 && <span className="bg-light rounded px-1">{`${filteredStats.totalQueueTime} hours`}<sup>(*)</sup></span>}
               </span>
             </div>
 

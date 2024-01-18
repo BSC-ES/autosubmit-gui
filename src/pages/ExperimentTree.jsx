@@ -90,7 +90,7 @@ const ExperimentTree = () => {
             <input ref={filterRef}
               className="form-control" placeholder="Filter job..." />
             <button type="submit" className="btn btn-dark fw-bold px-4">Filter</button>
-            <button type="button" className="btn btn-info fw-bold px-4" onClick={handleClear}>Clear</button>
+            <button type="button" className="btn btn-light border fw-bold px-4" onClick={handleClear}>Clear</button>
           </form>
         </div>
         {/* <button className="btn btn-success fw-bold text-white px-4 text-nowrap">

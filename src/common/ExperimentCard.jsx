@@ -19,19 +19,19 @@ const ExperimentCard = forwardRef(({ experiment }, ref) => {
 
   return (
     <div className="d-flex flex-column w-100 h-100">
-      <div className={"d-flex flex-column px-4 py-2 bg-dark " + (show ? "rounded-top-4" : "rounded-4")}>
+      <div className={"d-flex flex-column px-4 py-2 bg-light border " + (show ? "rounded-top-4" : "rounded-4")}>
         <div className="w-100 d-flex gap-3 align-items-center  " >
           <div style={{ width: "1.5rem", height: "1.5rem", minWidth: "1.5rem" }}
-            className={"rounded-circle " + (experiment?.status === "RUNNING" ? "bg-success" : "bg-white")}
+            className={"rounded-circle border " + (experiment?.status === "RUNNING" ? "bg-success" : "bg-white")}
             title={(experiment?.status === "RUNNING" ? "ACTIVE" : "INACTIVE")}
           />
           <Link to={`/experiment/${experiment.name}/quick`}
-            className="text-white fs-4 fw-bold"
+            className="text-dark fs-4 fw-bold"
             style={{ cursor: "pointer" }}
           >
             {experiment.name}
           </Link>
-          <span className="small text-white" title={experiment.description}
+          <span className="small text-dark" title={experiment.description}
             style={{ textOverflow: "ellipsis", overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" }}>
             {experiment.description}
           </span>
@@ -47,7 +47,7 @@ const ExperimentCard = forwardRef(({ experiment }, ref) => {
         <div className="flex-fill border border-top-0 rounded-bottom-4 py-3 px-4 w-100 d-flex flex-column gap-3">
           <div className="d-flex gap-3 align-items-center w-100">
             <div className="d-flex flex-column gap-1 flex-fill">
-              <ProgressBar className="bg-info border rounded-pill p-0" style={{ minWidth: "10rem", width: "100%" }}>
+              <ProgressBar className="bg-light border rounded-pill p-0" style={{ minWidth: "10rem", width: "100%" }}>
                 <ProgressBar max={experiment?.total} now={experiment?.completed}
                   animated={experiment?.status === "RUNNING"}
                   className={

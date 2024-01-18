@@ -44,7 +44,7 @@ const ExperimentMenu = () => {
     const location = useLocation()
 
     return (
-        <div className="d-flex flex-column gap-4 bg-info p-4 rounded-4"
+        <div className="d-flex flex-column gap-4 bg-light border p-4 rounded-4"
             style={{ minWidth: "16rem" }}>
             {EXPERIMENT_MENU_ITEMS.map(item => {
                 const expRoute = `/experiment/${routeParams.expid}${item.route}`

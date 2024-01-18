@@ -181,7 +181,7 @@ const Home = () => {
                 <button type="submit" className="btn btn-dark fw-bold px-4">
                   Search
                 </button>
-                <button type="button" className="btn btn-info fw-bold px-4"
+                <button type="button" className="btn btn-light border fw-bold px-4"
                   onClick={handleClear}>
                   Clear
                 </button>
