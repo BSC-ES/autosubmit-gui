@@ -20,19 +20,20 @@ const ExperimentCard = forwardRef(({ experiment }, ref) => {
   return (
     <div className="d-flex flex-column w-100 h-100">
       <div className={"d-flex flex-wrap gap-4 align-items-center justify-content-between bg-dark px-5 py-3 " + (show ? "rounded-top-4" : "rounded-4")}>
-        <div className="d-flex gap-4 align-items-center flex-fill">
+        <div className="d-flex gap-4 align-items-center flex-fill" style={{ maxWidth: "32rem" }}>
           <Link to={`/experiment/${experiment.name}/quick`}
             className="text-white fs-3 fw-bold"
             style={{ cursor: "pointer" }}
           >
             {experiment.name}
           </Link>
-          <div>
-            <span className="text-white small">{experiment.description}</span>
-          </div>
+          <span className="text-white small" title={experiment.description}
+            style={{ textOverflow: "ellipsis", overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical" }}>
+            {experiment.description}
+          </span>
         </div>
 
-        <div className="d-flex gap-4 align-items-center">
+        <div className="ms-auto d-flex gap-4 align-items-center">
           <div className="d-flex flex-column gap-1 flex-fill">
             <ProgressBar className="bg-info rounded-pill p-0" style={{ minWidth: "10rem" }}>
               <ProgressBar max={experiment?.total} now={experiment?.completed}

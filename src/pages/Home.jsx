@@ -4,6 +4,7 @@ import { useSearchParams } from "react-router-dom";
 import useASTitle from "../hooks/useASTitle";
 import useBreadcrumb from "../hooks/useBreadcrumb";
 import ExperimentCard from "../common/ExperimentCard";
+import Paginator from "../common/Paginator";
 
 const searchParamsToKeyValue = (searchParams) => {
   let searchParamsObj = {};
@@ -125,19 +126,9 @@ const Home = () => {
     setSearchParams(newParams)
   }
 
-  const handlePrevPage = () => {
-    const prevPage = currentPage - 1
-    if (prevPage > 0) {
-      setSearchParams({
-        ...searchParamsToKeyValue(searchParams),
-        page: prevPage
-      })
-    }
-  }
-
-  const handleNextPage = () => {
-    const nextPage = currentPage + 1
-    if (nextPage <= data?.pagination?.total_pages) {
+  const handleChangePage = (e) => {
+    const nextPage = e.selected;
+    if ((nextPage <= data?.pagination?.total_pages) && (nextPage > 0)) {
       setSearchParams({
         ...searchParamsToKeyValue(searchParams),
         page: nextPage
@@ -265,37 +256,13 @@ const Home = () => {
             }
           </div>
 
-          <div className="d-flex gap-3 justify-content-center align-items-center">
-            {
-              data?.pagination?.total_pages > 0 &&
-              <>
-                <button
-                  className={"btn rounded-circle border-0 btn-outline-light text-primary " + ((currentPage <= 1)?"disabled":"") }
-                  style={{ height: "2.5rem", width: "2.5rem" }}
-                  onClick={handlePrevPage}>
-                  <i className="fa-solid fa-angle-left"></i>
-                </button>
-                {
-                  [...(Array(data.pagination.total_pages).keys())].map(item => {
-                    return (
-                      <button key={item} type="button"
-                        className={"btn rounded-circle " + (((searchParams.get("page") || 1) == item + 1) ? "btn-primary text-white" : "btn-outline-light text-primary border-primary")}
-                        style={{ height: "2.5rem", width: "2.5rem" }}
-                        onClick={() => setSearchParams({ ...searchParamsToKeyValue(searchParams), page: item + 1 })}>
-                        {item + 1}
-                      </button>
-                    )
-                  })
-                }
-                <button
-                  className={"btn rounded-circle border-0 btn-outline-light text-primary " + ((currentPage >= data.pagination.total_pages)?"disabled":"")}
-                  style={{ height: "2.5rem", width: "2.5rem" }}
-                  onClick={handleNextPage}>
-                  <i className="fa-solid fa-angle-right"></i>
-                </button>
-              </>
-            }
-          </div>
+          {
+            !isFetching && data?.pagination?.total_pages > 0 && currentPage &&
+            <div className="d-flex gap-3 justify-content-center align-items-center">
+              <Paginator currentPage={currentPage} onPageClick={handleChangePage} totalPages={data.pagination.total_pages}></Paginator>
+            </div>
+          }
+
 
         </div>
 
