@@ -9,7 +9,7 @@ export const autosubmitApiV4 = createApi({
         getExperiments: builder.query({
             query: ({
                 page = 1,
-                page_size = 8,
+                page_size = 12,
                 query,
                 only_active,
                 exp_type,

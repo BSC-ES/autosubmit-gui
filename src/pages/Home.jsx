@@ -143,7 +143,7 @@ const Home = () => {
       let newRefs = {}
       let items = data.experiments.map((exp, index) => {
         return (
-          <div key={exp.name} className="g-col-xl-6 g-col-12" style={{ minWidth: "20rem" }}>
+          <div key={exp.name} className="g-col-xxl-4 g-col-lg-6 g-col-12" style={{ minWidth: "20rem" }}>
             <ExperimentCard experiment={exp}
               ref={(instance) => { newRefs[index] = instance }} />
           </div>
@@ -188,7 +188,7 @@ const Home = () => {
               </form>
             </div>
 
-            <button type="button"
+            {/* <button type="button"
               className="btn btn-primary fw-bold px-4 text-white text-nowrap"
               onClick={handleExpand}>
               Expand all +
@@ -197,7 +197,7 @@ const Home = () => {
               className="btn btn-secondary fw-bold px-4 text-white text-nowrap"
               onClick={handleCollapse}>
               Collapse all -
-            </button>
+            </button> */}
           </div>
 
           <div className="d-flex column-gap-5 row-gap-3 align-items-center flex-wrap">
@@ -243,7 +243,7 @@ const Home = () => {
                 <>
                   {
                     data?.experiments?.length > 0 ?
-                      <div className="grid">
+                      <div className="grid gap-3">
                         {generateExpItems()}
                       </div>
                       :
