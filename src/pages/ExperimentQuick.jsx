@@ -105,7 +105,7 @@ const ExperimentQuick = () => {
             <div className="d-flex mb-3 gap-3 align-items-center">
                 <div style={{ minWidth: "12rem" }}>
                     <select value={filters.status} onChange={handleStatusChange}
-                        className="form-select bg-primary text-white border-0 fw-bold text-center select-white-caret">
+                        className="form-select border border-primary text-primary fw-bold text-center">
                         <option value="ANY">TOTAL ({(data && data.total) || 0})</option>
                         <option value="COMPLETED">COMPLETED ({(data && data.completed) || 0})</option>
                         <option value="FAILED">FAILED ({(data && data.failed) || 0})</option>

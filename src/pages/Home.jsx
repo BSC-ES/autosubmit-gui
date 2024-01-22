@@ -204,7 +204,7 @@ const Home = () => {
             <div className="d-flex gap-3 align-items-center mx-3">
               <label className="text-nowrap">Type:</label>
               <select value={searchParams.get("exp_type") || ""} onChange={handleChangeType}
-                className="form-select bg-primary text-white border-0 fw-bold text-center select-white-caret">
+                className="form-select border border-primary text-primary fw-bold text-center">
                 <option value="">All</option>
                 <option value="experiment">Experiment</option>
                 <option value="operational">Operational</option>
@@ -222,7 +222,7 @@ const Home = () => {
             <div className="d-flex gap-3 align-items-center mx-3">
               <label className="text-nowrap">Order by:</label>
               <select onChange={handleChangeOrder} value={searchParams.get("order") || ""}
-                className="form-select bg-primary text-white border-0 fw-bold text-center select-white-caret">
+                className="form-select border border-primary text-primary fw-bold text-center">
                 <option value="">Default</option>
                 {
                   EXP_ORDER_BY.map(item =>

@@ -16,13 +16,21 @@ export const autosubmitApiV3 = createApi({
             query: (expid) => `quick/${expid}`
         }),
         getExperimentTreeView: builder.query({
-            query: ({ expid, signal }) => ({ 
-                url: `tree/${expid}`, 
-                signal: signal 
-            })
+            query: ({ expid, signal, runId }) => {
+                if (runId) {
+                    return {
+                        url: `rundetail/${expid}/${runId}`,
+                        signal: signal
+                    }
+                }
+                return {
+                    url: `tree/${expid}`,
+                    signal: signal
+                }
+            }
         }),
         getExperimentGraphView: builder.query({
-            query: ({ expid, layout, grouped, signal }) => ({ 
+            query: ({ expid, layout, grouped, signal }) => ({
                 url: `graph/${expid}/${layout}/${grouped}`,
                 signal: signal
             })
@@ -41,6 +49,9 @@ export const autosubmitApiV3 = createApi({
         }),
         getJobLog: builder.query({
             query: (logFile) => `joblog/${logFile}`
+        }),
+        getRuns: builder.query({
+            query: (expid) => `runs/${expid}`
         }),
         showdownRoute: builder.query({
             keepUnusedDataFor: 1, // reduce cache time
@@ -71,5 +82,6 @@ export const {
     useGetExperimentConfigurationQuery,
     useGetExperimentStatsQuery,
     useGetExperimentPerformanceQuery,
-    useGetJobLogQuery
+    useGetJobLogQuery,
+    useGetRunsQuery
 } = autosubmitApiV3

@@ -6,6 +6,8 @@ import useASTitle from "../hooks/useASTitle";
 import useBreadcrumb from "../hooks/useBreadcrumb";
 import JobDetailCard from "../common/JobDetailCard";
 import { useDispatch, useSelector } from "react-redux";
+import RunsModal from "../common/RunsModal";
+import { creationDateToId } from "../components/context/utils";
 
 
 const ExperimentTree = () => {
@@ -24,6 +26,11 @@ const ExperimentTree = () => {
     }
   ])
 
+  const [showRunsM, setShowRunsM] = useState(false)
+  const [selectedRun, setSelectedRun] = useState({
+    run_id: null,
+    created: null
+  })
   const [tree, setTree] = useState(null)
   const [selectedJob, setSelectedJob] = useState(null)
   const filterRef = useRef()
@@ -31,7 +38,8 @@ const ExperimentTree = () => {
   const abortController = new AbortController()
   const { data, isFetching, refetch } = useGetExperimentTreeViewQuery({
     expid: routeParams.expid,
-    signal: abortController.signal
+    signal: abortController.signal,
+    runId: selectedRun?.run_id
   })
 
   useEffect(() => {
@@ -47,7 +55,7 @@ const ExperimentTree = () => {
     }
   }, [])
 
-  useEffect(()=>{
+  useEffect(() => {
     handleCloseJobDetail()
   }, [data])
 
@@ -82,57 +90,77 @@ const ExperimentTree = () => {
 
   const handleCloseJobDetail = () => { setSelectedJob(null) }
 
+  const handleRunSelect = (item) => {
+    handleClear();
+    handleCloseJobDetail(null);
+    setSelectedRun(item);
+    setShowRunsM(false)
+  }
+
   return (
-    <div className="w-100 d-flex flex-column">
-      <div className="d-flex mb-3 gap-2 align-items-center flex-wrap">
-        <div className="flex-fill">
-          <form className="input-group" onSubmit={handleFilter}>
-            <input ref={filterRef}
-              className="form-control" placeholder="Filter job..." />
-            <button type="submit" className="btn btn-dark fw-bold px-4">Filter</button>
-            <button type="button" className="btn btn-light border fw-bold px-4" onClick={handleClear}>Clear</button>
-          </form>
-        </div>
-        {/* <button className="btn btn-success fw-bold text-white px-4 text-nowrap">
+    <>
+      <RunsModal show={showRunsM}
+        onHide={() => setShowRunsM(false)}
+        expid={routeParams.expid}
+        onRunSelect={handleRunSelect}
+      />
+      <div className="w-100 d-flex flex-column">
+        <div className="d-flex mb-3 gap-2 align-items-center flex-wrap">
+          <button className="btn btn-primary fw-bold text-white"
+            title="Refresh data"
+            onClick={() => { setShowRunsM(true) }}>
+            <i className="fa-solid fa-clock-rotate-left me-2"></i> Run: {(selectedRun.run_id && selectedRun.created) || "Latest"}
+          </button>
+          <div className="flex-fill">
+            <form className="input-group" onSubmit={handleFilter}>
+              <input ref={filterRef}
+                className="form-control" placeholder="Filter job..." />
+              <button type="submit" className="btn btn-dark fw-bold px-4">Filter</button>
+              <button type="button" className="btn btn-light border fw-bold px-4" onClick={handleClear}>Clear</button>
+            </form>
+          </div>
+          {/* <button className="btn btn-success fw-bold text-white px-4 text-nowrap">
           START MONITORING
         </button> */}
-        <button className="btn btn-success fw-bold text-white"
-          title="Refresh data"
-          onClick={() => { refetch() }}>
-          <i className="fa-solid fa-rotate-right"></i>
-        </button>
-      </div>
-      {
-        isFetching ?
-          <div className="w-100 h-100 d-flex align-items-center justify-content-center">
-            <div className="spinner-border" role="status"></div>
-          </div>
-          :
-          data &&
-          <div className="d-flex w-100 gap-3 flex-wrap d-flex flex-fill gap-3 justify-content-center">
-
-            <div className="flex-fill d-flex flex-column gap-3 flex-wrap">
-              <div className="d-flex gap-2 align-items-center justify-content-between">
-                <span className="mx-2 small">Total #Jobs: {data.total} | Chunk unit: {data.reference && data.reference.chunk_unit} | Chunk size: {data.reference && data.reference.chunk_size}</span>
-                <div className="d-flex gap-2">
-                  <button className="btn btn-sm btn-primary text-white fw-bold px-4" onClick={handleExpand}>Expand All +</button>
-                  <button className="btn btn-sm btn-secondary text-white fw-bold px-4" onClick={handleCollapse}>Collapse All -</button>
-                </div>
-              </div>
-              <div className="border rounded-4 p-3 flex-fill">
-                <div className="overflow-auto" style={{ maxHeight: "75vh", maxWidth: "80vw" }}>
-                  <FancyTree treeData={data.tree}
-                    onActivateNode={handleOnActivateNode}
-                    treeCallback={handleTreeCallback} />
-                </div>
-
-              </div>
+          <button className="btn btn-success fw-bold text-white"
+            title="Refresh data"
+            onClick={() => { refetch() }}>
+            <i className="fa-solid fa-rotate-right"></i>
+          </button>
+        </div>
+        {
+          isFetching ?
+            <div className="w-100 h-100 d-flex align-items-center justify-content-center">
+              <div className="spinner-border" role="status"></div>
             </div>
+            :
+            data &&
+            <div className="d-flex w-100 gap-3 flex-wrap d-flex flex-fill gap-3 justify-content-center">
 
-            <JobDetailCard jobData={selectedJob} jobs={data.jobs} onClose={handleCloseJobDetail} />
-          </div>
-      }
-    </div>
+              <div className="flex-fill d-flex flex-column gap-3 flex-wrap">
+                <div className="d-flex gap-2 align-items-center justify-content-between">
+                  <span className="mx-2 small">Total #Jobs: {data.total} | Chunk unit: {data.reference && data.reference.chunk_unit} | Chunk size: {data.reference && data.reference.chunk_size}</span>
+                  <div className="d-flex gap-2">
+                    <button className="btn btn-sm btn-primary text-white fw-bold px-4" onClick={handleExpand}>Expand All +</button>
+                    <button className="btn btn-sm btn-secondary text-white fw-bold px-4" onClick={handleCollapse}>Collapse All -</button>
+                  </div>
+                </div>
+                <div className="border rounded-4 p-3 flex-fill">
+                  <div className="overflow-auto" style={{ maxHeight: "75vh", maxWidth: "80vw" }}>
+                    <FancyTree treeData={data.tree}
+                      onActivateNode={handleOnActivateNode}
+                      treeCallback={handleTreeCallback} />
+                  </div>
+
+                </div>
+              </div>
+
+              <JobDetailCard jobData={selectedJob} jobs={data.jobs} onClose={handleCloseJobDetail} />
+            </div>
+        }
+      </div>
+    </>
+
   )
 }
 
