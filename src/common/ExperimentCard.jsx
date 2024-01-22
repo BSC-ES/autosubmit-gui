@@ -94,21 +94,21 @@ const ExperimentCard = forwardRef(({ experiment }, ref) => {
             <Link to={`/experiment/${experiment.name}/quick`}
               className="g-col-4">
               <button type="button"
-                className="w-100 btn btn-sm btn-primary fw-bold text-white text-nowrap">
+                className="w-100 btn btn-sm btn-outline-primary fw-bold text-nowrap">
                 QUICK
               </button>
             </Link>
             <Link to={`/experiment/${experiment.name}/tree`}
               className="g-col-4">
               <button type="button"
-                className="w-100 btn btn-sm btn-primary fw-bold text-white text-nowrap">
+                className="w-100 btn btn-sm btn-outline-primary fw-bold text-nowrap">
                 TREE
               </button>
             </Link>
             <Link to={`/experiment/${experiment.name}/graph`}
               className="g-col-4">
               <button type="button"
-                className="w-100 btn btn-sm btn-primary fw-bold text-white text-nowrap">
+                className="w-100 btn btn-sm btn-outline-primary fw-bold text-nowrap">
                 GRAPH
               </button>
             </Link>
