@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import VisNetwork from "../common/VisNetwork";
 import { autosubmitApiV3, useGetExperimentGraphViewQuery } from "../services/autosubmitApiV3";
@@ -6,6 +6,8 @@ import useASTitle from "../hooks/useASTitle";
 import useBreadcrumb from "../hooks/useBreadcrumb";
 import JobDetailCard from "../common/JobDetailCard";
 import { useDispatch, useSelector } from "react-redux";
+// eslint-disable-next-line
+import { Network } from "vis-network/standalone";
 
 
 const ExperimentGraph = () => {
@@ -27,7 +29,7 @@ const ExperimentGraph = () => {
   const filterRef = useRef()
 
   const [selectedJob, setSelectedJob] = useState(null)
-  const [network, setNetwork] = useState(null)
+  const [network, setNetwork] = useState(/** @type {Network} */(null))
   const [graphData, setGraphData] = useState({
     nodes: [],
     edges: []
@@ -52,6 +54,7 @@ const ExperimentGraph = () => {
       }, { forceRefetch: true }))
       promise.unsubscribe()
     }
+  // eslint-disable-next-line
   }, [])
 
   useEffect(() => {

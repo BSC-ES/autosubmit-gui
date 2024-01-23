@@ -8,17 +8,28 @@ import "jquery.fancytree/dist/modules/jquery.fancytree.multi";
 import "jquery.fancytree/dist/modules/jquery.fancytree.glyph";
 import "jquery.fancytree/dist/skin-bootstrap/ui.fancytree.min.css"
 
+/**
+ * 
+ * @param {object} props
+ * @param {Array<object>} props.treeData 
+ * @param {function} props.onActivateNode
+ * @param {function} props.treeCallback 
+ */
 const FancyTree = ({ treeData, onActivateNode, treeCallback }) => {
-    const [tree, setTree] = useState(null)
+    const [tree, setTree] = useState(/** @type {Fancytree.Fancytree} */(null))
 
     useEffect(() => {
         const newSource = Array.isArray(treeData) ? treeData : [];
         if (tree) {
             tree.reload(newSource)
         } else {
+            /** @type {Fancytree.Fancytree} */
             const newtree = createTree("#fancy-tree", {
                 activate: onActivateNode,
                 extensions: ["filter", "glyph", "childcounter"],
+                childcounter: {
+                    hideExpanded: true
+                },
                 filter: {
                     autoApply: true, // Re-apply last filter if lazy data is loaded
                     autoExpand: true, // Expand all branches that contain matches while filtered
@@ -45,8 +56,9 @@ const FancyTree = ({ treeData, onActivateNode, treeCallback }) => {
                 source: newSource
             });
             setTree(newtree)
-            if(treeCallback) treeCallback(newtree)
+            if (treeCallback) treeCallback(newtree)
         }
+    // eslint-disable-next-line
     }, [treeData])
 
     return (

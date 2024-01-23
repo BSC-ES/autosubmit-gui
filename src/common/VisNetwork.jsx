@@ -1,8 +1,16 @@
 import { useEffect, useState } from "react";
 import { DataSet, Network } from "vis-network/standalone";
 
+/**
+ * 
+ * @param {object} props
+ * @param {Array<object>} props.nodes 
+ * @param {Array<object>} props.edges
+ * @param {function} props.onSelectNode
+ * @param {function} props.networkCallback 
+ */
 const VisNetwork = ({ nodes, edges, onSelectNode, networkCallback }) => {
-    const [network, setNetwork] = useState(null)
+    const [network, setNetwork] = useState(/** @type {Network} */(null))
 
     useEffect(() => {
         const nodesDataset = new DataSet(nodes);

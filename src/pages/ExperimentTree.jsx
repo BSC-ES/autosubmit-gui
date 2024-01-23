@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react";
 import { autosubmitApiV3, useGetExperimentTreeViewQuery } from "../services/autosubmitApiV3";
 import { useParams } from "react-router-dom";
 import FancyTree from "../common/FancyTree";
@@ -7,7 +7,6 @@ import useBreadcrumb from "../hooks/useBreadcrumb";
 import JobDetailCard from "../common/JobDetailCard";
 import { useDispatch, useSelector } from "react-redux";
 import RunsModal from "../common/RunsModal";
-import { creationDateToId } from "../components/context/utils";
 
 
 const ExperimentTree = () => {
@@ -31,7 +30,8 @@ const ExperimentTree = () => {
     run_id: null,
     created: null
   })
-  const [tree, setTree] = useState(null)
+  
+  const [tree, setTree] = useState(/** @type {Fancytree.Fancytree} */(null))
   const [selectedJob, setSelectedJob] = useState(null)
   const filterRef = useRef()
 
@@ -53,6 +53,7 @@ const ExperimentTree = () => {
       }, { forceRefetch: true }))
       promise.unsubscribe()
     }
+  // eslint-disable-next-line
   }, [])
 
   useEffect(() => {
