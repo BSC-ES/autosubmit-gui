@@ -41,7 +41,7 @@ const Home = () => {
   const [searchParams, setSearchParams] = useSearchParams({})
   const [filters, setFilters] = useState({})
   const [isInitialized, setIsInitialized] = useState(false)
-  const { data, isFetching } = useGetExperimentsQuery({
+  const { data, isFetching, isError } = useGetExperimentsQuery({
     ...filters
   }, {
     skip: !isInitialized
@@ -242,15 +242,21 @@ const Home = () => {
                 :
                 <>
                   {
-                    data?.experiments?.length > 0 ?
-                      <div className="grid gap-3">
-                        {generateExpItems()}
+                    (isError || data?.error) ?
+                      <div className="text-danger w-100 h-100 d-flex flex-column gap-4 align-items-center justify-content-center">
+                        <i className="fa-solid fa-x" style={{ fontSize: "8rem" }}></i>
+                        <div className="fs-4">{"Error while fetching experiments"}</div>
                       </div>
                       :
-                      <div className="w-100 h-100 d-flex flex-column gap-4 align-items-center justify-content-center">
-                        <i className="fa-solid fa-ban" style={{ fontSize: "8rem" }}></i>
-                        <div className="fs-4">No experiments found</div>
-                      </div>
+                      data?.experiments?.length > 0 ?
+                        <div className="grid gap-3">
+                          {generateExpItems()}
+                        </div>
+                        :
+                        <div className="text-dark w-100 h-100 d-flex flex-column gap-4 align-items-center justify-content-center">
+                          <i className="fa-solid fa-ban" style={{ fontSize: "8rem" }}></i>
+                          <div className="fs-4">No experiments found</div>
+                        </div>
                   }
                 </>
             }

@@ -90,7 +90,7 @@ const ExperimentCard = forwardRef(({ experiment }, ref) => {
 
 
           </div>
-          <div className="grid">
+          <div className="grid gap-2">
             <Link to={`/experiment/${experiment.name}/quick`}
               className="g-col-4">
               <button type="button"
@@ -113,17 +113,17 @@ const ExperimentCard = forwardRef(({ experiment }, ref) => {
               </button>
             </Link>
           </div>
-          <div className="grid">
-            <div className="g-col-3 small" title="User">
+          <div className="grid px-2 gap-2">
+            <div className="g-col-6 small" title="User">
               <i className="fa-solid fa-user me-3" /> {experiment.user || "-"}
             </div>
-            <div className="g-col-3 small" title="HPC">
+            <div className="g-col-6 small" title="HPC">
               <i className="fa-solid fa-computer me-3" /> {experiment.hpc || "-"}
             </div>
-            <div className="g-col-3 small" title="Autosubmit version">
+            <div className="g-col-6 small" title="Autosubmit version">
               <i className="fa-solid fa-code-branch me-3" /> {experiment.version || "-"}
             </div>
-            <div className="g-col-3 small" title="Last modified date">
+            <div className="g-col-6 small" title="Last modified date">
               <i className="fa-solid fa-calendar me-3" /> {experiment.modified || "-"}
             </div>
           </div>
