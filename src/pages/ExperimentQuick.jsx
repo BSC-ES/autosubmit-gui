@@ -102,7 +102,7 @@ const ExperimentQuick = () => {
 
     return (
         <div className="w-100 d-flex flex-column">
-            <div className="d-flex mb-3 gap-3 align-items-center">
+            <div className="d-flex mb-3 gap-3 align-items-center flex-wrap">
                 <div style={{ minWidth: "12rem" }}>
                     <select value={filters.status} onChange={handleStatusChange}
                         className="form-select border border-primary text-primary fw-bold text-center">
@@ -113,7 +113,7 @@ const ExperimentQuick = () => {
                         <option value="QUEUING">QUEUING ({(data && data.queuing) || 0})</option>
                     </select>
                 </div>
-                <div className="flex-fill input-group">
+                <div className="flex-fill">
                     <input value={filters.filter} onChange={handleFilterChange}
                         className="form-control" placeholder="Filter job..." />
                     {/* <button className="btn btn-dark fw-bold px-4">Filter</button> */}

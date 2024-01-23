@@ -139,7 +139,7 @@ const ExperimentTree = () => {
             <div className="d-flex w-100 gap-3 flex-wrap d-flex flex-fill gap-3 justify-content-center">
 
               <div className="flex-fill d-flex flex-column gap-3 flex-wrap">
-                <div className="d-flex gap-2 align-items-center justify-content-between">
+                <div className="d-flex flex-wrap gap-2 align-items-center justify-content-between">
                   <span className="mx-2 small">Total #Jobs: {data.total} | Chunk unit: {data.reference && data.reference.chunk_unit} | Chunk size: {data.reference && data.reference.chunk_size}</span>
                   <div className="d-flex gap-2">
                     <button className="btn btn-sm btn-primary text-white fw-bold px-4" onClick={handleExpand}>Expand All +</button>

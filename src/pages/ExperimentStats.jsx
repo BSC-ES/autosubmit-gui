@@ -99,7 +99,7 @@ const StatsReport = ({ data, selectedSection }) => {
     <div className="d-flex flex-column flex-fill">
 
       <div className="rounded-4 border flex-fill">
-        <div className="bg-dark rounded-top-4 d-flex gap-3 justify-content-between align-items-center text-white px-4 py-2 mb-4">
+        <div className="bg-dark rounded-top-4 d-flex flex-wrap gap-3 justify-content-between align-items-center text-white px-4 py-2 mb-4">
           <label className="d-flex gap-2 align-items-center">
             Selected job section: <span className="badge bg-primary text-white">
               {selectedSection}
@@ -134,87 +134,100 @@ const StatsReport = ({ data, selectedSection }) => {
             </div>
 
 
-            <div className="d-flex gap-3 px-3">
+            <div className="d-flex gap-3 px-3 flex-wrap">
 
-              <StatsMetricsTable
-                stats={stats}
-                filteredStats={filteredStats}
-                metrics={[
-                  {
-                    title: "Jobs Submitted",
-                    key: "jobsSubmittedCount"
-                  },
-                  {
-                    title: "Jobs Run",
-                    key: "jobsRunCount"
-                  },
-                  {
-                    title: "Jobs Completed",
-                    key: "jobsCompletedCount"
-                  },
-                  {
-                    title: "Jobs Failed",
-                    key: "jobsFailedCount"
-                  },
-                ]}
-                caption="Considers number of jobs and retrials."
-              />
+              <div className="flex-fill">
+                <StatsMetricsTable
+                  stats={stats}
+                  filteredStats={filteredStats}
+                  metrics={[
+                    {
+                      title: "Jobs Submitted",
+                      key: "jobsSubmittedCount"
+                    },
+                    {
+                      title: "Jobs Run",
+                      key: "jobsRunCount"
+                    },
+                    {
+                      title: "Jobs Completed",
+                      key: "jobsCompletedCount"
+                    },
+                    {
+                      title: "Jobs Failed",
+                      key: "jobsFailedCount"
+                    },
+                  ]}
+                  caption="Considers number of jobs and retrials."
+                />
+              </div>
 
-              <StatsMetricsTable
-                stats={stats}
-                filteredStats={filteredStats}
-                metrics={[
-                  {
-                    title: "Expected Consumption (h)",
-                    key: "expectedConsumption"
-                  },
-                  {
-                    title: "Real Consumption (h)",
-                    key: "realConsumption"
-                  },
-                  {
-                    title: "Failed Real Consumption (h)",
-                    key: "failedRealConsumption"
-                  },
-                ]}
-                caption="Considers the running time of the jobs and retrials."
-              />
+              <div className="flex-fill">
+                <StatsMetricsTable
+                  stats={stats}
+                  filteredStats={filteredStats}
+                  metrics={[
+                    {
+                      title: "Expected Consumption (h)",
+                      key: "expectedConsumption"
+                    },
+                    {
+                      title: "Real Consumption (h)",
+                      key: "realConsumption"
+                    },
+                    {
+                      title: "Failed Real Consumption (h)",
+                      key: "failedRealConsumption"
+                    },
+                  ]}
+                  caption="Considers the running time of the jobs and retrials."
+                />
+              </div>
 
-              <StatsMetricsTable
-                stats={stats}
-                filteredStats={filteredStats}
-                metrics={[
-                  {
-                    title: "Expected CPU Consumption (h)",
-                    key: "expectedCpuConsumption"
-                  },
-                  {
-                    title: "CPU Consumption (h)",
-                    key: "cpuConsumption"
-                  },
-                  {
-                    title: "Failed CPU Consumption (h)",
-                    key: "failedCpuConsumption"
-                  },
-                ]}
-                caption="Considers the number of processors requested by the job (and retrials) multiplied by the corresponding running time."
-              />
+              <div className="flex-fill">
+                <StatsMetricsTable
+                  stats={stats}
+                  filteredStats={filteredStats}
+                  metrics={[
+                    {
+                      title: "Expected CPU Consumption (h)",
+                      key: "expectedCpuConsumption"
+                    },
+                    {
+                      title: "CPU Consumption (h)",
+                      key: "cpuConsumption"
+                    },
+                    {
+                      title: "Failed CPU Consumption (h)",
+                      key: "failedCpuConsumption"
+                    },
+                  ]}
+                  caption="Considers the number of processors requested by the job (and retrials) multiplied by the corresponding running time."
+                />
+              </div>
 
             </div>
 
             <div className="d-flex justify-content-center p-4 gap-3 flex-wrap">
-              <BarChart
-                data={filteredJobs}
-                title="Statistics"
-                metrics={["completedQueueTime", "completedRunTime", "failedQueueTime", "failedRunTime"]}
-                xtitle="Hours"
-                helperId={"4"} />
-              <BarChart
-                data={filteredJobs}
-                title="Failed Attempts per Job"
-                metrics={["failedCount"]}
-                xtitle="Attempts"
-                helperId={"1"} />
+              <div className="flex-fill text-center scroll-x">
+                <BarChart
+                  data={filteredJobs}
+                  title="Statistics"
+                  metrics={["completedQueueTime", "completedRunTime", "failedQueueTime", "failedRunTime"]}
+                  xtitle="Hours"
+                  helperId={"4"} />
+              </div>
+
+              <div className="flex-fill text-center scroll-x">
+                <BarChart
+                  data={filteredJobs}
+                  title="Failed Attempts per Job"
+                  metrics={["failedCount"]}
+                  xtitle="Attempts"
+                  helperId={"1"} />
+              </div>
+
+
             </div>
           </>
         }
@@ -268,11 +281,16 @@ const ExperimentStats = () => {
 
   return (
     <div className="w-100 d-flex flex-column" style={{ minWidth: 0 }}>
-      <form onSubmit={handleGetStats} className="mb-4 d-flex gap-3 align-items-center">
-        <label className="text-nowrap">Job section:</label>
-        <input className="form-control" ref={sectionRef} placeholder="e.g: SIM (optional)" />
-        <label className="text-nowrap">Past hours (from now):</label>
-        <input type="number" className="form-control" ref={hourRef} placeholder="e.g: 72 (optional)" />
+      <form onSubmit={handleGetStats} className="mb-4 d-flex flex-wrap gap-3 align-items-center">
+        <div className="flex-fill d-flex gap-3 align-items-center">
+          <label className="text-nowrap">Job section:</label>
+          <input className="form-control" ref={sectionRef} placeholder="e.g: SIM (optional)" />
+        </div>
+        <div className="flex-fill d-flex gap-3 align-items-center">
+          <label className="text-nowrap">Past hours (from now):</label>
+          <input type="number" className="form-control" ref={hourRef} placeholder="e.g: 72 (optional)" />
+        </div>
+
         <button className="btn btn-dark px-4 fw-bold text-nowrap" onClick={handleGetStats}>Get Statistics</button>
       </form>
 
