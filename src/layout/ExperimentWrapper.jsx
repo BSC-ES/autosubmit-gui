@@ -1,6 +1,6 @@
 import { Link, useLocation, useParams } from "react-router-dom";
-import useWindowSize from "../hooks/useWindowSize";
 import { useState } from "react";
+import { useWindowSize } from "@uidotdev/usehooks";
 
 const EXPERIMENT_MENU_ITEMS = [
   {

@@ -2,8 +2,8 @@ import { Modal } from "react-bootstrap"
 import { secondsToDelta } from "../components/context/utils"
 import { useEffect, useState } from "react"
 import { statusCodeToStyle } from "../components/context/vars"
-import useCopyToClipboard from "../hooks/useCopyToClipboard"
 import LogModal from "./LogModal"
+import { useCopyToClipboard } from "@uidotdev/usehooks"
 
 
 const parseLogPath = (logfile) => {
@@ -14,7 +14,7 @@ const parseLogPath = (logfile) => {
 
 
 const JobDetailCard = ({ jobData, jobs, onClose }) => {
-  const [_, copyToClipboard] = useCopyToClipboard();
+  const copyToClipboard = useCopyToClipboard()[1];
 
   const [showModal, setShowModal] = useState({
     children: false,

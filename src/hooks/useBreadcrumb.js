@@ -12,7 +12,7 @@ const useBreadcrumb = (items) => {
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(appActions.setBreadcrumbItems(items))
-    }, [items])
+    }, [items, dispatch])
 }
 
 export default useBreadcrumb

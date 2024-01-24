@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import AuthBadge from "../common/AuthBadge";
 import { ReactComponent as Logo } from "../common/Logo.svg"
-import useWindowSize from "../hooks/useWindowSize";
+import { useWindowSize } from "@uidotdev/usehooks";
 
 const NAVBAR_ITEMS = [
     {

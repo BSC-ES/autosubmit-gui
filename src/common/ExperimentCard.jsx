@@ -1,6 +1,19 @@
 import { forwardRef, useImperativeHandle, useState } from "react"
-import { ProgressBar } from "react-bootstrap"
+import { Dropdown, ProgressBar } from "react-bootstrap"
 import { Link } from "react-router-dom"
+
+const CustomToggle = forwardRef(({ children, onClick }, ref) => (
+  <btn
+    className="btn btn-light rounded-4 px-3"
+    ref={ref}
+    onClick={(e) => {
+      e.preventDefault();
+      onClick(e);
+    }}
+  >
+    {children}
+  </btn>
+));
 
 
 const ExperimentCard = forwardRef(({ experiment }, ref) => {
@@ -26,19 +39,44 @@ const ExperimentCard = forwardRef(({ experiment }, ref) => {
             title={(experiment?.status === "RUNNING" ? "ACTIVE" : "INACTIVE")}
           />
           <Link to={`/experiment/${experiment.name}/quick`}
-            className="text-dark fs-4 fw-bold"
-            style={{ cursor: "pointer" }}
-          >
+            className="text-dark fs-4 fw-bold">
             {experiment.name}
           </Link>
-          <span className="small text-dark" title={experiment.description}
-            style={{ textOverflow: "ellipsis", overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" }}>
-            {experiment.description}
-          </span>
+          <Link to={`/experiment/${experiment.name}/quick`} className="flex-fill">
+            <span className="small text-dark" title={experiment.description}
+              style={{ textOverflow: "ellipsis", overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" }}>
+              {experiment.description}
+            </span>
+          </Link>
           {/* <div onClick={toggle} className="ms-auto"
             style={{ cursor: "pointer" }}>
             <i className={"text-white fs-2 fa-solid " + (show ? "fa-angle-up" : "fa-angle-down")}></i>
           </div> */}
+          <Dropdown>
+            <Dropdown.Toggle as={CustomToggle}>
+              <i class="fa-solid fa-ellipsis-vertical"></i>
+            </Dropdown.Toggle>
+            <Dropdown.Menu align={"end"}>
+              <Dropdown.Item eventKey="1">
+                <Link to={`/experiment/${experiment.name}/quick`}
+                  className="text-dark text-center">
+                  <div>QUICK</div>
+                </Link>
+              </Dropdown.Item>
+              <Dropdown.Item eventKey="2">
+                <Link to={`/experiment/${experiment.name}/tree`}
+                  className="text-dark text-center">
+                  <div>TREE</div>
+                </Link>
+              </Dropdown.Item>
+              <Dropdown.Item eventKey="3">
+                <Link to={`/experiment/${experiment.name}/graph`}
+                  className="text-dark text-center">
+                  <div>GRAPH</div>
+                </Link>
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
         </div>
 
       </div>
@@ -47,14 +85,7 @@ const ExperimentCard = forwardRef(({ experiment }, ref) => {
         <div className="flex-fill border border-top-0 rounded-bottom-4 py-3 px-4 w-100 d-flex flex-column gap-3">
           <div className="d-flex gap-3 align-items-center w-100">
             <div className="d-flex flex-column gap-1 flex-fill">
-              <ProgressBar className="bg-light border rounded-pill p-0" style={{ minWidth: "10rem", width: "100%" }}>
-                <ProgressBar max={experiment?.total} now={experiment?.completed}
-                  animated={experiment?.status === "RUNNING"}
-                  className={
-                    (experiment?.failed > 0) ? "bg-danger" : (
-                      (experiment?.queuing > 0 && !(experiment?.running > 0)) ? "bg-queue" : "bg-success"
-                    )} />
-              </ProgressBar>
+
               <div className="d-flex gap-1 align-items-center justify-content-between">
                 <div className="d-flex gap-1">
                   {
@@ -86,11 +117,20 @@ const ExperimentCard = forwardRef(({ experiment }, ref) => {
                   /{experiment.total}
                 </span>
               </div>
+
+              <ProgressBar className="bg-light border rounded-pill p-0" style={{ minWidth: "10rem", width: "100%" }}>
+                <ProgressBar max={experiment?.total} now={experiment?.completed}
+                  animated={experiment?.status === "RUNNING"}
+                  className={
+                    (experiment?.failed > 0) ? "bg-danger" : (
+                      (experiment?.queuing > 0 && !(experiment?.running > 0)) ? "bg-queue" : "bg-success"
+                    )} />
+              </ProgressBar>
             </div>
 
 
           </div>
-          <div className="grid gap-2">
+          {/* <div className="grid gap-2">
             <Link to={`/experiment/${experiment.name}/quick`}
               className="g-col-4">
               <button type="button"
@@ -112,7 +152,7 @@ const ExperimentCard = forwardRef(({ experiment }, ref) => {
                 GRAPH
               </button>
             </Link>
-          </div>
+          </div> */}
           <div className="grid px-2 gap-2">
             <div className="g-col-6 small" title="User">
               <i className="fa-solid fa-user me-3" /> {experiment.user || "-"}
