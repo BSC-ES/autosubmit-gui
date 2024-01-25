@@ -39,7 +39,6 @@ const ExperimentDetail = () => {
                 <div title="Autosubmit version">
                     <i className="fa-solid fa-code-branch me-3" /> {((data?.version) && ("Autosubmit v" + data.version)) || "-"}
                 </div>
-                {/* |Branch: master|Hpc: marenostrum4|Owner: 3103 NA |Version: 3.14.0|DB: 18|#Jobs: 4190 */}
             </div>
 
         </div>

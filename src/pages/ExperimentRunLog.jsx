@@ -20,7 +20,7 @@ const ExperimentRunLog = () => {
   ])
   const logRef = useRef()
   const { data: expData } = useGetExperimentInfoQuery(routeParams.expid)
-  const { data: logData, isLoading } = useGetExperimentRunLogQuery(routeParams.expid, {
+  const { data: logData, isLoading, isError } = useGetExperimentRunLogQuery(routeParams.expid, {
     pollingInterval: (expData && expData.running) ? 10 * 1000 : false
   })
 
@@ -39,6 +39,12 @@ const ExperimentRunLog = () => {
           </div>
           :
           <>
+            {
+              (isError || logData?.error) &&
+              <span className="alert alert-danger rounded-4 px-4">
+                <i className="fa-solid fa-triangle-exclamation me-2"></i> {logData?.error_message || "Unknown error"}
+              </span>
+            }
             <div className='row px-1 file-info'>
               <div className='col-6'>
                 <span>LOG FILE: {logData.logfile}</span>{" "}

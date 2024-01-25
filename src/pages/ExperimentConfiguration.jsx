@@ -109,13 +109,19 @@ const ExperimentConfiguration = () => {
       route: `/experiment/${routeParams.expid}/config`
     }
   ])
-  const { data, isFetching } = useGetExperimentConfigurationQuery(routeParams.expid)
+  const { data, isFetching, isError } = useGetExperimentConfigurationQuery(routeParams.expid)
 
   return (
-    <div className="w-100">
+    <div className="w-100 d-flex flex-column">
       {/* <div className="d-flex flex-row-reverse mb-3 gap-3 align-items-center">
         <button className="btn btn-success fw-bold text-white px-5" onClick={() => { refetch() }}>REFRESH</button>
       </div> */}
+      {
+        (isError || data?.error) &&
+        <span className="alert alert-danger rounded-4 px-4">
+          <i className="fa-solid fa-triangle-exclamation me-2"></i> {data?.error_message || "Unknown error"}
+        </span>
+      }
       {
         isFetching ?
           <div className="w-100 h-100 d-flex align-items-center justify-content-center">

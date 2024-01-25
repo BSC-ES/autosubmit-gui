@@ -400,7 +400,7 @@ const ExperimentPerformance = () => {
       route: `/experiment/${routeParams.expid}/performance`
     }
   ])
-  const { data, isFetching, refetch } = useGetExperimentPerformanceQuery(routeParams.expid)
+  const { data, isFetching, refetch, isError } = useGetExperimentPerformanceQuery(routeParams.expid)
 
   const toggleShowWarning = () => setShowWarnings(!showWarnings);
   const toggleShowHelp = () => setShowHelp(!showHelp);
@@ -508,7 +508,12 @@ const ExperimentPerformance = () => {
       </Modal>
 
       <div className="w-100 flex-fill d-flex flex-column gap-3" style={{ minWidth: 0 }}>
-
+        {
+          (isError || data?.error) &&
+          <span className="alert alert-danger rounded-4 px-4">
+            <i className="fa-solid fa-triangle-exclamation me-2"></i> {data?.error_message || "Unknown error"}
+          </span>
+        }
         <div className="d-flex justify-content-between align-items-center flex-wrap">
           <h2 className="fw-semibold">PERFORMANCE METRICS</h2>
           <div className="d-flex gap-2 flex-wrap">

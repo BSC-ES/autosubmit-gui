@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom"
-import { useGetExperimentQuickViewQuery } from "../services/autosubmitApiV3"
+import { useGetExperimentInfoQuery, useGetExperimentQuickViewQuery } from "../services/autosubmitApiV3"
 import FancyTree from "../common/FancyTree"
 import { useEffect, useState } from "react"
 import { MAX_ITEMS_QUICK_VIEW } from '../consts'
@@ -76,6 +76,7 @@ const ExperimentQuick = () => {
         filter: ""
     })
     const [jobs, setJobs] = useState([])
+    const { data: expInfoData, isFetching: isExpInfoFetching, isError } = useGetExperimentInfoQuery(routeParams.expid)
     const { data, isFetching, refetch } = useGetExperimentQuickViewQuery(routeParams.expid)
 
     useEffect(() => {
@@ -102,6 +103,36 @@ const ExperimentQuick = () => {
 
     return (
         <div className="w-100 d-flex flex-column">
+            {
+                (isError || data?.error) &&
+                <span className="alert alert-danger rounded-4 px-4">
+                    <i className="fa-solid fa-triangle-exclamation me-2"></i> {data?.error_message || "Unknown error"}
+                </span>
+            }
+            <div className="border rounded-4 py-3 px-4 mb-3 bg-light d-flex flex-wrap gap-3 justify-content-between">
+                {
+                    isExpInfoFetching ?
+                        <div className="w-100 h-100 d-flex align-items-center justify-content-center">
+                            <div className="spinner-border" role="status"></div>
+                        </div>
+                        :
+                        <>
+                            <div title="Description"
+                                style={{ textOverflow: "ellipsis", overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" }}>
+                                <i className="fa-solid fa-info-circle me-3" /> {expInfoData?.description || "-"}
+                            </div>
+                            <div title="User">
+                                <i className="fa-solid fa-user me-3" /> {expInfoData?.owner || "-"}
+                            </div>
+                            <div title="HPC">
+                                <i className="fa-solid fa-computer me-3" /> {expInfoData?.hpc || "-"}
+                            </div>
+                            <div title="Autosubmit version">
+                                <i className="fa-solid fa-code-branch me-3" /> {((expInfoData?.version) && ("Autosubmit v" + expInfoData.version)) || "-"}
+                            </div>
+                        </>
+                }
+            </div>
             <div className="d-flex mb-3 gap-3 align-items-center flex-wrap">
                 <div style={{ minWidth: "12rem" }}>
                     <select value={filters.status} onChange={handleStatusChange}

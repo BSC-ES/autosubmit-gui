@@ -8,7 +8,7 @@ import { exportToCSV } from "../services/utils"
 
 const ExperimentTableView = () => {
   const routeParams = useParams()
-  useASTitle(`Experiment ${routeParams.expid}`)
+  useASTitle(`Experiment ${routeParams.expid} table view`)
   useBreadcrumb([
     {
       name: `Experiment ${routeParams.expid}`,
@@ -20,7 +20,7 @@ const ExperimentTableView = () => {
     }
   ])
 
-  const { data, isFetching } = autosubmitApiV3.endpoints.getExperimentTreeView.useQuery({
+  const { data, isFetching, isError } = autosubmitApiV3.endpoints.getExperimentTreeView.useQuery({
     expid: routeParams.expid
   })
 
@@ -72,6 +72,12 @@ const ExperimentTableView = () => {
 
   return (
     <div className="w-100 d-flex flex-column gap-3">
+      {
+        (isError || data?.error) &&
+        <span className="alert alert-danger rounded-4 px-4">
+          <i className="fa-solid fa-triangle-exclamation me-2"></i> {data?.error_message || "Unknown error"}
+        </span>
+      }
       {
         isFetching ?
           <div className="w-100 h-100 d-flex align-items-center justify-content-center">

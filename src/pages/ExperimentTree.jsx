@@ -30,13 +30,13 @@ const ExperimentTree = () => {
     run_id: null,
     created: null
   })
-  
+
   const [tree, setTree] = useState(/** @type {Fancytree.Fancytree} */(null))
   const [selectedJob, setSelectedJob] = useState(null)
   const filterRef = useRef()
 
   const abortController = new AbortController()
-  const { data, isFetching, refetch } = useGetExperimentTreeViewQuery({
+  const { data, isFetching, refetch, isError } = useGetExperimentTreeViewQuery({
     expid: routeParams.expid,
     signal: abortController.signal,
     runId: selectedRun?.run_id
@@ -53,7 +53,7 @@ const ExperimentTree = () => {
       }, { forceRefetch: true }))
       promise.unsubscribe()
     }
-  // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [])
 
   useEffect(() => {
@@ -106,6 +106,12 @@ const ExperimentTree = () => {
         onRunSelect={handleRunSelect}
       />
       <div className="w-100 d-flex flex-column">
+        {
+          (isError || data?.error) &&
+          <span className="alert alert-danger rounded-4 px-4">
+            <i className="fa-solid fa-triangle-exclamation me-2"></i> {data?.error_message || "Unknown error"}
+          </span>
+        }
         <div className="d-flex mb-3 gap-2 align-items-center flex-wrap">
           <button className="btn btn-primary fw-bold text-white"
             title="Refresh data"
@@ -140,7 +146,7 @@ const ExperimentTree = () => {
 
               <div className="flex-fill d-flex flex-column gap-3 flex-wrap">
                 <div className="d-flex flex-wrap gap-2 align-items-center justify-content-between">
-                  <span className="mx-2 small">Total #Jobs: {data.total} | Chunk unit: {data.reference && data.reference.chunk_unit} | Chunk size: {data.reference && data.reference.chunk_size}</span>
+                  <span className="mx-2 small">Total #Jobs: {data.total} | Chunk unit: {data?.reference?.chunk_unit} | Chunk size: {data?.reference?.chunk_size}</span>
                   <div className="d-flex gap-2">
                     <button className="btn btn-sm btn-primary text-white fw-bold px-4" onClick={handleExpand}>Expand All +</button>
                     <button className="btn btn-sm btn-secondary text-white fw-bold px-4" onClick={handleCollapse}>Collapse All -</button>

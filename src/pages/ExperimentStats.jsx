@@ -254,7 +254,7 @@ const ExperimentStats = () => {
       route: `/experiment/${routeParams.expid}/stats`
     }
   ])
-  const { data, isFetching } = useGetExperimentStatsQuery({
+  const { data, isFetching, isError } = useGetExperimentStatsQuery({
     expid: routeParams.expid,
     section: searchParams.get("section") || "Any",
     hours: searchParams.get("hours") || "0"
@@ -281,6 +281,12 @@ const ExperimentStats = () => {
 
   return (
     <div className="w-100 d-flex flex-column" style={{ minWidth: 0 }}>
+      {
+        (isError || data?.error) &&
+        <span className="alert alert-danger rounded-4 px-4">
+          <i className="fa-solid fa-triangle-exclamation me-2"></i> {data?.error_message || "Unknown error"}
+        </span>
+      }
       <form onSubmit={handleGetStats} className="mb-4 d-flex flex-wrap gap-3 align-items-center">
         <div className="flex-fill d-flex gap-3 align-items-center">
           <label className="text-nowrap">Job section:</label>

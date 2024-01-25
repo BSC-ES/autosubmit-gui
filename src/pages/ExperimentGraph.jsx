@@ -36,7 +36,7 @@ const ExperimentGraph = () => {
   })
 
   const abortController = new AbortController()
-  const { data, isFetching, refetch } = useGetExperimentGraphViewQuery({
+  const { data, isFetching, refetch, isError } = useGetExperimentGraphViewQuery({
     expid: routeParams.expid,
     layout: "standard",
     grouped: "none",
@@ -54,7 +54,7 @@ const ExperimentGraph = () => {
       }, { forceRefetch: true }))
       promise.unsubscribe()
     }
-  // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [])
 
   useEffect(() => {
@@ -118,7 +118,12 @@ const ExperimentGraph = () => {
 
   return (
     <div className="w-100 d-flex flex-column">
-
+      {
+        (isError || data?.error) &&
+        <span className="alert alert-danger rounded-4 px-4">
+          <i className="fa-solid fa-triangle-exclamation me-2"></i> {data?.error_message || "Unknown error"}
+        </span>
+      }
       <div className="d-flex mb-3 gap-2 align-items-center flex-wrap">
         <div className="flex-fill">
           <form className="input-group" onSubmit={handleFilter}>
