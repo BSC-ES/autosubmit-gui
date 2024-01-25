@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import * as d3 from "d3";
 import { secondsToDelta } from "../context/utils";
+import { saveSVGObj } from '../../services/utils';
 
 
 class TimeScatterPlot extends Component {
@@ -58,6 +59,7 @@ class TimeScatterPlot extends Component {
         .attr("x", this.width - 45 - this.padding)
         .attr("y", 0.6*this.padding)
         .attr("dy", "0.45em")
+        .attr("font-family", "Helvetica")
         .style("font-size", "0.9em")
         .style("text-anchor", "middle")
         .text("JPSY")
@@ -170,6 +172,7 @@ class TimeScatterPlot extends Component {
         .attr("x", this.width/2)
         .attr("y", this.height - 0.7*this.padding)
         .attr("dy", "1em")
+        .attr("font-family", "Helvetica")
         .style("text-anchor", "middle")
         .text(getTimeElementsName(attribute) + " time in " + getTimeMeasurementName(maxTime) + "")
     
@@ -179,6 +182,7 @@ class TimeScatterPlot extends Component {
         .attr("x", -this.height/2)
         .attr("y", 0.8*this.padding)
         .attr("dy", "-1em")
+        .attr("font-family", "Helvetica")
         .style("text-anchor", "middle")
         .text(attribute);
     
@@ -187,6 +191,7 @@ class TimeScatterPlot extends Component {
         .attr("x", this.width/2)
         .attr("y", 0.2*this.padding)
         .attr("dy", "1.5em")
+        .attr("font-family", "Helvetica")
         .style("text-anchor", "middle")
         .style("font-weight", "bold")
         .text(mainTitle || mainTitle);
@@ -237,7 +242,7 @@ class TimeScatterPlot extends Component {
     }
 
     return (
-      <div className="scroll-x">
+      <div className="scroll-x position-relative">
         <svg
           version="1.1"
           baseProfile="full"
@@ -245,6 +250,10 @@ class TimeScatterPlot extends Component {
           ref={this.setSvgElement}
         >
         </svg>
+        <button className='position-absolute top-0 start-0 btn'
+          onClick={() => saveSVGObj(this.svgElement, this.props.mainTitle)}>
+          <i className="fa-solid fa-floppy-disk"></i>
+        </button>
       </div>
     )
   }

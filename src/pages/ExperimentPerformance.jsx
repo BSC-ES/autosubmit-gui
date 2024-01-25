@@ -13,6 +13,7 @@ import {
 } from "../components/context/utils"
 import { Modal } from "react-bootstrap"
 import TimeScatterPlot from "../components/plots/TimeScatterPlot"
+import { exportToCSV } from "../services/utils"
 
 
 const PERFORMANCE_PLOTS = [
@@ -172,7 +173,7 @@ const PerformancePlots = ({ considered }) => {
           })
         }
       </div>
-      <div className="d-flex gap-3 flex-wrap justify-content-around" style={{ minHeight: 480 }}>
+      <div className="w-100 d-flex gap-3 flex-wrap justify-content-around" style={{ minHeight: 480 }}>
         {
           PERFORMANCE_PLOTS.map(item => {
             let plot = <></>
@@ -216,33 +217,67 @@ const PerformancePlots = ({ considered }) => {
 }
 
 const PerformanceConsideredJobs = ({ considered }) => {
+  const routeParams = useParams()
+
+  const exportConsideredToCSV = () => {
+    const exportableData = [...considered].sort((a, b) => {
+      if (a.chunk === b.chunk) {
+        return a.name > b.name ? 1 : -1
+      } else {
+        return a.chunk > b.chunk ? 1 : -1
+      }
+    }).map(item => {
+      return [
+        item.chunk,
+        item.name,
+        secondsToDelta(item.queue),
+        secondsToDelta(item.running),
+        formatNumberMoney(item.CHSY),
+        formatNumberMoney(item.SYPD),
+        formatNumberMoney(item.ASYPD),
+        formatNumberMoney(item.JPSY, true),
+        formatNumberMoney(item.energy, true)
+      ]
+    })
+    exportToCSV(
+      ["Chunk", "Job Name", "Queue", "Run", "CHSY", "SYPD", "ASYPD", "JPSY", "Energy"],
+      exportableData,
+      `${(new Date()).toISOString()}_ConsideredPerformance_${routeParams.expid}.csv`
+    )
+  }
 
   return (
-    <table className='table table-sm table-bordered list-table'>
-      <thead>
-        <tr className='table-primary performance-table-header sticky-header'>
-          <th scope='col'>
-            #
-          </th>
-          <th scope='col' className='ps-2'>
-            Job Name
-          </th>
+    <>
+      <table className='table table-sm table-bordered list-table'>
+        <thead>
+          <tr className='table-primary performance-table-header sticky-header'>
+            <th scope='col'>
+              Chunk
+            </th>
+            <th scope='col' className='ps-2'>
+              Job Name
+            </th>
+            {
+              ["Queue", "Run", "CHSY", "SYPD", "ASYPD", "JPSY", "Energy"].map(title =>
+                <th scope='col' className='text-end pe-2' key={title}>
+                  {title}
+                </th>)
+            }
+          </tr>
+        </thead>
+        <tbody>
           {
-            ["Queue", "Run", "CHSY", "SYPD", "ASYPD", "JPSY", "Energy"].map(title =>
-              <th scope='col' className='text-end pe-2' key={title}>
-                {title}
-              </th>)
-          }
-        </tr>
-      </thead>
-      <tbody>
-        {
-          considered &&
-          [...considered].sort((a, b) => (a.name > b.name ? 1 : -1))
-            .map((item, index) => (
+            considered &&
+            [...considered].sort((a, b) => {
+              if (a.chunk === b.chunk) {
+                return a.name > b.name ? 1 : -1
+              } else {
+                return a.chunk > b.chunk ? 1 : -1
+              }
+            }).map((item) => (
               <tr key={item.name}>
-                <th scope='row'>{index + 1}</th>
-                <td className='pl-1'>{item.name}</td>
+                <td className='ps-1 fw-bold'>{item.chunk}</td>
+                <td className='ps-1'>{item.name}</td>
                 <td className='text-end pe-1'>
                   <strong> {secondsToDelta(item.queue)}</strong>
                 </td>
@@ -266,8 +301,15 @@ const PerformanceConsideredJobs = ({ considered }) => {
                 </td>
               </tr>
             ))}
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+      <div className="text-end">
+        <button onClick={exportConsideredToCSV}
+          className="btn btn-light btn-sm border">
+          Export to CSV
+        </button>
+      </div>
+    </>
   )
 }
 
@@ -290,52 +332,55 @@ const PerformanceSummary = ({ data }) => {
   }, [data])
 
   return (
-    <table className='table table-sm table-bordered list-table'>
-      <thead>
-        <tr className='table-primary performance-table-header'>
-          <th scope='col'>Metric</th>
+    <>
+      <table className='table table-sm table-bordered list-table'>
+        <thead>
+          <tr className='table-primary performance-table-header'>
+            <th scope='col'>Metric</th>
+            {
+              ["Value", "Min", "Max", "Mean", "SD", "MAD"].map(title =>
+                <th scope='col' className='text-end pe-2' key={title}>
+                  {title}
+                </th>)
+            }
+          </tr>
+        </thead>
+        <tbody>
           {
-            ["Value", "Min", "Max", "Mean", "SD", "MAD"].map(title =>
-              <th scope='col' className='text-end pe-2' key={title}>
-                {title}
-              </th>)
+            metrics && Object.keys(metrics).map(key => {
+              return (
+                <tr key={key}>
+                  <th scope='row'>{key}</th>
+                  <td className={'text-end pe-1' + (key === "ASYPD" ? " fw-bold" : "")}>
+                    <span className='rounded px-1 bg-light'>
+                      {formatNumberMoney(data[key], true)}
+                    </span>
+                  </td>
+                  <td className='text-end pe-1'>
+                    {formatNumberMoney(Math.min(...metrics[key]), true)}
+                  </td>
+                  <td className='text-end pe-1'>
+                    {formatNumberMoney(Math.max(...metrics[key]), true)}
+                  </td>
+                  <td className={'text-end pe-1' + (key !== "ASYPD" ? " fw-bold" : "")}>
+                    {formatNumberMoney(arrayAverage(metrics[key]))}
+                  </td>
+                  <td className='text-end pe-1'>
+                    {formatNumberMoney(arrayStandardDeviation(metrics[key]))}
+                  </td>
+                  <td className='text-end pe-1'>
+                    {formatNumberMoney(
+                      arrayMeanAbsoluteDeviationAroundMean(metrics[key])
+                    )}
+                  </td>
+                </tr>
+              )
+            })
           }
-        </tr>
-      </thead>
-      <tbody>
-        {
-          metrics && ["JPSY", "SYPD", "ASYPD", "CHSY"].map(key => {
-            return (
-              <tr key={key}>
-                <th scope='row'>{key}</th>
-                <td className={'text-end pe-1' + (key === "ASYPD" ? " fw-bold" : "")}>
-                  <span className='rounded px-1 bg-light'>
-                    {formatNumberMoney(data[key], true)}
-                  </span>
-                </td>
-                <td className='text-end pe-1'>
-                  {formatNumberMoney(Math.min(...metrics[key]), true)}
-                </td>
-                <td className='text-end pe-1'>
-                  {formatNumberMoney(Math.max(...metrics[key]), true)}
-                </td>
-                <td className={'text-end pe-1' + (key !== "ASYPD" ? " fw-bold" : "")}>
-                  {formatNumberMoney(arrayAverage(metrics[key]))}
-                </td>
-                <td className='text-end pe-1'>
-                  {formatNumberMoney(arrayStandardDeviation(metrics[key]))}
-                </td>
-                <td className='text-end pe-1'>
-                  {formatNumberMoney(
-                    arrayMeanAbsoluteDeviationAroundMean(metrics[key])
-                  )}
-                </td>
-              </tr>
-            )
-          })
-        }
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </>
+
   )
 }
 
