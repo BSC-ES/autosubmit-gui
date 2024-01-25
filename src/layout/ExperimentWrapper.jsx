@@ -1,6 +1,6 @@
 import { Link, useLocation, useParams } from "react-router-dom";
 import { useState } from "react";
-import { useWindowSize } from "@uidotdev/usehooks";
+import { useLocalStorage, useWindowSize } from "@uidotdev/usehooks";
 
 const EXPERIMENT_MENU_ITEMS = [
   {
@@ -17,6 +17,11 @@ const EXPERIMENT_MENU_ITEMS = [
     name: "GRAPH VIEW",
     iconClass: "fa-solid fa-network-wired",
     route: "/graph"
+  },
+  {
+    name: "TABLE VIEW",
+    iconClass: "fa-solid fa-table",
+    route: "/table"
   },
   {
     name: "RUN LOG",
@@ -69,10 +74,17 @@ const ExperimentMenuItems = ({ showLabels = true }) => {
 
 const ExperimentWrapper = ({ children }) => {
   const { width } = useWindowSize()
-  const [showLabels, setShowLabels] = useState(true)
+  const [
+    showExperimentMenuLabelsDesktop,
+    saveShowExperimentMenuLabelsDesktop
+  ] = useLocalStorage("options.showExperimentMenuLabelsDesktop", true)
+  const [showLabels, setShowLabels] = useState(showExperimentMenuLabelsDesktop)
   const [showTopMenu, setShowTopMenu] = useState(false)
 
-  const handleToggleLabels = () => { setShowLabels(!showLabels) }
+  const handleToggleLabels = () => {
+    setShowLabels(!showLabels);
+    saveShowExperimentMenuLabelsDesktop(!showLabels);
+  }
   const handleToggleTopMenu = () => { setShowTopMenu(!showTopMenu) }
 
   return (
@@ -80,10 +92,13 @@ const ExperimentWrapper = ({ children }) => {
       {
         width > 992 ?
           <div className="d-flex gap-4 flex-fill">
-            <div className="d-flex flex-column gap-4 bg-light border p-4 rounded-4">
+            <div className="d-flex flex-column gap-4 bg-light border p-4 rounded-4"
+            style={{maxHeight: "80vh"}}>
               <ExperimentMenuItems showLabels={showLabels} />
-              <div className="mt-auto" onClick={handleToggleLabels}
+              <div className={"mt-auto d-flex align-items-center " + (!showLabels && "justify-content-center")}
+                onClick={handleToggleLabels}
                 style={{ cursor: "pointer" }}>
+                
                 <i className={"text-center fa-solid " + (showLabels ? "fa-angles-left" : "fa-angles-right")}
                   style={{ fontSize: "1.5rem", width: "2rem" }}></i>
               </div>

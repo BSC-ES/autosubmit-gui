@@ -15,7 +15,7 @@ const ExperimentDetail = () => {
         }
     ])
     const navigate = useNavigate()
-  const { data } = useGetExperimentInfoQuery(routeParams.expid)
+    const { data } = useGetExperimentInfoQuery(routeParams.expid)
 
 
     useEffect(() => {

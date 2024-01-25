@@ -14,6 +14,7 @@ import ExperimentStats from '../pages/ExperimentStats';
 import NotFound from '../pages/NotFound';
 import ExperimentPerformance from '../pages/ExperimentPerformance';
 import { PUBLIC_URL } from '../consts';
+import ExperimentTableView from '../pages/ExperimentTableView';
 
 const router = createBrowserRouter([
   {
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
           {
             path: "/experiment/:expid/graph",
             element: <ExperimentGraph />
+          },
+          {
+            path: "/experiment/:expid/table",
+            element: <ExperimentTableView />
           },
           {
             path: "/experiment/:expid/runlog",

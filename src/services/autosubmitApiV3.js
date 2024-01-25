@@ -17,23 +17,21 @@ export const autosubmitApiV3 = createApi({
         }),
         getExperimentTreeView: builder.query({
             query: ({ expid, signal, runId }) => {
-                if (runId) {
-                    return {
-                        url: `rundetail/${expid}/${runId}`,
-                        signal: signal
-                    }
+                const args = {
+                    url: runId ? `rundetail/${expid}/${runId}` : `tree/${expid}`
                 }
-                return {
-                    url: `tree/${expid}`,
-                    signal: signal
-                }
+                if (signal) args.signal = signal
+                return args
             }
         }),
         getExperimentGraphView: builder.query({
-            query: ({ expid, layout, grouped, signal }) => ({
-                url: `graph/${expid}/${layout}/${grouped}`,
-                signal: signal
-            })
+            query: ({ expid, layout, grouped, signal }) => {
+                const args = {
+                    url: `graph/${expid}/${layout}/${grouped}`
+                }
+                if (signal) args.signal = signal
+                return args
+            }
         }),
         getExperimentRunLog: builder.query({
             query: (expid) => `exprun/${expid}`
