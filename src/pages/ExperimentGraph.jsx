@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import VisNetwork from "../common/VisNetwork";
-import { autosubmitApiV3, useGetExperimentGraphViewQuery } from "../services/autosubmitApiV3";
+import { autosubmitApiV3 } from "../services/autosubmitApiV3";
 import useASTitle from "../hooks/useASTitle";
 import useBreadcrumb from "../hooks/useBreadcrumb";
 import JobDetailCard from "../common/JobDetailCard";
@@ -27,26 +27,40 @@ const ExperimentGraph = () => {
   ])
 
   const filterRef = useRef()
+  const [activeMonitor, setActiveMonitor] = useState(false)
 
-  const [selectedJob, setSelectedJob] = useState(null)
-  const [network, setNetwork] = useState(/** @type {Network} */(null))
+  const [jobs, setJobs] = useState([])
+  const [selectedJobId, setSelectedJobId] = useState(null)
+  const selectedJob = jobs.find(rawNode => rawNode.id === selectedJobId);
+  const [network, setNetwork] = useState(/** @type {Network | null} */(null))
   const [graphData, setGraphData] = useState({
     nodes: [],
     edges: []
   })
 
-  const abortController = new AbortController()
-  const { data, isFetching, refetch, isError } = useGetExperimentGraphViewQuery({
+  const {
+    data,
+    isFetching,
+    refetch,
+    isError
+  } = autosubmitApiV3.endpoints.getExperimentGraphView.useQuery({
     expid: routeParams.expid,
     layout: "standard",
-    grouped: "none",
-    signal: abortController.signal
+    grouped: "none"
+  })
+
+  const {
+    data: pklData
+  } = autosubmitApiV3.endpoints.getPklInfo.useQuery({
+    expid: routeParams.expid
+  }, {
+    skip: !activeMonitor,
+    pollingInterval: 5 * 1000
   })
 
   useEffect(() => {
     // Unmount component
     return () => {
-      abortController.abort()
       const promise = dispatch(autosubmitApiV3.endpoints.showdownRoute.initiate({
         route: "graph",
         loggedUser: authState.user_id,
@@ -58,15 +72,14 @@ const ExperimentGraph = () => {
   }, [])
 
   useEffect(() => {
-    handleCloseJobDetail()
-    if (data && Array.isArray(data.nodes) && Array.isArray(data.edges)) {
+    if (Array.isArray(data?.nodes) && Array.isArray(data?.edges)) {
+      setJobs([...data.nodes])
       const newNodes = data.nodes.map(node => {
         return {
           id: node.id,
           label: node.label,
           shape: node.shape,
           color: { background: node.status_color, border: "black" },
-          status: node.status,
           x: node.x,
           y: node.y,
           shapeProperties: { borderDashes: node.dashed },
@@ -79,11 +92,59 @@ const ExperimentGraph = () => {
     }
   }, [data])
 
+  useEffect(() => {
+    if (pklData) {
+      let shouldRedraw = false
+
+      let newJobData = {}
+      pklData.pkl_content.forEach(job => {
+        newJobData[job.name] = job
+      })
+
+      let changeLog = []
+      const newJobs = jobs.map(job => {
+        let newJob = { ...job }
+        const incomingData = newJobData[job.id]
+
+        if (newJob.status_code !== incomingData.status_code) {
+          changeLog.push(`[${(new Date()).toISOString()}] ${newJob.id} change status to ${incomingData.status_code}`)
+          network.body.nodes[newJob.id].options.color.background = incomingData.status_color
+          shouldRedraw = true
+        }
+
+        // Overwrite data
+        newJob.status_code = incomingData.status_code
+        newJob.status = incomingData.status
+        newJob.status_color = incomingData.status_color
+        newJob.package = incomingData.package
+        newJob.dashed = incomingData.dashed
+        newJob.out = incomingData.out;
+        newJob.err = incomingData.err;
+        newJob.minutes = incomingData.minutes;
+        newJob.minutes_queue = incomingData.minutes_queue;
+        newJob.submit = incomingData.submit;
+        newJob.start = incomingData.start;
+        newJob.finish = incomingData.finish;
+        newJob.rm_id = incomingData.rm_id;
+        newJob.SYPD = incomingData.SYPD;
+
+        return newJob
+      })
+
+      if (shouldRedraw) network.redraw()
+
+      // Refresh Job List
+      setJobs(newJobs)
+    }
+
+    // eslint-disable-next-line
+  }, [pklData])
+
+  /** @param {Network} newNetwork */
   const handleNetworkCallback = (newNetwork) => { setNetwork(newNetwork) }
 
   const handleOnSelectNode = (nodeId) => {
-    const newSelected = data.nodes.find(rawNode => rawNode.id === nodeId)
-    setSelectedJob(newSelected)
+    setSelectedJobId(nodeId)
   }
 
   const handleFilter = (e) => {
@@ -113,8 +174,9 @@ const ExperimentGraph = () => {
     }
   }
 
-  const handleCloseJobDetail = () => { setSelectedJob(null) }
+  const handleCloseJobDetail = () => { setSelectedJobId(null) }
 
+  const toggleActiveMonitor = () => { setActiveMonitor(!activeMonitor); }
 
   return (
     <div className="w-100 d-flex flex-column">
@@ -133,9 +195,10 @@ const ExperimentGraph = () => {
             <button type="button" className="btn btn-light border fw-bold px-4" onClick={handleClear}>Clear</button>
           </form>
         </div>
-        {/* <button className="btn btn-success fw-bold text-white px-4 text-nowrap">
-          START MONITORING
-        </button> */}
+        <button className={"btn fw-bold text-white px-4 text-nowrap " + (activeMonitor ? "btn-danger" : "btn-success")}
+          onClick={toggleActiveMonitor}>
+          {activeMonitor ? "STOP MONITORING" : "START MONITOR"}
+        </button>
         <button className="btn btn-success fw-bold text-white"
           title="Refresh data"
           onClick={() => { refetch() }}>
@@ -167,13 +230,12 @@ const ExperimentGraph = () => {
                   onSelectNode={handleOnSelectNode}
                   networkCallback={handleNetworkCallback}
                 />
-
               </div>
             </div>
 
             <JobDetailCard
               jobData={selectedJob}
-              jobs={data.nodes}
+              jobs={jobs}
               onClose={handleCloseJobDetail} />
 
           </div>

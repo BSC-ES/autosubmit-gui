@@ -51,6 +51,13 @@ export const autosubmitApiV3 = createApi({
         getRuns: builder.query({
             query: (expid) => `runs/${expid}`
         }),
+        getPklInfo: builder.query({
+            query: ({expid, timestamp = 0}) =>{
+                return {
+                    url: `pklinfo/${expid}/${timestamp}`
+                }
+            }
+        }),
         showdownRoute: builder.query({
             keepUnusedDataFor: 1, // reduce cache time
             query: ({
