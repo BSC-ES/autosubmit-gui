@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { autosubmitApiV3, useGetExperimentTreeViewQuery } from "../services/autosubmitApiV3";
+import { autosubmitApiV3 } from "../services/autosubmitApiV3";
 import { useParams } from "react-router-dom";
 import FancyTree from "../common/FancyTree";
 import useASTitle from "../hooks/useASTitle";
@@ -7,6 +7,7 @@ import useBreadcrumb from "../hooks/useBreadcrumb";
 import JobDetailCard from "../common/JobDetailCard";
 import { useDispatch, useSelector } from "react-redux";
 import RunsModal from "../common/RunsModal";
+import TreeContentHandler from "../components/context/tree/business/treeUpdate";
 
 
 const ExperimentTree = () => {
@@ -32,20 +33,39 @@ const ExperimentTree = () => {
   })
 
   const [tree, setTree] = useState(/** @type {Fancytree.Fancytree} */(null))
-  const [selectedJob, setSelectedJob] = useState(null)
   const filterRef = useRef()
 
-  const abortController = new AbortController()
-  const { data, isFetching, refetch, isError } = useGetExperimentTreeViewQuery({
+  const [activeMonitor, setActiveMonitor] = useState(false)
+
+  // const abortController = new AbortController()
+  const {
+    data,
+    isFetching,
+    refetch,
+    isError
+  } = autosubmitApiV3.endpoints.getExperimentTreeView.useQuery({
     expid: routeParams.expid,
-    signal: abortController.signal,
+    // signal: abortController.signal,
     runId: selectedRun?.run_id
   })
+
+  const {
+    data: pklData
+  } = autosubmitApiV3.endpoints.getPklTreeInfo.useQuery({
+    expid: routeParams.expid
+  }, {
+    skip: (!activeMonitor) || (selectedRun?.run_id),
+    pollingInterval: 5 * 1000
+  })
+
+  const [jobs, setJobs] = useState([])
+  const [selectedJobId, setSelectedJobId] = useState(null)
+  const selectedJob = jobs.find(item => item.label === selectedJobId)
 
   useEffect(() => {
     // Unmount component
     return () => {
-      abortController.abort()
+      // abortController.abort()
       const promise = dispatch(autosubmitApiV3.endpoints.showdownRoute.initiate({
         route: "tree",
         loggedUser: authState.user_id,
@@ -57,14 +77,30 @@ const ExperimentTree = () => {
   }, [])
 
   useEffect(() => {
-    handleCloseJobDetail()
+    const newJobs = (data?.jobs || [])
+    setJobs(newJobs)
   }, [data])
+
+  useEffect(() => {
+    let treeUpdater = new TreeContentHandler(
+      jobs,
+      (data?.reference || {}),
+      pklData,
+      false
+    )
+
+    if (tree && treeUpdater.validate()) {
+      const processResult = treeUpdater.processChanges(tree);
+      if (Array.isArray(processResult?.currentJobs)) {
+        setJobs(processResult.currentJobs)
+      }
+    }
+  }, [pklData])
 
 
   const handleOnActivateNode = (e, d) => {
-    if (data && Array.isArray(data.jobs) && d && d.node && d.node.folder === undefined) {
-      const newSelectedJob = data.jobs.find(item => item.label === d.node.refKey)
-      if (newSelectedJob) setSelectedJob(newSelectedJob)
+    if (Array.isArray(jobs) && d?.node && d.node.folder === undefined) {
+      setSelectedJobId(d.node.refKey)
     }
   }
 
@@ -89,19 +125,29 @@ const ExperimentTree = () => {
     if (tree) tree.clearFilter()
   }
 
-  const handleCloseJobDetail = () => { setSelectedJob(null) }
+  const handleCloseJobDetail = () => { setSelectedJobId(null) }
 
   const handleRunSelect = (item) => {
     handleClear();
-    handleCloseJobDetail(null);
     setSelectedRun(item);
     setShowRunsM(false)
   }
 
+  const handleResetRun = () => {
+    handleRunSelect({
+      run_id: null,
+      created: null
+    })
+  }
+
+  const toggleActiveMonitor = () => { setActiveMonitor(!activeMonitor); }
+
+  const toggleShowRunsM = () => { setShowRunsM(!showRunsM) }
+
   return (
     <>
       <RunsModal show={showRunsM}
-        onHide={() => setShowRunsM(false)}
+        onHide={toggleShowRunsM}
         expid={routeParams.expid}
         onRunSelect={handleRunSelect}
       />
@@ -113,11 +159,23 @@ const ExperimentTree = () => {
           </span>
         }
         <div className="d-flex mb-3 gap-2 align-items-center flex-wrap">
-          <button className="btn btn-primary fw-bold text-white"
-            title="Refresh data"
-            onClick={() => { setShowRunsM(true) }}>
-            <i className="fa-solid fa-clock-rotate-left me-2"></i> Run: {(selectedRun.run_id && selectedRun.created) || "Latest"}
-          </button>
+          <div>
+            <div className="input-group">
+              <button className="btn btn-primary fw-bold text-white"
+                title="Select Run"
+                onClick={toggleShowRunsM}>
+                <i className="fa-solid fa-clock-rotate-left me-2"></i> Run: {(selectedRun.run_id && selectedRun.created) || "Latest"}
+              </button>
+              {
+                (selectedRun?.run_id) &&
+                <button className="btn btn-light border-primary text-primary"
+                  title="Reset to latest"
+                  onClick={handleResetRun}>
+                  <i className="fa-solid fa-xmark"></i>
+                </button>
+              }
+            </div>
+          </div>
           <div className="flex-fill">
             <form className="input-group" onSubmit={handleFilter}>
               <input ref={filterRef}
@@ -126,9 +184,14 @@ const ExperimentTree = () => {
               <button type="button" className="btn btn-light border fw-bold px-4" onClick={handleClear}>Clear</button>
             </form>
           </div>
-          {/* <button className="btn btn-success fw-bold text-white px-4 text-nowrap">
-          START MONITORING
-        </button> */}
+          {
+            (!selectedRun?.run_id) &&
+            <button
+              className={"btn fw-bold text-white px-4 text-nowrap " + (activeMonitor ? "btn-danger" : "btn-success")}
+              onClick={toggleActiveMonitor}>
+              {activeMonitor ? "STOP MONITORING" : "START MONITOR"}
+            </button>
+          }
           <button className="btn btn-success fw-bold text-white"
             title="Refresh data"
             onClick={() => { refetch() }}>
@@ -162,7 +225,11 @@ const ExperimentTree = () => {
                 </div>
               </div>
 
-              <JobDetailCard jobData={selectedJob} jobs={data.jobs} onClose={handleCloseJobDetail} />
+              <JobDetailCard
+                jobData={selectedJob}
+                jobs={jobs}
+                onClose={handleCloseJobDetail}
+              />
             </div>
         }
       </div>

@@ -58,6 +58,13 @@ export const autosubmitApiV3 = createApi({
                 }
             }
         }),
+        getPklTreeInfo: builder.query({
+            query: ({expid, timestamp = 0}) =>{
+                return {
+                    url: `pkltreeinfo/${expid}/${timestamp}`
+                }
+            }
+        }),
         showdownRoute: builder.query({
             keepUnusedDataFor: 1, // reduce cache time
             query: ({
