@@ -2,7 +2,6 @@
 import { forwardRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { authActions } from '../store/authSlice';
-import { useLocalStorage } from '@uidotdev/usehooks';
 import { autosubmitApiV4 } from '../services/autosubmitApiV4';
 import { useNavigate } from 'react-router-dom';
 import { AUTHENTICATION } from '../consts';
@@ -24,7 +23,7 @@ const AuthBadge = () => {
   const authState = useSelector((state) => state.auth)
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [token, setToken] = useLocalStorage("token", null)
+  const token = localStorage.getItem("token")
   const [verifyToken, { data, isError }] = autosubmitApiV4.endpoints.verifyToken.useMutation()
 
   useEffect(() => {
@@ -55,7 +54,7 @@ const AuthBadge = () => {
 
   const handleLogout = () => {
     dispatch(authActions.logout())
-    setToken(null)
+    localStorage.setItem("token", null)
     if (AUTHENTICATION) navigate("/login")
   }
 

@@ -6,9 +6,9 @@ export const autosubmitApiV3 = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: AUTOSUBMIT_API_SOURCE + "/v3",
         prepareHeaders: (headers) => {
-            const token = JSON.parse(localStorage.getItem("token"))
-            if (token?.token) {
-                headers.set('Authorization', token?.token)
+            const token = localStorage.getItem("token")
+            if (token) {
+                headers.set('Authorization', token)
             }
             return headers
         },

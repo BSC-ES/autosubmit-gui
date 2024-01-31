@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { autosubmitApiV4 } from "../services/autosubmitApiV4";
 import { CAS_THIRD_PARTY_LOGIN_URL } from "../consts";
-import { useLocalStorage } from "@uidotdev/usehooks";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../store/authSlice";
 
@@ -12,7 +11,6 @@ const Login = () => {
   const navigate = useNavigate();
   const authState = useSelector((state) => state.auth)
   const dispatch = useDispatch();
-  const [token, setToken] = useLocalStorage("token", null)
   const [login, { data, isError, isUninitialized }] = autosubmitApiV4.endpoints.loginCASv2.useMutation()
 
   useEffect(() => {
@@ -31,10 +29,7 @@ const Login = () => {
 
   useEffect(() => {
     if (!isUninitialized && !isError && data) {
-      setToken({
-        token: data.token,
-        user_id: data.user
-      })
+      localStorage.setItem("token", data.token)
       dispatch(authActions.login({
         token: data.token,
         user_id: data.user
