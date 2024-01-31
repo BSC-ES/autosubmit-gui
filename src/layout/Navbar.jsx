@@ -45,7 +45,7 @@ const Navbar = () => {
             }
 
             <div>
-                {/* <AuthBadge></AuthBadge> */}
+                <AuthBadge></AuthBadge>
             </div>
         </nav>
     )

@@ -3,7 +3,16 @@ import { AUTOSUBMIT_API_SOURCE } from '../consts'
 
 export const autosubmitApiV3 = createApi({
     reducerPath: 'autosubmitApiV3',
-    baseQuery: fetchBaseQuery({ baseUrl: AUTOSUBMIT_API_SOURCE + "/v3" }),
+    baseQuery: fetchBaseQuery({
+        baseUrl: AUTOSUBMIT_API_SOURCE + "/v3",
+        prepareHeaders: (headers) => {
+            const token = JSON.parse(localStorage.getItem("token"))
+            if (token?.token) {
+                headers.set('Authorization', token?.token)
+            }
+            return headers
+        },
+    }),
     keepUnusedDataFor: 5,
     endpoints: (builder) => ({
         getRunningExperiments: builder.query({
@@ -52,14 +61,14 @@ export const autosubmitApiV3 = createApi({
             query: (expid) => `runs/${expid}`
         }),
         getPklInfo: builder.query({
-            query: ({expid, timestamp = 0}) =>{
+            query: ({ expid, timestamp = 0 }) => {
                 return {
                     url: `pklinfo/${expid}/${timestamp}`
                 }
             }
         }),
         getPklTreeInfo: builder.query({
-            query: ({expid, timestamp = 0}) =>{
+            query: ({ expid, timestamp = 0 }) => {
                 return {
                     url: `pkltreeinfo/${expid}/${timestamp}`
                 }

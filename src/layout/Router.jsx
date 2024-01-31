@@ -15,6 +15,7 @@ import NotFound from '../pages/NotFound';
 import ExperimentPerformance from '../pages/ExperimentPerformance';
 import { PUBLIC_URL } from '../consts';
 import ExperimentTableView from '../pages/ExperimentTableView';
+import Login from '../pages/Login';
 
 const router = createBrowserRouter([
   {
@@ -91,8 +92,12 @@ const router = createBrowserRouter([
     path: "/404",
     element: <NotFound />
   },
+  {
+    path: "/login",
+    element: <Login />
+  }
 ], {
-  basename: `${PUBLIC_URL||""}`
+  basename: `${PUBLIC_URL || ""}`
 });
 
 

@@ -3,7 +3,7 @@ import { Dropdown, ProgressBar } from "react-bootstrap"
 import { Link } from "react-router-dom"
 
 const CustomToggle = forwardRef(({ children, onClick }, ref) => (
-  <btn
+  <button
     className="btn btn-light rounded-4 px-3"
     ref={ref}
     onClick={(e) => {
@@ -12,7 +12,7 @@ const CustomToggle = forwardRef(({ children, onClick }, ref) => (
     }}
   >
     {children}
-  </btn>
+  </button>
 ));
 
 
@@ -54,7 +54,7 @@ const ExperimentCard = forwardRef(({ experiment }, ref) => {
           </div> */}
           <Dropdown>
             <Dropdown.Toggle as={CustomToggle}>
-              <i class="fa-solid fa-ellipsis-vertical"></i>
+              <i className="fa-solid fa-ellipsis-vertical"></i>
             </Dropdown.Toggle>
             <Dropdown.Menu align={"end"}>
               <Dropdown.Item eventKey="1">
