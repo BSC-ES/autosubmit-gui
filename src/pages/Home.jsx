@@ -176,12 +176,13 @@ const Home = () => {
           <div className="d-flex gap-2 flex-wrap">
             <div className="flex-fill">
               <form className="input-group" onSubmit={handleSubmit}>
-                <input ref={filterRef}
+                <input ref={filterRef} id="search-input"
                   className="form-control" placeholder="Search by expid, description, or owner..." />
-                <button type="submit" className="btn btn-dark fw-bold px-4">
+                <button type="submit" className="btn btn-dark fw-bold px-4" id="search-btn">
                   Search
                 </button>
-                <button type="button" className="btn btn-light border fw-bold px-4"
+                <button type="button" id="search-clear"
+                  className="btn btn-light border fw-bold px-4"
                   onClick={handleClear}>
                   Clear
                 </button>
