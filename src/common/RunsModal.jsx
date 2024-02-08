@@ -1,6 +1,7 @@
-import { Modal } from "react-bootstrap"
 import { autosubmitApiV3 } from "../services/autosubmitApiV3";
 import { creationDateToId } from "../components/context/utils";
+import Modal from "./Modal";
+import { Dialog } from "@headlessui/react";
 
 
 
@@ -11,32 +12,33 @@ const RunsModal = ({ expid, show, onHide, onRunSelect }) => {
   })
 
   return (
-    <Modal show={show} onHide={onHide} centered size="xl">
-      <Modal.Header closeButton
-        bsPrefix="modal-header bg-dark text-white">
-        <Modal.Title>
+    <Modal show={show} onClose={onHide}>
+      <Dialog.Title className={"bg-dark text-white py-4 px-4 text-2xl font-semibold rounded-t-lg flex gap-4 justify-between items-center"}>
+        <span>
           <i className="fa-solid fa-clock-rotate-left mx-2"></i> Runs of <strong>{expid}</strong>
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
+        </span>
+        <div className="cursor-pointer" onClick={onHide}>
+          <i className="fa-solid fa-xmark"></i>
+        </div>
+      </Dialog.Title>
+      <div className="bg-white py-6 px-6 rounded-b-lg">
         {
           isFetching ?
-            <div className="w-100 h-100 d-flex align-items-center justify-content-center">
+            <div className="w-full h-full flex items-center justify-center">
               <div className="spinner-border m-5" role="status"></div>
             </div>
             :
-            <div className="small scroll">
-              <table className="table table-sm table-bordered list-table">
-                <thead className="table-dark">
+            <div className="text-sm scroll">
+              <table className="table table-bordered">
+                <thead className="bg-dark text-white">
                   <tr>
-                    <th scope='col' className=''></th>
+                    <th scope='col' className='border'></th>
                     <th scope='col' className='ps-2'>
                       RunId
                     </th>
                     <th scope='col' className='ps-2'>
                       Created
                     </th>
-                    {/* <th scope='col'>Created</th> */}
                     <th scope='col' className='ps-2'>
                       Finish
                     </th>
@@ -83,7 +85,7 @@ const RunsModal = ({ expid, show, onHide, onRunSelect }) => {
                       <tr key={item.run_id}>
                         <td className='text-center'>
                           <button
-                            className={"rounded-3 btn btn-sm btn-primary text-white"}
+                            className={"rounded-full btn btn-sm btn-primary text-white"}
                             type='button'
                             onClick={() => onRunSelect(item)}
                           >
@@ -132,7 +134,7 @@ const RunsModal = ({ expid, show, onHide, onRunSelect }) => {
               </table>
             </div>
         }
-      </Modal.Body>
+      </div>
     </Modal>
   )
 }

@@ -38,7 +38,7 @@ const ConfigTableGen = ({ config, prefix, differences }) => {
     <>
       {
         configValues && Object.keys(configValues).length > 0 &&
-        <div className="configuration-section card border-0">
+        <div className="configuration-section w-full min-w-0 border-0">
           {
             prefix && <div className="configuration-section-title">
               [{prefix}]
@@ -51,8 +51,8 @@ const ConfigTableGen = ({ config, prefix, differences }) => {
               }
             </div>
           }
-          <table className='table table-sm table-fixed list-table'>
-            <thead className='table-dark'>
+          <table className='table table-fixed w-full break-words'>
+            <thead className='bg-dark text-white font-bold'>
               <tr>
                 <th scope='col'>Setting</th>
                 <th scope='col'>Value</th>
@@ -62,7 +62,7 @@ const ConfigTableGen = ({ config, prefix, differences }) => {
               {
                 Object.keys(configValues).map(key => {
                   return (
-                    <tr key={key}>
+                    <tr key={key} className=" border-b">
                       <td>
                         {key}
                       </td>
@@ -112,31 +112,31 @@ const ExperimentConfiguration = () => {
   const { data, isFetching, isError } = useGetExperimentConfigurationQuery(routeParams.expid)
 
   return (
-    <div className="w-100 d-flex flex-column">
+    <div className="w-full flex flex-col min-w-0">
       {/* <div className="d-flex flex-row-reverse mb-3 gap-3 align-items-center">
         <button className="btn btn-success fw-bold text-white px-5" onClick={() => { refetch() }}>REFRESH</button>
       </div> */}
       {
         (isError || data?.error) &&
-        <span className="alert alert-danger rounded-4 px-4">
+        <span className="alert alert-danger rounded-2xl">
           <i className="fa-solid fa-triangle-exclamation me-2"></i> {data?.error_message || "Unknown error"}
         </span>
       }
       {
         isFetching ?
-          <div className="w-100 h-100 d-flex align-items-center justify-content-center">
+          <div className="w-full h-full flex items-center justify-center">
             <div className="spinner-border" role="status"></div>
           </div>
           :
           <>
-            <div className='row'>
-              <div className='col-md-6'>
+            <div className='grid grid-cols-1 md:grid-cols-2'>
+              <div>
                 <div className='text-center header-information-space-sm configuration-source-info'>
                   <span>Current Run Configuration (Historical Database)</span>
                 </div>
                 <ConfigTableGen config={data.configuration_current_run} differences={new Set(data.differences)} />
               </div>
-              <div className='col-md-6'>
+              <div>
                 <div className='text-center header-information-space-sm configuration-source-info'>
                   <span>Current FileSystem Configuration</span>
                 </div>

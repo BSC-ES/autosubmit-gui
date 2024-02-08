@@ -7,23 +7,17 @@
   src: url('../public/fonts/SourceSans3-VariableFont_wght.ttf') format('truetype-variations');
 }
 
-$primary: #4E8490;
-$secondary: #FF511C;
-$light: #F8F8F8;
-$dark: #404040;
-$success: #43A373;
-$warning: #F0AD4E;
-
 @import '@fortawesome/fontawesome-free/css/all.min.css';
 
-
-html {
-  font-family: 'Source Sans 3', sans-serif;
+@layer base {
+  html {
+    font-family: 'Source Sans 3', sans-serif;
+  }
 }
 
 @layer components {
   .btn {
-    @apply px-3 py-1 inline-flex items-center justify-center whitespace-nowrap rounded-md transition-colors;
+    @apply px-3 py-1 inline-block items-center justify-center whitespace-nowrap rounded-md transition-colors;
     @apply focus-visible:outline-none focus-visible:ring;
     @apply disabled:pointer-events-none disabled:opacity-50;
   }
@@ -44,10 +38,23 @@ html {
     @apply bg-light text-black hover:bg-black/10
   }
 
+  .btn-success {
+    @apply bg-success text-white hover:bg-success/90
+  }
+
+  .btn-danger {
+    @apply bg-danger text-white hover:bg-danger/90
+  }
+
+  .btn-warning {
+    @apply bg-warning text-white hover:bg-warning/90
+  }
+
   .form-input {
     @apply px-3 py-1 rounded-md border bg-transparent transition-colors;
     @apply focus-visible:outline-none focus-visible:ring;
     @apply disabled:cursor-not-allowed disabled:opacity-50;
+    @apply read-only:cursor-not-allowed read-only:opacity-50;
   }
 
   .form-select {
@@ -61,7 +68,25 @@ html {
   }
 
   .badge {
-    @apply px-3 py-0 rounded-2xl text-sm font-bold;
+    @apply px-2 py-1 rounded-lg text-xs font-bold leading-none;
+  }
+
+  .alert {
+    @apply bg-light border px-6 py-4 rounded-2xl;
+  }
+
+  .alert-danger {
+    @apply bg-danger/20 text-red-950 border-danger/40;
+  }
+
+  .table-bordered {
+    > :not(caption)>* {
+      @apply border-y;
+
+      >* {
+        @apply border-x;
+      }
+    }
   }
 
   .spinner-border {
@@ -74,6 +99,24 @@ html {
     box-sizing: border-box;
     @apply animate-spin;
     @apply border-black border-b-transparent;
+  }
+
+  .markdown-container {
+    ul {
+      @apply list-disc ms-8;
+    }
+    h1 {
+      @apply text-4xl font-semibold mt-3 mb-2;
+    }
+    h2 {
+      @apply text-3xl font-semibold mt-3 mb-2;
+    }
+    h3 {
+      @apply text-2xl font-medium mt-3 mb-2;
+    }
+    code {
+      @apply text-orange-700;
+    }
   }
 }
 
@@ -124,7 +167,7 @@ html {
 .sticky-header {
   position: sticky;
   top: 0;
-  z-index: 1020;
+  z-index: 2;
 }
 
 .error-message {

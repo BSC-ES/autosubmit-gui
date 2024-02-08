@@ -242,7 +242,7 @@ class TimeScatterPlot extends Component {
     }
 
     return (
-      <div className="scroll-x position-relative">
+      <div className="scroll-x relative">
         <svg
           version="1.1"
           baseProfile="full"
@@ -250,7 +250,7 @@ class TimeScatterPlot extends Component {
           ref={this.setSvgElement}
         >
         </svg>
-        <button className='position-absolute top-0 start-0 btn'
+        <button className='absolute top-0 start-0 btn'
           onClick={() => saveSVGObj(this.svgElement, this.props.mainTitle)}>
           <i className="fa-solid fa-floppy-disk"></i>
         </button>

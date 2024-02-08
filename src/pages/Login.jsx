@@ -39,14 +39,14 @@ const Login = () => {
   }, [data])
 
   return (
-    <div className="vw-100 vh-100 d-flex align-items-center justify-content-center">
+    <div className=" w-screen h-screen flex items-center justify-center">
       {
         !isError ?
           <div className="spinner-border" role="status"></div>
           :
-          <div className="text-danger w-100 h-100 d-flex flex-column gap-4 align-items-center justify-content-center">
-            <i className="fa-solid fa-x" style={{ fontSize: "8rem" }}></i>
-            <div className="fs-4">Unauthorized</div>
+          <div className="text-danger w-full grow flex flex-col gap-8 items-center justify-center">
+            <i className="fa-solid fa-x text-9xl"></i>
+            <div className="text-2xl">Unauthorized</div>
           </div>
       }
     </div>

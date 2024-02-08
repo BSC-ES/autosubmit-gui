@@ -11,9 +11,10 @@ import {
   arrayMeanAbsoluteDeviationAroundMean,
   formatNumberMoney,
 } from "../components/context/utils"
-import { Modal } from "react-bootstrap"
 import TimeScatterPlot from "../components/plots/TimeScatterPlot"
 import { exportToCSV } from "../services/utils"
+import Modal from "../common/Modal"
+import { Dialog } from "@headlessui/react"
 
 
 const PERFORMANCE_PLOTS = [
@@ -152,8 +153,8 @@ const PerformancePlots = ({ considered }) => {
   }
 
   return (
-    <div className="d-flex flex-column gap-3 align-items-center">
-      <div className="d-flex gap-3 flex-wrap justify-content-around">
+    <div className="flex flex-col gap-3 items-center">
+      <div className="flex gap-3 flex-wrap justify-around">
         {
           PERFORMANCE_PLOTS.map(item => {
             return (
@@ -173,7 +174,7 @@ const PerformancePlots = ({ considered }) => {
           })
         }
       </div>
-      <div className="w-100 d-flex gap-3 flex-wrap justify-content-around" style={{ minHeight: 480 }}>
+      <div className="w-full flex gap-3 flex-wrap justify-around" style={{ minHeight: 480 }}>
         {
           PERFORMANCE_PLOTS.map(item => {
             let plot = <></>
@@ -248,9 +249,9 @@ const PerformanceConsideredJobs = ({ considered }) => {
 
   return (
     <>
-      <table className='table table-sm table-bordered list-table'>
+      <table className='table w-full table-bordered'>
         <thead>
-          <tr className='table-primary performance-table-header sticky-header'>
+          <tr className='bg-primary/25 font-bold performance-table-header sticky-header'>
             <th scope='col'>
               Chunk
             </th>
@@ -276,7 +277,7 @@ const PerformanceConsideredJobs = ({ considered }) => {
               }
             }).map((item) => (
               <tr key={item.name}>
-                <td className='ps-1 fw-bold'>{item.chunk}</td>
+                <td className='ps-1 font-bold'>{item.chunk}</td>
                 <td className='ps-1'>{item.name}</td>
                 <td className='text-end pe-1'>
                   <strong> {secondsToDelta(item.queue)}</strong>
@@ -303,9 +304,9 @@ const PerformanceConsideredJobs = ({ considered }) => {
             ))}
         </tbody>
       </table>
-      <div className="text-end">
+      <div className="text-end mt-2">
         <button onClick={exportConsideredToCSV}
-          className="btn btn-light btn-sm border">
+          className="btn btn-light text-sm border">
           Export to CSV
         </button>
       </div>
@@ -333,9 +334,9 @@ const PerformanceSummary = ({ data }) => {
 
   return (
     <>
-      <table className='table table-sm table-bordered list-table'>
+      <table className='table w-full table-bordered'>
         <thead>
-          <tr className='table-primary performance-table-header'>
+          <tr className='bg-primary/25 font-bold performance-table-header'>
             <th scope='col'>Metric</th>
             {
               ["Value", "Min", "Max", "Mean", "SD", "MAD"].map(title =>
@@ -350,8 +351,8 @@ const PerformanceSummary = ({ data }) => {
             metrics && Object.keys(metrics).map(key => {
               return (
                 <tr key={key}>
-                  <th scope='row'>{key}</th>
-                  <td className={'text-end pe-1' + (key === "ASYPD" ? " fw-bold" : "")}>
+                  <th scope='row' className="text-start">{key}</th>
+                  <td className={'text-end pe-1' + (key === "ASYPD" ? " font-bold" : "")}>
                     <span className='rounded px-1 bg-light'>
                       {formatNumberMoney(data[key], true)}
                     </span>
@@ -362,7 +363,7 @@ const PerformanceSummary = ({ data }) => {
                   <td className='text-end pe-1'>
                     {formatNumberMoney(Math.max(...metrics[key]), true)}
                   </td>
-                  <td className={'text-end pe-1' + (key !== "ASYPD" ? " fw-bold" : "")}>
+                  <td className={'text-end pe-1' + (key !== "ASYPD" ? " font-bold" : "")}>
                     {formatNumberMoney(arrayAverage(metrics[key]))}
                   </td>
                   <td className='text-end pe-1'>
@@ -407,15 +408,18 @@ const ExperimentPerformance = () => {
 
   return (
     <>
-      <Modal show={showWarnings} onHide={toggleShowWarning} centered>
-        <Modal.Header closeButton
-          bsPrefix="modal-header bg-warning text-white">
-          <Modal.Title>
+      <Modal show={showWarnings} onClose={toggleShowWarning}>
+
+        <Dialog.Title className={"bg-warning text-white py-4 px-4 text-2xl font-semibold rounded-t-lg flex gap-4 justify-between items-center"}>
+          <span>
             <i className="fa-solid fa-triangle-exclamation mx-2"></i> Warnings
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <ol>
+          </span>
+          <div className="cursor-pointer" onClick={toggleShowWarning}>
+            <i className="fa-solid fa-xmark"></i>
+          </div>
+        </Dialog.Title>
+        <div className="bg-white py-6 px-6 rounded-b-lg">
+          <ol className="list-decimal ms-4">
             {
               data && Array.isArray(data.warnings_job_data) &&
               data.warnings_job_data.map(warning => <li key={warning}>
@@ -423,17 +427,20 @@ const ExperimentPerformance = () => {
               </li>)
             }
           </ol>
-        </Modal.Body>
+        </div>
       </Modal>
 
-      <Modal show={showHelp} onHide={toggleShowHelp} centered size="xl">
-        <Modal.Header closeButton
-          bsPrefix="modal-header bg-dark text-white">
-          <Modal.Title>
+      <Modal show={showHelp} onClose={toggleShowHelp}>
+
+        <Dialog.Title className={"bg-dark text-white py-4 px-4 text-2xl font-semibold rounded-t-lg flex gap-4 justify-between items-center"}>
+          <span>
             <i className="fa-solid fa-circle-light mx-2"></i> Metrics description
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
+          </span>
+          <div className="cursor-pointer" onClick={toggleShowHelp}>
+            <i className="fa-solid fa-xmark"></i>
+          </div>
+        </Dialog.Title>
+        <div className="bg-white py-6 px-6 rounded-b-lg">
           <p>
             <strong>Parallelization</strong>: Total number of cores allocated
             for the run, per SIM.
@@ -504,27 +511,28 @@ const ExperimentPerformance = () => {
             </a>{" "}
             for more details.
           </p>
-        </Modal.Body>
+
+        </div>
       </Modal>
 
-      <div className="w-100 flex-fill d-flex flex-column gap-3" style={{ minWidth: 0 }}>
+      <div className="w-full grow flex flex-col gap-4 min-w-0"  >
         {
           (isError || data?.error) &&
-          <span className="alert alert-danger rounded-4 px-4">
+          <span className="alert alert-danger rounded-2xl">
             <i className="fa-solid fa-triangle-exclamation me-2"></i> {data?.error_message || "Unknown error"}
           </span>
         }
-        <div className="d-flex justify-content-between align-items-center flex-wrap">
-          <h2 className="fw-semibold">PERFORMANCE METRICS</h2>
-          <div className="d-flex gap-2 flex-wrap">
+        <div className="flex justify-between items-center flex-wrap">
+          <h2 className="text-3xl font-semibold">PERFORMANCE METRICS</h2>
+          <div className="flex gap-2 flex-wrap">
             {
               data && Array.isArray(data.warnings_job_data) && data.warnings_job_data.length > 0 &&
-              <button className="btn btn-warning fw-bold text-white px-4"
+              <button className="btn btn-warning font-bold text-white px-4"
                 onClick={() => { toggleShowWarning() }}>
                 WARNINGS ({data.warnings_job_data.length})
               </button>
             }
-            <button className="btn btn-success fw-bold text-white"
+            <button className="btn btn-success font-bold text-white"
               title="Refresh data"
               onClick={() => { refetch() }}>
               <i className="fa-solid fa-rotate-right"></i>
@@ -534,27 +542,27 @@ const ExperimentPerformance = () => {
 
         {
           isFetching ?
-            <div className="w-100 h-100 d-flex align-items-center justify-content-center">
+            <div className="w-full h-full flex items-center justify-center">
               <div className="spinner-border" role="status"></div>
             </div>
             :
             <>
-              <div className="d-flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-3 w-full">
 
-                <div className="rounded-4 border flex-fill mw-100">
-                  <div className="bg-dark rounded-top-4 d-flex gap-3 justify-content-between align-items-center text-white px-4 py-2 mb-2">
-                    <label className="fw-bold fs-6">SUMMARY</label>
+                <div className="rounded-2xl border grow min-w-0">
+                  <div className="bg-dark rounded-t-2xl flex gap-3 justify-between items-center text-white px-6 py-2 mb-2">
+                    <label className="font-bold">SUMMARY</label>
                     <div>
-                      <button className="btn btn-dark rounded-circle"
+                      <button className="btn btn-dark rounded-full"
                         onClick={toggleShowHelp}>
                         <i className="fa-solid fa-circle-question"></i>
                       </button>
                     </div>
                   </div>
-                  <div className="p-3">
+                  <div className="p-4">
                     <div className="overflow-auto">
                       <PerformanceSummary data={data} />
-                      <div className="d-flex flex-column">
+                      <div className="flex flex-col mt-4">
                         <span>
                           <strong>Value</strong>: Value of the metric calculated at the experiment level.
                         </span>
@@ -569,17 +577,17 @@ const ExperimentPerformance = () => {
                   </div>
                 </div>
 
-                <div className="rounded-4 border flex-fill mw-100">
-                  <div className="bg-dark rounded-top-4 d-flex gap-3 justify-content-between align-items-center text-white px-4 py-2 mb-2">
-                    <label className="fw-bold fs-6">CONSIDERED JOBS</label>
+                <div className="rounded-2xl border grow min-w-0">
+                  <div className="bg-dark rounded-t-2xl flex gap-3 justify-between items-center text-white px-6 py-2 mb-2">
+                    <label className="font-bold">CONSIDERED JOBS</label>
                     <div>
-                      <button className="btn btn-dark rounded-circle"
+                      <button className="btn btn-dark rounded-full"
                         onClick={toggleShowHelp}>
                         <i className="fa-solid fa-circle-question"></i>
                       </button>
                     </div>
                   </div>
-                  <div className="p-3">
+                  <div className="p-4">
                     <div className="overflow-auto" style={{ maxHeight: "50vh" }}>
                       <PerformanceConsideredJobs considered={data.considered} />
                     </div>
@@ -588,9 +596,9 @@ const ExperimentPerformance = () => {
               </div>
 
 
-              <div className="rounded-4 border flex-fill">
-                <div className="bg-dark rounded-top-4 d-flex gap-3 justify-content-between align-items-center text-white px-4 py-3 mb-4">
-                  <label className="fw-bold fs-6">COMPARATIVE PLOTS</label>
+              <div className="rounded-2xl border grow">
+                <div className="bg-dark rounded-t-2xl flex gap-3 justify-between items-center text-white px-4 py-3 mb-4">
+                  <label className="font-bold">COMPARATIVE PLOTS</label>
                 </div>
 
                 <div className="p-3">

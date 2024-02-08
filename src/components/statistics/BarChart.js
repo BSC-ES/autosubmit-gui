@@ -398,14 +398,12 @@ class BarChart extends Component {
 
   return (
     <div>
-        <div className="row">
-          <div className="col">            
-            {queueFilter}          
-            {runFilter}
-            {failedQueueFilter}  
-            {failedRunFilter}  
-            {failedAttemptFilter}              
-          </div>
+        <div className="flex items-center justify-center gap-4">
+          {queueFilter}          
+          {runFilter}
+          {failedQueueFilter}  
+          {failedRunFilter}  
+          {failedAttemptFilter}              
         </div>
         <svg version="1.1"
         baseProfile="full"

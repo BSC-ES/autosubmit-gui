@@ -24,7 +24,9 @@ const About = () => {
     })
 
     return (
-        <div className="container" dangerouslySetInnerHTML={{ __html: markdown }}>
+        <div className='border rounded-2xl px-8 pt-6 pb-8'>
+            <div className="markdown-container"
+                dangerouslySetInnerHTML={{ __html: markdown }} />
         </div>
     )
 }

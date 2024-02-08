@@ -21,20 +21,19 @@ const Navbar = () => {
     const { width } = useWindowSize()
 
     return (
-        <nav className="px-4 py-3 d-flex gap-5 justify-content-between">
+        <nav className="flex justify-between gap-12 py-4 px-6">
             <Link to={"/"}>
-                <Logo style={{ height: "2.5rem" }} />
+                <Logo className="h-10"/>
             </Link>
             {
                 width > 992 &&
-                <div className="flex-fill d-flex align-items-center gap-5 mx-4">
+                <div className="grow flex items-center gap-12 px-6">
                     {
                         NAVBAR_ITEMS.map(item =>
                             <Link key={item.route}
-                                className={"d-flex align-items-center " + (location.pathname === item.route ? ' text-secondary' : 'text-dark')}
+                                className={"flex items-center " + (location.pathname === item.route ? ' text-secondary' : 'text-dark')}
                                 to={item.route}>
-                                <i style={{ fontSize: "1.5rem" }}
-                                    className={"me-4 " + item.iconClass}></i>
+                                <i className={"text-2xl mr-6 " + item.iconClass}></i>
                                 <span>
                                     {item.name}
                                 </span>

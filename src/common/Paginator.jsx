@@ -19,18 +19,17 @@ const Paginator = ({ totalPages, currentPage = 1, siblingSize = 1, onPageClick }
         totalPages > 0 &&
         <>
           <button
-            className={"btn rounded-circle border-0 btn-outline-light text-primary " + ((currentPage <= 1) ? "disabled" : "")}
-            style={{ height: "2.5rem", width: "2.5rem" }}
+            className={"h-10 w-10 btn btn-light bg-transparent rounded-full text-primary"}
+            disabled={(currentPage <= 1)}
             onClick={() => onPageClick({ selected: currentPage - 1 })}>
             <i className="fa-solid fa-angle-left"></i>
           </button>
           {
             !pages.includes(1) &&
             <button type="button"
-              className={"btn rounded-circle btn-outline-light text-primary border-primary"}
-              style={{ height: "2.5rem", minWidth: "2.5rem" }}
+              className={"h-10 w-10 btn rounded-full btn-light bg-transparent text-primary"}
               onClick={() => onPageClick({ selected: 1 })}>
-              <span className="small">1</span>
+              <span className="text-sm">1</span>
             </button>
           }
           {
@@ -41,10 +40,9 @@ const Paginator = ({ totalPages, currentPage = 1, siblingSize = 1, onPageClick }
             pages.map(item => {
               return (
                 <button key={item} type="button"
-                  className={"btn rounded-circle " + ((currentPage === item) ? "btn-primary text-white" : "btn-outline-light text-primary border-primary")}
-                  style={{ height: "2.5rem", minWidth: "2.5rem" }}
+                  className={"h-10 w-10 btn rounded-full " + ((currentPage === item) ? "btn-primary" : "btn-light bg-transparent text-primary")}
                   onClick={() => onPageClick({ selected: item })}>
-                  <span className="small">{item + 0}</span>
+                  <span className="text-sm">{item + 0}</span>
                 </button>
               )
             })
@@ -56,15 +54,14 @@ const Paginator = ({ totalPages, currentPage = 1, siblingSize = 1, onPageClick }
           {
             !pages.includes(totalPages) &&
             <button type="button"
-              className={"btn rounded-circle btn-outline-light text-primary border-primary"}
-              style={{ height: "2.5rem", minWidth: "2.5rem" }}
+              className={"h-10 w-10 btn rounded-full btn-light bg-transparent text-primary"}
               onClick={() => onPageClick({ selected: totalPages })}>
-              <span className="small">{totalPages}</span>
+              <span className="text-sm">{totalPages}</span>
             </button>
           }
           <button
-            className={"btn rounded-circle border-0 btn-outline-light text-primary " + ((currentPage >= totalPages) ? "disabled" : "")}
-            style={{ height: "2.5rem", width: "2.5rem" }}
+            className={"h-10 w-10 btn btn-light bg-transparent rounded-full text-primary"}
+            disabled={(currentPage >= totalPages)}
             onClick={() => onPageClick({ selected: currentPage + 1 })}>
             <i className="fa-solid fa-angle-right"></i>
           </button>

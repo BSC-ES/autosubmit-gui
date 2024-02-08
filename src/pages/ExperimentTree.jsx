@@ -151,48 +151,44 @@ const ExperimentTree = () => {
         expid={routeParams.expid}
         onRunSelect={handleRunSelect}
       />
-      <div className="w-100 d-flex flex-column">
+      <div className="w-full flex flex-col gap-4">
         {
           (isError || data?.error) &&
-          <span className="alert alert-danger rounded-4 px-4">
+          <span className="alert alert-danger rounded-2xl">
             <i className="fa-solid fa-triangle-exclamation me-2"></i> {data?.error_message || "Unknown error"}
           </span>
         }
-        <div className="d-flex mb-3 gap-2 align-items-center flex-wrap">
+        <div className="flex gap-2 items-center flex-wrap">
           <div>
-            <div className="input-group">
-              <button className="btn btn-primary fw-bold text-white"
-                title="Select Run"
-                onClick={toggleShowRunsM}>
-                <i className="fa-solid fa-clock-rotate-left me-2"></i> Run: {(selectedRun.run_id && selectedRun.created) || "Latest"}
+            <button className={"btn btn-primary font-bold " + ((selectedRun?.run_id) && " rounded-e-none")}
+              title="Select Run"
+              onClick={toggleShowRunsM}>
+              <i className="fa-solid fa-clock-rotate-left me-2"></i> Run: {(selectedRun.run_id && selectedRun.created) || "Latest"}
+            </button>
+            {
+              (selectedRun?.run_id) &&
+              <button className="btn btn-light text-primary rounded-s-none border"
+                title="Reset to latest"
+                onClick={handleResetRun}>
+                <i className="fa-solid fa-xmark"></i>
               </button>
-              {
-                (selectedRun?.run_id) &&
-                <button className="btn btn-light border-primary text-primary"
-                  title="Reset to latest"
-                  onClick={handleResetRun}>
-                  <i className="fa-solid fa-xmark"></i>
-                </button>
-              }
-            </div>
+            }
           </div>
-          <div className="flex-fill">
-            <form className="input-group" onSubmit={handleFilter}>
-              <input ref={filterRef}
-                className="form-control" placeholder="Filter job..." />
-              <button type="submit" className="btn btn-dark fw-bold px-4">Filter</button>
-              <button type="button" className="btn btn-light border fw-bold px-4" onClick={handleClear}>Clear</button>
-            </form>
-          </div>
+          <form className="grow flex flex-wrap" onSubmit={handleFilter}>
+            <input ref={filterRef}
+              className="form-input rounded-e-none grow" placeholder="Filter job..." />
+            <button type="submit" className="btn btn-dark border-dark font-bold px-4 rounded-s-none rounded-e-none">Filter</button>
+            <button type="button" className="btn btn-light border font-bold px-4 rounded-s-none" onClick={handleClear}>Clear</button>
+          </form>
           {
             (!selectedRun?.run_id) &&
             <button
-              className={"btn fw-bold text-white px-4 text-nowrap " + (activeMonitor ? "btn-danger" : "btn-success")}
+              className={"btn font-bold px-4 text-nowrap " + (activeMonitor ? "btn-danger" : "btn-success")}
               onClick={toggleActiveMonitor}>
               {activeMonitor ? "STOP MONITORING" : "START MONITOR"}
             </button>
           }
-          <button className="btn btn-success fw-bold text-white"
+          <button className="btn btn-success font-bold"
             title="Refresh data"
             onClick={() => { refetch() }}>
             <i className="fa-solid fa-rotate-right"></i>
@@ -200,22 +196,22 @@ const ExperimentTree = () => {
         </div>
         {
           isFetching ?
-            <div className="w-100 h-100 d-flex align-items-center justify-content-center">
+            <div className="w-full h-full flex items-center justify-center">
               <div className="spinner-border" role="status"></div>
             </div>
             :
             data &&
-            <div className="d-flex w-100 gap-3 flex-wrap d-flex flex-fill gap-3 justify-content-center">
+            <div className="flex w-full flex-wrap grow gap-4 justify-center">
 
-              <div className="flex-fill d-flex flex-column gap-3 flex-wrap">
-                <div className="d-flex flex-wrap gap-2 align-items-center justify-content-between">
-                  <span className="mx-2 small">Total #Jobs: {data.total} | Chunk unit: {data?.reference?.chunk_unit} | Chunk size: {data?.reference?.chunk_size}</span>
-                  <div className="d-flex gap-2">
-                    <button className="btn btn-sm btn-primary text-white fw-bold px-4" onClick={handleExpand}>Expand All +</button>
-                    <button className="btn btn-sm btn-secondary text-white fw-bold px-4" onClick={handleCollapse}>Collapse All -</button>
+              <div className="grow flex flex-col gap-4 flex-wrap">
+                <div className="flex flex-wrap gap-2 items-center justify-between">
+                  <span className="mx-2 text-sm">Total #Jobs: {data.total} | Chunk unit: {data?.reference?.chunk_unit} | Chunk size: {data?.reference?.chunk_size}</span>
+                  <div className="flex gap-2">
+                    <button className="btn btn-primary font-bold px-4 text-sm" onClick={handleExpand}>Expand All +</button>
+                    <button className="btn btn-secondary font-bold px-4 text-sm" onClick={handleCollapse}>Collapse All -</button>
                   </div>
                 </div>
-                <div className="border rounded-4 p-3 flex-fill">
+                <div className="border rounded-2xl p-4 grow">
                   <div className="overflow-auto" style={{ maxHeight: "75vh", maxWidth: "80vw" }}>
                     <FancyTree treeData={data.tree}
                       onActivateNode={handleOnActivateNode}

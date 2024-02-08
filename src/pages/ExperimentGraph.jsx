@@ -179,27 +179,25 @@ const ExperimentGraph = () => {
   const toggleActiveMonitor = () => { setActiveMonitor(!activeMonitor); }
 
   return (
-    <div className="w-100 d-flex flex-column">
+    <div className="w-full flex flex-col gap-4">
       {
         (isError || data?.error) &&
-        <span className="alert alert-danger rounded-4 px-4">
+        <span className="alert alert-danger rounded-2xl">
           <i className="fa-solid fa-triangle-exclamation me-2"></i> {data?.error_message || "Unknown error"}
         </span>
       }
-      <div className="d-flex mb-3 gap-2 align-items-center flex-wrap">
-        <div className="flex-fill">
-          <form className="input-group" onSubmit={handleFilter}>
-            <input ref={filterRef}
-              className="form-control" placeholder="Filter job..." />
-            <button type="submit" className="btn btn-dark fw-bold px-4">Filter</button>
-            <button type="button" className="btn btn-light border fw-bold px-4" onClick={handleClear}>Clear</button>
-          </form>
-        </div>
-        <button className={"btn fw-bold text-white px-4 text-nowrap " + (activeMonitor ? "btn-danger" : "btn-success")}
+      <div className="flex gap-2 items-center flex-wrap">
+        <form className="grow flex flex-wrap" onSubmit={handleFilter}>
+          <input ref={filterRef}
+            className="form-input rounded-e-none grow" placeholder="Filter job..." />
+          <button type="submit" className="btn btn-dark font-bold px-4 rounded-s-none rounded-e-none">Filter</button>
+          <button type="button" className="btn btn-light border font-bold px-4 rounded-s-none" onClick={handleClear}>Clear</button>
+        </form>
+        <button className={"btn font-bold text-white px-4 text-nowrap " + (activeMonitor ? "btn-danger" : "btn-success")}
           onClick={toggleActiveMonitor}>
           {activeMonitor ? "STOP MONITORING" : "START MONITOR"}
         </button>
-        <button className="btn btn-success fw-bold text-white"
+        <button className="btn btn-success font-bold text-white"
           title="Refresh data"
           onClick={() => { refetch() }}>
           <i className="fa-solid fa-rotate-right"></i>
@@ -208,16 +206,16 @@ const ExperimentGraph = () => {
 
       {
         isFetching ?
-          <div className="w-100 h-100 d-flex align-items-center justify-content-center">
+          <div className="w-full h-full flex items-center justify-center">
             <div className="spinner-border" role="status"></div>
           </div>
           :
           data &&
-          <div className="d-flex w-100 gap-3 justify-content-center flex-wrap">
+          <div className="flex w-full gap-4 justify-center flex-wrap">
 
-            <div className="col d-flex flex-column gap-3 flex-wrap" style={{ minWidth: "min(30rem,90vw)" }}>
-              <div className="d-flex gap-2 align-items-center justify-content-between">
-                <span className="mx-2 small">
+            <div className="grow shrink-0 basis-0 flex flex-col gap-4" style={{ minWidth: "min(30rem,90vw)" }}>
+              <div className="flex gap-2 items-center justify-between">
+                <span className="mx-2 text-sm">
                   Total #Jobs: {data.total_jobs} | Chunk unit: {data.chunk_unit} | Chunk size: {data.chunk_size}
                 </span>
               </div>

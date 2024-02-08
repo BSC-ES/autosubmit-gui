@@ -71,32 +71,32 @@ const ExperimentTableView = () => {
   }
 
   return (
-    <div className="w-100 d-flex flex-column gap-3">
+    <div className="w-full flex flex-col gap-4">
       {
         (isError || data?.error) &&
-        <span className="alert alert-danger rounded-4 px-4">
+        <span className="alert alert-danger rounded-2xl">
           <i className="fa-solid fa-triangle-exclamation me-2"></i> {data?.error_message || "Unknown error"}
         </span>
       }
       {
         isFetching ?
-          <div className="w-100 h-100 d-flex align-items-center justify-content-center">
+          <div className="w-full h-full flex items-center justify-center">
             <div className="spinner-border" role="status"></div>
           </div>
           :
           <>
-            <div>
-              <div className="d-flex align-items-center justify-content-between">
-                <h3>Aggregated by Job Section</h3>
+            <div className="w-full flex flex-col gap-2">
+              <div className="flex items-center justify-between">
+                <h3 className="text-2xl font-semibold">Aggregated by Job Section</h3>
                 <button onClick={exportAggregatedToCSV}
-                  className="btn btn-light btn-sm border">
+                  className="btn btn-light text-sm border">
                   Export to CSV
                 </button>
               </div>
 
-              <div className="scroll-x">
-                <table className='table mt-2 table-sm table-bordered list-table'>
-                  <thead className='table-dark'>
+              <div className="scroll-x w-full">
+                <table className='table table-bordered w-full'>
+                  <thead className="bg-dark text-white font-bold">
                     <tr>
                       <th scope='col'>Section</th>
                       <th scope='col' className='text-right'>
@@ -142,18 +142,18 @@ const ExperimentTableView = () => {
               </div>
             </div>
 
-            <div>
-              <div className="d-flex align-items-center justify-content-between">
-                <h3>Job List</h3>
+            <div className="w-full flex flex-col gap-2">
+              <div className="flex items-center justify-between">
+                <h3 className="text-2xl font-semibold">Job List</h3>
                 <button onClick={exportJobListToCSV}
-                  className="btn btn-light btn-sm border">
+                  className="btn btn-light text-sm border">
                   Export to CSV
                 </button>
               </div>
 
-              <div className="scroll-x">
-                <table className='table mt-2 table-sm table-bordered list-table scroll-x'>
-                  <thead className='table-dark'>
+              <div className="scroll-x w-full">
+                <table className='table table-bordered w-full'>
+                  <thead className="bg-dark text-white font-bold">
                     <tr>
                       <th scope='col'>Job Name</th>
                       <th scope='col' className='text-right'>

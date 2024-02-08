@@ -143,7 +143,7 @@ const Home = () => {
       let newRefs = {}
       let items = data.experiments.map((exp, index) => {
         return (
-          <div key={exp.name} className="g-col-xxl-4 g-col-lg-6 g-col-12" style={{ minWidth: "20rem" }}>
+          <div key={exp.name}>
             <ExperimentCard experiment={exp}
               ref={(instance) => { newRefs[index] = instance }} />
           </div>
@@ -170,26 +170,26 @@ const Home = () => {
 
   return (
     <>
-      <div className="d-flex flex-fill gap-4 w-100">
 
-        <div className="flex-fill d-flex flex-column gap-3 w-100">
-          <div className="d-flex gap-2 flex-wrap">
-            <div className="flex-fill">
-              <form className="input-group" onSubmit={handleSubmit}>
-                <input ref={filterRef} id="search-input"
-                  className="form-control" placeholder="Search by expid, description, or owner..." />
-                <button type="submit" className="btn btn-dark fw-bold px-4" id="search-btn">
-                  Search
-                </button>
-                <button type="button" id="search-clear"
-                  className="btn btn-light border fw-bold px-4"
-                  onClick={handleClear}>
-                  Clear
-                </button>
-              </form>
-            </div>
+      <div className="grow w-full flex flex-col gap-4">
 
-            {/* <button type="button"
+        <div className="flex w-full gap-4 flex-wrap">
+          <form onSubmit={handleSubmit} className="grow flex flex-wrap">
+            <input ref={filterRef} id="search-input"
+              className="grow form-input rounded-e-none"
+              placeholder="Search by expid, description, or owner..." />
+            <button id="search-btn" type="submit"
+              className="btn btn-dark font-bold px-6 rounded-none">
+              Search
+            </button>
+            <button id="search-clear" type="button"
+              className="btn btn-light font-bold px-6 border rounded-s-none"
+              onClick={handleClear}>
+              Clear
+            </button>
+          </form>
+
+          {/* <button type="button"
               className="btn btn-primary fw-bold px-4 text-white text-nowrap"
               onClick={handleExpand}>
               Expand all +
@@ -199,81 +199,80 @@ const Home = () => {
               onClick={handleCollapse}>
               Collapse all -
             </button> */}
-          </div>
-
-          <div className="d-flex column-gap-5 row-gap-3 align-items-center flex-wrap">
-            <div className="d-flex gap-3 align-items-center mx-3">
-              <label className="text-nowrap">Type:</label>
-              <select value={searchParams.get("exp_type") || ""} onChange={handleChangeType}
-                className="form-select border border-primary text-primary fw-bold text-center">
-                <option value="">All</option>
-                <option value="experiment">Experiment</option>
-                <option value="operational">Operational</option>
-                <option value="test">Test</option>
-              </select>
-            </div>
-            <div className="flex-fill d-flex gap-3 align-items-center mx-3">
-              <input className="form-check-input" type="checkbox"
-                checked={isOnlyActive}
-                onChange={handleChangeOnlyActive}
-              />
-              <label className="text-nowrap">Only active</label>
-            </div>
-
-            <div className="d-flex gap-3 align-items-center mx-3">
-              <label className="text-nowrap">Order by:</label>
-              <select onChange={handleChangeOrder} value={searchParams.get("order") || ""}
-                className="form-select border border-primary text-primary fw-bold text-center">
-                <option value="">Default</option>
-                {
-                  EXP_ORDER_BY.map(item =>
-                    <option key={item.key} value={item.key}>{item.name}</option>
-                  )
-                }
-              </select>
-            </div>
-          </div>
-
-          <div className="flex-fill">
-            {
-              isFetching ?
-                <div className="w-100 h-100 d-flex align-items-center justify-content-center">
-                  <div className="spinner-border" role="status"></div>
-                </div>
-                :
-                <>
-                  {
-                    (isError || data?.error) ?
-                      <div className="text-danger w-100 h-100 d-flex flex-column gap-4 align-items-center justify-content-center">
-                        <i className="fa-solid fa-x" style={{ fontSize: "8rem" }}></i>
-                        <div className="fs-4">{"Error while fetching experiments"}</div>
-                      </div>
-                      :
-                      data?.experiments?.length > 0 ?
-                        <div className="grid gap-3">
-                          {generateExpItems()}
-                        </div>
-                        :
-                        <div className="text-dark w-100 h-100 d-flex flex-column gap-4 align-items-center justify-content-center">
-                          <i className="fa-solid fa-ban" style={{ fontSize: "8rem" }}></i>
-                          <div className="fs-4">No experiments found</div>
-                        </div>
-                  }
-                </>
-            }
-          </div>
-
-          {
-            !isFetching && data?.pagination?.total_pages > 0 && currentPage &&
-            <div className="d-flex gap-3 justify-content-center align-items-center">
-              <Paginator currentPage={currentPage} onPageClick={handleChangePage} totalPages={data.pagination.total_pages}></Paginator>
-            </div>
-          }
-
-
         </div>
 
+        <div className="flex gap-x-8 gap-y-3 items-center flex-wrap">
+          <div className="flex gap-4 items-center mx-4">
+            <label className="text-nowrap">Type:</label>
+            <select value={searchParams.get("exp_type") || ""} onChange={handleChangeType}
+              className="form-select border border-primary text-primary font-bold text-center">
+              <option value="">All</option>
+              <option value="experiment">Experiment</option>
+              <option value="operational">Operational</option>
+              <option value="test">Test</option>
+            </select>
+          </div>
+          <div className="flex gap-4 items-center mx-4">
+            <input type="checkbox" className="cursor-pointer"
+              checked={isOnlyActive}
+              onChange={handleChangeOnlyActive}
+            />
+            <label className="text-nowrap cursor-pointer" onClick={handleChangeOnlyActive}>Only active</label>
+          </div>
+
+          <div className="ms-auto flex gap-4 items-center mx-4">
+            <label className="text-nowrap">Order by:</label>
+            <select onChange={handleChangeOrder} value={searchParams.get("order") || ""}
+              className="form-select border border-primary text-primary font-bold text-center">
+              <option value="">Default</option>
+              {
+                EXP_ORDER_BY.map(item =>
+                  <option key={item.key} value={item.key}>{item.name}</option>
+                )
+              }
+            </select>
+          </div>
+        </div>
+
+        <div className="grow flex flex-col">
+          {
+            isFetching ?
+              <div className="grow w-full flex items-center justify-center">
+                <div className="spinner-border" role="status"></div>
+              </div>
+              :
+              <>
+                {
+                  (isError || data?.error) ?
+                    <div className="text-danger w-full grow flex flex-col gap-8 items-center justify-center">
+                      <i className="fa-solid fa-x text-9xl"></i>
+                      <div className="text-2xl">{"Error while fetching experiments"}</div>
+                    </div>
+                    :
+                    data?.experiments?.length > 0 ?
+                      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                        {generateExpItems()}
+                      </div>
+                      :
+                      <div className="text-dark w-full grow flex flex-col gap-8 items-center justify-center">
+                        <i className="fa-solid fa-ban text-9xl"></i>
+                        <div className="text-2xl">No experiments found</div>
+                      </div>
+                }
+              </>
+          }
+        </div>
+
+        {
+          !isFetching && data?.pagination?.total_pages > 0 && currentPage &&
+          <div className="flex gap-2 justify-center items-center">
+            <Paginator currentPage={currentPage} onPageClick={handleChangePage} totalPages={data.pagination.total_pages}></Paginator>
+          </div>
+        }
+
+
       </div>
+
     </>
   )
 }

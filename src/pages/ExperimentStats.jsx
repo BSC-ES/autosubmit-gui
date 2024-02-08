@@ -10,9 +10,9 @@ import BarChart from "../components/statistics/BarChart"
 const StatsMetricsTable = ({ stats, filteredStats, metrics, caption }) => {
 
   return (
-    <table className="table table-sm table-bordered mb-0">
-      <caption>{caption}</caption>
-      <thead className="table-dark">
+    <table className="table w-full text-sm table-bordered mb-0 caption-bottom">
+      <caption className="text-dark">{caption}</caption>
+      <thead className="bg-dark text-white font-bold">
         <tr>
           <th>Metric</th>
           <th className="text-end">Value</th>
@@ -26,7 +26,7 @@ const StatsMetricsTable = ({ stats, filteredStats, metrics, caption }) => {
       <tbody>
         {
           metrics.map(metric => <tr key={metric.key}>
-            <td className="fw-bold">{metric.title}</td>
+            <td className="font-bold">{metric.title}</td>
             <td className="text-end">{stats[metric.key]}</td>
             {
               Object.keys(filteredStats).length > 0 &&
@@ -96,18 +96,18 @@ const StatsReport = ({ data, selectedSection }) => {
   }
 
   return (
-    <div className="d-flex flex-column flex-fill">
+    <div className="flex flex-col grow">
 
-      <div className="rounded-4 border flex-fill">
-        <div className="bg-dark rounded-top-4 d-flex flex-wrap gap-3 justify-content-between align-items-center text-white px-4 py-2 mb-4">
-          <label className="d-flex gap-2 align-items-center">
+      <div className="rounded-2xl border grow">
+        <div className="bg-dark rounded-t-2xl flex flex-wrap gap-4 justify-between items-center text-white px-6 py-2 mb-6">
+          <label className="flex gap-2 items-center">
             Selected job section: <span className="badge bg-primary text-white">
               {selectedSection}
             </span>
           </label>
           {
             data && data.Statistics && data.Statistics.Period &&
-            <label className="d-flex gap-2 align-items-center">
+            <label className="flex gap-2 items-center">
               Time range: <span className="badge bg-primary text-white">{
                 data.Statistics.Period.From !== "None" ? data.Statistics.Period.From : "Start of experiment"
               }</span> to <span className="badge bg-primary text-white">{data.Statistics.Period.To}</span>
@@ -115,8 +115,8 @@ const StatsReport = ({ data, selectedSection }) => {
           }
 
           <div>
-            <label className="small me-2">Filter jobs:</label>
-            <input className="form-control-sm px-3" placeholder="e.g: _71_SIM"
+            <label className="text-sm me-2">Filter jobs:</label>
+            <input className="form-input text-sm px-3 bg-white text-black" placeholder="e.g: _71_SIM"
               onChange={handleFilterChange} />
           </div>
         </div>
@@ -124,7 +124,7 @@ const StatsReport = ({ data, selectedSection }) => {
         {
           data && data.Statistics && data.Statistics.JobStatistics &&
           <>
-            <div className="d-flex px-3 mb-3 gap-4 justify-content-center">
+            <div className="flex px-4 mb-3 gap-4 justify-center">
               <span>
                 CPU Consumption <span className="bg-light rounded px-1">{`${stats.cpuConsumptionPercentage} %`}</span> {Object.keys(filteredStats).length > 0 && <span className="bg-light rounded px-1">{`${filteredStats.cpuConsumptionPercentage} %`}<sup>(*)</sup></span>}
               </span>
@@ -134,9 +134,9 @@ const StatsReport = ({ data, selectedSection }) => {
             </div>
 
 
-            <div className="d-flex gap-3 px-3 flex-wrap">
+            <div className="flex gap-3 px-3 flex-wrap">
 
-              <div className="flex-fill">
+              <div className="grow">
                 <StatsMetricsTable
                   stats={stats}
                   filteredStats={filteredStats}
@@ -162,7 +162,7 @@ const StatsReport = ({ data, selectedSection }) => {
                 />
               </div>
 
-              <div className="flex-fill">
+              <div className="grow">
                 <StatsMetricsTable
                   stats={stats}
                   filteredStats={filteredStats}
@@ -184,7 +184,7 @@ const StatsReport = ({ data, selectedSection }) => {
                 />
               </div>
 
-              <div className="flex-fill">
+              <div className="grow">
                 <StatsMetricsTable
                   stats={stats}
                   filteredStats={filteredStats}
@@ -208,8 +208,8 @@ const StatsReport = ({ data, selectedSection }) => {
 
             </div>
 
-            <div className="d-flex justify-content-center p-4 gap-3 flex-wrap">
-              <div className="flex-fill text-center scroll-x">
+            <div className="flex justify-center items-center p-4 gap-3 flex-wrap">
+              <div className="overflow-x-auto">
                 <BarChart
                   data={filteredJobs}
                   title="Statistics"
@@ -218,7 +218,7 @@ const StatsReport = ({ data, selectedSection }) => {
                   helperId={"4"} />
               </div>
 
-              <div className="flex-fill text-center scroll-x">
+              <div className="overflow-x-auto">
                 <BarChart
                   data={filteredJobs}
                   title="Failed Attempts per Job"
@@ -280,36 +280,36 @@ const ExperimentStats = () => {
   }
 
   return (
-    <div className="w-100 d-flex flex-column" style={{ minWidth: 0 }}>
+    <div className="w-full flex flex-col min-w-0">
       {
         (isError || data?.error) &&
-        <span className="alert alert-danger rounded-4 px-4">
+        <span className="alert alert-danger rounded-2xl">
           <i className="fa-solid fa-triangle-exclamation me-2"></i> {data?.error_message || "Unknown error"}
         </span>
       }
-      <form onSubmit={handleGetStats} className="mb-4 d-flex flex-wrap gap-3 align-items-center">
-        <div className="flex-fill d-flex gap-3 align-items-center">
-          <label className="text-nowrap">Job section:</label>
-          <input className="form-control" ref={sectionRef} placeholder="e.g: SIM (optional)" />
+      <form onSubmit={handleGetStats} className="mb-4 flex flex-wrap gap-3 items-center">
+        <div className="grow flex gap-3 items-center">
+          <label>Job section:</label>
+          <input className="form-input grow" ref={sectionRef} placeholder="e.g: SIM (optional)" />
         </div>
-        <div className="flex-fill d-flex gap-3 align-items-center">
-          <label className="text-nowrap">Past hours (from now):</label>
-          <input type="number" className="form-control" ref={hourRef} placeholder="e.g: 72 (optional)" />
+        <div className="grow flex gap-3 items-center">
+          <label>Past hours (from now):</label>
+          <input type="number" className="form-input grow" ref={hourRef} placeholder="e.g: 72 (optional)" />
         </div>
 
-        <button className="btn btn-dark px-4 fw-bold text-nowrap" onClick={handleGetStats}>Get Statistics</button>
+        <button className="btn btn-dark px-4 font-bold text-nowrap" onClick={handleGetStats}>Get Statistics</button>
       </form>
 
       {
         isFetching ?
-          <div className="w-100 h-100 d-flex align-items-center justify-content-center">
+          <div className="w-full h-full flex items-center justify-center">
             <div className="spinner-border" role="status"></div>
           </div>
           :
           (!searchParams.get("section") && !searchParams.get("hours")) ?
-            <div className="w-100 h-100 d-flex flex-column gap-3 align-items-center justify-content-center">
-              <i className="fa-solid fa-magnifying-glass fs-1"></i>
-              <div>Please press the <strong>"Get Statistics"</strong> button to continue</div>
+            <div className="my-8 w-full h-full flex flex-col gap-8 items-center justify-center">
+              <i className="fa-solid fa-magnifying-glass text-9xl"></i>
+              <div className="text-lg text-center mx-2">Please press the <strong>"Get Statistics"</strong> button to continue</div>
             </div>
             :
             <StatsReport

@@ -15,7 +15,7 @@ const ExperimentDetail = () => {
         }
     ])
     const navigate = useNavigate()
-    const { data } = useGetExperimentInfoQuery(routeParams.expid)
+    // const { data } = useGetExperimentInfoQuery(routeParams.expid)
 
 
     useEffect(() => {
@@ -25,7 +25,7 @@ const ExperimentDetail = () => {
 
     return (
         <div>
-            <div className="border rounded-4 py-3 px-4 mb-3 bg-light d-flex flex-wrap gap-3 justify-content-between">
+            {/* <div className="border rounded-4 py-3 px-4 mb-3 bg-light d-flex flex-wrap gap-3 justify-content-between">
                 <div title="Description"
                     style={{ textOverflow: "ellipsis", overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 1, WebkitBoxOrient: "vertical" }}>
                     <i className="fa-solid fa-quote-left me-3" /> {data?.description || "-"}
@@ -39,8 +39,7 @@ const ExperimentDetail = () => {
                 <div title="Autosubmit version">
                     <i className="fa-solid fa-code-branch me-3" /> {((data?.version) && ("Autosubmit v" + data.version)) || "-"}
                 </div>
-            </div>
-
+            </div> */}
         </div>
     )
 }

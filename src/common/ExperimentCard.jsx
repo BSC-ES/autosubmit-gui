@@ -1,19 +1,14 @@
+import * as Progress from "@radix-ui/react-progress";
+import { Menu } from '@headlessui/react'
 import { forwardRef, useImperativeHandle, useState } from "react"
-import { Dropdown, ProgressBar } from "react-bootstrap"
 import { Link } from "react-router-dom"
 
-const CustomToggle = forwardRef(({ children, onClick }, ref) => (
-  <button
-    className="btn btn-light rounded-4 px-3"
-    ref={ref}
-    onClick={(e) => {
-      e.preventDefault();
-      onClick(e);
-    }}
-  >
-    {children}
-  </button>
-));
+
+const getProgressPercentage = (value, max) => {
+  let _max = max || 1;
+  let _value = value || 0;
+  return (_max - _value) / _max
+}
 
 
 const ExperimentCard = forwardRef(({ experiment }, ref) => {
@@ -31,20 +26,19 @@ const ExperimentCard = forwardRef(({ experiment }, ref) => {
   })
 
   return (
-    <div className="d-flex flex-column w-100 h-100">
-      <div className={"d-flex flex-column px-4 py-2 bg-light border " + (show ? "rounded-top-4" : "rounded-4")}>
-        <div className="w-100 d-flex gap-3 align-items-center  " >
-          <div style={{ width: "1.5rem", height: "1.5rem", minWidth: "1.5rem" }}
-            className={"rounded-circle border " + (experiment?.status === "RUNNING" ? "bg-success" : "bg-white")}
+    <div className="flex flex-col w-full h-full">
+      <div className={"flex flex-col px-6 py-3 bg-light border " + (show ? "rounded-t-2xl" : "rounded-2xl")}>
+        <div className="w-full flex gap-4 items-center  " >
+          <div
+            className={"w-6 h-6 min-w-6 rounded-full border " + (experiment?.status === "RUNNING" ? "bg-success animate-pulse-soft" : "bg-white")}
             title={(experiment?.status === "RUNNING" ? "ACTIVE" : "INACTIVE")}
           />
           <Link to={`/experiment/${experiment.name}/quick`}
-            className="text-dark fs-4 fw-bold">
+            className="text-dark text-2xl font-bold">
             {experiment.name}
           </Link>
-          <Link to={`/experiment/${experiment.name}/quick`} className="flex-fill">
-            <span className="small text-dark" title={experiment.description}
-              style={{ textOverflow: "ellipsis", overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" }}>
+          <Link to={`/experiment/${experiment.name}/quick`} className="grow">
+            <span className="text-sm text-dark line-clamp-2" title={experiment.description}>
               {experiment.description}
             </span>
           </Link>
@@ -52,42 +46,60 @@ const ExperimentCard = forwardRef(({ experiment }, ref) => {
             style={{ cursor: "pointer" }}>
             <i className={"text-white fs-2 fa-solid " + (show ? "fa-angle-up" : "fa-angle-down")}></i>
           </div> */}
-          <Dropdown>
-            <Dropdown.Toggle as={CustomToggle}>
-              <i className="fa-solid fa-ellipsis-vertical"></i>
-            </Dropdown.Toggle>
-            <Dropdown.Menu align={"end"}>
-              <Dropdown.Item eventKey="1">
-                <Link to={`/experiment/${experiment.name}/quick`}
-                  className="text-dark text-center">
-                  <div>QUICK</div>
-                </Link>
-              </Dropdown.Item>
-              <Dropdown.Item eventKey="2">
-                <Link to={`/experiment/${experiment.name}/tree`}
-                  className="text-dark text-center">
-                  <div>TREE</div>
-                </Link>
-              </Dropdown.Item>
-              <Dropdown.Item eventKey="3">
-                <Link to={`/experiment/${experiment.name}/graph`}
-                  className="text-dark text-center">
-                  <div>GRAPH</div>
-                </Link>
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+
+          <Menu as="div" className="relative">
+            <Menu.Button>
+              <button className="btn btn-light">
+                <i className="fa-solid fa-ellipsis-vertical"></i>
+              </button>
+            </Menu.Button>
+            <Menu.Items as="div" className={"absolute right-0 bg-white border z-40 rounded-xl"}>
+              <div className="py-3 flex flex-col">
+                <Menu.Item>
+                  {
+                    ({ active }) => (
+                      <Link role="button" to={`/experiment/${experiment.name}/quick`}
+                        className={"text-dark text-center px-10 py-1 w-full " + (active ? "bg-primary text-white" : "")}>
+                        <div>QUICK</div>
+                      </Link>
+                    )
+                  }
+                </Menu.Item>
+                <Menu.Item>
+                  {
+                    ({ active }) => (
+                      <Link role="button" to={`/experiment/${experiment.name}/tree`}
+                        className={"text-dark text-center px-10 py-1 w-full " + (active ? "bg-primary text-white" : "")}>
+                        <div>TREE</div>
+                      </Link>
+                    )
+                  }
+                </Menu.Item>
+                <Menu.Item>
+                  {
+                    ({ active }) => (
+                      <Link role="button" to={`/experiment/${experiment.name}/graph`}
+                        className={"text-dark text-center px-10 py-1 w-full " + (active ? "bg-primary text-white" : "")}>
+                        <div>GRAPH</div>
+                      </Link>
+                    )
+                  }
+                </Menu.Item>
+              </div>
+            </Menu.Items>
+          </Menu>
+
         </div>
 
       </div>
+      
       {
         show &&
-        <div className="flex-fill border border-top-0 rounded-bottom-4 py-3 px-4 w-100 d-flex flex-column gap-3">
-          <div className="d-flex gap-3 align-items-center w-100">
-            <div className="d-flex flex-column gap-1 flex-fill">
-
-              <div className="d-flex gap-1 align-items-center justify-content-between">
-                <div className="d-flex gap-1">
+        <div className="grow border border-t-0 rounded-b-2xl py-4 px-6 w-full flex flex-col gap-4">
+          <div className="flex gap-4 items-center w-full">
+            <div className="grow flex flex-col gap-1">
+              <div className="flex gap-4 items-center justify-between">
+                <div className="flex gap-1">
                   {
                     experiment?.queuing > 0 &&
                     <span className='badge bg-queue text-black'>
@@ -113,19 +125,25 @@ const ExperimentCard = forwardRef(({ experiment }, ref) => {
                     </span>
                   }
                 </div>
-                <span className='fw-bold'>
+                <span className='font-bold'>
                   /{experiment.total}
                 </span>
               </div>
 
-              <ProgressBar className="bg-light border rounded-pill p-0" style={{ minWidth: "10rem", width: "100%" }}>
-                <ProgressBar max={experiment?.total} now={experiment?.completed}
-                  animated={experiment?.status === "RUNNING"}
-                  className={
-                    (experiment?.failed > 0) ? "bg-danger" : (
-                      (experiment?.queuing > 0 && !(experiment?.running > 0)) ? "bg-queue" : "bg-success"
-                    )} />
-              </ProgressBar>
+              <Progress.Root value={experiment?.completed} max={experiment?.total}
+                className="relative h-4 w-full overflow-hidden rounded-full bg-light border"
+                style={{
+                  // Fix overflow clipping in Safari https://gist.github.com/domske/b66047671c780a238b51c51ffde8d3a0
+                  transform: 'translateZ(0)',
+                }}>
+                <Progress.Indicator className={"h-full w-full flex-1 transition-all " + (
+                  (experiment?.failed > 0) ? "bg-danger" : (
+                    (experiment?.queuing > 0 && !(experiment?.running > 0)) ? "bg-queue" : "bg-success"
+                  )) + ((experiment?.status === "RUNNING") ? "animate-pulse-soft" : "")}
+                  style={{ transform: `translateX(-${100 * getProgressPercentage(experiment?.completed, experiment?.total)}%)` }}
+                />
+              </Progress.Root>
+
             </div>
 
 
@@ -153,17 +171,17 @@ const ExperimentCard = forwardRef(({ experiment }, ref) => {
               </button>
             </Link>
           </div> */}
-          <div className="grid px-2 gap-2">
-            <div className="g-col-6 small" title="User">
+          <div className="grid grid-cols-2 px-2 gap-2">
+            <div className="text-sm" title="User">
               <i className="fa-solid fa-user me-3" /> {experiment.user || "-"}
             </div>
-            <div className="g-col-6 small" title="HPC">
+            <div className="text-sm" title="HPC">
               <i className="fa-solid fa-computer me-3" /> {experiment.hpc || "-"}
             </div>
-            <div className="g-col-6 small" title="Autosubmit version">
+            <div className="text-sm" title="Autosubmit version">
               <i className="fa-solid fa-code-branch me-3" /> {experiment.version || "-"}
             </div>
-            <div className="g-col-6 small" title="Last modified date">
+            <div className="text-sm" title="Last modified date">
               <i className="fa-solid fa-calendar me-3" /> {experiment.modified || "-"}
             </div>
           </div>

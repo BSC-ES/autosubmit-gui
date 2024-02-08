@@ -31,7 +31,7 @@ const ExperimentRunLog = () => {
   })
 
   return (
-    <div className="card rounded-4 p-4 w-100">
+    <div className="w-full flex flex-col border rounded-2xl p-4 min-w-0">
       {
         isLoading ?
           <div className="w-100 h-100 d-flex align-items-center justify-content-center">
@@ -45,23 +45,23 @@ const ExperimentRunLog = () => {
                 <i className="fa-solid fa-triangle-exclamation me-2"></i> {logData?.error_message || "Unknown error"}
               </span>
             }
-            <div className='row px-1 file-info'>
-              <div className='col-6'>
+            <div className='w-full px-1 file-info flex justify-between'>
+              <div>
                 <span>LOG FILE: {logData.logfile}</span>{" "}
-                <span className='text-muted'>({logData.timeStamp})</span>
+                <span className='text-dark'>({logData.timeStamp})</span>
               </div>
-              <div className='col-6 text-end text-muted'>
+              <div className='text-dark'>
                 LAST MODIFIED: {logData.lastModified}
               </div>
             </div>
 
-            <pre ref={logRef} className="bash scroll m-0" style={{ overflowX: "scroll" }}>
-              <ul style={{ listStyleType: "none" }} className='p-1 mb-0'>
+            <pre ref={logRef} className="bash m-0 overflow-x-scroll scroll">
+              <ul>
                 {
                   logData.logcontent.map((item) => {
                     return (
-                      <li key={item.index}>
-                        <small>{item.content}</small>
+                      <li key={item.index} className="text-sm">
+                        {item.content}
                       </li>
                     )
                   })
@@ -69,7 +69,8 @@ const ExperimentRunLog = () => {
               </ul>
             </pre>
 
-            <div className='text-muted text-center file-info mt-3'>
+
+            <div className='text-dark text-center file-info mt-4'>
               Showing last 150 lines
             </div>
           </>

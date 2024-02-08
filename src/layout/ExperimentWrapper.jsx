@@ -55,13 +55,12 @@ const ExperimentMenuItems = ({ showLabels = true }) => {
         const expRoute = `/experiment/${routeParams.expid}${item.route}`
         return (
           <Link key={item.route}
-            className={"d-flex align-items-center fw-bold p-1 " + (location.pathname === expRoute ? ' text-secondary' : 'text-black')}
+            className={"flex items-center font-bold p-1 " + (location.pathname === expRoute ? ' text-secondary' : 'text-black')}
             to={expRoute}>
-            <i style={{ fontSize: "1.5rem", width: "2rem" }}
-              className={"text-center " + item.iconClass}></i>
+            <i className={"text-center text-2xl w-8 " + item.iconClass}></i>
             {
               showLabels &&
-              <span className="mx-4">
+              <span className="mx-6">
                 {item.name}
               </span>
             }
@@ -91,14 +90,12 @@ const ExperimentWrapper = ({ children }) => {
     <>
       {
         width > 992 ?
-          <div className="d-flex gap-4 flex-fill">
-            <div className="d-flex flex-column gap-4 bg-light border p-4 rounded-4"
+          <div className="flex gap-6 grow">
+            <div className="flex flex-col gap-4 bg-light border p-6 rounded-2xl"
             style={{maxHeight: "80vh"}}>
               <ExperimentMenuItems showLabels={showLabels} />
-              <div className={"mt-auto d-flex align-items-center " + (!showLabels && "justify-content-center")}
-                onClick={handleToggleLabels}
-                style={{ cursor: "pointer" }}>
-                
+              <div className={"mt-auto flex items-center cursor-pointer " + (!showLabels && "justify-center")}
+                onClick={handleToggleLabels}>
                 <i className={"text-center fa-solid " + (showLabels ? "fa-angles-left" : "fa-angles-right")}
                   style={{ fontSize: "1.5rem", width: "2rem" }}></i>
               </div>
@@ -106,16 +103,15 @@ const ExperimentWrapper = ({ children }) => {
             {children}
           </div>
           :
-          <div className="d-flex gap-4 flex-column">
-            <div className="d-flex flex-column">
-              <div className="bg-light border text-center fw-bold py-2"
-                onClick={handleToggleTopMenu}
-                style={{ cursor: "pointer" }}>
+          <div className="flex gap-4 flex-col">
+            <div className="flex flex-col">
+              <div className="bg-light border text-center font-bold py-2 cursor-pointer"
+                onClick={handleToggleTopMenu}>
                 MENU <i className="ms-2 fa-solid fa-bars"></i>
               </div>
               {
                 showTopMenu &&
-                <div className="d-flex flex-column gap-4 bg-light border border-top-0 p-4 rounded-bottom-4"
+                <div className="flex flex-col gap-1 bg-light border border-t-0 py-4 px-6 rounded-b-2xl"
                   onClick={handleToggleTopMenu}>
                   <ExperimentMenuItems />
                 </div>
