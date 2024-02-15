@@ -1,7 +1,8 @@
 import * as Progress from "@radix-ui/react-progress";
-import { Menu } from '@headlessui/react'
-import { forwardRef, useImperativeHandle, useState } from "react"
+import { Menu, Transition } from '@headlessui/react'
+import { Fragment, forwardRef, useImperativeHandle, useState } from "react"
 import { Link } from "react-router-dom"
+import { cn } from '../services/utils'
 
 
 const getProgressPercentage = (value, max) => {
@@ -27,39 +28,47 @@ const ExperimentCard = forwardRef(({ experiment }, ref) => {
 
   return (
     <div className="flex flex-col w-full h-full">
-      <div className={"flex flex-col px-6 py-3 bg-light border " + (show ? "rounded-t-2xl" : "rounded-2xl")}>
-        <div className="w-full flex gap-4 items-center  " >
-          <div
-            className={"w-6 h-6 min-w-6 rounded-full border " + (experiment?.status === "RUNNING" ? "bg-success animate-pulse-soft" : "bg-white")}
-            title={(experiment?.status === "RUNNING" ? "ACTIVE" : "INACTIVE")}
-          />
-          <Link to={`/experiment/${experiment.name}/quick`}
-            className="text-dark text-2xl font-bold">
-            {experiment.name}
-          </Link>
-          <Link to={`/experiment/${experiment.name}/quick`} className="grow">
-            <span className="text-sm text-dark line-clamp-2" title={experiment.description}>
-              {experiment.description}
-            </span>
-          </Link>
-          {/* <div onClick={toggle} className="ms-auto"
+      <div className={cn([
+        "flex px-6 py-3 items-center gap-4 transition-colors bg-light border has-[>a:hover]:bg-dark text-dark has-[>a:hover]:text-light",
+        (show ? "rounded-t-2xl" : "rounded-2xl")])}>
+        <div
+          className={"min-w-6 min-h-6 rounded-full border " + (experiment?.status === "RUNNING" ? "bg-success animate-pulse-soft" : "bg-white")}
+          title={(experiment?.status === "RUNNING" ? "ACTIVE" : "INACTIVE")}
+        />
+        <Link to={`/experiment/${experiment.name}/quick`}
+          className="text-2xl font-bold">
+          {experiment.name}
+        </Link>
+        <Link to={`/experiment/${experiment.name}/quick`} className="grow text-sm line-clamp-2 items-center">
+          {experiment.description}
+        </Link>
+        {/* <div onClick={toggle} className="ms-auto"
             style={{ cursor: "pointer" }}>
             <i className={"text-white fs-2 fa-solid " + (show ? "fa-angle-up" : "fa-angle-down")}></i>
           </div> */}
 
-          <Menu as="div" className="relative">
-            <Menu.Button>
-              <button className="btn btn-light">
-                <i className="fa-solid fa-ellipsis-vertical"></i>
-              </button>
-            </Menu.Button>
+        <Menu as="div" className="relative">
+          <Menu.Button>
+            <button className="btn btn-light">
+              <i className="fa-solid fa-ellipsis-vertical"></i>
+            </button>
+          </Menu.Button>
+          <Transition
+            as={Fragment}
+            enter="transition ease-out duration-100"
+            enterFrom="transform opacity-0 scale-95"
+            enterTo="transform opacity-100 scale-100"
+            leave="transition ease-in duration-75"
+            leaveFrom="transform opacity-100 scale-100"
+            leaveTo="transform opacity-0 scale-95"
+          >
             <Menu.Items as="div" className={"absolute right-0 bg-white border z-40 rounded-xl"}>
               <div className="py-3 flex flex-col">
                 <Menu.Item>
                   {
                     ({ active }) => (
-                      <Link role="button" to={`/experiment/${experiment.name}/quick`}
-                        className={"text-dark text-center px-10 py-1 w-full " + (active ? "bg-primary text-white" : "")}>
+                      <Link role="button" as="button" to={`/experiment/${experiment.name}/quick`}
+                        className={cn(["text-dark text-center px-10 py-1 w-full transition-colors ", { "bg-primary text-white": active }])}>
                         <div>QUICK</div>
                       </Link>
                     )
@@ -69,7 +78,7 @@ const ExperimentCard = forwardRef(({ experiment }, ref) => {
                   {
                     ({ active }) => (
                       <Link role="button" to={`/experiment/${experiment.name}/tree`}
-                        className={"text-dark text-center px-10 py-1 w-full " + (active ? "bg-primary text-white" : "")}>
+                        className={cn(["text-dark text-center px-10 py-1 w-full transition-colors ", { "bg-primary text-white": active }])}>
                         <div>TREE</div>
                       </Link>
                     )
@@ -79,7 +88,7 @@ const ExperimentCard = forwardRef(({ experiment }, ref) => {
                   {
                     ({ active }) => (
                       <Link role="button" to={`/experiment/${experiment.name}/graph`}
-                        className={"text-dark text-center px-10 py-1 w-full " + (active ? "bg-primary text-white" : "")}>
+                        className={cn(["text-dark text-center px-10 py-1 w-full transition-colors ", { "bg-primary text-white": active }])}>
                         <div>GRAPH</div>
                       </Link>
                     )
@@ -87,12 +96,12 @@ const ExperimentCard = forwardRef(({ experiment }, ref) => {
                 </Menu.Item>
               </div>
             </Menu.Items>
-          </Menu>
+          </Transition>
+        </Menu>
 
-        </div>
 
       </div>
-      
+
       {
         show &&
         <div className="grow border border-t-0 rounded-b-2xl py-4 px-6 w-full flex flex-col gap-4">
@@ -139,7 +148,7 @@ const ExperimentCard = forwardRef(({ experiment }, ref) => {
                 <Progress.Indicator className={"h-full w-full flex-1 transition-all " + (
                   (experiment?.failed > 0) ? "bg-danger" : (
                     (experiment?.queuing > 0 && !(experiment?.running > 0)) ? "bg-queue" : "bg-success"
-                  )) + ((experiment?.status === "RUNNING") ? "animate-pulse-soft" : "")}
+                  )) + ((experiment?.status === "RUNNING") ? " animate-pulse-soft" : "")}
                   style={{ transform: `translateX(-${100 * getProgressPercentage(experiment?.completed, experiment?.total)}%)` }}
                 />
               </Progress.Root>

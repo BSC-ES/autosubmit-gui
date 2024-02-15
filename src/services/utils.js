@@ -1,4 +1,9 @@
-
+import { clsx } from "clsx"
+import { twMerge } from "tailwind-merge"
+ 
+export function cn(...inputs) {
+  return twMerge(clsx(inputs))
+}
 
 /**
  * Very simple export to CSV utility
@@ -36,3 +41,4 @@ export const saveSVGObj = (svgData, filename) => {
     link.click();
     document.body.removeChild(link);
   }
+
