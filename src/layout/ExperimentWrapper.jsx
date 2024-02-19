@@ -1,6 +1,7 @@
 import { Link, useLocation, useParams } from "react-router-dom";
 import { useState } from "react";
 import { useLocalStorage, useWindowSize } from "@uidotdev/usehooks";
+import { cn } from "../services/utils";
 
 const EXPERIMENT_MENU_ITEMS = [
   {
@@ -55,9 +56,10 @@ const ExperimentMenuItems = ({ showLabels = true }) => {
         const expRoute = `/experiment/${routeParams.expid}${item.route}`
         return (
           <Link key={item.route}
-            className={"flex items-center font-bold p-1 " + (location.pathname === expRoute ? ' text-secondary' : 'text-black')}
+            className={cn("flex items-center font-bold p-2 rounded transition-colors hover:bg-black/5",
+              (location.pathname === expRoute ? ' text-secondary' : 'text-black'))}
             to={expRoute}>
-            <i className={"text-center text-2xl w-8 " + item.iconClass}></i>
+            <i className={cn("text-center text-2xl w-8", item.iconClass)}></i>
             {
               showLabels &&
               <span className="mx-6">
@@ -91,13 +93,14 @@ const ExperimentWrapper = ({ children }) => {
       {
         width > 992 ?
           <div className="flex gap-6 grow">
-            <div className="flex flex-col gap-4 bg-light border p-6 rounded-2xl"
-            style={{maxHeight: "80vh"}}>
+            <div className="flex flex-col gap-2 bg-light border p-5 rounded-2xl"
+              style={{ maxHeight: "80vh" }}>
               <ExperimentMenuItems showLabels={showLabels} />
-              <div className={"mt-auto flex items-center cursor-pointer " + (!showLabels && "justify-center")}
+              <div className={cn("mt-auto flex items-center cursor-pointer p-2 rounded transition-colors hover:bg-black/5",
+                 (!showLabels && "justify-center"))}
                 onClick={handleToggleLabels}>
-                <i className={"text-center fa-solid " + (showLabels ? "fa-angles-left" : "fa-angles-right")}
-                  style={{ fontSize: "1.5rem", width: "2rem" }}></i>
+                <i className={cn("text-center text-2xl w-8 fa-solid",
+                (showLabels ? "fa-angles-left" : "fa-angles-right"))}></i>
               </div>
             </div>
             {children}

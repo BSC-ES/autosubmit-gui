@@ -39,7 +39,7 @@ const AuthBadge = () => {
   useEffect(() => {
     console.log(data)
     if (isError) {
-      handleLogout()
+      if (AUTHENTICATION) handleLogout()
     }
     else if (data) {
       dispatch(authActions.login({
