@@ -32,12 +32,13 @@
     "vis-util": "^5.0.7"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts -r @cypress/instrument-cra start",
     "build": "react-scripts build",
     "test": "jest",
     "eject": "react-scripts eject",
     "lint": "eslint src --ext .js --ignore-pattern *.test.js",
-    "cypress:open": "cypress open"
+    "cy:open": "cypress open",
+    "cy:run": "cypress run"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -59,6 +60,9 @@
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/plugin-transform-modules-commonjs": "^7.23.3",
+    "@cypress/code-coverage": "^3.12.22",
+    "@cypress/instrument-cra": "^1.4.0",
+    "babel-plugin-istanbul": "^6.1.1",
     "canvas": "^2.11.2",
     "cypress": "^13.6.4",
     "identity-obj-proxy": "^3.0.0",
@@ -88,7 +92,15 @@
         "plugins": [
           "@babel/plugin-transform-modules-commonjs",
           "@babel/plugin-proposal-class-properties",
-          "@babel/plugin-transform-react-jsx"
+          "@babel/plugin-transform-react-jsx",
+          [
+            "istanbul",
+            {
+              "exclude": [
+                "**/*.test.js"
+              ]
+            }
+          ]
         ]
       }
     }
