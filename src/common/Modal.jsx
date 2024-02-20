@@ -1,49 +1,36 @@
-import { Dialog, Transition } from "@headlessui/react";
-import { Fragment } from "react";
+import { Dialog } from "@headlessui/react";
+import { AnimatePresence, motion } from 'framer-motion'
 
 
 const Modal = ({ show, onClose, children }) => {
   return (
-    <Transition
-      show={show}
-      as={Fragment}
-    >
-      <Dialog onClose={() => onClose()}
-        className={"relative z-50"}>
-        <Transition.Child
-          as={Fragment}
-          enter="ease-out duration-300"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="ease-in duration-200"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
-        </Transition.Child>
+    <AnimatePresence>
+      {
+        show &&
+        <Dialog onClose={() => onClose()} open={show}
+          className={"relative z-50"}>
 
-        <Transition.Child
-          as={Fragment}
-          enter="ease-out duration-300"
-          enterFrom="opacity-0 scale-95"
-          enterTo="opacity-100 scale-100"
-          leave="ease-in duration-200"
-          leaveFrom="opacity-100 scale-100"
-          leaveTo="opacity-0 scale-95"
-        >
-          <div className="fixed inset-0 w-screen overflow-y-auto">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/30" aria-hidden="true" />
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1, transition: { type: "spring", bounce: 0.6, duration: 0.5, opacity: { bounce: 0 } } }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="fixed inset-0 overflow-y-auto">
             <div className="flex min-h-full items-center justify-center p-4">
-              <Dialog.Panel className="mx-auto drop-shadow" style={{maxWidth: "95vw"}}>
-
-
+              <Dialog.Panel className="drop-shadow max-w-[95vw]">
                 {children}
-
               </Dialog.Panel>
             </div>
-          </div>
-        </Transition.Child>
-      </Dialog>
-    </Transition>
+          </motion.div>
+
+        </Dialog>
+      }
+    </AnimatePresence>
   )
 }
 
