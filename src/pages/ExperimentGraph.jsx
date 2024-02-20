@@ -8,6 +8,7 @@ import JobDetailCard from "../common/JobDetailCard";
 import { useDispatch, useSelector } from "react-redux";
 // eslint-disable-next-line
 import { Network } from "vis-network/standalone";
+import { motion } from "framer-motion";
 
 
 const ExperimentGraph = () => {
@@ -26,6 +27,7 @@ const ExperimentGraph = () => {
     }
   ])
 
+  const dragConstraintRef = useRef(null)
   const filterRef = useRef()
   const [activeMonitor, setActiveMonitor] = useState(false)
 
@@ -179,7 +181,7 @@ const ExperimentGraph = () => {
   const toggleActiveMonitor = () => { setActiveMonitor(!activeMonitor); }
 
   return (
-    <div className="w-full flex flex-col gap-4">
+    <div className="w-full flex flex-col gap-4" ref={dragConstraintRef}>
       {
         (isError || data?.error) &&
         <span className="alert alert-danger rounded-2xl">
@@ -211,33 +213,41 @@ const ExperimentGraph = () => {
           </div>
           :
           data &&
-          <div className="flex w-full gap-4 justify-center flex-wrap">
+          <>
+            <div className="flex w-full gap-4 justify-center flex-wrap">
 
-            <div className="grow shrink-0 basis-0 flex flex-col gap-4" style={{ minWidth: "min(30rem,90vw)" }}>
-              <div className="flex gap-2 items-center justify-between">
-                <span className="mx-2 text-sm">
-                  Total #Jobs: {data.total_jobs} | Chunk unit: {data.chunk_unit} | Chunk size: {data.chunk_size}
-                </span>
-              </div>
+              <div className="grow shrink-0 basis-0 flex flex-col gap-4" style={{ minWidth: "min(30rem,90vw)" }}>
+                <div className="flex gap-2 items-center justify-between">
+                  <span className="mx-2 text-sm">
+                    Total #Jobs: {data.total_jobs} | Chunk unit: {data.chunk_unit} | Chunk size: {data.chunk_size}
+                  </span>
+                </div>
 
 
-              <div className="border">
-                <VisNetwork
-                  nodes={graphData.nodes}
-                  edges={graphData.edges}
-                  onSelectNode={handleOnSelectNode}
-                  networkCallback={handleNetworkCallback}
-                />
+                <div className="border">
+                  <VisNetwork
+                    nodes={graphData.nodes}
+                    edges={graphData.edges}
+                    onSelectNode={handleOnSelectNode}
+                    networkCallback={handleNetworkCallback}
+                  />
+                </div>
               </div>
             </div>
 
-            <JobDetailCard
-              jobData={selectedJob}
-              jobs={jobs}
-              onClose={handleCloseJobDetail} />
-
-          </div>
-
+            <motion.div drag
+                dragElastic={0.05}
+                whileDrag={{ scale: 0.95 }}
+                dragConstraints={dragConstraintRef}
+                dragMomentum={false}
+                className="fixed bottom-[5%] right-[2%] drop-shadow-lg">
+                <JobDetailCard
+                  jobData={selectedJob}
+                  jobs={jobs}
+                  onClose={handleCloseJobDetail}
+                />
+              </motion.div>
+          </>
       }
     </div>
   )

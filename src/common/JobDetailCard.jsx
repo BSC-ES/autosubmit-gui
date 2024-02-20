@@ -69,7 +69,7 @@ const JobDetailCard = ({ jobData, jobs, onClose }) => {
               }
             </div>
 
-            <div className="flex flex-col px-6 py-4 gap-1">
+            <div className="flex flex-col px-6 py-4 gap-1 bg-white rounded-b-2xl">
               <div className="flex gap-3 justify-evenly">
                 <span className="grow">
                   <strong>Start:</strong> {jobData.date || "-"}

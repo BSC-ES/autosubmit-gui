@@ -8,6 +8,7 @@ import JobDetailCard from "../common/JobDetailCard";
 import { useDispatch, useSelector } from "react-redux";
 import RunsModal from "../common/RunsModal";
 import TreeContentHandler from "../components/context/tree/business/treeUpdate";
+import { motion } from "framer-motion";
 
 
 const ExperimentTree = () => {
@@ -26,6 +27,7 @@ const ExperimentTree = () => {
     }
   ])
 
+  const dragConstraintRef = useRef(null)
   const [showRunsM, setShowRunsM] = useState(false)
   const [selectedRun, setSelectedRun] = useState({
     run_id: null,
@@ -151,7 +153,7 @@ const ExperimentTree = () => {
         expid={routeParams.expid}
         onRunSelect={handleRunSelect}
       />
-      <div className="w-full flex flex-col gap-4">
+      <div className="w-full flex flex-col gap-4" ref={dragConstraintRef}>
         {
           (isError || data?.error) &&
           <span className="alert alert-danger rounded-2xl">
@@ -201,32 +203,40 @@ const ExperimentTree = () => {
             </div>
             :
             data &&
-            <div className="flex w-full flex-wrap grow gap-4 justify-center">
-
-              <div className="grow flex flex-col gap-4 flex-wrap">
-                <div className="flex flex-wrap gap-2 items-center justify-between">
-                  <span className="mx-2 text-sm">Total #Jobs: {data.total} | Chunk unit: {data?.reference?.chunk_unit} | Chunk size: {data?.reference?.chunk_size}</span>
-                  <div className="flex gap-2">
-                    <button className="btn btn-primary font-bold px-4 text-sm" onClick={handleExpand}>Expand All +</button>
-                    <button className="btn btn-secondary font-bold px-4 text-sm" onClick={handleCollapse}>Collapse All -</button>
+            <>
+              <div className="flex w-full flex-wrap grow gap-4 justify-center">
+                <div className="grow flex flex-col gap-4 flex-wrap">
+                  <div className="flex flex-wrap gap-2 items-center justify-between">
+                    <span className="mx-2 text-sm">Total #Jobs: {data.total} | Chunk unit: {data?.reference?.chunk_unit} | Chunk size: {data?.reference?.chunk_size}</span>
+                    <div className="flex gap-2">
+                      <button className="btn btn-primary font-bold px-4 text-sm" onClick={handleExpand}>Expand All +</button>
+                      <button className="btn btn-secondary font-bold px-4 text-sm" onClick={handleCollapse}>Collapse All -</button>
+                    </div>
                   </div>
-                </div>
-                <div className="border rounded-2xl p-4 grow">
-                  <div className="overflow-auto" style={{ maxHeight: "75vh", maxWidth: "80vw" }}>
-                    <FancyTree treeData={data.tree}
-                      onActivateNode={handleOnActivateNode}
-                      treeCallback={handleTreeCallback} />
-                  </div>
+                  <div className="border rounded-2xl p-4 grow">
+                    <div className="overflow-auto" style={{ minHeight: "50vh", maxHeight: "75vh", maxWidth: "80vw" }}>
+                      <FancyTree treeData={data.tree}
+                        onActivateNode={handleOnActivateNode}
+                        treeCallback={handleTreeCallback} />
+                    </div>
 
+                  </div>
                 </div>
               </div>
+              <motion.div drag
+                dragElastic={0.05}
+                whileDrag={{ scale: 0.95 }}
+                dragConstraints={dragConstraintRef}
+                dragMomentum={false}
+                className="fixed bottom-[5%] right-[2%] drop-shadow-lg">
+                <JobDetailCard
+                  jobData={selectedJob}
+                  jobs={jobs}
+                  onClose={handleCloseJobDetail}
+                />
+              </motion.div>
+            </>
 
-              <JobDetailCard
-                jobData={selectedJob}
-                jobs={jobs}
-                onClose={handleCloseJobDetail}
-              />
-            </div>
         }
       </div>
     </>
