@@ -120,6 +120,24 @@
   }
 }
 
+@layer utilities {
+
+  .animate-striped-bg {
+    background-size  : 2rem 2rem;
+    animation        : stripes-move 1.5s linear infinite;
+		background-image : linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent);
+  }
+
+	@keyframes stripes-move {
+		0% {
+			background-position: 0 0;
+		}
+		100% {
+			background-position: 2rem 2rem;
+		}
+	}
+}
+
 /* Global Styles */
 /* :root {
   --primary-color: #dc3545;

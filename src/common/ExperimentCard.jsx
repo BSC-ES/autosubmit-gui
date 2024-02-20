@@ -14,6 +14,7 @@ const getProgressPercentage = (value, max) => {
 
 const ExperimentCard = forwardRef(({ experiment }, ref) => {
   const [show, setShow] = useState(true)
+  const isActive = experiment?.status === "RUNNING";
 
   const expand = () => { setShow(true) }
   const collapse = () => { setShow(false) }
@@ -28,20 +29,32 @@ const ExperimentCard = forwardRef(({ experiment }, ref) => {
 
   return (
     <div className="flex flex-col w-full h-full">
-      <div className={cn([
-        "flex px-6 py-3 items-center gap-4 transition-colors bg-light border has-[>a:hover]:bg-dark text-dark has-[>a:hover]:text-light",
-        (show ? "rounded-t-2xl" : "rounded-2xl")])}>
+      <Link to={`/experiment/${experiment.name}/quick`}
+        className={cn(
+          "flex px-6 py-3 items-center gap-4 transition-colors bg-light border hover:bg-black/5 text-dark",
+          (show ? "rounded-t-2xl" : "rounded-2xl")
+        )}>
         <div
-          className={"min-w-6 min-h-6 rounded-full border " + (experiment?.status === "RUNNING" ? "bg-success animate-pulse-soft" : "bg-white")}
-          title={(experiment?.status === "RUNNING" ? "ACTIVE" : "INACTIVE")}
-        />
-        <Link to={`/experiment/${experiment.name}/quick`}
+          className={cn(
+            "relative",
+            "min-w-6 min-h-6 rounded-full border",
+            (isActive ? "bg-success animate-pulse-soft" : "bg-white")
+          )}
+          title={isActive ? "ACTIVE" : "INACTIVE"}
+        >
+          {
+            isActive &&
+            <div className="absolute animate-ping bg-success/50 w-full h-full rounded-full"></div>
+
+          }
+        </div>
+        <div
           className="text-2xl font-bold">
           {experiment.name}
-        </Link>
-        <Link to={`/experiment/${experiment.name}/quick`} className="grow text-sm line-clamp-2 items-center">
+        </div>
+        <div className="grow text-sm line-clamp-2 items-center">
           {experiment.description}
-        </Link>
+        </div>
         {/* <div onClick={toggle} className="ms-auto"
             style={{ cursor: "pointer" }}>
             <i className={"text-white fs-2 fa-solid " + (show ? "fa-angle-up" : "fa-angle-down")}></i>
@@ -100,7 +113,7 @@ const ExperimentCard = forwardRef(({ experiment }, ref) => {
         </Menu>
 
 
-      </div>
+      </Link>
 
       {
         show &&
@@ -145,10 +158,12 @@ const ExperimentCard = forwardRef(({ experiment }, ref) => {
                   // Fix overflow clipping in Safari https://gist.github.com/domske/b66047671c780a238b51c51ffde8d3a0
                   transform: 'translateZ(0)',
                 }}>
-                <Progress.Indicator className={"h-full w-full flex-1 transition-all " + (
-                  (experiment?.failed > 0) ? "bg-danger" : (
-                    (experiment?.queuing > 0 && !(experiment?.running > 0)) ? "bg-queue" : "bg-success"
-                  )) + ((experiment?.status === "RUNNING") ? " animate-pulse-soft" : "")}
+                <Progress.Indicator className={cn(
+                  "h-full w-full flex-1 transition-all",
+                  ((experiment?.failed > 0) ? "bg-danger" : (
+                    (experiment?.queuing > 0 && !(experiment?.running > 0)) ? "bg-queue" : "bg-success")),
+                  isActive && "animate-striped-bg"
+                )}
                   style={{ transform: `translateX(-${100 * getProgressPercentage(experiment?.completed, experiment?.total)}%)` }}
                 />
               </Progress.Root>

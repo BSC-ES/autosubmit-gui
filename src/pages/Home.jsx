@@ -41,7 +41,7 @@ const Home = () => {
   const [searchParams, setSearchParams] = useSearchParams({})
   const [filters, setFilters] = useState({})
   const [isInitialized, setIsInitialized] = useState(false)
-  const { data, isFetching, isError } = useGetExperimentsQuery({
+  const { data, isFetching, isError, refetch } = useGetExperimentsQuery({
     ...filters
   }, {
     skip: !isInitialized
@@ -173,7 +173,7 @@ const Home = () => {
 
       <div className="grow w-full flex flex-col gap-4">
 
-        <div className="flex w-full gap-4 flex-wrap">
+        <div className="flex w-full gap-2 flex-wrap">
           <form onSubmit={handleSubmit} className="grow flex flex-wrap">
             <input ref={filterRef} id="search-input"
               className="grow form-input rounded-e-none"
@@ -188,6 +188,11 @@ const Home = () => {
               Clear
             </button>
           </form>
+          <button className="btn btn-success"
+            title="Refresh data"
+            onClick={() => { refetch() }}>
+            <i className="fa-solid fa-rotate-right"></i>
+          </button>
 
           {/* <button type="button"
               className="btn btn-primary fw-bold px-4 text-white text-nowrap"
