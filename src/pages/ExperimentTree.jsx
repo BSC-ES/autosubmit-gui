@@ -8,7 +8,8 @@ import JobDetailCard from "../common/JobDetailCard";
 import { useDispatch, useSelector } from "react-redux";
 import RunsModal from "../common/RunsModal";
 import TreeContentHandler from "../components/context/tree/business/treeUpdate";
-import { motion } from "framer-motion";
+import { motion, useDragControls } from "framer-motion";
+import DraggablePanel from "../common/DraggablePanel";
 
 
 const ExperimentTree = () => {
@@ -223,20 +224,20 @@ const ExperimentTree = () => {
                   </div>
                 </div>
               </div>
-              <motion.div drag
-                dragElastic={0.05}
-                whileDrag={{ scale: 0.95 }}
-                dragConstraints={dragConstraintRef}
-                dragMomentum={false}
-                className="fixed bottom-[5%] right-[2%] drop-shadow-lg">
+
+              <DraggablePanel
+                show={Boolean(selectedJob)} 
+                title={selectedJob?.label}
+                onClose={handleCloseJobDetail}
+                // dragConstraints={dragConstraintRef}
+                className={"bottom-[7%] right-[2%]"}
+                >
                 <JobDetailCard
                   jobData={selectedJob}
                   jobs={jobs}
-                  onClose={handleCloseJobDetail}
                 />
-              </motion.div>
+              </DraggablePanel>
             </>
-
         }
       </div>
     </>

@@ -57,256 +57,244 @@ const JobDetailCard = ({ jobData, jobs, onClose }) => {
       {
         jobData &&
         <>
-          <div className="rounded-2xl border flex flex-col" style={{ width: "min(28rem, 90vw)" }}>
-
-            <div className="bg-dark text-white rounded-t-2xl px-6 py-2 flex justify-between items-center">
-              <div className="font-bold">{jobData.label}</div>
+          <div className="flex flex-col gap-1">
+            <div className="flex gap-3 justify-evenly">
+              <span className="grow">
+                <strong>Start:</strong> {jobData.date || "-"}
+              </span>
+              <span className="grow">
+                <strong>End:</strong> {jobData.date_plus || "-"}
+              </span>
+            </div>
+            <div className="flex gap-4">
+              <span>
+                <strong>Section:</strong> {jobData.section || "-"}
+              </span>
+            </div>
+            <div className="flex gap-4 justify-evenly">
+              <span className="grow">
+                <strong>Member:</strong> {jobData.member || "-"}
+              </span>
+              <span className="grow">
+                <strong>Chunk:</strong> {jobData.chunk || "-"}
+              </span>
+            </div>
+            <div className="flex gap-4 justify-evenly">
+              <span className="grow">
+                <strong>Platform:</strong> {jobData.platform_name || "-"}
+              </span>
               {
-                onClose &&
-                <div className="cursor-pointer" onClick={onClose}>
-                  <i className="fa-solid fa-xmark"></i>
-                </div>
+                jobData.queue &&
+                <span className="grow">
+                  <strong>QoS:</strong> {jobData.queue || "-"}
+                </span>
+              }
+              {
+                jobData.queue &&
+                <span className="grow">
+                  <strong>Remote ID:</strong> {jobData.rm_id || "-"}
+                </span>
               }
             </div>
-
-            <div className="flex flex-col px-6 py-4 gap-1 bg-white rounded-b-2xl">
-              <div className="flex gap-3 justify-evenly">
-                <span className="grow">
-                  <strong>Start:</strong> {jobData.date || "-"}
-                </span>
-                <span className="grow">
-                  <strong>End:</strong> {jobData.date_plus || "-"}
-                </span>
-              </div>
-              <div className="flex gap-4">
-                <span>
-                  <strong>Section:</strong> {jobData.section || "-"}
-                </span>
-              </div>
-              <div className="flex gap-4 justify-evenly">
-                <span className="grow">
-                  <strong>Member:</strong> {jobData.member || "-"}
-                </span>
-                <span className="grow">
-                  <strong>Chunk:</strong> {jobData.chunk || "-"}
-                </span>
-              </div>
-              <div className="flex gap-4 justify-evenly">
-                <span className="grow">
-                  <strong>Platform:</strong> {jobData.platform_name || "-"}
-                </span>
-                {
-                  jobData.queue &&
-                  <span className="grow">
-                    <strong>QoS:</strong> {jobData.queue || "-"}
-                  </span>
-                }
-                {
-                  jobData.queue &&
-                  <span className="grow">
-                    <strong>Remote ID:</strong> {jobData.rm_id || "-"}
-                  </span>
-                }
-              </div>
-              <div className="flex gap-4 justify-evenly">
-                <span className="grow">
-                  <strong>Processors:</strong> {jobData.processors || "-"}
-                </span>
-                <span className="grow">
-                  <strong>Wallclock:</strong> {jobData.wallclock || "-"}
-                </span>
-              </div>
-              <div className="flex gap-x-4 gap-y-1 flex-wrap">
-                {
-                  jobData.minutes_queue >= 0 &&
-                  [
-                    "SUBMITTED",
-                    "QUEUING",
-                    "RUNNING",
-                    "COMPLETED",
-                    "FAILED",
-                  ].includes(jobData.status) &&
-                  <div>
-                    <span
-                      className='rounded-full text-center px-4 w-full'
-                      style={{
-                        backgroundColor:
-                          jobData.status === "SUBMITTED"
-                            ? "cyan"
-                            : "pink",
-                        color: "black",
-                      }}
-                    >
-                      <strong>
-                        {jobData.status === "SUBMITTED"
-                          ? "Submit"
-                          : "Queue"}
-                        : {secondsToDelta(jobData.minutes_queue)}
-                      </strong>
-                    </span>
-                  </div>
-                }
-                {jobData.minutes >= 0 &&
-                  ["RUNNING", "COMPLETED", "FAILED"].includes(
-                    jobData.status
-                  ) &&
-                  <div>
-                    <span
-                      className='rounded-full text-center px-4 w-full bg-success text-white'
-                      style={{ width: "100%" }}
-                    >
-                      <strong>
-                        Run: {secondsToDelta(jobData.minutes)}
-                      </strong>
-                    </span>
-                  </div>
-                }
+            <div className="flex gap-4 justify-evenly">
+              <span className="grow">
+                <strong>Processors:</strong> {jobData.processors || "-"}
+              </span>
+              <span className="grow">
+                <strong>Wallclock:</strong> {jobData.wallclock || "-"}
+              </span>
+            </div>
+            <div className="flex gap-x-4 gap-y-1 flex-wrap">
+              {
+                jobData.minutes_queue >= 0 &&
+                [
+                  "SUBMITTED",
+                  "QUEUING",
+                  "RUNNING",
+                  "COMPLETED",
+                  "FAILED",
+                ].includes(jobData.status) &&
                 <div>
                   <span
                     className='rounded-full text-center px-4 w-full'
                     style={{
-                      width: "100%",
-                      backgroundColor: jobData.status_color,
-                      color:
-                        jobData.status === "RUNNING"
-                          ? "white"
-                          : "black",
+                      backgroundColor:
+                        jobData.status === "SUBMITTED"
+                          ? "cyan"
+                          : "pink",
+                      color: "black",
                     }}
                   >
-                    <strong>Status: {jobData.status}</strong>
+                    <strong>
+                      {jobData.status === "SUBMITTED"
+                        ? "Submit"
+                        : "Queue"}
+                      : {secondsToDelta(jobData.minutes_queue)}
+                    </strong>
                   </span>
                 </div>
-              </div>
-              <div className="flex gap-2 items-center flex-wrap">
-                <strong>Dependencies: </strong>
-                <button className="btn btn-dark text-sm px-4 rounded-lg"
-                  onClick={() => toggleModal("children")}
-                  disabled={jobDependencies.children.length <= 0}>
-                  <strong>CHILDREN:</strong> {
-                    (jobDependencies.children.length) || "0"
-                  }
-                </button>
-                <button className="btn btn-dark text-sm px-4 rounded-lg"
-                  onClick={() => toggleModal("parents")}
-                  disabled={jobDependencies.parents.length <= 0}>
-                  <strong>PARENTS:</strong> {
-                    (jobDependencies.parents.length) || "0"
-                  }
-                </button>
-              </div>
-
-              <div className="flex flex-col gap-1 my-1">
-                <div className='flex items-center h-8 border rounded'>
-                  <span className="h-full rounded-s bg-light px-2 text-sm flex items-center border-e font-mono">OUT</span>
-                  <input
-                    className='grow truncate form-input py-0 h-full rounded-none border-0'
-                    type='text'
-                    value={
-                      jobData.out
-                        ? jobData.out
-                        : "Not Available"
-                    }
-                    id='g_out_t'
-                    readOnly disabled
-                  />
-                  <button className="btn btn-light text-sm h-full rounded-none border-0 border-s"
-                    disabled={!jobData.out}
-                    onClick={() => copyToClipboard(jobData.out || "")}>
-                    COPY
-                  </button>
-                  <button className="btn btn-dark text-sm h-full rounded-s-none"
-                    disabled={!jobData.out}
-                    onClick={() => toggleModal("outlog")}>
-                    <i className="fa-solid fa-terminal"></i>
-                  </button>
+              }
+              {jobData.minutes >= 0 &&
+                ["RUNNING", "COMPLETED", "FAILED"].includes(
+                  jobData.status
+                ) &&
+                <div>
+                  <span
+                    className='rounded-full text-center px-4 w-full bg-success text-white'
+                    style={{ width: "100%" }}
+                  >
+                    <strong>
+                      Run: {secondsToDelta(jobData.minutes)}
+                    </strong>
+                  </span>
                 </div>
+              }
+              <div>
+                <span
+                  className='rounded-full text-center px-4 w-full'
+                  style={{
+                    width: "100%",
+                    backgroundColor: jobData.status_color,
+                    color:
+                      jobData.status === "RUNNING"
+                        ? "white"
+                        : "black",
+                  }}
+                >
+                  <strong>Status: {jobData.status}</strong>
+                </span>
+              </div>
+            </div>
+            <div className="flex gap-2 items-center flex-wrap">
+              <strong>Dependencies: </strong>
+              <button className="btn btn-dark text-sm px-4 rounded-lg"
+                onClick={() => toggleModal("children")}
+                disabled={jobDependencies.children.length <= 0}>
+                <strong>CHILDREN:</strong> {
+                  (jobDependencies.children.length) || "0"
+                }
+              </button>
+              <button className="btn btn-dark text-sm px-4 rounded-lg"
+                onClick={() => toggleModal("parents")}
+                disabled={jobDependencies.parents.length <= 0}>
+                <strong>PARENTS:</strong> {
+                  (jobDependencies.parents.length) || "0"
+                }
+              </button>
+            </div>
 
-                <div className='flex items-center h-8 border rounded'>
-                  <span className="h-full rounded-s bg-light px-2 text-sm flex items-center border-e font-mono">ERR</span>
-                  <input
-                    className='grow truncate form-input py-0 h-full rounded-none border-0'
-                    type='text'
-                    value={
-                      jobData.err
-                        ? jobData.err
-                        : "Not Available"
-                    }
-                    id='g_err_t'
-                    readOnly disabled
-                  />
-                  <button className="btn btn-light text-sm h-full rounded-none border-0 border-s"
-                    disabled={!jobData.err}
-                    onClick={() => copyToClipboard(jobData.err || "")}>
-                    COPY
-                  </button>
-                  <button className="btn btn-dark text-sm h-full rounded-s-none"
-                    disabled={!jobData.err}
-                    onClick={() => toggleModal("errlog")}>
-                    <i className="fa-solid fa-terminal"></i>
-                  </button>
-                </div>
+            <div className="flex flex-col gap-1 my-1">
+              <div className='flex items-center h-8 border rounded'>
+                <span className="h-full rounded-s bg-light px-2 text-sm flex items-center border-e font-mono">OUT</span>
+                <input
+                  className='grow truncate form-input py-0 h-full rounded-none border-0'
+                  type='text'
+                  value={
+                    jobData.out
+                      ? jobData.out
+                      : "Not Available"
+                  }
+                  id='g_out_t'
+                  readOnly disabled
+                />
+                <button className="btn btn-light text-sm h-full rounded-none border-0 border-s"
+                  disabled={!jobData.out}
+                  onClick={() => copyToClipboard(jobData.out || "")}>
+                  COPY
+                </button>
+                <button className="btn btn-dark text-sm h-full rounded-s-none"
+                  disabled={!jobData.out}
+                  onClick={() => toggleModal("outlog")}>
+                  <i className="fa-solid fa-terminal"></i>
+                </button>
               </div>
 
-
-              <div className="flex flex-col gap-1">
-                {
-                  jobData.submit &&
-                  <div className="flex items-center">
-                    <strong className="me-2">Submit: </strong>
-                    <span className="badge bg-light">{jobData.submit}</span>
-                  </div>
-                }
-                {
-                  jobData.start &&
-                  <div className="flex items-center">
-                    <strong className="me-2">Start: </strong>
-                    <span className="badge bg-light">{jobData.start}</span>
-                  </div>
-                }
-                {
-                  jobData.finish &&
-                  <div className="flex items-center">
-                    <strong className="me-2">Finish: </strong>
-                    <span className="badge bg-light">{jobData.finish}</span>
-                  </div>
-                }
+              <div className='flex items-center h-8 border rounded'>
+                <span className="h-full rounded-s bg-light px-2 text-sm flex items-center border-e font-mono">ERR</span>
+                <input
+                  className='grow truncate form-input py-0 h-full rounded-none border-0'
+                  type='text'
+                  value={
+                    jobData.err
+                      ? jobData.err
+                      : "Not Available"
+                  }
+                  id='g_err_t'
+                  readOnly disabled
+                />
+                <button className="btn btn-light text-sm h-full rounded-none border-0 border-s"
+                  disabled={!jobData.err}
+                  onClick={() => copyToClipboard(jobData.err || "")}>
+                  COPY
+                </button>
+                <button className="btn btn-dark text-sm h-full rounded-s-none"
+                  disabled={!jobData.err}
+                  onClick={() => toggleModal("errlog")}>
+                  <i className="fa-solid fa-terminal"></i>
+                </button>
               </div>
+            </div>
 
-              <div className="flex gap-x-4 gap-y-1 flex-wrap">
-                {
-                  jobData.SYPD &&
-                  <div>
-                    <span
-                      className='bg-primary text-white rounded-full px-4'
-                      title='Generalization of Simulated Years per Day.'
-                    >
-                      <strong>SYPD: </strong>{jobData.SYPD}
-                    </span>
-                  </div>
-                }
-                {
-                  jobData.ASYPD &&
-                  <div>
-                    <span
-                      className='bg-primary text-white rounded-full px-4'
-                      title='Generalization of Actual SYPD.'
-                    >
-                      <strong>ASYPD: </strong>{jobData.ASYPD}
-                    </span>
-                  </div>
-                }
-              </div>
 
+            <div className="flex flex-col gap-1">
               {
-                jobData.wrapper &&
-                <div className="flex gap-4">
-                  <span>
-                    <strong>Wrapper:</strong> <span className="badge bg-light">{jobData.wrapper}</span>
+                jobData.submit &&
+                <div className="flex items-center">
+                  <strong className="me-2">Submit: </strong>
+                  <span className="badge bg-light">{jobData.submit}</span>
+                </div>
+              }
+              {
+                jobData.start &&
+                <div className="flex items-center">
+                  <strong className="me-2">Start: </strong>
+                  <span className="badge bg-light">{jobData.start}</span>
+                </div>
+              }
+              {
+                jobData.finish &&
+                <div className="flex items-center">
+                  <strong className="me-2">Finish: </strong>
+                  <span className="badge bg-light">{jobData.finish}</span>
+                </div>
+              }
+            </div>
+
+            <div className="flex gap-x-4 gap-y-1 flex-wrap">
+              {
+                jobData.SYPD &&
+                <div>
+                  <span
+                    className='bg-primary text-white rounded-full px-4'
+                    title='Generalization of Simulated Years per Day.'
+                  >
+                    <strong>SYPD: </strong>{jobData.SYPD}
+                  </span>
+                </div>
+              }
+              {
+                jobData.ASYPD &&
+                <div>
+                  <span
+                    className='bg-primary text-white rounded-full px-4'
+                    title='Generalization of Actual SYPD.'
+                  >
+                    <strong>ASYPD: </strong>{jobData.ASYPD}
                   </span>
                 </div>
               }
             </div>
+
+            {
+              jobData.wrapper &&
+              <div className="flex gap-4">
+                <span>
+                  <strong>Wrapper:</strong> <span className="badge bg-light">{jobData.wrapper}</span>
+                </span>
+              </div>
+            }
           </div>
+
 
           <Modal show={showModal.children} onClose={() => toggleModal("children")}>
             <Dialog.Title className={"bg-dark text-white py-4 px-8 text-2xl font-semibold rounded-t-lg flex justify-between items-center"}>

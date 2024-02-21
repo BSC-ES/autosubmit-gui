@@ -8,7 +8,7 @@ import JobDetailCard from "../common/JobDetailCard";
 import { useDispatch, useSelector } from "react-redux";
 // eslint-disable-next-line
 import { Network } from "vis-network/standalone";
-import { motion } from "framer-motion";
+import DraggablePanel from "../common/DraggablePanel";
 
 
 const ExperimentGraph = () => {
@@ -235,18 +235,18 @@ const ExperimentGraph = () => {
               </div>
             </div>
 
-            <motion.div drag
-                dragElastic={0.05}
-                whileDrag={{ scale: 0.95 }}
-                dragConstraints={dragConstraintRef}
-                dragMomentum={false}
-                className="fixed bottom-[5%] right-[2%] drop-shadow-lg">
-                <JobDetailCard
-                  jobData={selectedJob}
-                  jobs={jobs}
-                  onClose={handleCloseJobDetail}
-                />
-              </motion.div>
+            <DraggablePanel
+              show={Boolean(selectedJob)}
+              title={selectedJob?.label}
+              onClose={handleCloseJobDetail}
+              // dragConstraints={dragConstraintRef}
+              className={"bottom-[7%] right-[2%]"}
+            >
+              <JobDetailCard
+                jobData={selectedJob}
+                jobs={jobs}
+              />
+            </DraggablePanel>
           </>
       }
     </div>
