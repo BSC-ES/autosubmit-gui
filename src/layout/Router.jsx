@@ -13,9 +13,12 @@ import ExperimentQuick from '../pages/ExperimentQuick';
 import ExperimentStats from '../pages/ExperimentStats';
 import NotFound from '../pages/NotFound';
 import ExperimentPerformance from '../pages/ExperimentPerformance';
-import { PUBLIC_URL } from '../consts';
+import { DARK_MODE_SWITCHER, PUBLIC_URL } from '../consts';
 import ExperimentTableView from '../pages/ExperimentTableView';
 import Login from '../pages/Login';
+import { useDispatch } from 'react-redux';
+import { appActions } from '../store/appSlice';
+import { useEffect } from 'react';
 
 const router = createBrowserRouter([
   {
@@ -102,6 +105,22 @@ const router = createBrowserRouter([
 
 
 export default function Router() {
+  // First enable/disable dark mode
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (DARK_MODE_SWITCHER) {
+      const localTheme = localStorage.getItem("asgui.theme");
+      if (localTheme) {
+        dispatch(appActions.setTheme(localTheme))
+        if (localTheme === "dark") {
+          document.documentElement.classList.add("dark");
+        }
+      } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        dispatch(appActions.setTheme("dark"))
+        document.documentElement.classList.add("dark");
+      }
+    }
+  }, []);
 
   return (
     <RouterProvider router={router} />

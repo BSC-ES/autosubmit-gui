@@ -46,6 +46,7 @@ const FancyTree = ({ treeData, onActivateNode, treeCallback }) => {
                     // The preset defines defaults for all supported icon types.
                     preset: "awesome5",
                     map: {
+                        _addClass: "text-black",
                         // Override distinct default icons here
                         folder: "fas fa-folder",
                         folderOpen: "fas fa-folder-open",

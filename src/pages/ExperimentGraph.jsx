@@ -224,7 +224,7 @@ const ExperimentGraph = () => {
                 </div>
 
 
-                <div className="border">
+                <div className="border dark:bg-neutral-50">
                   <VisNetwork
                     nodes={graphData.nodes}
                     edges={graphData.edges}

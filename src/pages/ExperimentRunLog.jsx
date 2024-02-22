@@ -31,7 +31,7 @@ const ExperimentRunLog = () => {
   })
 
   return (
-    <div className="w-full flex flex-col border rounded-2xl p-4 min-w-0">
+    <div className="w-full flex flex-col border rounded-2xl p-4 min-w-0 dark:bg-neutral-700">
       {
         isLoading ?
           <div className="w-100 h-100 d-flex align-items-center justify-content-center">
@@ -48,7 +48,7 @@ const ExperimentRunLog = () => {
             <div className='w-full px-1 file-info flex justify-between'>
               <div>
                 <span>LOG FILE: {logData.logfile}</span>{" "}
-                <span className='text-dark'>({logData.timeStamp})</span>
+                <span className='text-dark dark:text-neutral-300'>({logData.timeStamp})</span>
               </div>
               <div className='text-dark'>
                 LAST MODIFIED: {logData.lastModified}
@@ -70,7 +70,7 @@ const ExperimentRunLog = () => {
             </pre>
 
 
-            <div className='text-dark text-center file-info mt-4'>
+            <div className='text-dark dark:text-neutral-300 text-center file-info mt-4'>
               Showing last 150 lines
             </div>
           </>

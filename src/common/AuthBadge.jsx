@@ -73,7 +73,7 @@ const AuthBadge = () => {
         //   </Dropdown.Menu>
         // </Dropdown>
         <Menu as="div" className="relative p-0">
-          <Menu.Button className={"btn btn-light rounded-full font-bold drop-shadow py-2 px-4"}>
+          <Menu.Button className={"btn btn-light dark:btn-dark rounded-full font-bold drop-shadow py-2 px-4"}>
             {authState.user_id} <i className="fa-solid fa-angle-down ms-1"></i>
           </Menu.Button>
           <Transition

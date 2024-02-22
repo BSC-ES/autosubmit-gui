@@ -18,7 +18,7 @@ const LogModal = ({ logFile, show, onHide }) => {
           <i className="fa-solid fa-xmark"></i>
         </div>
       </Dialog.Title>
-      <div className="bg-white py-6 px-6 rounded-b-lg">
+      <div className="bg-white text-black py-6 px-6 rounded-b-lg">
         {data &&
           data.found === true &&
           data.logcontent &&

@@ -184,10 +184,10 @@ const JobDetailCard = ({ jobData, jobs, onClose }) => {
             </div>
 
             <div className="flex flex-col gap-1 my-1">
-              <div className='flex items-center h-8 border rounded'>
-                <span className="h-full rounded-s bg-light px-2 text-sm flex items-center border-e font-mono">OUT</span>
+              <div className='flex items-center h-8'>
+                <span className="h-full rounded-s bg-light px-2 text-sm flex items-center border font-mono">OUT</span>
                 <input
-                  className='grow truncate form-input py-0 h-full rounded-none border-0'
+                  className='grow truncate form-input py-0 h-full rounded-none border'
                   type='text'
                   value={
                     jobData.out
@@ -197,22 +197,22 @@ const JobDetailCard = ({ jobData, jobs, onClose }) => {
                   id='g_out_t'
                   readOnly disabled
                 />
-                <button className="btn btn-light text-sm h-full rounded-none border-0 border-s"
+                <button className="btn btn-light text-sm h-full rounded-none border"
                   disabled={!jobData.out}
                   onClick={() => copyToClipboard(jobData.out || "")}>
                   COPY
                 </button>
-                <button className="btn btn-dark text-sm h-full rounded-s-none"
+                <button className="btn btn-dark text-sm h-full rounded-s-none border"
                   disabled={!jobData.out}
                   onClick={() => toggleModal("outlog")}>
                   <i className="fa-solid fa-terminal"></i>
                 </button>
               </div>
 
-              <div className='flex items-center h-8 border rounded'>
-                <span className="h-full rounded-s bg-light px-2 text-sm flex items-center border-e font-mono">ERR</span>
+              <div className='flex items-center h-8'>
+                <span className="h-full rounded-s bg-light px-2 text-sm flex items-center border font-mono">ERR</span>
                 <input
-                  className='grow truncate form-input py-0 h-full rounded-none border-0'
+                  className='grow truncate form-input py-0 h-full rounded-none border'
                   type='text'
                   value={
                     jobData.err
@@ -222,12 +222,12 @@ const JobDetailCard = ({ jobData, jobs, onClose }) => {
                   id='g_err_t'
                   readOnly disabled
                 />
-                <button className="btn btn-light text-sm h-full rounded-none border-0 border-s"
+                <button className="btn btn-light text-sm h-full rounded-none border"
                   disabled={!jobData.err}
                   onClick={() => copyToClipboard(jobData.err || "")}>
                   COPY
                 </button>
-                <button className="btn btn-dark text-sm h-full rounded-s-none"
+                <button className="btn btn-dark text-sm h-full rounded-s-none border"
                   disabled={!jobData.err}
                   onClick={() => toggleModal("errlog")}>
                   <i className="fa-solid fa-terminal"></i>
@@ -303,7 +303,7 @@ const JobDetailCard = ({ jobData, jobs, onClose }) => {
                 <i className="fa-solid fa-xmark"></i>
               </div>
             </Dialog.Title>
-            <div className="bg-white py-6 px-6 rounded-b-lg">
+            <div className="bg-white text-black py-6 px-6 rounded-b-lg">
               <ul className="list-disc ms-8">
                 {jobDependencies.children.map((item, index) => (
                   <li key={index}>
@@ -327,7 +327,7 @@ const JobDetailCard = ({ jobData, jobs, onClose }) => {
                 <i className="fa-solid fa-xmark"></i>
               </div>
             </Dialog.Title>
-            <div className="bg-white py-6 px-6 rounded-b-lg">
+            <div className="bg-white text-black py-6 px-6 rounded-b-lg">
               <ul className="list-disc ms-8">
                 {jobDependencies.parents.map((item, index) => (
                   <li key={index}>

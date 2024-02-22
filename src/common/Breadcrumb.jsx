@@ -13,7 +13,7 @@ const Breadcrumb = () => {
                 breadcrumb_items.map(item => {
                     return (
                         <Fragment key={item.name}>
-                            <i className="fa-solid fa-chevron-right text-dark"></i>
+                            <i className="fa-solid fa-chevron-right text-dark dark:text-primary"></i>
                             {
                                 item.route ?
                                     <Link to={item.route}>{item.name}</Link>

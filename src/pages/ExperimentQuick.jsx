@@ -109,7 +109,7 @@ const ExperimentQuick = () => {
           <i className="fa-solid fa-triangle-exclamation me-2"></i> {data?.error_message || "Unknown error"}
         </span>
       }
-      <div className="border rounded-2xl py-4 px-6 bg-light flex flex-wrap gap-4 justify-between">
+      <div className="border rounded-2xl py-4 px-6 bg-light dark:bg-neutral-700 dark:border-neutral-700 flex flex-wrap gap-4 justify-between">
         {
           isExpInfoFetching ?
             <div className="w-full h-full flex items-center justify-center">
@@ -135,7 +135,7 @@ const ExperimentQuick = () => {
       <div className="flex gap-3 items-center flex-wrap">
         <div>
           <select value={filters.status} onChange={handleStatusChange}
-            className="form-select border border-primary text-primary font-bold text-center">
+            className="form-select border border-primary text-primary dark:bg-primary dark:text-white font-bold text-center">
             <option value="ANY">TOTAL ({(data && data.total) || 0})</option>
             <option value="COMPLETED">COMPLETED ({(data && data.completed) || 0})</option>
             <option value="FAILED">FAILED ({(data && data.failed) || 0})</option>
@@ -157,7 +157,7 @@ const ExperimentQuick = () => {
           <i className="fa-solid fa-rotate-right"></i>
         </button>
       </div>
-      <div className="block border rounded-2xl p-4 grow">
+      <div className="block border dark:bg-neutral-50 rounded-2xl p-4 grow">
         <div className="overflow-y-auto h-full" style={{ maxHeight: "75vh" }}>
           {
             isFetching ?

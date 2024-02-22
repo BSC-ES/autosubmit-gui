@@ -21,7 +21,7 @@ const RunsModal = ({ expid, show, onHide, onRunSelect }) => {
           <i className="fa-solid fa-xmark"></i>
         </div>
       </Dialog.Title>
-      <div className="bg-white py-6 px-6 rounded-b-lg">
+      <div className="bg-white text-black py-6 px-6 rounded-b-lg">
         {
           isFetching ?
             <div className="w-full h-full flex items-center justify-center">

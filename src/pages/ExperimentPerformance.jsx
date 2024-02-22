@@ -418,7 +418,7 @@ const ExperimentPerformance = () => {
             <i className="fa-solid fa-xmark"></i>
           </div>
         </Dialog.Title>
-        <div className="bg-white py-6 px-6 rounded-b-lg">
+        <div className="bg-white text-black py-6 px-6 rounded-b-lg">
           <ol className="list-decimal ms-4">
             {
               data && Array.isArray(data.warnings_job_data) &&
@@ -440,7 +440,7 @@ const ExperimentPerformance = () => {
             <i className="fa-solid fa-xmark"></i>
           </div>
         </Dialog.Title>
-        <div className="bg-white py-6 px-6 rounded-b-lg">
+        <div className="bg-white text-black py-6 px-6 rounded-b-lg">
           <p>
             <strong>Parallelization</strong>: Total number of cores allocated
             for the run, per SIM.
@@ -549,8 +549,8 @@ const ExperimentPerformance = () => {
             <>
               <div className="flex flex-wrap gap-3 w-full">
 
-                <div className="rounded-2xl border grow min-w-0">
-                  <div className="bg-dark rounded-t-2xl flex gap-3 justify-between items-center text-white px-6 py-2 mb-2">
+                <div className="rounded-2xl border grow min-w-0 dark:bg-neutral-50 dark:text-black">
+                  <div className="bg-dark rounded-t-xl flex gap-3 justify-between items-center text-white px-6 py-2 mb-2">
                     <label className="font-bold">SUMMARY</label>
                     <div>
                       <button className="btn btn-dark rounded-full"
@@ -577,8 +577,8 @@ const ExperimentPerformance = () => {
                   </div>
                 </div>
 
-                <div className="rounded-2xl border grow min-w-0">
-                  <div className="bg-dark rounded-t-2xl flex gap-3 justify-between items-center text-white px-6 py-2 mb-2">
+                <div className="rounded-2xl border grow min-w-0 dark:bg-neutral-50 dark:text-black">
+                  <div className="bg-dark rounded-t-xl flex gap-3 justify-between items-center text-white px-6 py-2 mb-2">
                     <label className="font-bold">CONSIDERED JOBS</label>
                     <div>
                       <button className="btn btn-dark rounded-full"
@@ -596,8 +596,8 @@ const ExperimentPerformance = () => {
               </div>
 
 
-              <div className="rounded-2xl border grow">
-                <div className="bg-dark rounded-t-2xl flex gap-3 justify-between items-center text-white px-4 py-3 mb-4">
+              <div className="rounded-2xl border grow dark:bg-neutral-50 dark:text-black">
+                <div className="bg-dark rounded-t-xl flex gap-3 justify-between items-center text-white px-4 py-3 mb-4">
                   <label className="font-bold">COMPARATIVE PLOTS</label>
                 </div>
 

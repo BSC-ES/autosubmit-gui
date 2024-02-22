@@ -41,7 +41,7 @@ export default function DraggablePanel({ title, dragConstraints, children, class
               }
             </div>
 
-            <div className="px-6 py-4 bg-white rounded-b-2xl">
+            <div className="px-6 py-4 bg-white text-black rounded-b-2xl">
               {children}
             </div>
             

@@ -32,12 +32,14 @@ const ExperimentCard = forwardRef(({ experiment }, ref) => {
       <Link to={`/experiment/${experiment.name}/quick`}
         className={cn(
           "flex px-6 py-3 items-center gap-4 transition-colors bg-light border hover:bg-black/5 text-dark",
+          "dark:bg-dark dark:text-white dark:border-dark dark:hover:bg-white/5",
           (show ? "rounded-t-2xl" : "rounded-2xl")
         )}>
         <div
           className={cn(
             "relative",
             "min-w-6 min-h-6 rounded-full border",
+            "dark:border-dark",
             (isActive ? "bg-success animate-pulse-soft" : "bg-white")
           )}
           title={isActive ? "ACTIVE" : "INACTIVE"}
@@ -62,7 +64,7 @@ const ExperimentCard = forwardRef(({ experiment }, ref) => {
 
         <Menu as="div" className="relative">
           <Menu.Button>
-            <button className="btn btn-light">
+            <button className="btn btn-light dark:btn-dark">
               <i className="fa-solid fa-ellipsis-vertical"></i>
             </button>
           </Menu.Button>
@@ -117,7 +119,8 @@ const ExperimentCard = forwardRef(({ experiment }, ref) => {
 
       {
         show &&
-        <div className="grow border border-t-0 rounded-b-2xl py-4 px-6 w-full flex flex-col gap-4">
+        <div className={cn("grow border border-t-0 rounded-b-2xl py-4 px-6 w-full flex flex-col gap-4",
+        "dark:border-dark dark:bg-neutral-600")}>
           <div className="flex gap-4 items-center w-full">
             <div className="grow flex flex-col gap-1">
               <div className="flex gap-4 items-center justify-between">

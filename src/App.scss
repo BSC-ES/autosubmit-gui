@@ -13,6 +13,20 @@
   html {
     font-family: 'Source Sans 3', sans-serif;
   }
+
+  body {
+    @apply bg-white text-black dark:bg-neutral-800 dark:text-white;
+  }
+
+  .border,
+  .border-r,
+  .border-l,
+  .border-t,
+  .border-b,
+  .border-x,
+  .border-y {
+    @apply dark:border-neutral-700;
+  }
 }
 
 @layer components {
@@ -31,11 +45,11 @@
   }
 
   .btn-dark {
-    @apply bg-dark text-white hover:bg-dark/90
+    @apply bg-dark text-white hover:bg-neutral-600;
   }
 
   .btn-light {
-    @apply bg-light text-black hover:bg-black/10
+    @apply bg-light text-black hover:bg-neutral-200;
   }
 
   .btn-success {
@@ -51,7 +65,8 @@
   }
 
   .form-input {
-    @apply px-3 py-1 rounded-md border bg-transparent transition-colors;
+    @apply px-3 py-1 rounded-md border bg-white transition-colors;
+    @apply dark:bg-neutral-100 dark:text-black;
     @apply focus-visible:outline-none focus-visible:ring;
     @apply disabled:cursor-not-allowed disabled:opacity-50;
     @apply read-only:cursor-not-allowed read-only:opacity-50;
@@ -72,11 +87,12 @@
   }
 
   .alert {
-    @apply bg-light border px-6 py-4 rounded-2xl;
+    @apply border px-6 py-4 rounded-2xl;
   }
 
   .alert-danger {
-    @apply bg-danger/20 text-red-950 border-danger/40;
+    @apply bg-red-100 text-red-950 border-red-400;
+    @apply dark:bg-red-800 dark:text-red-50 dark:border-red-800
   }
 
   .table-bordered {
@@ -99,21 +115,26 @@
     box-sizing: border-box;
     @apply animate-spin;
     @apply border-black border-b-transparent;
+    @apply dark:border-white dark:border-b-transparent;
   }
 
   .markdown-container {
     ul {
       @apply list-disc ms-8;
     }
+
     h1 {
       @apply text-4xl font-semibold mt-3 mb-2;
     }
+
     h2 {
       @apply text-3xl font-semibold mt-3 mb-2;
     }
+
     h3 {
       @apply text-2xl font-medium mt-3 mb-2;
     }
+
     code {
       @apply text-orange-700;
     }
@@ -123,19 +144,22 @@
 @layer utilities {
 
   .animate-striped-bg {
-    background-size  : 2rem 2rem;
-    animation        : stripes-move 1.5s linear infinite;
-		background-image : linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent);
+    background-size: 2rem 2rem;
+    animation: stripes-move 1.5s linear infinite;
+    background-image: linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent);
   }
 
-	@keyframes stripes-move {
-		0% {
-			background-position: 0 0;
-		}
-		100% {
-			background-position: 2rem 2rem;
-		}
-	}
+  @keyframes stripes-move {
+    0% {
+      background-position: 0 0;
+    }
+
+    100% {
+      background-position: 2rem 2rem;
+    }
+  }
+
+
 }
 
 /* Global Styles */
@@ -534,6 +558,8 @@ pre.bash-joblog {
 
 ul.fancytree-container {
   border: none;
+  background-color: transparent;
+  @apply bg-transparent;
 }
 
 /* span.fancytree-node.fancytree-clone span.fancytree-title {

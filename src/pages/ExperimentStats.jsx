@@ -98,8 +98,8 @@ const StatsReport = ({ data, selectedSection }) => {
   return (
     <div className="flex flex-col grow">
 
-      <div className="rounded-2xl border grow">
-        <div className="bg-dark rounded-t-2xl flex flex-wrap gap-4 justify-between items-center text-white px-6 py-2 mb-6">
+      <div className="rounded-2xl border grow dark:bg-neutral-50 dark:text-black">
+        <div className="bg-dark rounded-t-xl flex flex-wrap gap-4 justify-between items-center text-white px-6 py-2 mb-6">
           <label className="flex gap-2 items-center">
             Selected job section: <span className="badge bg-primary text-white">
               {selectedSection}

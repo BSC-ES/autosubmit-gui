@@ -214,7 +214,7 @@ const ExperimentTree = () => {
                       <button className="btn btn-secondary font-bold px-4 text-sm" onClick={handleCollapse}>Collapse All -</button>
                     </div>
                   </div>
-                  <div className="border rounded-2xl p-4 grow">
+                  <div className="border rounded-2xl p-4 grow dark:bg-neutral-50">
                     <div className="overflow-auto" style={{ minHeight: "50vh", maxHeight: "75vh", maxWidth: "80vw" }}>
                       <FancyTree treeData={data.tree}
                         onActivateNode={handleOnActivateNode}
