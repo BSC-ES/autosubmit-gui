@@ -78,7 +78,7 @@ const ExperimentWrapper = ({ children }) => {
   const [
     showExperimentMenuLabelsDesktop,
     saveShowExperimentMenuLabelsDesktop
-  ] = useLocalStorage("options.showExperimentMenuLabelsDesktop", true)
+  ] = useLocalStorage("asgui.layout.experiment.menu.showLabels", true)
   const [showLabels, setShowLabels] = useState(showExperimentMenuLabelsDesktop)
   const [showTopMenu, setShowTopMenu] = useState(false)
 
@@ -91,7 +91,7 @@ const ExperimentWrapper = ({ children }) => {
   return (
     <>
       {
-        width > 992 ?
+        width >= 1024 ?
           <div className="flex gap-6 grow">
             <div className="flex flex-col gap-2 bg-light border p-5 rounded-2xl"
               style={{ maxHeight: "80vh" }}>

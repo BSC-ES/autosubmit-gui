@@ -5,6 +5,7 @@ import useASTitle from "../hooks/useASTitle";
 import useBreadcrumb from "../hooks/useBreadcrumb";
 import ExperimentCard from "../common/ExperimentCard";
 import Paginator from "../common/Paginator";
+import { useWindowSize } from "@uidotdev/usehooks";
 
 const searchParamsToKeyValue = (searchParams) => {
   let searchParamsObj = {};
@@ -47,6 +48,7 @@ const Home = () => {
     skip: !isInitialized
   })
 
+  const { width } = useWindowSize()
   const filterRef = useRef()
 
   // State Transforms
@@ -271,7 +273,11 @@ const Home = () => {
         {
           !isFetching && data?.pagination?.total_pages > 0 && currentPage &&
           <div className="flex gap-2 justify-center items-center">
-            <Paginator currentPage={currentPage} onPageClick={handleChangePage} totalPages={data.pagination.total_pages}></Paginator>
+            <Paginator
+              currentPage={currentPage}
+              onPageClick={handleChangePage}
+              totalPages={data.pagination.total_pages}
+              siblingSize={width >= 640 ? 2 : 1} />
           </div>
         }
 

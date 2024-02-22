@@ -26,7 +26,7 @@ const Navbar = () => {
                 <Logo className="h-10"/>
             </Link>
             {
-                width > 992 &&
+                width >= 768 &&
                 <div className="grow flex items-center gap-12 px-6">
                     {
                         NAVBAR_ITEMS.map(item =>
