@@ -39,14 +39,24 @@ export const autosubmitApiV4 = createApi({
                 })
             }
         }),
-        loginCASv2: builder.mutation({
-            query: ({ ticket, service }) => {
-                return {
-                    url: `auth/cas/v2/login`,
-                    method: "GET",
-                    params: {
-                        ticket: ticket,
-                        service: service
+        login: builder.mutation({
+            query: ({ provider, ticket, service, code }) => {
+                if (provider === "github") {
+                    return {
+                        url: `auth/oauth2/github/login`,
+                        method: "GET",
+                        params: {
+                            code: code
+                        }
+                    }
+                } else {
+                    return {
+                        url: `auth/cas/v2/login`,
+                        method: "GET",
+                        params: {
+                            ticket: ticket,
+                            service: service
+                        }
                     }
                 }
             }

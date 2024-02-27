@@ -3,8 +3,16 @@ export const PUBLIC_URL = process.env.PUBLIC_URL
 
 export const MAX_ITEMS_QUICK_VIEW = 100
 
-export const CAS_THIRD_PARTY_LOGIN_URL = process.env.REACT_APP_CAS_THIRD_PARTY_LOGIN_URL;
 
+// Authentication
 export const AUTHENTICATION = ["true", "T"].includes(process.env.REACT_APP_AUTHENTICATION); // Default: false. If false -> The authentication requirement is disabled. Some API calls require a valid token though.
+export const AUTH_PROVIDER = process.env.REACT_APP_AUTH_PROVIDER;
 
-export const DARK_MODE_SWITCHER = false;
+// CAS Auth
+export const CAS_THIRD_PARTY_LOGIN_URL = process.env.REACT_APP_CAS_THIRD_PARTY_LOGIN_URL;
+export const CAS_SERVICE_ID = process.env.REACT_APP_CAS_SERVICE_ID;
+
+// GitHub Auth
+export const GITHUB_CLIENT_ID = process.env.REACT_APP_GITHUB_CLIENT_ID;
+
+export const DARK_MODE_SWITCHER = false; // Experimental feature
