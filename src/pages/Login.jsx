@@ -26,7 +26,7 @@ const Login = () => {
       })
     } else {
       if ( AUTH_PROVIDER === "github") {
-        const _target = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}`;
+        const _target = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&scope=read:user%20read:org`;
         window.location.href = _target;
       }else{
         const _target = `${CAS_THIRD_PARTY_LOGIN_URL}?service=${service}`;

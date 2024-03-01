@@ -15,4 +15,4 @@ export const CAS_SERVICE_ID = process.env.REACT_APP_CAS_SERVICE_ID;
 // GitHub Auth
 export const GITHUB_CLIENT_ID = process.env.REACT_APP_GITHUB_CLIENT_ID;
 
-export const DARK_MODE_SWITCHER = false; // Experimental feature
+export const DARK_MODE_SWITCHER = ["true", "T"].includes(process.env.REACT_APP_DARK_MODE_SWITCHER);; // Experimental feature. Default: false.

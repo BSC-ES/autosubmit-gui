@@ -6,6 +6,7 @@ import useBreadcrumb from "../hooks/useBreadcrumb";
 import ExperimentCard from "../common/ExperimentCard";
 import Paginator from "../common/Paginator";
 import { useWindowSize } from "@uidotdev/usehooks";
+import { Switch } from "@headlessui/react";
 
 const searchParamsToKeyValue = (searchParams) => {
   let searchParamsObj = {};
@@ -220,10 +221,18 @@ const Home = () => {
             </select>
           </div>
           <div className="flex gap-4 items-center mx-4">
-            <input type="checkbox" className="cursor-pointer"
+            <Switch checked={isOnlyActive} onChange={handleChangeOnlyActive}
+              className={`${isOnlyActive ? 'bg-primary' : 'bg-neutral-200 dark:bg-neutral-700'
+                } relative inline-flex h-6 w-11 items-center rounded-full`}>
+              <span
+                className={`${isOnlyActive ? 'translate-x-6' : 'translate-x-1'
+                  } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+              />
+            </Switch>
+            {/* <input type="checkbox" className="cursor-pointer"
               checked={isOnlyActive}
               onChange={handleChangeOnlyActive}
-            />
+            /> */}
             <label className="text-nowrap cursor-pointer" onClick={handleChangeOnlyActive}>Only active</label>
           </div>
 

@@ -7,13 +7,13 @@ const Breadcrumb = () => {
     const breadcrumb_items = useSelector((state) => state.app.breadcrumb_items)
 
     return (
-        <div className="px-6 pb-6 pt-4 flex items-center gap-4  text-primary font-bold">
+        <div className="px-6 pb-6 pt-4 flex items-center gap-4  text-primary dark:text-primary-400 font-bold">
             <Link to={"/"}><i className="fa-solid fa-house" /></Link>
             {
                 breadcrumb_items.map(item => {
                     return (
                         <Fragment key={item.name}>
-                            <i className="fa-solid fa-chevron-right text-dark dark:text-primary"></i>
+                            <i className="fa-solid fa-chevron-right text-dark dark:text-primary-400"></i>
                             {
                                 item.route ?
                                     <Link to={item.route}>{item.name}</Link>

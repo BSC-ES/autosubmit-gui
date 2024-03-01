@@ -10,7 +10,7 @@ export default function DarkThemeSwitcher() {
   }
 
   return (
-    <button className="btn btn-light dark:btn-dark rounded-full drop-shadow" onClick={toggleMode}>
+    <button className="btn btn-light dark:btn-dark rounded-full drop-shadow border" onClick={toggleMode}>
       {theme === "light" ? <div><i className="fa-solid fa-circle-half-stroke"></i></div> :  <div><i className="fa-solid fa-circle-half-stroke"></i></div>}
     </button>
   )

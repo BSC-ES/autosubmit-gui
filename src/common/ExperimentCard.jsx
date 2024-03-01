@@ -31,7 +31,7 @@ const ExperimentCard = forwardRef(({ experiment }, ref) => {
     <div className="flex flex-col w-full h-full">
       <Link to={`/experiment/${experiment.name}/quick`}
         className={cn(
-          "flex px-6 py-3 items-center gap-4 transition-colors bg-light border hover:bg-black/5 text-dark",
+          "flex px-6 py-3 items-center gap-4 transition-colors bg-light border hover:bg-neutral-200 text-dark",
           "dark:bg-dark dark:text-white dark:border-dark dark:hover:bg-white/5",
           (show ? "rounded-t-2xl" : "rounded-2xl")
         )}>
