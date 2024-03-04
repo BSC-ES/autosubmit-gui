@@ -1,6 +1,18 @@
 ## Changelog
 
-### Pre-release v4.0.0-beta.2 - Release date: 2023-11-23
+### Pre-release v4.0.0-beta.3 - Release date: TBD
+
+* **Major change**: New graphical upgrade. Everything changed.
+* Multiple dependencies changed:
+    * Bootstrap removed
+    * Redux toolkit added
+    * Tailwind CSS added (with headlessUI and RadixUI)
+    * Sass added
+* Experimental dark mode
+* Support to new `autosubmit_api==4.0.0b4`
+
+
+### Pre-release v3.8.0-beta.1 (v4.0.0-beta.2) - Release date: 2023-11-23
 
 * Supports `autosubmit_api==4.0.0b2`
 * Configuration updated to support dotenv files.
