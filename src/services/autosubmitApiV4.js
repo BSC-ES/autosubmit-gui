@@ -61,13 +61,14 @@ export const autosubmitApiV4 = createApi({
                 }
             }
         }),
-        verifyToken: builder.mutation({
+        verifyToken: builder.query({
             query: () => {
                 return {
                     url: `auth/verify-token`,
                     method: "GET"
                 }
-            }
+            },
+            keepUnusedDataFor: 1
         }),
     }),
 })

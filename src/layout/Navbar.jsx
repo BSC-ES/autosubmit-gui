@@ -1,9 +1,9 @@
 import { Link, useLocation } from "react-router-dom";
 import AuthBadge from "../common/AuthBadge";
-import { ReactComponent as Logo } from "../common/Logo.svg"
+import { ReactComponent as Logo } from "../common/Logo.svg";
 import { useWindowSize } from "@uidotdev/usehooks";
 import DarkThemeSwitcher from "../common/DarkThemeSwitcher";
-import { DARK_MODE_SWITCHER } from "../consts";
+import { AUTHENTICATION, DARK_MODE_SWITCHER } from "../consts";
 
 const NAVBAR_ITEMS = [
   {
@@ -46,7 +46,9 @@ const Navbar = () => {
       }
 
       <div className="flex gap-4">
-        <AuthBadge />
+        {
+          AUTHENTICATION &&
+          <AuthBadge />}
         {
           DARK_MODE_SWITCHER &&
           <DarkThemeSwitcher />
