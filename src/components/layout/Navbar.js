@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AUTHENTICATION, latestNewsLabel, NOAPI, rootAppName, TRACK_ESARCHIVE } from "../context/vars";
 import ExperimentContext from "../context/experiment/experimentContext";
 import Experiment from "../experiment/Experiment";
@@ -8,7 +8,7 @@ import FileStatus from "../experiment/FileStatus";
 import { unsetAuthInLocalStorage } from "../context/utils";
 
 const Navbar = ({ icon, title }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const experimentContext = useContext(ExperimentContext);
   const {
     searchExperiments,
@@ -47,7 +47,7 @@ const Navbar = ({ icon, title }) => {
     e.preventDefault();
     if (text !== "") {
       searchExperiments(text);
-      history.push(`/${rootAppName}/`);
+      navigate(`/${rootAppName}/`);
     }
   };
   let expid = null;
@@ -60,7 +60,7 @@ const Navbar = ({ icon, title }) => {
     e.preventDefault();
     unsetAuthInLocalStorage();
     setLoggedUser(null, null);
-    history.push(`/${rootAppName}/about`);
+    navigate(`/${rootAppName}/about`);
   };
 
   return (
@@ -119,36 +119,6 @@ const Navbar = ({ icon, title }) => {
 
             </li>
           </ul>
-          {history &&
-            history.location.pathname !== `/${rootAppName}/` &&
-            history.location.pathname !== `/${rootAppName}` && (
-              <form
-                className='form-inline my-2 my-lg-0'
-                onSubmit={submitSearch}
-              >
-                <div className='input-group input-group-sm'>
-                  <input
-                    type='search'
-                    className='form-control py-0'
-                    placeholder='Search Experiments'
-                    aria-label='Search'
-                    value={text}
-                    onChange={onChange}
-                  />
-                  <div className='input-group-append'>
-                    <button
-                      className='btn btn-dark'
-                      type='submit'
-                      data-toggle='tooltip'
-                      data-placement='bottom'
-                      title='Search by expid, description, or owner.'
-                    >
-                      Search
-                    </button>
-                  </div>
-                </div>
-              </form>
-            )}
           {
             AUTHENTICATION &&
             <>

@@ -1,0 +1,29 @@
+{
+    "experiments": [
+        {
+            "completed": 1,
+            "description": "Francesc",
+            "failed": 0,
+            "hpc": "LUMI",
+            "id": 14,
+            "modified": "2024-01-19 12:12:23",
+            "name": "a0it",
+            "queuing": 0,
+            "running": 0,
+            "status": "NOT RUNNING",
+            "submitted": 0,
+            "suspended": 0,
+            "total": 874,
+            "user": "froura",
+            "version": "4.1.0",
+            "wrapper": null
+        }
+    ],
+    "pagination": {
+        "page": 1,
+        "page_items": 1,
+        "page_size": 12,
+        "total_items": 1,
+        "total_pages": 1
+    }
+}

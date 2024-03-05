@@ -1,9 +1,14 @@
 import { timeStampToDate } from "../../utils";
 
 export default class TreeContentHandler {
-  constructor(currentJobs, referenceHeaders, pklInfo) {
-    this.currentJobs = currentJobs;
-    this.referenceHeaders = referenceHeaders;
+  constructor(currentJobs, referenceHeaders, pklInfo, replaceJobsInPlace = true) {
+    if(replaceJobsInPlace){
+      this.currentJobs = currentJobs;
+      this.referenceHeaders = referenceHeaders;
+    } else {
+      this.currentJobs = JSON.parse(JSON.stringify(currentJobs));
+      this.referenceHeaders = JSON.parse(JSON.stringify(referenceHeaders));
+    }
     this.pklInfo = pklInfo;
   }
 
