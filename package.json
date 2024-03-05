@@ -1,35 +1,45 @@
 {
-  "homepage": "https://earth.bsc.es/autosubmitapp/",
   "name": "autosubmitgui",
-  "version": "4.0.0-beta.2",
+  "version": "4.0.0-beta.3",
   "private": true,
   "dependencies": {
-    "axios": "^0.22.0",
-    "d3": "^4.13.0",
-    "dateformat": "^3.0.3",
-    "jquery": "^3.5.0",
-    "jquery.fancytree": "^2.35.0",
-    "react": "^17.0.1",
-    "react-copy-to-clipboard": "^5.0.2",
+    "@fortawesome/fontawesome-free": "^6.5.1",
+    "@headlessui/react": "^1.7.18",
+    "@radix-ui/react-progress": "^1.0.3",
+    "@reduxjs/toolkit": "^2.0.1",
+    "@uidotdev/usehooks": "^2.4.1",
+    "axios": "^1.6.2",
+    "clsx": "^2.1.0",
+    "d3": "^7.8.5",
+    "dateformat": "^5.0.3",
+    "framer-motion": "^11.0.5",
+    "jquery": "^3.7.1",
+    "jquery.fancytree": "^2.38.3",
+    "react": "^18.2.0",
+    "react-copy-to-clipboard": "^5.1.0",
     "react-desktop-notification": "^1.0.9",
-    "react-dom": "^16.14.0",
-    "react-google-charts": "^3.0.15",
-    "react-router-dom": "^5.1.2",
-    "react-scripts": "^4.0.3",
-    "react-scroll": "^1.7.16",
-    "react-web-notification": "^0.8.0",
+    "react-dom": "^18.2.0",
+    "react-google-charts": "^4.0.1",
+    "react-redux": "^9.0.4",
+    "react-router-dom": "^6.21.0",
+    "react-scripts": "^5.0.1",
+    "react-scroll": "^1.9.0",
+    "sass": "^1.69.5",
     "showdown": "^2.1.0",
-    "uuid": "^7.0.3",
+    "tailwind-merge": "^2.2.1",
+    "uuid": "^9.0.1",
     "vis": "^4.21.0",
-    "vis-network": "^5.1.0",
-    "vis-util": "^1.1.10"
+    "vis-network": "^9.1.9",
+    "vis-util": "^5.0.7"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts -r @cypress/instrument-cra start",
     "build": "react-scripts build",
     "test": "jest",
     "eject": "react-scripts eject",
-    "lint": "eslint src --ext .js --ignore-pattern *.test.js"
+    "lint": "eslint src --ext .js --ignore-pattern *.test.js",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -50,12 +60,17 @@
   "main": "index.js",
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.12.1",
-    "@babel/plugin-transform-modules-commonjs": "^7.12.1",
-    "canvas": "^2.6.1",
+    "@babel/plugin-transform-modules-commonjs": "^7.23.3",
+    "@cypress/code-coverage": "^3.12.22",
+    "@cypress/instrument-cra": "^1.4.0",
+    "babel-plugin-istanbul": "^6.1.1",
+    "canvas": "^2.11.2",
+    "cypress": "^13.6.4",
     "identity-obj-proxy": "^3.0.0",
-    "jest-canvas-mock": "^2.3.0",
-    "react-dev-utils": "^11.0.3",
-    "react-test-renderer": "^17.0.1"
+    "jest-canvas-mock": "^2.5.2",
+    "react-dev-utils": "^12.0.1",
+    "react-test-renderer": "^18.2.0",
+    "tailwindcss": "^3.4.1"
   },
   "repository": {
     "type": "git",
@@ -78,7 +93,15 @@
         "plugins": [
           "@babel/plugin-transform-modules-commonjs",
           "@babel/plugin-proposal-class-properties",
-          "@babel/plugin-transform-react-jsx"
+          "@babel/plugin-transform-react-jsx",
+          [
+            "istanbul",
+            {
+              "exclude": [
+                "**/*.test.js"
+              ]
+            }
+          ]
         ]
       }
     }

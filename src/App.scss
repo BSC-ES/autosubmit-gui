@@ -1,4 +1,166 @@
-@import url("https://fonts.googleapis.com/css?family=Roboto");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Source Sans 3';
+  src: url('../public/fonts/SourceSans3-VariableFont_wght.ttf') format('truetype-variations');
+}
+
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+
+@layer base {
+  html {
+    font-family: 'Source Sans 3', sans-serif;
+  }
+
+  body {
+    @apply bg-white text-black dark:bg-neutral-800 dark:text-white;
+  }
+
+  .border,
+  .border-r,
+  .border-l,
+  .border-t,
+  .border-b,
+  .border-x,
+  .border-y {
+    @apply dark:border-neutral-700;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply px-3 py-1 inline-block items-center justify-center whitespace-nowrap rounded-md transition-colors;
+    @apply focus-visible:outline-none focus-visible:ring;
+    @apply disabled:pointer-events-none disabled:opacity-50;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-white hover:bg-primary/90
+  }
+
+  .btn-secondary {
+    @apply bg-secondary text-white hover:bg-secondary/90
+  }
+
+  .btn-dark {
+    @apply bg-dark text-white hover:bg-neutral-600;
+  }
+
+  .btn-light {
+    @apply bg-light text-black hover:bg-neutral-200;
+  }
+
+  .btn-success {
+    @apply bg-success text-white hover:bg-success/90
+  }
+
+  .btn-danger {
+    @apply bg-danger text-white hover:bg-danger/90
+  }
+
+  .btn-warning {
+    @apply bg-warning text-white hover:bg-warning/90
+  }
+
+  .form-input {
+    @apply px-3 py-1 rounded-md border bg-white transition-colors;
+    @apply dark:bg-neutral-100 dark:text-black;
+    @apply focus-visible:outline-none focus-visible:ring;
+    @apply disabled:cursor-not-allowed disabled:opacity-50;
+    @apply read-only:cursor-not-allowed read-only:opacity-50;
+  }
+
+  .form-select {
+    @apply px-3 py-1 rounded-md bg-transparent transition-colors;
+    @apply focus-visible:outline-none focus-visible:ring;
+    @apply disabled:pointer-events-none disabled:opacity-50;
+    @apply bg-no-repeat appearance-none pr-8 pl-2;
+    background-image: url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3e%3cpath fill=%27none%27 stroke=%27currentColor%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27m2 5 6 6 6-6%27/%3e%3c/svg%3e");
+    background-size: 0.7rem;
+    background-position: right 0.7rem center;
+  }
+
+  .badge {
+    @apply px-2 py-1 rounded-lg text-xs font-bold leading-none;
+  }
+
+  .alert {
+    @apply border px-6 py-4 rounded-2xl;
+  }
+
+  .alert-danger {
+    @apply bg-red-100 text-red-950 border-red-400;
+    @apply dark:bg-red-800 dark:text-red-50 dark:border-red-800
+  }
+
+  .table-bordered {
+    > :not(caption)>* {
+      @apply border-y;
+
+      >* {
+        @apply border-x;
+      }
+    }
+  }
+
+  .spinner-border {
+    width: 30px;
+    height: 30px;
+    border-width: 4px;
+    border-style: solid;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    @apply animate-spin;
+    @apply border-black border-b-transparent;
+    @apply dark:border-white dark:border-b-transparent;
+  }
+
+  .markdown-container {
+    ul {
+      @apply list-disc ms-8;
+    }
+
+    h1 {
+      @apply text-4xl font-semibold mt-3 mb-2;
+    }
+
+    h2 {
+      @apply text-3xl font-semibold mt-3 mb-2;
+    }
+
+    h3 {
+      @apply text-2xl font-medium mt-3 mb-2;
+    }
+
+    code {
+      @apply text-orange-700;
+    }
+  }
+}
+
+@layer utilities {
+
+  .animate-striped-bg {
+    background-size: 2rem 2rem;
+    animation: stripes-move 1.5s linear infinite;
+    background-image: linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent);
+  }
+
+  @keyframes stripes-move {
+    0% {
+      background-position: 0 0;
+    }
+
+    100% {
+      background-position: 2rem 2rem;
+    }
+  }
+
+
+}
 
 /* Global Styles */
 /* :root {
@@ -16,6 +178,14 @@
 } */
 
 /* GENERAL CUSTOM STYLES */
+
+.btn-outline-primary:hover {
+  color: #FFFFFF;
+}
+
+.select-white-caret {
+  --bs-form-select-bg-img: url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3e%3cpath fill=%27none%27 stroke=%27%23ffffff%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27m2 5 6 6 6-6%27/%3e%3c/svg%3e");
+}
 
 .header-information-space {
   padding: 2.4rem 0;
@@ -39,7 +209,7 @@
 .sticky-header {
   position: sticky;
   top: 0;
-  z-index: 1020;
+  z-index: 2;
 }
 
 .error-message {
@@ -72,8 +242,6 @@
   font-size: 0.9rem;
   letter-spacing: 1px;
 }
-
-
 
 /* LOG TAB */
 
@@ -150,8 +318,7 @@
   -webkit-transform: scale(0);
   -ms-transform: scale(0);
   transform: scale(0);
-  -webkit-transition: -webkit-transform 300ms 0ms
-    cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  -webkit-transition: -webkit-transform 300ms 0ms cubic-bezier(0.6, -0.28, 0.735, 0.045);
   transition: -webkit-transform 300ms 0ms cubic-bezier(0.6, -0.28, 0.735, 0.045);
   -o-transition: transform 300ms 0ms cubic-bezier(0.6, -0.28, 0.735, 0.045);
   transition: transform 300ms 0ms cubic-bezier(0.6, -0.28, 0.735, 0.045);
@@ -163,10 +330,8 @@
   -webkit-transform: scale(1);
   -ms-transform: scale(1);
   transform: scale(1);
-  -webkit-transition: -webkit-transform 300ms 300ms
-    cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  transition: -webkit-transform 300ms 300ms
-    cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  -webkit-transition: -webkit-transform 300ms 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: -webkit-transform 300ms 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
   -o-transition: transform 300ms 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
   transition: transform 300ms 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
   transition: transform 300ms 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275),
@@ -202,6 +367,7 @@
 .table th {
   padding: 0.7px 4px 0.7px 4px;
 }
+
 .table td {
   padding: 0.7px 2px 0.7px 2px;
   font-size: 1rem;
@@ -303,7 +469,7 @@ pre.bash-joblog {
 }
 
 .scroll {
-  max-height: 800px;
+  max-height: 75vh;
   overflow-y: auto;
 }
 
@@ -324,14 +490,6 @@ pre.bash-joblog {
   height: 275px;
   font-size: 0.7rem;
   font-family: Arial, Helvetica, sans-serif;
-}
-
-.bg-queue {
-  background-color: lightpink;
-}
-
-.bg-completed {
-  background-color: yellow;
 }
 
 .scroll-y-jobs {
@@ -399,14 +557,9 @@ pre.bash-joblog {
 }
 
 ul.fancytree-container {
-  /* height: 800px;
-  max-height: 800px; */
-  min-height: 780px;
-  height: 780px;
-  max-height: 780px;
-  width: 100%;
   border: none;
-  overflow: auto;
+  background-color: transparent;
+  @apply bg-transparent;
 }
 
 /* span.fancytree-node.fancytree-clone span.fancytree-title {
@@ -414,8 +567,7 @@ ul.fancytree-container {
 } */
 span.fancytree-node.fancytree-clone span.fancytree-title:after {
   content: "";
-  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAMAAAC67D+PAAAAFVBMVEVmmcwzmcyZzP8AZswAZv////////9E6giVAAAAB3RSTlP///////8AGksDRgAAADhJREFUGFcly0ESAEAEA0Ei6/9P3sEcVB8kmrwFyni0bOeyyDpy9JTLEaOhQq7Ongf5FeMhHS/4AVnsAZubxDVmAAAAAElFTkSuQmCC")
-    100% 50% no-repeat;
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAMAAAC67D+PAAAAFVBMVEVmmcwzmcyZzP8AZswAZv////////9E6giVAAAAB3RSTlP///////8AGksDRgAAADhJREFUGFcly0ESAEAEA0Ei6/9P3sEcVB8kmrwFyni0bOeyyDpy9JTLEaOhQq7Ongf5FeMhHS/4AVnsAZubxDVmAAAAAElFTkSuQmCC") 100% 50% no-repeat;
   padding-right: 13px;
 }
 
@@ -429,9 +581,11 @@ span.fancytree-node.fancytree-active-clone {
   0% {
     background-color: none;
   }
+
   50% {
     background-color: #fbf8b2;
   }
+
   100% {
     background-color: none;
   }
