@@ -25,7 +25,7 @@ These two systems, the **API** and the **GUI**, are independent. It is possible 
 
 ![Autosubmit Big Picture](/docs/Total_Autosubmit_Diagram.png)
 
-In this image you can see the flow of information in the **Autosubmit environment**.
+In this image you can see the flow of information in the **Autosubmit environment at BSC**.
 
 * **Autosubmit**: Machines running Autosubmit.
 * **Remote Platforms**: Platforms (HPCs in most cases) to which Autosubmit connects to run jobs. 
@@ -42,10 +42,11 @@ In this image you can see the flow of information in the **Autosubmit environmen
 
 - npm
 - Javascript: asynchronous functions, promises, event handling, etc.
-- Bootstrap 4 and CSS
-- DOM manipulation
-- JSON
 - ReactJS
+- Tailwind CSS
+- Redux Toolkit
+- Framer Motion
+- Cypress
 
 ## Installation
 
@@ -64,30 +65,33 @@ Install the needed dependencies using the [Node Package Manager](https://www.npm
 
 `npm install`
 
+### Configuration options
+
 It's important that you configure this project before using it by using Enviroment variables. This can be easily done by creating a `.env` file on the project root directory with the following variables:
 
-* **REACT_APP_AUTHENTICATION**: Default `false`. You can set it to `false` to avoid the requirement of an authentication token, because you won't be able to get one from BSC internal Central Authentication Service (CAS).
-However, some API calls might require that you have a valid token, but if you are using the internal data, it shouldn't be a problem. In case is set to `true`, you have to specify `REACT_APP_CAS_THIRD_PARTY_LOGIN_URL` and `REACT_APP_CAS_SERVICE_ID`.
+#### Authentication:
+
+* **REACT_APP_AUTHENTICATION**: Default `false`. You can set it to `false` to avoid the requirement of an authentication in the GUI. However, some API calls might require that you have a valid token. In case is set to `true`, you have to specify `REACT_APP_CAS_THIRD_PARTY_LOGIN_URL` and `REACT_APP_CAS_SERVICE_ID`, or `REACT_APP_GITHUB_CLIENT_ID`.
+* **REACT_APP_AUTH_PROVIDER**: Can be set to `cas` or `github`.
 * **REACT_APP_CAS_THIRD_PARTY_LOGIN_URL**: This is the login endpoint to request credentials to the user according to the [CAS protocol](https://apereo.github.io/cas/6.6.x/protocol/CAS-Protocol.html).
 * **REACT_APP_CAS_SERVICE_ID**: This will specify the `service` parameter during the request of credentials according to the [CAS protocol](https://apereo.github.io/cas/6.6.x/protocol/CAS-Protocol.html).
-* **REACT_APP_NOAPI**: Default `false`. Set it to `true` if you want to try the GUI without a backend. This will effectively set the API calls to be redirected towards an internal data samples folder `/autosubmitreact/src/components/context/data/` implemented for testing purposes.
-* **REACT_APP_AUTOSUBMIT_API_SOURCE**: Defines the API URI. For more information check [autosubmit_api](https://earth.bsc.es/gitlab/es/autosubmit_api).
-* **REACT_APP_DEBUG**: Default `false`. Set it to `true` if you want to enable the DEBUG features.
 
-> **IMPORTANT**
-> The static data required by `NOAPI = true` is stored in [/autosubmitreact/data](https://earth.bsc.es/gitlab/es/autosubmitreact/-/tree/master/data) because we don't want that the package sent for deployment includes all this information that will only increase the size of the package. Therefore, in forder for `NOAPI = true` to work, you should copy the contents of `/autosubmitreact/data/` into `/autosubmitreact/src/components/context/data/`.
+#### Other:
+
+* **REACT_APP_AUTOSUBMIT_API_SOURCE**: Defines the API URI. For more information check [autosubmit_api](https://earth.bsc.es/gitlab/es/autosubmit_api).
+* **PUBLIC_URL**: This allows to serve the GUI from another subpath. See more in [CRA advanced configuration](https://create-react-app.dev/docs/advanced-configuration).
+* **REACT_APP_DARK_MODE_SWITCHER** (experimental feature): Default `false`. Set it to `true` if you want to enable the Dark mode feature.
+
 
 Here is an example content of a `.env` file:
 
 ```bash
 REACT_APP_AUTHENTICATION=true
+REACT_APP_AUTH_PROVIDER=cas
 REACT_APP_CAS_THIRD_PARTY_LOGIN_URL=https://cas.bsc.es/cas/login
 REACT_APP_CAS_SERVICE_ID=https://earth.bsc.es/autosubmitapp/login
 
-REACT_APP_NOAPI=false
 REACT_APP_AUTOSUBMIT_API_SOURCE=https://earth.bsc.es/autosubmitapi
-
-REACT_APP_DEBUG=false
 ```
 
 > **NOTE**
@@ -103,17 +107,18 @@ Furthermore, if you want to set up it for production, please refere to the [Depl
 
 ## Testing
 
-The testing suite has been developed using [JEST](https://jestjs.io/en/).
+The testing have been developed using [Cypress](https://docs.cypress.io/guides/overview/why-cypress).
 
-To execute it, go to your main folder (`/autosubmitreact/`) and execute:
+To start running the e2e and component tests you have to configure and run the GUI. Follow the installation guide above if needed.
 
-`npm test`
+Then, you have to write a `.env.cypress` with the URL of your GUI and API like this:
 
-Almost all tests can be found at `/autosubmitreact/src/components/experiment/tests/`.
+```bash
+CYPRESS_BASE_URL=http://localhost:3000/
+CYPRESS_EXTERNAL_API=http://127.0.0.1:8000
+```
 
-Make sure that you have installed the dependencies before running the tests.
-
-Note: It could happen that `jest` fails to run or is not automatically installed along the other dependencies on a Windows machine, please install it manually.
+Once done, you can run the tests by running `npm run cy:run` or interactively using `npm run cy:open`.
 
 
 ## User Guide

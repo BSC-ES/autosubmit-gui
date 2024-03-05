@@ -1,5 +1,7 @@
 ## Changelog
 
+### Pre-release v4.0.0-beta.4 - Release date: TBD
+
 ### Pre-release v4.0.0-beta.3 - Release date: 2024-03-05
 
 * **Major change**: New graphical upgrade. Everything changed.
