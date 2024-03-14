@@ -135,6 +135,18 @@
       @apply text-2xl font-medium mt-3 mb-2;
     }
 
+    h4 {
+      @apply text-xl font-medium mt-3 mb-2;
+    }
+
+    h5 {
+      @apply text-lg font-medium mt-3 mb-2;
+    }
+
+    h6 {
+      @apply text-base font-medium mt-3 mb-2;
+    }
+
     code {
       @apply text-orange-700;
     }
