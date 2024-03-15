@@ -7,6 +7,7 @@ import ExperimentCard from "../common/ExperimentCard";
 import Paginator from "../common/Paginator";
 import { useWindowSize } from "@uidotdev/usehooks";
 import { Switch } from "@headlessui/react";
+import IntervalButton from "../common/IntervalButton";
 
 const searchParamsToKeyValue = (searchParams) => {
   let searchParamsObj = {};
@@ -197,6 +198,8 @@ const Home = () => {
             <i className="fa-solid fa-rotate-right"></i>
           </button>
 
+          <IntervalButton intervalCallback={refetch} />
+
           {/* <button type="button"
               className="btn btn-primary fw-bold px-4 text-white text-nowrap"
               onClick={handleExpand}>
@@ -229,10 +232,6 @@ const Home = () => {
                   } inline-block h-4 w-4 transform rounded-full bg-white transition`}
               />
             </Switch>
-            {/* <input type="checkbox" className="cursor-pointer"
-              checked={isOnlyActive}
-              onChange={handleChangeOnlyActive}
-            /> */}
             <label className="text-nowrap cursor-pointer" onClick={handleChangeOnlyActive}>Only active</label>
           </div>
 
