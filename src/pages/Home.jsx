@@ -103,8 +103,11 @@ const Home = () => {
     const newParams = {
       ...searchParamsToKeyValue(searchParams),
       page: 1,
-      only_active: !isOnlyActive
+      only_active: !isOnlyActive,
+      query: filterRef.current.value
+
     }
+    if (!filterRef.current.value) delete newParams.query;
     setSearchParams(newParams)
   }
 
@@ -112,9 +115,11 @@ const Home = () => {
     const newParams = {
       ...searchParamsToKeyValue(searchParams),
       page: 1,
-      exp_type: e.target.value
+      exp_type: e.target.value,
+      query: filterRef.current.value
     }
     if (!e.target.value) delete newParams.exp_type;
+    if (!filterRef.current.value) delete newParams.query;
     setSearchParams(newParams)
   }
 
@@ -122,11 +127,13 @@ const Home = () => {
     const newParams = {
       ...searchParamsToKeyValue(searchParams),
       page: 1,
-      order: e.target.value
+      order: e.target.value,
+      query: filterRef.current.value
     }
     if (!e.target.value) {
       delete newParams.order;
     }
+    if (!filterRef.current.value) delete newParams.query;
     setSearchParams(newParams)
   }
 
@@ -215,7 +222,8 @@ const Home = () => {
         <div className="flex gap-x-8 gap-y-3 items-center flex-wrap">
           <div className="flex gap-4 items-center mx-4">
             <label className="text-nowrap">Type:</label>
-            <select value={searchParams.get("exp_type") || ""} onChange={handleChangeType}
+            <select id="experiment-type-select"
+              value={searchParams.get("exp_type") || ""} onChange={handleChangeType}
               className="form-select border border-primary text-primary dark:bg-primary dark:text-white font-bold text-center">
               <option value="">All</option>
               <option value="experiment">Experiment</option>
@@ -224,7 +232,7 @@ const Home = () => {
             </select>
           </div>
           <div className="flex gap-4 items-center mx-4">
-            <Switch checked={isOnlyActive} onChange={handleChangeOnlyActive}
+            <Switch id="only-active-switch" checked={isOnlyActive} onChange={handleChangeOnlyActive}
               className={`${isOnlyActive ? 'bg-primary' : 'bg-neutral-200 dark:bg-neutral-700'
                 } relative inline-flex h-6 w-11 items-center rounded-full`}>
               <span
@@ -237,7 +245,8 @@ const Home = () => {
 
           <div className="ms-auto flex gap-4 items-center mx-4">
             <label className="text-nowrap">Order by:</label>
-            <select onChange={handleChangeOrder} value={searchParams.get("order") || ""}
+            <select id="order-by-select"
+              onChange={handleChangeOrder} value={searchParams.get("order") || ""}
               className="form-select border border-primary text-primary dark:bg-primary dark:text-white font-bold text-center">
               <option value="">Default</option>
               {
