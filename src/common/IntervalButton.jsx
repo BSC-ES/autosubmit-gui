@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { cn } from "../services/utils";
-
-const REFRESH_RATE = 2;
+import { INTERVAL_BUTTON_REFRESH_RATE } from '../consts';
 
 const IntervalButton = ({ intervalCallback }) => {
   const [isMonitoring, setIsMonitoring] = useState(false)
@@ -13,7 +12,7 @@ const IntervalButton = ({ intervalCallback }) => {
       clearInterval(monitorRef.current)
       setIsMonitoring(false)
     } else {
-      const id = setInterval(intervalCallback, REFRESH_RATE * 1000)
+      const id = setInterval(intervalCallback, INTERVAL_BUTTON_REFRESH_RATE * 1000)
       monitorRef.current = id;
       setIsMonitoring(true)
     }
@@ -33,11 +32,11 @@ const IntervalButton = ({ intervalCallback }) => {
       {
         isMonitoring ?
           <svg className="w-4 h-4 rotate-90" fill="none" width={200} height={200} viewBox="0 0 200 200">
-            <rect x={60} y={60} width={80} height={80} fill="#ffffff"/>
+            <rect x={60} y={60} width={80} height={80} fill="#ffffff" />
             <circle stroke={"rgba(255, 255, 255, 0.3)"} r={85} cx={100} cy={100} strokeWidth={30} />
             <motion.circle stroke={"#ffffff"} r={85} cx={100} cy={100} strokeWidth={30}
               initial={{ pathLength: 0 }}
-              animate={{ pathLength: 1, transition: { duration: REFRESH_RATE, repeat: Infinity } }}
+              animate={{ pathLength: 1, transition: { duration: INTERVAL_BUTTON_REFRESH_RATE, repeat: Infinity } }}
             />
           </svg>
           :
