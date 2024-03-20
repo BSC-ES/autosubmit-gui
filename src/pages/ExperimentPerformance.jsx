@@ -251,7 +251,7 @@ const PerformanceConsideredJobs = ({ considered }) => {
     <>
       <table className='table w-full table-bordered'>
         <thead>
-          <tr className='bg-primary/25 font-bold performance-table-header sticky-header'>
+          <tr className='bg-primary-200 font-bold performance-table-header sticky-header'>
             <th scope='col'>
               Chunk
             </th>
@@ -336,7 +336,7 @@ const PerformanceSummary = ({ data }) => {
     <>
       <table className='table w-full table-bordered'>
         <thead>
-          <tr className='bg-primary/25 font-bold performance-table-header'>
+          <tr className='bg-primary-200 font-bold performance-table-header'>
             <th scope='col'>Metric</th>
             {
               ["Value", "Min", "Max", "Mean", "SD", "MAD"].map(title =>
