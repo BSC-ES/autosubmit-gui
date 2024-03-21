@@ -36,7 +36,7 @@ const IntervalButton = ({ intervalCallback }) => {
             <circle stroke={"rgba(255, 255, 255, 0.3)"} r={85} cx={100} cy={100} strokeWidth={30} />
             <motion.circle stroke={"#ffffff"} r={85} cx={100} cy={100} strokeWidth={30}
               initial={{ pathLength: 0 }}
-              animate={{ pathLength: 1, transition: { duration: INTERVAL_BUTTON_REFRESH_RATE, repeat: Infinity } }}
+              animate={{ pathLength: 1, transition: { ease: "linear", duration: INTERVAL_BUTTON_REFRESH_RATE, repeat: Infinity } }}
             />
           </svg>
           :

@@ -83,7 +83,55 @@
   }
 
   .badge {
-    @apply px-2 py-1 rounded-lg text-xs font-bold leading-none;
+    @apply px-2 py-1 rounded-full text-xs font-bold leading-none;
+  }
+
+  .badge-status-unknown {
+    @apply bg-neutral-50 text-black;
+  }
+
+  .badge-status-waiting {
+    @apply bg-neutral-300 text-black;
+  }
+
+  .badge-status-ready {
+    @apply bg-[lightblue] text-black;
+  }
+
+  .badge-status-prepared {
+    @apply bg-[lightsalmon] text-black;
+  }
+
+  .badge-status-submitted {
+    @apply bg-[cyan] text-black;
+  }
+
+  .badge-status-held {
+    @apply bg-[salmon] text-black;
+  }
+
+  .badge-status-queuing {
+    @apply bg-[lightpink] text-black;
+  }
+
+  .badge-status-running {
+    @apply bg-[green] text-white;
+  }
+
+  .badge-status-completed {
+    @apply bg-[yellow] text-black;
+  }
+
+  .badge-status-failed {
+    @apply bg-[red] text-white;
+  }
+
+  .badge-status-suspended {
+    @apply bg-[orange] text-black;
+  }
+
+  .badge-status-skipped {
+    @apply bg-[lightyellow] text-black;
   }
 
   .alert {
@@ -174,6 +222,8 @@
 
 }
 
+  
+
 /* Global Styles */
 /* :root {
   --primary-color: #dc3545;
@@ -242,10 +292,6 @@
   letter-spacing: 1px;
 }
 
-.badge-font {
-  font-size: 0.9rem;
-  letter-spacing: 1px;
-}
 
 /* LOG TAB */
 

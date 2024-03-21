@@ -8,8 +8,8 @@ import JobDetailCard from "../common/JobDetailCard";
 import { useDispatch, useSelector } from "react-redux";
 import RunsModal from "../common/RunsModal";
 import TreeContentHandler from "../components/context/tree/business/treeUpdate";
-import { motion, useDragControls } from "framer-motion";
 import DraggablePanel from "../common/DraggablePanel";
+import JobsBasket from "../common/JobsBasket";
 
 
 const ExperimentTree = () => {
@@ -40,7 +40,8 @@ const ExperimentTree = () => {
 
   const [activeMonitor, setActiveMonitor] = useState(false)
 
-  // const abortController = new AbortController()
+  const [jobsBasket, setJobsBasket] = useState([])
+
   const {
     data,
     isFetching,
@@ -48,7 +49,6 @@ const ExperimentTree = () => {
     isError
   } = autosubmitApiV3.endpoints.getExperimentTreeView.useQuery({
     expid: routeParams.expid,
-    // signal: abortController.signal,
     runId: selectedRun?.run_id
   })
 
@@ -68,7 +68,6 @@ const ExperimentTree = () => {
   useEffect(() => {
     // Unmount component
     return () => {
-      // abortController.abort()
       const promise = dispatch(autosubmitApiV3.endpoints.showdownRoute.initiate({
         route: "tree",
         loggedUser: authState.user_id,
@@ -100,9 +99,30 @@ const ExperimentTree = () => {
     }
   }, [pklData])
 
+  useEffect(() => {
+    const foundJob = jobs.find(j => (selectedJobId === j.id));
+    if (foundJob) {
+      if (!jobsBasket.map(j => j.name).includes(foundJob.id)) {
+        setJobsBasket([...jobsBasket, {
+          name: foundJob.id,
+          status: foundJob.status
+        }])
+      }
+    }
+  }, [selectedJobId])
+
+  const handleRemoveBasket = (job) => {
+    setJobsBasket(jobsBasket.filter(j => (j.name !== job.name)))
+  }
+
+  const handleClearBasket = (job) => {
+    setJobsBasket([])
+  }
 
   const handleOnActivateNode = (e, d) => {
-    if (Array.isArray(jobs) && d?.node && d.node.folder === undefined) {
+    // This method will be static in the FancyTree. Changes in this component will not be reflected. 
+    // Use the useEffect (..., [selectedJobId]) instead.
+    if (d?.node && d.node.folder === undefined) {
       setSelectedJobId(d.node.refKey)
     }
   }
@@ -196,6 +216,11 @@ const ExperimentTree = () => {
             onClick={() => { refetch() }}>
             <i className="fa-solid fa-rotate-right"></i>
           </button>
+
+          <JobsBasket expid={routeParams.expid}
+            selectedJobs={jobsBasket}
+            onRemoveJob={handleRemoveBasket}
+            onClear={handleClearBasket}/>
         </div>
         {
           isFetching ?
@@ -226,12 +251,12 @@ const ExperimentTree = () => {
               </div>
 
               <DraggablePanel
-                show={Boolean(selectedJob)} 
+                show={Boolean(selectedJob)}
                 title={selectedJob?.label}
                 onClose={handleCloseJobDetail}
                 // dragConstraints={dragConstraintRef}
                 className={"bottom-[7%] right-[2%]"}
-                >
+              >
                 <JobDetailCard
                   jobData={selectedJob}
                   jobs={jobs}

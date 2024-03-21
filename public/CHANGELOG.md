@@ -4,6 +4,9 @@
 
 * Updated About page
 * Fix mandatory login redirect on unauthenticated case
+* Added a button to periodically refresh the home page
+* Added the "Job Selection" button to generate change status commands 
+* Fixed minor bugs
 
 ### Pre-release v4.0.0-beta.3 - Release date: 2024-03-05
 
