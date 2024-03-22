@@ -213,7 +213,7 @@ const ExperimentCentral = ({ match }) => {
   // Window close
   useEffect(() => {
     const unloadCallback = (event) => {
-      event.preventDefault()
+      // event.preventDefault() // Don't call preventDefault. It pop up an annoying message: https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event
       controller.abort()
       controller = new AbortController();
       if (!treedata) experimentContext.shutdown("tree", experimentContext.loggedUser, expid);

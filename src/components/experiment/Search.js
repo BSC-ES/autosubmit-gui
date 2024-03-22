@@ -38,7 +38,7 @@ const Search = ({ specificSearch }) => {
   // Window close
   useEffect(() => {
     const unloadCallback = (event) => {
-      event.preventDefault()
+      // event.preventDefault()
       controller.abort()
       experimentContext.shutdown("summary", loggedUser, experimentContext.expid);
       controller = new AbortController();
