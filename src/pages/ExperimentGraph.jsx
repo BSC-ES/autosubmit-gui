@@ -142,6 +142,14 @@ const ExperimentGraph = () => {
     // eslint-disable-next-line
   }, [pklData])
 
+  useEffect(() => {
+    if (network) {
+      let focusedJob = data?.nodes?.find(j => { return ["RUNNING", "FAILED", "QUEUING"].includes(j?.status) });
+      if (!focusedJob) focusedJob = data?.nodes?.at(data?.nodes?.length - 1)
+      if (focusedJob) network.fit({ nodes: [focusedJob.id] })
+    }
+  }, [network])
+
   /** @param {Network} newNetwork */
   const handleNetworkCallback = (newNetwork) => { setNetwork(newNetwork) }
 
@@ -172,7 +180,6 @@ const ExperimentGraph = () => {
     filterRef.current.value = ""
     if (network) {
       network.unselectAll()
-      network.fit()
     }
   }
 
