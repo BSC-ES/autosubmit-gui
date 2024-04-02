@@ -26,7 +26,7 @@ const FancyTree = ({ treeData, onActivateNode, treeCallback }) => {
             /** @type {Fancytree.Fancytree} */
             const newtree = createTree("#fancy-tree", {
                 activate: onActivateNode,
-                extensions: ["filter", "glyph", "childcounter", "clones"],
+                extensions: ["filter", "glyph", "childcounter", "clones", "multi"],
                 childcounter: {
                     hideExpanded: true
                 },

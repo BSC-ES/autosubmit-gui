@@ -72,9 +72,33 @@ const GRAPH_STYLE = [
     }
   },
   {
+    selector: "node[status='PREPARED']",
+    style: {
+      backgroundColor: "lightsalmon"
+    }
+  },
+  {
     selector: "node[status='SUBMITTED']",
     style: {
       backgroundColor: "cyan"
+    }
+  },
+  {
+    selector: "node[status='HELD']",
+    style: {
+      backgroundColor: "salmon"
+    }
+  },
+  {
+    selector: "node[status='QUEUING']",
+    style: {
+      backgroundColor: "lightpink"
+    }
+  },
+  {
+    selector: "node[status='RUNNING']",
+    style: {
+      backgroundColor: "green"
     }
   },
   {
@@ -82,7 +106,25 @@ const GRAPH_STYLE = [
     style: {
       backgroundColor: "yellow"
     }
-  }
+  },
+  {
+    selector: "node[status='FAILED']",
+    style: {
+      backgroundColor: "red"
+    }
+  },
+  {
+    selector: "node[status='SUSPENDED']",
+    style: {
+      backgroundColor: "orange"
+    }
+  },
+  {
+    selector: "node[status='SKIPPED']",
+    style: {
+      backgroundColor: "lightyellow"
+    }
+  },
 ]
 
 const CyWorkflow = ({ elements, onSelectNodes, cy: forwardCy }) => {

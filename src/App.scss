@@ -640,3 +640,10 @@ span.fancytree-node.fancytree-active-clone {
     background-color: none;
   }
 }
+
+/* Multiple select glyph skin fix */
+.fancytree-plain span.fancytree-active span.fancytree-title, .fancytree-plain span.fancytree-selected span.fancytree-title {
+  /* background-color: #f7f7f7;
+  border-color: #dedede; */
+  background-color: #e0f2fe;
+}

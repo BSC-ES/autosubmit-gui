@@ -111,7 +111,7 @@ export default function JobsBasket({ expid, selectedJobs = [], onRemoveJob, onCl
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                 >
-                  <div id="job-basket-header" className='w-full flex justify-between px-4'>
+                  <div id="job-basket-header" className='w-full flex gap-4 justify-between px-4'>
                     <DropdownMenu.Label className='font-semibold'>Selected Jobs</DropdownMenu.Label>
                     <button className='text-sm rounded px-2 dark:hover:bg-white/5 hover:bg-black/5 hover:text-primary'
                       onClick={onClear}>
