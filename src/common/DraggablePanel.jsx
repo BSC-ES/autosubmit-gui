@@ -27,7 +27,7 @@ export default function DraggablePanel({ title, dragConstraints, children, class
             dragControls={dragControl}
             dragMomentum={false}
             dragListener={false}
-            className={cn("drop-shadow-lg fixed max-w-[90vw] w-[28rem]", className)}>
+            className={cn("z-20 drop-shadow-lg fixed max-w-[90vw] w-[28rem]", className)}>
 
             <div
               onPointerDown={startDrag}
