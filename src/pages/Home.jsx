@@ -347,7 +347,7 @@ const Home = () => {
                   <div className="text-2xl">No experiments found</div>
                   {isOnlyActive && (
                     <div className="alert bg-primary-500 text-white border-0 font-semibold py-2 px-3 ">
-                      <i class="fa-solid fa-circle-info me-2"></i> Try to switch
+                      <i className="fa-solid fa-circle-info me-2"></i> Try to switch
                       off the "Only active" option
                     </div>
                   )}

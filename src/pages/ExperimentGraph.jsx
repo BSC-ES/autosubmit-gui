@@ -9,6 +9,7 @@ import useASTitle from "../hooks/useASTitle";
 import useBreadcrumb from "../hooks/useBreadcrumb";
 import BottomPanel from "../common/BottomPanel";
 import { ChangeStatusModal } from "../common/ChangeStatusModal";
+import { STATUS_STYLES, cn } from "../services/utils";
 
 const ExperimentGraph = () => {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ const ExperimentGraph = () => {
   const cy = useRef();
 
   const filterRef = useRef();
+  const statusSelectRef = useRef();
   const [activeMonitor, setActiveMonitor] = useState(false);
 
   const [jobs, setJobs] = useState([]);
@@ -42,6 +44,11 @@ const ExperimentGraph = () => {
     }
     return undefined;
   }, [jobs, selectedJobIds]);
+
+  const [showModal, setShowModal] = useState(false);
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
 
   const { data, isFetching, refetch, isError } =
     autosubmitApiV3.endpoints.getExperimentGraphView.useQuery({
@@ -184,9 +191,12 @@ const ExperimentGraph = () => {
     setActiveMonitor(!activeMonitor);
   };
 
-  const [showModal, setShowModal] = useState(false);
-  const toggleModal = () => {
-    setShowModal(!showModal);
+  const handleSelectByStatus = () => {
+    const selStatus = statusSelectRef.current.value;
+    cy.current.nodes().unselect();
+    const vals = cy.current.filter(`node[status = '${selStatus}']`);
+    vals.select();
+    cy.current.fit(vals);
   };
 
   return (
@@ -237,6 +247,36 @@ const ExperimentGraph = () => {
         >
           <i className="fa-solid fa-rotate-right"></i>
         </button>
+      </div>
+
+      <div className="flex items-center">
+        <div className="me-auto">
+          <span className="mx-2 text-sm">
+            Total #Jobs: {data?.total_jobs} | Chunk unit: {data?.chunk_unit} |
+            Chunk size: {data?.chunk_size}
+          </span>
+        </div>
+        <div className="flex items-center gap-2">
+          <div>Select by status:</div>
+          <select
+            ref={statusSelectRef}
+            className={"bg-white text-black border text-center px-2"}
+          >
+            {Object.keys(STATUS_STYLES).sort().map((key) => {
+              return (
+                <option key={key} value={key} className={STATUS_STYLES[key].badge}>
+                  {key}
+                </option>
+              );
+            })}
+          </select>
+          <button
+            className="btn btn-success text-sm"
+            onClick={handleSelectByStatus}
+          >
+            <i className="fa-solid fa-check"></i>
+          </button>
+        </div>
       </div>
 
       <div className="flex grow border relative">
