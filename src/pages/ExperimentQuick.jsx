@@ -157,18 +157,13 @@ const ExperimentQuick = () => {
           <i className="fa-solid fa-rotate-right"></i>
         </button>
       </div>
-      <div className="block border dark:bg-neutral-50 rounded-2xl p-4 grow">
-        <div className="overflow-y-auto h-full" style={{ maxHeight: "75vh" }}>
-          {
-            isFetching ?
-              <div className="w-full h-full flex items-center justify-center">
-                <div className="spinner-border" role="status"></div>
-              </div>
-              :
-              <FancyTree treeData={jobs}></FancyTree>
-
-          }
-        </div>
+      <div className="relative grow basis-0 overflow-auto min-h-[70vh] lg:min-h-[50vh] w-full border p-4 rounded-lg custom-scrollbar bg-white">
+        {isFetching && (
+          <div className="absolute inset-0 z-20 flex items-center justify-center bg-white">
+            <div className="spinner-border dark:invert" role="status"></div>
+          </div>
+        )}
+        <FancyTree source={jobs}></FancyTree>
       </div>
     </div>
   )

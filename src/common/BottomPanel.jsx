@@ -8,7 +8,7 @@ const BottomPanel = ({ children, title, onClose }) => {
   };
 
   const handleClose = () => {
-    onClose();
+    if (onClose) onClose();
   };
 
   return (
@@ -18,7 +18,7 @@ const BottomPanel = ({ children, title, onClose }) => {
         className="flex gap-3 px-6 py-3 bg-neutral-700 text-white items-center"
         onDoubleClick={toggleExpand}
       >
-        <div className="me-auto font-bold text-lg">{title}</div>
+        <div className="me-auto font-bold text-lg truncate">{title}</div>
         <div
           className="cursor-pointer rounded-full w-8 h-8 flex items-center justify-center hover:bg-neutral-600"
           onClick={toggleExpand}
@@ -28,13 +28,15 @@ const BottomPanel = ({ children, title, onClose }) => {
             className={cn("fa-solid", expand ? "fa-angle-down" : "fa-angle-up")}
           ></i>
         </div>
-        <div
-          className="cursor-pointer rounded-full w-8 h-8 flex items-center justify-center hover:bg-neutral-800"
-          onClick={handleClose}
-          title="Close panel"
-        >
-          <i className="fa-solid fa-xmark"></i>
-        </div>
+        {onClose && (
+          <div
+            className="cursor-pointer rounded-full w-8 h-8 flex items-center justify-center hover:bg-neutral-800"
+            onClick={handleClose}
+            title="Close panel"
+          >
+            <i className="fa-solid fa-xmark"></i>
+          </div>
+        )}
       </div>
 
       {expand && (

@@ -132,7 +132,6 @@ const CyWorkflow = ({ elements, onSelectNodes, cy: forwardCy }) => {
   const cy = useRef();
 
   const handleSelect = () => {
-    console.log("handleSelect");
     const selectedNodes = cy.current.filter("node:selected");
     onSelectNodes(selectedNodes.jsons());
   };
