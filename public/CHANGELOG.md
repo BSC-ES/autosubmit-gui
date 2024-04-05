@@ -8,6 +8,7 @@
 * Added the "Job Selection" button to generate change status commands 
 * Replaced graph visualization library to Cytoscape.js
 * Add selection panel in graph view
+* Add select by status option in graph view
 * Fixed minor bugs
 
 ### Pre-release v4.0.0-beta.3 - Release date: 2024-03-05

@@ -59,7 +59,7 @@ export function ChangeStatusModal({ expid, selectedJobs, show, onHide }) {
           </div>
           <div className="bg-black text-white p-2 font-mono relative">
             <button
-              className="absolute bottom-2 right-4 opacity-50"
+              className="absolute top-2 right-4 opacity-50"
               onClick={handleCopy}
             >
               <i className="fa-regular fa-copy"></i> {copied}
