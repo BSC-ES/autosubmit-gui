@@ -58,7 +58,7 @@ const FancyTree = ({ source, tree: forwardTree, onSelectNodes, className }) => {
       source: newSource,
       select: handleSelect,
     });
-    if(forwardTree) forwardTree(tree.current);
+    if (forwardTree) forwardTree(tree.current);
   }, []);
 
   useEffect(() => {
@@ -71,7 +71,18 @@ const FancyTree = ({ source, tree: forwardTree, onSelectNodes, className }) => {
   const handleSelect = (e, d) => {
     clearTimeout(selectEventTimeout);
     selectEventTimeout = setTimeout(function () {
-      if (onSelectNodes) onSelectNodes(tree.current.getSelectedNodes());
+      if (onSelectNodes) {
+        const activeNode = tree.current.getActiveNode();
+        const selectedNodes = tree.current.getSelectedNodes();
+        const isActiveInSelected = Boolean(
+          selectedNodes.find((node) => node.refKey === activeNode.refKey)
+        );
+        if (isActiveInSelected) {
+          onSelectNodes(selectedNodes);
+        } else {
+          onSelectNodes(selectedNodes.concat(activeNode));
+        }
+      }
     }, 100);
   };
 

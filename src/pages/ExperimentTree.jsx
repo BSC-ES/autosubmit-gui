@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import RunsModal from "../common/RunsModal";
 import TreeContentHandler from "../components/context/tree/business/treeUpdate";
 import BottomPanel from "../common/BottomPanel";
+import { ChangeStatusModal } from "../common/ChangeStatusModal";
 
 const ExperimentTree = () => {
   const dispatch = useDispatch();
@@ -46,6 +47,11 @@ const ExperimentTree = () => {
     run_id: null,
     created: null,
   });
+
+  const [showModal, setShowModal] = useState(false);
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
 
   const { data, isFetching, refetch, isError } =
     autosubmitApiV3.endpoints.getExperimentTreeView.useQuery({
@@ -286,6 +292,18 @@ const ExperimentTree = () => {
         >
           <div className="flex flex-col gap-3">
             <JobDetailCard jobData={selectedJob} jobs={jobs} />
+            <div className="flex items-center justify-center gap-3">
+              <div className="font-semibold">Actions:</div>
+              <button className="btn btn-primary" onClick={toggleModal}>
+                Change status
+              </button>
+            </div>
+            <ChangeStatusModal
+              selectedJobs={selectedJobIds}
+              show={showModal}
+              onHide={toggleModal}
+              expid={routeParams.expid}
+            />
           </div>
         </BottomPanel>
       )}
