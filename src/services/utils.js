@@ -84,4 +84,10 @@ export const STATUS_STYLES = {
 
 export const getStatusBadgeStyle = (status) => {
   return STATUS_STYLES[status]?.badge || "badge-status-unknown";
-}
+};
+
+export const parseLogPath = (logfile) => {
+  const logPathSplit = logfile && logfile.length > 0 ? logfile.split("/") : [""];
+  const logFileName = logPathSplit.pop();
+  return logFileName;
+};

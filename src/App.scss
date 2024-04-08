@@ -3,15 +3,16 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'Source Sans 3';
-  src: url('../public/fonts/SourceSans3-VariableFont_wght.ttf') format('truetype-variations');
+  font-family: "Source Sans 3";
+  src: url("../public/fonts/SourceSans3-VariableFont_wght.ttf")
+    format("truetype-variations");
 }
 
-@import '@fortawesome/fontawesome-free/css/all.min.css';
+@import "@fortawesome/fontawesome-free/css/all.min.css";
 
 @layer base {
   html {
-    font-family: 'Source Sans 3', sans-serif;
+    font-family: "Source Sans 3", sans-serif;
   }
 
   body {
@@ -37,11 +38,11 @@
   }
 
   .btn-primary {
-    @apply bg-primary text-white hover:bg-primary/90
+    @apply bg-primary text-white hover:bg-primary/90;
   }
 
   .btn-secondary {
-    @apply bg-secondary text-white hover:bg-secondary/90
+    @apply bg-secondary text-white hover:bg-secondary/90;
   }
 
   .btn-dark {
@@ -53,15 +54,15 @@
   }
 
   .btn-success {
-    @apply bg-success text-white hover:bg-success/90
+    @apply bg-success text-white hover:bg-success/90;
   }
 
   .btn-danger {
-    @apply bg-danger text-white hover:bg-danger/90
+    @apply bg-danger text-white hover:bg-danger/90;
   }
 
   .btn-warning {
-    @apply bg-warning text-white hover:bg-warning/90
+    @apply bg-warning text-white hover:bg-warning/90;
   }
 
   .form-input {
@@ -140,14 +141,14 @@
 
   .alert-danger {
     @apply bg-red-100 text-red-950 border-red-400;
-    @apply dark:bg-red-800 dark:text-red-50 dark:border-red-800
+    @apply dark:bg-red-800 dark:text-red-50 dark:border-red-800;
   }
 
   .table-bordered {
-    > :not(caption)>* {
+    > :not(caption) > * {
       @apply border-y;
 
-      >* {
+      > * {
         @apply border-x;
       }
     }
@@ -202,11 +203,23 @@
 }
 
 @layer utilities {
+  .table-striped:nth-child(even) {
+    @apply bg-neutral-100;
+  }
 
   .animate-striped-bg {
     background-size: 2rem 2rem;
     animation: stripes-move 1.5s linear infinite;
-    background-image: linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent);
+    background-image: linear-gradient(
+      -45deg,
+      rgba(255, 255, 255, 0.2) 25%,
+      transparent 25%,
+      transparent 50%,
+      rgba(255, 255, 255, 0.2) 50%,
+      rgba(255, 255, 255, 0.2) 75%,
+      transparent 75%,
+      transparent
+    );
   }
 
   @keyframes stripes-move {
@@ -218,11 +231,7 @@
       background-position: 2rem 2rem;
     }
   }
-
-
 }
-
-  
 
 /* Global Styles */
 /* :root {
@@ -291,7 +300,6 @@
   font-weight: 500;
   letter-spacing: 1px;
 }
-
 
 /* LOG TAB */
 
@@ -368,7 +376,8 @@
   -webkit-transform: scale(0);
   -ms-transform: scale(0);
   transform: scale(0);
-  -webkit-transition: -webkit-transform 300ms 0ms cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  -webkit-transition: -webkit-transform 300ms 0ms
+    cubic-bezier(0.6, -0.28, 0.735, 0.045);
   transition: -webkit-transform 300ms 0ms cubic-bezier(0.6, -0.28, 0.735, 0.045);
   -o-transition: transform 300ms 0ms cubic-bezier(0.6, -0.28, 0.735, 0.045);
   transition: transform 300ms 0ms cubic-bezier(0.6, -0.28, 0.735, 0.045);
@@ -380,8 +389,10 @@
   -webkit-transform: scale(1);
   -ms-transform: scale(1);
   transform: scale(1);
-  -webkit-transition: -webkit-transform 300ms 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  transition: -webkit-transform 300ms 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  -webkit-transition: -webkit-transform 300ms 300ms
+    cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: -webkit-transform 300ms 300ms
+    cubic-bezier(0.175, 0.885, 0.32, 1.275);
   -o-transition: transform 300ms 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
   transition: transform 300ms 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
   transition: transform 300ms 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275),
@@ -617,7 +628,8 @@ ul.fancytree-container {
 } */
 span.fancytree-node.fancytree-clone span.fancytree-title:after {
   content: "";
-  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAMAAAC67D+PAAAAFVBMVEVmmcwzmcyZzP8AZswAZv////////9E6giVAAAAB3RSTlP///////8AGksDRgAAADhJREFUGFcly0ESAEAEA0Ei6/9P3sEcVB8kmrwFyni0bOeyyDpy9JTLEaOhQq7Ongf5FeMhHS/4AVnsAZubxDVmAAAAAElFTkSuQmCC") 100% 50% no-repeat;
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAMAAAC67D+PAAAAFVBMVEVmmcwzmcyZzP8AZswAZv////////9E6giVAAAAB3RSTlP///////8AGksDRgAAADhJREFUGFcly0ESAEAEA0Ei6/9P3sEcVB8kmrwFyni0bOeyyDpy9JTLEaOhQq7Ongf5FeMhHS/4AVnsAZubxDVmAAAAAElFTkSuQmCC")
+    100% 50% no-repeat;
   padding-right: 13px;
 }
 
@@ -642,7 +654,8 @@ span.fancytree-node.fancytree-active-clone {
 }
 
 /* Multiple select glyph skin fix */
-.fancytree-plain span.fancytree-active span.fancytree-title, .fancytree-plain span.fancytree-selected span.fancytree-title {
+.fancytree-plain span.fancytree-active span.fancytree-title,
+.fancytree-plain span.fancytree-selected span.fancytree-title {
   /* background-color: #f7f7f7;
   border-color: #dedede; */
   background-color: #e0f2fe;
