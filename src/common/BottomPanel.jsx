@@ -1,10 +1,16 @@
 import { useState } from "react";
 import { cn } from "../services/utils";
+import { useDefault, useLocalStorage } from "@uidotdev/usehooks";
 
 const BottomPanel = ({ children, title, onClose }) => {
-  const [expand, setExpand] = useState(false);
+  const [defaultExpanded, saveDefaultExpanded] = useLocalStorage(
+    "asgui.layout.experiment.bpanel.expanded",
+    true
+  );
+  const [expand, setExpand] = useDefault(defaultExpanded);
   const toggleExpand = () => {
     setExpand(!expand);
+    saveDefaultExpanded(!expand);
   };
 
   const handleClose = () => {
@@ -42,7 +48,7 @@ const BottomPanel = ({ children, title, onClose }) => {
       {expand && (
         <div
           id="bottom-panel-content"
-          className="px-6 py-4 max-h-[55vh] overflow-auto bg-white text-black"
+          className="px-6 py-4 max-h-[55vh] overflow-auto bg-white text-black custom-scrollbar"
         >
           {children}
         </div>
