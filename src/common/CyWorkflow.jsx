@@ -198,6 +198,14 @@ const CyWorkflow = ({ elements, onSelectNodes, cy: forwardCy }) => {
         minZoom={1e-3}
         wheelSensitivity={0.4}
       />
+      <div className="absolute bottom-0 right-0 z-10 bg-neutral-200 text-black opacity-50 px-2 py-2 text-xs">
+        <div>
+          Box selection: <kbd className="kbd-key">Shift + LClick</kbd>
+        </div>
+        <div>
+          Add/remove select: <kbd className="kbd-key">Ctrl + LClick</kbd>
+        </div>
+      </div>
     </div>
   );
 };
