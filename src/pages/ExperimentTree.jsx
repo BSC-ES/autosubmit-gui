@@ -145,6 +145,17 @@ const ExperimentTree = () => {
   const handleCollapse = () => {
     if (tree.current) tree.current.expandAll(false);
   };
+  const handleDefaultExpand = () => {
+    if (tree.current) {
+      tree.current.expandAll(false, {
+        noAnimation: true,
+        noEvents: true,
+      });
+      tree.current.getRootNode().children.forEach((node) => {
+        node.setExpanded();
+      });
+    }
+  };
 
   const handleRunSelect = (item) => {
     handleClear();
@@ -252,6 +263,12 @@ const ExperimentTree = () => {
           </span>
           <div className="flex gap-2">
             <button
+              className="btn btn-success font-bold px-4 text-sm"
+              onClick={handleDefaultExpand}
+            >
+              Default Expand
+            </button>
+            <button
               className="btn btn-primary font-bold px-4 text-sm"
               onClick={handleExpand}
             >
@@ -291,7 +308,11 @@ const ExperimentTree = () => {
           }
         >
           <div className="flex flex-col gap-3">
-            <JobDetailCard jobData={selectedJob} jobs={jobs} />
+            <JobDetailCard
+              expid={routeParams.expid}
+              jobData={selectedJob}
+              jobs={jobs}
+            />
             <div className="flex items-center justify-center gap-3">
               <div className="font-semibold">Actions:</div>
               <button className="btn btn-primary" onClick={toggleModal}>

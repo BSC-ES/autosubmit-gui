@@ -305,7 +305,7 @@ const ExperimentGraph = () => {
         >
           <div className="flex flex-col gap-3">
             {selectedJobIds.length === 1 && (
-              <JobDetailCard jobData={selectedJob} jobs={jobs} />
+              <JobDetailCard expid={routeParams.expid} jobData={selectedJob} jobs={jobs} />
             )}
             <div className="flex items-center justify-center gap-3">
               <div className="font-semibold">Actions:</div>

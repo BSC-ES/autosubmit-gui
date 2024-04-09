@@ -8,7 +8,7 @@ import Modal from "./Modal";
 import JobHistoryModal from "./JobHistoryModal";
 import { parseLogPath } from "../services/utils";
 
-const JobDetailCard = ({ jobData, jobs, onClose }) => {
+const JobDetailCard = ({ expid, jobData, jobs }) => {
   const copyToClipboard = useCopyToClipboard()[1];
 
   const [showModal, setShowModal] = useState({
@@ -369,6 +369,7 @@ const JobDetailCard = ({ jobData, jobs, onClose }) => {
           />
 
           <JobHistoryModal
+            expid={expid}
             jobName={jobData.label}
             show={showModal.history}
             onHide={() => toggleModal("history")}

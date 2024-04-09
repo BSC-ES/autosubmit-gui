@@ -127,7 +127,10 @@ const ExperimentQuick = () => {
                 <i className="fa-solid fa-computer me-3" /> {expInfoData?.hpc || "-"}
               </div>
               <div title="Autosubmit version">
-                <i className="fa-solid fa-code-branch me-3" /> {((expInfoData?.version) && ("Autosubmit v" + expInfoData.version)) || "-"}
+                <i className="fa-solid fa-code-commit me-3" /> {((expInfoData?.version) && ("Autosubmit v" + expInfoData.version)) || "-"}
+              </div>
+              <div title="Branch">
+                <i className="fa-solid fa-code-branch me-3" /> {expInfoData?.branch || "-"}
               </div>
             </>
         }

@@ -39,7 +39,7 @@ const ExperimentCard = forwardRef(({ experiment }, ref) => {
 
   return (
     <Link to={`/experiment/${experiment.name}/quick`}>
-      <div className="group flex flex-col w-full h-full border rounded-2xl overflow-hidden">
+      <div className="group flex flex-col w-full h-full border dark:border-neutral-700 rounded-2xl overflow-hidden">
 
         <div className={cn(
           "flex items-center gap-4 px-6 py-3 h-16",
@@ -94,7 +94,7 @@ const ExperimentCard = forwardRef(({ experiment }, ref) => {
         </div>
 
         <div className={cn(
-          "grow py-4 px-6 w-full flex flex-col gap-4 border-t",
+          "grow py-4 px-6 w-full flex flex-col gap-4 border-t dark:border-neutral-700",
           "bg-white",
           "dark:bg-neutral-600",
           "group-hover:bg-neutral-50 dark:group-hover:bg-neutral-500"
@@ -152,7 +152,7 @@ const ExperimentCard = forwardRef(({ experiment }, ref) => {
               <i className="fa-solid fa-computer me-3" /> {experiment.hpc || "-"}
             </div>
             <div className="text-sm" title="Autosubmit version">
-              <i className="fa-solid fa-code-branch me-3" /> {experiment.version || "-"}
+              <i className="fa-solid fa-code-commit me-3" /> {experiment.version || "-"}
             </div>
             <div className="text-sm" title="Last modified date">
               <i className="fa-solid fa-calendar me-3" /> {experiment.modified || "-"}
