@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useGetExperimentsQuery } from "../services/autosubmitApiV4";
 import { useSearchParams } from "react-router-dom";
 import useASTitle from "../hooks/useASTitle";
@@ -8,6 +8,7 @@ import Paginator from "../common/Paginator";
 import { useWindowSize } from "@uidotdev/usehooks";
 import { Switch } from "@headlessui/react";
 import IntervalButton from "../common/IntervalButton";
+import { useForm } from "react-hook-form";
 
 const searchParamsToKeyValue = (searchParams) => {
   let searchParamsObj = {};
@@ -40,40 +41,38 @@ const EXP_ORDER_BY = [
 
 const Home = () => {
   useASTitle("Home");
-  useBreadcrumb([
-    {
-      name: "Experiments",
-    },
-  ]);
-
+  useBreadcrumb([{ name: "Experiments" }]);
   const [searchParams, setSearchParams] = useSearchParams({});
-  const [filters, setFilters] = useState({});
-  const [isInitialized, setIsInitialized] = useState(false);
-  const { data, isFetching, isError, refetch } = useGetExperimentsQuery(
-    {
-      ...filters,
-    },
-    {
-      skip: !isInitialized,
-    }
-  );
-
   const { width } = useWindowSize();
-  const filterRef = useRef();
 
-  // State Transforms
-  const isOnlyActive = ["true", null].includes(searchParams.get("only_active"));
-  const currentPage = parseInt(searchParams.get("page") || 1);
+  const { register, handleSubmit, setValue } = useForm({
+    defaultValues: {
+      query: "",
+      exp_type: "",
+      only_active: true,
+      page_size: 12,
+      order: "",
+    },
+  });
 
-  // Search Params to Query Filter
-  useEffect(() => {
-    filterRef.current.value = searchParams.get("query");
+  const isOnlyActive = useMemo(() => {
+    return ["true", null].includes(searchParams.get("only_active"));
+  }, [searchParams]);
 
+  const currentPage = useMemo(() => {
+    return parseInt(searchParams.get("page") || 1);
+  }, [searchParams]);
+
+  const filters = useMemo(() => {
+    setValue("query", searchParams.get("query"));
+    setValue("exp_type", searchParams.get("exp_type"));
+    setValue("only_active", isOnlyActive);
+    setValue("page_size", searchParams.get("page_size"));
+    setValue("order", searchParams.get("order"));
     let selectedOrder = EXP_ORDER_BY.find(
       (item) => item.key === searchParams.get("order")
     );
-
-    setFilters({
+    return {
       page: searchParams.get("page") || undefined,
       page_size: searchParams.get("page_size") || undefined,
       query: searchParams.get("query") || undefined,
@@ -81,67 +80,44 @@ const Home = () => {
       exp_type: searchParams.get("exp_type") || undefined,
       order_by: selectedOrder?.order_by || undefined,
       order_desc: selectedOrder?.order_desc || undefined,
-    });
-    if (!isInitialized) setIsInitialized(true);
+    };
   }, [searchParams]);
 
+  const { data, isFetching, isError, refetch } =
+    useGetExperimentsQuery(filters);
+
   // Form Handlers
-  const handleSubmit = (e) => {
-    e?.preventDefault();
+  const onSubmit = (data) => {
+    console.log("onSubmit Data");
+    console.log(data);
     const newParams = {
       ...searchParamsToKeyValue(searchParams),
       page: 1,
-      query: filterRef.current.value,
+      query: data.query,
+      exp_type: data.exp_type,
+      only_active: data.only_active,
+      order: data.order,
+      page_size: data.page_size,
     };
-    if (!filterRef.current.value) delete newParams.query;
+    ["query", "exp_type", "order"].forEach((key) => {
+      if (!newParams[key]) {
+        delete newParams[key];
+      }
+    });
+
+    console.log("newParams Data");
+    console.log(newParams);
     setSearchParams(newParams);
   };
 
   const handleClear = () => {
-    filterRef.current.value = "";
-    const newParams = {
-      ...searchParamsToKeyValue(searchParams),
-      page: 1,
-    };
-    delete newParams.query;
-    setSearchParams(newParams);
+    setValue("query", null);
+    handleSubmit(onSubmit)();
   };
 
   const handleChangeOnlyActive = () => {
-    const newParams = {
-      ...searchParamsToKeyValue(searchParams),
-      page: 1,
-      only_active: !isOnlyActive,
-      query: filterRef.current.value,
-    };
-    if (!filterRef.current.value) delete newParams.query;
-    setSearchParams(newParams);
-  };
-
-  const handleChangeType = (e) => {
-    const newParams = {
-      ...searchParamsToKeyValue(searchParams),
-      page: 1,
-      exp_type: e.target.value,
-      query: filterRef.current.value,
-    };
-    if (!e.target.value) delete newParams.exp_type;
-    if (!filterRef.current.value) delete newParams.query;
-    setSearchParams(newParams);
-  };
-
-  const handleChangeOrder = (e) => {
-    const newParams = {
-      ...searchParamsToKeyValue(searchParams),
-      page: 1,
-      order: e.target.value,
-      query: filterRef.current.value,
-    };
-    if (!e.target.value) {
-      delete newParams.order;
-    }
-    if (!filterRef.current.value) delete newParams.query;
-    setSearchParams(newParams);
+    setValue("only_active", !isOnlyActive);
+    handleSubmit(onSubmit)();
   };
 
   const handleChangePage = (e) => {
@@ -154,63 +130,16 @@ const Home = () => {
     }
   };
 
-  const handleChangePageSize = (e) => {
-    const newParams = {
-      ...searchParamsToKeyValue(searchParams),
-      page: 1,
-      page_size: e.target.value,
-      query: filterRef.current.value,
-    };
-    if (!e.target.value) {
-      delete newParams.page_size;
-    }
-    if (!filterRef.current.value) delete newParams.query;
-    setSearchParams(newParams);
-  };
-
-  // Ref Children
-  let expListRefs = {};
-  const generateExpItems = () => {
-    if (Array.isArray(data?.experiments)) {
-      let newRefs = {};
-      let items = data.experiments.map((exp, index) => {
-        return (
-          <div key={exp.name}>
-            <ExperimentCard
-              experiment={exp}
-              ref={(instance) => {
-                newRefs[index] = instance;
-              }}
-            />
-          </div>
-        );
-      });
-      expListRefs = newRefs;
-      return items;
-    }
-    return <></>;
-  };
-
-  // Children methods
-  const handleExpand = () => {
-    Object.keys(expListRefs).forEach((key) => {
-      expListRefs[key].expand();
-    });
-  };
-
-  const handleCollapse = () => {
-    Object.keys(expListRefs).forEach((key) => {
-      expListRefs[key].collapse();
-    });
-  };
-
   return (
     <>
       <div className="grow w-full flex flex-col gap-4">
         <div className="flex w-full gap-2 flex-wrap">
-          <form onSubmit={handleSubmit} className="grow flex flex-wrap">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="grow flex flex-wrap"
+          >
             <input
-              ref={filterRef}
+              {...register("query")}
               id="search-input"
               className="grow form-input rounded-e-none"
               placeholder="Search by expid, description, or owner..."
@@ -224,7 +153,6 @@ const Home = () => {
             </button>
             <button
               id="search-clear"
-              type="button"
               className="btn btn-light font-bold px-6 border rounded-s-none"
               onClick={handleClear}
             >
@@ -242,17 +170,6 @@ const Home = () => {
           </button>
 
           <IntervalButton intervalCallback={refetch} />
-
-          {/* <button type="button"
-              className="btn btn-primary fw-bold px-4 text-white text-nowrap"
-              onClick={handleExpand}>
-              Expand all +
-            </button>
-            <button type="button"
-              className="btn btn-secondary fw-bold px-4 text-white text-nowrap"
-              onClick={handleCollapse}>
-              Collapse all -
-            </button> */}
         </div>
 
         <div className="flex gap-x-8 gap-y-3 items-center flex-wrap">
@@ -260,9 +177,10 @@ const Home = () => {
             <label className="text-nowrap">Type:</label>
             <select
               id="experiment-type-select"
-              value={searchParams.get("exp_type") || ""}
-              onChange={handleChangeType}
               className="form-select border border-primary text-primary dark:bg-primary dark:text-white font-bold text-center text-sm"
+              {...register("exp_type", {
+                onChange: handleSubmit(onSubmit),
+              })}
             >
               <option value="">All</option>
               <option value="experiment">Experiment</option>
@@ -299,9 +217,10 @@ const Home = () => {
             <label className="text-nowrap">Order by:</label>
             <select
               id="order-by-select"
-              onChange={handleChangeOrder}
-              value={searchParams.get("order") || ""}
               className="form-select border border-primary text-primary dark:bg-primary dark:text-white font-bold text-center text-sm"
+              {...register("order", {
+                onChange: handleSubmit(onSubmit),
+              })}
             >
               <option value="">Default</option>
               {EXP_ORDER_BY.map((item) => (
@@ -313,10 +232,12 @@ const Home = () => {
             <label className="text-nowrap ms-2">Page size:</label>
             <select
               id="page-size-select"
-              onChange={handleChangePageSize}
-              value={searchParams.get("page_size") || ""}
               className="form-select border border-primary text-primary dark:bg-primary dark:text-white font-bold text-center text-sm"
+              {...register("page_size", {
+                onChange: handleSubmit(onSubmit),
+              })}
             >
+              {/* <option value={6}>6</option> */}
               <option value={12}>12</option>
               <option value={24}>24</option>
             </select>
@@ -339,7 +260,13 @@ const Home = () => {
                 </div>
               ) : data?.experiments?.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 3xl:grid-cols-4 gap-4">
-                  {generateExpItems()}
+                  {data.experiments.map((exp, index) => {
+                    return (
+                      <div key={exp.name}>
+                        <ExperimentCard experiment={exp} />
+                      </div>
+                    );
+                  })}
                 </div>
               ) : (
                 <div className="w-full grow flex flex-col gap-8 items-center justify-center text-neutral-700 dark:text-neutral-100">
@@ -347,8 +274,8 @@ const Home = () => {
                   <div className="text-2xl">No experiments found</div>
                   {isOnlyActive && (
                     <div className="alert bg-primary-500 text-white border-0 font-semibold py-2 px-3 ">
-                      <i className="fa-solid fa-circle-info me-2"></i> Try to switch
-                      off the "Only active" option
+                      <i className="fa-solid fa-circle-info me-2"></i> Try to
+                      switch off the "Only active" option
                     </div>
                   )}
                 </div>
