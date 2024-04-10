@@ -1,8 +1,9 @@
-import { Menu, Transition } from "@headlessui/react";
-import { Fragment, forwardRef } from "react";
+import { forwardRef, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { cn } from "../services/utils";
 import ProgressBar from "./ProgressBar";
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+import { AnimatePresence, motion } from "framer-motion";
 
 const ActiveIndicator = ({ isActive }) => {
   return (
@@ -23,7 +24,10 @@ const ActiveIndicator = ({ isActive }) => {
 };
 
 const ExperimentCard = forwardRef(({ experiment }, ref) => {
-  const isActive = experiment?.status === "RUNNING";
+  const isActive = useMemo(() => {
+    return experiment?.status === "RUNNING";
+  }, [experiment]);
+  const [open, setOpen] = useState(false);
 
   return (
     <Link to={`/experiment/${experiment.name}/quick`}>
@@ -41,47 +45,47 @@ const ExperimentCard = forwardRef(({ experiment }, ref) => {
           <div className="grow text-sm line-clamp-2 items-center">
             {experiment.description}
           </div>
-          <Menu as="div" className="relative">
-            <Menu.Button className="btn btn-light dark:btn-dark">
-              <i className="fa-solid fa-ellipsis-vertical"></i>
-            </Menu.Button>
-            <Transition
-              as={Fragment}
-              enter="transition ease-out duration-100"
-              enterFrom="transform opacity-0 scale-95"
-              enterTo="transform opacity-100 scale-100"
-              leave="transition ease-in duration-75"
-              leaveFrom="transform opacity-100 scale-100"
-              leaveTo="transform opacity-0 scale-95"
+          <DropdownMenu.Root modal={false} open={open} onOpenChange={setOpen}>
+            <DropdownMenu.Trigger
+              className="btn btn-light dark:btn-dark"
+              onClick={(e) => e.preventDefault()}
             >
-              <Menu.Items
-                as="div"
-                className={"absolute right-0 bg-white border z-40 rounded-xl"}
-              >
-                <div className="py-3 flex flex-col">
-                  {["quick", "tree", "graph"].map((item) => {
-                    return (
-                      <Menu.Item key={item}>
-                        {({ active }) => (
-                          <Link
-                            role="button"
-                            as="button"
-                            to={`/experiment/${experiment.name}/${item}`}
-                            className={cn([
-                              "text-dark text-center px-10 py-1 w-full transition-colors ",
-                              { "bg-primary text-white": active },
-                            ])}
-                          >
-                            <div>{item.toUpperCase()}</div>
-                          </Link>
-                        )}
-                      </Menu.Item>
-                    );
-                  })}
-                </div>
-              </Menu.Items>
-            </Transition>
-          </Menu>
+              <i className="fa-solid fa-ellipsis-vertical"></i>
+            </DropdownMenu.Trigger>
+            <AnimatePresence>
+              {open && (
+                <DropdownMenu.Portal forceMount>
+                  <DropdownMenu.Content asChild align="end">
+                    <motion.div
+                      className="bg-white border z-40 rounded-xl"
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                    >
+                      <div className="py-3 flex flex-col">
+                        {["quick", "tree", "graph"].map((item) => {
+                          return (
+                            <DropdownMenu.Item key={item} asChild>
+                              <Link
+                                to={`/experiment/${experiment.name}/${item}`}
+                                className={cn([
+                                  "text-dark text-center px-10 py-1 w-full transition-colors ",
+                                  "hover:bg-primary hover:text-white",
+                                  "focus:bg-primary focus:text-white",
+                                ])}
+                              >
+                                <div>{item.toUpperCase()}</div>
+                              </Link>
+                            </DropdownMenu.Item>
+                          );
+                        })}
+                      </div>
+                    </motion.div>
+                  </DropdownMenu.Content>
+                </DropdownMenu.Portal>
+              )}
+            </AnimatePresence>
+          </DropdownMenu.Root>
         </div>
 
         <div

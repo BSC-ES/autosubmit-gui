@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo } from "react";
 import { useGetExperimentsQuery } from "../services/autosubmitApiV4";
 import { useSearchParams } from "react-router-dom";
 import useASTitle from "../hooks/useASTitle";
@@ -67,7 +67,7 @@ const Home = () => {
     setValue("query", searchParams.get("query"));
     setValue("exp_type", searchParams.get("exp_type"));
     setValue("only_active", isOnlyActive);
-    setValue("page_size", searchParams.get("page_size"));
+    setValue("page_size", searchParams.get("page_size") || 12);
     setValue("order", searchParams.get("order"));
     let selectedOrder = EXP_ORDER_BY.find(
       (item) => item.key === searchParams.get("order")
@@ -99,7 +99,7 @@ const Home = () => {
       order: data.order,
       page_size: data.page_size,
     };
-    ["query", "exp_type", "order"].forEach((key) => {
+    ["query", "exp_type", "order", "page_size"].forEach((key) => {
       if (!newParams[key]) {
         delete newParams[key];
       }
