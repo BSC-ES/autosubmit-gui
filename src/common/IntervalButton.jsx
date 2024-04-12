@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { cn } from "../services/utils";
 import { INTERVAL_BUTTON_REFRESH_RATE } from '../consts';
 
-const IntervalButton = ({ intervalCallback }) => {
+const IntervalButton = ({ intervalCallback, className }) => {
   const [isMonitoring, setIsMonitoring] = useState(false)
   const monitorRef = useRef();
 
@@ -26,7 +26,7 @@ const IntervalButton = ({ intervalCallback }) => {
   }, [])
 
   return (
-    <button className={cn("btn flex items-center justify-center btn-success")}
+    <button className={cn("btn flex items-center justify-center btn-success", className)}
       title="Automatic refresh data"
       onClick={() => { toggleMonitor() }}>
       {

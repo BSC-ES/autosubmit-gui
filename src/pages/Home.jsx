@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useGetExperimentsQuery } from "../services/autosubmitApiV4";
 import { useSearchParams } from "react-router-dom";
 import useASTitle from "../hooks/useASTitle";
@@ -9,6 +9,7 @@ import { useWindowSize } from "@uidotdev/usehooks";
 import { Switch } from "@headlessui/react";
 import IntervalButton from "../common/IntervalButton";
 import { useForm } from "react-hook-form";
+import { cn } from "../services/utils";
 
 const searchParamsToKeyValue = (searchParams) => {
   let searchParamsObj = {};
@@ -45,15 +46,11 @@ const Home = () => {
   const [searchParams, setSearchParams] = useSearchParams({});
   const { width } = useWindowSize();
 
-  const { register, handleSubmit, setValue } = useForm({
-    defaultValues: {
-      query: "",
-      exp_type: "",
-      only_active: true,
-      page_size: 12,
-      order: "",
-    },
-  });
+  const { register, handleSubmit, setValue } = useForm();
+  const [showMoreFilters, setShowMoreFilters] = useState(false);
+  const toggleMoreFilters = () => {
+    setShowMoreFilters(!showMoreFilters);
+  };
 
   const isOnlyActive = useMemo(() => {
     return ["true", null].includes(searchParams.get("only_active"));
@@ -63,33 +60,34 @@ const Home = () => {
     return parseInt(searchParams.get("page") || 1);
   }, [searchParams]);
 
-  const filters = useMemo(() => {
+  const selectedOrder = useMemo(() => {
+    return EXP_ORDER_BY.find((item) => item.key === searchParams.get("order"));
+  }, [searchParams]);
+
+  useEffect(() => {
     setValue("query", searchParams.get("query"));
     setValue("exp_type", searchParams.get("exp_type"));
     setValue("only_active", isOnlyActive);
     setValue("page_size", searchParams.get("page_size") || 12);
     setValue("order", searchParams.get("order"));
-    let selectedOrder = EXP_ORDER_BY.find(
-      (item) => item.key === searchParams.get("order")
-    );
-    return {
-      page: searchParams.get("page") || undefined,
-      page_size: searchParams.get("page_size") || undefined,
-      query: searchParams.get("query") || undefined,
-      only_active: isOnlyActive,
-      exp_type: searchParams.get("exp_type") || undefined,
-      order_by: selectedOrder?.order_by || undefined,
-      order_desc: selectedOrder?.order_desc || undefined,
-    };
+    setValue("autosubmit_version", searchParams.get("autosubmit_version"));
+    setValue("owner", searchParams.get("owner"));
   }, [searchParams]);
 
-  const { data, isFetching, isError, refetch } =
-    useGetExperimentsQuery(filters);
+  const { data, isFetching, isError, refetch } = useGetExperimentsQuery({
+    page: searchParams.get("page") || undefined,
+    page_size: searchParams.get("page_size") || undefined,
+    query: searchParams.get("query") || undefined,
+    only_active: isOnlyActive,
+    exp_type: searchParams.get("exp_type") || undefined,
+    autosubmit_version: searchParams.get("autosubmit_version") || undefined,
+    owner: searchParams.get("owner") || undefined,
+    order_by: selectedOrder?.order_by || undefined,
+    order_desc: selectedOrder?.order_desc || undefined,
+  });
 
   // Form Handlers
   const onSubmit = (data) => {
-    console.log("onSubmit Data");
-    console.log(data);
     const newParams = {
       ...searchParamsToKeyValue(searchParams),
       page: 1,
@@ -98,20 +96,28 @@ const Home = () => {
       only_active: data.only_active,
       order: data.order,
       page_size: data.page_size,
+      autosubmit_version: data.autosubmit_version,
+      owner: data.owner,
     };
-    ["query", "exp_type", "order", "page_size"].forEach((key) => {
+    [
+      "query",
+      "exp_type",
+      "order",
+      "page_size",
+      "autosubmit_version",
+      "owner",
+    ].forEach((key) => {
       if (!newParams[key]) {
         delete newParams[key];
       }
     });
-
-    console.log("newParams Data");
-    console.log(newParams);
     setSearchParams(newParams);
   };
 
   const handleClear = () => {
-    setValue("query", null);
+    setValue("query", "");
+    setValue("autosubmit_version", "");
+    setValue("owner", "");
     handleSubmit(onSubmit)();
   };
 
@@ -133,21 +139,55 @@ const Home = () => {
   return (
     <>
       <div className="grow w-full flex flex-col gap-4">
-        <div className="flex w-full gap-2 flex-wrap">
+        <div className="flex w-full gap-2 flex-wrap items-start">
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="grow flex flex-wrap"
+            className="grow flex flex-wrap items-start"
           >
-            <input
-              {...register("query")}
-              id="search-input"
-              className="grow form-input rounded-e-none"
-              placeholder="Search by expid, description, or owner..."
-            />
+            <div className="grow flex flex-col gap-1">
+              <div className="grow relative">
+                <input
+                  {...register("query")}
+                  id="search-input"
+                  className="w-full form-input rounded-e-none"
+                  placeholder="Search by expid, description, or owner..."
+                />
+                <button
+                  type="button"
+                  className="absolute right-0 h-full px-3 opacity-50"
+                  onClick={toggleMoreFilters}
+                >
+                  more filters{" "}
+                  <i
+                    className={cn(
+                      "fa-solid",
+                      showMoreFilters ? "fa-caret-up" : "fa-caret-down"
+                    )}
+                  ></i>
+                </button>
+              </div>
+              {showMoreFilters && (
+                <>
+                  <input
+                    {...register("autosubmit_version")}
+                    id="search-as-version-input"
+                    className="grow form-input"
+                    placeholder="Search by autosubmit version"
+                  />
+                  <input
+                    {...register("owner")}
+                    id="search-input"
+                    className="grow form-input"
+                    placeholder="Search by owner"
+                  />
+                </>
+              )}
+            </div>
+
             <button
               id="search-btn"
               type="submit"
-              className="btn btn-dark font-bold px-6 rounded-none"
+              className="btn btn-dark font-bold px-6 border border-dark rounded-none"
             >
               Search
             </button>
@@ -160,7 +200,7 @@ const Home = () => {
             </button>
           </form>
           <button
-            className="btn btn-success"
+            className="btn btn-success h-8"
             title="Refresh data"
             onClick={() => {
               refetch();
@@ -169,7 +209,7 @@ const Home = () => {
             <i className="fa-solid fa-rotate-right"></i>
           </button>
 
-          <IntervalButton intervalCallback={refetch} />
+          <IntervalButton className={"h-8"} intervalCallback={refetch} />
         </div>
 
         <div className="flex gap-x-8 gap-y-3 items-center flex-wrap">
@@ -213,7 +253,7 @@ const Home = () => {
             </label>
           </div>
 
-          <div className="ms-auto flex gap-3 items-center">
+          <div className="ms-auto flex flex-wrap gap-3 items-center">
             <label className="text-nowrap">Order by:</label>
             <select
               id="order-by-select"

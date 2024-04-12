@@ -22,6 +22,8 @@ export const autosubmitApiV4 = createApi({
                 query,
                 only_active,
                 exp_type,
+                autosubmit_version,
+                owner,
                 order_by,
                 order_desc
             }) => {
@@ -33,6 +35,8 @@ export const autosubmitApiV4 = createApi({
                         query,
                         only_active,
                         exp_type,
+                        autosubmit_version,
+                        owner,
                         order_by,
                         order_desc
                     }
