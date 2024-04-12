@@ -43,20 +43,16 @@ const GRAPH_STYLE = [
       label: "data(id)",
       "text-valign": "top",
       "border-style": "dashed",
-      "text-margin-y": 0,
-      "font-weight": "bold",
+      "text-margin-y": -8,
+      "text-opacity": 0.75,
+      "font-style": "italic",
     },
   },
   {
     selector: "node:selected > $node",
     style: {
       "border-color": "#4E8490",
-    },
-  },
-  {
-    selector: "node:active > $node",
-    style: {
-      "border-color": "#4E8490",
+      "border-style": "dashed",
     },
   },
   {
@@ -132,7 +128,7 @@ const CyWorkflow = ({ elements, onSelectNodes, cy: forwardCy }) => {
   const cy = useRef();
 
   const handleSelect = () => {
-    const selectedNodes = cy.current.filter("node:selected");
+    const selectedNodes = cy.current.filter("node:selected:childless");
     onSelectNodes(selectedNodes.jsons());
   };
 
@@ -140,14 +136,24 @@ const CyWorkflow = ({ elements, onSelectNodes, cy: forwardCy }) => {
     // Mount component
 
     // First add
-    cy.current.one("add", () => {
+    cy.current.one("add", "node", () => {
       cy.current.fit();
+    });
+
+    // On wrapper add
+    cy.current.on("add", "node:parent", (e) => {
+      const selectedNodes = cy.current.filter("node:parent");
+      selectedNodes.removeAllListeners();
+      // This will allow Shift + DoubleClick select
+      selectedNodes.addListener("dblclick", (e) => {
+        e.target.children().select();
+      });
     });
 
     // Every time a node is selected, timeout used to only call the handle once when multiple are called at the same time
     // https://stackoverflow.com/questions/16677856/cy-onselect-callback-only-once
     var selectEventTimeout;
-    cy.current.on("select", (e) => {
+    cy.current.on("select", "node:childless", (e) => {
       clearTimeout(selectEventTimeout);
       selectEventTimeout = setTimeout(function () {
         handleSelect();
@@ -155,7 +161,7 @@ const CyWorkflow = ({ elements, onSelectNodes, cy: forwardCy }) => {
     });
 
     var unselectEventTimeout;
-    cy.current.on("unselect", (e) => {
+    cy.current.on("unselect", "node:childless", (e) => {
       clearTimeout(unselectEventTimeout);
       unselectEventTimeout = setTimeout(function () {
         handleSelect();

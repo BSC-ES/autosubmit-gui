@@ -89,16 +89,33 @@ const ExperimentGraph = () => {
     if (Array.isArray(data?.nodes) && Array.isArray(data?.edges)) {
       setJobs([...data.nodes]);
       const newElems = [];
-      data.nodes.forEach((node) => {
-        newElems.push({
-          data: { id: node.id, status: node.status },
-          position: { x: node.x, y: node.y },
-        });
+      const wrapperNodes = new Set();
+      data.nodes.forEach((item) => {
+        let node = {
+          group: "nodes",
+          data: { id: item.id, status: item.status },
+          position: { x: item.x, y: item.y },
+        };
+        if (item.wrapper) {
+          if (!wrapperNodes.has(item.wrapper)) {
+            newElems.push({
+              group: "nodes",
+              data: { id: item.wrapper },
+              grabbable: false,
+              pannable: true
+            });
+            wrapperNodes.add(item.wrapper);
+          }
+          node.data["parent"] = item.wrapper;
+        }
+        newElems.push(node);
       });
-      data.edges.forEach((edge) => {
+      data.edges.forEach((item) => {
         newElems.push({
-          data: { source: edge.from, target: edge.to },
+          group: "edges",
+          data: { source: item.from, target: item.to },
           selectable: false,
+          pannable: true
         });
       });
       setGraphElements(newElems);
@@ -262,13 +279,19 @@ const ExperimentGraph = () => {
             ref={statusSelectRef}
             className={"bg-white text-black border text-center px-2"}
           >
-            {Object.keys(STATUS_STYLES).sort().map((key) => {
-              return (
-                <option key={key} value={key} className={STATUS_STYLES[key].badge}>
-                  {key}
-                </option>
-              );
-            })}
+            {Object.keys(STATUS_STYLES)
+              .sort()
+              .map((key) => {
+                return (
+                  <option
+                    key={key}
+                    value={key}
+                    className={STATUS_STYLES[key].badge}
+                  >
+                    {key}
+                  </option>
+                );
+              })}
           </select>
           <button
             className="btn btn-success text-sm"
@@ -305,7 +328,11 @@ const ExperimentGraph = () => {
         >
           <div className="flex flex-col gap-3">
             {selectedJobIds.length === 1 && (
-              <JobDetailCard expid={routeParams.expid} jobData={selectedJob} jobs={jobs} />
+              <JobDetailCard
+                expid={routeParams.expid}
+                jobData={selectedJob}
+                jobs={jobs}
+              />
             )}
             <div className="flex items-center justify-center gap-3">
               <div className="font-semibold">Actions:</div>
