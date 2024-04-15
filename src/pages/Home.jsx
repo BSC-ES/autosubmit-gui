@@ -154,7 +154,7 @@ const Home = () => {
                 />
                 <button
                   type="button"
-                  className="absolute right-0 h-full px-3 opacity-50"
+                  className="absolute right-0 h-full px-3 opacity-50 text-black"
                   onClick={toggleMoreFilters}
                 >
                   more filters{" "}
