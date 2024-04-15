@@ -7,6 +7,7 @@ import "jquery.fancytree/dist/modules/jquery.fancytree.edit";
 import "jquery.fancytree/dist/modules/jquery.fancytree.multi";
 import "jquery.fancytree/dist/modules/jquery.fancytree.glyph";
 import "jquery.fancytree/dist/skin-bootstrap/ui.fancytree.min.css";
+import "./FancyTree.scss";
 
 const FANCY_TREE_OPTIONS = {
   extensions: ["filter", "glyph", "childcounter", "clones", "multi"],

@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.fancytree-ext-childcounter span.fancytree-childcounter {
+  border: 0px !important;
+}
+
+ul.fancytree-container {
+  border: none;
+  background-color: transparent;
+  @apply bg-transparent;
+}
+
+/* span.fancytree-node.fancytree-clone span.fancytree-title {
+    color: blue;
+  } */
+span.fancytree-node.fancytree-clone span.fancytree-title:after {
+  content: "";
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAMAAAC67D+PAAAAFVBMVEVmmcwzmcyZzP8AZswAZv////////9E6giVAAAAB3RSTlP///////8AGksDRgAAADhJREFUGFcly0ESAEAEA0Ei6/9P3sEcVB8kmrwFyni0bOeyyDpy9JTLEaOhQq7Ongf5FeMhHS/4AVnsAZubxDVmAAAAAElFTkSuQmCC")
+    100% 50% no-repeat;
+  padding-right: 13px;
+}
+
+span.fancytree-node.fancytree-active-clone {
+  /* border-color: blue; */
+  animation: flash 2s ease-out;
+  animation-iteration-count: 1;
+}
+
+@keyframes flash {
+  0% {
+    background-color: none;
+  }
+
+  50% {
+    background-color: #fbf8b2;
+  }
+
+  100% {
+    background-color: none;
+  }
+}
+
+/* Multiple select glyph skin fix */
+.fancytree-plain span.fancytree-active span.fancytree-title,
+.fancytree-plain span.fancytree-selected span.fancytree-title {
+  /* background-color: #f7f7f7;
+    border-color: #dedede; */
+  background-color: #e0f2fe;
+}

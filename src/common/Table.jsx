@@ -27,7 +27,7 @@ const TableCell = forwardRef(({ className, ...props }, ref) => {
   return (
     <td
       className={cn(
-        "p-2 text-nowrap border-t border-b border-neutral-200",
+        "p-2 border-t border-b border-neutral-200",
         className
       )}
       {...props}
