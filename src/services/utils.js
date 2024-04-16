@@ -22,10 +22,10 @@ export const triggerDownload = (href, download) => {
  * @param {Array<Array>} data 
  * @param {string} filename 
  */
-export const exportToCSV = (columns, data, filename) => {
+export const exportToCSV = (columns, data, filename, sep = ",") => {
   let csvContent = "data:text/csv;charset=utf-8,";
-  csvContent += columns.join(",") + "\n";
-  csvContent += data.map(row => row.join(",")).join("\n");
+  csvContent += columns.join(sep) + "\n";
+  csvContent += data.map(row => row.join(sep)).join("\n");
 
   const encodedUri = encodeURI(csvContent);
 
