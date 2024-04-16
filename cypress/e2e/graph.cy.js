@@ -16,7 +16,7 @@ describe("navigation", () => {
     cy.wait(750);
   });
 
-  it("filter", () => {
+  it("monitor, filter and selection", () => {
     cy.contains("START MONITOR").click();
     cy.wait(500);
     cy.contains("STOP MONITOR").click();
