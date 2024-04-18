@@ -9,7 +9,6 @@ The Performance Metrics page offers a set of metrics that try to measure the eff
    :name: experiment_performance
    :width: 100%
    :align: center
-   :alt: Performance Metrics 1
 
    Performance Metrics Page
 

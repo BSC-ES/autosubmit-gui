@@ -2,20 +2,23 @@
 
 # -- Project information
 
-project = 'Autosubmit GUI'
-copyright = '2024, Barcelona Supercomputing Center, BSC'
-author = 'Earth Sciences Department, Barcelona Supercomputing Center, BSC'
+project = "Autosubmit GUI"
+copyright = "2024, Barcelona Supercomputing Center, BSC"
+author = "Earth Sciences Department, Barcelona Supercomputing Center, BSC"
 
-release = '4.0.0'
-version = '4.0.0'
+release = "4.0.0"
+version = "4.0.0"
 
 # -- General configuration
 
-extensions = [
-]
+extensions = []
 
 # -- Options for HTML output
 
-html_theme = 'pydata_sphinx_theme'
+html_theme = "pydata_sphinx_theme"
 
-html_logo = '_static/Logo.svg'
+html_static_path = ["_static"]
+
+html_logo = "_static/Logo.svg"
+
+html_css_files = ["custom.css"]
