@@ -3,7 +3,7 @@ import AuthBadge from "../common/AuthBadge";
 import { ReactComponent as Logo } from "../common/Logo.svg";
 import { useWindowSize } from "@uidotdev/usehooks";
 import DarkThemeSwitcher from "../common/DarkThemeSwitcher";
-import { AUTHENTICATION, DARK_MODE_SWITCHER } from "../consts";
+import { AUTHENTICATION, CUSTOM_LOGO_URL, DARK_MODE_SWITCHER } from "../consts";
 import * as Dialog from "@radix-ui/react-dialog";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
@@ -105,8 +105,14 @@ const Navbar = () => {
           </AnimatePresence>
         </Dialog.Root>
       )}
-      <Link to={"/"}>
+      <Link to={"/"} className="flex gap-4 items-center">
         <Logo className="h-10" />
+        {CUSTOM_LOGO_URL && (
+          <>
+            <div className="w-px h-10 bg-black dark:bg-white opacity-25"></div>
+            <img src={CUSTOM_LOGO_URL} className="h-10"/>
+          </>
+        )}
       </Link>
       {width >= NAVBAR_BREAKPOINT && (
         <>
