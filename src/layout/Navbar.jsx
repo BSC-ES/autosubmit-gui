@@ -110,7 +110,7 @@ const Navbar = () => {
         {CUSTOM_LOGO_URL && (
           <>
             <div className="w-px h-10 bg-black dark:bg-white opacity-25"></div>
-            <img src={CUSTOM_LOGO_URL} className="h-10"/>
+            <img src={CUSTOM_LOGO_URL} className="h-10" alt="Logo"/>
           </>
         )}
       </Link>

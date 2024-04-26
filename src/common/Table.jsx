@@ -3,33 +3,35 @@ import { cn } from "../services/utils";
 
 const Table = forwardRef(({ className, ...props }, ref) => {
   return (
-    <table className={cn("caption-bottom w-full", className)} {...props} />
+    <table
+      ref={ref}
+      className={cn("caption-bottom w-full", className)}
+      {...props}
+    />
   );
 });
 
 const TableHead = forwardRef(({ className, ...props }, ref) => {
-  return <thead className={cn("", className)} {...props} />;
+  return <thead ref={ref} className={cn("", className)} {...props} />;
 });
 
 const TableHeader = forwardRef(({ className, ...props }, ref) => {
-  return <th className={cn("p-2 text-left", className)} {...props} />;
+  return <th ref={ref} className={cn("p-2 text-left", className)} {...props} />;
 });
 
 const TableBody = forwardRef(({ className, ...props }, ref) => {
-  return <tbody className={cn("", className)} {...props} />;
+  return <tbody ref={ref} className={cn("", className)} {...props} />;
 });
 
 const TableRow = forwardRef(({ className, ...props }, ref) => {
-  return <tr className={cn("", className)} {...props} />;
+  return <tr ref={ref} className={cn("", className)} {...props} />;
 });
 
 const TableCell = forwardRef(({ className, ...props }, ref) => {
   return (
     <td
-      className={cn(
-        "p-2 border-t border-b border-neutral-200",
-        className
-      )}
+      ref={ref}
+      className={cn("p-2 border-t border-b border-neutral-200", className)}
       {...props}
     />
   );

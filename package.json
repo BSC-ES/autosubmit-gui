@@ -34,22 +34,16 @@
     "sass": "^1.69.5",
     "showdown": "^2.1.0",
     "tailwind-merge": "^2.2.1",
-    "uuid": "^9.0.1",
-    "vis": "^4.21.0",
-    "vis-network": "^9.1.9",
-    "vis-util": "^5.0.7"
+    "uuid": "^9.0.1"
   },
   "scripts": {
     "start": "react-scripts -r @cypress/instrument-cra start",
     "build": "react-scripts build",
     "test": "jest",
     "eject": "react-scripts eject",
-    "lint": "eslint src --ext .js --ignore-pattern *.test.js",
+    "lint": "eslint src --ext .js,.jsx --ignore-pattern *.test.js",
     "cy:open": "cypress open",
     "cy:run": "cypress run"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "browserslist": {
     "production": [
@@ -67,6 +61,7 @@
   "main": "index.js",
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@babel/plugin-transform-modules-commonjs": "^7.23.3",
     "@cypress/code-coverage": "^3.12.22",
     "@cypress/instrument-cra": "^1.4.0",
@@ -74,6 +69,11 @@
     "canvas": "^2.11.2",
     "cypress": "^13.6.4",
     "dotenv": "^16.4.5",
+    "eslint": "^8.55.0",
+    "eslint-plugin-jsdoc": "^48.2.3",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.5",
     "identity-obj-proxy": "^3.0.0",
     "jest-canvas-mock": "^2.5.2",
     "react-dev-utils": "^12.0.1",

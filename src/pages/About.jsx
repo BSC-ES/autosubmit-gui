@@ -21,7 +21,7 @@ const FAQ = [
     key: 2,
     question: (<span>Where can I report an issue?</span>),
     answer: (<>
-      <p>If you find that something is broken or you suspect that it is not working correctly, you can open an issue at <a href="https://earth.bsc.es/gitlab/es/autosubmit/-/issues" target="_blank" className='text-primary-600 dark:text-primary-400'>Autosubmit GUI Issues</a>.</p>
+      <p>If you find that something is broken or you suspect that it is not working correctly, you can open an issue at <a href="https://earth.bsc.es/gitlab/es/autosubmit/-/issues" target="_blank" className='text-primary-600 dark:text-primary-400' rel="noreferrer">Autosubmit GUI Issues</a>.</p>
     </>)
   },
   {
@@ -72,7 +72,7 @@ const About = () => {
             The Autosubmit GUI is a modern web application that allows you to easily monitor the experiments inside your Autosubmit environment.
           </p>
           <p>If you find a bug or want to request some important feature, please open an issue at <a
-            href="https://earth.bsc.es/gitlab/es/autosubmitreact/issues" target='_blank' className='text-primary-600 dark:text-primary-400'
+            href="https://earth.bsc.es/gitlab/es/autosubmitreact/issues" target='_blank' className='text-primary-600 dark:text-primary-400' rel="noreferrer"
           >Autosubmit GUI Issues page</a>.</p>
         </div>
         <div className='w-full text-right text-black/50 dark:text-white/50'>— GUI Version: {packageJson.version}</div>

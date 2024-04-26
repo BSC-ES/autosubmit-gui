@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useGetExperimentConfigurationQuery } from "../services/autosubmitApiV3";
 import useASTitle from "../hooks/useASTitle";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import useBreadcrumb from "../hooks/useBreadcrumb";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../common/Table";
 

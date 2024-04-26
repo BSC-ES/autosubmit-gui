@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link, useNavigate } from "react-router-dom";
 import { AUTHENTICATION, latestNewsLabel, NOAPI, rootAppName, TRACK_ESARCHIVE } from "../context/vars";
@@ -11,7 +11,6 @@ const Navbar = ({ icon, title }) => {
   const navigate = useNavigate();
   const experimentContext = useContext(ExperimentContext);
   const {
-    searchExperiments,
     experiment,
     cleanFileStatusData,
     getFileStatus,
@@ -41,20 +40,12 @@ const Navbar = ({ icon, title }) => {
   //   testToken();
   // });
 
-  const [text, setText] = useState("");
   // const expid = match.params.expid;
-  const submitSearch = (e) => {
-    e.preventDefault();
-    if (text !== "") {
-      searchExperiments(text);
-      navigate(`/${rootAppName}/`);
-    }
-  };
+
   let expid = null;
   if (experiment) {
     expid = experiment.expid;
   }
-  const onChange = (e) => setText(e.target.value);
 
   const onLogout = (e) => {
     e.preventDefault();

@@ -300,7 +300,7 @@ const Home = () => {
                 </div>
               ) : data?.experiments?.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 3xl:grid-cols-4 gap-4">
-                  {data.experiments.map((exp, index) => {
+                  {data.experiments.map((exp) => {
                     return (
                       <div key={exp.name}>
                         <ExperimentCard experiment={exp} />

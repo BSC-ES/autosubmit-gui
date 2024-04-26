@@ -9,7 +9,7 @@ import useASTitle from "../hooks/useASTitle";
 import useBreadcrumb from "../hooks/useBreadcrumb";
 import BottomPanel from "../common/BottomPanel";
 import { ChangeStatusModal } from "../common/ChangeStatusModal";
-import { STATUS_STYLES, cn } from "../services/utils";
+import { STATUS_STYLES } from "../services/utils";
 
 const ExperimentGraph = () => {
   const dispatch = useDispatch();
