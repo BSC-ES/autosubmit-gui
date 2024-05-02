@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, MutableRefObject } from "react";
 import { autosubmitApiV3 } from "../services/autosubmitApiV3";
 import { useParams } from "react-router-dom";
 import FancyTree from "../common/FancyTree";
@@ -8,241 +8,328 @@ import JobDetailCard from "../common/JobDetailCard";
 import { useDispatch, useSelector } from "react-redux";
 import RunsModal from "../common/RunsModal";
 import TreeContentHandler from "../components/context/tree/business/treeUpdate";
-import { motion, useDragControls } from "framer-motion";
-import DraggablePanel from "../common/DraggablePanel";
-
+import BottomPanel from "../common/BottomPanel";
+import { ChangeStatusModal } from "../common/ChangeStatusModal";
 
 const ExperimentTree = () => {
-  const dispatch = useDispatch()
-  const authState = useSelector(state => state.auth)
-  const routeParams = useParams()
-  useASTitle(`Experiment ${routeParams.expid} tree`)
+  const dispatch = useDispatch();
+  const authState = useSelector((state) => state.auth);
+  const routeParams = useParams();
+  useASTitle(`Experiment ${routeParams.expid} tree`);
   useBreadcrumb([
     {
       name: `Experiment ${routeParams.expid}`,
-      route: `/experiment/${routeParams.expid}`
+      route: `/experiment/${routeParams.expid}`,
     },
     {
       name: `Tree View`,
-      route: `/experiment/${routeParams.expid}/tree`
-    }
-  ])
+      route: `/experiment/${routeParams.expid}/tree`,
+    },
+  ]);
 
-  const dragConstraintRef = useRef(null)
-  const [showRunsM, setShowRunsM] = useState(false)
+  /** @type {MutableRefObject<Fancytree.Fancytree>} */
+  const tree = useRef();
+  const filterRef = useRef();
+
+  const [activeMonitor, setActiveMonitor] = useState(false);
+
+  const [jobs, setJobs] = useState([]);
+  const [selectedJobIds, setSelectedJobIds] = useState([]);
+  const selectedJob = useMemo(() => {
+    if (selectedJobIds.length === 1) {
+      return jobs.find((rawNode) => rawNode.label === selectedJobIds[0]);
+    }
+    return undefined;
+  }, [jobs, selectedJobIds]);
+
+  const [showRunsM, setShowRunsM] = useState(false);
   const [selectedRun, setSelectedRun] = useState({
     run_id: null,
-    created: null
-  })
+    created: null,
+  });
 
-  const [tree, setTree] = useState(/** @type {Fancytree.Fancytree} */(null))
-  const filterRef = useRef()
+  const [showModal, setShowModal] = useState(false);
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
 
-  const [activeMonitor, setActiveMonitor] = useState(false)
+  const { data, isFetching, refetch, isError } =
+    autosubmitApiV3.endpoints.getExperimentTreeView.useQuery({
+      expid: routeParams.expid,
+      runId: selectedRun?.run_id,
+    });
 
-  // const abortController = new AbortController()
-  const {
-    data,
-    isFetching,
-    refetch,
-    isError
-  } = autosubmitApiV3.endpoints.getExperimentTreeView.useQuery({
-    expid: routeParams.expid,
-    // signal: abortController.signal,
-    runId: selectedRun?.run_id
-  })
-
-  const {
-    data: pklData
-  } = autosubmitApiV3.endpoints.getPklTreeInfo.useQuery({
-    expid: routeParams.expid
-  }, {
-    skip: (!activeMonitor) || (selectedRun?.run_id),
-    pollingInterval: 5 * 1000
-  })
-
-  const [jobs, setJobs] = useState([])
-  const [selectedJobId, setSelectedJobId] = useState(null)
-  const selectedJob = jobs.find(item => item.label === selectedJobId)
+  const { data: pklData } = autosubmitApiV3.endpoints.getPklTreeInfo.useQuery(
+    {
+      expid: routeParams.expid,
+    },
+    {
+      skip: !activeMonitor || selectedRun?.run_id,
+      pollingInterval: 5 * 1000,
+    }
+  );
 
   useEffect(() => {
     // Unmount component
     return () => {
-      // abortController.abort()
-      const promise = dispatch(autosubmitApiV3.endpoints.showdownRoute.initiate({
-        route: "tree",
-        loggedUser: authState.user_id,
-        expid: routeParams.expid
-      }, { forceRefetch: true }))
-      promise.unsubscribe()
-    }
+      const promise = dispatch(
+        autosubmitApiV3.endpoints.showdownRoute.initiate(
+          {
+            route: "tree",
+            loggedUser: authState.user_id,
+            expid: routeParams.expid,
+          },
+          { forceRefetch: true }
+        )
+      );
+      promise.unsubscribe();
+    };
     // eslint-disable-next-line
-  }, [])
+  }, []);
 
   useEffect(() => {
-    const newJobs = (data?.jobs || [])
-    setJobs(newJobs)
-  }, [data])
+    const newJobs = data?.jobs || [];
+    setJobs(newJobs);
+  }, [data]);
 
   useEffect(() => {
     let treeUpdater = new TreeContentHandler(
       jobs,
-      (data?.reference || {}),
+      data?.reference || {},
       pklData,
       false
-    )
+    );
 
-    if (tree && treeUpdater.validate()) {
-      const processResult = treeUpdater.processChanges(tree);
+    if (tree.current && treeUpdater.validate()) {
+      const processResult = treeUpdater.processChanges(tree.current);
       if (Array.isArray(processResult?.currentJobs)) {
-        setJobs(processResult.currentJobs)
+        setJobs(processResult.currentJobs);
       }
     }
-  }, [pklData])
+  }, [pklData]);
 
-
-  const handleOnActivateNode = (e, d) => {
-    if (Array.isArray(jobs) && d?.node && d.node.folder === undefined) {
-      setSelectedJobId(d.node.refKey)
-    }
-  }
-
-  const handleTreeCallback = (tree) => { setTree(tree) }
-
-  const handleExpand = () => { if (tree) tree.expandAll() }
-  const handleCollapse = () => { if (tree) tree.expandAll(false) }
+  const toggleActiveMonitor = () => {
+    setActiveMonitor(!activeMonitor);
+  };
 
   const handleFilter = (e) => {
     e.preventDefault();
-    if (tree) {
+    if (tree.current) {
       if (filterRef.current.value) {
-        tree.filterNodes(filterRef.current.value)
+        tree.current.filterNodes(filterRef.current.value);
       } else {
-        tree.clearFilter()
+        tree.current.clearFilter();
       }
     }
-  }
+  };
 
   const handleClear = () => {
-    filterRef.current.value = ""
-    if (tree) tree.clearFilter()
-  }
+    filterRef.current.value = "";
+    if (tree.current) tree.current.clearFilter();
+  };
 
-  const handleCloseJobDetail = () => { setSelectedJobId(null) }
+  const handleSelectNodes = (_selectedNodes) => {
+    if (Array.isArray(_selectedNodes)) {
+      const newSelectedIds = _selectedNodes
+        .filter((node) => node?.folder === undefined)
+        .map((node) => node?.refKey);
+      setSelectedJobIds(newSelectedIds);
+    } else {
+      setSelectedJobIds([]);
+    }
+  };
+
+  const handleExpand = () => {
+    if (tree.current) tree.current.expandAll();
+  };
+  const handleCollapse = () => {
+    if (tree.current) tree.current.expandAll(false);
+  };
+  const handleDefaultExpand = () => {
+    if (tree.current) {
+      tree.current.expandAll(false, {
+        noAnimation: true,
+        noEvents: true,
+      });
+      tree.current.getRootNode().children.forEach((node) => {
+        node.setExpanded();
+      });
+    }
+  };
 
   const handleRunSelect = (item) => {
     handleClear();
     setSelectedRun(item);
-    setShowRunsM(false)
-  }
+    setShowRunsM(false);
+  };
 
   const handleResetRun = () => {
     handleRunSelect({
       run_id: null,
-      created: null
-    })
-  }
+      created: null,
+    });
+  };
 
-  const toggleActiveMonitor = () => { setActiveMonitor(!activeMonitor); }
-
-  const toggleShowRunsM = () => { setShowRunsM(!showRunsM) }
+  const toggleShowRunsM = () => {
+    setShowRunsM(!showRunsM);
+  };
 
   return (
     <>
-      <RunsModal show={showRunsM}
+      <RunsModal
+        show={showRunsM}
         onHide={toggleShowRunsM}
         expid={routeParams.expid}
         onRunSelect={handleRunSelect}
       />
-      <div className="w-full flex flex-col gap-4" ref={dragConstraintRef}>
-        {
-          (isError || data?.error) &&
+      <div className="w-full flex flex-col gap-4">
+        {(isError || data?.error) && (
           <span className="alert alert-danger rounded-2xl">
-            <i className="fa-solid fa-triangle-exclamation me-2"></i> {data?.error_message || "Unknown error"}
+            <i className="fa-solid fa-triangle-exclamation me-2"></i>{" "}
+            {data?.error_message || "Unknown error"}
           </span>
-        }
+        )}
+
         <div className="flex gap-2 items-center flex-wrap">
           <div>
-            <button className={"btn btn-primary font-bold " + ((selectedRun?.run_id) && " rounded-e-none")}
+            <button
+              className={
+                "btn btn-primary font-bold " +
+                (selectedRun?.run_id && " rounded-e-none")
+              }
               title="Select Run"
-              onClick={toggleShowRunsM}>
-              <i className="fa-solid fa-clock-rotate-left me-2"></i> Run: {(selectedRun.run_id && selectedRun.created) || "Latest"}
+              onClick={toggleShowRunsM}
+            >
+              <i className="fa-solid fa-clock-rotate-left me-2"></i> Run:{" "}
+              {(selectedRun.run_id && selectedRun.created) || "Latest"}
             </button>
-            {
-              (selectedRun?.run_id) &&
-              <button className="btn btn-light text-primary rounded-s-none border"
+            {selectedRun?.run_id && (
+              <button
+                className="btn btn-light text-primary rounded-s-none border"
                 title="Reset to latest"
-                onClick={handleResetRun}>
+                onClick={handleResetRun}
+              >
                 <i className="fa-solid fa-xmark"></i>
               </button>
-            }
+            )}
           </div>
           <form className="grow flex flex-wrap" onSubmit={handleFilter}>
-            <input ref={filterRef}
-              className="form-input rounded-e-none grow" placeholder="Filter job..." />
-            <button type="submit" className="btn btn-dark border-dark font-bold px-4 rounded-s-none rounded-e-none">Filter</button>
-            <button type="button" className="btn btn-light border font-bold px-4 rounded-s-none" onClick={handleClear}>Clear</button>
-          </form>
-          {
-            (!selectedRun?.run_id) &&
+            <input
+              ref={filterRef}
+              className="form-input rounded-e-none grow"
+              placeholder="Filter job..."
+            />
             <button
-              className={"btn font-bold px-4 text-nowrap " + (activeMonitor ? "btn-danger" : "btn-success")}
-              onClick={toggleActiveMonitor}>
+              type="submit"
+              className="btn btn-dark border-dark font-bold px-4 rounded-s-none rounded-e-none"
+            >
+              Filter
+            </button>
+            <button
+              type="button"
+              className="btn btn-light border font-bold px-4 rounded-s-none"
+              onClick={handleClear}
+            >
+              Clear
+            </button>
+          </form>
+          {!selectedRun?.run_id && (
+            <button
+              className={
+                "btn font-bold px-4 text-nowrap " +
+                (activeMonitor ? "btn-danger" : "btn-success")
+              }
+              onClick={toggleActiveMonitor}
+            >
               {activeMonitor ? "STOP MONITORING" : "START MONITOR"}
             </button>
-          }
-          <button className="btn btn-success font-bold"
+          )}
+          <button
+            className="btn btn-success font-bold"
             title="Refresh data"
-            onClick={() => { refetch() }}>
+            onClick={() => {
+              refetch();
+            }}
+          >
             <i className="fa-solid fa-rotate-right"></i>
           </button>
         </div>
-        {
-          isFetching ?
-            <div className="w-full h-full flex items-center justify-center">
-              <div className="spinner-border" role="status"></div>
+
+        <div className="flex flex-wrap gap-2 items-center justify-between">
+          <span className="mx-2 text-sm">
+            Total #Jobs: {data?.total} | Chunk unit:{" "}
+            {data?.reference?.chunk_unit} | Chunk size:{" "}
+            {data?.reference?.chunk_size}
+          </span>
+          <div className="flex gap-2">
+            <button
+              className="btn btn-success font-bold px-4 text-sm"
+              onClick={handleDefaultExpand}
+            >
+              Default Expand
+            </button>
+            <button
+              className="btn btn-primary font-bold px-4 text-sm"
+              onClick={handleExpand}
+            >
+              Expand All +
+            </button>
+            <button
+              className="btn btn-secondary font-bold px-4 text-sm"
+              onClick={handleCollapse}
+            >
+              Collapse All -
+            </button>
+          </div>
+        </div>
+
+        <div className="relative grow basis-0 overflow-auto min-h-[70vh] lg:min-h-[50vh] w-full border p-4 rounded-lg custom-scrollbar bg-white">
+          {isFetching && (
+            <div className="absolute inset-0 z-20 flex items-center justify-center bg-white">
+              <div className="spinner-border dark:invert" role="status"></div>
             </div>
-            :
-            data &&
-            <>
-              <div className="flex w-full flex-wrap grow gap-4 justify-center">
-                <div className="grow flex flex-col gap-4 flex-wrap">
-                  <div className="flex flex-wrap gap-2 items-center justify-between">
-                    <span className="mx-2 text-sm">Total #Jobs: {data.total} | Chunk unit: {data?.reference?.chunk_unit} | Chunk size: {data?.reference?.chunk_size}</span>
-                    <div className="flex gap-2">
-                      <button className="btn btn-primary font-bold px-4 text-sm" onClick={handleExpand}>Expand All +</button>
-                      <button className="btn btn-secondary font-bold px-4 text-sm" onClick={handleCollapse}>Collapse All -</button>
-                    </div>
-                  </div>
-                  <div className="border rounded-2xl p-4 grow dark:bg-neutral-50">
-                    <div className="overflow-auto" style={{ minHeight: "50vh", maxHeight: "75vh", maxWidth: "80vw" }}>
-                      <FancyTree treeData={data.tree}
-                        onActivateNode={handleOnActivateNode}
-                        treeCallback={handleTreeCallback} />
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-
-              <DraggablePanel
-                show={Boolean(selectedJob)} 
-                title={selectedJob?.label}
-                onClose={handleCloseJobDetail}
-                // dragConstraints={dragConstraintRef}
-                className={"bottom-[7%] right-[2%]"}
-                >
-                <JobDetailCard
-                  jobData={selectedJob}
-                  jobs={jobs}
-                />
-              </DraggablePanel>
-            </>
-        }
+          )}
+          <FancyTree
+            tree={(_tree) => {
+              tree.current = _tree;
+            }}
+            source={data?.tree}
+            onSelectNodes={handleSelectNodes}
+          />
+        </div>
       </div>
+
+      {selectedJobIds.length > 0 && (
+        <BottomPanel
+          title={
+            selectedJobIds.length === 1
+              ? selectedJobIds[0]
+              : `${selectedJobIds.length} jobs selected`
+          }
+        >
+          <div className="flex flex-col gap-3">
+            <JobDetailCard
+              expid={routeParams.expid}
+              jobData={selectedJob}
+              jobs={jobs}
+            />
+            <div className="flex items-center justify-center gap-3">
+              <div className="font-semibold">Actions:</div>
+              <button className="btn btn-primary" onClick={toggleModal}>
+                Change status
+              </button>
+            </div>
+            <ChangeStatusModal
+              selectedJobs={selectedJobIds}
+              show={showModal}
+              onHide={toggleModal}
+              expid={routeParams.expid}
+            />
+          </div>
+        </BottomPanel>
+      )}
     </>
+  );
+};
 
-  )
-}
-
-export default ExperimentTree
+export default ExperimentTree;

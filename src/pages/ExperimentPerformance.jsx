@@ -12,9 +12,10 @@ import {
   formatNumberMoney,
 } from "../components/context/utils"
 import TimeScatterPlot from "../components/plots/TimeScatterPlot"
-import { exportToCSV } from "../services/utils"
+import { cn, exportToCSV } from "../services/utils"
 import Modal from "../common/Modal"
 import { Dialog } from "@headlessui/react"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../common/Table"
 
 
 const PERFORMANCE_PLOTS = [
@@ -218,100 +219,71 @@ const PerformancePlots = ({ considered }) => {
 }
 
 const PerformanceConsideredJobs = ({ considered }) => {
-  const routeParams = useParams()
-
-  const exportConsideredToCSV = () => {
-    const exportableData = [...considered].sort((a, b) => {
-      if (a.chunk === b.chunk) {
-        return a.name > b.name ? 1 : -1
-      } else {
-        return a.chunk > b.chunk ? 1 : -1
-      }
-    }).map(item => {
-      return [
-        item.chunk,
-        item.name,
-        secondsToDelta(item.queue),
-        secondsToDelta(item.running),
-        formatNumberMoney(item.CHSY),
-        formatNumberMoney(item.SYPD),
-        formatNumberMoney(item.ASYPD),
-        formatNumberMoney(item.JPSY, true),
-        formatNumberMoney(item.energy, true)
-      ]
-    })
-    exportToCSV(
-      ["Chunk", "Job Name", "Queue", "Run", "CHSY", "SYPD", "ASYPD", "JPSY", "Energy"],
-      exportableData,
-      `${(new Date()).toISOString()}_ConsideredPerformance_${routeParams.expid}.csv`
-    )
-  }
 
   return (
     <>
-      <table className='table w-full table-bordered'>
-        <thead>
-          <tr className='bg-primary/25 font-bold performance-table-header sticky-header'>
-            <th scope='col'>
-              Chunk
-            </th>
-            <th scope='col' className='ps-2'>
-              Job Name
-            </th>
-            {
-              ["Queue", "Run", "CHSY", "SYPD", "ASYPD", "JPSY", "Energy"].map(title =>
-                <th scope='col' className='text-end pe-2' key={title}>
-                  {title}
-                </th>)
-            }
-          </tr>
-        </thead>
-        <tbody>
-          {
-            considered &&
-            [...considered].sort((a, b) => {
-              if (a.chunk === b.chunk) {
-                return a.name > b.name ? 1 : -1
-              } else {
-                return a.chunk > b.chunk ? 1 : -1
-              }
-            }).map((item) => (
-              <tr key={item.name}>
-                <td className='ps-1 font-bold'>{item.chunk}</td>
-                <td className='ps-1'>{item.name}</td>
-                <td className='text-end pe-1'>
-                  <strong> {secondsToDelta(item.queue)}</strong>
-                </td>
-                <td className='text-end pe-1'>
-                  <strong>{secondsToDelta(item.running)}</strong>
-                </td>
-                <td className='text-end pe-1'>
-                  {formatNumberMoney(item.CHSY)}
-                </td>
-                <td className='text-end pe-1'>
-                  {formatNumberMoney(item.SYPD)}
-                </td>
-                <td className='text-end pe-1'>
-                  {formatNumberMoney(item.ASYPD)}
-                </td>
-                <td className='text-end pe-1'>
-                  {formatNumberMoney(item.JPSY, true)}
-                </td>
-                <td className='text-end pe-1'>
-                  {formatNumberMoney(item.energy, true)}
-                </td>
-              </tr>
+      <Table>
+        <TableHead>
+          <TableRow className="bg-primary-200 font-bold sticky top-0">
+            {[
+              "Chunk",
+              "Job Name",
+              "Queue",
+              "Run",
+              "CHSY",
+              "SYPD",
+              "ASYPD",
+              "JPSY",
+              "Energy",
+            ].map((title) => (
+              <TableHeader className="py-1" key={title}>
+                {title}
+              </TableHeader>
             ))}
-        </tbody>
-      </table>
-      <div className="text-end mt-2">
-        <button onClick={exportConsideredToCSV}
-          className="btn btn-light text-sm border">
-          Export to CSV
-        </button>
-      </div>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {considered &&
+            [...considered]
+              .sort((a, b) => {
+                if (a.chunk === b.chunk) {
+                  return a.name > b.name ? 1 : -1;
+                } else {
+                  return a.chunk > b.chunk ? 1 : -1;
+                }
+              })
+              .map((item) => (
+                <TableRow key={item.name}>
+                  <TableCell className="py-1">{item.chunk}</TableCell>
+                  <TableCell className="py-1">{item.name}</TableCell>
+                  <TableCell className="py-1">
+                    <strong> {secondsToDelta(item.queue)}</strong>
+                  </TableCell>
+                  <TableCell className="py-1">
+                    <strong>{secondsToDelta(item.running)}</strong>
+                  </TableCell>
+                  <TableCell className="py-1">
+                    {formatNumberMoney(item.CHSY)}
+                  </TableCell>
+                  <TableCell className="py-1">
+                    {formatNumberMoney(item.SYPD)}
+                  </TableCell>
+                  <TableCell className="py-1">
+                    {formatNumberMoney(item.ASYPD)}
+                  </TableCell>
+                  <TableCell className="py-1">
+                    {formatNumberMoney(item.JPSY, true)}
+                  </TableCell>
+                  <TableCell className="py-1">
+                    {formatNumberMoney(item.energy, true)}
+                  </TableCell>
+                </TableRow>
+              ))}
+        </TableBody>
+      </Table>
+      
     </>
-  )
+  );
 }
 
 
@@ -334,55 +306,57 @@ const PerformanceSummary = ({ data }) => {
 
   return (
     <>
-      <table className='table w-full table-bordered'>
-        <thead>
-          <tr className='bg-primary/25 font-bold performance-table-header'>
-            <th scope='col'>Metric</th>
-            {
-              ["Value", "Min", "Max", "Mean", "SD", "MAD"].map(title =>
-                <th scope='col' className='text-end pe-2' key={title}>
+      <Table>
+        <TableHead>
+          <TableRow className="bg-primary-200 font-bold">
+            {["Metric", "Value", "Min", "Max", "Mean", "SD", "MAD"].map(
+              (title) => (
+                <TableHeader className="py-1" key={title}>
                   {title}
-                </th>)
-            }
-          </tr>
-        </thead>
-        <tbody>
-          {
-            metrics && Object.keys(metrics).map(key => {
+                </TableHeader>
+              )
+            )}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {metrics &&
+            Object.keys(metrics).map((key) => {
               return (
-                <tr key={key}>
-                  <th scope='row' className="text-start">{key}</th>
-                  <td className={'text-end pe-1' + (key === "ASYPD" ? " font-bold" : "")}>
-                    <span className='rounded px-1 bg-light'>
+                <TableRow key={key}>
+                  <TableCell className="py-1 font-bold">{key}</TableCell>
+                  <TableCell
+                    className={cn("py-1", key === "ASYPD" ? " font-bold" : "")}
+                  >
+                    <span className="rounded px-1 bg-light">
                       {formatNumberMoney(data[key], true)}
                     </span>
-                  </td>
-                  <td className='text-end pe-1'>
+                  </TableCell>
+                  <TableCell className="py-1">
                     {formatNumberMoney(Math.min(...metrics[key]), true)}
-                  </td>
-                  <td className='text-end pe-1'>
+                  </TableCell>
+                  <TableCell className="py-1">
                     {formatNumberMoney(Math.max(...metrics[key]), true)}
-                  </td>
-                  <td className={'text-end pe-1' + (key !== "ASYPD" ? " font-bold" : "")}>
+                  </TableCell>
+                  <TableCell
+                    className={cn("py-1", key !== "ASYPD" ? " font-bold" : "")}
+                  >
                     {formatNumberMoney(arrayAverage(metrics[key]))}
-                  </td>
-                  <td className='text-end pe-1'>
+                  </TableCell>
+                  <TableCell className="py-1">
                     {formatNumberMoney(arrayStandardDeviation(metrics[key]))}
-                  </td>
-                  <td className='text-end pe-1'>
+                  </TableCell>
+                  <TableCell className="py-1">
                     {formatNumberMoney(
                       arrayMeanAbsoluteDeviationAroundMean(metrics[key])
                     )}
-                  </td>
-                </tr>
-              )
-            })
-          }
-        </tbody>
-      </table>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+        </TableBody>
+      </Table>
     </>
-
-  )
+  );
 }
 
 const ExperimentPerformance = () => {
@@ -405,6 +379,34 @@ const ExperimentPerformance = () => {
 
   const toggleShowWarning = () => setShowWarnings(!showWarnings);
   const toggleShowHelp = () => setShowHelp(!showHelp);
+
+  const exportConsideredToCSV = (considered, expid) => {
+    const exportableData = [...considered].sort((a, b) => {
+      if (a.chunk === b.chunk) {
+        return a.name > b.name ? 1 : -1
+      } else {
+        return a.chunk > b.chunk ? 1 : -1
+      }
+    }).map(item => {
+      return [
+        item.chunk,
+        item.name,
+        secondsToDelta(item.queue),
+        secondsToDelta(item.running),
+        formatNumberMoney(item.CHSY),
+        formatNumberMoney(item.SYPD),
+        formatNumberMoney(item.ASYPD),
+        formatNumberMoney(item.JPSY, true),
+        formatNumberMoney(item.energy, true)
+      ]
+    })
+    exportToCSV(
+      ["Chunk", "Job Name", "Queue", "Run", "CHSY", "SYPD", "ASYPD", "JPSY", "Energy"],
+      exportableData,
+      `${(new Date()).toISOString()}_ConsideredPerformance_${expid}.csv`,
+      "\t"
+    )
+  }
 
   return (
     <>
@@ -588,9 +590,17 @@ const ExperimentPerformance = () => {
                     </div>
                   </div>
                   <div className="p-4">
-                    <div className="overflow-auto" style={{ maxHeight: "50vh" }}>
+                    <div className="overflow-auto custom-scrollbar" style={{ maxHeight: "50vh" }}>
                       <PerformanceConsideredJobs considered={data.considered} />
                     </div>
+                    <div className="text-end mt-2">
+                    <button
+                      onClick={() => exportConsideredToCSV(data.considered, routeParams.expid)}
+                      className="btn btn-light text-sm border"
+                    >
+                      Export to CSV
+                    </button>
+                  </div>
                   </div>
                 </div>
               </div>
@@ -603,6 +613,7 @@ const ExperimentPerformance = () => {
 
                 <div className="p-3">
                   <PerformancePlots considered={data.considered} />
+                  
                 </div>
               </div>
             </>

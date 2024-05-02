@@ -41,8 +41,6 @@ Here is an example content of a `.env` file:
 
 ```bash
 REACT_APP_AUTOSUBMIT_API_SOURCE=https://earth.bsc.es/autosubmitapi
-
-REACT_APP_DEBUG=false
 ```
 
 You can check the full list of the configuration variables here: https://autosubmit-gui.readthedocs.io/en/latest/configuration/index.html
@@ -64,17 +62,18 @@ Furthermore, if you want to set up it for production, please refere to the [Depl
 
 ## Testing
 
-The testing suite has been developed using [JEST](https://jestjs.io/en/).
+The testing have been developed using [Cypress](https://docs.cypress.io/guides/overview/why-cypress).
 
-To execute it, go to your main folder (`/autosubmitreact/`) and execute:
+To start running the e2e and component tests you have to configure and run the GUI. Follow the installation guide above if needed.
 
-`npm test`
+Then, you have to write a `.env.cypress` with the URL of your GUI and API like this:
 
-Almost all tests can be found at `/autosubmitreact/src/components/experiment/tests/`.
+```bash
+CYPRESS_BASE_URL=http://localhost:3000/
+CYPRESS_EXTERNAL_API=http://127.0.0.1:8000
+```
 
-Make sure that you have installed the dependencies before running the tests.
-
-Note: It could happen that `jest` fails to run or is not automatically installed along the other dependencies on a Windows machine, please install it manually.
+Once done, you can run the tests by running `npm run cy:run` or interactively using `npm run cy:open`.
 
 
 ## User Guide

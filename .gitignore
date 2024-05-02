@@ -45,3 +45,5 @@ next-env.d.ts
 
 # misc
 .nyc_output/
+
+docs/build/
