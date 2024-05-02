@@ -1,6 +1,5 @@
 import { Provider } from 'react-redux'
 import Router from './layout/Router'
-import ContextProvider from './components/context/ContextProvider'
 import store from './store'
 
 // Add stylings
@@ -10,9 +9,7 @@ const App = () => {
 
     return (
         <Provider store={store}>
-            <ContextProvider>
-                <Router />
-            </ContextProvider>
+            <Router />
         </Provider>
     );
 

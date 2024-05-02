@@ -17,6 +17,13 @@ const AuthBadge = () => {
   const { data, isError, isFetching, refetch } = autosubmitApiV4.endpoints.verifyToken.useQuery()
 
   useEffect(() => {
+    if (AUTHENTICATION && !token) {
+      dispatch(authActions.logout())
+      navigate("/login")
+    }
+  }, [])
+
+  useEffect(() => {
     if (!isFetching) {
       if (isError) {
         if (AUTHENTICATION) {

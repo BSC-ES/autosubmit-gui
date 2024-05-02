@@ -2,7 +2,6 @@ import { useNavigate, useParams } from "react-router-dom"
 import useASTitle from "../hooks/useASTitle"
 import useBreadcrumb from "../hooks/useBreadcrumb"
 import { useEffect } from "react"
-import { useGetExperimentInfoQuery } from "../services/autosubmitApiV3"
 
 
 const ExperimentDetail = () => {

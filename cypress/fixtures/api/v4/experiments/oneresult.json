@@ -1,7 +1,7 @@
 {
     "experiments": [
         {
-            "completed": 1,
+            "completed": 128,
             "description": "Francesc",
             "failed": 0,
             "hpc": "LUMI",
@@ -10,7 +10,7 @@
             "name": "a0it",
             "queuing": 0,
             "running": 0,
-            "status": "NOT RUNNING",
+            "status": "RUNNING",
             "submitted": 0,
             "suspended": 0,
             "total": 874,

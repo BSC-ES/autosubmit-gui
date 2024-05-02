@@ -19,6 +19,7 @@ import Login from '../pages/Login';
 import { useDispatch } from 'react-redux';
 import { appActions } from '../store/appSlice';
 import { useEffect } from 'react';
+import Footer from './Footer';
 
 const router = createBrowserRouter([
   {
@@ -29,9 +30,7 @@ const router = createBrowserRouter([
         <Breadcrumb />
         {/* <Alert /> */}
         <Outlet />
-
-        <div className='h-12'></div>
-        {/* <Footer /> */}
+        <Footer />
       </main>
     ),
     errorElement: <Navigate to={"/404"} replace />,

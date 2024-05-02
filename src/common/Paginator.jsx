@@ -1,16 +1,14 @@
-import { useEffect, useState } from "react"
+import { useMemo } from "react"
 
 const Paginator = ({ totalPages, currentPage = 1, siblingSize = 1, onPageClick }) => {
 
-  const [pages, setPages] = useState([])
-
-  useEffect(() => {
+  const pages = useMemo(() => {
     let rangeSize = Math.min(totalPages, siblingSize * 2 + 1)
     let start = Math.max(1, Math.min(currentPage - siblingSize, totalPages - rangeSize + 1))
     const newPages = [...(Array(rangeSize).keys())].map(item => {
       return (item + start)
     })
-    setPages(newPages)
+    return newPages
   }, [totalPages, currentPage, siblingSize])
 
   return (

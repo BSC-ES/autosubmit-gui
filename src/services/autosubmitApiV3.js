@@ -60,6 +60,9 @@ export const autosubmitApiV3 = createApi({
         getRuns: builder.query({
             query: (expid) => `runs/${expid}`
         }),
+        getJobHistory: builder.query({
+            query: ({expid, jobName}) => `history/${expid}/${jobName}`
+        }),
         getPklInfo: builder.query({
             query: ({ expid, timestamp = 0 }) => {
                 return {
