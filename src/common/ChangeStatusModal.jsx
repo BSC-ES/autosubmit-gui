@@ -3,15 +3,15 @@ import { STATUS_STYLES } from "../services/utils";
 import Modal from "./Modal";
 import {
   commandGeneratorGraph,
-  statusChangeTextGeneratorGraph
+  statusChangeTextGeneratorGraph,
 } from "../components/context/utils";
 import { useCopyToClipboard } from "@uidotdev/usehooks";
 
 export function ChangeStatusModal({ expid, selectedJobs, show, onHide }) {
   const copyToClipboard = useCopyToClipboard()[1];
-  const [targetStatus, setTargetStatus] = useState("READY");
+  const [targetStatus, setTargetStatus] = useState("WAITING");
   const [type, setType] = useState("cmd");
-  const [copied, setCopied] = useState("");
+  const [copied, setCopied] = useState("Copy to clipboard");
 
   const handleCopy = () => {
     let content = "";
@@ -23,7 +23,7 @@ export function ChangeStatusModal({ expid, selectedJobs, show, onHide }) {
     copyToClipboard(content);
     setCopied("Copied!");
     setTimeout(() => {
-      setCopied("");
+      setCopied("Copy to clipboard");
     }, 2000);
   };
   return (
@@ -57,9 +57,9 @@ export function ChangeStatusModal({ expid, selectedJobs, show, onHide }) {
               <option value="txt">Text File</option>
             </select>
           </div>
-          <div className="bg-black text-white p-2 font-mono relative">
+          <div className="bg-black text-white px-2 font-mono relative pt-8 py-4">
             <button
-              className="absolute top-2 right-4 opacity-50"
+              className="absolute top-2 text-sm right-2 opacity-50 text-black bg-white px-2 rounded"
               onClick={handleCopy}
             >
               <i className="fa-regular fa-copy"></i> {copied}
