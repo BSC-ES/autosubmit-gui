@@ -17,7 +17,7 @@ RUN yarn install
 
 # Build arguments
 ARG AUTOSUBMIT_API_SOURCE
-ARG PUBLIC_URL
+ARG PUBLIC_URL="/"
 ARG DARK_MODE_SWITCHER="false"
 ARG AUTHENTICATION="false"
 ARG AUTH_PROVIDER
@@ -41,8 +41,17 @@ RUN yarn run build
 # Phase 2: Serve the app with nginx
 FROM nginx:alpine-slim AS runtime
 
-COPY --from=build /app/build /usr/share/nginx/html
+ARG PUBLIC_URL="/"
+
+# Conditional COPY path
+COPY --from=build /app/build "/usr/share/nginx/html${PUBLIC_URL}"
+
+# Copy the new configuration file over the default one
 COPY nginx.conf /etc/nginx/nginx.conf
+
+# Replace %%PUBLIC_URL%% to the value of PUBLIC_URL in the nginx configuration file
+RUN sed -i "s|%%PUBLIC_URL%%|${PUBLIC_URL}|g" /etc/nginx/nginx.conf
+
 
 EXPOSE 8080
 
