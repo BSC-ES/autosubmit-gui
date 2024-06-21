@@ -16,7 +16,7 @@ RUN git checkout ${GIT_BRANCH}
 RUN yarn install
 
 # Build arguments
-ARG AUTOSUBMIT_API_SOURCE
+ARG AUTOSUBMIT_API_SOURCE="/api"
 ARG PUBLIC_URL="/"
 ARG DARK_MODE_SWITCHER="false"
 ARG AUTHENTICATION="false"
@@ -49,10 +49,17 @@ COPY --from=build /app/build "/usr/share/nginx/html${PUBLIC_URL}"
 # Copy the new configuration file over the default one
 COPY nginx.conf /etc/nginx/nginx.conf
 
+# Create an empty file for the API proxy
+RUN touch /etc/nginx/conf.d/proxy.conf
+ENV API_URL_PROXY=""
+
 # Replace %%PUBLIC_URL%% to the value of PUBLIC_URL in the nginx configuration file
 RUN sed -i "s|%%PUBLIC_URL%%|${PUBLIC_URL}|g" /etc/nginx/nginx.conf
 
+# Copy entrypoint script
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 EXPOSE 8080
 
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT [ "/entrypoint.sh" ]
