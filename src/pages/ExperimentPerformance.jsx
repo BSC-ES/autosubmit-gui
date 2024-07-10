@@ -319,13 +319,11 @@ const PerformanceSummary = ({ data }) => {
       <Table>
         <TableHead>
           <TableRow className="bg-primary-200 font-bold">
-            {["Metric", "Value", "Min", "Max", "Mean", "SD", "MAD"].map(
-              (title) => (
-                <TableHeader className="py-1" key={title}>
-                  {title}
-                </TableHeader>
-              )
-            )}
+            {["Metric", "Value", "Min", "Max", "SD", "MAD"].map((title) => (
+              <TableHeader className="py-1" key={title}>
+                {title}
+              </TableHeader>
+            ))}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -334,9 +332,7 @@ const PerformanceSummary = ({ data }) => {
               return (
                 <TableRow key={key}>
                   <TableCell className="py-1 font-bold">{key}</TableCell>
-                  <TableCell
-                    className={cn("py-1", key === "ASYPD" ? " font-bold" : "")}
-                  >
+                  <TableCell className={cn("py-1 font-bold")}>
                     <span className="rounded px-1 bg-light">
                       {formatNumberMoney(data[key])}
                     </span>
@@ -346,11 +342,6 @@ const PerformanceSummary = ({ data }) => {
                   </TableCell>
                   <TableCell className="py-1">
                     {formatNumberMoney(Math.max(...metrics[key]))}
-                  </TableCell>
-                  <TableCell
-                    className={cn("py-1", key !== "ASYPD" ? " font-bold" : "")}
-                  >
-                    {formatNumberMoney(arrayAverage(metrics[key]))}
                   </TableCell>
                   <TableCell className="py-1">
                     {formatNumberMoney(arrayStandardDeviation(metrics[key]))}
@@ -645,6 +636,14 @@ const ExperimentPerformance = () => {
                   </div>
                 </div>
                 <div className="p-4">
+                  <div className="mb-4 flex gap-4">
+                    <span>
+                      <strong># considered</strong>:{" "}
+                      <span className="rounded px-1 bg-light">
+                        {data?.considered?.length || "0"}
+                      </span>
+                    </span>
+                  </div>
                   <div
                     className="overflow-auto custom-scrollbar"
                     style={{ maxHeight: "50vh" }}
