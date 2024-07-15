@@ -7,7 +7,7 @@
 # Author: Autosubmit Team, BSC
 ######################################################################################################
 
-cd autosubmitreact/
+cd autosubmit-gui/
 echo "deleting old build folder"
 rm -rf build
 npm run build

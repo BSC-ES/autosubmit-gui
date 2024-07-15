@@ -25,7 +25,7 @@ Full documentation: https://autosubmit-gui.readthedocs.io/en/latest/
 
 First, clone the repository:
 
-`git clone https://earth.bsc.es/gitlab/es/autosubmitreact/`
+`git clone https://earth.bsc.es/gitlab/es/autosubmit-gui/`
 
 Then, check if you are using the right recommended Node.js version of this project to be sure there is no conflict in its dependencies. This could be easily done by using the [Node Version Manager](https://github.com/nvm-sh/nvm) using: 
 

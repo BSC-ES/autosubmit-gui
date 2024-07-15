@@ -83,7 +83,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://earth.bsc.es/gitlab/es/autosubmitreact"
+    "url": "https://earth.bsc.es/gitlab/es/autosubmit-gui"
   },
   "author": "",
   "license": "MIT",
