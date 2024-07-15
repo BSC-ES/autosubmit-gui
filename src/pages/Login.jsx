@@ -1,7 +1,12 @@
 import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { autosubmitApiV4 } from "../services/autosubmitApiV4";
-import { AUTH_PROVIDER, CAS_THIRD_PARTY_LOGIN_URL, CAS_SERVICE_ID, GITHUB_CLIENT_ID } from "../consts";
+import {
+  AUTH_PROVIDER,
+  CAS_THIRD_PARTY_LOGIN_URL,
+  CAS_SERVICE_ID,
+  GITHUB_CLIENT_ID,
+} from "../consts";
 import { useDispatch } from "react-redux";
 import { ReactComponent as Logo } from "../common/Logo.svg";
 
@@ -9,71 +14,70 @@ import { authActions } from "../store/authSlice";
 import { motion, useAnimate } from "framer-motion";
 import useASTitle from "../hooks/useASTitle";
 
-
 const AnimatedBG = () => {
-  const [scope, animate] = useAnimate()
-  const [scope2, animate2] = useAnimate()
-
+  const [scope, animate] = useAnimate();
+  const [scope2, animate2] = useAnimate();
 
   useEffect(() => {
-    animate([
+    animate(
       [
-        scope.current,
-        {
-          pathLength: 1,
-          pathOffset: 0
-        },
-        {
-          duration: 2
-        }
+        [
+          scope.current,
+          {
+            pathLength: 1,
+            pathOffset: 0,
+          },
+          {
+            duration: 2,
+          },
+        ],
+        [
+          scope.current,
+          {
+            pathLength: 1,
+            pathOffset: 1,
+          },
+          {
+            duration: 2,
+            delay: 1,
+          },
+        ],
       ],
-      [
-        scope.current,
-        {
-          pathLength: 1,
-          pathOffset: 1
-        },
-        {
-          duration: 2,
-          delay: 1
-        }
-      ],
-    ],
-      {
-        repeat: Infinity
-      })
-
-
-    animate2([
-      [
-        scope2.current,
-        {
-          pathLength: 1,
-          pathOffset: 0
-        },
-        {
-          duration: 2
-        }
-      ],
-      [
-        scope2.current,
-        {
-          pathLength: 1,
-          pathOffset: 1
-        },
-        {
-          duration: 2,
-          delay: 1
-        }
-      ],
-    ],
       {
         repeat: Infinity,
-        delay: 1.5
-      })
-  }, [])
+      }
+    );
 
-
+    animate2(
+      [
+        [
+          scope2.current,
+          {
+            pathLength: 1,
+            pathOffset: 0,
+          },
+          {
+            duration: 2,
+          },
+        ],
+        [
+          scope2.current,
+          {
+            pathLength: 1,
+            pathOffset: 1,
+          },
+          {
+            duration: 2,
+            delay: 1,
+          },
+        ],
+      ],
+      {
+        repeat: Infinity,
+        delay: 1.5,
+      }
+    );
+  }, []);
 
   return (
     <svg
@@ -88,7 +92,7 @@ const AnimatedBG = () => {
         strokeWidth={4}
         initial={{
           pathLength: 0,
-          pathOffset: 0
+          pathOffset: 0,
         }}
         ref={scope}
       />
@@ -99,39 +103,40 @@ const AnimatedBG = () => {
         strokeWidth={4}
         initial={{
           pathLength: 0,
-          pathOffset: 0
+          pathOffset: 0,
         }}
         ref={scope2}
       />
     </svg>
-
-  )
-}
-
+  );
+};
 
 const Login = () => {
-  useASTitle("Login")
+  useASTitle("Login");
   const searchParams = useSearchParams({})[0];
   const navigate = useNavigate();
-  const ticket = searchParams.get("ticket")
-  const service = CAS_SERVICE_ID || window.location.href.split("?")[0]
-  const code = searchParams.get("code")
+  const ticket = searchParams.get("ticket");
+  const service = CAS_SERVICE_ID || window.location.href.split("?")[0];
+  const code = searchParams.get("code");
   const dispatch = useDispatch();
-  const [login, {
-    data: loginData,
-    isError: isLoginError,
-    isUninitialized: isLoginUninitialized
-  }] = autosubmitApiV4.endpoints.login.useMutation()
+  const [
+    login,
+    {
+      data: loginData,
+      isError: isLoginError,
+      isLoading: isLoginLoading,
+      isUninitialized: isLoginUninitialized,
+    },
+  ] = autosubmitApiV4.endpoints.login.useMutation();
   const {
     isSuccess: isVerifySuccess,
     isFetching: isVerifyFetching,
-    refetch
-  } = autosubmitApiV4.endpoints.verifyToken.useQuery()
+    refetch,
+  } = autosubmitApiV4.endpoints.verifyToken.useQuery();
 
   useEffect(() => {
-    if (!isVerifyFetching && isVerifySuccess) navigate("/")
-  }, [isVerifyFetching, isVerifySuccess])
-
+    if (!isVerifyFetching && isVerifySuccess) navigate("/");
+  }, [isVerifyFetching, isVerifySuccess]);
 
   useEffect(() => {
     if (ticket || code) {
@@ -139,10 +144,10 @@ const Login = () => {
         provider: AUTH_PROVIDER,
         ticket: ticket,
         service: service,
-        code: code
-      })
+        code: code,
+      });
     }
-  }, [])
+  }, []);
 
   const handleLogin = () => {
     if (AUTH_PROVIDER === "github") {
@@ -152,43 +157,61 @@ const Login = () => {
       const _target = `${CAS_THIRD_PARTY_LOGIN_URL}?service=${service}`;
       window.location.href = _target;
     }
-  }
+  };
 
   useEffect(() => {
     if (!isLoginUninitialized && !isLoginError && loginData) {
-      localStorage.setItem("token", loginData.token)
-      dispatch(authActions.login({
-        token: loginData.token,
-        user_id: loginData.user
-      }))
-      refetch()
+      localStorage.setItem("token", loginData.token);
+      dispatch(
+        authActions.login({
+          token: loginData.token,
+          user_id: loginData.user,
+        })
+      );
+      refetch();
     }
-  }, [loginData, isLoginUninitialized, isLoginError])
+  }, [loginData, isLoginUninitialized, isLoginError]);
 
   return (
     <>
       <div className="w-screen h-screen flex items-center justify-center">
-        {
-          (isVerifyFetching || code || ticket) ?
-            <div className="spinner-border" role="status"></div>
-            :
-            <motion.div
-              initial={{ opacity: 0, scale: 0.90 }}
-              animate={{ opacity: 1, scale: 1, transition: { type: "spring", bounce: 0.6, duration: 0.5, opacity: { bounce: 0 } } }}
-              className="flex flex-col gap-8 border px-20 py-12 rounded-2xl max-w-[90vw] shadow bg-white dark:bg-neutral-800">
-              <Logo className="h-20" />
-              <button
-                onClick={handleLogin}
-                className="btn btn-light border text-xl px-8 py-2 font-semibold text-center truncate">
-                Login with {AUTH_PROVIDER.toUpperCase()}
-              </button>
-            </motion.div>
-        }
+        {isVerifyFetching || isLoginLoading ? (
+          <div className="spinner-border" role="status"></div>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+              transition: {
+                type: "spring",
+                bounce: 0.6,
+                duration: 0.5,
+                opacity: { bounce: 0 },
+              },
+            }}
+            className="flex flex-col gap-8 border px-20 py-12 rounded-2xl max-w-[90vw] shadow bg-white dark:bg-neutral-800"
+          >
+            {isLoginError && (
+              <span className="alert alert-danger rounded-2xl">
+                <i className="fa-solid fa-triangle-exclamation me-2"></i>{" "}
+                {"Error logging in. You may be unauthorized."}
+              </span>
+            )}
+            <Logo className="h-20" />
+            <button
+              onClick={handleLogin}
+              className="btn btn-light border text-xl px-8 py-2 font-semibold text-center truncate"
+            >
+              Login with {AUTH_PROVIDER.toUpperCase()}
+            </button>
+          </motion.div>
+        )}
 
         <AnimatedBG />
       </div>
     </>
-  )
-}
+  );
+};
 
 export default Login;
