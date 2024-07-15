@@ -21,7 +21,7 @@ const About = () => {
         <p>
           If you find a bug or want to request some important feature, please open
           an issue at{" "}
-          <a href='https://earth.bsc.es/gitlab/es/autosubmitreact/issues'>
+          <a href='https://earth.bsc.es/gitlab/es/autosubmit-gui/issues'>
             Autosubmit GUI Issues page
           </a>
           .
