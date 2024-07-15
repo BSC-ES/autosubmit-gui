@@ -1,5 +1,10 @@
 ## Changelog
 
+### Pre-release v4.0.0-beta.5 - Release date: 2024-07-15
+
+* Fixed error messages in Login page
+* Minor improvements in experiment performance page
+
 ### Pre-release v4.0.0-beta.4 - Release date: 2024-05-02
 
 * Updated About page
