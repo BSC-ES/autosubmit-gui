@@ -1,5 +1,9 @@
 ## Changelog
 
+### Pre-release v4.0.0-beta.5 - Release date: 2024-07-17
+
+* Added a subsection to show not considered jobs (outliers) in the Experiment Performance View
+
 ### Release v4.0.0 - Release date: 2024-07-15
 
 * Supported Autosubmit API version: [4.0.0](https://pypi.org/project/autosubmit-api/4.0.0/)
