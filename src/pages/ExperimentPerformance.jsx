@@ -23,6 +23,7 @@ import {
   TableHeader,
   TableRow,
 } from "../common/Table";
+import * as Collapsible from "@radix-ui/react-collapsible";
 
 const PERFORMANCE_PLOTS = [
   {
@@ -643,11 +644,16 @@ const ExperimentPerformance = () => {
                         {data?.considered?.length || "0"}
                       </span>
                     </span>
+                    {Array.isArray(data?.not_considered) && (
+                      <span>
+                        <strong># not considered</strong>:{" "}
+                        <span className="rounded px-1 bg-light">
+                          {data?.not_considered?.length || "0"}
+                        </span>
+                      </span>
+                    )}
                   </div>
-                  <div
-                    className="overflow-auto custom-scrollbar"
-                    style={{ maxHeight: "50vh" }}
-                  >
+                  <div className="overflow-auto custom-scrollbar max-h-[40vh]">
                     <PerformanceConsideredJobs considered={data.considered} />
                   </div>
                   <div className="text-end mt-2">
@@ -663,6 +669,21 @@ const ExperimentPerformance = () => {
                       Export to CSV
                     </button>
                   </div>
+                  {data?.not_considered?.length > 0 && (
+                    <Collapsible.Root className="py-4">
+                      <Collapsible.Trigger className="bg-primary-600 text-white w-full font-semibold py-2 hover:opacity-95">
+                        Display not considered jobs{" "}
+                        <i className="ms-1 fa-solid fa-eye"></i>
+                      </Collapsible.Trigger>
+                      <Collapsible.Content>
+                        <div className="overflow-auto custom-scrollbar max-h-[40vh]">
+                          <PerformanceConsideredJobs
+                            considered={data.not_considered}
+                          />
+                        </div>
+                      </Collapsible.Content>
+                    </Collapsible.Root>
+                  )}
                 </div>
               </div>
             </div>

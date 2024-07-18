@@ -41,10 +41,14 @@ export function ChangeStatusModal({ expid, selectedJobs, show, onHide }) {
             >
               {Object.keys(STATUS_STYLES)
                 .sort()
-                .map((item) => {
+                .map((key) => {
                   return (
-                    <option value={item} key={item}>
-                      {item}
+                    <option
+                      value={key}
+                      key={key}
+                      className={STATUS_STYLES[key].badge}
+                    >
+                      {key}
                     </option>
                   );
                 })}
