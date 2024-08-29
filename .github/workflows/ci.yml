@@ -1,0 +1,70 @@
+name: CI
+
+on:
+  pull_request:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        browser: [chrome, firefox]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Read .nvmrc
+        id: nvmrc
+        run: echo "NODE_VERSION=$(cat .nvmrc)" >> $GITHUB_ENV
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        env:
+          REACT_APP_AUTOSUBMIT_API_SOURCE: "http://localhost:8000" # This url is only used by the interceptor to mock the API
+          CYPRESS_BASE_URL: "http://localhost:3000"
+          CYPRESS_EXTERNAL_API: "http://localhost:8000"
+        with:
+          install-command: yarn install
+          start: npm start
+          wait-on: "http://localhost:3000"
+          browser: ${{ matrix.browser }}
+
+      - name: Upload coverage artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage_${{ matrix.browser }}
+          path: coverage/clover.xml
+          retention-days: 7
+
+  coverage:
+    needs: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download coverage artifacts
+        uses: actions/download-artifact@v4
+
+      - name: Codecov upload
+        uses: codecov/codecov-action@v4
+        with:
+          name: ${{ github.workflow }}
+          flags: fast-tests
+          fail_ci_if_error: true
+          verbose: true
+          # Token not required for public repos, but avoids upload failure due
+          # to rate-limiting (but not for PRs opened from forks)
+          token: ${{ secrets.CODECOV_TOKEN }}
