@@ -43,6 +43,30 @@ export const autosubmitApiV4 = createApi({
                 })
             }
         }),
+        getExperimentRuns: builder.query({
+            query: ({ expid }) => {
+                return {
+                    url: `experiments/${expid}/runs`,
+                    method: "GET"
+                }
+            }
+        }),
+        getExperimentConfigurationMixed: builder.query({
+            query: ({ expid, run_id }) => {
+                // Gets the configuration of the experiment from the file system or a specific run
+                if (run_id === "fs") {
+                    return {
+                        url: `experiments/${expid}/filesystem-config`,
+                        method: "GET"
+                    }
+                } else {
+                    return {
+                        url: `experiments/${expid}/runs/${run_id}/config`,
+                        method: "GET"
+                    }
+                }
+            }
+        }),
         login: builder.mutation({
             query: ({ provider, ticket, service, code }) => {
                 if (provider === "github") {

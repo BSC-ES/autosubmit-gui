@@ -1,84 +1,226 @@
 import { useParams } from "react-router-dom";
-import { useGetExperimentConfigurationQuery } from "../services/autosubmitApiV3";
+import { autosubmitApiV4 } from "../services/autosubmitApiV4";
 import useASTitle from "../hooks/useASTitle";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import useBreadcrumb from "../hooks/useBreadcrumb";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../common/Table";
 
-const alertDifferenceSpan = (
-  <span className="text-amber-500 mx-1" title="Difference detected">
-    <i class="fa-solid fa-circle-exclamation"></i>
-  </span>
-);
+const deepMapAccess = (obj, path) => {
+  return path.reduce((acc, key) => {
+    return acc && acc[key] !== undefined ? acc[key] : undefined;
+  }, obj);
+};
 
-const ConfigTableGen = ({ config, prefix, differences }) => {
-  const [configValues, setConfigValues] = useState({});
-  const [configChilds, setConfigChilds] = useState({});
+const getSectionsHeadersMergeConfigs = (config1, config2) => {
+  let sections = [];
 
-  useEffect(() => {
-    let _newValues = {};
-    let _newChilds = {};
-    if (config) {
-      Object.keys(config).forEach((key) => {
-        if (typeof config[key] === "object") {
-          _newChilds[key] = config[key];
-        } else {
-          _newValues[key] = config[key];
-        }
-      });
-      setConfigChilds(_newChilds);
-      setConfigValues(_newValues);
+  // Sepatate subsections with not object values
+  let primitiveSections = new Set();
+  let objectSections = new Set();
+  if (config1 && typeof config1 === "object") {
+    Object.keys(config1).forEach((key) => {
+      if (typeof config1[key] !== "object") {
+        primitiveSections.add(key);
+      } else {
+        objectSections.add(key);
+      }
+    });
+  }
+  if (config2 && typeof config2 === "object") {
+    Object.keys(config2).forEach((key) => {
+      if (typeof config2[key] !== "object") {
+        primitiveSections.add(key);
+      } else {
+        objectSections.add(key);
+      }
+    });
+  }
+  if (primitiveSections.size > 0) {
+    sections.push({
+      section: [],
+      keys: Array.from(primitiveSections),
+    });
+  }
+
+  // Separate subsections with object values
+  objectSections.forEach((key) => {
+    let subsection = getSectionsHeadersMergeConfigs(
+      config1 && typeof config1[key] === "object" ? config1[key] : {},
+      config2 && typeof config2[key] === "object" ? config2[key] : {}
+    );
+    subsection = subsection.map((sub) => {
+      return {
+        section: [key, ...sub.section],
+        keys: sub.keys,
+      };
+    });
+    sections = sections.concat(subsection);
+  });
+
+  return sections;
+};
+
+const ExperimentConfigurationCompare = ({ configLeft, configRight }) => {
+  const sections = useMemo(() => {
+    return getSectionsHeadersMergeConfigs(configLeft, configRight);
+  }, [configLeft, configRight]);
+
+  return (
+    <div className="flex flex-col">
+      {sections.map((section) => (
+        <div key={section.section.join(".")} className="mb-8">
+          {section.section.length > 0 && (
+            <>
+              <div className="text-2xl font-bold mx-4 my-2 text-wrap break-words">
+                {section.section.join(".")}
+              </div>
+              <hr />
+            </>
+          )}
+          <div className="flex flex-col gap-3 my-3">
+            {section.keys.map((key) => {
+              let leftSubValue = deepMapAccess(
+                configLeft,
+                section.section.concat(key)
+              );
+              let rightSubValue = deepMapAccess(
+                configRight,
+                section.section.concat(key)
+              );
+              // eslint-disable-next-line eqeqeq
+              let isDifferent = leftSubValue != rightSubValue;
+              return (
+                <div key={key} className="flex">
+                  <div className="w-1/3 font-semibold pl-8 break-all">
+                    {key}{" "}
+                    {isDifferent && (
+                      <i class="fa-solid fa-circle-exclamation text-amber-500"></i>
+                    )}
+                  </div>
+                  <div className="w-1/3 text-wrap break-all pl-8">
+                    {["string", "number"].includes(typeof leftSubValue)
+                      ? leftSubValue
+                      : JSON.stringify(leftSubValue)}
+                  </div>
+                  <div className="w-1/3 text-wrap break-all pl-8">
+                    {["string", "number"].includes(typeof rightSubValue)
+                      ? rightSubValue
+                      : JSON.stringify(rightSubValue)}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const ExperimentConfigurationSelect = ({
+  selectedRun,
+  setSelectedRun,
+  config,
+  runs,
+  isError,
+}) => {
+  return (
+    <>
+      <select
+        className="border rounded-xl px-2 py-3 bg-white text-black min-w-[75%] max-w-full"
+        value={selectedRun}
+        onChange={(e) => setSelectedRun(e.target.value)}
+      >
+        <option disabled value="">
+          Select a configuration...
+        </option>
+        <option value="fs">Current Filesystem</option>
+        {runs.map((run) => {
+          return (
+            <option key={run.run_id} value={run.run_id}>
+              Run {run.run_id}
+            </option>
+          );
+        })}
+      </select>
+      {isError && (
+        <span className="text-red-600 text-sm px-4 py-2">
+          <i className="fa-solid fa-triangle-exclamation me-2"></i>Error while
+          fetching configuration: {config?.error_message || "Unknown error"}
+        </span>
+      )}
+    </>
+  );
+};
+
+const ExperimentConfigurationControl = ({ expid, runs }) => {
+  const [selectedRunLeft, setSelectedRunLeft] = useState("fs");
+  // use State last value of runs list or empty
+  const [selectedRunRight, setSelectedRunRight] = useState(
+    runs.length > 0 ? runs[0].run_id : ""
+  );
+
+  const {
+    data: configLeft,
+    isFetching: isFetchingLeft,
+    isError: isErrorLeft,
+  } = autosubmitApiV4.endpoints.getExperimentConfigurationMixed.useQuery(
+    {
+      expid: expid,
+      run_id: selectedRunLeft,
+    },
+    {
+      skip: !selectedRunLeft,
     }
-  }, [config]);
+  );
+
+  const {
+    data: configRight,
+    isFetching: isFetchingRight,
+    isError: isErrorRight,
+  } = autosubmitApiV4.endpoints.getExperimentConfigurationMixed.useQuery(
+    {
+      expid: expid,
+      run_id: selectedRunRight,
+    },
+    {
+      skip: !selectedRunRight,
+    }
+  );
 
   return (
     <>
-      {configValues && Object.keys(configValues).length > 0 && (
-        <div className="configuration-section w-full max-w-full min-w-0 border-0">
-          {prefix && (
-            <div className="configuration-section-title break-words">
-              [{prefix}]{differences.has(prefix) && <> {alertDifferenceSpan}</>}
-            </div>
-          )}
-          <Table className="table break-words table-fixed">
-            <TableHead className="bg-dark text-white font-bold">
-              <TableRow>
-                <TableHeader className="py-1">Setting</TableHeader>
-                <TableHeader className="py-1">Value</TableHeader>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {Object.keys(configValues).map((key) => {
-                return (
-                  <TableRow key={key}>
-                    <TableCell className="py-1">{key}</TableCell>
-                    <TableCell className="py-1">
-                      {["string", "number"].includes(typeof config[key])
-                        ? config[key]
-                        : JSON.stringify(config[key])}
-                      {differences.has((prefix ? prefix + "." : "") + key) && (
-                        <> {alertDifferenceSpan}</>
-                      )}
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
+      <div className="flex my-4 sticky top-4">
+        <div className="w-1/3"></div>
+        <div className="w-1/3 pl-8 flex flex-col gap-2">
+          <ExperimentConfigurationSelect
+            selectedRun={selectedRunLeft}
+            setSelectedRun={setSelectedRunLeft}
+            config={configLeft}
+            runs={runs}
+            isError={isErrorLeft}
+          />
         </div>
+        <div className="w-1/3 pl-8 flex flex-col gap-2">
+          <ExperimentConfigurationSelect
+            selectedRun={selectedRunRight}
+            setSelectedRun={setSelectedRunRight}
+            config={configRight}
+            runs={runs}
+            isError={isErrorRight}
+          />
+        </div>
+      </div>
+
+      {isFetchingLeft || isFetchingRight ? (
+        <div className="w-full h-full flex items-center justify-center">
+          <div className="spinner-border" role="status"></div>
+        </div>
+      ) : (
+        <ExperimentConfigurationCompare
+          configLeft={configLeft?.config || {}}
+          configRight={configRight?.config || {}}
+        />
       )}
-      {config &&
-        Object.keys(configChilds).map((key) => {
-          let title = (prefix ? prefix + "." : "") + key;
-          return (
-            <ConfigTableGen
-              key={title}
-              config={config[key]}
-              prefix={title}
-              differences={differences}
-            />
-          );
-        })}
     </>
   );
 };
@@ -96,76 +238,31 @@ const ExperimentConfiguration = () => {
       route: `/experiment/${routeParams.expid}/config`,
     },
   ]);
-  const { data, isFetching, isError } = useGetExperimentConfigurationQuery(
-    routeParams.expid
-  );
-
-  // const flatData = (configData, title) => {
-  //   const tables = [];
-
-  //   Object.keys(configData).map({
-
-  //   })
-  // }
-
-  // const flatRunConfig = useMemo(()=>{
-  //   data.configuration_current_run
-  // }, [data])
-
-  // const flatFilesConfig = useMemo(()=>{
-  //   const configData = data.configuration_filesystem;
-    
-
-
-
-    
-  // }, [data])
+  const { data, isFetching, isError } =
+    autosubmitApiV4.endpoints.getExperimentRuns.useQuery({
+      expid: routeParams.expid,
+    });
 
   return (
     <div className="w-full flex flex-col min-w-0">
-      {/* <div className="d-flex flex-row-reverse mb-3 gap-3 align-items-center">
-        <button className="btn btn-success fw-bold text-white px-5" onClick={() => { refetch() }}>REFRESH</button>
-      </div> */}
-      {(isError || data?.error) && (
+      {isError && (
         <span className="alert alert-danger rounded-2xl">
-          <i className="fa-solid fa-triangle-exclamation me-2"></i>{" "}
-          {data?.error_message || "Unknown error"}
+          <i className="fa-solid fa-triangle-exclamation me-2"></i>Error while
+          fetching run data: {data?.error_message || "Unknown error"}
         </span>
       )}
-      {isFetching ? (
+      {isFetching && (
         <div className="w-full h-full flex items-center justify-center">
           <div className="spinner-border" role="status"></div>
         </div>
-      ) : (
-        <>
-          {data?.differences && data?.differences?.length > 0 && (
-            <div className="alert alert-warning">
-              <i className="fa-solid fa-triangle-exclamation me-2"></i> The
-              current run configuration in the historical database is different
-              than the current configuration in the file system
-            </div>
-          )}
-          <div className="grid grid-cols-1 md:grid-cols-2">
-            <div>
-              <div className="text-center header-information-space-sm configuration-source-info">
-                <span>Current Run Configuration (Historical Database)</span>
-              </div>
-              <ConfigTableGen
-                config={data.configuration_current_run}
-                differences={new Set(data.differences)}
-              />
-            </div>
-            <div>
-              <div className="text-center header-information-space-sm configuration-source-info">
-                <span>Current FileSystem Configuration</span>
-              </div>
-              <ConfigTableGen
-                config={data.configuration_filesystem}
-                differences={new Set(data.differences)}
-              />
-            </div>
-          </div>
-        </>
+      )}
+      {!isFetching && (
+        <ExperimentConfigurationControl
+          expid={routeParams.expid}
+          runs={
+            data?.runs ? [...data.runs].sort((a, b) => b.run_id - a.run_id) : []
+          }
+        />
       )}
     </div>
   );
