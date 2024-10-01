@@ -1,8 +1,11 @@
 ## Changelog
 
-### Pre-release v4.0.1-beta.1 - Release date: TBD
+### Pre-release v4.0.1-beta.1 - Release date: 2024-10-01
 
+* **Compatibility with Autosubmit API version >= [4.0.1b3](https://pypi.org/project/autosubmit-api/4.0.1b3/)**
 * Added a subsection to show not considered jobs (outliers) in the Experiment Performance View
+* Added colors to the select status in the change status modal
+* Improved the experiment configuration page
 
 ### Release v4.0.0 - Release date: 2024-07-15
 
