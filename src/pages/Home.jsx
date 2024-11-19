@@ -72,6 +72,7 @@ const Home = () => {
     setValue("order", searchParams.get("order"));
     setValue("autosubmit_version", searchParams.get("autosubmit_version"));
     setValue("owner", searchParams.get("owner"));
+    setValue("hpc", searchParams.get("hpc"));
   }, [searchParams]);
 
   const { data, isFetching, isError, refetch } = useGetExperimentsQuery({
@@ -82,6 +83,7 @@ const Home = () => {
     exp_type: searchParams.get("exp_type") || undefined,
     autosubmit_version: searchParams.get("autosubmit_version") || undefined,
     owner: searchParams.get("owner") || undefined,
+    hpc: searchParams.get("hpc") || undefined,
     order_by: selectedOrder?.order_by || undefined,
     order_desc: selectedOrder?.order_desc || undefined,
   });
@@ -98,6 +100,7 @@ const Home = () => {
       page_size: data.page_size,
       autosubmit_version: data.autosubmit_version,
       owner: data.owner,
+      hpc: data.hpc,
     };
     [
       "query",
@@ -106,6 +109,7 @@ const Home = () => {
       "page_size",
       "autosubmit_version",
       "owner",
+      "hpc",
     ].forEach((key) => {
       if (!newParams[key]) {
         delete newParams[key];
@@ -118,6 +122,7 @@ const Home = () => {
     setValue("query", "");
     setValue("autosubmit_version", "");
     setValue("owner", "");
+    setValue("hpc", "");
     handleSubmit(onSubmit)();
   };
 
@@ -179,6 +184,12 @@ const Home = () => {
                     id="search-input"
                     className="grow form-input"
                     placeholder="Search by owner"
+                  />
+                  <input
+                    {...register("hpc")}
+                    id="search-input"
+                    className="grow form-input"
+                    placeholder="Search by HPC platform"
                   />
                 </>
               )}
