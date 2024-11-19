@@ -67,7 +67,7 @@
     "@cypress/instrument-cra": "^1.4.0",
     "babel-plugin-istanbul": "^6.1.1",
     "canvas": "^2.11.2",
-    "cypress": "^13.6.4",
+    "cypress": "^13.16.0",
     "dotenv": "^16.4.5",
     "eslint": "^8.55.0",
     "eslint-plugin-jsdoc": "^48.2.3",
