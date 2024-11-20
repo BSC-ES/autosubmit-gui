@@ -39,19 +39,17 @@ export function ChangeStatusModal({ expid, selectedJobs, show, onHide }) {
               value={targetStatus}
               onChange={(e) => setTargetStatus(e.target.value)}
             >
-              {Object.keys(STATUS_STYLES)
-                .sort()
-                .map((key) => {
-                  return (
-                    <option
-                      value={key}
-                      key={key}
-                      className={STATUS_STYLES[key].badge}
-                    >
-                      {key}
-                    </option>
-                  );
-                })}
+              {["WAITING", "COMPLETED", "SUSPENDED", "FAILED"].map((key) => {
+                return (
+                  <option
+                    value={key}
+                    key={key}
+                    className={STATUS_STYLES[key].badge}
+                  >
+                    {key}
+                  </option>
+                );
+              })}
             </select>
           </div>
           <div className="flex gap-2">
