@@ -4,12 +4,12 @@ export const CAS_SERVICE_ID = process.env.REACT_APP_CAS_SERVICE_ID; // Service I
 
 export const AUTOSUBMIT_API_SOURCE = process.env.REACT_APP_AUTOSUBMIT_API_SOURCE; // BSC API
 
-export const DEBUG = ["true", "T"].includes(process.env.REACT_APP_DEBUG); ; // Default: false. If true, some calls print their response to the console. However, it pollutes the console. Leave it at false.
-export const NOAPI = ["true", "T"].includes(process.env.REACT_APP_NOAPI); ; // Default: false. If true -> API requests are replaced by demo data.
+export const DEBUG = ["true", "T"].includes(process.env.REACT_APP_DEBUG);; // Default: false. If true, some calls print their response to the console. However, it pollutes the console. Leave it at false.
+export const NOAPI = ["true", "T"].includes(process.env.REACT_APP_NOAPI);; // Default: false. If true -> API requests are replaced by demo data.
 
 export const TRACK_ESARCHIVE = ["true", "T"].includes(process.env.REACT_APP_TRACK_ESARCHIVE); // Default false. For BSC internal use. Show esarchive status on Navbar.
-export const SHOW_PERFORMANCE_TAB = !["false", "F"].includes(process.env.REACT_APP_SHOW_PERFORMANCE_TAB); ; // Default: true. If false -> The performance tab an all its references are hidden.
-export const SHOW_CONFIGURATION_TAB = !["false", "F"].includes(process.env.REACT_APP_SHOW_CONFIGURATION_TAB); ; // Default: true. If false -> The configuration tab an all its references are hidden (for AS4 experiments).
+export const SHOW_PERFORMANCE_TAB = !["false", "F"].includes(process.env.REACT_APP_SHOW_PERFORMANCE_TAB);; // Default: true. If false -> The performance tab an all its references are hidden.
+export const SHOW_CONFIGURATION_TAB = !["false", "F"].includes(process.env.REACT_APP_SHOW_CONFIGURATION_TAB);; // Default: true. If false -> The configuration tab an all its references are hidden (for AS4 experiments).
 
 export const rootAppName = "autosubmitapp"; // Name of the app. It can be changed to publish the GUI in another environment, for example for testing in a new server.
 // Main external url of the app. It can be changed to publish the GUI in another environment, for example for testing in a new server.
@@ -148,52 +148,6 @@ export const simpleExperimentType = {
 export const simpleActiveStatus = {
   All: "all",
   Active: "active",
-};
-
-export const complexTypeExperimentToSimple = (complex) => {
-  switch (complex) {
-    case orderByType.radioExperiments:
-      return simpleExperimentType.Experiment;
-    case orderByType.radioTests:
-      return simpleExperimentType.Test;
-    case orderByType.radioAll:
-    default:
-      return simpleExperimentType.All;
-  }
-};
-
-export const complexActiveStatusToSimple = (complex) => {
-  switch (complex) {
-    case orderByType.showAllActiveInactive:
-    default:
-      return simpleActiveStatus.All;
-    case orderByType.showOnlyActive:
-      return simpleActiveStatus.Active;
-  }
-};
-
-export const simpleActiveStatusToComplex = (simple) => {
-  switch (simple) {
-    case simpleActiveStatus.All:
-      return orderByType.showAllActiveInactive;
-    case simpleActiveStatus.Active:
-      return orderByType.showOnlyActive;
-    default:
-      return null;
-  }
-};
-
-export const simpleTypeToComplex = (simple) => {
-  switch (simple) {
-    case simpleExperimentType.Experiment:
-      return orderByType.radioExperiments;
-    case simpleExperimentType.Test:
-      return orderByType.radioTests;
-    case simpleExperimentType.All:
-      return orderByType.radioAll;
-    default:
-      return null;
-  }
 };
 
 export const defaultPerformanceDisplaySettings = {
