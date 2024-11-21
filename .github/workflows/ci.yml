@@ -32,6 +32,8 @@ jobs:
         uses: cypress-io/github-action@v6
         env:
           REACT_APP_AUTOSUBMIT_API_SOURCE: "http://localhost:8000" # This url is only used by the interceptor to mock the API
+          REACT_APP_DARK_MODE_SWITCHER: true # Enable dark mode switcher
+          REACT_APP_TOP_ANNOUNCEMENT: "Testing" # Set the announcement text
           CYPRESS_BASE_URL: "http://localhost:3000"
           CYPRESS_EXTERNAL_API: "http://localhost:8000"
         with:

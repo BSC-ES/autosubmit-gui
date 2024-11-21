@@ -10,7 +10,7 @@ export const INTERVAL_BUTTON_REFRESH_RATE = process.env.REACT_APP_INTERVAL_BUTTO
 
 // Authentication
 export const AUTHENTICATION = ["true", "T"].includes(process.env.REACT_APP_AUTHENTICATION); // Default: false. If false -> The authentication requirement is disabled. Some API calls require a valid token though.
-export const AUTH_PROVIDER = process.env.REACT_APP_AUTH_PROVIDER;
+export const AUTH_PROVIDER = process.env.REACT_APP_AUTH_PROVIDER || "cas"; // Default: cas. Options: cas, github
 
 // CAS Auth
 export const CAS_THIRD_PARTY_LOGIN_URL = process.env.REACT_APP_CAS_THIRD_PARTY_LOGIN_URL;
