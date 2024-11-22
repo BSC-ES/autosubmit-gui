@@ -1,5 +1,5 @@
-import axios from "axios";
 import React from "react";
+
 export const timeStampToDate = (value) => {
   let formattedDate = "";
   let date = new Date(value * 1000);
@@ -22,19 +22,6 @@ export const timeStampToDate = (value) => {
   return formattedDate;
 };
 
-export const hashCode = (value) => {
-  let hash = 0,
-    i,
-    chr;
-  if (value.length === 0) return hash;
-  for (i = 0; i < value.length; i++) {
-    chr = value.charCodeAt(i);
-    hash = (hash << 5) - hash + chr;
-    hash |= 0; // Convert to 32bit integer
-  }
-  return hash;
-};
-
 export const commandGeneratorGraph = (expid, jobs, status) => {
   let command = "Invalid Command: You have to select at least one job.";
   //jobs.map((job) => arrayNames.push(job.name));
@@ -50,29 +37,6 @@ export const commandGeneratorGraph = (expid, jobs, status) => {
   }
   return command;
 };
-
-export const commandGeneratorUpdateDescrip = (expid, description) => {
-  let command = "Not a valid experiment.";
-  if (expid) {
-    command = "autosubmit updatedescrip " + expid + " '" + description + "'";
-  }
-  return command;
-};
-
-export const getExperimentAutosubmitVersion = (version) => {
-    if (typeof(version) != 'string') { return false; }
-
-    var arr = version.split('.');
-    // parse int or default to 0
-    var maj = parseInt(arr[0]) || 0;
-    var min = parseInt(arr[1]) || 0;
-    var rest = parseInt(arr[2]) || 0;
-    return {
-        major: maj,
-        minor: min,
-        build: rest
-    }
-}
 
 export const commandGenerator = (expid, jobs, status) => {
   let arrayNames = [];
@@ -144,149 +108,6 @@ export const end = () => {
   console.log(seconds + " seconds");
 };
 
-export const approximateLoadingTreeTime = (x) => {
-  if (x <= 1000) return 1;
-  if (x > 1000 && x <= 1600) return 5;
-  let y = Math.round(0.02 * x - 30);
-  return y;
-};
-
-export const approximateLoadingQuickView = (x) => {
-  if (x <= 2000) return 1;
-  let y = Math.round(0.005 * x - 37);
-  return y;
-};
-
-export const exportSummaryToCSV = (data, columnNames, title) => {
-  let date = new Date();
-  title =
-    date.getFullYear().toString() +
-    "-" +
-    date.getMonth() +
-    "-" +
-    date.getDate() +
-    "_" +
-    date.getHours() +
-    "-" +
-    date.getMinutes() +
-    "_" +
-    title;
-  let csvContent = "data:text/csv;charset=utf-8,";
-  csvContent += columnNames.join(",") + "\n";
-  if (data) {
-    let mapped = [];
-    if (columnNames.length === 4) {
-      data.map((item) =>
-        mapped.push([
-          item[columnNames[0]],
-          item[columnNames[1]],
-          item[columnNames[2]],
-          item[columnNames[3]],
-        ])
-      );
-    } else if (columnNames.length === 6) {
-      data.map((item) =>
-        mapped.push([
-          item[columnNames[0]],
-          item[columnNames[1]],
-          item[columnNames[2]],
-          item[columnNames[3]],
-          item[columnNames[4]],
-          item[columnNames[5]],
-        ])
-      );
-    }
-    csvContent += mapped.map((item) => item.join(",")).join("\n");
-  }
-  let encodedUri = encodeURI(csvContent);
-  let link = document.createElement("a");
-  link.setAttribute("href", encodedUri);
-  link.setAttribute("download", title);
-  document.body.appendChild(link); // Required for FF
-  link.click();
-};
-
-export const exportHistoryToCSV = (data, columnNames, title) => {
-  let date = new Date();
-  title =
-    date.getFullYear().toString() +
-    "-" +
-    date.getMonth() +
-    "-" +
-    date.getDate() +
-    "_" +
-    date.getHours() +
-    "-" +
-    date.getMinutes() +
-    "_" +
-    title;
-  let csvContent = "data:text/csv;charset=utf-8,";
-  csvContent += columnNames.join(",") + "\n";
-  if (data) {
-    let mapped = [];
-    data.map((item) =>
-      mapped.push([
-        item.counter,
-        item.job_id,
-        item.submit,
-        item.start,
-        item.finish,
-        item.queue_time,
-        item.run_time,
-        item.status,
-        item.energy,
-        item.wallclock,
-        item.ncpus,
-        item.nodes,
-      ])
-    );
-    csvContent += mapped.map((item) => item.join(",")).join("\n");
-  }
-  let encodedUri = encodeURI(csvContent);
-  let link = document.createElement("a");
-  link.setAttribute("href", encodedUri);
-  link.setAttribute("download", title);
-  document.body.appendChild(link); // Required for FF
-  link.click();
-};
-
-export const sleep = (ms) => {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-};
-
-export const getReadyJobs = (jobs) => {
-  if (jobs) {
-    const readyJobs = jobs.filter((x) => x.status === "READY");
-    const jobArray = [];
-    readyJobs.map((item) =>
-      jobArray.push({ name: item.id, status: item.status })
-    );
-    if (jobArray.length > 0) {
-      return jobArray;
-    } else {
-      return null;
-    }
-  }
-  return null;
-};
-
-export const getIFActiveJobs = (jobs) => {
-  if (jobs) {
-    const activeJobs = jobs.filter(
-      (x) =>
-        x.status === "QUEUING" ||
-        x.status === "SUBMITTED" ||
-        x.status === "RUNNING"
-    );
-    if (activeJobs.length > 0) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-  return false;
-};
-
 export const groupBy = (arrayObjects, key) => {
   return arrayObjects.reduce(function (result, currentObject) {
     const val = currentObject[key];
@@ -325,64 +146,6 @@ export const groupByAndAggregate = (arrayObjects, key) => {
   return result;
 };
 
-export const buildWarningInactiveMessageTree = (
-  experimentRunning,
-  timeDiff,
-  logPath,
-  jobs
-) => {
-  let message = null;
-  // NOT Active, and more than 10 minutes difference
-  if (!experimentRunning && timeDiff > 600 && jobs) {
-    const activeJobs = getIFActiveJobs(jobs);
-    // console.log("Active jobs " + String(activeJobs));
-    if (activeJobs) {
-      message =
-        "The log of your experiment has been inactive for an extended period of time while some jobs are still active. Verify that Autosubmit is still working. Review your log: " +
-        String(logPath);
-    }
-  }
-  return message;
-};
-
-export const errorEsarchiveStatus = {
-  data: {
-    avg_bandwidth: null,
-    avg_latency: null,
-    bandwidth_warning: null,
-    current_bandwidth: null,
-    current_latency: null,
-    datetime: "2021-04-19-13:50:04",
-    error: true,
-    error_message:
-      "The server couldn't reach esarchive in a reasonable time. Some simple operations might be completed, but complex requests are likely to fail.",
-    latency_warning: null,
-    reponse_time: 2,
-    response_warning: null,
-    status: "OFFLINE",
-  },
-};
-export const openIcon = <i className='far fa-square'></i>;
-export const openIconHistory = <i className='fas fa-history'></i>;
-export const logIconLeft = <i className='fas fa-align-left'></i>;
-export const logIconRight = <i className='fas fa-align-right'></i>;
-
-export const generateArrayOfNumbers = (numbers) => {
-  return [...Array(numbers).keys()].slice(1);
-};
-
-export const normalizeString = (input) => {
-  if (input) return String(input);
-  return "";
-};
-
-export const normalizeInt = (input) => {
-  if (input && input !== "NA") {
-    return input;
-  }
-  return 0;
-};
-
 export const creationDateToId = (strCreationDate, intRunId) => {
   // 2021-07-07-10:36:37
   if (
@@ -407,111 +170,6 @@ export const creationDateToId = (strCreationDate, intRunId) => {
     "" +
     timeDay[1];
   return code;
-};
-
-export const differenceBetweenConfigurations = (
-  historicalConf,
-  currentConf
-) => {
-  let differences = new Set();
-  if (historicalConf && currentConf) {
-    // First Level
-    Object.keys(currentConf).forEach((file) => {
-      const historicalFile = Object.keys(historicalConf)
-        ? Object.keys(historicalConf)
-        : [];
-      if (historicalFile.includes(file)) {
-        // Second Level
-        Object.keys(currentConf[file]).forEach((header) => {
-          const historicalFileHeader = Object.keys(historicalConf[file])
-            ? Object.keys(historicalConf[file])
-            : [];
-          if (historicalFileHeader.includes(header)) {
-            Object.keys(currentConf[file][header]).forEach((field) => {
-              const historicalFileHeaderField = Object.keys(
-                historicalConf[file][header]
-              )
-                ? Object.keys(historicalConf[file][header])
-                : [];
-              if (historicalFileHeaderField.includes(field)) {
-                if (
-                  currentConf[file][header][field] !==
-                  historicalConf[file][header][field]
-                ) {
-                  differences.add(`${file}.${header}.${field}`);
-                  differences.add(`${file}.${header}`);
-                  differences.add(file);
-                }
-              } else {
-                differences.add(`${file}.${header}.${field}`);
-                differences.add(`${file}.${header}`);
-                differences.add(file);
-              }
-            });
-          } else {
-            differences.add(`${file}.${header}`);
-            differences.add(file);
-          }
-          const fileFileHeader = Object.keys(currentConf[file])
-            ? Object.keys(currentConf[file])
-            : [];
-
-          historicalFileHeader.forEach((head) => {
-            if (!fileFileHeader.includes(head))
-              differences.add(`${file}.${head}`);
-          });
-        });
-      } else {
-        differences.add(file);
-      }
-    });
-  }
-  return differences;
-};
-
-export const generateConfigFileHtml = (
-  conf,
-  confName = "name",
-  differences = new Set(),
-  alertSpan = "Differencia"
-) => {
-  if (conf) {
-    let htmlResult = (
-      <div className='row'>
-        <div className='col'>
-          {Object.keys(conf).map((v) => (
-            <div key={v} className='configuration-section'>
-              <div className='configuration-section-title'>
-                <strong>[{v}]</strong>{" "}
-                {differences.has(`${confName}.${v}`) && alertSpan}
-              </div>
-              <table className='table table-sm table-fixed list-table'>
-                <thead className='thead-dark'>
-                  <tr>
-                    <th scope='col'>Setting</th>
-                    <th scope='col'>Value</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {Object.keys(conf[v]).map((w) => (
-                    <tr key={w}>
-                      <td>
-                        {w}{" "}
-                        {differences.has(`${confName}.${v}.${w}`) && alertSpan}
-                      </td>
-                      <td>{conf[v][w]}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-    return htmlResult;
-  }
-  return null;
 };
 
 export const arrayAverage = (arr) => {
@@ -636,16 +294,3 @@ export const calculateStatistics = (jobs) => {
     cpuConsumptionPercentage: formatNumberMoney(cpuConsumptionPercentage),
   };
 };
-
-
-export const setAuthInLocalStorage = (user, token) => {
-  localStorage.setItem("user", user);
-  localStorage.setItem("token", token);
-  axios.defaults.headers.common['Authorization'] = token;
-}
-
-export const unsetAuthInLocalStorage = () => {
-  localStorage.removeItem("user");
-  localStorage.removeItem("token");
-  axios.defaults.headers.common['Authorization'] = null;
-} 
