@@ -1,6 +1,7 @@
 # Autosubmit GUI
 
 [![status](https://joss.theoj.org/papers/a8ac17f6c02fdf76098ac97ed3e09b22/status.svg)](https://joss.theoj.org/papers/a8ac17f6c02fdf76098ac97ed3e09b22)
+[![codecov](https://codecov.io/gh/BSC-ES/autosubmit-gui/graph/badge.svg?token=0O5IW8PCGO)](https://codecov.io/gh/BSC-ES/autosubmit-gui)
 
 # Table of Contents
 
