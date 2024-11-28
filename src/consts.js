@@ -19,6 +19,11 @@ export const CAS_SERVICE_ID = process.env.REACT_APP_CAS_SERVICE_ID;
 // GitHub Auth
 export const GITHUB_CLIENT_ID = process.env.REACT_APP_GITHUB_CLIENT_ID;
 
+// OpenID Connect Auth
+export const OIDC_AUTHORIZATION_ENDPOINT = process.env.REACT_APP_OIDC_AUTHORIZATION_ENDPOINT;
+export const OIDC_CLIENT_ID = process.env.REACT_APP_OIDC_CLIENT_ID;
+
+// Other
 export const DARK_MODE_SWITCHER = ["true", "T"].includes(process.env.REACT_APP_DARK_MODE_SWITCHER);; // Experimental feature. Default: false.
 
 export const TOP_ANNOUNCEMENT = process.env.REACT_APP_TOP_ANNOUNCEMENT;
