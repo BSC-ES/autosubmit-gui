@@ -9,7 +9,7 @@ Before building the project, it is important to create a ``.env`` file on the pr
 General variables
 **************************
 
-* ``REACT_APP_AUTOSUBMIT_API_SOURCE``: Defines the API URI. For more information check `autosubmit_api <https://earth.bsc.es/gitlab/es/autosubmit_api>`_.
+* ``REACT_APP_AUTOSUBMIT_API_SOURCE``: Defines the API URI. For more information check `autosubmit_api <https://github.com/BSC-ES/autosubmit-api>`_.
 * ``PUBLIC_URL``: This allows to serve the GUI from another subpath. See more in `CRA advanced configuration <https://create-react-app.dev/docs/advanced-configuration>`_.
 * ``REACT_APP_DARK_MODE_SWITCHER`` *(experimental feature)*: Default ``false``. Set it to ``true`` if you want to enable the Dark mode feature.
 

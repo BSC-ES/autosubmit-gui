@@ -526,7 +526,7 @@ const ExperimentPerformance = () => {
           <p>
             Visit{" "}
             <a
-              href="https://earth.bsc.es/gitlab/es/autosubmit_api/-/wikis/Performance-Metrics"
+              href="https://autosubmit-api.readthedocs.io/en/latest/guides/performance/index.html"
               target="_blank"
               rel="noopener noreferrer"
             >

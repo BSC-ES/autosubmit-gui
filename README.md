@@ -1,6 +1,7 @@
 # Autosubmit GUI
 
 [![status](https://joss.theoj.org/papers/a8ac17f6c02fdf76098ac97ed3e09b22/status.svg)](https://joss.theoj.org/papers/a8ac17f6c02fdf76098ac97ed3e09b22)
+[![codecov](https://codecov.io/gh/BSC-ES/autosubmit-gui/graph/badge.svg?token=0O5IW8PCGO)](https://codecov.io/gh/BSC-ES/autosubmit-gui)
 
 # Table of Contents
 
@@ -12,9 +13,9 @@
 
 ## Overview:
 
-**Autosubmit GUI** is a front-end software developed using [ReactJS](https://react.dev/) as the main framework This front-end software consumes most of the information it needs from [Autosubmit API](https://earth.bsc.es/gitlab/es/autosubmit-api), an API that retrieves information from an internal file system and databases that result from the execution experiments under [Autosubmit](https://earth.bsc.es/gitlab/es/autosubmit) on a High Performance Computing environment.
+**Autosubmit GUI** is a front-end software developed using [ReactJS](https://react.dev/) as the main framework This front-end software consumes most of the information it needs from [Autosubmit API](https://github.com/BSC-ES/autosubmit-api), an API that retrieves information from an internal file system and databases that result from the execution experiments under [Autosubmit](https://earth.bsc.es/gitlab/es/autosubmit) on a High Performance Computing environment.
 
-These two systems, the **API** and the **GUI**, are independent. It is possible to replace **Autosubmit API** for another API that provides similar information. For that purpose, we provide with response examples (more details in the installation section) that can help the developer understand how the information is used in the components of the GUI. Furthermore, you can review the [Autosubmit API repository](https://earth.bsc.es/gitlab/es/autosubmit-api) to learn more about the API and find the current list of available requests.
+These two systems, the **API** and the **GUI**, are independent. It is possible to replace **Autosubmit API** for another API that provides similar information. For that purpose, we provide with response examples (more details in the installation section) that can help the developer understand how the information is used in the components of the GUI. Furthermore, you can review the [Autosubmit API repository](https://github.com/BSC-ES/autosubmit-api) to learn more about the API and find the current list of available requests.
 
 Full documentation: https://autosubmit-gui.readthedocs.io/en/latest/
 
@@ -25,7 +26,7 @@ Full documentation: https://autosubmit-gui.readthedocs.io/en/latest/
 
 First, clone the repository:
 
-`git clone https://earth.bsc.es/gitlab/es/autosubmit-gui/`
+`git clone https://github.com/BSC-ES/autosubmit-gui`
 
 Then, check if you are using the right recommended Node.js version of this project to be sure there is no conflict in its dependencies. This could be easily done by using the [Node Version Manager](https://github.com/nvm-sh/nvm) using: 
 
