@@ -16,6 +16,7 @@ import ExperimentRunLog from "../pages/ExperimentRunLog";
 import ExperimentConfiguration from "../pages/ExperimentConfiguration";
 import ExperimentQuick from "../pages/ExperimentQuick";
 import ExperimentStats from "../pages/ExperimentStats";
+import UserSettings from "../pages/UserSettings";
 import NotFound from "../pages/NotFound";
 import ExperimentPerformance from "../pages/ExperimentPerformance";
 import { DARK_MODE_SWITCHER, PUBLIC_URL } from "../consts";
@@ -52,6 +53,10 @@ const router = createBrowserRouter(
         {
           path: "/about",
           element: <About />,
+        },
+        {
+          path: "/settings",
+          element: <UserSettings />,
         },
         {
           path: "/experiment/:expid",
