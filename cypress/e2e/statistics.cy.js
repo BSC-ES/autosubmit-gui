@@ -1,6 +1,8 @@
 describe("stats view navigation", () => {
   const expid = "a6zi";
   before(() => {
+    cy.byPassAuth();
+    
     cy.intercept("GET", Cypress.env("EXTERNAL_API") + "/v3/stats/*/*/*", {
       fixture: "api/v3/stats/any0.json",
     }).as("dummy_response");

@@ -27,13 +27,7 @@ describe("login", () => {
   })
 
   it("successful login", () => {
-    cy.intercept(
-      "GET",
-      Cypress.env("EXTERNAL_API") + `/v4/auth/verify-token`,
-      {
-        statusCode: 200
-      }
-    ).as("dummy_response");
+    cy.byPassAuth();
 
     cy.visit(`/login`);
     cy.wait(500);

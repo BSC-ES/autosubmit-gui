@@ -1,6 +1,8 @@
 describe("navigation", () => {
   const expid = "a6zi";
   before(() => {
+    cy.byPassAuth();
+    
     cy.intercept(
       "GET",
       Cypress.env("EXTERNAL_API") + "/v3/graph/*/standard/none",

@@ -1,6 +1,8 @@
 describe("tree navigation", () => {
   const expid = "a6zi";
   before(() => {
+    cy.byPassAuth();
+
     cy.intercept("GET", Cypress.env("EXTERNAL_API") + "/v3/tree/*", {
       fixture: "api/v3/tree/tree_wrappers.json",
     }).as("dummy_response");

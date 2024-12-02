@@ -2,6 +2,8 @@ describe("configuration view", () => {
   const expid = "a000";
 
   before(() => {
+    cy.byPassAuth();
+    
     cy.intercept(
       "GET",
       Cypress.env("EXTERNAL_API") + `/v4/experiments/${expid}/runs`,
