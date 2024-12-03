@@ -60,7 +60,7 @@
     "@cypress/instrument-cra": "^1.4.0",
     "babel-plugin-istanbul": "^7.0.0",
     "cypress": "^13.16.0",
-    "dotenv": "^16.4.5",
+    "dotenv": "^16.4.7",
     "eslint": "^8.55.0",
     "jest-canvas-mock": "^2.5.2",
     "source-map-explorer": "^2.5.3",
