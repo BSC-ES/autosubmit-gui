@@ -2,6 +2,8 @@ describe("Home Page Search Flow", () => {
   const expid = "a0it";
 
   beforeEach(() => {
+    cy.byPassAuth();
+
     cy.intercept("GET", Cypress.env("EXTERNAL_API") + "/v4/experiments*", {
       fixture: "api/v4/experiments/oneresult.json",
     }).as("dummy_response");
@@ -42,6 +44,8 @@ describe("Navigation buttons", () => {
   const expid = "a0it";
 
   beforeEach(() => {
+    cy.byPassAuth();
+    
     cy.intercept("GET", Cypress.env("EXTERNAL_API") + "/v4/experiments*", {
       fixture: "api/v4/experiments/fullpage.json",
     }).as("dummy_response");

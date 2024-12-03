@@ -1,4 +1,8 @@
 describe('Initial', () => {
+  beforeEach(() => {
+    cy.byPassAuth();
+  });
+
   it('Webserver is working', () => {
     cy.visit('/')
   })
