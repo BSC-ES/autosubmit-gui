@@ -59,7 +59,7 @@
     "@cypress/code-coverage": "^3.13.8",
     "@cypress/instrument-cra": "^1.4.0",
     "babel-plugin-istanbul": "^7.0.0",
-    "cypress": "^13.16.0",
+    "cypress": "^13.16.1",
     "dotenv": "^16.4.7",
     "eslint": "^8.55.0",
     "jest-canvas-mock": "^2.5.2",
