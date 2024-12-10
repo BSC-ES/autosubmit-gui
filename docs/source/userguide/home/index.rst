@@ -34,3 +34,5 @@ Here you can search for any ongoing or past experiment by typing some text in th
 Also, you can filter results by experiment type (``Normal Experiment``, ``Test``, or ``Operational``) and by status (``ACTIVE`` or ``INACTIVE``).
 
 Results can be ordered by Experiment name (``expid``) or by Creation date. Also, the size of the page can be changed.
+
+At the right side of the search bar, you can click on the *"more filters"* button to filter by owner, Autosubmit version, or HPC. This search also allows to use wildcards (``*``) and negation (``!``) symbols. For example, if you want to search for all the experiments that are not owned by the users which name starts with the letter "a", you can type ``!a*`` in the owner filter.

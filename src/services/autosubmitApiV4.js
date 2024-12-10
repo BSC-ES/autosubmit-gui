@@ -24,6 +24,7 @@ export const autosubmitApiV4 = createApi({
                 exp_type,
                 autosubmit_version,
                 owner,
+                hpc,
                 order_by,
                 order_desc
             }) => {
@@ -37,6 +38,7 @@ export const autosubmitApiV4 = createApi({
                         exp_type,
                         autosubmit_version,
                         owner,
+                        hpc,
                         order_by,
                         order_desc
                     }
