@@ -1,5 +1,13 @@
 ## Changelog
 
+### Pre-release v4.0.1-beta.3 - Release date: 2024-12-10
+
+* **Compatibility with Autosubmit API version >= [4.0.1b5](https://pypi.org/project/autosubmit-api/4.0.1b5/)**
+* Change status modal now only allows change to `WAITING`, `COMPLETED`, `SUSPENDED`, and `FAILED`
+* Add HPC filter to the home page
+* Search by owner, autosubmit version, and HPC supports wildcards `*` and negation `!`
+* Several dependencies updated
+
 ### Pre-release v4.0.1-beta.2 - Release date: 2024-10-01
 
 * **Compatibility with Autosubmit API version >= [4.0.1b3](https://pypi.org/project/autosubmit-api/4.0.1b3/)**
