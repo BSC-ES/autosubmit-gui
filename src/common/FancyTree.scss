@@ -4,6 +4,7 @@
 
 .fancytree-ext-childcounter span.fancytree-childcounter {
   border: 0px !important;
+  font-size: 7px;
 }
 
 ul.fancytree-container {
@@ -48,4 +49,11 @@ span.fancytree-node.fancytree-active-clone {
   /* background-color: #f7f7f7;
     border-color: #dedede; */
   background-color: #e0f2fe;
+}
+
+.fancytree-title > span {
+  color: black;
+}
+
+.fancytree-childcounter {
 }
