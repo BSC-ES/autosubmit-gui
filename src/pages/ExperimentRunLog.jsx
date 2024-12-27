@@ -55,7 +55,7 @@ const ExperimentRunLog = () => {
               </div>
             </div>
 
-            <pre ref={logRef} className="bash m-0 overflow-x-scroll scroll">
+            <pre ref={logRef} className="bash m-0 overflow-x-scroll overflow-y-auto max-h-[75vh]">
               <ul>
                 {
                   logData.logcontent.map((item) => {

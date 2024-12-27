@@ -22,7 +22,7 @@ const ExperimentInfoHeader = ({ expid }) => {
       <div className="flex flex-col gap-4 mb-2">
         <div className="flex px-4 gap-6 items-center">
           <ActiveIndicator isActive={expInfoData?.running} />
-          <div className="text-xl font-semibold grow">
+          <div className="text-xl font-semibold grow line-clamp-3">
             {isExpInfoFetching ? (
               <DotLoader dotClassName={"bg-black dark:bg-white"} />
             ) : (
@@ -52,7 +52,7 @@ const ExperimentInfoHeader = ({ expid }) => {
         </div>
 
         {open && (
-          <div className="flex flex-col items-start ps-16 pe-6 gap-2">
+          <div className="flex flex-col items-start ps-16 pe-6 gap-2 overflow-auto">
             <div className="flex items-center gap-16">
               <div>
                 <span className="font-semibold">User: </span>

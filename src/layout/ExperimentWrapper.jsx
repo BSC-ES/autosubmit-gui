@@ -111,7 +111,7 @@ const ExperimentWrapper = ({ children }) => {
               </div>
             </div>
               
-            <div className="flex flex-col gap-4 grow">
+            <div className="flex flex-col gap-4 grow min-w-0">
               <ExperimentInfoHeader expid={routeParams.expid} />
               {children}
             </div>

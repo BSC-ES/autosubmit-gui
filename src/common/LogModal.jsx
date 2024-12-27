@@ -23,7 +23,7 @@ const LogModal = ({ logFile, show, onHide }) => {
           data.found === true &&
           data.logcontent &&
           data.logcontent.length > 0 && (
-            <pre className='bash bash-data mb-0 scroll'>
+            <pre className='bash bash-data mb-0 overflow-y-auto max-h-[75vh]'>
               <ul style={{ listStyleType: "none" }} className='p-1 mb-0 ul-2'>
                 {data.logcontent.map((item) => (
                   <li key={item.index}>
