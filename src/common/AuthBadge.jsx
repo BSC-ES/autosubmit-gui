@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { AUTHENTICATION } from "../consts";
 import { Menu, Transition } from "@headlessui/react";
 import { cn } from "../services/utils";
+import { DotLoader } from "./Loaders";
 
 const AuthBadge = () => {
   const authState = useSelector((state) => state.auth);
@@ -114,7 +115,7 @@ const AuthBadge = () => {
           className="btn btn-light rounded-full font-bold drop-shadow py-2 px-4 border"
           onClick={handleLogin}
         >
-          {isFetching ? "..." : "Login"}
+          {isFetching ? <DotLoader /> : "Login"}
         </button>
       )}
     </>
