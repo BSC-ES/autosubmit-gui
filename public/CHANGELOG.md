@@ -1,5 +1,10 @@
 ## Changelog
 
+### Pre-release v4.0.1-beta.4 - Release date: TBD
+
+* Updated upper bar in experiment pages to show basic information in all sub sections
+* Multiple minor visual improvements
+
 ### Pre-release v4.0.1-beta.3 - Release date: 2024-12-10
 
 * **Compatibility with Autosubmit API version >= [4.0.1b5](https://pypi.org/project/autosubmit-api/4.0.1b5/)**
