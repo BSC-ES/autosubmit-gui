@@ -34,7 +34,7 @@ const ExperimentRunLog = () => {
     <div className="w-full flex flex-col border rounded-2xl p-4 min-w-0 dark:bg-neutral-700">
       {
         isLoading ?
-          <div className="w-100 h-100 d-flex align-items-center justify-content-center">
+          <div className="w-full h-full flex items-center justify-center">
             <div className="spinner-border" role="status"></div>
           </div>
           :
@@ -55,7 +55,7 @@ const ExperimentRunLog = () => {
               </div>
             </div>
 
-            <pre ref={logRef} className="bash m-0 overflow-x-scroll scroll">
+            <pre ref={logRef} className="bash m-0 overflow-x-scroll overflow-y-auto max-h-[75vh]">
               <ul>
                 {
                   logData.logcontent.map((item) => {

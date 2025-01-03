@@ -2,6 +2,7 @@ import { Link, useLocation, useParams } from "react-router-dom";
 import { useState } from "react";
 import { useLocalStorage, useWindowSize } from "@uidotdev/usehooks";
 import { cn } from "../services/utils";
+import ExperimentInfoHeader from "../common/ExperimentInfoHeader";
 
 const EXPERIMENT_MENU_ITEMS = [
   {
@@ -76,6 +77,7 @@ const ExperimentMenuItems = ({ showLabels = true }) => {
 }
 
 const ExperimentWrapper = ({ children }) => {
+  const routeParams = useParams()
   const { width } = useWindowSize()
   const [
     showExperimentMenuLabelsDesktop,
@@ -108,7 +110,11 @@ const ExperimentWrapper = ({ children }) => {
                   (showLabels ? "fa-angles-left" : "fa-angles-right"))}></i>
               </div>
             </div>
-            {children}
+              
+            <div className="flex flex-col gap-4 grow min-w-0">
+              <ExperimentInfoHeader expid={routeParams.expid} />
+              {children}
+            </div>
           </div>
           :
           <div className="flex gap-4 flex-col">
@@ -129,7 +135,8 @@ const ExperimentWrapper = ({ children }) => {
                 </div>
               }
             </div>
-
+            
+            <ExperimentInfoHeader expid={routeParams.expid} />
             {children}
           </div>
 

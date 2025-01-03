@@ -182,7 +182,7 @@ const ExperimentTree = () => {
         expid={routeParams.expid}
         onRunSelect={handleRunSelect}
       />
-      <div className="w-full flex flex-col gap-4">
+      <div className="w-full flex flex-col gap-4 grow">
         {(isError || data?.error) && (
           <span className="alert alert-danger rounded-2xl">
             <i className="fa-solid fa-triangle-exclamation me-2"></i>{" "}

@@ -12,6 +12,7 @@ const ActiveIndicator = ({ isActive }) => {
       className={cn(
         "relative",
         "min-w-6 min-h-6 rounded-full border",
+        "w-6 h-6",
         "dark:border-dark",
         isActive ? "bg-success animate-pulse-soft" : "bg-white"
       )}
@@ -163,3 +164,4 @@ const ExperimentCard = forwardRef(({ experiment }, ref) => {
 });
 
 export default ExperimentCard;
+export { ActiveIndicator };
