@@ -16,7 +16,13 @@ The view is organized in groups by ``date``, and ``date-member``. Each group has
 
 Furthermore, if wrappers exist in the experiment, these will be enclosed in the  ``wrappers`` folder sorted by running time. independent groups will be added for each wrapper that will contain the list of jobs included in the corresponding wrapper. This implies that a job can be repeated: once inside its ``date-member`` group and once in its wrapper group.
 
-Inside each group you will find the list of jobs that belong to that group. The jobs are shown following this format: *job name* + # *job status* + ( + *queuing time* + ) + *running time*. Jobs that belong to a wrapper have also a badge with the code of the wrapper.
+Inside each group you will find the list of jobs that belong to that group. The jobs are shown following this format: *job name* + # *job status* + ( + *queuing time* + ) + *running time*. Additionally, each job can have multiple badges to describe them: 
+
+* Jobs that belong to a wrapper have also a badge with the code of the wrapper
+* Jobs without children dependencies will have a ``TARGET`` badge
+* Jobs without parents dependencies will have a ``SOURCE`` badge
+* Jobs that belongs to a date but not to a member will have a ``SYNC`` badge
+* If there are inconsistencies in the status of the job between their different sources (local/remote), a ``SUSPICIOUS`` badge will be displayed
 
 The ``date-member`` folders will be displayed collapsed if all jobs inside a given folder have status COMPLETED, SUSPENDED or WAITING. 
 
