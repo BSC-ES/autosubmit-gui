@@ -1,10 +1,32 @@
 import { useParams } from "react-router-dom"
 import { useGetExperimentQuickViewQuery } from "../services/autosubmitApiV3"
-import FancyTree from "../common/FancyTree"
 import { useEffect, useState } from "react"
 import { MAX_ITEMS_QUICK_VIEW } from '../consts'
 import useASTitle from "../hooks/useASTitle"
 import useBreadcrumb from "../hooks/useBreadcrumb"
+
+const QuickJobList = ({ jobs }) => {
+  return (
+    <ul
+      className="text-sm flex flex-col gap-[0.35rem] py-1 font-thin"
+      style={{
+        fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
+        color: "#333",
+      }}
+    >
+      {jobs.map((job) => {
+        return (
+          <li key={job.refKey} className="flex gap-3 px-6">
+            <span>
+              <i className="fa-regular fa-circle text-primary" />
+            </span>
+            <span dangerouslySetInnerHTML={{ __html: job.title }}></span>
+          </li>
+        );
+      })}
+    </ul>
+  );
+};
 
 /**
  * Filter the jobs received in the Quick View
@@ -139,7 +161,7 @@ const ExperimentQuick = () => {
             <div className="spinner-border dark:invert" role="status"></div>
           </div>
         )}
-        <FancyTree source={jobs}></FancyTree>
+        <QuickJobList jobs={jobs}></QuickJobList>
       </div>
     </div>
   )
