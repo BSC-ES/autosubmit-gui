@@ -1,8 +1,10 @@
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { autosubmitApiV4 } from "../services/autosubmitApiV4";
 import useASTitle from "../hooks/useASTitle";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useRef, useEffect } from "react";
 import useBreadcrumb from "../hooks/useBreadcrumb";
+import { set } from "react-hook-form";
+import { use } from "cytoscape";
 
 const deepMapAccess = (obj, path) => {
   return path.reduce((acc, key) => {
@@ -59,18 +61,68 @@ const getSectionsHeadersMergeConfigs = (config1, config2) => {
   return sections;
 };
 
-const ExperimentConfigurationCompare = ({ configLeft, configRight }) => {
+const _isTextMatchingFilter = (text, filter) => {
+  // Wildcard filter. Generate regex by lowercase the filter, replacing * with .*, and match
+  if (filter.includes("*")) {
+    let regex = filter
+      .toLowerCase()
+      .replace(/\*/g, ".*") // Replace * with .*
+      .replace(/[+?^${}()|[\]\\]/g, "\\$&"); // Escape special characters
+    console.log(regex);
+    return text.toLowerCase().match(regex);
+  }
+  return text.toLowerCase().includes(filter.toLowerCase());
+};
+
+const ExperimentConfigurationCompare = ({
+  configLeft,
+  configRight,
+  filter,
+}) => {
   const sections = useMemo(() => {
     return getSectionsHeadersMergeConfigs(configLeft, configRight);
   }, [configLeft, configRight]);
 
+  const filteredSections = useMemo(() => {
+    if (!filter) {
+      return sections;
+    }
+
+    // Filter sections that have the filter
+    let _filtered = sections
+      .map((section) => {
+        // If the section name includes the filter, return all the section
+        if (_isTextMatchingFilter(section.section.join("."), filter)) {
+          return section;
+        } else {
+          // Otherwise, filter the keys
+          let _keys = section.keys.filter((key) =>
+            _isTextMatchingFilter(key, filter)
+          );
+          return {
+            section: section.section,
+            keys: _keys,
+          };
+        }
+      })
+      .filter((section) => {
+        // Filter sections that have no keys
+        return section && section.keys.length > 0;
+      });
+
+    return _filtered;
+  }, [sections, filter]);
+
   return (
     <div className="flex flex-col">
-      {sections.map((section) => (
+      {filteredSections.map((section) => (
         <div key={section.section.join(".")} className="mb-8">
           {section.section.length > 0 && (
             <>
-              <div className="text-2xl font-bold mx-4 my-2 text-wrap break-words">
+              <div
+                className="text-2xl font-bold mx-4 my-2 text-wrap break-words"
+                id={section.section.join(".")}
+              >
                 {section.section.join(".")}
               </div>
               <hr />
@@ -153,11 +205,20 @@ const ExperimentConfigurationSelect = ({
 };
 
 const ExperimentConfigurationControl = ({ expid, runs }) => {
+  const filterRef = useRef();
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [selectedRunLeft, setSelectedRunLeft] = useState("fs");
   // use State last value of runs list or empty
   const [selectedRunRight, setSelectedRunRight] = useState(
     runs.length > 0 ? runs[0].run_id : ""
   );
+
+  useEffect(() => {
+    if (searchParams.get("filter")) {
+      filterRef.current.value = searchParams.get("filter");
+    }
+  }, []);
 
   const {
     data: configLeft,
@@ -187,8 +248,43 @@ const ExperimentConfigurationControl = ({ expid, runs }) => {
     }
   );
 
+  const handleFilterChange = (value) => {
+    if (value) {
+      setSearchParams({ filter: value });
+    } else {
+      setSearchParams(searchParams.delete("filter"));
+    }
+  };
+
+  const handleEnterFilter = (e) => {
+    if (e.key === "Enter") {
+      handleFilterChange(e.target.value);
+    }
+  };
+
+  const handleFilterButton = (e) => {
+    handleFilterChange(filterRef.current.value);
+  };
+
   return (
     <>
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center gap-2 text-sm">
+            <label className="font-semibold ps-8">Filter:</label>
+            <input
+              ref={filterRef}
+              type="text"
+              onKeyDown={handleEnterFilter}
+              className="form-input border rounded-xl px-2 py-1 bg-white text-black w-full"
+            />
+            <button className="btn btn-primary" onClick={handleFilterButton}>
+              Apply
+            </button>
+          </div>
+        </div>
+      </div>
+
       <div className="flex my-4 sticky top-4">
         <div className="w-1/3"></div>
         <div className="w-1/3 pl-8 flex flex-col gap-2">
@@ -219,6 +315,7 @@ const ExperimentConfigurationControl = ({ expid, runs }) => {
         <ExperimentConfigurationCompare
           configLeft={configLeft?.config || {}}
           configRight={configRight?.config || {}}
+          filter={searchParams.get("filter") || ""}
         />
       )}
     </>
