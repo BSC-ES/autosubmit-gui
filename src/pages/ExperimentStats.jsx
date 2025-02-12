@@ -1,8 +1,9 @@
 import { useParams, useSearchParams } from "react-router-dom";
 import useASTitle from "../hooks/useASTitle";
 import useBreadcrumb from "../hooks/useBreadcrumb";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useGetExperimentStatsQuery } from "../services/autosubmitApiV3";
+import { autosubmitApiV4 } from "../services/autosubmitApiV4";
 import { calculateStatistics } from "../components/context/utils";
 import BarChart from "../components/statistics/BarChart";
 import * as Tooltip from "@radix-ui/react-tooltip";
@@ -273,6 +274,21 @@ const ExperimentStats = () => {
       route: `/experiment/${routeParams.expid}/stats`,
     },
   ]);
+
+  const { data: jobData } =
+    autosubmitApiV4.endpoints.getExperimentJobs.useQuery({
+      expid: routeParams.expid,
+    });
+
+  const jobSections = useMemo(() => {
+    let _aux = new Set(["Any", searchParams.get("section") || "Any"]);
+    jobData?.jobs?.forEach((job) => {
+      _aux.add(job.section);
+    });
+    let jobSections = Array.from(_aux);
+    return jobSections;
+  }, [jobData]);
+
   const { data, isFetching, isError } = useGetExperimentStatsQuery(
     {
       expid: routeParams.expid,
@@ -285,7 +301,7 @@ const ExperimentStats = () => {
   );
 
   useEffect(() => {
-    sectionRef.current.value = searchParams.get("section");
+    sectionRef.current.value = searchParams.get("section") || "Any";
     hourRef.current.value = searchParams.get("hours");
   }, [searchParams]);
 
@@ -332,11 +348,17 @@ const ExperimentStats = () => {
               </Tooltip.Root>
             </Tooltip.Provider>
           </label>
-          <input
-            className="form-input grow"
+          <select
+            className="form-select grow border dark:bg-neutral-100 dark:text-black"
             ref={sectionRef}
-            placeholder="e.g: SIM (optional)"
-          />
+          >
+            <option disabled>Choose a section</option>
+            {jobSections?.map((section) => (
+              <option key={section} value={section}>
+                {section}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="grow flex gap-3 items-center">
           <label>

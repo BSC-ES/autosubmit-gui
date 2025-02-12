@@ -12,7 +12,7 @@ describe("stats view navigation", () => {
 
   it("navigate", () => {
     cy.contains("Get Statistics").click();
-    cy.get("input").should("have.value", "Any");
+    cy.get("select").should("have.value", "Any");
     cy.url().should("include", `section=Any`);
     cy.url().should("include", `hours=0`);
     cy.contains("Start of experiment").should("exist");
