@@ -19,7 +19,7 @@ const AuthBadge = () => {
   useEffect(() => {
     if (AUTHENTICATION && !token) {
       dispatch(authActions.logout());
-      navigate("/login");
+      handleLogin();
     }
   }, []);
 
@@ -29,7 +29,7 @@ const AuthBadge = () => {
         if (AUTHENTICATION) {
           dispatch(authActions.logout());
           localStorage.setItem("token", null);
-          navigate("/login");
+          handleLogin();
         }
       } else if (data) {
         dispatch(
@@ -43,6 +43,10 @@ const AuthBadge = () => {
   }, [data, isError, isFetching]);
 
   const handleLogin = () => {
+    localStorage.setItem(
+      "autosubmit/api/redirect-path",
+      window.location.pathname
+    );
     navigate("/login");
   };
 
