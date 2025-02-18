@@ -135,7 +135,17 @@ const Login = () => {
   } = autosubmitApiV4.endpoints.verifyToken.useQuery();
 
   useEffect(() => {
-    if (!isVerifyFetching && isVerifySuccess) navigate("/");
+    if (!isVerifyFetching && isVerifySuccess) {
+      const redirect_path = localStorage.getItem(
+        "autosubmit/api/redirect-path"
+      );
+      if (redirect_path) {
+        localStorage.removeItem("autosubmit/api/redirect-path");
+        navigate(redirect_path);
+      } else {
+        navigate("/");
+      }
+    }
   }, [isVerifyFetching, isVerifySuccess]);
 
   useEffect(() => {

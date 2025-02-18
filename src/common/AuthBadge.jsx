@@ -2,7 +2,7 @@ import { Fragment, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { authActions } from "../store/authSlice";
 import { autosubmitApiV4 } from "../services/autosubmitApiV4";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AUTHENTICATION } from "../consts";
 import { Menu, Transition } from "@headlessui/react";
 import { cn } from "../services/utils";
@@ -12,6 +12,7 @@ const AuthBadge = () => {
   const authState = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const token = localStorage.getItem("token");
   const { data, isError, isFetching, refetch } =
     autosubmitApiV4.endpoints.verifyToken.useQuery();
@@ -19,7 +20,7 @@ const AuthBadge = () => {
   useEffect(() => {
     if (AUTHENTICATION && !token) {
       dispatch(authActions.logout());
-      navigate("/login");
+      handleLogin();
     }
   }, []);
 
@@ -29,7 +30,7 @@ const AuthBadge = () => {
         if (AUTHENTICATION) {
           dispatch(authActions.logout());
           localStorage.setItem("token", null);
-          navigate("/login");
+          handleLogin();
         }
       } else if (data) {
         dispatch(
@@ -43,6 +44,7 @@ const AuthBadge = () => {
   }, [data, isError, isFetching]);
 
   const handleLogin = () => {
+    localStorage.setItem("autosubmit/api/redirect-path", location.pathname);
     navigate("/login");
   };
 
