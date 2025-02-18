@@ -3,8 +3,6 @@ import { autosubmitApiV4 } from "../services/autosubmitApiV4";
 import useASTitle from "../hooks/useASTitle";
 import { useMemo, useState, useRef, useEffect } from "react";
 import useBreadcrumb from "../hooks/useBreadcrumb";
-import { set } from "react-hook-form";
-import { use } from "cytoscape";
 
 const deepMapAccess = (obj, path) => {
   return path.reduce((acc, key) => {
@@ -208,10 +206,16 @@ const ExperimentConfigurationControl = ({ expid, runs }) => {
   const filterRef = useRef();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [selectedRunLeft, setSelectedRunLeft] = useState("fs");
+  const [selectedRunLeft, setSelectedRunLeft] = useState(
+    (runs?.map((run) => String(run.run_id)).includes(searchParams.get("left")) &&
+      searchParams.get("left")) ||
+      "fs"
+  );
   // use State last value of runs list or empty
   const [selectedRunRight, setSelectedRunRight] = useState(
-    runs.length > 0 ? runs[0].run_id : ""
+    (runs?.map((run) => String(run.run_id)).includes(searchParams.get("right")) &&
+      searchParams.get("right")) ||
+      (runs?.length > 0 ? runs[0].run_id : "")
   );
 
   useEffect(() => {
@@ -250,9 +254,15 @@ const ExperimentConfigurationControl = ({ expid, runs }) => {
 
   const handleFilterChange = (value) => {
     if (value) {
-      setSearchParams({ filter: value });
+      setSearchParams((prev) => {
+        prev.set("filter", value);
+        return prev;
+      });
     } else {
-      setSearchParams(searchParams.delete("filter"));
+      setSearchParams((prev) => {
+        prev.delete("filter");
+        return prev;
+      });
     }
   };
 
@@ -264,6 +274,28 @@ const ExperimentConfigurationControl = ({ expid, runs }) => {
 
   const handleFilterButton = (e) => {
     handleFilterChange(filterRef.current.value);
+  };
+
+  const handleSelectChange = (section, value) => {
+    if (section === "right") {
+      setSelectedRunRight(value);
+    } else if (section === "left") {
+      setSelectedRunLeft(value);
+    } else {
+      return; // Break if section is not left or right
+    }
+    setSearchParams((prev) => {
+      prev.set(section, value);
+      return prev;
+    });
+  };
+
+  const handleSelectChangeLeft = (value) => {
+    handleSelectChange("left", value);
+  };
+
+  const handleSelectChangeRight = (value) => {
+    handleSelectChange("right", value);
   };
 
   return (
@@ -290,7 +322,7 @@ const ExperimentConfigurationControl = ({ expid, runs }) => {
         <div className="w-1/3 pl-8 flex flex-col gap-2">
           <ExperimentConfigurationSelect
             selectedRun={selectedRunLeft}
-            setSelectedRun={setSelectedRunLeft}
+            setSelectedRun={handleSelectChangeLeft}
             config={configLeft}
             runs={runs}
             isError={isErrorLeft}
@@ -299,7 +331,7 @@ const ExperimentConfigurationControl = ({ expid, runs }) => {
         <div className="w-1/3 pl-8 flex flex-col gap-2">
           <ExperimentConfigurationSelect
             selectedRun={selectedRunRight}
-            setSelectedRun={setSelectedRunRight}
+            setSelectedRun={handleSelectChangeRight}
             config={configRight}
             runs={runs}
             isError={isErrorRight}
