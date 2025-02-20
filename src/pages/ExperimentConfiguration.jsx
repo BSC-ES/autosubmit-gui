@@ -207,13 +207,17 @@ const ExperimentConfigurationControl = ({ expid, runs }) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [selectedRunLeft, setSelectedRunLeft] = useState(
-    (runs?.map((run) => String(run.run_id)).includes(searchParams.get("left")) &&
+    (runs
+      ?.map((run) => String(run.run_id))
+      .includes(searchParams.get("left")) &&
       searchParams.get("left")) ||
       "fs"
   );
   // use State last value of runs list or empty
   const [selectedRunRight, setSelectedRunRight] = useState(
-    (runs?.map((run) => String(run.run_id)).includes(searchParams.get("right")) &&
+    (runs
+      ?.map((run) => String(run.run_id))
+      .includes(searchParams.get("right")) &&
       searchParams.get("right")) ||
       (runs?.length > 0 ? runs[0].run_id : "")
   );
@@ -306,11 +310,16 @@ const ExperimentConfigurationControl = ({ expid, runs }) => {
             <label className="font-semibold ps-8">Filter:</label>
             <input
               ref={filterRef}
+              id="config-filter"
               type="text"
               onKeyDown={handleEnterFilter}
               className="form-input border rounded-xl px-2 py-1 bg-white text-black w-full"
             />
-            <button className="btn btn-primary" onClick={handleFilterButton}>
+            <button
+              id="config-filter-apply"
+              className="btn btn-primary"
+              onClick={handleFilterButton}
+            >
               Apply
             </button>
           </div>
