@@ -206,18 +206,17 @@ const ExperimentConfigurationControl = ({ expid, runs }) => {
   const filterRef = useRef();
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const allowedRunIds = runs?.map((run) => String(run.run_id));
+  allowedRunIds.push("fs");
+
   const [selectedRunLeft, setSelectedRunLeft] = useState(
-    (runs
-      ?.map((run) => String(run.run_id))
-      .includes(searchParams.get("left")) &&
+    (allowedRunIds?.includes(searchParams.get("left")) &&
       searchParams.get("left")) ||
       "fs"
   );
   // use State last value of runs list or empty
   const [selectedRunRight, setSelectedRunRight] = useState(
-    (runs
-      ?.map((run) => String(run.run_id))
-      .includes(searchParams.get("right")) &&
+    (allowedRunIds?.includes(searchParams.get("right")) &&
       searchParams.get("right")) ||
       (runs?.length > 0 ? runs[0].run_id : "")
   );
