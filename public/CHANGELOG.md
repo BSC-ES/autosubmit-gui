@@ -1,8 +1,12 @@
 ## Changelog
 
-### Pre-release v4.0.1-beta.4 - Release date: TBD
+### Pre-release v4.0.1-beta.4 - Release date: 2025-02-24
 
-* Updated upper bar in experiment pages to show basic information in all sub sections
+* Updated upper bar in experiment pages to show basic information in all sub-sections
+* Then statistics page now shows a list of possible job sections to query
+* Login will redirect you to the last page visited before logout
+* Configuration page job sections can be filtered supporting wildcards `*`
+* Configuration page saves the search state on the URL params making it shareable
 * Multiple minor visual improvements
 
 ### Pre-release v4.0.1-beta.3 - Release date: 2024-12-10
