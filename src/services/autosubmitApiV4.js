@@ -78,8 +78,17 @@ export const autosubmitApiV4 = createApi({
             }
         }),
         login: builder.mutation({
-            query: ({ provider, ticket, service, code }) => {
-                if (provider === "github") {
+            query: ({ provider, ticket, service, code, redirect_uri }) => {
+                if (provider === "oidc") {
+                    return {
+                        url: `auth/oidc/login`,
+                        method: "GET",
+                        params: {
+                            code: code,
+                            redirect_uri: redirect_uri
+                        }
+                    }
+                } else if (provider === "github") {
                     return {
                         url: `auth/oauth2/github/login`,
                         method: "GET",

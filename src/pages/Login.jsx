@@ -6,6 +6,8 @@ import {
   CAS_THIRD_PARTY_LOGIN_URL,
   CAS_SERVICE_ID,
   GITHUB_CLIENT_ID,
+  OIDC_AUTHORIZATION_ENDPOINT,
+  OIDC_CLIENT_ID,
 } from "../consts";
 import { useDispatch } from "react-redux";
 import { ReactComponent as Logo } from "../common/Logo.svg";
@@ -155,12 +157,16 @@ const Login = () => {
         ticket: ticket,
         service: service,
         code: code,
+        redirect_uri: window.location.href,
       });
     }
   }, []);
 
   const handleLogin = () => {
-    if (AUTH_PROVIDER === "github") {
+    if (AUTH_PROVIDER === "oidc") {
+      const _target = `${OIDC_AUTHORIZATION_ENDPOINT}?scope=openid&response_type=code&client_id=${OIDC_CLIENT_ID}&redirect_uri=${window.location.href}`;
+      window.location.href = _target;
+    } else if (AUTH_PROVIDER === "github") {
       const _target = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&scope=read:user%20read:org`;
       window.location.href = _target;
     } else {
