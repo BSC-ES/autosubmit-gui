@@ -820,7 +820,7 @@ const ExperimentPerformance = () => {
                       <span>
                         <strong>Simulated time</strong>:{" "}
                         <span className="rounded px-1 bg-light">
-                          {data?.SY? formatSimTime(data.SY) : "-"}
+                          {data?.SY? formatSimTime(data.SY) : "-"} 
                         </span>
                       </span>
                     </div>
@@ -936,7 +936,7 @@ const ExperimentPerformance = () => {
                       <span>
                         <strong>PUE</strong>:{" "}
                         <span className="rounded px-1 bg-light">
-                          {data?.SIM_platform_info?.PUE.toFixed(2) || "-"}
+                          {data?.SIM_platform_info?.PUE || "-"}
                         </span>
                       </span>
                     </div>
