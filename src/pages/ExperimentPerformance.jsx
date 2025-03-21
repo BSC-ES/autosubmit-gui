@@ -389,12 +389,12 @@ const PerformanceSustainability = ({ data }) => {
 
   const metrics = [
     {
-      label: "Total energy consumed",
+      label: "Total energy consumed (J)",
       stats: energyStats,
       total: data?.Total_energy || "-",
     },
     {
-      label: "Total footprint generated",
+      label: "Total footprint generated (gCO2)",
       stats: footprintStats,
       total: data?.Total_footprint || "-",
     },
@@ -614,7 +614,7 @@ const ExperimentPerformance = () => {
                   as <strong>Job Name</strong>,{" "} <strong>QUEUE</strong> and {" "}
                   <strong>RUNNING</strong> time in{" "}<em>HH:mm:ss</em> format,{" "} 
                   <strong>CHSY</strong>, <strong>JPSY</strong>, and raw {" "}
-                  <strong>Energy</strong> consumption for that job.{" "} <em>
+                  <strong>Energy (J)</strong> consumption for that job.{" "} <em>
                     Note: Energy values are only collected for jobs running on 
                     MareNostrum4 and using the latest version oTotal number of cores allocated for the run, per <strong>SIM</strong>.f Autosubmit. 
                     Subsequent development will expand this feature for other 
@@ -713,7 +713,7 @@ const ExperimentPerformance = () => {
             <h4 className="text-xl font-semibold mt-4 mb-2">Sustainability</h4>
             <ul className="list-disc list-inside space-y-2">
               <li>
-                <strong>Total energy consumed</strong>:
+                <strong>Total energy consumed (J)</strong>:
                 <span>
                 {" "} Represents the cumulative amount of energy consumed by the
                 platform where the simulation jobs were executed. 
@@ -721,12 +721,12 @@ const ExperimentPerformance = () => {
               </li>
               <li>
                 <span>
-                <strong>Total footprint generated</strong>: 
+                <strong>Total footprint generated (gCo2)</strong>: 
                 Represents the cumulative amount of greenhouse gases,
                 especially carbon dioxide, emitted directly and indirectly by the
                 platform where the simulation jobs were executed. The footprint of a
                 job is calculated as the product of the energy consumed (J) by the job
-                ; the greenhouse gas conversion factor (CF) from megawatt-hours to kilograms 
+                ; the greenhouse gas conversion factor (CF) from megawatt-hours to grams 
                 of CO2 according to the supplier bill or the country energy mix; 
                 and power usage effectiveness (PUE) which accounts for other costs sustained 
                 from the data centre of the platform, such as cooling.
@@ -924,19 +924,19 @@ const ExperimentPerformance = () => {
                       <span>
                         <strong>Platform</strong>:{" "}
                         <span className="rounded px-1 bg-light">
-                          {data?.SIM_platform_info.name || "-"}
+                          {data?.SIM_platform_info?.name || "-"}
                         </span>
                       </span>
                       <span>
                         <strong>CF</strong>:{" "}
                         <span className="rounded px-1 bg-light">
-                          {data?.SIM_platform_info.CF.toFixed(2) || "-"}
+                          {data?.SIM_platform_info?.CF|| "-"}
                         </span>
                       </span>
                       <span>
                         <strong>PUE</strong>:{" "}
                         <span className="rounded px-1 bg-light">
-                          {data?.SIM_platform_info.PUE.toFixed(2) || "-"}
+                          {data?.SIM_platform_info?.PUE.toFixed(2) || "-"}
                         </span>
                       </span>
                     </div>
