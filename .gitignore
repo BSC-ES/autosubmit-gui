@@ -47,3 +47,5 @@ next-env.d.ts
 .nyc_output/
 
 docs/build/
+
+venv/
