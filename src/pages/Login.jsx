@@ -115,6 +115,7 @@ const AnimatedBG = () => {
 
 const Login = () => {
   useASTitle("Login");
+  const currentURL = window.location.href.split("?")[0];
   const searchParams = useSearchParams({})[0];
   const navigate = useNavigate();
   const ticket = searchParams.get("ticket");
@@ -157,14 +158,14 @@ const Login = () => {
         ticket: ticket,
         service: service,
         code: code,
-        redirect_uri: window.location.href,
+        redirect_uri: currentURL,
       });
     }
   }, []);
 
   const handleLogin = () => {
     if (AUTH_PROVIDER === "oidc") {
-      const _target = `${OIDC_AUTHORIZATION_ENDPOINT}?scope=openid&response_type=code&client_id=${OIDC_CLIENT_ID}&redirect_uri=${window.location.href}`;
+      const _target = `${OIDC_AUTHORIZATION_ENDPOINT}?scope=openid&response_type=code&client_id=${OIDC_CLIENT_ID}&redirect_uri=${currentURL}`;
       window.location.href = _target;
     } else if (AUTH_PROVIDER === "github") {
       const _target = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&scope=read:user%20read:org`;
