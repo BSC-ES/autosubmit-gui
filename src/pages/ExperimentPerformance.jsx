@@ -729,8 +729,12 @@ const ExperimentPerformance = () => {
                 ; the greenhouse gas conversion factor (CF) from megawatt-hours to grams 
                 of CO2 according to the supplier bill or the country energy mix; 
                 and power usage effectiveness (PUE) which accounts for other costs sustained 
-                from the data centre of the platform, such as cooling.
-                </span>
+                from the data centre of the platform, such as cooling.{" "}
+                </span> 
+                <em>
+                Note: To be able to calculate the footprint, it is necessary to have configured 
+                the 'CF' and 'PUE' values in the platform configuration.  
+                </em>
               </li>
               <p>
                 Visit sections 2, 2.1 and 3.8 {" "}
@@ -924,19 +928,19 @@ const ExperimentPerformance = () => {
                       <span>
                         <strong>Platform</strong>:{" "}
                         <span className="rounded px-1 bg-light">
-                          {data?.SIM_platform_info?.name || "-"}
+                          {data?.platform_info?.name || "-"}
                         </span>
                       </span>
                       <span>
                         <strong>CF</strong>:{" "}
                         <span className="rounded px-1 bg-light">
-                          {data?.SIM_platform_info?.CF|| "-"}
+                          {data?.platform_info?.CF|| "-"}
                         </span>
                       </span>
                       <span>
                         <strong>PUE</strong>:{" "}
                         <span className="rounded px-1 bg-light">
-                          {data?.SIM_platform_info?.PUE || "-"}
+                          {data?.platform_info?.PUE || "-"}
                         </span>
                       </span>
                     </div>
