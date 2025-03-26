@@ -10,6 +10,7 @@ import {
   arrayStandardDeviation,
   arrayMeanAbsoluteDeviationAroundMean,
   formatNumberMoney,
+  formatTime,
 } from "../components/context/utils";
 import TimeScatterPlot from "../components/plots/TimeScatterPlot";
 import { cn, exportToCSV } from "../services/utils";
@@ -389,12 +390,12 @@ const PerformanceSustainability = ({ data }) => {
 
   const metrics = [
     {
-      label: "Total energy consumed (J)",
+      label: "Energy consumed (J)",
       stats: energyStats,
       total: data?.Total_energy || "-",
     },
     {
-      label: "Total footprint generated (gCO2)",
+      label: "Footprint generated (gCO₂)",
       stats: footprintStats,
       total: data?.Total_footprint || "-",
     },
@@ -530,43 +531,6 @@ const ExperimentPerformance = () => {
     );
   };
 
-  const CONVERSIONS_YEARS = [
-    { label: 'year', hours: 8760 },
-    { label: 'month', hours: 730 },
-    { label: 'week', hours: 168 },
-    { label: 'day', hours: 24 },
-    { label: 'hour', hours: 1 }
-  ];
-
-  const formatSimTime = (years) => {
-      if (typeof years !== "number" || isNaN(years)) return "-";
-      else if (years === 0) return "0 hours";
-
-      let totalHours = years * CONVERSIONS_YEARS[0].hours;
-      const results = [];
-
-      for (let i = 0; i < CONVERSIONS_YEARS.length; i++) {
-          const unit = CONVERSIONS_YEARS[i];
-          const count = Math.floor(totalHours / unit.hours);
-          if (count > 0) {
-              results.push({ unit: unit.label, count });
-          }
-          totalHours %= unit.hours;
-          if (totalHours === 0) {
-              break;
-          }
-      }
-
-      const parts = results.map(item => `${item.count} ${item.unit}${item.count !== 1 ? 's' : ''}`);
-      let message = "";
-      if (parts.length > 1) {
-          message += parts.slice(0, parts.length - 1).join(', ') + " and " + parts[parts.length - 1];
-      } else {
-          message += parts[0];
-      }
-      return message;
-  };
-
   return (
     <>
       <Modal show={showWarnings} onClose={toggleShowWarning}>
@@ -616,7 +580,7 @@ const ExperimentPerformance = () => {
                   <strong>CHSY</strong>, <strong>JPSY</strong>, and raw {" "}
                   <strong>Energy (J)</strong> consumption for that job.{" "} <em>
                     Note: Energy values are only collected for jobs running on 
-                    MareNostrum4 and using the latest version oTotal number of cores allocated for the run, per <strong>SIM</strong>.f Autosubmit. 
+                    MareNostrum4 and using the latest version of Autosubmit. 
                     Subsequent development will expand this feature for other 
                     platforms. Please note that all performance metrics displayed 
                     in the Performance Metrics section are calculated based on the 
@@ -657,9 +621,9 @@ const ExperimentPerformance = () => {
               <li>
                 <span>
                 <strong>SYPD</strong>: 
-                Simulated Years Per Day for the model in a 24h period. The <strong>value</strong>  
-                at the experiment level is the mean of the values calculated at the 
-                job level.
+                Simulated Years Per Day for the model in a 24h period.
+                The <strong>value</strong> at the experiment level is the mean of 
+                the values calculated at the job level.
                 </span>
               </li>
               <li>
@@ -713,27 +677,28 @@ const ExperimentPerformance = () => {
             <h4 className="text-xl font-semibold mt-4 mb-2">Sustainability</h4>
             <ul className="list-disc list-inside space-y-2">
               <li>
-                <strong>Total energy consumed (J)</strong>:
+                <strong>Energy consumed (J)</strong>:
                 <span>
-                {" "} Represents the cumulative amount of energy consumed by the
-                platform where the simulation jobs were executed. 
+                {" "}Represents the amount of energy consumed by the
+                platform where the simulation job was executed. 
                 </span>
               </li>
               <li>
                 <span>
-                <strong>Total footprint generated (gCo2)</strong>: 
-                Represents the cumulative amount of greenhouse gases,
-                especially carbon dioxide, emitted directly and indirectly by the
-                platform where the simulation jobs were executed. The footprint of a
-                job is calculated as the product of the energy consumed (J) by the job
-                ; the greenhouse gas conversion factor (CF) from megawatt-hours to grams 
-                of CO2 according to the supplier bill or the country energy mix; 
+                <strong>Footprint generated (gCO₂)</strong>: The footprint of a
+                job is calculated as the product of the energy consumed (MWh) by the job;
+                the greenhouse gas conversion factor (CF) —which converts megawatt-hours 
+                into grams of CO₂— according to the supplier bill or the country energy mix; 
                 and power usage effectiveness (PUE) which accounts for other costs sustained 
                 from the data centre of the platform, such as cooling.{" "}
                 </span> 
                 <em>
-                Note: To be able to calculate the footprint, it is necessary to have configured 
-                the 'CF' and 'PUE' values in the platform configuration.  
+                Note: To be able to calculate the footprint, the energy in Joules is first 
+                converted to Megawatt-hours by dividing by 3.6*10⁹. Moreover, ensure 
+                that the 'CF' and 'PUE' values are configured in the platform settings to obtain 
+                the footprint. Finally, the units of the CF showed at the article are in kgCO₂/MWh 
+                which differ from the gCO₂/MWh used; this is done to facilitate the comprehension 
+                of the footprint values.
                 </em>
               </li>
               <p>
@@ -824,7 +789,7 @@ const ExperimentPerformance = () => {
                       <span>
                         <strong>Simulated time</strong>:{" "}
                         <span className="rounded px-1 bg-light">
-                          {data?.SY? formatSimTime(data.SY) : "-"} 
+                          {data?.SY? formatTime(data.SY) : "-"} 
                         </span>
                       </span>
                     </div>

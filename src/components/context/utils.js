@@ -294,3 +294,40 @@ export const calculateStatistics = (jobs) => {
     cpuConsumptionPercentage: formatNumberMoney(cpuConsumptionPercentage),
   };
 };
+
+export const CONVERSIONS_YEARS = [
+  { label: 'year', hours: 8760 },
+  { label: 'month', hours: 730 },
+  { label: 'week', hours: 168 },
+  { label: 'day', hours: 24 },
+  { label: 'hour', hours: 1 }
+];
+
+export const formatTime = (years) => {
+    if (typeof years !== "number" || isNaN(years)) return "-";
+    else if (years === 0) return "0 hours";
+
+    let totalHours = years * CONVERSIONS_YEARS[0].hours;
+    const results = [];
+
+    for (let i = 0; i < CONVERSIONS_YEARS.length; i++) {
+        const unit = CONVERSIONS_YEARS[i];
+        const count = Math.floor(totalHours / unit.hours);
+        if (count > 0) {
+            results.push({ unit: unit.label, count });
+        }
+        totalHours %= unit.hours;
+        if (totalHours === 0) {
+            break;
+        }
+    }
+
+    const parts = results.map(item => `${item.count} ${item.unit}${item.count !== 1 ? 's' : ''}`);
+    let message = "";
+    if (parts.length > 1) {
+        message += parts.slice(0, parts.length - 1).join(', ') + " and " + parts[parts.length - 1];
+    } else {
+        message += parts[0];
+    }
+    return message;
+};
