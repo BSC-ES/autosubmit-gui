@@ -697,7 +697,7 @@ const ExperimentPerformance = () => {
                 converted to Megawatt-hours by dividing by 3.6*10⁹. Moreover, ensure 
                 that the 'CF' and 'PUE' values are configured in the platform settings to obtain 
                 the footprint. Finally, the units of the CF showed at the article are in kgCO₂/MWh 
-                which differ from the gCO₂/MWh used; this is done to facilitate the comprehension 
+                but we suggest to use gCO₂/MWh; this is done to facilitate the comprehension 
                 of the footprint values.
                 </em>
               </li>
