@@ -10,6 +10,7 @@ import {
   arrayStandardDeviation,
   arrayMeanAbsoluteDeviationAroundMean,
   formatNumberMoney,
+  formatTime,
 } from "../components/context/utils";
 import TimeScatterPlot from "../components/plots/TimeScatterPlot";
 import { cn, exportToCSV } from "../services/utils";
@@ -248,6 +249,7 @@ const PerformanceConsideredJobs = ({ considered }) => {
               "ASYPD",
               "JPSY",
               "Energy",
+              "Footprint",
             ].map((title) => (
               <TableHeader className="py-1" key={title}>
                 {title}
@@ -289,6 +291,9 @@ const PerformanceConsideredJobs = ({ considered }) => {
                   </TableCell>
                   <TableCell className="py-1">
                     {formatNumberMoney(item.energy, true)}
+                  </TableCell>
+                  <TableCell className="py-1">
+                    {formatNumberMoney(item.footprint, true)}
                   </TableCell>
                 </TableRow>
               ))}
@@ -361,6 +366,107 @@ const PerformanceSummary = ({ data }) => {
   );
 };
 
+const PerformanceSustainability = ({ data }) => {
+  
+  const computeStats = (values) => {
+    const nums = values.filter((v) => typeof v === "number" && !isNaN(v));
+    if (nums.length === 0)
+      return { avg: "-", min: "-", max: "-", sd: "-", mad: "-" };
+
+    return {
+      avg: arrayAverage(nums),
+      min: Math.min(...nums),
+      max: Math.max(...nums),
+      sd: arrayStandardDeviation(nums),
+      mad: arrayMeanAbsoluteDeviationAroundMean(nums),
+    };
+  };
+
+  const energyValues = data?.considered?.map((job) => job.energy) || [];
+  const footprintValues = data?.considered?.map((job) => job.footprint) || [];
+
+  const energyStats = computeStats(energyValues);
+  const footprintStats = computeStats(footprintValues);
+
+  const metrics = [
+    {
+      label: "Energy consumed (J)",
+      stats: energyStats,
+      total: data?.Total_energy || "-",
+    },
+    {
+      label: "Footprint generated (gCO₂)",
+      stats: footprintStats,
+      total: data?.Total_footprint || "-",
+    },
+  ];
+
+  return (
+    <Table>
+      <TableHead>
+        <TableRow className="bg-primary-200 font-bold">
+          <TableHeader className="py-1">Metric</TableHeader>
+          <TableHeader className="py-1">Mean</TableHeader>
+          <TableHeader className="py-1">Min</TableHeader>
+          <TableHeader className="py-1">Max</TableHeader>
+          <TableHeader className="py-1">SD</TableHeader>
+          <TableHeader className="py-1">MAD</TableHeader>
+          <TableHeader className="py-1">Total</TableHeader>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {metrics.map((metric, index) => (
+          <TableRow key={index}>
+            <TableCell className="py-1 font-bold">{metric.label}</TableCell>
+            <TableCell className="py-1">
+              <span className="rounded px-1 bg-light">
+                {metric.stats.avg === "-"
+                  ? "-"
+                  : formatNumberMoney(metric.stats.avg, true)}
+              </span>
+            </TableCell>
+            <TableCell className="py-1">
+              <span className="rounded px-1 bg-light">
+                {metric.stats.min === "-"
+                  ? "-"
+                  : formatNumberMoney(metric.stats.min, true)}
+              </span>
+            </TableCell>
+            <TableCell className="py-1">
+              <span className="rounded px-1 bg-light">
+                {metric.stats.max === "-"
+                  ? "-"
+                  : formatNumberMoney(metric.stats.max, true)}
+              </span>
+            </TableCell>
+            <TableCell className="py-1">
+              <span className="rounded px-1 bg-light">
+                {metric.stats.sd === "-"
+                  ? "-"
+                  : formatNumberMoney(metric.stats.sd, true)}
+              </span>
+            </TableCell>
+            <TableCell className="py-1">
+              <span className="rounded px-1 bg-light">
+                {metric.stats.mad === "-"
+                  ? "-"
+                  : formatNumberMoney(metric.stats.mad, true)}
+              </span>
+            </TableCell>
+            <TableCell className="py-1 font-bold">
+              <span className="rounded px-1 bg-light">
+                {typeof metric.total === "undefined" || metric.total === null
+                  ? "-"
+                  : formatNumberMoney(metric.total, true)}
+              </span>
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  );
+};
+
 const ExperimentPerformance = () => {
   const routeParams = useParams();
   const [showWarnings, setShowWarnings] = useState(false);
@@ -403,6 +509,7 @@ const ExperimentPerformance = () => {
           formatNumberMoney(item.ASYPD),
           formatNumberMoney(item.JPSY, true),
           formatNumberMoney(item.energy, true),
+          formatNumberMoney(item.footprint, true),
         ];
       });
     exportToCSV(
@@ -416,6 +523,7 @@ const ExperimentPerformance = () => {
         "ASYPD",
         "JPSY",
         "Energy",
+        "Footprint",
       ],
       exportableData,
       `${new Date().toISOString()}_ConsideredPerformance_${expid}.csv`,
@@ -451,89 +559,162 @@ const ExperimentPerformance = () => {
 
       <Modal show={showHelp} onClose={toggleShowHelp}>
         <Dialog.Title
-          className={
-            "bg-dark text-white py-4 px-4 text-2xl font-semibold rounded-t-lg flex gap-4 justify-between items-center"
-          }
+          className="bg-dark text-white py-4 px-4 text-2xl font-semibold rounded-t-lg flex justify-between items-center"
         >
           <span>
-            <i className="fa-solid fa-circle-light mx-2"></i> Metrics
-            description
+            <i className="fa-solid fa-circle-light mx-2"></i> Key information
           </span>
           <div className="cursor-pointer" onClick={toggleShowHelp}>
             <i className="fa-solid fa-xmark"></i>
           </div>
         </Dialog.Title>
-        <div className="bg-white text-black py-6 px-6 rounded-b-lg">
-          <p>
-            <strong>Parallelization</strong>: Total number of cores allocated
-            for the run, per SIM.
-          </p>
-          <p>
-            <strong>JPSY</strong>: Energy cost of a simulation, measured in
-            Joules per simulated year. The JPSY <strong>value</strong> at the
-            experiment level is the mean of the values calculated at the job
-            level. Energy values are only collected for jobs running on{" "}
-            <strong>Marenostrum4</strong>. In rare occassions the query that
-            retrieves the energy information fails and the value stays at 0.
-            Jobs with <strong>0</strong> energy value are not considered for the
-            calculation.
-          </p>
-          <p>
-            <strong>SYPD</strong>: Simulated Years Per Day for the model in a
-            24h period. The <strong>value</strong> at the experiment level is
-            the mean of the values calculated at the job level.
-          </p>
-          <p>
-            <strong>ASYPD</strong>: Actual Simulated Years Per Day, this number
-            should be lower than SYPD due to interruptions, queue wait time,{" "}
-            <strong>POST</strong> jobs, data transfer, or issues with the model
-            workflow. The ASYPD <strong>value</strong> calculated at the job
-            level uses a generalization of the formula applied at the experiment
-            level. As a consequence, the ASYPD value at the experiment level can
-            be different that the mean of the values calculated at the job
-            level.
-          </p>
-          <p>
-            <strong>CHSY</strong>: Core Hours Per Simulated Year. This metric is
-            the product of the model runtime for 1 Simulated Year and the number
-            of processors (Parallelization) allocated. The CHSY{" "}
-            <strong>value</strong> at the experiment level is the mean of the
-            values calculated at the job level.
-          </p>
-          <p>
-            <strong>RSYPD</strong>: "Real" Simulated Years Per Day. This
-            variation of SYPD has been defined only at the experiment level. It
-            depends on the existences of <strong>TRANSFER</strong> or{" "}
-            <strong>CLEAN</strong> jobs. Then, it uses the finish time of the
-            last TRANSFER or CLEAN job and the start time of the first SIM job
-            in the experiment to calculate an approximation of the total
-            duration of the simulation.
-          </p>
-          <p>
-            <strong>Considered</strong>: Scrollable list where each item in the
-            list represents job information showing <strong>Job Name</strong>,{" "}
-            <strong>QUEUE</strong> and <strong>RUNNING</strong> time in{" "}
-            <i>HH:mm:ss</i> format, <strong>CHSY</strong>, <strong>JPSY</strong>
-            , and raw <strong>Energy</strong> consumption for that job.{" "}
-            <i>
-              Note: Energy values are only collected for those jobs running on
-              MareNostrum4 and using the latest version of Autosubmit.
-              Subsequent development will expand this feature for other
-              platforms.
-            </i>
-          </p>
-
-          <p>
-            Visit{" "}
-            <a
-              href="https://autosubmit-api.readthedocs.io/en/latest/guides/performance/index.html"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Performance Metrics Documentation
-            </a>{" "}
-            for more details.
-          </p>
+        <div className="bg-white text-black py-6 px-6 rounded-b-lg space-y-6">
+          <div>
+            <div className="mb-4">
+              <h4 className="text-xl font-semibold mb-2">Considered Jobs</h4>
+                <p>
+                  Scrollable list where each item represents the last successful{" "} 
+                  <strong>SIM</strong> job for each <em>CHUNK</em>. Displays key information such 
+                  as <strong>Job Name</strong>,{" "} <strong>QUEUE</strong> and {" "}
+                  <strong>RUNNING</strong> time in{" "}<em>HH:mm:ss</em> format,{" "} 
+                  <strong>CHSY</strong>, <strong>JPSY</strong>, and raw {" "}
+                  <strong>Energy (J)</strong> consumption for that job.{" "} <em>
+                    Note: Energy values are only collected for jobs running on 
+                    MareNostrum4 and using the latest version of Autosubmit. 
+                    Subsequent development will expand this feature for other 
+                    platforms. Please note that all performance metrics displayed 
+                    in the Performance Metrics section are calculated based on the 
+                    data from these considered <strong>SIM</strong> jobs.
+                  </em>
+                </p>
+            </div>
+            <h4 className="text-xl font-semibold mb-2">General Metrics</h4>
+            <ul className="list-disc list-inside space-y-2">
+              <li>
+                <strong>Parallelization</strong>:
+                <span>
+                {" "}Total number of cores allocated for the run, per <strong>SIM</strong>.
+                </span>
+              </li>
+              <li>
+              <strong>Simulated time</strong>:
+                <span>
+                {" "}Represents the computed duration of the simulation run 
+                expressed in standard time units. 
+                Units used: 1 year = 8760 hours, 1 month = 730 hours, 1 week = 168 hours and
+                1 day = 24 hours.
+                </span>
+              </li>
+              <li>
+                <span>
+                <strong>JPSY</strong>: 
+                Energy cost of a simulation, measured in
+                Joules per simulated year. The JPSY <strong>value</strong> at the
+                experiment level is the mean of the values calculated at the job
+                level. Energy values are only collected for jobs running on{" "}
+                <strong>Marenostrum4</strong>. In rare occassions the query that
+                retrieves the energy information fails and the value stays at 0.
+                Jobs with <strong>0</strong> energy value are not considered for the
+                calculation.
+                </span>
+              </li>
+              <li>
+                <span>
+                <strong>SYPD</strong>: 
+                Simulated Years Per Day for the model in a 24h period.
+                The <strong>value</strong> at the experiment level is the mean of 
+                the values calculated at the job level.
+                </span>
+              </li>
+              <li>
+                <span>
+                <strong>ASYPD</strong>: 
+                Actual Simulated Years Per Day, this number
+                should be lower than SYPD due to interruptions, queue wait time,{" "}
+                <strong>POST</strong> jobs, data transfer, or issues with the model
+                workflow. The ASYPD <strong>value</strong> calculated at the job
+                level uses a generalization of the formula applied at the experiment
+                level. As a consequence, the ASYPD value at the experiment level can
+                be different that the mean of the values calculated at the job
+                level.
+                </span>
+              </li>
+              <li>
+                <span>
+                <strong>CHSY</strong>: 
+                Core Hours Per Simulated Year. This metric is
+                the product of the model runtime for 1 Simulated Year and the number
+                of processors (Parallelization) allocated. The CHSY{" "}
+                <strong>value</strong> at the experiment level is the mean of the
+                values calculated at the job level.
+                </span>
+              </li>
+              <li>
+                <span>
+                <strong>RSYPD</strong>: 
+                "Real" Simulated Years Per Day. This
+                variation of SYPD has been defined only at the experiment level. It
+                depends on the existences of <strong>TRANSFER</strong> or{" "}
+                <strong>CLEAN</strong> jobs. Then, it uses the finish time of the
+                last TRANSFER or CLEAN job and the start time of the first SIM job
+                in the experiment to calculate an approximation of the total
+                duration of the simulation.
+                </span>
+              </li>
+              <p>
+                Visit{" "}
+                <a
+                  href="https://autosubmit-api.readthedocs.io/en/latest/guides/performance/index.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500"
+                >
+                  Performance Metrics Documentation
+                </a>{" "}
+                for more details.
+              </p>
+            </ul>
+            <h4 className="text-xl font-semibold mt-4 mb-2">Sustainability</h4>
+            <ul className="list-disc list-inside space-y-2">
+              <li>
+                <strong>Energy consumed (J)</strong>:
+                <span>
+                {" "}Represents the amount of energy consumed by the
+                platform where the simulation job was executed. 
+                </span>
+              </li>
+              <li>
+                <span>
+                <strong>Footprint generated (gCO₂)</strong>: The footprint of a
+                job is calculated as the product of the energy consumed (MWh) by the job;
+                the greenhouse gas conversion factor (CF) —which converts megawatt-hours 
+                into grams of CO₂— according to the supplier bill or the country energy mix; 
+                and power usage effectiveness (PUE) which accounts for other costs sustained 
+                from the data centre of the platform, such as cooling.{" "}
+                </span> 
+                <em>
+                Note: To be able to calculate the footprint, the energy in Joules is first 
+                converted to Megawatt-hours by dividing by 3.6*10⁹. Moreover, ensure 
+                that the 'CF' and 'PUE' values are configured in the platform settings to obtain 
+                the footprint. Finally, the units of the CF showed at the article are in kgCO₂/MWh 
+                but we suggest to use gCO₂/MWh; this is done to facilitate the comprehension 
+                of the footprint values.
+                </em>
+              </li>
+              <p>
+                Visit sections 2, 2.1 and 3.8 {" "}
+                <a
+                  href="https://gmd.copernicus.org/articles/17/3081/2024/gmd-17-3081-2024.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 hover:underline"
+                >
+                  Footprint and Energy Cost Article
+                </a>{" "}
+                for more details.
+              </p>
+            </ul>
+          </div>
         </div>
       </Modal>
 
@@ -603,6 +784,12 @@ const ExperimentPerformance = () => {
                         <strong>RSYPD</strong>:{" "}
                         <span className="rounded px-1 bg-light">
                           {data?.RSYPD?.toFixed(2) || "-"}
+                        </span>
+                      </span>
+                      <span>
+                        <strong>Simulated time</strong>:{" "}
+                        <span className="rounded px-1 bg-light">
+                          {data?.SY? formatTime(data.SY) : "-"} 
                         </span>
                       </span>
                     </div>
@@ -687,7 +874,51 @@ const ExperimentPerformance = () => {
                 </div>
               </div>
             </div>
-
+                
+            <div className="rounded-2xl border grow min-w-0 dark:bg-neutral-50 dark:text-black">
+                <div className="bg-dark rounded-t-xl flex gap-3 justify-between items-center text-white px-6 py-2 mb-2">
+                  <label className="font-bold">SUSTAINABILITY</label>
+                  <div>
+                    <button
+                      className="btn btn-dark rounded-full"
+                      onClick={toggleShowHelp}
+                    >
+                      <i className="fa-solid fa-circle-question"></i>
+                    </button>
+                  </div>
+                </div>
+                <div className="p-4">
+                  <div className="overflow-auto">
+                  <div className="mb-4 flex gap-4">
+                      <span>
+                        <strong>Platform</strong>:{" "}
+                        <span className="rounded px-1 bg-light">
+                          {data?.platform_info?.name || "-"}
+                        </span>
+                      </span>
+                      <span>
+                        <strong>CF</strong>:{" "}
+                        <span className="rounded px-1 bg-light">
+                          {data?.platform_info?.CF|| "-"}
+                        </span>
+                      </span>
+                      <span>
+                        <strong>PUE</strong>:{" "}
+                        <span className="rounded px-1 bg-light">
+                          {data?.platform_info?.PUE || "-"}
+                        </span>
+                      </span>
+                    </div>
+                    <PerformanceSustainability data={data} />
+                    <div className="flex flex-col mt-4">
+                      <span>
+                        <strong>Footprint</strong>: Measures the total amount of greenhouse gases, especially carbon dioxide, emitted directly and indirectly by a platform.
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          
             <div className="rounded-2xl border grow dark:bg-neutral-50 dark:text-black">
               <div className="bg-dark rounded-t-xl flex gap-3 justify-between items-center text-white px-4 py-3 mb-4">
                 <label className="font-bold">COMPARATIVE PLOTS</label>
