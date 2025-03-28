@@ -25,6 +25,7 @@ import {
   TableRow,
 } from "../common/Table";
 import * as Collapsible from "@radix-ui/react-collapsible";
+import EnergyFootprintComparison from "../components/performance/EnergyFootprintComparison";
 
 const PERFORMANCE_PLOTS = [
   {
@@ -390,80 +391,94 @@ const PerformanceSustainability = ({ data }) => {
 
   const metrics = [
     {
-      label: "Energy consumed (J)",
+      label: "Consumed Energy (J)",
       stats: energyStats,
       total: data?.Total_energy || "-",
     },
     {
-      label: "Footprint generated (gCO₂)",
+      label: "Generated footprint (gCO₂)",
       stats: footprintStats,
       total: data?.Total_footprint || "-",
     },
   ];
 
   return (
-    <Table>
-      <TableHead>
-        <TableRow className="bg-primary-200 font-bold">
-          <TableHeader className="py-1">Metric</TableHeader>
-          <TableHeader className="py-1">Mean</TableHeader>
-          <TableHeader className="py-1">Min</TableHeader>
-          <TableHeader className="py-1">Max</TableHeader>
-          <TableHeader className="py-1">SD</TableHeader>
-          <TableHeader className="py-1">MAD</TableHeader>
-          <TableHeader className="py-1">Total</TableHeader>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {metrics.map((metric, index) => (
-          <TableRow key={index}>
-            <TableCell className="py-1 font-bold">{metric.label}</TableCell>
-            <TableCell className="py-1">
-              <span className="rounded px-1 bg-light">
-                {metric.stats.avg === "-"
-                  ? "-"
-                  : formatNumberMoney(metric.stats.avg, true)}
-              </span>
-            </TableCell>
-            <TableCell className="py-1">
-              <span className="rounded px-1 bg-light">
-                {metric.stats.min === "-"
-                  ? "-"
-                  : formatNumberMoney(metric.stats.min, true)}
-              </span>
-            </TableCell>
-            <TableCell className="py-1">
-              <span className="rounded px-1 bg-light">
-                {metric.stats.max === "-"
-                  ? "-"
-                  : formatNumberMoney(metric.stats.max, true)}
-              </span>
-            </TableCell>
-            <TableCell className="py-1">
-              <span className="rounded px-1 bg-light">
-                {metric.stats.sd === "-"
-                  ? "-"
-                  : formatNumberMoney(metric.stats.sd, true)}
-              </span>
-            </TableCell>
-            <TableCell className="py-1">
-              <span className="rounded px-1 bg-light">
-                {metric.stats.mad === "-"
-                  ? "-"
-                  : formatNumberMoney(metric.stats.mad, true)}
-              </span>
-            </TableCell>
-            <TableCell className="py-1 font-bold">
-              <span className="rounded px-1 bg-light">
-                {typeof metric.total === "undefined" || metric.total === null
-                  ? "-"
-                  : formatNumberMoney(metric.total, true)}
-              </span>
-            </TableCell>
+    <>
+      <Table>
+        <TableHead>
+          <TableRow className="bg-primary-200 font-bold">
+            <TableHeader className="py-1">Metric</TableHeader>
+            <TableHeader className="py-1">Mean</TableHeader>
+            <TableHeader className="py-1">Min</TableHeader>
+            <TableHeader className="py-1">Max</TableHeader>
+            <TableHeader className="py-1">SD</TableHeader>
+            <TableHeader className="py-1">MAD</TableHeader>
+            <TableHeader className="py-1">Total</TableHeader>
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        </TableHead>
+        <TableBody>
+          {metrics.map((metric, index) => (
+            <TableRow key={index}>
+              <TableCell className="py-1 font-bold">{metric.label}</TableCell>
+              <TableCell className="py-1">
+                <span className="rounded px-1 bg-light">
+                  {metric.stats.avg === "-"
+                    ? "-"
+                    : formatNumberMoney(metric.stats.avg, true)}
+                </span>
+              </TableCell>
+              <TableCell className="py-1">
+                <span className="rounded px-1 bg-light">
+                  {metric.stats.min === "-"
+                    ? "-"
+                    : formatNumberMoney(metric.stats.min, true)}
+                </span>
+              </TableCell>
+              <TableCell className="py-1">
+                <span className="rounded px-1 bg-light">
+                  {metric.stats.max === "-"
+                    ? "-"
+                    : formatNumberMoney(metric.stats.max, true)}
+                </span>
+              </TableCell>
+              <TableCell className="py-1">
+                <span className="rounded px-1 bg-light">
+                  {metric.stats.sd === "-"
+                    ? "-"
+                    : formatNumberMoney(metric.stats.sd, true)}
+                </span>
+              </TableCell>
+              <TableCell className="py-1">
+                <span className="rounded px-1 bg-light">
+                  {metric.stats.mad === "-"
+                    ? "-"
+                    : formatNumberMoney(metric.stats.mad, true)}
+                </span>
+              </TableCell>
+              <TableCell className="py-1 font-bold">
+                <span className="rounded px-1 bg-light">
+                  {typeof metric.total === "undefined" || metric.total === null
+                    ? "-"
+                    : formatNumberMoney(metric.total, true)}
+                </span>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+      <div className="flex flex-col mt-4">
+        <span>
+          <strong>Footprint</strong>: Measures the total amount of greenhouse gases, especially carbon dioxide, emitted directly and indirectly by a platform.
+        </span>
+      </div>
+      <div className="rounded-2xl border mt-5 p-5 dark:bg-neutral-50 dark:text-black">
+        <h2 className="text-2xl font-bold mb-12 text-center">Comparative of Energy and Carbon Footprint</h2>
+        <EnergyFootprintComparison
+          energy={data.Total_energy || 0}
+          footprint={data.Total_footprint || 0}
+        />
+      </div>
+    </>
   );
 };
 
@@ -574,8 +589,10 @@ const ExperimentPerformance = () => {
               <h4 className="text-xl font-semibold mb-2">Considered Jobs</h4>
                 <p>
                   Scrollable list where each item represents the last successful{" "} 
-                  <strong>SIM</strong> job for each <em>CHUNK</em>. Displays key information such 
-                  as <strong>Job Name</strong>,{" "} <strong>QUEUE</strong> and {" "}
+                  <strong>SIM</strong> job for each <strong>CHUNK</strong>. 
+                  It's important to know that <strong>retries</strong> are <strong>not considered</strong> in this list.
+                  Displays key information such as <strong>Job Name</strong>,{" "} 
+                  <strong>QUEUE</strong> and {" "}
                   <strong>RUNNING</strong> time in{" "}<em>HH:mm:ss</em> format,{" "} 
                   <strong>CHSY</strong>, <strong>JPSY</strong>, and raw {" "}
                   <strong>Energy (J)</strong> consumption for that job.{" "} <em>
@@ -600,9 +617,16 @@ const ExperimentPerformance = () => {
               <strong>Simulated time</strong>:
                 <span>
                 {" "}Represents the computed duration of the simulation run 
-                expressed in standard time units. 
+                from the <strong>Start Date</strong> to the last completed <strong>CHUNK</strong> of the last<strong>SIM</strong> job; expressed in standard time units. 
                 Units used: 1 year = 8760 hours, 1 month = 730 hours, 1 week = 168 hours and
                 1 day = 24 hours.
+                </span>
+              </li>
+              <li>
+              <strong>Total core-hours</strong>:
+                <span>
+                {" "}Represents the sum of the number of core-hours consumed by the the last successful
+                {" "} <strong>SIM</strong> job of each <strong>CHUNK</strong>.
                 </span>
               </li>
               <li>
@@ -677,16 +701,17 @@ const ExperimentPerformance = () => {
             <h4 className="text-xl font-semibold mt-4 mb-2">Sustainability</h4>
             <ul className="list-disc list-inside space-y-2">
               <li>
-                <strong>Energy consumed (J)</strong>:
+                <strong>Consumed Energy (J)</strong>:
                 <span>
-                {" "}Represents the amount of energy consumed by the
-                platform where the simulation job was executed. 
+                {" "}Represents the sum of consumed energy by the
+                platform for each last successful <strong>SIM</strong> job of each <strong>CHUNK</strong>.
                 </span>
               </li>
               <li>
                 <span>
-                <strong>Footprint generated (gCO₂)</strong>: The footprint of a
-                job is calculated as the product of the energy consumed (MWh) by the job;
+                <strong>Generated footprint (gCO₂)</strong>: Represents the sum of generated footprint by the  
+                platform for each last successful <strong>SIM</strong> job of each <strong>CHUNK</strong>. The footprint of a
+                job is calculated as the product of the consumed energy (MWh) by the job;
                 the greenhouse gas conversion factor (CF) —which converts megawatt-hours 
                 into grams of CO₂— according to the supplier bill or the country energy mix; 
                 and power usage effectiveness (PUE) which accounts for other costs sustained 
@@ -696,8 +721,8 @@ const ExperimentPerformance = () => {
                 Note: To be able to calculate the footprint, the energy in Joules is first 
                 converted to Megawatt-hours by dividing by 3.6*10⁹. Moreover, ensure 
                 that the 'CF' and 'PUE' values are configured in the platform settings to obtain 
-                the footprint. Finally, the units of the CF showed at the article are in kgCO₂/MWh 
-                but we suggest to use gCO₂/MWh; this is done to facilitate the comprehension 
+                the footprint. Finally, the units of the CF showed at the article are in kgCO₂/MWh. 
+                However, we suggest to use gCO₂/MWh because it facilitates the comprehension 
                 of the footprint values.
                 </em>
               </li>
@@ -790,6 +815,12 @@ const ExperimentPerformance = () => {
                         <strong>Simulated time</strong>:{" "}
                         <span className="rounded px-1 bg-light">
                           {data?.SY? formatTime(data.SY) : "-"} 
+                        </span>
+                      </span>
+                      <span>
+                        <strong>Total core-hours</strong>:{" "}
+                        <span className="rounded px-1 bg-light">
+                          {data?.Total_core_hours || "-"} 
                         </span>
                       </span>
                     </div>
@@ -910,11 +941,6 @@ const ExperimentPerformance = () => {
                       </span>
                     </div>
                     <PerformanceSustainability data={data} />
-                    <div className="flex flex-col mt-4">
-                      <span>
-                        <strong>Footprint</strong>: Measures the total amount of greenhouse gases, especially carbon dioxide, emitted directly and indirectly by a platform.
-                      </span>
-                    </div>
                   </div>
                 </div>
               </div>
