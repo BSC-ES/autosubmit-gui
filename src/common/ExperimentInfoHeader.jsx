@@ -76,6 +76,10 @@ const ExperimentInfoHeader = ({ expid }) => {
                 <span className="font-semibold">Branch: </span>
                 {expInfoData?.branch || "-"}
               </div>
+              <div>
+                <span className="font-semibold">Commit: </span>
+                {expInfoData?.workflow_commit || "-"}
+              </div>
             </div>
           </div>
         )}
