@@ -75,6 +75,14 @@ const JobDetailCard = ({ expid, jobData, jobs }) => {
                 <strong>Chunk:</strong> {jobData.chunk || "-"}
               </span>
             </div>
+            {jobData?.workflow_commit && (
+              <div className="flex gap-4 justify-evenly">
+                <span className="grow">
+                  <strong>Workflow Commit:</strong>{" "}
+                  {jobData.workflow_commit || "-"}
+                </span>
+              </div>
+            )}
             <div className="flex gap-4 justify-evenly">
               <span className="grow">
                 <strong>Platform:</strong> {jobData.platform_name || "-"}
