@@ -81,7 +81,7 @@ const CriticalPathGraph = ({ elements, onTapNode }) => {
       const uri = await cyRef.current.png({ output: "base64uri" });
       const link = document.createElement("a");
       link.href = uri;
-      link.download = "critical_path.png";
+      link.download = "ideal_critical_path.png";
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);

@@ -29,7 +29,7 @@ import * as Collapsible from "@radix-ui/react-collapsible";
 import PhaseChart from "../components/performance/PhaseChart.jsx";
 import CyWorkflow from "../common/CyWorkflow";
 import BottomPanel from "../common/BottomPanel";
-import CriticalPathGraph from "../components/performance/CriticalPathGraph.jsx";
+import IdealCriticalPathGraph from "../components/performance/IdealCriticalPathGraph.jsx";
 
 const PERFORMANCE_PLOTS = [
   {
@@ -476,16 +476,16 @@ const PerformanceSustainability = ({ data }) => {
   );
 };
 
-const PerformanceCriticalPath = ({ criticalPath, phases, formatSecondsToHMS }) => {
+const PerformanceIdealCriticalPath = ({ idealCriticalPath, phases, formatSecondsToHMS }) => {
 	const [selectedNode, setSelectedNode] = useState(null);
 
-	const generateCriticalPathElements = (criticalPath) => {
-		const maxNameLength = Math.max(...criticalPath.map(node => node.name.length));
+	const generateIdealCriticalPathElements = (idealCriticalPath) => {
+		const maxNameLength = Math.max(...idealCriticalPath.map(node => node.name.length));
 		const spacingX = maxNameLength * 10;
 		const spacingY = 150; 
-		const rowCount = Math.ceil(Math.sqrt(criticalPath.length)); 
+		const rowCount = Math.ceil(Math.sqrt(idealCriticalPath.length)); 
 		let elements = [];
-		criticalPath.forEach((node, index) => {
+		idealCriticalPath.forEach((node, index) => {
 			const rowIndex = Math.floor(index / rowCount);
 			const colIndex = index % rowCount;
 			let x;
@@ -503,14 +503,14 @@ const PerformanceCriticalPath = ({ criticalPath, phases, formatSecondsToHMS }) =
 			if (index > 0) {
 				elements.push({
 					group: "edges",
-					data: { source: criticalPath[index - 1].name, target: node.name },
+					data: { source: idealCriticalPath[index - 1].name, target: node.name },
 				});
 			}
 		});
 		return elements;
 	};
   
-	const graphElements = generateCriticalPathElements(criticalPath);
+	const graphElements = generateIdealCriticalPathElements(idealCriticalPath);
 	return (
 		<div className="rounded-2xl border grow dark:bg-neutral-50 dark:text-black">
 			<div className="bg-dark rounded-t-xl flex justify-between items-center text-white px-6 py-2 mb-2">
@@ -518,14 +518,14 @@ const PerformanceCriticalPath = ({ criticalPath, phases, formatSecondsToHMS }) =
 			</div>
 			<div className="p-4">
 				<div className="flex border relative mx-auto overflow-hidden">
-					<CriticalPathGraph
+					<IdealCriticalPathGraph
 						elements={graphElements}
 						onTapNode={(nodeData) => setSelectedNode(nodeData)}
 					/>
 				</div>
 
 				<div className="mt-4">
-					<h4 className="font-semibold mb-2">Phases of the critical path</h4>
+					<h4 className="font-semibold mb-2">Phases of the ideal critical path</h4>
 					{phases ? (
 						<ul className="list-disc list-inside">
 							<li>
@@ -565,7 +565,7 @@ const PerformanceCriticalPath = ({ criticalPath, phases, formatSecondsToHMS }) =
 					onClose={() => setSelectedNode(null)}
 				>
           <div className="p-2 bg-gray-100 rounded shadow-sm">
-            <span className="font-semibold">Run Time: </span>
+            <span className="font-bold">Run Time: </span>
             {formatSecondsToHMS(selectedNode.run)}
           </div>
 				</BottomPanel>
@@ -781,7 +781,16 @@ const ExperimentPerformance = () => {
                 <span>
                 <strong>WSYPD</strong>: 
                   "Workflow" Simulated Years Per Day is calculated based on the total 
-                  time of the experiment's critical path and represents the portion of 
+                  time (queue and run time) of the experiment's ideal critical path and 
+                  represents the portion of time dedicated by the experiment towards 
+                  achieving the SYPD. 
+                </span>
+              </li>
+              <li>
+                <span>
+                <strong>IWSYPD</strong>: 
+                  "Ideal Workflow" Simulated Years Per Day is calculated based on the total 
+                  run time of the experiment's ideal critical path and represents the portion of 
                   time dedicated by the experiment towards achieving the SYPD. 
                 </span>
               </li>
@@ -918,6 +927,12 @@ const ExperimentPerformance = () => {
                         </span>
                       </span>
                       <span>
+                        <strong>IWSYPD</strong>:{" "}
+                        <span className="rounded px-1 bg-light">
+                          {data?.IWSYPD?.toFixed(2) || "-"}
+                        </span>
+                      </span>
+                      <span>
                         <strong>Simulated time</strong>:{" "}
                         <span className="rounded px-1 bg-light">
                           {data?.SY? formatTime(data.SY) : "-"} 
@@ -1051,9 +1066,9 @@ const ExperimentPerformance = () => {
                 </div>
               </div>
 
-            <PerformanceCriticalPath
-              criticalPath={data?.critical_path}
-              phases={data?.phases}
+            <PerformanceIdealCriticalPath
+              idealCriticalPath={data?.ideal_critical_path}
+              phases={data?.ideal_phases}
               formatSecondsToHMS={formatSecondsToHMS}
             />
           
