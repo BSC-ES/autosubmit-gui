@@ -331,3 +331,16 @@ export const formatTime = (years) => {
     }
     return message;
 };
+
+
+export const formatSecondsToHMS = (seconds) => {
+  if (seconds === 0) return "0s";
+  const hrs = Math.floor(seconds / 3600);
+  const mins = Math.floor((seconds % 3600) / 60);
+  const secs = Math.floor(seconds % 60);
+  let parts = [];
+  if (hrs) parts.push(`${hrs}h`);
+  if (mins) parts.push(`${mins}m`);
+  if (secs) parts.push(`${secs}s`);
+  return parts.join(" ");
+};

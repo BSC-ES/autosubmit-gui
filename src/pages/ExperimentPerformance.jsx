@@ -3,7 +3,7 @@ import useASTitle from "../hooks/useASTitle";
 import useBreadcrumb from "../hooks/useBreadcrumb";
 import { useGetExperimentPerformanceQuery } from "../services/autosubmitApiV3";
 import MetricScatterPlot from "../components/plots/MetricScatterPlot";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState, useRef } from "react";
 import {
   secondsToDelta,
   arrayAverage,
@@ -11,6 +11,7 @@ import {
   arrayMeanAbsoluteDeviationAroundMean,
   formatNumberMoney,
   formatTime,
+  formatSecondsToHMS,
 } from "../components/context/utils";
 import TimeScatterPlot from "../components/plots/TimeScatterPlot";
 import { cn, exportToCSV } from "../services/utils";
@@ -25,7 +26,10 @@ import {
   TableRow,
 } from "../common/Table";
 import * as Collapsible from "@radix-ui/react-collapsible";
-import EnergyFootprintComparison from "../components/performance/EnergyFootprintComparison";
+import PhaseChart from "../components/performance/PhaseChart.jsx";
+import CyWorkflow from "../common/CyWorkflow";
+import BottomPanel from "../common/BottomPanel";
+import CriticalPathGraph from "../components/performance/CriticalPathGraph.jsx";
 
 const PERFORMANCE_PLOTS = [
   {
@@ -383,11 +387,8 @@ const PerformanceSustainability = ({ data }) => {
     };
   };
 
-  const energyValues = data?.considered?.map((job) => job.energy) || [];
-  const footprintValues = data?.considered?.map((job) => job.footprint) || [];
-
-  const energyStats = computeStats(energyValues);
-  const footprintStats = computeStats(footprintValues);
+  const energyStats = computeStats(data?.considered?.map((job) => job.energy) || []);
+  const footprintStats = computeStats(data?.considered?.map((job) => job.footprint) || []);
 
   const metrics = [
     {
@@ -471,15 +472,106 @@ const PerformanceSustainability = ({ data }) => {
           <strong>Footprint</strong>: Measures the total amount of greenhouse gases, especially carbon dioxide, emitted directly and indirectly by a platform.
         </span>
       </div>
-      <div className="rounded-2xl border mt-5 p-5 dark:bg-neutral-50 dark:text-black">
-        <h2 className="text-2xl font-bold mb-12 text-center">Comparative of Energy and Carbon Footprint</h2>
-        <EnergyFootprintComparison
-          energy={data.Total_energy || 0}
-          footprint={data.Total_footprint || 0}
-        />
-      </div>
     </>
   );
+};
+
+const PerformanceCriticalPath = ({ criticalPath, phases, formatSecondsToHMS }) => {
+	const [selectedNode, setSelectedNode] = useState(null);
+
+	const generateCriticalPathElements = (criticalPath) => {
+		const maxNameLength = Math.max(...criticalPath.map(node => node.name.length));
+		const spacingX = maxNameLength * 10;
+		const spacingY = 150; 
+		const rowCount = Math.ceil(Math.sqrt(criticalPath.length)); 
+		let elements = [];
+		criticalPath.forEach((node, index) => {
+			const rowIndex = Math.floor(index / rowCount);
+			const colIndex = index % rowCount;
+			let x;
+			if (rowIndex % 2 === 0) {
+				x = 100 + colIndex * spacingX;
+			} else {
+				x = 100 + (rowCount - 1 - colIndex) * spacingX;
+			}
+			const y = 200 + rowIndex * spacingY;
+			elements.push({
+				group: "nodes",
+				data: { id: node.name, run: node.running},
+				position: { x, y },
+			});
+			if (index > 0) {
+				elements.push({
+					group: "edges",
+					data: { source: criticalPath[index - 1].name, target: node.name },
+				});
+			}
+		});
+		return elements;
+	};
+  
+	const graphElements = generateCriticalPathElements(criticalPath);
+	return (
+		<div className="rounded-2xl border grow dark:bg-neutral-50 dark:text-black">
+			<div className="bg-dark rounded-t-xl flex justify-between items-center text-white px-6 py-2 mb-2">
+				<label className="font-bold"> IDEAL CRITICAL PATH (QUEUE TIME OMITTED)</label>
+			</div>
+			<div className="p-4">
+				<div className="flex border relative mx-auto overflow-hidden">
+					<CriticalPathGraph
+						elements={graphElements}
+						onTapNode={(nodeData) => setSelectedNode(nodeData)}
+					/>
+				</div>
+
+				<div className="mt-4">
+					<h4 className="font-semibold mb-2">Phases of the critical path</h4>
+					{phases ? (
+						<ul className="list-disc list-inside">
+							<li>
+								<strong>Pre-SIM:</strong>{" "}
+								<span className="rounded px-1 bg-light">
+									{formatSecondsToHMS(phases.pre_sim_time)}
+								</span>
+							</li>
+							<li>
+								<strong>SIM:</strong>{" "}
+								<span className="rounded px-1 bg-light">
+									{formatSecondsToHMS(phases.sim_time)}
+								</span>
+							</li>
+							<li>
+								<strong>Post-SIM:</strong>{" "}
+								<span className="rounded px-1 bg-light">
+									{formatSecondsToHMS(phases.post_sim_time)}
+								</span>
+							</li>
+							<li>
+								<strong>Total:</strong>{" "}
+								<span className="rounded px-1 bg-light">
+									{formatSecondsToHMS(phases.total_time)}
+								</span>
+							</li>
+						</ul>
+					) : (
+						<span>No phase data available.</span>
+					)}
+				</div>
+				<PhaseChart phases={phases} formatSecondsToHMS={formatSecondsToHMS} />
+			</div>
+			{selectedNode && (
+				<BottomPanel
+					title={selectedNode.id}
+					onClose={() => setSelectedNode(null)}
+				>
+          <div className="p-2 bg-gray-100 rounded shadow-sm">
+            <span className="font-semibold">Run Time: </span>
+            {formatSecondsToHMS(selectedNode.run)}
+          </div>
+				</BottomPanel>
+			)}
+		</div>
+	);
 };
 
 const ExperimentPerformance = () => {
@@ -685,6 +777,14 @@ const ExperimentPerformance = () => {
                 duration of the simulation.
                 </span>
               </li>
+              <li>
+                <span>
+                <strong>WSYPD</strong>: 
+                  "Workflow" Simulated Years Per Day is calculated based on the total 
+                  time of the experiment's critical path and represents the portion of 
+                  time dedicated by the experiment towards achieving the SYPD. 
+                </span>
+              </li>
               <p>
                 Visit{" "}
                 <a
@@ -812,6 +912,12 @@ const ExperimentPerformance = () => {
                         </span>
                       </span>
                       <span>
+                        <strong>WSYPD</strong>:{" "}
+                        <span className="rounded px-1 bg-light">
+                          {data?.WSYPD?.toFixed(2) || "-"}
+                        </span>
+                      </span>
+                      <span>
                         <strong>Simulated time</strong>:{" "}
                         <span className="rounded px-1 bg-light">
                           {data?.SY? formatTime(data.SY) : "-"} 
@@ -847,7 +953,7 @@ const ExperimentPerformance = () => {
                   <label className="font-bold">CONSIDERED JOBS</label>
                   <div>
                     <button
-                      className="btn btn-dark rounded-full"
+                      className="btn btn-darked-full"
                       onClick={toggleShowHelp}
                     >
                       <i className="fa-solid fa-circle-question"></i>
@@ -944,6 +1050,12 @@ const ExperimentPerformance = () => {
                   </div>
                 </div>
               </div>
+
+            <PerformanceCriticalPath
+              criticalPath={data?.critical_path}
+              phases={data?.phases}
+              formatSecondsToHMS={formatSecondsToHMS}
+            />
           
             <div className="rounded-2xl border grow dark:bg-neutral-50 dark:text-black">
               <div className="bg-dark rounded-t-xl flex gap-3 justify-between items-center text-white px-4 py-3 mb-4">
