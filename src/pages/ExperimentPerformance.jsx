@@ -485,6 +485,9 @@ const PerformanceIdealCriticalPath = ({ idealCriticalPath, phases, formatSeconds
 	const [selectedNode, setSelectedNode] = useState(null);
 
 	const generateIdealCriticalPathElements = (idealCriticalPath) => {
+		if (!idealCriticalPath || !Array.isArray(idealCriticalPath)) {
+			return [];
+		}
 		const maxNameLength = Math.max(...idealCriticalPath.map(node => node.name.length));
 		const spacingX = maxNameLength * 10;
 		const spacingY = 150; 
@@ -522,52 +525,63 @@ const PerformanceIdealCriticalPath = ({ idealCriticalPath, phases, formatSeconds
 				<label className="font-bold"> IDEAL CRITICAL PATH (QUEUE TIME OMITTED)</label>
 			</div>
 			<div className="p-4">
-				<div className="flex border relative mx-auto overflow-hidden">
-					<IdealCriticalPathGraph
-						elements={graphElements}
-						onTapNode={(nodeData) => setSelectedNode(nodeData)}
-					/>
-				</div>
-
-				<div className="mt-4">
-					<h4 className="font-semibold mb-2">Phases of the ideal critical path</h4>
-					{phases ? (
-						<ul className="list-disc list-inside">
-							<li>
-								<strong>Pre-SIM:</strong>{" "}
-								<span className="rounded px-1 bg-light">
-									{formatSecondsToHMS(phases.pre_sim_time)}
-								</span>
-							</li>
-							<li>
-								<strong>SIM:</strong>{" "}
-								<span className="rounded px-1 bg-light">
-									{formatSecondsToHMS(phases.sim_time)}
-								</span>
-							</li>
-							<li>
-								<strong>Post-SIM:</strong>{" "}
-								<span className="rounded px-1 bg-light">
-									{formatSecondsToHMS(phases.post_sim_time)}
-								</span>
-							</li>
-							<li>
-								<strong>Total:</strong>{" "}
-								<span className="rounded px-1 bg-light">
-									{formatSecondsToHMS(phases.total_time)}
-								</span>
-							</li>
-						</ul>
-					) : (
+				{graphElements.length === 0 ? (
+					<div className="flex flex-col justify-center items-center w-full h-full py-12 gap-4">
+						<i className="fa-solid fa-triangle-exclamation text-danger text-6xl"></i>
+						<span className="font-bold text-center">
+							{"Ideal critical path data not available"}
+						</span>
+					</div>
+				) : (
+				
+        <div className="flex border relative mx-auto overflow-hidden">
+          <IdealCriticalPathGraph
+            elements={graphElements}
+            onTapNode={(nodeData) => setSelectedNode(nodeData)}
+          />
+        </div>
+        )}
+        <div className="mt-4">
+          {phases ? (
+            <div>
+              <h4 className="font-semibold mb-2">Phases of the ideal critical path</h4>
+              <ul className="list-disc list-inside">
+                <li>
+                  <strong>Pre-SIM:</strong>{" "}
+                  <span className="rounded px-1 bg-light">
+                    {formatSecondsToHMS(phases.pre_sim_time)}
+                  </span>
+                </li>
+                <li>
+                  <strong>SIM:</strong>{" "}
+                  <span className="rounded px-1 bg-light">
+                    {formatSecondsToHMS(phases.sim_time)}
+                  </span>
+                </li>
+                <li>
+                  <strong>Post-SIM:</strong>{" "}
+                  <span className="rounded px-1 bg-light">
+                    {formatSecondsToHMS(phases.post_sim_time)}
+                  </span>
+                </li>
+                <li>
+                  <strong>Total:</strong>{" "}
+                  <span className="rounded px-1 bg-light">
+                    {formatSecondsToHMS(phases.total_time)}
+                  </span>
+                </li>
+              </ul>
+            </div>
+          ) : (
             <div className="flex flex-col justify-center items-center w-full h-full py-12 gap-4">
               <i className="fa-solid fa-triangle-exclamation text-danger text-6xl"></i>
-                <span className="font-bold text-center">
-                    {"Phases data not available"}
-                </span>
+              <span className="font-bold text-center">
+                {"Phases data not available"}
+              </span>
             </div>
-					)}
-				</div>
-				<PhaseChart phases={phases} formatSecondsToHMS={formatSecondsToHMS} />
+          )}
+          <PhaseChart phases={phases} formatSecondsToHMS={formatSecondsToHMS} />
+        </div>		
 			</div>
 			{selectedNode && (
 				<BottomPanel
