@@ -763,7 +763,9 @@ const ExperimentPerformance = () => {
                 level uses a generalization of the formula applied at the experiment
                 level. As a consequence, the PSYPD value at the experiment level can
                 be different that the mean of the values calculated at the job
-                level.
+                level. The <strong>value</strong> of the PSYPD is calculated as the product of the 
+                simulated years per simulation and the number of seconds in a day, divided by the total 
+                simulation time, taking into account the run time, queue time and average post time.
                 </span>
               </li>
               <li>
