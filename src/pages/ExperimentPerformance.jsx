@@ -720,8 +720,7 @@ const ExperimentPerformance = () => {
               <li>
               <strong>Simulated time</strong>:
                 <span>
-                {" "}Represents the computed duration of the simulation run 
-                from the <strong>Start Date</strong> to the last completed <strong>CHUNK</strong> of the last<strong>SIM</strong> job; expressed in standard time units. 
+                {" "}Represents the sum of the simulated years of each last completed <strong>CHUNK</strong> of the last <strong>SIM</strong> job; expressed in standard time units. 
                 Units used: 1 year = 8760 hours, 1 month = 730 hours, 1 week = 168 hours and
                 1 day = 24 hours.
                 </span>
@@ -774,7 +773,7 @@ const ExperimentPerformance = () => {
                 level uses a generalization of the formula applied at the experiment
                 level. As a consequence, the QSYPD value at the experiment level can
                 be different that the mean of the values calculated at the job
-                level. The value of the <strong>QSYPD</strong> is calculated as the product of the 
+                level. The <strong>value</strong> of the QSYPD is calculated as the product of the 
                 simulated years per simulation and the number of seconds in a day, divided by the total 
                 simulation time, taking into account the queue time.
                 </span>
@@ -787,18 +786,6 @@ const ExperimentPerformance = () => {
                 of processors (Parallelization) allocated. The CHSY{" "}
                 <strong>value</strong> at the experiment level is the mean of the
                 values calculated at the job level.
-                </span>
-              </li>
-              <li>
-                <span>
-                <strong>RSYPD</strong>: 
-                "Real" Simulated Years Per Day. This
-                variation of SYPD has been defined only at the experiment level. It
-                depends on the existences of <strong>TRANSFER</strong> or{" "}
-                <strong>CLEAN</strong> jobs. Then, it uses the finish time of the
-                last TRANSFER or CLEAN job and the start time of the first SIM job
-                in the experiment to calculate an approximation of the total
-                duration of the simulation.
                 </span>
               </li>
               <li>
@@ -936,12 +923,6 @@ const ExperimentPerformance = () => {
                         <strong>Parallelization</strong>:{" "}
                         <span className="rounded px-1 bg-light">
                           {data?.Parallelization || "-"}
-                        </span>
-                      </span>
-                      <span>
-                        <strong>RSYPD</strong>:{" "}
-                        <span className="rounded px-1 bg-light">
-                          {data?.RSYPD?.toFixed(2) || "-"}
                         </span>
                       </span>
                       <span>
