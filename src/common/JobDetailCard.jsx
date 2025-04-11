@@ -266,14 +266,14 @@ const JobDetailCard = ({ expid, jobData, jobs }) => {
                   </span>
                 </div>
               )}
-              {jobData.ASYPD && (
+              {jobData.PSYPD && (
                 <div>
                   <span
                     className="bg-primary text-white rounded-full px-4"
-                    title="Generalization of Actual SYPD."
+                    title="Generalization of Post SYPD."
                   >
-                    <strong>ASYPD: </strong>
-                    {jobData.ASYPD}
+                    <strong>PSYPD: </strong>
+                    {jobData.PSYPD}
                   </span>
                 </div>
               )}

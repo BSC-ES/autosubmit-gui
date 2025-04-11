@@ -153,11 +153,11 @@ export const simpleActiveStatus = {
 export const defaultPerformanceDisplaySettings = {
   JPSYvsCHSY: false,
   JPSYvsSYPD: false,
-  JPSYvsASYPD: false,
-  SYPDvsASYPD: false,
+  JPSYvsPSYPD: false,
+  SYPDvsPSYPD: false,
   CHSYvsSYPD: false,
-  CHSYvsASYPD: false,
+  CHSYvsPSYPD: false,
   RunVsSYPD: false,
   RunVsCHSY: false,
-  QueueRunVsASYPD: false,
+  QueueRunVsPSYPD: false,
 };
