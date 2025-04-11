@@ -252,6 +252,7 @@ const PerformanceConsideredJobs = ({ considered }) => {
               "CHSY",
               "SYPD",
               "ASYPD",
+              "QSYPD",
               "JPSY",
               "Energy",
               "Footprint",
@@ -292,6 +293,9 @@ const PerformanceConsideredJobs = ({ considered }) => {
                     {formatNumberMoney(item.ASYPD)}
                   </TableCell>
                   <TableCell className="py-1">
+                    {formatNumberMoney(item.QSYPD)}
+                  </TableCell>
+                  <TableCell className="py-1">
                     {formatNumberMoney(item.JPSY, true)}
                   </TableCell>
                   <TableCell className="py-1">
@@ -319,6 +323,7 @@ const PerformanceSummary = ({ data }) => {
           .map((item) => item.JPSY),
         SYPD: data.considered.map((item) => item.SYPD),
         ASYPD: data.considered.map((item) => item.ASYPD),
+        QSYPD: data.considered.map((item) => item.QSYPD),
         CHSY: data.considered.map((item) => item.CHSY),
       };
       setMetrics(newMetrics);
@@ -554,7 +559,12 @@ const PerformanceIdealCriticalPath = ({ idealCriticalPath, phases, formatSeconds
 							</li>
 						</ul>
 					) : (
-						<span>No phase data available.</span>
+            <div className="flex flex-col justify-center items-center w-full h-full py-12 gap-4">
+              <i className="fa-solid fa-triangle-exclamation text-danger text-6xl"></i>
+                <span className="font-bold text-center">
+                    {"Phases data not available"}
+                </span>
+            </div>
 					)}
 				</div>
 				<PhaseChart phases={phases} formatSecondsToHMS={formatSecondsToHMS} />
@@ -614,6 +624,7 @@ const ExperimentPerformance = () => {
           formatNumberMoney(item.CHSY),
           formatNumberMoney(item.SYPD),
           formatNumberMoney(item.ASYPD),
+          formatNumberMoney(item.QSYPD),
           formatNumberMoney(item.JPSY, true),
           formatNumberMoney(item.energy, true),
           formatNumberMoney(item.footprint, true),
@@ -628,6 +639,7 @@ const ExperimentPerformance = () => {
         "CHSY",
         "SYPD",
         "ASYPD",
+        "QSYPD",
         "JPSY",
         "Energy",
         "Footprint",
@@ -753,6 +765,18 @@ const ExperimentPerformance = () => {
                 level. As a consequence, the ASYPD value at the experiment level can
                 be different that the mean of the values calculated at the job
                 level.
+                </span>
+              </li>
+              <li>
+                <span>
+                <strong>QSYPD</strong>: 
+                Queue Simulated Years Per Day. The QSYPD <strong>value</strong> calculated at the job
+                level uses a generalization of the formula applied at the experiment
+                level. As a consequence, the QSYPD value at the experiment level can
+                be different that the mean of the values calculated at the job
+                level. The value of the <strong>QSYPD</strong> is calculated as the product of the 
+                simulated years per simulation and the number of seconds in a day, divided by the total 
+                simulation time, taking into account the queue time.
                 </span>
               </li>
               <li>
