@@ -3,7 +3,7 @@
     "error_message": "",
     "jobs": [
         {
-            "ASYPD": null,
+            "PSYPD": null,
             "SYPD": null,
             "children": 1,
             "children_list": [
@@ -41,7 +41,7 @@
             "wrapper_code": null
         },
         {
-            "ASYPD": null,
+            "PSYPD": null,
             "SYPD": null,
             "children": 1,
             "children_list": [
@@ -81,7 +81,7 @@
             "wrapper_code": null
         },
         {
-            "ASYPD": null,
+            "PSYPD": null,
             "SYPD": null,
             "children": 1,
             "children_list": [
@@ -121,7 +121,7 @@
             "wrapper_code": null
         },
         {
-            "ASYPD": null,
+            "PSYPD": null,
             "SYPD": null,
             "children": 1,
             "children_list": [
@@ -163,7 +163,7 @@
             "wrapper_code": null
         },
         {
-            "ASYPD": 7.55,
+            "PSYPD": 7.55,
             "SYPD": 7.57,
             "children": 1,
             "children_list": [
@@ -205,7 +205,7 @@
             "wrapper_code": "17108563159474"
         },
         {
-            "ASYPD": 7.64,
+            "PSYPD": 7.64,
             "SYPD": 7.64,
             "children": 1,
             "children_list": [
@@ -247,7 +247,7 @@
             "wrapper_code": "17108563159474"
         },
         {
-            "ASYPD": 4.38,
+            "PSYPD": 4.38,
             "SYPD": 7.58,
             "children": 1,
             "children_list": [
@@ -289,7 +289,7 @@
             "wrapper_code": "17108816522924"
         },
         {
-            "ASYPD": 7.62,
+            "PSYPD": 7.62,
             "SYPD": 7.62,
             "children": 1,
             "children_list": [
@@ -331,7 +331,7 @@
             "wrapper_code": "17108816522924"
         },
         {
-            "ASYPD": 7.59,
+            "PSYPD": 7.59,
             "SYPD": 7.59,
             "children": 1,
             "children_list": [
@@ -373,7 +373,7 @@
             "wrapper_code": "17108816522924"
         },
         {
-            "ASYPD": 7.57,
+            "PSYPD": 7.57,
             "SYPD": 7.57,
             "children": 1,
             "children_list": [
@@ -415,7 +415,7 @@
             "wrapper_code": "17108816522924"
         },
         {
-            "ASYPD": 7.62,
+            "PSYPD": 7.62,
             "SYPD": 7.62,
             "children": 1,
             "children_list": [
@@ -457,7 +457,7 @@
             "wrapper_code": "17108816522924"
         },
         {
-            "ASYPD": 7.64,
+            "PSYPD": 7.64,
             "SYPD": 7.64,
             "children": 1,
             "children_list": [
@@ -499,7 +499,7 @@
             "wrapper_code": "17108816522924"
         },
         {
-            "ASYPD": 7.64,
+            "PSYPD": 7.64,
             "SYPD": 7.64,
             "children": 1,
             "children_list": [
@@ -541,7 +541,7 @@
             "wrapper_code": "17108816522924"
         },
         {
-            "ASYPD": 7.62,
+            "PSYPD": 7.62,
             "SYPD": 7.62,
             "children": 1,
             "children_list": [
@@ -583,7 +583,7 @@
             "wrapper_code": "17108816522924"
         },
         {
-            "ASYPD": 7.6,
+            "PSYPD": 7.6,
             "SYPD": 7.6,
             "children": 1,
             "children_list": [
@@ -625,7 +625,7 @@
             "wrapper_code": "17108816522924"
         },
         {
-            "ASYPD": 7.61,
+            "PSYPD": 7.61,
             "SYPD": 7.61,
             "children": 1,
             "children_list": [
@@ -667,7 +667,7 @@
             "wrapper_code": "17108816522924"
         },
         {
-            "ASYPD": 5.72,
+            "PSYPD": 5.72,
             "SYPD": 7.65,
             "children": 1,
             "children_list": [
@@ -709,7 +709,7 @@
             "wrapper_code": "17110035707450"
         },
         {
-            "ASYPD": 7.66,
+            "PSYPD": 7.66,
             "SYPD": 7.66,
             "children": 1,
             "children_list": [
@@ -751,7 +751,7 @@
             "wrapper_code": "17110035707450"
         },
         {
-            "ASYPD": 7.62,
+            "PSYPD": 7.62,
             "SYPD": 7.62,
             "children": 1,
             "children_list": [
@@ -793,7 +793,7 @@
             "wrapper_code": "17110035707450"
         },
         {
-            "ASYPD": 7.66,
+            "PSYPD": 7.66,
             "SYPD": 7.66,
             "children": 1,
             "children_list": [
@@ -835,7 +835,7 @@
             "wrapper_code": "17110035707450"
         },
         {
-            "ASYPD": 7.68,
+            "PSYPD": 7.68,
             "SYPD": 7.68,
             "children": 1,
             "children_list": [
@@ -877,7 +877,7 @@
             "wrapper_code": "17110035707450"
         },
         {
-            "ASYPD": 7.66,
+            "PSYPD": 7.66,
             "SYPD": 7.66,
             "children": 1,
             "children_list": [
@@ -919,7 +919,7 @@
             "wrapper_code": "17110035707450"
         },
         {
-            "ASYPD": 7.64,
+            "PSYPD": 7.64,
             "SYPD": 7.64,
             "children": 1,
             "children_list": [
@@ -961,7 +961,7 @@
             "wrapper_code": "17110035707450"
         },
         {
-            "ASYPD": 7.69,
+            "PSYPD": 7.69,
             "SYPD": 7.69,
             "children": 1,
             "children_list": [
@@ -1003,7 +1003,7 @@
             "wrapper_code": "17110035707450"
         },
         {
-            "ASYPD": 7.68,
+            "PSYPD": 7.68,
             "SYPD": 7.68,
             "children": 1,
             "children_list": [
@@ -1045,7 +1045,7 @@
             "wrapper_code": "17110035707450"
         },
         {
-            "ASYPD": 7.65,
+            "PSYPD": 7.65,
             "SYPD": 7.65,
             "children": 1,
             "children_list": [
@@ -1087,7 +1087,7 @@
             "wrapper_code": "17110035707450"
         },
         {
-            "ASYPD": 5.89,
+            "PSYPD": 5.89,
             "SYPD": 7.61,
             "children": 1,
             "children_list": [
@@ -1129,7 +1129,7 @@
             "wrapper_code": "17111202269568"
         },
         {
-            "ASYPD": 7.64,
+            "PSYPD": 7.64,
             "SYPD": 7.64,
             "children": 1,
             "children_list": [
@@ -1171,7 +1171,7 @@
             "wrapper_code": "17111202269568"
         },
         {
-            "ASYPD": 7.66,
+            "PSYPD": 7.66,
             "SYPD": 7.66,
             "children": 1,
             "children_list": [
@@ -1213,7 +1213,7 @@
             "wrapper_code": "17111202269568"
         },
         {
-            "ASYPD": 7.63,
+            "PSYPD": 7.63,
             "SYPD": 7.63,
             "children": 1,
             "children_list": [
@@ -1255,7 +1255,7 @@
             "wrapper_code": "17111202269568"
         },
         {
-            "ASYPD": 7.6,
+            "PSYPD": 7.6,
             "SYPD": 7.6,
             "children": 1,
             "children_list": [
@@ -1297,7 +1297,7 @@
             "wrapper_code": "17111202269568"
         },
         {
-            "ASYPD": 7.65,
+            "PSYPD": 7.65,
             "SYPD": 7.65,
             "children": 1,
             "children_list": [
@@ -1339,7 +1339,7 @@
             "wrapper_code": "17111202269568"
         },
         {
-            "ASYPD": 7.64,
+            "PSYPD": 7.64,
             "SYPD": 7.64,
             "children": 1,
             "children_list": [
@@ -1381,7 +1381,7 @@
             "wrapper_code": "17111202269568"
         },
         {
-            "ASYPD": 7.68,
+            "PSYPD": 7.68,
             "SYPD": 7.68,
             "children": 1,
             "children_list": [
@@ -1423,7 +1423,7 @@
             "wrapper_code": "17111202269568"
         },
         {
-            "ASYPD": 7.58,
+            "PSYPD": 7.58,
             "SYPD": 7.58,
             "children": 1,
             "children_list": [
@@ -1465,7 +1465,7 @@
             "wrapper_code": "17111202269568"
         },
         {
-            "ASYPD": 7.61,
+            "PSYPD": 7.61,
             "SYPD": 7.61,
             "children": 1,
             "children_list": [
@@ -1507,7 +1507,7 @@
             "wrapper_code": "17111202269568"
         },
         {
-            "ASYPD": 7.58,
+            "PSYPD": 7.58,
             "SYPD": 7.59,
             "children": 1,
             "children_list": [
@@ -1549,7 +1549,7 @@
             "wrapper_code": "17112368179816"
         },
         {
-            "ASYPD": 7.62,
+            "PSYPD": 7.62,
             "SYPD": 7.62,
             "children": 1,
             "children_list": [
@@ -1591,7 +1591,7 @@
             "wrapper_code": "17112368179816"
         },
         {
-            "ASYPD": 7.6,
+            "PSYPD": 7.6,
             "SYPD": 7.6,
             "children": 1,
             "children_list": [
@@ -1633,7 +1633,7 @@
             "wrapper_code": "17112368179816"
         },
         {
-            "ASYPD": 7.62,
+            "PSYPD": 7.62,
             "SYPD": 7.62,
             "children": 1,
             "children_list": [
@@ -1675,7 +1675,7 @@
             "wrapper_code": "17112368179816"
         },
         {
-            "ASYPD": 7.63,
+            "PSYPD": 7.63,
             "SYPD": 7.63,
             "children": 1,
             "children_list": [
@@ -1717,7 +1717,7 @@
             "wrapper_code": "17112368179816"
         },
         {
-            "ASYPD": 7.62,
+            "PSYPD": 7.62,
             "SYPD": 7.62,
             "children": 1,
             "children_list": [
@@ -1759,7 +1759,7 @@
             "wrapper_code": "17112368179816"
         },
         {
-            "ASYPD": 7.56,
+            "PSYPD": 7.56,
             "SYPD": 7.56,
             "children": 1,
             "children_list": [
@@ -1801,7 +1801,7 @@
             "wrapper_code": "17112368179816"
         },
         {
-            "ASYPD": 7.59,
+            "PSYPD": 7.59,
             "SYPD": 7.59,
             "children": 1,
             "children_list": [
@@ -1843,7 +1843,7 @@
             "wrapper_code": "17112368179816"
         },
         {
-            "ASYPD": 7.62,
+            "PSYPD": 7.62,
             "SYPD": 7.62,
             "children": 1,
             "children_list": [
@@ -1885,7 +1885,7 @@
             "wrapper_code": "17112368179816"
         },
         {
-            "ASYPD": 7.64,
+            "PSYPD": 7.64,
             "SYPD": 7.64,
             "children": 1,
             "children_list": [
@@ -1927,7 +1927,7 @@
             "wrapper_code": "17112368179816"
         },
         {
-            "ASYPD": 7.57,
+            "PSYPD": 7.57,
             "SYPD": 7.59,
             "children": 1,
             "children_list": [
@@ -1969,7 +1969,7 @@
             "wrapper_code": "17113504018271"
         },
         {
-            "ASYPD": 7.58,
+            "PSYPD": 7.58,
             "SYPD": 7.58,
             "children": 1,
             "children_list": [
@@ -2011,7 +2011,7 @@
             "wrapper_code": "17113504018271"
         },
         {
-            "ASYPD": 7.61,
+            "PSYPD": 7.61,
             "SYPD": 7.61,
             "children": 1,
             "children_list": [
@@ -2053,7 +2053,7 @@
             "wrapper_code": "17113504018271"
         },
         {
-            "ASYPD": 7.58,
+            "PSYPD": 7.58,
             "SYPD": 7.58,
             "children": 1,
             "children_list": [
@@ -2095,7 +2095,7 @@
             "wrapper_code": "17113504018271"
         },
         {
-            "ASYPD": 7.56,
+            "PSYPD": 7.56,
             "SYPD": 7.56,
             "children": 1,
             "children_list": [
@@ -2137,7 +2137,7 @@
             "wrapper_code": "17113504018271"
         },
         {
-            "ASYPD": 7.62,
+            "PSYPD": 7.62,
             "SYPD": 7.62,
             "children": 1,
             "children_list": [
@@ -2179,7 +2179,7 @@
             "wrapper_code": "17113504018271"
         },
         {
-            "ASYPD": 7.6,
+            "PSYPD": 7.6,
             "SYPD": 7.6,
             "children": 1,
             "children_list": [
@@ -2221,7 +2221,7 @@
             "wrapper_code": "17113504018271"
         },
         {
-            "ASYPD": 7.58,
+            "PSYPD": 7.58,
             "SYPD": 7.58,
             "children": 0,
             "children_list": [],

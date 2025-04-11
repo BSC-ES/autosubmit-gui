@@ -3,7 +3,7 @@
   "error_message": "",
   "history": [
     {
-      "ASYPD": 8.05,
+      "PSYPD": 8.05,
       "SYPD": 14.53,
       "counter": 93,
       "created": "2021-11-15-10:37:37",
@@ -24,7 +24,7 @@
       "wallclock": "2:00"
     },
     {
-      "ASYPD": null,
+      "PSYPD": null,
       "SYPD": null,
       "counter": 89,
       "created": "2021-11-06-22:09:53",
@@ -45,7 +45,7 @@
       "wallclock": "2:00"
     },
     {
-      "ASYPD": 14.32,
+      "PSYPD": 14.32,
       "SYPD": 14.67,
       "counter": 87,
       "created": "2021-11-06-14:05:32",

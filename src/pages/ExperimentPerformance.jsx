@@ -49,20 +49,20 @@ const PERFORMANCE_PLOTS = [
     attributeY: "SYPD",
   },
   {
-    key: "JPSYvsASYPD",
-    title: "JPSY vs ASYPD",
+    key: "JPSYvsPSYPD",
+    title: "JPSY vs PSYPD",
     disabled: (d) => d.maxJPSY <= 0,
     type: "Scatter2D",
     attributeX: "JPSY",
-    attributeY: "ASYPD",
+    attributeY: "PSYPD",
   },
   {
-    key: "SYPDvsASYPD",
-    title: "SYPD vs ASYPD",
-    disabled: (d) => d.maxASYPD <= 0,
+    key: "SYPDvsPSYPD",
+    title: "SYPD vs PSYPD",
+    disabled: (d) => d.maxPSYPD <= 0,
     type: "Scatter2D",
     attributeX: "SYPD",
-    attributeY: "ASYPD",
+    attributeY: "PSYPD",
   },
   {
     key: "CHSYvsSYPD",
@@ -73,12 +73,12 @@ const PERFORMANCE_PLOTS = [
     attributeY: "SYPD",
   },
   {
-    key: "CHSYvsASYPD",
-    title: "CHSY vs ASYPD",
-    disabled: (d) => d.maxASYPD <= 0,
+    key: "CHSYvsPSYPD",
+    title: "CHSY vs PSYPD",
+    disabled: (d) => d.maxPSYPD <= 0,
     type: "Scatter2D",
     attributeX: "CHSY",
-    attributeY: "ASYPD",
+    attributeY: "PSYPD",
   },
   {
     key: "RunVsSYPD",
@@ -95,11 +95,11 @@ const PERFORMANCE_PLOTS = [
     attribute: "CHSY",
   },
   {
-    key: "QueueRunVsASYPD",
-    title: "Queue+Runtime vs ASYPD",
-    disabled: (d) => d.maxASYPD <= 0,
+    key: "QueueRunVsPSYPD",
+    title: "Queue+Runtime vs PSYPD",
+    disabled: (d) => d.maxPSYPD <= 0,
     type: "TimeScatter",
-    attribute: "ASYPD",
+    attribute: "PSYPD",
   },
 ];
 
@@ -107,19 +107,19 @@ const PerformancePlots = ({ considered }) => {
   const [displayPlots, setDisplayPlots] = useState({
     JPSYvsCHSY: false,
     JPSYvsSYPD: false,
-    JPSYvsASYPD: false,
-    SYPDvsASYPD: false,
+    JPSYvsPSYPD: false,
+    SYPDvsPSYPD: false,
     CHSYvsSYPD: false,
-    CHSYvsASYPD: false,
+    CHSYvsPSYPD: false,
     RunVsSYPD: false,
     RunVsCHSY: false,
-    QueueRunVsASYPD: false,
+    QueueRunVsPSYPD: false,
   });
 
   const [auxStats, setAuxStats] = useState({
     consideredJPSY: [],
     maxJPSY: 0,
-    maxASYPD: 0,
+    maxPSYPD: 0,
     JPSYdivisor: 1000,
     JPSYtitleX: "JPSY (thousands)",
   });
@@ -133,8 +133,8 @@ const PerformancePlots = ({ considered }) => {
           })
         )
       );
-      const maxASYPD = Math.max(
-        ...Array.from(considered.map((item) => Number.parseFloat(item.ASYPD)))
+      const maxPSYPD = Math.max(
+        ...Array.from(considered.map((item) => Number.parseFloat(item.PSYPD)))
       );
       const JPSYdivisor = maxJPSY > 999999999 ? 1000000 : 1000;
       const JPSYtitleX =
@@ -149,7 +149,7 @@ const PerformancePlots = ({ considered }) => {
       const newAux = {
         consideredJPSY: consideredJPSY,
         maxJPSY: maxJPSY,
-        maxASYPD: maxASYPD,
+        maxPSYPD: maxPSYPD,
         JPSYdivisor: JPSYdivisor,
         JPSYtitleX: JPSYtitleX,
       };
@@ -197,7 +197,7 @@ const PerformancePlots = ({ considered }) => {
           if (displayPlots[item.key]) {
             if (item.type === "Scatter2D") {
               if (
-                ["JPSYvsCHSY", "JPSYvsSYPD", "JPSYvsASYPD"].includes(item.key)
+                ["JPSYvsCHSY", "JPSYvsSYPD", "JPSYvsPSYPD"].includes(item.key)
               ) {
                 plot = (
                   <MetricScatterPlot
@@ -251,7 +251,7 @@ const PerformanceConsideredJobs = ({ considered }) => {
               "Run",
               "CHSY",
               "SYPD",
-              "ASYPD",
+              "PSYPD",
               "QSYPD",
               "JPSY",
               "Energy",
@@ -290,7 +290,7 @@ const PerformanceConsideredJobs = ({ considered }) => {
                     {formatNumberMoney(item.SYPD)}
                   </TableCell>
                   <TableCell className="py-1">
-                    {formatNumberMoney(item.ASYPD)}
+                    {formatNumberMoney(item.PSYPD)}
                   </TableCell>
                   <TableCell className="py-1">
                     {formatNumberMoney(item.QSYPD)}
@@ -322,7 +322,7 @@ const PerformanceSummary = ({ data }) => {
           .filter((x) => x.JPSY > 0)
           .map((item) => item.JPSY),
         SYPD: data.considered.map((item) => item.SYPD),
-        ASYPD: data.considered.map((item) => item.ASYPD),
+        PSYPD: data.considered.map((item) => item.PSYPD),
         QSYPD: data.considered.map((item) => item.QSYPD),
         CHSY: data.considered.map((item) => item.CHSY),
       };
@@ -623,7 +623,7 @@ const ExperimentPerformance = () => {
           secondsToDelta(item.running),
           formatNumberMoney(item.CHSY),
           formatNumberMoney(item.SYPD),
-          formatNumberMoney(item.ASYPD),
+          formatNumberMoney(item.PSYPD),
           formatNumberMoney(item.QSYPD),
           formatNumberMoney(item.JPSY, true),
           formatNumberMoney(item.energy, true),
@@ -638,7 +638,7 @@ const ExperimentPerformance = () => {
         "Run",
         "CHSY",
         "SYPD",
-        "ASYPD",
+        "PSYPD",
         "QSYPD",
         "JPSY",
         "Energy",
@@ -755,13 +755,13 @@ const ExperimentPerformance = () => {
               </li>
               <li>
                 <span>
-                <strong>ASYPD</strong>: 
-                Actual Simulated Years Per Day, this number
+                <strong>PSYPD</strong>: 
+                Post Simulated Years Per Day, this number
                 should be lower than SYPD due to interruptions, queue wait time,{" "}
                 <strong>POST</strong> jobs, data transfer, or issues with the model
-                workflow. The ASYPD <strong>value</strong> calculated at the job
+                workflow. The PSYPD <strong>value</strong> calculated at the job
                 level uses a generalization of the formula applied at the experiment
-                level. As a consequence, the ASYPD value at the experiment level can
+                level. As a consequence, the PSYPD value at the experiment level can
                 be different that the mean of the values calculated at the job
                 level.
                 </span>

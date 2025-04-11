@@ -3,7 +3,7 @@
     "error_message": "None",
     "jobs": [
         {
-            "ASYPD": null,
+            "PSYPD": null,
             "SYPD": null,
             "children": 4,
             "children_list": [
@@ -45,7 +45,7 @@
             "wrapper_code": null
         },
         {
-            "ASYPD": 0,
+            "PSYPD": 0,
             "SYPD": 1.3,
             "children": 1,
             "children_list": [
@@ -88,7 +88,7 @@
             "wrapper_code": null
         },
         {
-            "ASYPD": 0,
+            "PSYPD": 0,
             "SYPD": 1.29,
             "children": 1,
             "children_list": [
@@ -131,7 +131,7 @@
             "wrapper_code": null
         },
         {
-            "ASYPD": null,
+            "PSYPD": null,
             "SYPD": null,
             "children": 1,
             "children_list": [
@@ -172,7 +172,7 @@
             "wrapper_code": null
         },
         {
-            "ASYPD": null,
+            "PSYPD": null,
             "SYPD": null,
             "children": 1,
             "children_list": [
@@ -213,7 +213,7 @@
             "wrapper_code": null
         },
         {
-            "ASYPD": null,
+            "PSYPD": null,
             "SYPD": null,
             "children": 1,
             "children_list": [
@@ -254,7 +254,7 @@
             "wrapper_code": null
         },
         {
-            "ASYPD": null,
+            "PSYPD": null,
             "SYPD": null,
             "children": 2,
             "children_list": [
@@ -297,7 +297,7 @@
             "wrapper_code": null
         },
         {
-            "ASYPD": 0,
+            "PSYPD": 0,
             "SYPD": 3.53,
             "children": 1,
             "children_list": [
@@ -341,7 +341,7 @@
             "wrapper_code": null
         },
         {
-            "ASYPD": 0,
+            "PSYPD": 0,
             "SYPD": 4.15,
             "children": 1,
             "children_list": [
@@ -385,7 +385,7 @@
             "wrapper_code": null
         },
         {
-            "ASYPD": 0,
+            "PSYPD": 0,
             "SYPD": 1.0,
             "children": 2,
             "children_list": [
@@ -429,7 +429,7 @@
             "wrapper_code": null
         },
         {
-            "ASYPD": 0,
+            "PSYPD": 0,
             "SYPD": 1.21,
             "children": 1,
             "children_list": [
@@ -473,7 +473,7 @@
             "wrapper_code": null
         },
         {
-            "ASYPD": 0,
+            "PSYPD": 0,
             "SYPD": 0.93,
             "children": 2,
             "children_list": [
@@ -517,7 +517,7 @@
             "wrapper_code": null
         },
         {
-            "ASYPD": 0,
+            "PSYPD": 0,
             "SYPD": 0.88,
             "children": 2,
             "children_list": [
@@ -562,7 +562,7 @@
             "wrapper_code": null
         },
         {
-            "ASYPD": 0,
+            "PSYPD": 0,
             "SYPD": 0.88,
             "children": 2,
             "children_list": [
@@ -606,7 +606,7 @@
             "wrapper_code": null
         },
         {
-            "ASYPD": 0,
+            "PSYPD": 0,
             "SYPD": 0.89,
             "children": 1,
             "children_list": [
@@ -650,7 +650,7 @@
             "wrapper_code": null
         },
         {
-            "ASYPD": 0,
+            "PSYPD": 0,
             "SYPD": 0,
             "children": 0,
             "children_list": [],
@@ -692,7 +692,7 @@
             "wrapper_code": null
         },
         {
-            "ASYPD": 0,
+            "PSYPD": 0,
             "SYPD": 0,
             "children": 0,
             "children_list": [],
