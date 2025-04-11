@@ -648,7 +648,7 @@
     "error_message": "",
     "warnings_job_data": [
         "Considered | Job a6zi_18500101_fc0_20_SIM (Package a6zi_ASThread_17110035707450_528_10) has no energy information and is not going to be considered for energy calculations.",
-        "We couldn't find COMPLETED POST jobs in the experiment. The time of the POST jobs will be not included in the PSYD calculation.",
+        "We couldn't find COMPLETED POST jobs in the experiment. The time of the POST jobs will not be included in the PSYD calculation.",
         "RSYPD | There are no TRANSFER nor CLEAN (COMPLETED) jobs in the experiment, RSYPD cannot be computed."
     ]
 }
