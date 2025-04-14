@@ -3,7 +3,7 @@
   "error_message": "",
   "runs": [
     {
-      "ASYPD": 2.46,
+      "PSYPD": 2.46,
       "SYPD": 3.52,
       "chunk_size": 12,
       "chunk_unit": "month",
@@ -19,7 +19,7 @@
       "total": 89
     },
     {
-      "ASYPD": null,
+      "PSYPD": null,
       "SYPD": null,
       "chunk_size": 12,
       "chunk_unit": "month",
