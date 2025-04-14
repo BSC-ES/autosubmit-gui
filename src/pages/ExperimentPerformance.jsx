@@ -549,25 +549,25 @@ const PerformanceIdealCriticalPath = ({ idealCriticalPath, phases, formatSeconds
                 <li>
                   <strong>Pre-SIM:</strong>{" "}
                   <span className="rounded px-1 bg-light">
-                    {formatSecondsToHMS(phases.pre_sim_time)}
+                    {formatSecondsToHMS(phases.pre_sim)}
                   </span>
                 </li>
                 <li>
                   <strong>SIM:</strong>{" "}
                   <span className="rounded px-1 bg-light">
-                    {formatSecondsToHMS(phases.sim_time)}
+                    {formatSecondsToHMS(phases.sim)}
                   </span>
                 </li>
                 <li>
                   <strong>Post-SIM:</strong>{" "}
                   <span className="rounded px-1 bg-light">
-                    {formatSecondsToHMS(phases.post_sim_time)}
+                    {formatSecondsToHMS(phases.post_sim)}
                   </span>
                 </li>
                 <li>
                   <strong>Total:</strong>{" "}
                   <span className="rounded px-1 bg-light">
-                    {formatSecondsToHMS(phases.total_time)}
+                    {formatSecondsToHMS(phases.pre_sim + phases.sim + phases.post_sim)}
                   </span>
                 </li>
               </ul>
@@ -1089,7 +1089,7 @@ const ExperimentPerformance = () => {
 
             <PerformanceIdealCriticalPath
               idealCriticalPath={data?.ideal_critical_path}
-              phases={data?.ideal_phases}
+              phases={data?.phases_run_times}
               formatSecondsToHMS={formatSecondsToHMS}
             />
           

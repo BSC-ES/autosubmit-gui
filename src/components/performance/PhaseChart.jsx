@@ -2,7 +2,7 @@ import React from "react";
 import * as d3 from "d3";
 
 const PhaseChart = ({ phases, formatSecondsToHMS }) => {
-    if (!phases || !phases.sim_time) {
+    if (!phases || !phases.sim) {
       return (
         <div className="flex flex-col justify-center items-center w-full h-full py-12 gap-4">
             <i className="fa-solid fa-triangle-exclamation text-danger text-6xl"></i>
@@ -19,9 +19,9 @@ const PhaseChart = ({ phases, formatSecondsToHMS }) => {
         d3.select(node).selectAll("*").remove();
 
         const data = [
-            { name: "Pre-SIM", duration: phases.pre_sim_time },
-            { name: "SIM", duration: phases.sim_time },
-            { name: "Post-SIM", duration: phases.post_sim_time },
+            { name: "Pre-SIM", duration: phases.pre_sim},
+            { name: "SIM", duration: phases.sim},
+            { name: "Post-SIM", duration: phases.post_sim},
         ];
         const containerWidth = parseInt(d3.select(node.parentNode).style("width"));
         const width = containerWidth;
