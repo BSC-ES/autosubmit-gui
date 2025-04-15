@@ -45,6 +45,11 @@ const EXPERIMENT_MENU_ITEMS = [
     iconClass: "fa-solid fa-stopwatch",
     route: "/performance"
   },
+  {
+    name: "USER METRICS",
+    iconClass: "fa-solid fa-magnifying-glass-chart",
+    route: "/user-metrics"
+  }
 ]
 
 const ExperimentMenuItems = ({ showLabels = true }) => {
