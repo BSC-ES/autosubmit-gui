@@ -27,6 +27,7 @@ import { appActions } from "../store/appSlice";
 import { useEffect } from "react";
 import Footer from "./Footer";
 import TopAnnouncement from "./TopAnnouncement";
+import UserMetricsPage from "../pages/UserMetricsPage";
 
 const router = createBrowserRouter(
   [
@@ -101,6 +102,10 @@ const router = createBrowserRouter(
             {
               path: "/experiment/:expid/performance",
               element: <ExperimentPerformance />,
+            },
+            {
+              path: "/experiment/:expid/user-metrics",
+              element: <UserMetricsPage />,
             },
           ],
         },
