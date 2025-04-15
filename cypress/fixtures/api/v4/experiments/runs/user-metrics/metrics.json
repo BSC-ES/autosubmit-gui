@@ -1,0 +1,29 @@
+{
+  "run_id": 3,
+  "metrics": [
+    {
+      "job_name": "a6zi_SETUP",
+      "metric_name": "metric",
+      "metric_value": "lorem ipsum dolor sit amet consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, lorem ipsum dolor sit amet consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, lorem ipsum dolor sit amet consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, lorem ipsum dolor sit amet consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+      "modified": "2025-04-02T12:54:47+00:00"
+    },
+    {
+      "job_name": "a6zi_SIM",
+      "metric_name": "foo_metric",
+      "metric_value": "300",
+      "modified": "2025-04-02T12:54:47+00:00"
+    },
+    {
+      "job_name": "a6zi_SIM",
+      "metric_name": "bar_metric",
+      "metric_value": "ICON-model",
+      "modified": "2025-04-02T12:54:47+00:00"
+    },
+    {
+      "job_name": "a6zi_POST",
+      "metric_name": "qux_metric",
+      "metric_value": "2000321401340134902340324913123412423",
+      "modified": "2025-04-02T12:54:47+00:00"
+    }
+  ]
+}
