@@ -80,6 +80,9 @@ export const STATUS_STYLES = {
   "SKIPPED": {
     badge: "badge-status-skipped"
   },
+  "DELAYED": {
+    badge: "badge-status-delayed"
+  },
 }
 
 export const getStatusBadgeStyle = (status) => {
