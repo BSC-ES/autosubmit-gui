@@ -129,6 +129,10 @@
     @apply bg-[lightyellow] text-black;
   }
 
+  .badge-status-delayed {
+    @apply bg-[lightcyan] text-black;
+  }
+
   .alert {
     @apply border px-6 py-4 rounded-2xl;
   }

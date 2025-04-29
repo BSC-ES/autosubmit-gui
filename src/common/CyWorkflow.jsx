@@ -121,6 +121,12 @@ const GRAPH_STYLE = [
       backgroundColor: "lightyellow",
     },
   },
+  {
+    selector: "node[status='DELAYED']",
+    style: {
+      backgroundColor: "lightcyan",
+    },
+  },
 ];
 
 const CyWorkflow = ({ elements, onSelectNodes, cy: forwardCy }) => {
