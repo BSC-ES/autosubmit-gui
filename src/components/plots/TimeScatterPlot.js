@@ -93,7 +93,7 @@ class TimeScatterPlot extends Component {
     }
 
     const getTimeElementsName = (chosenAttrib) => {
-      if (chosenAttrib === "ASYPD") {
+      if (chosenAttrib === "PSYPD") {
         return "Queue + Run"
       } else {
         return "Run";
@@ -101,7 +101,7 @@ class TimeScatterPlot extends Component {
     }
 
     const getTimeSeconds = (d, chosenAttrib) => {
-      if (chosenAttrib === "ASYPD") {
+      if (chosenAttrib === "PSYPD") {
         return Number.parseInt(d.queue + d.running);
       } else {
         return Number.parseInt(d.running);
