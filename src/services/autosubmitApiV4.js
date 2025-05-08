@@ -77,6 +77,14 @@ export const autosubmitApiV4 = createApi({
                 }
             }
         }),
+        getUserMetricsByRun: builder.query({
+            query: ({ expid, run_id }) => {
+                return {
+                    url: `experiments/${expid}/runs/${run_id}/user-metrics`,
+                    method: "GET"
+                }
+            }
+        }),
         login: builder.mutation({
             query: ({ provider, ticket, service, code, redirect_uri }) => {
                 if (provider === "oidc") {
