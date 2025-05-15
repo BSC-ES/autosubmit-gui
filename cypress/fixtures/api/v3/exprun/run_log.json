@@ -1,0 +1,22 @@
+{
+  "logfile": "20250514_113134_run.log",
+  "found": true,
+  "lastModified": "2025-05-14T11:31:58+02:00",
+  "timeStamp": 1747215118,
+  "error": false,
+  "error_message": "",
+  "logcontent": [
+    {
+      "index": 0,
+      "content": "2025-05-14 11:31:35,179 Autosubmit is running with 4.1.14"
+    },
+    {
+      "index": 1,
+      "content": "2025-05-14 11:31:35,179 Preparing run"
+    },
+    {
+      "index": 2,
+      "content": "2025-05-14 11:31:58,144 Run successful"
+    }
+  ]
+}

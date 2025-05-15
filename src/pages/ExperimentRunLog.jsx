@@ -202,6 +202,7 @@ const ExperimentRunLog = () => {
         {TAB_LIST.map((tabItem) => (
           <div
             key={tabItem.value}
+            id={"tab_" + tabItem.value}
             className={`grow text-center cursor-pointer py-2 border-b hover:bg-neutral-100 dark:hover:bg-neutral-700 ${
               tab === tabItem.value
                 ? "text-primary border-b-2 border-primary dark:border-primary-400 dark:text-primary-400"
