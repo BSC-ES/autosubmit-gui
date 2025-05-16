@@ -1,0 +1,46 @@
+{
+  "platform_recovery_logs": [
+    {
+      "datetime": "2025-05-13T12:44:57",
+      "filename": "20250513_124457_local_log_recovery.log",
+      "platform": "local",
+      "modified_date": "2025-05-13T12:45:20+02:00",
+      "content": [
+        {
+          "index": 0,
+          "content": "2025-05-13 12:44:58,704 local(log_recovery): Starting..."
+        },
+        {
+          "index": 1,
+          "content": "2025-05-13 12:44:58,704 local(log_recovery): lorem ipsum"
+        },
+        {
+          "index": 2,
+          "content": "2025-05-13 12:45:20,776 local(log_recovery): Exiting."
+        }
+      ]
+    },
+    {
+      "datetime": "2025-05-13T12:45:32",
+      "filename": "20250513_124532_marenostrum5_log_recovery.log",
+      "platform": "marenostrum5",
+      "modified_date": "2025-05-13T12:45:20+02:00",
+      "content": [
+        {
+          "index": 0,
+          "content": "2025-05-13 12:44:58,704 marenostrum5(log_recovery): Starting..."
+        },
+        {
+          "index": 1,
+          "content": "2025-05-13 12:44:58,704 marenostrum5(log_recovery): lorem ipsum"
+        },
+        {
+          "index": 2,
+          "content": "2025-05-13 12:45:20,776 marenostrum5(log_recovery): Exiting."
+        }
+      ]
+    }
+  ],
+  "error": false,
+  "error_message": ""
+}

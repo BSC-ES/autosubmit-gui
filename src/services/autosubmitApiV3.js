@@ -45,6 +45,9 @@ export const autosubmitApiV3 = createApi({
         getExperimentRunLog: builder.query({
             query: (expid) => `exprun/${expid}`
         }),
+        getExperimentRecoveryLog: builder.query({
+            query: (expid) => `exp-recovery-logs/${expid}`
+        }),
         getExperimentConfiguration: builder.query({
             query: (expid) => `cconfig/${expid}`
         }),
