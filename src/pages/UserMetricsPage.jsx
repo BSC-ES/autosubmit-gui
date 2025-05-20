@@ -11,6 +11,7 @@ import {
   TableBody,
   TableCell,
 } from "../common/Table";
+import { cn } from "../services/utils";
 
 const UserMetricsTable = ({ metrics }) => {
   const groupedMetrics = useMemo(() => {
@@ -36,26 +37,24 @@ const UserMetricsTable = ({ metrics }) => {
         </TableHead>
         <TableBody>
           {groupedMetrics &&
-            Object.entries(groupedMetrics).map(([jobName, metrics]) => (
-              <>
-                {metrics.map((metric, index) => (
-                  <TableRow key={`${jobName}-${metric.metric_name}`}>
-                    {index === 0 && (
-                      <TableCell
-                        rowSpan={metrics.length}
-                        className="font-semibold"
-                      >
-                        {jobName}
-                      </TableCell>
-                    )}
-                    <TableCell className="font-semibold">
-                      {metric.metric_name}
+            Object.entries(groupedMetrics).map(([jobName, metrics]) => {
+              return metrics.map((metric, index) => (
+                <TableRow key={`${jobName}-${metric.metric_name}`}>
+                  {index === 0 && (
+                    <TableCell
+                      rowSpan={metrics.length}
+                      className="font-semibold"
+                    >
+                      {jobName}
                     </TableCell>
-                    <TableCell>{metric.metric_value}</TableCell>
-                  </TableRow>
-                ))}
-              </>
-            ))}
+                  )}
+                  <TableCell className="font-semibold">
+                    {metric.metric_name}
+                  </TableCell>
+                  <TableCell>{metric.metric_value}</TableCell>
+                </TableRow>
+              ));
+            })}
           {groupedMetrics && Object.keys(groupedMetrics).length === 0 && (
             <TableRow>
               <TableCell colSpan={3} className="text-center opacity-50 py-6">
@@ -76,21 +75,25 @@ const UserMetricsSelection = ({ expid, runs }) => {
     return searchParams.get("run_id") || runs[0].run_id;
   }, [searchParams]);
 
-  const { data } = autosubmitApiV4.endpoints.getUserMetricsByRun.useQuery(
-    {
-      expid: expid,
-      run_id: runId,
-    },
-    {
-      skip: !runId,
-    }
-  );
+  const { data, isFetching } =
+    autosubmitApiV4.endpoints.getUserMetricsByRun.useQuery(
+      {
+        expid: expid,
+        run_id: runId,
+      },
+      {
+        skip: !runId,
+      }
+    );
 
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center gap-4 mx-8">
-        <div className="font-semibold">Select Run:</div>
+        <label htmlFor="select-run-user-metrics" className="font-semibold">
+          Select Run:
+        </label>
         <select
+          id="select-run-user-metrics"
           className="border rounded-xl px-2 py-3 bg-white text-black min-w-[25%] max-w-full"
           value={runId}
           onChange={(e) => setSearchParams({ run_id: e.target.value })}
@@ -106,7 +109,13 @@ const UserMetricsSelection = ({ expid, runs }) => {
         </select>
       </div>
       <div className="flex flex-col">
-        <UserMetricsTable metrics={data?.metrics} />
+        {isFetching ? (
+          <div className="w-full h-full flex items-center justify-center">
+            <div className="spinner-border" role="status"></div>
+          </div>
+        ) : (
+          <UserMetricsTable metrics={data?.metrics} />
+        )}
       </div>
     </div>
   );
@@ -145,10 +154,17 @@ const UserMetricsPage = () => {
           {runsIsError ||
           !Array.isArray(runsData?.runs) ||
           runsData.runs.length === 0 ? (
-            <div className="text-danger w-full grow flex flex-col gap-8 items-center justify-center">
+            <div
+              className={cn(
+                "w-full grow flex flex-col gap-8 items-center justify-center",
+                runsData?.runs?.length === 0 ? "opacity-50" : "text-danger"
+              )}
+            >
               <i className="fa-solid fa-triangle-exclamation text-9xl"></i>
               <div className="text-2xl">
-                {"Error fetching the experiment runs or no runs found"}
+                {runsData?.runs?.length === 0
+                  ? "No runs with user metrics found"
+                  : "Error fetching the experiment runs"}
               </div>
             </div>
           ) : (
