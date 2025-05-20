@@ -130,7 +130,7 @@ const UserMetricsPage = () => {
     data: runsData,
     isFetching: runsIsFetching,
     isError: runsIsError,
-  } = autosubmitApiV4.endpoints.getExperimentRuns.useQuery({
+  } = autosubmitApiV4.endpoints.getUserMetricsRuns.useQuery({
     expid: routeParams.expid,
   });
 

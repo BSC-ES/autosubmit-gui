@@ -77,6 +77,14 @@ export const autosubmitApiV4 = createApi({
                 }
             }
         }),
+        getUserMetricsRuns: builder.query({
+            query: ({ expid }) => {
+                return {
+                    url: `experiments/${expid}/user-metrics-runs`,
+                    method: "GET"
+                }
+            }
+        }),
         getUserMetricsByRun: builder.query({
             query: ({ expid, run_id }) => {
                 return {

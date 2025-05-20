@@ -6,7 +6,7 @@ describe("user metrics view", () => {
 
     cy.intercept(
       "GET",
-      Cypress.env("EXTERNAL_API") + `/v4/experiments/${expid}/runs`,
+      Cypress.env("EXTERNAL_API") + `/v4/experiments/${expid}/user-metrics-runs`,
       {
         fixture: "api/v4/experiments/runs/minimal_run_list.json",
       }
@@ -59,7 +59,7 @@ describe("user metrics view", () => {
   it("cannot get runs", () => {
     cy.intercept(
       "GET",
-      Cypress.env("EXTERNAL_API") + `/v4/experiments/${expid}/runs`,
+      Cypress.env("EXTERNAL_API") + `/v4/experiments/${expid}/user-metrics-runs`,
       {
         body: {
           error: "Cannot get runs",
