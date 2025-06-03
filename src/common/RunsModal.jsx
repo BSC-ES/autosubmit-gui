@@ -57,7 +57,7 @@ const RunsModal = ({ expid, show, onHide, onRunSelect }) => {
                     "Completed",
                     "Total",
                     "SYPD",
-                    "ASYPD",
+                    "PSYPD",
                     "ChunkUnit",
                     "ChunkSize",
                   ].map((item) => (
@@ -97,7 +97,7 @@ const RunsModal = ({ expid, show, onHide, onRunSelect }) => {
                       <TableCell>{item.completed}</TableCell>
                       <TableCell className="font-bold">{item.total}</TableCell>
                       <TableCell>{item.SYPD}</TableCell>
-                      <TableCell>{item.ASYPD}</TableCell>
+                      <TableCell>{item.PSYPD}</TableCell>
                       <TableCell>{item.chunk_unit}</TableCell>
                       <TableCell>{item.chunk_size}</TableCell>
                     </TableRow>
