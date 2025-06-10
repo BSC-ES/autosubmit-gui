@@ -1,5 +1,9 @@
 ## Changelog
 
+### Release v4.0.1 - Release date: 2025-06-10
+
+* Supported Autosubmit API version: [4.1.1](https://pypi.org/project/autosubmit-api/4.1.1/)
+
 ### Pre-release v4.1.0-beta.1 - Release date: 2025-05-21
 
 * **Compatibility with Autosubmit API version >= [4.1.0b1](https://pypi.org/project/autosubmit-api/4.1.0b1/)**
