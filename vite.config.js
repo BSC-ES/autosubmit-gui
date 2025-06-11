@@ -11,6 +11,8 @@ export default defineConfig(() => {
     envPrefix: 'REACT_APP_',
     build: {
       outDir: 'build',
+      // fancytree is mixed fix: https://stackoverflow.com/questions/77421447/how-to-solve-require-is-not-defined-in-vite
+      commonjsOptions: { transformMixedEsModules: true } 
     },
     resolve: {
       alias: {
