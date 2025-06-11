@@ -10,7 +10,7 @@ import {
   OIDC_CLIENT_ID,
 } from "../consts";
 import { useDispatch } from "react-redux";
-import { ReactComponent as Logo } from "../common/Logo.svg";
+import Logo from "../common/Logo.svg?react";
 
 import { authActions } from "../store/authSlice";
 import { motion, useAnimate } from "framer-motion";

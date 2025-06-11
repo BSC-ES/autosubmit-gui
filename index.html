@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="manifest" href="/manifest.json" />
+
+    <title>Autosubmit GUI</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <script type="module" src="/src/index.jsx"></script>
+  </body>
+
+  <script type="text/javascript">
+
+    function copyToClip(inputname) {
+      // console.log(inputname);
+      var copyText = document.getElementById(inputname);
+      if (copyText) {
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+        document.execCommand("copy");
+        // console.log("Copied the text: " + copyText.value);
+      } else {
+        console.log("No selection");
+      }
+    }
+
+    function fallbackCopyTextToClipboard(text) {
+      var textArea = document.createElement("textarea");
+      textArea.value = text;
+
+      // Avoid scrolling to bottom
+      textArea.style.top = "0";
+      textArea.style.left = "0";
+      textArea.style.position = "fixed";
+
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+
+      try {
+        var successful = document.execCommand("copy");
+        var msg = successful ? "successful" : "unsuccessful";
+        console.log("Fallback: Copying text command was " + msg);
+      } catch (err) {
+        console.error("Fallback: Oops, unable to copy", err);
+      }
+
+      document.body.removeChild(textArea);
+    }
+
+    function copyTextToClipboard(text) {
+      if (!navigator.clipboard) {
+        fallbackCopyTextToClipboard(text);
+        return;
+      }
+      navigator.clipboard.writeText(text).then(
+        function () {
+          console.log("Async: Copying to clipboard was successful!");
+        },
+        function (err) {
+          console.error("Async: Could not copy text: ", err);
+        }
+      );
+    }
+
+    function scrollToBottom() {
+      //console.log(id)
+      var div = document.getElementById("log_scroll");
+      //console.log(div)
+      if (div) {
+        div.scrollTop = div.scrollHeight - div.clientHeight;
+      }
+    }
+  </script>
+
+</html>
