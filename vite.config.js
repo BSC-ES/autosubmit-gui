@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import svgr from 'vite-plugin-svgr';
 import inject from '@rollup/plugin-inject';
+import istanbul from "vite-plugin-istanbul";
 
 
 export default defineConfig(() => {
@@ -29,6 +30,10 @@ export default defineConfig(() => {
       inject({
         $: 'jquery',
         jQuery: 'jquery',
+      }),
+      // Istanbul plugin for code coverage
+      istanbul({
+        cypress: true,
       }),
     ],
   };
