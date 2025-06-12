@@ -1,7 +1,6 @@
 {
   "name": "autosubmit-gui",
   "version": "4.1.0",
-  "main": "index.js",
   "repository": "https://github.com/BSC-ES/autosubmit-gui",
   "author": "Luiggi Tenorio, Barcelona Supercomputing Center",
   "description": "Autosubmit GUI is a software made up of two separate components. A web application based on ReactJS, and a web service API written on Python. This documentation is about the former: The ReactJS App. We begin by emphasizing the fact the application is written using Javascript with some ReactJS flavored syntax, e.g. JSX. However, the developer familiar with Javascript should not have problems understanding the main code of this application.  You can find more information about **React** in the following link: [https://reactjs.org/docs/getting-started.html](https://reactjs.org/docs/getting-started.html)",
@@ -11,7 +10,7 @@
   "scripts": {
     "start": "vite",
     "build": "vite build",
-    "serve": "vite preview",
+    "preview": "vite preview",
     "cy:open": "cypress open",
     "cy:run": "cypress run"
   },
@@ -24,7 +23,6 @@
     "@radix-ui/react-progress": "^1.1.7",
     "@radix-ui/react-tooltip": "^1.2.7",
     "@reduxjs/toolkit": "^2.8.2",
-    "@tailwindcss/vite": "^4.1.8",
     "@uidotdev/usehooks": "^2.4.1",
     "clsx": "^2.1.1",
     "cytoscape": "^3.32.0",
@@ -45,6 +43,7 @@
   "devDependencies": {
     "@cypress/code-coverage": "^3.14.4",
     "@rollup/plugin-inject": "^5.0.5",
+    "@tailwindcss/vite": "^4.1.10",
     "@vitejs/plugin-react": "^4.5.2",
     "autoprefixer": "^10.4.21",
     "cypress": "^14.4.1",
