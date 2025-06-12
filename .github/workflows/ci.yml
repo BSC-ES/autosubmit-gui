@@ -39,7 +39,7 @@ jobs:
           CYPRESS_EXTERNAL_API: "http://localhost:8000"
         with:
           install-command: yarn install
-          start: npm start
+          start: yarn start
           wait-on: "http://localhost:3000"
           browser: ${{ matrix.browser }}
 

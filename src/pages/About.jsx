@@ -51,7 +51,6 @@ const About = () => {
     }
   ])
   const [markdown, setMarkdown] = useState("")
-  // console.log(process.env.PUBLIC_URL)
 
   useEffect(() => {
     fetch(`${PUBLIC_URL}/CHANGELOG.md`)
