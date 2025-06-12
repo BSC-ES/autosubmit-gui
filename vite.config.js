@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import svgr from 'vite-plugin-svgr';
@@ -6,13 +6,19 @@ import inject from '@rollup/plugin-inject';
 import istanbul from "vite-plugin-istanbul";
 
 
-export default defineConfig(() => {
+export default defineConfig(({ mode }) => {
+  const PREFIXES = ['REACT_APP_', 'PUBLIC_URL'];
+  let _dotEnvContent = loadEnv(mode, process.cwd(), PREFIXES);
+  console.log(`Loaded environment variables from dotenv:`, _dotEnvContent);
+  process.env = { ...process.env, ..._dotEnvContent };
+
   return {
-    envPrefix: 'REACT_APP_',
+    envPrefix: PREFIXES,
+    base: process.env.PUBLIC_URL || undefined,
     build: {
       outDir: 'build',
       // fancytree is mixed fix: https://stackoverflow.com/questions/77421447/how-to-solve-require-is-not-defined-in-vite
-      commonjsOptions: { transformMixedEsModules: true } 
+      commonjsOptions: { transformMixedEsModules: true }
     },
     resolve: {
       alias: {
