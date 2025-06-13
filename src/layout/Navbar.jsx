@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import AuthBadge from "../common/AuthBadge";
-import { ReactComponent as Logo } from "../common/Logo.svg";
+import Logo from "../common/Logo.svg?react";
 import { useWindowSize } from "@uidotdev/usehooks";
 import DarkThemeSwitcher from "../common/DarkThemeSwitcher";
 import { AUTHENTICATION, CUSTOM_LOGO_URL, DARK_MODE_SWITCHER } from "../consts";

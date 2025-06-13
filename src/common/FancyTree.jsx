@@ -1,5 +1,5 @@
 import { useEffect, useRef, MutableRefObject } from "react";
-import { createTree } from "jquery.fancytree";
+import $ from "jquery";
 import "jquery.fancytree/dist/modules/jquery.fancytree.clones";
 import "jquery.fancytree/dist/modules/jquery.fancytree.filter";
 import "jquery.fancytree/dist/modules/jquery.fancytree.childcounter";
@@ -54,7 +54,7 @@ const FancyTree = ({ source, tree: forwardTree, onSelectNodes, className }) => {
   useEffect(() => {
     let newSource = [];
     if (source) newSource = source;
-    tree.current = createTree("#fancy-tree", {
+    tree.current = $.ui.fancytree.createTree("#fancy-tree", {
       ...FANCY_TREE_OPTIONS,
       source: newSource,
       select: handleSelect,

@@ -1,103 +1,58 @@
 {
-  "name": "autosubmitgui",
+  "name": "autosubmit-gui",
   "version": "4.1.0",
+  "repository": "https://github.com/BSC-ES/autosubmit-gui",
+  "author": "Luiggi Tenorio, Barcelona Supercomputing Center",
+  "description": "Autosubmit GUI is a software made up of two separate components. A web application based on ReactJS, and a web service API written on Python. This documentation is about the former: The ReactJS App. We begin by emphasizing the fact the application is written using Javascript with some ReactJS flavored syntax, e.g. JSX. However, the developer familiar with Javascript should not have problems understanding the main code of this application.  You can find more information about **React** in the following link: [https://reactjs.org/docs/getting-started.html](https://reactjs.org/docs/getting-started.html)",
+  "license": "MIT",
+  "type": "module",
   "private": true,
-  "dependencies": {
-    "@fortawesome/fontawesome-free": "^6.7.1",
-    "@headlessui/react": "^2.2.0",
-    "@radix-ui/react-collapsible": "^1.1.1",
-    "@radix-ui/react-dialog": "^1.1.2",
-    "@radix-ui/react-dropdown-menu": "^2.1.2",
-    "@radix-ui/react-progress": "^1.1.1",
-    "@radix-ui/react-tooltip": "^1.1.4",
-    "@reduxjs/toolkit": "^2.5.0",
-    "@uidotdev/usehooks": "^2.4.1",
-    "clsx": "^2.1.1",
-    "cytoscape": "^3.30.4",
-    "d3": "^7.9.0",
-    "framer-motion": "^11.15.0",
-    "jquery": "^3.7.1",
-    "jquery.fancytree": "^2.38.3",
-    "react": "^18.3.1",
-    "react-cytoscapejs": "^2.0.0",
-    "react-dom": "^18.3.1",
-    "react-hook-form": "^7.54.2",
-    "react-redux": "^9.1.2",
-    "react-router-dom": "^7.0.2",
-    "react-scripts": "^5.0.1",
-    "sass": "^1.82.0",
-    "showdown": "^2.1.0",
-    "tailwind-merge": "^2.5.5"
-  },
   "scripts": {
-    "start": "react-scripts -r @cypress/instrument-cra start",
-    "build": "react-scripts build",
-    "test": "jest",
-    "eject": "react-scripts eject",
-    "lint": "eslint src --ext .js,.jsx --ignore-pattern *.test.js",
+    "start": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
     "cy:open": "cypress open",
     "cy:run": "cypress run"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.7.2",
+    "@headlessui/react": "^2.2.4",
+    "@radix-ui/react-collapsible": "^1.1.11",
+    "@radix-ui/react-dialog": "^1.1.14",
+    "@radix-ui/react-dropdown-menu": "^2.1.15",
+    "@radix-ui/react-progress": "^1.1.7",
+    "@radix-ui/react-tooltip": "^1.2.7",
+    "@reduxjs/toolkit": "^2.8.2",
+    "@uidotdev/usehooks": "^2.4.1",
+    "clsx": "^2.1.1",
+    "cytoscape": "^3.32.0",
+    "d3": "^7.9.0",
+    "framer-motion": "^12.16.0",
+    "jquery": "^3.7.1",
+    "jquery.fancytree": "^2.38.3",
+    "react": "^19.1.0",
+    "react-cytoscapejs": "^2.0.0",
+    "react-dom": "^19.1.0",
+    "react-hook-form": "^7.57.0",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.6.2",
+    "sass": "^1.89.2",
+    "showdown": "^2.1.0",
+    "tailwind-merge": "^3.3.0"
   },
-  "description": "Autosubmit GUI is a software made up of two separate components. A web application based on ReactJS, and a web service API written on Python. This documentation is about the former: The ReactJS App. We begin by emphasizing the fact the application is written using Javascript with some ReactJS flavored syntax, e.g. JSX. However, the developer familiar with Javascript should not have problems understanding the main code of this application.  You can find more information about **React** in the following link: [https://reactjs.org/docs/getting-started.html](https://reactjs.org/docs/getting-started.html)",
-  "main": "index.js",
   "devDependencies": {
-    "@babel/plugin-proposal-class-properties": "^7.12.1",
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@babel/plugin-transform-modules-commonjs": "^7.26.3",
-    "@cypress/code-coverage": "^3.13.9",
-    "@cypress/instrument-cra": "^1.4.0",
-    "babel-plugin-istanbul": "^7.0.0",
-    "cypress": "^13.16.1",
-    "dotenv": "^16.4.7",
-    "eslint": "^8.55.0",
-    "jest-canvas-mock": "^2.5.2",
-    "source-map-explorer": "^2.5.3",
-    "tailwindcss": "^3.4.16"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/BSC-ES/autosubmit-gui"
-  },
-  "author": "",
-  "license": "MIT",
-  "jest": {
-    "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/mocks/fileMock.js",
-      "\\.(css|sass)$": "<rootDir>/mocks/styleMock.js"
-    },
-    "setupFiles": [
-      "jest-canvas-mock"
-    ]
-  },
-  "babel": {
-    "env": {
-      "test": {
-        "plugins": [
-          "@babel/plugin-transform-modules-commonjs",
-          "@babel/plugin-proposal-class-properties",
-          "@babel/plugin-transform-react-jsx",
-          [
-            "istanbul",
-            {
-              "exclude": [
-                "**/*.test.js"
-              ]
-            }
-          ]
-        ]
-      }
-    }
+    "@cypress/code-coverage": "^3.14.4",
+    "@rollup/plugin-inject": "^5.0.5",
+    "@tailwindcss/vite": "^4.1.10",
+    "@vitejs/plugin-react": "^4.5.2",
+    "autoprefixer": "^10.4.21",
+    "cypress": "^14.4.1",
+    "dotenv": "^16.5.0",
+    "eslint": "^9.28.0",
+    "postcss": "^8.5.4",
+    "tailwindcss": "3",
+    "vite": "^6.3.5",
+    "vite-plugin-istanbul": "^7.0.0",
+    "vite-plugin-svgr": "^4.3.0"
   }
 }
