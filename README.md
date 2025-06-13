@@ -22,7 +22,7 @@ Full documentation: https://autosubmit-gui.readthedocs.io/en/latest/
 ## Installation
 
 > **NOTE**
-> This project has been created by using [Create React App (CRA)](https://create-react-app.dev/), so it is important to check CRA documentation to do changes on its deployment process.
+> This project has been created by using [Vite](https://vite.dev/), so it is important to check its documentation to do changes on its deployment process.
 
 First, clone the repository:
 
@@ -47,7 +47,7 @@ REACT_APP_AUTOSUBMIT_API_SOURCE=https://earth.bsc.es/autosubmitapi
 You can check the full list of the configuration variables here: https://autosubmit-gui.readthedocs.io/en/latest/configuration/index.html
 
 > **NOTE**
-> If you want to have different sets of `.env` files for different purposes (production, development, testing, etc), refer to the [Enviroment variables CRA documentation](https://create-react-app.dev/docs/adding-custom-environment-variables).
+> If you want to have different sets of `.env` files for different purposes (production, development, testing, etc), refer to the [Vite's Enviroment variables documentation](https://vite.dev/guide/env-and-mode#env-files).
 
 
 Now you are able to run the GUI locally using:
@@ -58,7 +58,7 @@ Or build the project bundle by doing:
 
 `npm run build`
 
-Furthermore, if you want to set up it for production, please refere to the [Deployment CRA documentation](https://create-react-app.dev/docs/deployment).
+Furthermore, if you want to set up it for production, please refere to the [Vite's Building for Production documentation](https://vite.dev/guide/build.html).
 
 
 ## Testing

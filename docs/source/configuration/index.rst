@@ -10,7 +10,7 @@ General variables
 **************************
 
 * ``REACT_APP_AUTOSUBMIT_API_SOURCE``: Defines the API URI. For more information check `autosubmit_api <https://github.com/BSC-ES/autosubmit-api>`_.
-* ``PUBLIC_URL``: This allows to serve the GUI from another subpath. See more in `CRA advanced configuration <https://create-react-app.dev/docs/advanced-configuration>`_.
+* ``PUBLIC_URL``: This allows to serve the GUI from another subpath. Remind that this works with Vite's ``base`` option.
 * ``REACT_APP_DARK_MODE_SWITCHER`` *(experimental feature)*: Default ``false``. Set it to ``true`` if you want to enable the Dark mode feature.
 
 
@@ -29,7 +29,7 @@ Authentication variables
 * ``REACT_APP_OIDC_CLIENT_ID``: Client ID for the OpenID Connect protocol. See more on `OpenID Connect Terminology <https://openid.net/specs/openid-connect-core-1_0.html#Terminology>`_.
 
 
-.. note:: If you want to have different sets of ``.env`` files for different purposes (production, development, testing, etc), refer to the `Enviroment variables CRA documentation <https://create-react-app.dev/docs/adding-custom-environment-variables>`_.
+.. note:: If you want to have different sets of ``.env`` files for different purposes (production, development, testing, etc), refer to the `Vite's Enviroment variables documentation <https://vite.dev/guide/env-and-mode#env-files>`_.
 
 Here is an example of ``.env`` file:
 

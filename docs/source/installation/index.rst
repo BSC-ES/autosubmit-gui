@@ -8,7 +8,7 @@ Installation
 Building the project locally
 *****************************
 
-.. important:: This project has been created by using `Create React App (CRA) <https://create-react-app.dev/>`_, so it is important to check CRA documentation to do changes on its deployment process.
+.. important:: This project uses `Vite <https://vite.dev/>`_, so it is important to check its documentation to do changes on its deployment process.
 
 First, clone the repository:
 
@@ -51,4 +51,4 @@ Once configured, you are now able to run the GUI locally using:
     npm start
 
 
-.. note:: Furthermore, if you want to set up it for production, please refere to the `Deployment CRA documentation <https://create-react-app.dev/docs/deployment>`_
+.. note:: Furthermore, if you want to set up it for production, please refere to the `Vite's Building for Production documentation <https://vite.dev/guide/build.html>`_
