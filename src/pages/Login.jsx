@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { autosubmitApiV4 } from "../services/autosubmitApiV4";
 import {
@@ -122,6 +122,8 @@ const Login = () => {
   const service = CAS_SERVICE_ID || window.location.href.split("?")[0];
   const code = searchParams.get("code");
   const dispatch = useDispatch();
+  const [showTokenErrorMsg, setShowTokenErrorMsg] = useState(false);
+
   const [
     login,
     {
@@ -148,6 +150,14 @@ const Login = () => {
       } else {
         navigate("/");
       }
+    }
+    if (
+      !isVerifyFetching &&
+      !isVerifySuccess &&
+      localStorage.getItem("token")
+    ) {
+      setShowTokenErrorMsg(true);
+      localStorage.removeItem("token");
     }
   }, [isVerifyFetching, isVerifySuccess]);
 
@@ -176,8 +186,20 @@ const Login = () => {
     }
   };
 
+  const setToken = (token, user) => {
+    localStorage.setItem("token", token);
+    dispatch(
+      authActions.login({
+        token: token,
+        user_id: user,
+      })
+    );
+    refetch();
+  };
+
   useEffect(() => {
     if (!isLoginUninitialized && !isLoginError && loginData) {
+      setToken(loginData.token, loginData.user);
       localStorage.setItem("token", loginData.token);
       dispatch(
         authActions.login({
@@ -215,13 +237,47 @@ const Login = () => {
                 {"Error logging in. You may be unauthorized."}
               </span>
             )}
+            {showTokenErrorMsg && (
+              <span className="alert alert-danger rounded-2xl">
+                <i className="fa-solid fa-triangle-exclamation me-2"></i>{" "}
+                {"Invalid token. Please try again."}
+              </span>
+            )}
             <Logo className="h-20" />
-            <button
-              onClick={handleLogin}
-              className="btn btn-light border text-xl px-8 py-2 font-semibold text-center truncate"
-            >
-              Login with {AUTH_PROVIDER.toUpperCase()}
-            </button>
+            {AUTH_PROVIDER === "secret-token" ? (
+              <div className="flex w-full gap-2">
+                <input
+                  type="text"
+                  id="secret-token-input"
+                  placeholder="Enter your secret token"
+                  className="grow form-control w-full border rounded px-2"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      const token = "Bearer " + e.target.value;
+                      setToken(token, "User");
+                    }
+                  }}
+                />
+                <button
+                  onClick={() => {
+                    const token =
+                      "Bearer " +
+                      document.querySelector("#secret-token-input").value;
+                    setToken(token, "User");
+                  }}
+                  className="btn btn-light border px-4 py-2 font-semibold text-center"
+                >
+                  Login
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={handleLogin}
+                className="btn btn-light border text-xl px-8 py-2 font-semibold text-center truncate"
+              >
+                Login with {AUTH_PROVIDER.toUpperCase()}
+              </button>
+            )}
           </motion.div>
         )}
 
