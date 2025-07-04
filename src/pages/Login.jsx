@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { autosubmitApiV4 } from "../services/autosubmitApiV4";
 import {
@@ -123,6 +123,7 @@ const Login = () => {
   const code = searchParams.get("code");
   const dispatch = useDispatch();
   const [showTokenErrorMsg, setShowTokenErrorMsg] = useState(false);
+  const secretTokenInputRef = useRef(null);
 
   const [
     login,
@@ -247,6 +248,7 @@ const Login = () => {
             {AUTH_PROVIDER === "secret-token" ? (
               <div className="flex w-full gap-2">
                 <input
+                  ref={secretTokenInputRef}
                   type="text"
                   id="secret-token-input"
                   placeholder="Enter your secret token"
@@ -260,9 +262,7 @@ const Login = () => {
                 />
                 <button
                   onClick={() => {
-                    const token =
-                      "Bearer " +
-                      document.querySelector("#secret-token-input").value;
+                    const token = "Bearer " + secretTokenInputRef.current.value;
                     setToken(token, "User");
                   }}
                   className="btn btn-light border px-4 py-2 font-semibold text-center"
