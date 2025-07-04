@@ -168,10 +168,10 @@
     "@babel/helper-string-parser" "^7.27.1"
     "@babel/helper-validator-identifier" "^7.27.1"
 
-"@cypress/code-coverage@^3.14.4":
-  version "3.14.4"
-  resolved "https://registry.yarnpkg.com/@cypress/code-coverage/-/code-coverage-3.14.4.tgz#098f653d7b021e35fbe73cd278cf403cda83a9d1"
-  integrity sha512-XIjBmx4zMb+b1sSOvrQyLoq0vROSSpm0quXE9PoE0bdIOfTTStVDLdjwpmnjP62bF7e72PGX1p7vyEfs3j/62A==
+"@cypress/code-coverage@^3.14.5":
+  version "3.14.5"
+  resolved "https://registry.yarnpkg.com/@cypress/code-coverage/-/code-coverage-3.14.5.tgz#3438a86412ac4bb4fd45a0a5e7095917a16e2175"
+  integrity sha512-sSyCSiYpChgKIaO7Bglxp1Pjf1l6EQDejq6yIc4REcGXCVxrtjP5G5j2TsjH/zcceDvyShXH5DyLD21M9ryaeg==
   dependencies:
     "@cypress/webpack-preprocessor" "^6.0.0"
     chalk "4.1.2"
