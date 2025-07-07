@@ -201,14 +201,6 @@ const Login = () => {
   useEffect(() => {
     if (!isLoginUninitialized && !isLoginError && loginData) {
       setToken(loginData.token, loginData.user);
-      localStorage.setItem("token", loginData.token);
-      dispatch(
-        authActions.login({
-          token: loginData.token,
-          user_id: loginData.user,
-        })
-      );
-      refetch();
     }
   }, [loginData, isLoginUninitialized, isLoginError]);
 
