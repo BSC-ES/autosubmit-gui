@@ -29,7 +29,7 @@ const AuthBadge = () => {
       if (isError) {
         if (AUTHENTICATION) {
           dispatch(authActions.logout());
-          localStorage.setItem("token", null);
+          localStorage.removeItem("token");
           handleLogin();
         }
       } else if (data) {
@@ -50,7 +50,7 @@ const AuthBadge = () => {
 
   const handleLogout = () => {
     dispatch(authActions.logout());
-    localStorage.setItem("token", null);
+    localStorage.removeItem("token");
     refetch();
   };
 
