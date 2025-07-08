@@ -43,7 +43,7 @@
   "devDependencies": {
     "@cypress/code-coverage": "^3.14.5",
     "@rollup/plugin-inject": "^5.0.5",
-    "@tailwindcss/vite": "^4.1.10",
+    "@tailwindcss/vite": "^4.1.11",
     "@vitejs/plugin-react": "^4.5.2",
     "autoprefixer": "^10.4.21",
     "cypress": "^14.4.1",
