@@ -1,6 +1,6 @@
 {
   "name": "autosubmit-gui",
-  "version": "4.1.0",
+  "version": "4.1.1-beta.1",
   "repository": "https://github.com/BSC-ES/autosubmit-gui",
   "author": "Luiggi Tenorio, Barcelona Supercomputing Center",
   "description": "Autosubmit GUI is a software made up of two separate components. A web application based on ReactJS, and a web service API written on Python. This documentation is about the former: The ReactJS App. We begin by emphasizing the fact the application is written using Javascript with some ReactJS flavored syntax, e.g. JSX. However, the developer familiar with Javascript should not have problems understanding the main code of this application.  You can find more information about **React** in the following link: [https://reactjs.org/docs/getting-started.html](https://reactjs.org/docs/getting-started.html)",
