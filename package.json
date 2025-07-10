@@ -44,7 +44,7 @@
     "@cypress/code-coverage": "^3.14.5",
     "@rollup/plugin-inject": "^5.0.5",
     "@tailwindcss/vite": "^4.1.10",
-    "@vitejs/plugin-react": "^4.5.2",
+    "@vitejs/plugin-react": "^4.6.0",
     "autoprefixer": "^10.4.21",
     "cypress": "^14.4.1",
     "dotenv": "^16.5.0",
