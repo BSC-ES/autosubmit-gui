@@ -1,5 +1,10 @@
 ## Changelog
 
+### Pre-release v4.1.0-beta.1 - Release date: 2025-07-10
+
+* **Major change: Vite is now the build tool used in this project. CRA have been removed.**
+* Login page allows to use Secret token authentication
+
 ### Release v4.0.1 - Release date: 2025-06-10
 
 * Supported Autosubmit API version: [4.1.1](https://pypi.org/project/autosubmit-api/4.1.1/)
