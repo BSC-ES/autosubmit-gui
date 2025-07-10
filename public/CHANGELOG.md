@@ -1,6 +1,6 @@
 ## Changelog
 
-### Pre-release v4.1.0-beta.1 - Release date: 2025-07-10
+### Pre-release v4.1.1-beta.1 - Release date: 2025-07-10
 
 * **Major change: Vite is now the build tool used in this project. CRA have been removed.**
 * Login page allows to use Secret token authentication
