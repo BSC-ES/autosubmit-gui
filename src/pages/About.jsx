@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import showdown from 'showdown'
 import useASTitle from '../hooks/useASTitle';
 import useBreadcrumb from '../hooks/useBreadcrumb';
-import { PUBLIC_URL } from '../consts';
 import packageJson from "../../package.json";
 import { Disclosure } from '@headlessui/react'
 import { cn } from '../services/utils'
@@ -53,7 +52,7 @@ const About = () => {
   const [markdown, setMarkdown] = useState("")
 
   useEffect(() => {
-    fetch(`${PUBLIC_URL}/CHANGELOG.md`)
+    fetch(`CHANGELOG.md`)
       .then((r) => r.text())
       .then(text => {
         const converter = new showdown.Converter()
