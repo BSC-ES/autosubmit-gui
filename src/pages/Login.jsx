@@ -241,7 +241,7 @@ const Login = () => {
               <div className="flex w-full gap-2">
                 <input
                   ref={secretTokenInputRef}
-                  type="text"
+                  type="password"
                   id="secret-token-input"
                   placeholder="Enter your secret token"
                   className="grow form-control w-full border rounded px-2"
