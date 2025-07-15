@@ -24,7 +24,7 @@ The Experiment ``Job Panel`` have the following information:
 - *Start*: Start time of the job (If applicable).
 - *Finish*: Finish time of the job (If applicable).
 - *SYPD*
-- *ASYPD*
+- *PSYPD*
 - *Wrapper*
 
 .. note:: Next to the **out** and **err** paths, you see the a ``Copy out/err`` button that copies the path to your clipboard. Then you see a ``>_`` button, that when clicked will show that last 150 lines of the **out/err** file.

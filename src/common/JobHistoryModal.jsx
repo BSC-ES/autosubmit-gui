@@ -42,7 +42,7 @@ const JobHistoryModal = ({ expid, jobName, show, onHide }) => {
         item.status,
         formatNumberMoney(item.energy, true),
         item.SYPD,
-        item.ASYPD,
+        item.PSYPD,
         item.wallclock,
         formatNumberMoney(item.ncpus, true),
         formatNumberMoney(item.nodes, true),
@@ -61,7 +61,7 @@ const JobHistoryModal = ({ expid, jobName, show, onHide }) => {
         "Status",
         "Energy",
         "SYPD",
-        "ASYPD",
+        "PSYPD",
         "Wallclock",
         "NCpus",
         "NNodes",
@@ -107,7 +107,7 @@ const JobHistoryModal = ({ expid, jobName, show, onHide }) => {
                       "Status",
                       "Energy",
                       "SYPD",
-                      "ASYPD",
+                      "PSYPD",
                       "Wallclock",
                       "NCpus",
                       "NNodes",
@@ -197,13 +197,13 @@ const JobHistoryModal = ({ expid, jobName, show, onHide }) => {
                       </TableCell>
                       <TableCell>
                         {item.run_id ? (
-                          item.ASYPD
+                          item.PSYPD
                         ) : (
                           <span
                             className="badge badge-warning"
                             data-toggle="tooltip"
                             data-placement="bottom"
-                            title="This register is not associated to a run Id because it ran with an old version of the database, ASYPD cannot be calculated."
+                            title="This register is not associated to a run Id because it ran with an old version of the database, PSYPD cannot be calculated."
                           >
                             !
                           </span>

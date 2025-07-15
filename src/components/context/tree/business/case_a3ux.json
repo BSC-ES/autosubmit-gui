@@ -3,7 +3,7 @@
   "error_message": "",
   "jobs": [
     {
-      "ASYPD": null,
+      "PSYPD": null,
       "SYPD": null,
       "children": 1,
       "children_list": ["a3ux_REMOTE_SETUP"],
@@ -39,7 +39,7 @@
       "wrapper_code": null
     },
     {
-      "ASYPD": null,
+      "PSYPD": null,
       "SYPD": null,
       "children": 1,
       "children_list": ["a3ux_19500101_fc0_INI"],
@@ -75,7 +75,7 @@
       "wrapper_code": null
     },
     {
-      "ASYPD": null,
+      "PSYPD": null,
       "SYPD": null,
       "children": 1,
       "children_list": ["a3ux_19500101_fc0_1_SIM"],
@@ -111,7 +111,7 @@
       "wrapper_code": null
     },
     {
-      "ASYPD": null,
+      "PSYPD": null,
       "SYPD": null,
       "children": 2,
       "children_list": [
@@ -150,7 +150,7 @@
       "wrapper_code": null
     },
     {
-      "ASYPD": null,
+      "PSYPD": null,
       "SYPD": null,
       "children": 2,
       "children_list": [
@@ -189,7 +189,7 @@
       "wrapper_code": null
     },
     {
-      "ASYPD": null,
+      "PSYPD": null,
       "SYPD": null,
       "children": 1,
       "children_list": ["a3ux_19500101_fc0_3_SAVE_IC"],
@@ -225,7 +225,7 @@
       "wrapper_code": null
     },
     {
-      "ASYPD": null,
+      "PSYPD": null,
       "SYPD": null,
       "children": 0,
       "children_list": [],
@@ -261,7 +261,7 @@
       "wrapper_code": null
     },
     {
-      "ASYPD": null,
+      "PSYPD": null,
       "SYPD": null,
       "children": 0,
       "children_list": [],
@@ -297,7 +297,7 @@
       "wrapper_code": null
     },
     {
-      "ASYPD": null,
+      "PSYPD": null,
       "SYPD": null,
       "children": 0,
       "children_list": [],

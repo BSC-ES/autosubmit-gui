@@ -3,7 +3,7 @@ import useASTitle from "../hooks/useASTitle";
 import useBreadcrumb from "../hooks/useBreadcrumb";
 import { useGetExperimentPerformanceQuery } from "../services/autosubmitApiV3";
 import MetricScatterPlot from "../components/plots/MetricScatterPlot";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState, useRef } from "react";
 import {
   secondsToDelta,
   arrayAverage,
@@ -11,6 +11,7 @@ import {
   arrayMeanAbsoluteDeviationAroundMean,
   formatNumberMoney,
   formatTime,
+  formatSecondsToHMS,
 } from "../components/context/utils";
 import TimeScatterPlot from "../components/plots/TimeScatterPlot";
 import { cn, exportToCSV } from "../services/utils";
@@ -25,6 +26,10 @@ import {
   TableRow,
 } from "../common/Table";
 import * as Collapsible from "@radix-ui/react-collapsible";
+import PhaseChart from "../components/performance/PhaseChart.jsx";
+import CyWorkflow from "../common/CyWorkflow";
+import BottomPanel from "../common/BottomPanel";
+import IdealCriticalPathGraph from "../components/performance/IdealCriticalPathGraph.jsx";
 
 const PERFORMANCE_PLOTS = [
   {
@@ -44,20 +49,20 @@ const PERFORMANCE_PLOTS = [
     attributeY: "SYPD",
   },
   {
-    key: "JPSYvsASYPD",
-    title: "JPSY vs ASYPD",
+    key: "JPSYvsPSYPD",
+    title: "JPSY vs PSYPD",
     disabled: (d) => d.maxJPSY <= 0,
     type: "Scatter2D",
     attributeX: "JPSY",
-    attributeY: "ASYPD",
+    attributeY: "PSYPD",
   },
   {
-    key: "SYPDvsASYPD",
-    title: "SYPD vs ASYPD",
-    disabled: (d) => d.maxASYPD <= 0,
+    key: "SYPDvsPSYPD",
+    title: "SYPD vs PSYPD",
+    disabled: (d) => d.maxPSYPD <= 0,
     type: "Scatter2D",
     attributeX: "SYPD",
-    attributeY: "ASYPD",
+    attributeY: "PSYPD",
   },
   {
     key: "CHSYvsSYPD",
@@ -68,12 +73,12 @@ const PERFORMANCE_PLOTS = [
     attributeY: "SYPD",
   },
   {
-    key: "CHSYvsASYPD",
-    title: "CHSY vs ASYPD",
-    disabled: (d) => d.maxASYPD <= 0,
+    key: "CHSYvsPSYPD",
+    title: "CHSY vs PSYPD",
+    disabled: (d) => d.maxPSYPD <= 0,
     type: "Scatter2D",
     attributeX: "CHSY",
-    attributeY: "ASYPD",
+    attributeY: "PSYPD",
   },
   {
     key: "RunVsSYPD",
@@ -90,11 +95,11 @@ const PERFORMANCE_PLOTS = [
     attribute: "CHSY",
   },
   {
-    key: "QueueRunVsASYPD",
-    title: "Queue+Runtime vs ASYPD",
-    disabled: (d) => d.maxASYPD <= 0,
+    key: "QueueRunVsPSYPD",
+    title: "Queue+Runtime vs PSYPD",
+    disabled: (d) => d.maxPSYPD <= 0,
     type: "TimeScatter",
-    attribute: "ASYPD",
+    attribute: "PSYPD",
   },
 ];
 
@@ -102,19 +107,19 @@ const PerformancePlots = ({ considered }) => {
   const [displayPlots, setDisplayPlots] = useState({
     JPSYvsCHSY: false,
     JPSYvsSYPD: false,
-    JPSYvsASYPD: false,
-    SYPDvsASYPD: false,
+    JPSYvsPSYPD: false,
+    SYPDvsPSYPD: false,
     CHSYvsSYPD: false,
-    CHSYvsASYPD: false,
+    CHSYvsPSYPD: false,
     RunVsSYPD: false,
     RunVsCHSY: false,
-    QueueRunVsASYPD: false,
+    QueueRunVsPSYPD: false,
   });
 
   const [auxStats, setAuxStats] = useState({
     consideredJPSY: [],
     maxJPSY: 0,
-    maxASYPD: 0,
+    maxPSYPD: 0,
     JPSYdivisor: 1000,
     JPSYtitleX: "JPSY (thousands)",
   });
@@ -128,8 +133,8 @@ const PerformancePlots = ({ considered }) => {
           })
         )
       );
-      const maxASYPD = Math.max(
-        ...Array.from(considered.map((item) => Number.parseFloat(item.ASYPD)))
+      const maxPSYPD = Math.max(
+        ...Array.from(considered.map((item) => Number.parseFloat(item.PSYPD)))
       );
       const JPSYdivisor = maxJPSY > 999999999 ? 1000000 : 1000;
       const JPSYtitleX =
@@ -144,7 +149,7 @@ const PerformancePlots = ({ considered }) => {
       const newAux = {
         consideredJPSY: consideredJPSY,
         maxJPSY: maxJPSY,
-        maxASYPD: maxASYPD,
+        maxPSYPD: maxPSYPD,
         JPSYdivisor: JPSYdivisor,
         JPSYtitleX: JPSYtitleX,
       };
@@ -192,7 +197,7 @@ const PerformancePlots = ({ considered }) => {
           if (displayPlots[item.key]) {
             if (item.type === "Scatter2D") {
               if (
-                ["JPSYvsCHSY", "JPSYvsSYPD", "JPSYvsASYPD"].includes(item.key)
+                ["JPSYvsCHSY", "JPSYvsSYPD", "JPSYvsPSYPD"].includes(item.key)
               ) {
                 plot = (
                   <MetricScatterPlot
@@ -246,7 +251,8 @@ const PerformanceConsideredJobs = ({ considered }) => {
               "Run",
               "CHSY",
               "SYPD",
-              "ASYPD",
+              "PSYPD",
+              "QSYPD",
               "JPSY",
               "Energy",
               "Footprint",
@@ -284,7 +290,10 @@ const PerformanceConsideredJobs = ({ considered }) => {
                     {formatNumberMoney(item.SYPD)}
                   </TableCell>
                   <TableCell className="py-1">
-                    {formatNumberMoney(item.ASYPD)}
+                    {formatNumberMoney(item.PSYPD)}
+                  </TableCell>
+                  <TableCell className="py-1">
+                    {formatNumberMoney(item.QSYPD)}
                   </TableCell>
                   <TableCell className="py-1">
                     {formatNumberMoney(item.JPSY, true)}
@@ -313,7 +322,8 @@ const PerformanceSummary = ({ data }) => {
           .filter((x) => x.JPSY > 0)
           .map((item) => item.JPSY),
         SYPD: data.considered.map((item) => item.SYPD),
-        ASYPD: data.considered.map((item) => item.ASYPD),
+        PSYPD: data.considered.map((item) => item.PSYPD),
+        QSYPD: data.considered.map((item) => item.QSYPD),
         CHSY: data.considered.map((item) => item.CHSY),
       };
       setMetrics(newMetrics);
@@ -382,89 +392,210 @@ const PerformanceSustainability = ({ data }) => {
     };
   };
 
-  const energyValues = data?.considered?.map((job) => job.energy) || [];
-  const footprintValues = data?.considered?.map((job) => job.footprint) || [];
-
-  const energyStats = computeStats(energyValues);
-  const footprintStats = computeStats(footprintValues);
+  const energyStats = computeStats(data?.considered?.map((job) => job.energy) || []);
+  const footprintStats = computeStats(data?.considered?.map((job) => job.footprint) || []);
 
   const metrics = [
     {
-      label: "Energy consumed (J)",
+      label: "Consumed Energy (J)",
       stats: energyStats,
       total: data?.Total_energy || "-",
     },
     {
-      label: "Footprint generated (gCO₂)",
+      label: "Generated footprint (gCO₂)",
       stats: footprintStats,
       total: data?.Total_footprint || "-",
     },
   ];
 
   return (
-    <Table>
-      <TableHead>
-        <TableRow className="bg-primary-200 font-bold">
-          <TableHeader className="py-1">Metric</TableHeader>
-          <TableHeader className="py-1">Mean</TableHeader>
-          <TableHeader className="py-1">Min</TableHeader>
-          <TableHeader className="py-1">Max</TableHeader>
-          <TableHeader className="py-1">SD</TableHeader>
-          <TableHeader className="py-1">MAD</TableHeader>
-          <TableHeader className="py-1">Total</TableHeader>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {metrics.map((metric, index) => (
-          <TableRow key={index}>
-            <TableCell className="py-1 font-bold">{metric.label}</TableCell>
-            <TableCell className="py-1">
-              <span className="rounded px-1 bg-light">
-                {metric.stats.avg === "-"
-                  ? "-"
-                  : formatNumberMoney(metric.stats.avg, true)}
-              </span>
-            </TableCell>
-            <TableCell className="py-1">
-              <span className="rounded px-1 bg-light">
-                {metric.stats.min === "-"
-                  ? "-"
-                  : formatNumberMoney(metric.stats.min, true)}
-              </span>
-            </TableCell>
-            <TableCell className="py-1">
-              <span className="rounded px-1 bg-light">
-                {metric.stats.max === "-"
-                  ? "-"
-                  : formatNumberMoney(metric.stats.max, true)}
-              </span>
-            </TableCell>
-            <TableCell className="py-1">
-              <span className="rounded px-1 bg-light">
-                {metric.stats.sd === "-"
-                  ? "-"
-                  : formatNumberMoney(metric.stats.sd, true)}
-              </span>
-            </TableCell>
-            <TableCell className="py-1">
-              <span className="rounded px-1 bg-light">
-                {metric.stats.mad === "-"
-                  ? "-"
-                  : formatNumberMoney(metric.stats.mad, true)}
-              </span>
-            </TableCell>
-            <TableCell className="py-1 font-bold">
-              <span className="rounded px-1 bg-light">
-                {typeof metric.total === "undefined" || metric.total === null
-                  ? "-"
-                  : formatNumberMoney(metric.total, true)}
-              </span>
-            </TableCell>
+    <>
+      <Table>
+        <TableHead>
+          <TableRow className="bg-primary-200 font-bold">
+            <TableHeader className="py-1">Metric</TableHeader>
+            <TableHeader className="py-1">Mean</TableHeader>
+            <TableHeader className="py-1">Min</TableHeader>
+            <TableHeader className="py-1">Max</TableHeader>
+            <TableHeader className="py-1">SD</TableHeader>
+            <TableHeader className="py-1">MAD</TableHeader>
+            <TableHeader className="py-1">Total</TableHeader>
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        </TableHead>
+        <TableBody>
+          {metrics.map((metric, index) => (
+            <TableRow key={index}>
+              <TableCell className="py-1 font-bold">{metric.label}</TableCell>
+              <TableCell className="py-1">
+                <span className="rounded px-1 bg-light">
+                  {metric.stats.avg === "-"
+                    ? "-"
+                    : formatNumberMoney(metric.stats.avg, true)}
+                </span>
+              </TableCell>
+              <TableCell className="py-1">
+                <span className="rounded px-1 bg-light">
+                  {metric.stats.min === "-"
+                    ? "-"
+                    : formatNumberMoney(metric.stats.min, true)}
+                </span>
+              </TableCell>
+              <TableCell className="py-1">
+                <span className="rounded px-1 bg-light">
+                  {metric.stats.max === "-"
+                    ? "-"
+                    : formatNumberMoney(metric.stats.max, true)}
+                </span>
+              </TableCell>
+              <TableCell className="py-1">
+                <span className="rounded px-1 bg-light">
+                  {metric.stats.sd === "-"
+                    ? "-"
+                    : formatNumberMoney(metric.stats.sd, true)}
+                </span>
+              </TableCell>
+              <TableCell className="py-1">
+                <span className="rounded px-1 bg-light">
+                  {metric.stats.mad === "-"
+                    ? "-"
+                    : formatNumberMoney(metric.stats.mad, true)}
+                </span>
+              </TableCell>
+              <TableCell className="py-1 font-bold">
+                <span className="rounded px-1 bg-light">
+                  {typeof metric.total === "undefined" || metric.total === null
+                    ? "-"
+                    : formatNumberMoney(metric.total, true)}
+                </span>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+      <div className="flex flex-col mt-4">
+        <span>
+          <strong>Footprint</strong>: Measures the total amount of greenhouse gases, especially carbon dioxide, emitted directly and indirectly by a platform.
+        </span>
+      </div>
+    </>
   );
+};
+
+const PerformanceIdealCriticalPath = ({ idealCriticalPath, phases, formatSecondsToHMS }) => {
+	const [selectedNode, setSelectedNode] = useState(null);
+
+	const generateIdealCriticalPathElements = (idealCriticalPath) => {
+		if (!idealCriticalPath || !Array.isArray(idealCriticalPath)) {
+			return [];
+		}
+		const maxNameLength = Math.max(...idealCriticalPath.map(node => node.name.length));
+		const spacingX = maxNameLength * 10;
+		const spacingY = 150; 
+		const rowCount = Math.ceil(Math.sqrt(idealCriticalPath.length)); 
+		let elements = [];
+		idealCriticalPath.forEach((node, index) => {
+			const rowIndex = Math.floor(index / rowCount);
+			const colIndex = index % rowCount;
+			let x;
+			if (rowIndex % 2 === 0) {
+				x = 100 + colIndex * spacingX;
+			} else {
+				x = 100 + (rowCount - 1 - colIndex) * spacingX;
+			}
+			const y = 200 + rowIndex * spacingY;
+			elements.push({
+				group: "nodes",
+				data: { id: node.name, run: node.running},
+				position: { x, y },
+			});
+			if (index > 0) {
+				elements.push({
+					group: "edges",
+					data: { source: idealCriticalPath[index - 1].name, target: node.name },
+				});
+			}
+		});
+		return elements;
+	};
+  
+	const graphElements = generateIdealCriticalPathElements(idealCriticalPath);
+	return (
+		<div className="rounded-2xl border grow dark:bg-neutral-50 dark:text-black">
+			<div className="bg-dark rounded-t-xl flex justify-between items-center text-white px-6 py-2 mb-2">
+				<label className="font-bold"> IDEAL CRITICAL PATH (QUEUE TIME OMITTED)</label>
+			</div>
+			<div className="p-4">
+				{graphElements.length === 0 ? (
+					<div className="flex flex-col justify-center items-center w-full h-full py-12 gap-4">
+						<i className="fa-solid fa-triangle-exclamation text-danger text-6xl"></i>
+						<span className="font-bold text-center">
+							{"Ideal critical path data not available"}
+						</span>
+					</div>
+				) : (
+				
+        <div className="flex border relative mx-auto overflow-hidden">
+          <IdealCriticalPathGraph
+            elements={graphElements}
+            onTapNode={(nodeData) => setSelectedNode(nodeData)}
+          />
+        </div>
+        )}
+        <div className="mt-4">
+          {phases ? (
+            <div>
+              <h4 className="font-semibold mb-2">Phases of the ideal critical path</h4>
+              <ul className="list-disc list-inside">
+                <li>
+                  <strong>Pre-SIM:</strong>{" "}
+                  <span className="rounded px-1 bg-light">
+                    {formatSecondsToHMS(phases.pre_sim)}
+                  </span>
+                </li>
+                <li>
+                  <strong>SIM:</strong>{" "}
+                  <span className="rounded px-1 bg-light">
+                    {formatSecondsToHMS(phases.sim)}
+                  </span>
+                </li>
+                <li>
+                  <strong>Post-SIM:</strong>{" "}
+                  <span className="rounded px-1 bg-light">
+                    {formatSecondsToHMS(phases.post_sim)}
+                  </span>
+                </li>
+                <li>
+                  <strong>Total:</strong>{" "}
+                  <span className="rounded px-1 bg-light">
+                    {formatSecondsToHMS(phases.pre_sim + phases.sim + phases.post_sim)}
+                  </span>
+                </li>
+              </ul>
+            </div>
+          ) : (
+            <div className="flex flex-col justify-center items-center w-full h-full py-12 gap-4">
+              <i className="fa-solid fa-triangle-exclamation text-danger text-6xl"></i>
+              <span className="font-bold text-center">
+                {"Phases data not available"}
+              </span>
+            </div>
+          )}
+          <PhaseChart phases={phases} formatSecondsToHMS={formatSecondsToHMS} />
+        </div>		
+			</div>
+			{selectedNode && (
+				<BottomPanel
+					title={selectedNode.id}
+					onClose={() => setSelectedNode(null)}
+				>
+          <div className="p-2 bg-gray-100 rounded shadow-sm">
+            <span className="font-bold">Run Time: </span>
+            {formatSecondsToHMS(selectedNode.run)}
+          </div>
+				</BottomPanel>
+			)}
+		</div>
+	);
 };
 
 const ExperimentPerformance = () => {
@@ -506,7 +637,8 @@ const ExperimentPerformance = () => {
           secondsToDelta(item.running),
           formatNumberMoney(item.CHSY),
           formatNumberMoney(item.SYPD),
-          formatNumberMoney(item.ASYPD),
+          formatNumberMoney(item.PSYPD),
+          formatNumberMoney(item.QSYPD),
           formatNumberMoney(item.JPSY, true),
           formatNumberMoney(item.energy, true),
           formatNumberMoney(item.footprint, true),
@@ -520,7 +652,8 @@ const ExperimentPerformance = () => {
         "Run",
         "CHSY",
         "SYPD",
-        "ASYPD",
+        "PSYPD",
+        "QSYPD",
         "JPSY",
         "Energy",
         "Footprint",
@@ -574,8 +707,10 @@ const ExperimentPerformance = () => {
               <h4 className="text-xl font-semibold mb-2">Considered Jobs</h4>
                 <p>
                   Scrollable list where each item represents the last successful{" "} 
-                  <strong>SIM</strong> job for each <em>CHUNK</em>. Displays key information such 
-                  as <strong>Job Name</strong>,{" "} <strong>QUEUE</strong> and {" "}
+                  <strong>SIM</strong> job for each <strong>CHUNK</strong>. 
+                  It's important to know that <strong>retries</strong> are <strong>not considered</strong> in this list.
+                  Displays key information such as <strong>Job Name</strong>,{" "} 
+                  <strong>QUEUE</strong> and {" "}
                   <strong>RUNNING</strong> time in{" "}<em>HH:mm:ss</em> format,{" "} 
                   <strong>CHSY</strong>, <strong>JPSY</strong>, and raw {" "}
                   <strong>Energy (J)</strong> consumption for that job.{" "} <em>
@@ -599,10 +734,16 @@ const ExperimentPerformance = () => {
               <li>
               <strong>Simulated time</strong>:
                 <span>
-                {" "}Represents the computed duration of the simulation run 
-                expressed in standard time units. 
+                {" "}Represents the sum of the simulated years of each last completed <strong>CHUNK</strong> of the last <strong>SIM</strong> job; expressed in standard time units. 
                 Units used: 1 year = 8760 hours, 1 month = 730 hours, 1 week = 168 hours and
                 1 day = 24 hours.
+                </span>
+              </li>
+              <li>
+              <strong>Total core-hours</strong>:
+                <span>
+                {" "}Represents the sum of the number of core-hours consumed by the the last successful
+                {" "} <strong>SIM</strong> job of each <strong>CHUNK</strong>.
                 </span>
               </li>
               <li>
@@ -628,15 +769,29 @@ const ExperimentPerformance = () => {
               </li>
               <li>
                 <span>
-                <strong>ASYPD</strong>: 
-                Actual Simulated Years Per Day, this number
+                <strong>PSYPD</strong>: 
+                Post Simulated Years Per Day, this number
                 should be lower than SYPD due to interruptions, queue wait time,{" "}
                 <strong>POST</strong> jobs, data transfer, or issues with the model
-                workflow. The ASYPD <strong>value</strong> calculated at the job
+                workflow. The PSYPD <strong>value</strong> calculated at the job
                 level uses a generalization of the formula applied at the experiment
-                level. As a consequence, the ASYPD value at the experiment level can
+                level. As a consequence, the PSYPD value at the experiment level can
                 be different that the mean of the values calculated at the job
-                level.
+                level. The <strong>value</strong> of the PSYPD is calculated as the product of the 
+                simulated years per simulation and the number of seconds in a day, divided by the total 
+                simulation time, taking into account the run time, queue time and average post time.
+                </span>
+              </li>
+              <li>
+                <span>
+                <strong>QSYPD</strong>: 
+                Queue Simulated Years Per Day. The QSYPD <strong>value</strong> calculated at the job
+                level uses a generalization of the formula applied at the experiment
+                level. As a consequence, the QSYPD value at the experiment level can
+                be different that the mean of the values calculated at the job
+                level. The <strong>value</strong> of the QSYPD is calculated as the product of the 
+                simulated years per simulation and the number of seconds in a day, divided by the total 
+                simulation time, taking into account the queue time.
                 </span>
               </li>
               <li>
@@ -651,14 +806,19 @@ const ExperimentPerformance = () => {
               </li>
               <li>
                 <span>
-                <strong>RSYPD</strong>: 
-                "Real" Simulated Years Per Day. This
-                variation of SYPD has been defined only at the experiment level. It
-                depends on the existences of <strong>TRANSFER</strong> or{" "}
-                <strong>CLEAN</strong> jobs. Then, it uses the finish time of the
-                last TRANSFER or CLEAN job and the start time of the first SIM job
-                in the experiment to calculate an approximation of the total
-                duration of the simulation.
+                <strong>WSYPD</strong>: 
+                  "Workflow" Simulated Years Per Day is calculated based on the total 
+                  time (queue and run time) of the experiment's ideal critical path and 
+                  represents the portion of time dedicated by the experiment towards 
+                  achieving the SYPD. 
+                </span>
+              </li>
+              <li>
+                <span>
+                <strong>IWSYPD</strong>: 
+                  "Ideal Workflow" Simulated Years Per Day is calculated based on the total 
+                  run time of the experiment's ideal critical path and represents the portion of 
+                  time dedicated by the experiment towards achieving the SYPD. 
                 </span>
               </li>
               <p>
@@ -677,16 +837,17 @@ const ExperimentPerformance = () => {
             <h4 className="text-xl font-semibold mt-4 mb-2">Sustainability</h4>
             <ul className="list-disc list-inside space-y-2">
               <li>
-                <strong>Energy consumed (J)</strong>:
+                <strong>Consumed Energy (J)</strong>:
                 <span>
-                {" "}Represents the amount of energy consumed by the
-                platform where the simulation job was executed. 
+                {" "}Represents the sum of consumed energy by the
+                platform for each last successful <strong>SIM</strong> job of each <strong>CHUNK</strong>.
                 </span>
               </li>
               <li>
                 <span>
-                <strong>Footprint generated (gCO₂)</strong>: The footprint of a
-                job is calculated as the product of the energy consumed (MWh) by the job;
+                <strong>Generated footprint (gCO₂)</strong>: Represents the sum of generated footprint by the  
+                platform for each last successful <strong>SIM</strong> job of each <strong>CHUNK</strong>. The footprint of a
+                job is calculated as the product of the consumed energy (MWh) by the job;
                 the greenhouse gas conversion factor (CF) —which converts megawatt-hours 
                 into grams of CO₂— according to the supplier bill or the country energy mix; 
                 and power usage effectiveness (PUE) which accounts for other costs sustained 
@@ -696,8 +857,8 @@ const ExperimentPerformance = () => {
                 Note: To be able to calculate the footprint, the energy in Joules is first 
                 converted to Megawatt-hours by dividing by 3.6*10⁹. Moreover, ensure 
                 that the 'CF' and 'PUE' values are configured in the platform settings to obtain 
-                the footprint. Finally, the units of the CF showed at the article are in kgCO₂/MWh 
-                but we suggest to use gCO₂/MWh; this is done to facilitate the comprehension 
+                the footprint. Finally, the units of the CF showed at the article are in kgCO₂/MWh. 
+                However, we suggest to use gCO₂/MWh because it facilitates the comprehension 
                 of the footprint values.
                 </em>
               </li>
@@ -781,15 +942,27 @@ const ExperimentPerformance = () => {
                         </span>
                       </span>
                       <span>
-                        <strong>RSYPD</strong>:{" "}
+                        <strong>WSYPD</strong>:{" "}
                         <span className="rounded px-1 bg-light">
-                          {data?.RSYPD?.toFixed(2) || "-"}
+                          {data?.WSYPD?.toFixed(2) || "-"}
+                        </span>
+                      </span>
+                      <span>
+                        <strong>IWSYPD</strong>:{" "}
+                        <span className="rounded px-1 bg-light">
+                          {data?.IWSYPD?.toFixed(2) || "-"}
                         </span>
                       </span>
                       <span>
                         <strong>Simulated time</strong>:{" "}
                         <span className="rounded px-1 bg-light">
                           {data?.SY? formatTime(data.SY) : "-"} 
+                        </span>
+                      </span>
+                      <span>
+                        <strong>Total core-hours</strong>:{" "}
+                        <span className="rounded px-1 bg-light">
+                          {data?.Total_core_hours || "-"} 
                         </span>
                       </span>
                     </div>
@@ -816,7 +989,7 @@ const ExperimentPerformance = () => {
                   <label className="font-bold">CONSIDERED JOBS</label>
                   <div>
                     <button
-                      className="btn btn-dark rounded-full"
+                      className="btn btn-darked-full"
                       onClick={toggleShowHelp}
                     >
                       <i className="fa-solid fa-circle-question"></i>
@@ -910,14 +1083,15 @@ const ExperimentPerformance = () => {
                       </span>
                     </div>
                     <PerformanceSustainability data={data} />
-                    <div className="flex flex-col mt-4">
-                      <span>
-                        <strong>Footprint</strong>: Measures the total amount of greenhouse gases, especially carbon dioxide, emitted directly and indirectly by a platform.
-                      </span>
-                    </div>
                   </div>
                 </div>
               </div>
+
+            <PerformanceIdealCriticalPath
+              idealCriticalPath={data?.ideal_critical_path}
+              phases={data?.phases_run_times}
+              formatSecondsToHMS={formatSecondsToHMS}
+            />
           
             <div className="rounded-2xl border grow dark:bg-neutral-50 dark:text-black">
               <div className="bg-dark rounded-t-xl flex gap-3 justify-between items-center text-white px-4 py-3 mb-4">
