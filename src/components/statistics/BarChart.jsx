@@ -4,6 +4,14 @@ import { queueColor, runningColor, unknownColor, failedQueueColor, failedRunAtte
 import { formatNumberMoney } from "../context/utils";
 // import StatsContext from "../context/statistics/statsContext";
 
+// Use original color scheme with better text contrast
+const chartColors = {
+  background: "#FFFFFF", // White background
+  border: "#E5E7EB", // Gray-200 for grid lines
+  text: "#1F2937", // Dark gray for better contrast
+  textLight: "#6B7280", // Gray-500
+};
+
 class BarChart extends Component { 
 
   constructor(props) {
@@ -21,12 +29,12 @@ class BarChart extends Component {
     const metrics = this.props.metrics;
     const helperId = this.props.helperId;
 
-    const minHeight = 240.0;
-    const svgHeight = Math.max(data.length * 35.0, minHeight);
-    const svgWidth = 620.0;
+    const minHeight = 280.0; // Increased minimum height
+    const svgHeight = Math.max(data.length * 45.0, minHeight); // Increased spacing
+    const svgWidth = 620.0; // Increased width for better readability
     const numBars = data.length * 1.0;
-    const barPadding = 4;
-    const padding = 30;
+    const barPadding = 6; // Increased padding
+    const padding = 40; // Increased padding
     const totalBarHeight = numBars > 0 ? Math.floor((svgHeight - 3*padding) / numBars - barPadding) : barPadding;
     const singleBarHeight = totalBarHeight / 4.0; // Maximum = 4
     const doubleBarHeight = totalBarHeight / 2.0;
@@ -43,7 +51,14 @@ class BarChart extends Component {
 
     const tooltip = d3.select("body")
                       .append("div")
-                      .classed("tooltip-d3", true); 
+                      .classed("tooltip-d3", true)
+                      .style("background-color", "rgba(0, 0, 0, 0.9)")
+                      .style("color", "white")
+                      .style("border-radius", "8px")
+                      .style("padding", "12px")
+                      .style("font-size", "14px")
+                      .style("box-shadow", "0 4px 6px -1px rgba(0, 0, 0, 0.1)")
+                      .style("backdrop-filter", "blur(8px)"); 
     
     const svgEl = d3.select(this.svgElement);
     svgEl.attr("width", svgWidth);
@@ -105,12 +120,18 @@ class BarChart extends Component {
       svgEl.append("g")
         .classed(`xaxis-${helperId}`, true)
         .attr("transform", "translate(" + padding + "," + (svgHeight - padding) + ")")
-        .call(xAxis);
+        .call(xAxis)
+        .selectAll("line")
+        .style("stroke", chartColors.border)
+        .style("stroke-dasharray", "2,2");
       
       svgEl.append("g")
         .classed(`xaxis-${helperId}`, true)
         .attr("transform", "translate(" + padding + "," + (1.8*padding) + ")")
-        .call(xAxisTop);
+        .call(xAxisTop)
+        .selectAll("text")
+        .style("fill", chartColors.text)
+        .style("font-size", "12px");
   
       const groupsEnter = svgEl.selectAll("rect")
         .data(data)
@@ -153,9 +174,19 @@ class BarChart extends Component {
             return yScaleQueue(i) + validValues[j]*calculateBarHeight(d, ignoredMetrics);
           }
         })
+        .attr("rx", 4) // Rounded corners
+        .attr("ry", 4)
+        .style("opacity", 0.9)
+        .style("cursor", "pointer")
+        .on("mouseover", function(event, d) {
+          showTooltip(event, d);
+        })
+        .on("mouseout", function(event, d) {
+          hideTooltip();
+        })
         .transition()   
-        .duration(500)           
-        .ease(d3.easeLinear)
+        .duration(750) // Slower, smoother animation           
+        .ease(d3.easeCubicOut) // More natural easing
         .attr("width", d => { 
           if (metrics[0] === "failedCount") {
             return xScaleQueue(d.failedCount);
@@ -168,20 +199,28 @@ class BarChart extends Component {
             
           }
           })        
-        .attr("fill", color);
+        .attr("fill", color)
+        .style("opacity", 1);
       }
 
       groupsEnter.append("text")
-      .attr("x", 0 + padding + 5 )
+      .attr("x", 0 + padding + 8 ) // Slightly more padding
       .attr("y", function(d, i) {
         return yScaleQueue(i) + (barPadding + totalBarHeight)/2;
       })
       .classed(`newtext-${helperId}`, true)
       .text(d => d.name)
-      .on("mousemove", showTooltip)
-      .on("touchstart", showTooltip)
-      .on("mouseout", hideTooltip)      
-      .on("touchend", hideTooltip);
+      .style("font-size", "14px")
+      .style("font-weight", "600") // Bold for better visibility
+      .style("fill", chartColors.text)
+      .style("cursor", "pointer")
+      // .style("text-shadow", "1px 1px 2px rgba(255,255,255,0.5)") // White text shadow for better contrast
+      .on("mouseover", function(event, d) {
+        showTooltip(event, d);
+      })
+      .on("mouseout", function(event, d) {
+        hideTooltip();
+      });
 
     }
     
@@ -189,9 +228,11 @@ class BarChart extends Component {
     d3.select(this.svgElement)
       .append("text")
         .attr("x", svgWidth / 2)
-        .attr("y", padding - 5)
-        .attr("font-size", "1.5em")
+        .attr("y", padding - 8)
+        .attr("font-size", "18px")
+        .attr("font-weight", "600")
         .style("text-anchor", "middle")
+        .style("fill", chartColors.text)
         .text(this.props.title);
     
     // Add xAxis title
@@ -199,8 +240,11 @@ class BarChart extends Component {
       .append("text")
         .attr("x", svgWidth / 2)
         .attr("y", svgHeight - padding + 2)
-        .attr("dy", "1.5em")
+        .attr("dy", "1.8em")
+        .attr("font-size", "14px")
+        .attr("font-weight", "500")
         .style("text-anchor", "middle")
+        .style("fill", chartColors.textLight)
         .text(this.props.xtitle);
     
     // Add yAxis title
@@ -209,27 +253,34 @@ class BarChart extends Component {
         .attr("transform", "rotate(-90)")
         .attr("x", -svgHeight/2)
         .attr("y", padding)
-        .attr("dy", "-1.1em")
+        .attr("dy", "-1.4em")
+        .attr("font-size", "14px")
+        .attr("font-weight", "500")
         .style("text-anchor", "middle")
+        .style("fill", chartColors.textLight)
         .text("Job Name");
     
     function showTooltip(event, d) {
       
       tooltip
         .style("opacity", 1)
-        .style("left", event.pageX + "px")
-        .style("top", event.pageY + "px")
+        .style("left", (event.pageX + 15) + "px")
+        .style("top", (event.pageY - 10) + "px")
         .html(
           (metrics[0] === "failedCount" ? 
           `
-          <p> Failed Attempts: ${formatNumberMoney(d.failedCount, true)} </p>
+          <div class="font-semibold text-white mb-1">${d.name}</div>
+          <div class="text-gray-200">Failed Attempts: <span class="font-medium text-red-300">${formatNumberMoney(d.failedCount, true)}</span></div>
           `
           : 
           `
-          <p> Queue: ${formatNumberMoney(d.completedQueueTime, false, 4)} h.</p>
-        ` + (metrics.includes("completedRunTime") ? `<p> Run: ${formatNumberMoney(d.completedRunTime, false, 4)} h.</p>`: ``)
-          + (metrics.includes("failedQueueTime") ? `<p> Failed Queue: ${formatNumberMoney(d.failedQueueTime, false, 4)} h.</p>` : ``)
-          + (metrics.includes("failedRunTime") ? `<p> Failed Run: ${formatNumberMoney(d.failedRunTime, false, 4)} h.</p>` : ``))
+          <div class="font-semibold text-white mb-2">${d.name}</div>
+          <div class="space-y-1">
+            <div class="text-gray-200">Queue: <span class="font-medium text-pink-300">${formatNumberMoney(d.completedQueueTime, false, 4)} h</span></div>
+        ` + (metrics.includes("completedRunTime") ? `<div class="text-gray-200">Run: <span class="font-medium text-green-300">${formatNumberMoney(d.completedRunTime, false, 4)} h</span></div>`: ``)
+          + (metrics.includes("failedQueueTime") ? `<div class="text-gray-200">Failed Queue: <span class="font-medium text-orange-300">${formatNumberMoney(d.failedQueueTime, false, 4)} h</span></div>` : ``)
+          + (metrics.includes("failedRunTime") ? `<div class="text-gray-200">Failed Run: <span class="font-medium text-red-300">${formatNumberMoney(d.failedRunTime, false, 4)} h</span></div>` : ``)
+          + `</div>`)
          );
     }
     
@@ -247,7 +298,8 @@ class BarChart extends Component {
           color = queueColor.background;
           break;
         case "completedRunTime":
-          color = runningColor.background;
+          color = "#4caf50";
+          // color = runningColor.background;
           break;
         case "failedQueueTime":
           color = failedQueueColor;
@@ -369,46 +421,123 @@ class BarChart extends Component {
 
     if (this.props.data.length === 0) {
       return (
-        <div>
-          <div className="row">
-            <div className="col">No data</div>
+        <div className="flex items-center justify-center p-8">
+          <div className="text-center">
+            <div className="text-gray-500 text-lg font-medium">No data available</div>
+            <div className="text-gray-400 text-sm mt-2">No statistics to display at this time</div>
           </div>
         </div>
       );
     }
 
   
-  const queueFilter = this.props.metrics.includes("completedQueueTime") ? <div className="form-check form-check-inline">                
-  <input type="checkbox" name="chartMetricsQ" id={`queueTimeChart-${this.props.helperId}`} className="form-check-input" defaultChecked value="completedQueueTime"/>
-  <label htmlFor="queueTimeChart" className="px-1 mx-1 rounded form-check-label " style={{ background: queueColor.background }}>Queue</label>
-  </div> : null;
-  const runFilter = this.props.metrics.includes("completedRunTime") ? <div className="form-check form-check-inline">
-  <input type="checkbox" name="chartMetricsR" id={`runTimeChart-${this.props.helperId}`} className="form-check-input" defaultChecked value="completedRunTime"/>
-  <label htmlFor="runTimeChart" className="px-1 mx-1 rounded form-check-label text-white" style={{ background: runningColor.background }}>Run</label>
-  </div> : null;
-  const failedQueueFilter = this.props.metrics.includes("failedQueueTime") ? <div className="form-check form-check-inline">
-  <input type="checkbox" name="chartMetricsFq" id={`failedQueueTimeChart-${this.props.helperId}`} className="form-check-input" defaultChecked value="failedQueueTime"/>
-  <label htmlFor="failedQueueTimeChart" className="px-1 mx-1 rounded form-check-label" style={{ background: failedQueueColor }}>Failed Queue</label>
-  </div> : null;
-  const failedRunFilter = this.props.metrics.includes("failedRunTime") ? <div className="form-check form-check-inline">
-  <input type="checkbox" name="chartMetricsFr" id={`failedRunTimeChart-${this.props.helperId}`} className="form-check-input" defaultChecked value="failedRunTime"/>
-  <label htmlFor="failedRunTimeChart" className="px-1 mx-1 rounded form-check-label" style={{ background: failedRunAttempts }}>Failed Run</label>
-  </div> : null;
-  const failedAttemptFilter = this.props.metrics.includes("failedCount") ? <div className="form-check form-check-inline"><label className="px-1 mx-1 rounded form-check-label" style={{ background: failedRunAttempts }}>Failed Attempts</label></div> : null;
+  const queueFilter = this.props.metrics.includes("completedQueueTime") ? 
+    <div className="flex items-center space-x-2">                
+      <input 
+        type="checkbox" 
+        name="chartMetricsQ" 
+        id={`queueTimeChart-${this.props.helperId}`} 
+        className="w-4 h-4 text-pink-600 bg-gray-100 border-gray-300 rounded focus:ring-pink-500 focus:ring-2" 
+        defaultChecked 
+        value="completedQueueTime"
+      />
+      <label 
+        htmlFor="queueTimeChart" 
+        className="px-3 py-1.5 text-sm font-medium text-black rounded-md transition-colors cursor-pointer hover:opacity-90" 
+        style={{ backgroundColor: queueColor.background }}
+      >
+        Queue
+      </label>
+    </div> : null;
+    
+  const runFilter = this.props.metrics.includes("completedRunTime") ? 
+    <div className="flex items-center space-x-2">
+      <input 
+        type="checkbox" 
+        name="chartMetricsR" 
+        id={`runTimeChart-${this.props.helperId}`} 
+        className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 focus:ring-2" 
+        defaultChecked 
+        value="completedRunTime"
+      />
+      <label 
+        htmlFor="runTimeChart" 
+        className="px-3 py-1.5 text-sm font-medium text-black rounded-md transition-colors cursor-pointer hover:opacity-90" 
+        // style={{ backgroundColor: runningColor.background  }}
+        style={{ backgroundColor: "#4caf50"  }}
+      >
+        Run
+      </label>
+    </div> : null;
+    
+  const failedQueueFilter = this.props.metrics.includes("failedQueueTime") ? 
+    <div className="flex items-center space-x-2">
+      <input 
+        type="checkbox" 
+        name="chartMetricsFq" 
+        id={`failedQueueTimeChart-${this.props.helperId}`} 
+        className="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 rounded focus:ring-orange-500 focus:ring-2" 
+        defaultChecked 
+        value="failedQueueTime"
+      />
+      <label 
+        htmlFor="failedQueueTimeChart" 
+        className="px-3 py-1.5 text-sm font-medium text-black rounded-md transition-colors cursor-pointer hover:opacity-90" 
+        style={{ backgroundColor: failedQueueColor }}
+      >
+        Failed Queue
+      </label>
+    </div> : null;
+    
+  const failedRunFilter = this.props.metrics.includes("failedRunTime") ? 
+    <div className="flex items-center space-x-2">
+      <input 
+        type="checkbox" 
+        name="chartMetricsFr" 
+        id={`failedRunTimeChart-${this.props.helperId}`} 
+        className="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500 focus:ring-2" 
+        defaultChecked 
+        value="failedRunTime"
+      />
+      <label 
+        htmlFor="failedRunTimeChart" 
+        className="px-3 py-1.5 text-sm font-medium text-white rounded-md transition-colors cursor-pointer hover:opacity-90" 
+        style={{ backgroundColor: failedRunAttempts }}
+      >
+        Failed Run
+      </label>
+    </div> : null;
+    
+  const failedAttemptFilter = this.props.metrics.includes("failedCount") ? 
+    <div className="flex items-center space-x-2">
+      <div className="w-4 h-4"></div> {/* Spacer for alignment */}
+      <label 
+        className="px-3 py-1.5 text-sm font-medium text-white rounded-md" 
+        style={{ backgroundColor: failedRunAttempts }}
+      >
+        Failed Attempts
+      </label>
+    </div> : null;
 
   return (
-    <div>
-        <div className="flex items-center justify-center gap-4">
+    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <div className="flex flex-wrap items-center justify-center gap-4 mb-6">
           {queueFilter}          
           {runFilter}
           {failedQueueFilter}  
           {failedRunFilter}  
           {failedAttemptFilter}              
         </div>
-        <svg version="1.1"
-        baseProfile="full"
-        xmlns="http://www.w3.org/2000/svg"
-        ref={this.setSvgElement} />
+        <div className="flex justify-center">
+          <svg 
+            version="1.1"
+            baseProfile="full"
+            xmlns="http://www.w3.org/2000/svg"
+            ref={this.setSvgElement}
+            className="drop-shadow-sm"
+            style={{ background: chartColors.background, borderRadius: '8px' }}
+          />
+        </div>
     </div>
   );
   }
