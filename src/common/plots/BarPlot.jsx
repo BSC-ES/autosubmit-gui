@@ -17,6 +17,7 @@ const BarPlot = ({
   xtitle,
   ytitle,
   tooltipContentFn,
+  integerXTicks = false,
 }) => {
   const svgRef = useRef(null);
   const tooltipRef = useRef(null);
@@ -33,6 +34,7 @@ const BarPlot = ({
     xtitle,
     ytitle,
     tooltipContentFn,
+    integerXTicks,
   ]);
 
   const calculateDomain = (data, metrics) => {
@@ -40,6 +42,10 @@ const BarPlot = ({
     const flatValues = values.flat();
     const filteredValues = flatValues.filter((v) => v !== undefined);
     return [d3.min(filteredValues), d3.max(filteredValues)];
+  };
+
+  const tickXFormatFn = (x) => {
+    return integerXTicks ? Math.round(x) : x;
   };
 
   const generatePlot = () => {
@@ -109,12 +115,18 @@ const BarPlot = ({
     const xAxis = d3
       .axisBottom(xScaleQueue)
       .tickSize(-svgHeight + 2.8 * padding)
-      .tickFormat((x) => x)
+      .tickValues(
+        integerXTicks ? [...Array(parseInt(maxDomain) + 1).keys()] : null
+      )
+      .tickFormat(tickXFormatFn)
       .tickSizeOuter(0);
 
     const xAxisTop = d3
       .axisTop(xScaleQueue)
-      .tickFormat((x) => x)
+      .tickValues(
+        integerXTicks ? [...Array(parseInt(maxDomain) + 1).keys()] : null
+      )
+      .tickFormat(tickXFormatFn)
       .tickSizeOuter(0);
 
     svgEl
@@ -218,12 +230,20 @@ const BarPlot = ({
   };
 
   return (
-    <svg
-      version="1.1"
-      baseProfile="full"
-      xmlns="http://www.w3.org/2000/svg"
-      ref={svgRef}
-    />
+    <>
+      {data === undefined || data.length === 0 ? (
+        <div className="text-center text-gray-500 min-w-[620px]">
+          No data available
+        </div>
+      ) : (
+        <svg
+          version="1.1"
+          baseProfile="full"
+          xmlns="http://www.w3.org/2000/svg"
+          ref={svgRef}
+        />
+      )}
+    </>
   );
 };
 

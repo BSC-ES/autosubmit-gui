@@ -1,7 +1,11 @@
-import { useState } from 'react';
-import BarPlot from '../../common/plots/BarPlot';
+import { useState } from "react";
+import BarPlot from "../../common/plots/BarPlot";
 import { formatNumberMoney } from "../context/utils";
-import { failedQueueColor, failedRunAttempts, queueColor } from "../context/vars";
+import {
+  failedQueueColor,
+  failedRunAttempts,
+  queueColor,
+} from "../context/vars";
 
 const StatsBarChart = ({ data, title, xtitle, metrics }) => {
   const [filteredMetrics, setFilteredMetrics] = useState(metrics);
@@ -61,15 +65,13 @@ const StatsBarChart = ({ data, title, xtitle, metrics }) => {
           className={`w-4 h-4 ${inputClass} bg-gray-100 border-gray-300 rounded focus:ring-2`}
           defaultChecked={checked}
           value={key}
-          onChange={e => {
+          onChange={(e) => {
             if (e.target.checked) {
-              setFilteredMetrics(prev =>
+              setFilteredMetrics((prev) =>
                 prev.includes(key) ? prev : [...prev, key]
               );
             } else {
-              setFilteredMetrics(prev =>
-                prev.filter(m => m !== key)
-              );
+              setFilteredMetrics((prev) => prev.filter((m) => m !== key));
             }
           }}
         />
@@ -125,7 +127,7 @@ const StatsBarChart = ({ data, title, xtitle, metrics }) => {
   ) : null;
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 overflow-x-auto">
       <div className="flex flex-wrap items-center justify-center gap-4 mb-6">
         {queueFilter}
         {runFilter}
@@ -153,6 +155,7 @@ const StatsBarChart = ({ data, title, xtitle, metrics }) => {
             ? tooltipFnAttempt
             : tooltipFn4Metrics
         }
+        integerXTicks={metrics && metrics[0] === "failedCount"}
       />
     </div>
   );
