@@ -41,7 +41,9 @@ const BarPlot = ({
     const values = data.map((d) => metrics.map((key) => d[key] || undefined));
     const flatValues = values.flat();
     const filteredValues = flatValues.filter((v) => v !== undefined);
-    return [d3.min(filteredValues), d3.max(filteredValues)];
+    let maxDomain = d3.max(filteredValues);
+    if (maxDomain === undefined) maxDomain = 1;
+    return [d3.min(filteredValues), maxDomain];
   };
 
   const tickXFormatFn = (x) => {
