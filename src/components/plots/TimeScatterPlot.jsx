@@ -42,9 +42,10 @@ const StatsTimeScatterPlot = ({ data, attribute, mainTitle }) => {
   };
 
   const tooltipContentFn = (d) => `
-    <p>${d.name} </p>
-    <p>Queue: ${secondsToDelta(d.queue)}</p>
-    <p>Run: ${secondsToDelta(d.running)}</p>
+    <p class="font-semibold text-white">${d.name} </p>
+    <p>Queue: <span class="text-pink-300">${secondsToDelta(d.queue)}</span></p>
+    <p>Run: <span class="text-green-300">${secondsToDelta(d.running)}</span></p>
+    <p>JPSY: <span class="text-cyan-300">${d.JPSY}</span></p>
     <p>${attribute}: ${d[attribute]}</p>
     `;
 
