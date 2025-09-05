@@ -30,27 +30,6 @@ const ScatterPlot = ({
   const svgRef = useRef(null);
   const tooltipRef = useRef(null);
 
-  useEffect(() => {
-    if (!data || data.length === 0) return;
-    generatePlot();
-  }, [
-    data,
-    xKey,
-    yKey,
-    colorKey,
-    radiusKey,
-    title,
-    xTitle,
-    yTitle,
-    legendTitle,
-    tooltipContentFn,
-    colorRange,
-    radiusRange,
-    width,
-    height,
-    showSaveButton,
-  ]);
-
   const handleSaveClick = () => {
     if (svgRef.current && title) {
       saveSVGObj(svgRef.current, title);
@@ -257,6 +236,14 @@ const ScatterPlot = ({
     tooltipRef.current = tooltip;
   };
 
+  const cleanupTooltip = () => {
+    const tooltip = tooltipRef.current;
+    if (tooltip) {
+      tooltip.remove();
+      tooltipRef.current = null;
+    }
+  };
+
   const showTooltip = (event, d) => {
     const tooltip = tooltipRef.current;
     tooltip
@@ -286,6 +273,33 @@ const ScatterPlot = ({
     const tooltip = tooltipRef.current;
     tooltip.style("opacity", 0);
   };
+
+  useEffect(() => {
+    if (!data || data.length === 0) return;
+    generatePlot();
+
+    return () => {
+      // Cleanup code if needed
+      cleanupTooltip();
+    };
+  }, [
+    generatePlot,
+    data,
+    xKey,
+    yKey,
+    colorKey,
+    radiusKey,
+    title,
+    xTitle,
+    yTitle,
+    legendTitle,
+    tooltipContentFn,
+    colorRange,
+    radiusRange,
+    width,
+    height,
+    showSaveButton,
+  ]);
 
   return (
     <>
