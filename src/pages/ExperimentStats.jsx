@@ -225,30 +225,26 @@ const StatsReport = ({ data, selectedSection }) => {
             </div>
 
             <div className="flex justify-center items-center p-4 gap-3 flex-wrap">
-              <div className="overflow-x-auto">
-                <BarChart
-                  data={filteredJobs}
-                  title="Statistics"
-                  metrics={[
-                    "completedQueueTime",
-                    "completedRunTime",
-                    "failedQueueTime",
-                    "failedRunTime",
-                  ]}
-                  xtitle="Hours"
-                  helperId={"4"}
-                />
-              </div>
+              <BarChart
+                data={filteredJobs}
+                title="Statistics"
+                metrics={[
+                  "completedQueueTime",
+                  "completedRunTime",
+                  "failedQueueTime",
+                  "failedRunTime",
+                ]}
+                xtitle="Hours"
+                helperId={"4"}
+              />
 
-              <div className="overflow-x-auto">
-                <BarChart
-                  data={filteredJobs}
-                  title="Failed Attempts per Job"
-                  metrics={["failedCount"]}
-                  xtitle="Attempts"
-                  helperId={"1"}
-                />
-              </div>
+              <BarChart
+                data={filteredJobs}
+                title="Failed Attempts per Job"
+                metrics={["failedCount"]}
+                xtitle="Attempts"
+                helperId={"1"}
+              />
             </div>
           </>
         )}
