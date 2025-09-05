@@ -22,21 +22,6 @@ const BarPlot = ({
   const svgRef = useRef(null);
   const tooltipRef = useRef(null);
 
-  useEffect(() => {
-    if (!data || data.length === 0) return;
-    generatePlot();
-  }, [
-    data,
-    labelKey,
-    valueKeys,
-    colorMap,
-    title,
-    xtitle,
-    ytitle,
-    tooltipContentFn,
-    integerXTicks,
-  ]);
-
   const calculateDomain = (data, metrics) => {
     const values = data.map((d) => metrics.map((key) => d[key] || undefined));
     const flatValues = values.flat();
@@ -175,7 +160,9 @@ const BarPlot = ({
           );
           const subBarHeight =
             validSubBars.length > 0 ? barHeight / validSubBars.length : 0;
-          return yScaleQueue(idx) + subBarHeight * validSubBars.indexOf(key);
+          const subBarIndex = validSubBars.indexOf(key);
+          if (subBarIndex === -1) return yScaleQueue(idx) + barHeight; // Place it outside the bar if not valid
+          return yScaleQueue(idx) + subBarHeight * subBarIndex;
         })
         .attr("rx", 4)
         .attr("ry", 4)
@@ -217,6 +204,14 @@ const BarPlot = ({
     tooltipRef.current = tooltip;
   };
 
+  const cleanupTooltip = () => {
+    const tooltip = tooltipRef.current;
+    if (tooltip) {
+      tooltip.remove();
+      tooltipRef.current = null;
+    }
+  };
+
   const showTooltip = (event, d) => {
     const tooltip = tooltipRef.current;
     tooltip
@@ -230,6 +225,27 @@ const BarPlot = ({
     const tooltip = tooltipRef.current;
     tooltip.style("opacity", 0);
   };
+
+  useEffect(() => {
+    if (!data || data.length === 0) return;
+    generatePlot();
+
+    return () => {
+      // Cleanup code if needed
+      cleanupTooltip();
+    };
+  }, [
+    generatePlot,
+    data,
+    labelKey,
+    valueKeys,
+    colorMap,
+    title,
+    xtitle,
+    ytitle,
+    tooltipContentFn,
+    integerXTicks,
+  ]);
 
   return (
     <>
