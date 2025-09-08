@@ -235,7 +235,6 @@ const BarPlot = ({
       cleanupTooltip();
     };
   }, [
-    generatePlot,
     data,
     labelKey,
     valueKeys,

@@ -283,7 +283,6 @@ const ScatterPlot = ({
       cleanupTooltip();
     };
   }, [
-    generatePlot,
     data,
     xKey,
     yKey,
