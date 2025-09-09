@@ -84,7 +84,7 @@ const ExperimentInfoHeader = ({ expid }) => {
           </div>
         )}
 
-        <hr />
+        <hr className="dark:border-neutral-700" />
       </div>
     </>
   );
