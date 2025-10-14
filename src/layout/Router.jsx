@@ -28,6 +28,7 @@ import { useEffect } from "react";
 import Footer from "./Footer";
 import TopAnnouncement from "./TopAnnouncement";
 import UserMetricsPage from "../pages/UserMetricsPage";
+import ExperimentTreeAlpha from "../pages/ExperimentTreeAlpha";
 
 const router = createBrowserRouter(
   [
@@ -78,6 +79,10 @@ const router = createBrowserRouter(
             {
               path: "/experiment/:expid/tree",
               element: <ExperimentTree />,
+            },
+            {
+              path: "/experiment/:expid/tree-alpha",
+              element: <ExperimentTreeAlpha />,
             },
             {
               path: "/experiment/:expid/graph",
