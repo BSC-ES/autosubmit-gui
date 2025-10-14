@@ -102,7 +102,8 @@ const ExperimentWrapper = ({ children }) => {
       {
         width >= 1024 ?
           <div className="flex gap-6 grow">
-            <div className={cn("flex flex-col gap-2 border-e p-5",)}
+            <div className={cn("flex flex-col gap-2 bg-light border p-5 rounded-2xl",
+              "dark:bg-neutral-700 dark:border-neutral-700")}
               style={{ maxHeight: "80vh" }}>
               <ExperimentMenuItems showLabels={showLabels} />
               <div className={cn("mt-auto flex items-center cursor-pointer p-2 rounded transition-colors hover:bg-black/5",
@@ -131,7 +132,9 @@ const ExperimentWrapper = ({ children }) => {
               </div>
               {
                 showTopMenu &&
-                <div className={cn("flex flex-col gap-1 border border-t-0 py-4 px-6 rounded-b-2xl")}
+                <div className={cn("flex flex-col gap-1 bg-light border border-t-0 py-4 px-6 rounded-b-2xl",
+                  "dark:bg-neutral-700 dark:border-neutral-700"
+                )}
                   onClick={handleToggleTopMenu}>
                   <ExperimentMenuItems />
                 </div>
