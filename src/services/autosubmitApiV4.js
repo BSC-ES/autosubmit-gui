@@ -133,6 +133,25 @@ export const autosubmitApiV4 = createApi({
             },
             keepUnusedDataFor: 1
         }),
+        getPreferredUsername: builder.query({
+            query: () => {
+                return {
+                    url: `user-settings/preferred-username`,
+                    method: "GET"
+                }
+            },
+        }),
+        updatePreferredUsername: builder.mutation({
+            query: ({ preferred_username }) => {
+                return {
+                    url: `user-settings/preferred-username`,
+                    method: "POST",
+                    body: {
+                        preferred_username: preferred_username
+                    }
+                }
+            }
+        })
     }),
 })
 
