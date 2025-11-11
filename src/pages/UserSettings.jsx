@@ -11,10 +11,12 @@ const PreferredUsernameInput = () => {
   const {
     data,
     isLoading: isLoadingPreferredUsername,
+    error: preferredUsernameError,
   } = autosubmitApiV4.endpoints.getPreferredUsername.useQuery();
 
   const [preferredUsername, setPreferredUsernameInput] = useState("");
   const [isDirty, setIsDirty] = useState(false);
+  const [isNotAvailable, setIsNotAvailable] = useState(false);
 
   const [
     updatePreferredUsername,
@@ -31,7 +33,13 @@ const PreferredUsernameInput = () => {
       setPreferredUsernameInput(data.preferred_username);
       setIsDirty(false);
     }
-  }, [data]);
+    console.log("preferredUsernameError", preferredUsernameError || "none");
+    if (preferredUsernameError && preferredUsernameError.status === 404) {
+      setIsNotAvailable(true);
+    } else {
+      setIsNotAvailable(false);
+    }
+  }, [data, preferredUsernameError]);
 
   const handlePreferredUsernameChange = (e) => {
     setPreferredUsernameInput(e.target.value);
@@ -55,7 +63,11 @@ const PreferredUsernameInput = () => {
         type="text"
         value={preferredUsername}
         onChange={handlePreferredUsernameChange}
-        disabled={isLoadingPreferredUsername || isUpdatingPreferredUsername}
+        disabled={
+          isLoadingPreferredUsername ||
+          isUpdatingPreferredUsername ||
+          isNotAvailable
+        }
         placeholder="Enter preferred username"
         maxLength={128}
         style={{ minWidth: "100px", maxWidth: "220px" }}
@@ -68,7 +80,8 @@ const PreferredUsernameInput = () => {
           isLoadingPreferredUsername ||
           isUpdatingPreferredUsername ||
           !isDirty ||
-          preferredUsername.trim() === ""
+          preferredUsername.trim() === "" ||
+          isNotAvailable
         }
         title="Save preferred username"
         style={{
@@ -94,6 +107,11 @@ const PreferredUsernameInput = () => {
       {isUpdatePreferredUsernameError && (
         <span className="text-danger ms-2 text-sm">
           {updatePreferredUsernameError?.data?.detail || "Error saving"}
+        </span>
+      )}
+      {isNotAvailable && (
+        <span className="text-danger ms-2 text-sm">
+          The preferred username option is not available.
         </span>
       )}
     </form>
@@ -177,7 +195,9 @@ const UserSettings = () => {
             </div>
 
             <div className="flex flex-wrap items-center">
-              <span className="font-semibold me-4">Preferred username <Tooltip.Provider>
+              <span className="font-semibold me-4">
+                Preferred username{" "}
+                <Tooltip.Provider>
                   <Tooltip.Root delayDuration={300}>
                     <Tooltip.Trigger>
                       <i className="fa-solid fa-info-circle opacity-70" />
@@ -187,11 +207,14 @@ const UserSettings = () => {
                       align="center"
                       className="text-xs bg-black/85 text-white px-2 py-1 rounded max-w-[16rem] text-center font-normal"
                     >
-                      This username will be suggested when you are about to submit any command through a Runner
+                      This username will be suggested when you are about to
+                      submit any command through a Runner
                       <Tooltip.Arrow />
                     </Tooltip.Content>
                   </Tooltip.Root>
-                </Tooltip.Provider> :</span>
+                </Tooltip.Provider>{" "}
+                :
+              </span>
               <PreferredUsernameInput />
             </div>
 
