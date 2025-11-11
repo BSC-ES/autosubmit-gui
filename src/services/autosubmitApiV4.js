@@ -150,6 +150,22 @@ export const autosubmitApiV4 = createApi({
                         preferred_username: preferred_username
                     }
                 }
+            },
+        }),
+        getRunnersConfig: builder.query({
+            query: () => {
+                return {
+                    url: `/runners/config`,
+                    method: "GET"
+                }
+            }
+        }),
+        getPublicSSHKeys: builder.query({
+            query: () => {
+                return {
+                    url: `/runners/ssh-public-keys`,
+                    method: "GET"
+                }
             }
         })
     }),

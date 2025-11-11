@@ -118,8 +118,7 @@ const PreferredUsernameInput = () => {
   );
 };
 
-const TokenBox = () => {
-  const token = (localStorage.getItem("token") || "").replace("Bearer ", "");
+const TokenBox = ({ token }) => {
   const [tokenHide, setTokenHide] = useState(true);
   const copyToClipboard = useCopyToClipboard()[1];
   const [copied, setCopied] = useState(false);
@@ -168,13 +167,194 @@ const TokenBox = () => {
   );
 };
 
+const SSHKeyBox = ({ keyValue }) => {
+  const [copied, setCopied] = useState(false);
+  const copyToClipboard = useCopyToClipboard()[1];
+  const handleCopy = () => {
+    copyToClipboard(keyValue);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+  return (
+    <div className="border rounded p-4 bg-gray-50 dark:bg-gray-800 flex items-start justify-between gap-2">
+      <div className="font-mono break-all text-xs flex-1">{keyValue}</div>
+      <button
+        title="Copy to clipboard"
+        className="ml-2 px-2 py-1 text-xs border rounded opacity-70 hover:opacity-100 transition"
+        onClick={handleCopy}
+      >
+        <i
+          className={cn(
+            copied ? "fa-solid fa-check text-success" : "fa-regular fa-copy"
+          )}
+        />
+      </button>
+    </div>
+  );
+};
+
+const RunnerConfigSection = () => {
+  const {
+    data: runnersConfig,
+    error: runnersConfigError,
+    isLoading: runnersConfigLoading,
+  } = autosubmitApiV4.endpoints.getRunnersConfig.useQuery();
+
+  const {
+    data: publicSSHKeys,
+    error: publicSSHKeysError,
+    isLoading: publicSSHKeysLoading,
+  } = autosubmitApiV4.endpoints.getPublicSSHKeys.useQuery();
+
+  return (
+    <div className="border rounded-2xl px-8 pt-8 pb-12">
+      <div className="flex flex-col">
+        <h2 className="text-3xl font-semibold">Runner configuration</h2>
+
+        <hr className="mt-2 mb-8" />
+
+        {runnersConfigLoading && (
+          <div className="px-4 text-center py-8">
+            <i className="fa-solid fa-spinner fa-spin me-2" />
+            Loading runner configuration...
+          </div>
+        )}
+
+        {runnersConfigError && (
+          <div className="px-4 text-center py-8 text-red-500">
+            <i className="fa-solid fa-exclamation-triangle me-2" />
+            Error loading runner configuration
+          </div>
+        )}
+
+        {runnersConfig && (
+          <div className="px-4 flex flex-col gap-8">
+            {Object.entries(runnersConfig).map(([runnerName, runnerConfig]) => (
+              <div key={runnerName}>
+                <div className="flex items-center gap-2 mb-4">
+                  <h3 className="text-lg font-semibold">{runnerName}</h3>
+                  <span
+                    className={cn(
+                      "text-sm",
+                      runnerConfig.ENABLED
+                        ? "text-green-600 dark:text-green-400"
+                        : "text-gray-400 dark:text-gray-500"
+                    )}
+                  >
+                    {runnerConfig.ENABLED ? "● Enabled" : "○ Disabled"}
+                  </span>
+                </div>
+
+                {runnerConfig.MODULE_LOADERS && (
+                  <div className="ml-6 space-y-3">
+                    {Object.entries(runnerConfig.MODULE_LOADERS).map(
+                      ([loaderName, loaderConfig]) => (
+                        <div key={loaderName}>
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="text-gray-800 dark:text-gray-300">
+                              {loaderName}
+                            </span>
+                            <span
+                              className={cn(
+                                "text-sm",
+                                loaderConfig.ENABLED
+                                  ? "text-green-600 dark:text-green-400"
+                                  : "text-gray-400 dark:text-gray-500"
+                              )}
+                            >
+                              {loaderConfig.ENABLED
+                                ? "● Enabled"
+                                : "○ Disabled"}
+                            </span>
+                          </div>
+
+                          {loaderConfig.MODULES_WHITELIST &&
+                            loaderConfig.MODULES_WHITELIST.length > 0 && (
+                              <div className="ml-4 mt-1">
+                                <div className="text-sm text-gray-500 dark:text-gray-400">
+                                  Whitelisted modules:
+                                </div>
+                                <div className="text-sm text-gray-500 dark:text-gray-400 space-y-0.5 ml-4">
+                                  {loaderConfig.MODULES_WHITELIST.map(
+                                    (module, idx) => (
+                                      <div key={idx}>- {module}</div>
+                                    )
+                                  )}
+                                </div>
+                              </div>
+                            )}
+
+                          {loaderConfig.MODULES_WHITELIST &&
+                            loaderConfig.MODULES_WHITELIST.length === 0 && (
+                              <div className="ml-4 mt-1">
+                                <div className="text-sm text-gray-500 dark:text-gray-400">
+                                  No modules whitelisted (all modules allowed)
+                                </div>
+                              </div>
+                            )}
+                        </div>
+                      )
+                    )}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* SSH Keys */}
+        <div className="mt-12">
+          <h3 className="text-2xl font-semibold mb-4">Public SSH Keys</h3>
+
+          <div className="mb-4 text-sm ml-2 text-gray-700 dark:text-gray-300">
+            Include these public SSH keys your authorized_keys file to allow SSH
+            access to runners
+          </div>
+
+          {publicSSHKeysLoading && (
+            <div className="px-4 text-center py-8">
+              <i className="fa-solid fa-spinner fa-spin me-2" />
+              Loading public SSH keys...
+            </div>
+          )}
+
+          {publicSSHKeysError && (
+            <div className="px-4 text-center py-8 text-red-500">
+              <i className="fa-solid fa-exclamation-triangle me-2" />
+              Error loading public SSH keys
+            </div>
+          )}
+
+          {publicSSHKeys?.ssh_public_keys &&
+            publicSSHKeys.ssh_public_keys.length === 0 && (
+              <div className="px-4 py-4 text-gray-500">
+                No public SSH keys found
+              </div>
+            )}
+
+          {publicSSHKeys?.ssh_public_keys &&
+            publicSSHKeys.ssh_public_keys.length > 0 && (
+              <div className="px-4 flex flex-col gap-4">
+                {publicSSHKeys.ssh_public_keys.map((key, idx) => {
+                  return <SSHKeyBox key={idx} keyValue={key} />;
+                })}
+              </div>
+            )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const UserSettings = () => {
-  useASTitle(`User settings`);
+  useASTitle(`Settings`);
   useBreadcrumb([
     {
-      name: `User settings`,
+      name: `Settings`,
     },
   ]);
+
+  const token = (localStorage.getItem("token") || "").replace("Bearer ", "");
 
   const authState = useSelector((state) => state.auth);
 
@@ -183,8 +363,8 @@ const UserSettings = () => {
   return (
     <div className="flex flex-col gap-4">
       <div className="border rounded-2xl px-8 pt-8 pb-12">
-        <div className="markdown-container">
-          <h2>User settings</h2>
+        <div className="flex flex-col">
+          <h2 className="text-3xl font-semibold">User settings</h2>
 
           <hr className="mt-2 mb-8" />
 
@@ -220,11 +400,13 @@ const UserSettings = () => {
 
             <div className="flex flex-wrap">
               <span className="font-semibold me-4">Token: </span>
-              <TokenBox />
+              <TokenBox token={token} />
             </div>
           </div>
         </div>
       </div>
+
+      <RunnerConfigSection />
     </div>
   );
 };
