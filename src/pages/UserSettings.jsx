@@ -193,12 +193,101 @@ const SSHKeyBox = ({ keyValue }) => {
   );
 };
 
+const RunnerProfileDetails = ({ profileName, profileConfig }) => {
+  const isSSHRunner = profileConfig.RUNNER_TYPE === "SSH";
+  const hasModules = profileConfig.MODULE_LOADER_TYPE !== "NO_MODULE";
+
+  const ConfigRow = ({ label, value, isUserProvided = false }) => (
+    <div className="flex items-center gap-3">
+      <span className="text-sm text-gray-600 dark:text-gray-400 min-w-[140px]">
+        {label}
+      </span>
+      <span
+        className={cn(
+          "text-sm font-mono",
+          isUserProvided && "italic text-gray-500 dark:text-gray-500"
+        )}
+      >
+        {isUserProvided ? `<${value}>` : value}
+      </span>
+    </div>
+  );
+
+  const renderModules = (modules) => {
+    if (Array.isArray(modules)) {
+      return modules.join(", ");
+    }
+    return String(modules);
+  };
+
+  return (
+    <div className="border rounded-lg p-4 bg-gray-50 dark:bg-gray-800">
+      <h3 className="text-lg font-semibold mb-3">{profileName}</h3>
+      <div className="space-y-2">
+        <ConfigRow
+          label="Runner Type"
+          value={profileConfig.RUNNER_TYPE || "any runner type"}
+          isUserProvided={!profileConfig.RUNNER_TYPE}
+        />
+        <ConfigRow
+          label="Module Loader"
+          value={profileConfig.MODULE_LOADER_TYPE || "any module loader"}
+          isUserProvided={!profileConfig.MODULE_LOADER_TYPE}
+        />
+        {hasModules && (
+          <ConfigRow
+            label="Modules"
+            value={
+              profileConfig.MODULES
+                ? renderModules(profileConfig.MODULES)
+                : "modules to load"
+            }
+            isUserProvided={!profileConfig.MODULES}
+          />
+        )}
+        {isSSHRunner && (
+          <>
+            <div className="pt-1 pb-1">
+              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                SSH:
+              </span>
+            </div>
+            <div className="ml-4 space-y-2">
+              <ConfigRow
+                label="Host"
+                value={
+                  profileConfig.SSH?.HOST
+                    ? profileConfig.SSH.HOST
+                    : "your SSH host"
+                }
+                isUserProvided={!profileConfig.SSH?.HOST}
+              />
+              <ConfigRow
+                label="Username"
+                value={
+                  profileConfig.SSH?.USERNAME
+                    ? profileConfig.SSH.USERNAME
+                    : "your SSH username"
+                }
+                isUserProvided={!profileConfig.SSH?.USERNAME}
+              />
+              {profileConfig.SSH?.PORT && (
+                <ConfigRow label="Port" value={profileConfig.SSH.PORT} />
+              )}
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
+};
+
 const RunnerConfigSection = () => {
   const {
-    data: runnersConfig,
-    error: runnersConfigError,
-    isLoading: runnersConfigLoading,
-  } = autosubmitApiV4.endpoints.getRunnersConfig.useQuery();
+    data: runnerProfiles,
+    error: runnerProfilesError,
+    isLoading: runnerProfilesLoading,
+  } = autosubmitApiV4.endpoints.getRunnersConfigProfiles.useQuery();
 
   const {
     data: publicSSHKeys,
@@ -213,92 +302,33 @@ const RunnerConfigSection = () => {
 
         <hr className="mt-2 mb-8" />
 
-        {runnersConfigLoading && (
+        <h3 className="text-2xl font-semibold mb-4">Available profiles</h3>
+
+        {runnerProfilesLoading && (
           <div className="px-4 text-center py-8">
             <i className="fa-solid fa-spinner fa-spin me-2" />
-            Loading runner configuration...
+            Loading runner profiles...
           </div>
         )}
 
-        {runnersConfigError && (
+        {runnerProfilesError && (
           <div className="px-4 text-center py-8 text-red-500">
             <i className="fa-solid fa-exclamation-triangle me-2" />
-            Error loading runner configuration
+            Error loading runner profiles
           </div>
         )}
 
-        {runnersConfig && (
+        {runnerProfiles && (
           <div className="px-4 flex flex-col gap-8">
-            {Object.entries(runnersConfig).map(([runnerName, runnerConfig]) => (
-              <div key={runnerName}>
-                <div className="flex items-center gap-2 mb-4">
-                  <h3 className="text-lg font-semibold">{runnerName}</h3>
-                  <span
-                    className={cn(
-                      "text-sm",
-                      runnerConfig.ENABLED
-                        ? "text-green-600 dark:text-green-400"
-                        : "text-gray-400 dark:text-gray-500"
-                    )}
-                  >
-                    {runnerConfig.ENABLED ? "● Enabled" : "○ Disabled"}
-                  </span>
-                </div>
-
-                {runnerConfig.MODULE_LOADERS && (
-                  <div className="ml-6 space-y-3">
-                    {Object.entries(runnerConfig.MODULE_LOADERS).map(
-                      ([loaderName, loaderConfig]) => (
-                        <div key={loaderName}>
-                          <div className="flex items-center gap-2 mb-1">
-                            <span className="text-gray-800 dark:text-gray-300">
-                              {loaderName}
-                            </span>
-                            <span
-                              className={cn(
-                                "text-sm",
-                                loaderConfig.ENABLED
-                                  ? "text-green-600 dark:text-green-400"
-                                  : "text-gray-400 dark:text-gray-500"
-                              )}
-                            >
-                              {loaderConfig.ENABLED
-                                ? "● Enabled"
-                                : "○ Disabled"}
-                            </span>
-                          </div>
-
-                          {loaderConfig.MODULES_WHITELIST &&
-                            loaderConfig.MODULES_WHITELIST.length > 0 && (
-                              <div className="ml-4 mt-1">
-                                <div className="text-sm text-gray-500 dark:text-gray-400">
-                                  Whitelisted modules:
-                                </div>
-                                <div className="text-sm text-gray-500 dark:text-gray-400 space-y-0.5 ml-4">
-                                  {loaderConfig.MODULES_WHITELIST.map(
-                                    (module, idx) => (
-                                      <div key={idx}>- {module}</div>
-                                    )
-                                  )}
-                                </div>
-                              </div>
-                            )}
-
-                          {loaderConfig.MODULES_WHITELIST &&
-                            loaderConfig.MODULES_WHITELIST.length === 0 && (
-                              <div className="ml-4 mt-1">
-                                <div className="text-sm text-gray-500 dark:text-gray-400">
-                                  No modules whitelisted (all modules allowed)
-                                </div>
-                              </div>
-                            )}
-                        </div>
-                      )
-                    )}
-                  </div>
-                )}
-              </div>
-            ))}
+            {Object.entries(runnerProfiles).map(
+              ([runnerProfileName, runnerProfileConfig]) => (
+                <RunnerProfileDetails
+                  key={runnerProfileName}
+                  profileName={runnerProfileName}
+                  profileConfig={runnerProfileConfig}
+                />
+              )
+            )}
           </div>
         )}
 
@@ -325,21 +355,19 @@ const RunnerConfigSection = () => {
             </div>
           )}
 
-          {publicSSHKeys?.ssh_public_keys &&
-            publicSSHKeys.ssh_public_keys.length === 0 && (
-              <div className="px-4 py-4 text-gray-500">
-                No public SSH keys found
-              </div>
-            )}
+          {publicSSHKeys && publicSSHKeys.length === 0 && (
+            <div className="px-4 py-4 text-gray-500">
+              No public SSH keys found
+            </div>
+          )}
 
-          {publicSSHKeys?.ssh_public_keys &&
-            publicSSHKeys.ssh_public_keys.length > 0 && (
-              <div className="px-4 flex flex-col gap-4">
-                {publicSSHKeys.ssh_public_keys.map((key, idx) => {
-                  return <SSHKeyBox key={idx} keyValue={key} />;
-                })}
-              </div>
-            )}
+          {publicSSHKeys && publicSSHKeys.length > 0 && (
+            <div className="px-4 flex flex-col gap-4">
+              {publicSSHKeys.map((key, idx) => {
+                return <SSHKeyBox key={idx} keyValue={key} />;
+              })}
+            </div>
+          )}
         </div>
       </div>
     </div>
