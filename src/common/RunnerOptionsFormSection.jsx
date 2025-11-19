@@ -1,6 +1,5 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { autosubmitApiV4 } from "../services/autosubmitApiV4";
-import { cn } from "../services/utils";
 
 export const RunnerOptionsFormSection = ({ onSelectionChange }) => {
   const {
@@ -78,6 +77,9 @@ export const RunnerOptionsFormSection = ({ onSelectionChange }) => {
             </option>
           ))}
         </select>
+        <div className="text-sm text-gray-500">
+          ({activeRunnerProfiles.length} profiles available)
+        </div>
       </div>
 
       {selectedProfile && (
