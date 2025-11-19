@@ -318,6 +318,12 @@ const RunnerConfigSection = () => {
           </div>
         )}
 
+        {runnerProfiles && Object.keys(runnerProfiles).length === 0 && (
+          <div className="px-4 pt-4 pb-2 text-gray-500">
+            No runner configuration profiles found
+          </div>
+        )}
+
         {runnerProfiles && (
           <div className="px-4 flex flex-col gap-8">
             {Object.entries(runnerProfiles).map(

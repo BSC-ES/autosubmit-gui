@@ -149,8 +149,8 @@ export function ChangeStatusModal({ expid, selectedJobs, show, onHide }) {
             />
 
             {isSubmitCommandError && (
-              <div className="text-red-600 mt-2">
-                Error running the set job status command. Please try again.
+              <div className="text-red-600 mt-2 text-sm">
+                Error running the set job status command. Please check your command configuration and try again.
               </div>
             )}
 
