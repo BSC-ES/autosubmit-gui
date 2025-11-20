@@ -8,6 +8,12 @@ export const RunnerOptionsFormSection = ({ onSelectionChange }) => {
     isLoading: runnerProfilesLoading,
   } = autosubmitApiV4.endpoints.getRunnersConfigProfiles.useQuery();
 
+  const {
+    data: preferredUsername,
+    isLoading: isLoadingPreferredUsername,
+    error: preferredUsernameError,
+  } = autosubmitApiV4.endpoints.getPreferredUsername.useQuery();
+
   const activeRunnerProfiles = useMemo(
     () => (runnerProfiles ? Object.keys(runnerProfiles) : []),
     [runnerProfiles]
@@ -129,15 +135,30 @@ export const RunnerOptionsFormSection = ({ onSelectionChange }) => {
                 {selectedProfile.SSH?.USERNAME ? (
                   <div className="ml-2">{selectedProfile.SSH.USERNAME}</div>
                 ) : (
-                  <input
-                    type="text"
-                    className="ml-2 px-2 py-1 border rounded text-sm flex-1"
-                    placeholder="Enter SSH username"
-                    value={runnerConfig.SSH?.USERNAME || ""}
-                    onChange={(e) =>
-                      handleSSHChange("USERNAME", e.target.value)
-                    }
-                  />
+                  <>
+                    <input
+                      type="text"
+                      className="ml-2 px-2 py-1 border rounded text-sm flex-1"
+                      placeholder="Enter SSH username"
+                      value={runnerConfig.SSH?.USERNAME || ""}
+                      onChange={(e) =>
+                        handleSSHChange("USERNAME", e.target.value)
+                      }
+                    />
+                    {preferredUsername?.preferred_username && (
+                      <button
+                        className="ml-2 px-3 py-1 text-primary rounded text-sm hover:underline"
+                        onClick={() => {
+                          handleSSHChange(
+                            "USERNAME",
+                            preferredUsername.preferred_username
+                          );
+                        }}
+                      >
+                        Use {preferredUsername.preferred_username} ?
+                      </button>
+                    )}
+                  </>
                 )}
               </div>
 
