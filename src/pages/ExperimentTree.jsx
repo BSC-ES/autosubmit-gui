@@ -49,8 +49,11 @@ const ExperimentTree = () => {
   });
 
   const [showModal, setShowModal] = useState(false);
-  const toggleModal = () => {
+  const toggleModal = ( refresh = false ) => {
     setShowModal(!showModal);
+    if (refresh === true) {
+      refetch();
+    }
   };
 
   const { data, isFetching, refetch, isError } =

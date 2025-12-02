@@ -150,7 +150,30 @@ export const autosubmitApiV4 = createApi({
                         preferred_username: preferred_username
                     }
                 }
+            },
+        }),
+        getRunnersConfigProfiles: builder.query({
+            query: () => {
+                return {
+                    url: `/runners/configuration/profiles`,
+                    method: "GET"
+                }
             }
+        }),
+        getPublicSSHKeys: builder.query({
+            query: () => {
+                return {
+                    url: `/runners/configuration/ssh-public-keys`,
+                    method: "GET"
+                }
+            }
+        }),
+        runJobSetStatusCommand: builder.mutation({
+            query: (body) => ({
+                url: `/runners/command/set-job-status`,
+                method: "POST",
+                body
+            })
         })
     }),
 })
