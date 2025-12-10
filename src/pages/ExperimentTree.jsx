@@ -72,6 +72,22 @@ const ExperimentTree = () => {
     }
   );
 
+  const assignKeysToTree = (tree) => {
+    if (Array.isArray(tree)) {
+      // Create a deep copy and assign keys
+      return tree.map((node) => {
+        const newNode = { ...node };
+        newNode.key = `${node.refKey}-${Math.random().toString(36).slice(2, 11)}`;
+        if (Array.isArray(newNode.children)) {
+          newNode.children = assignKeysToTree(newNode.children);
+        }
+        return newNode;
+      });
+    }
+  };
+
+  const dataTree = useMemo(() => assignKeysToTree(data?.tree || []), [data]);
+
   useEffect(() => {
     // Unmount component
     return () => {
@@ -296,7 +312,7 @@ const ExperimentTree = () => {
             tree={(_tree) => {
               tree.current = _tree;
             }}
-            source={data?.tree}
+            source={dataTree}
             onSelectNodes={handleSelectNodes}
           />
         </div>
