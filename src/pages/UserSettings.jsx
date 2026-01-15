@@ -221,7 +221,7 @@ const RunnerProfileDetails = ({ profileName, profileConfig }) => {
   };
 
   return (
-    <div className="border rounded-lg p-4 bg-gray-50 dark:bg-gray-800">
+    <div className="border rounded-lg p-4 bg-gray-50 dark:bg-gray-800 overflow-auto">
       <h3 className="text-lg font-semibold mb-3">{profileName}</h3>
       <div className="space-y-2">
         <ConfigRow
@@ -302,6 +302,54 @@ const RunnerConfigSection = () => {
 
         <hr className="mt-2 mb-8" />
 
+        {/* SSH Keys */}
+        <div className="mb-8">
+          <h3 className="text-2xl font-semibold mb-4">Public SSH Keys</h3>
+
+          <div className="mb-4 text-sm ml-2 text-gray-700 dark:text-gray-300">
+            Include these public SSH keys your authorized_keys file to allow SSH
+            access to runners. Example command:{" "}
+            <code className="border p-1 rounded bg-gray-100 dark:bg-gray-800 font-mono text-xs text-red-600">
+              cat $API_PUBLIC_KEY &gt;&gt; ~/.ssh/authorized_keys
+            </code>{" "}
+            where{" "}
+            <code className="border p-1 rounded bg-gray-100 dark:bg-gray-800 font-mono text-xs text-red-600">
+              $API_PUBLIC_KEY
+            </code>{" "}
+            is any of the keys below. Note that by adding these keys, you are
+            allowing the Autosubmit API to access your runner machines via SSH.
+          </div>
+
+          {publicSSHKeysLoading && (
+            <div className="px-4 text-center py-8">
+              <i className="fa-solid fa-spinner fa-spin me-2" />
+              Loading public SSH keys...
+            </div>
+          )}
+
+          {publicSSHKeysError && (
+            <div className="px-4 text-center py-8 text-red-500">
+              <i className="fa-solid fa-exclamation-triangle me-2" />
+              Error loading public SSH keys
+            </div>
+          )}
+
+          {publicSSHKeys && publicSSHKeys.length === 0 && (
+            <div className="px-4 py-4 text-gray-500">
+              No public SSH keys found
+            </div>
+          )}
+
+          {publicSSHKeys && publicSSHKeys.length > 0 && (
+            <div className="px-4 flex flex-col gap-4">
+              {publicSSHKeys.map((key, idx) => {
+                return <SSHKeyBox key={idx} keyValue={key} />;
+              })}
+            </div>
+          )}
+        </div>
+
+        {/* Runner Profiles */}
         <h3 className="text-2xl font-semibold mb-4">Available profiles</h3>
 
         {runnerProfilesLoading && (
@@ -337,44 +385,6 @@ const RunnerConfigSection = () => {
             )}
           </div>
         )}
-
-        {/* SSH Keys */}
-        <div className="mt-12">
-          <h3 className="text-2xl font-semibold mb-4">Public SSH Keys</h3>
-
-          <div className="mb-4 text-sm ml-2 text-gray-700 dark:text-gray-300">
-            Include these public SSH keys your authorized_keys file to allow SSH
-            access to runners
-          </div>
-
-          {publicSSHKeysLoading && (
-            <div className="px-4 text-center py-8">
-              <i className="fa-solid fa-spinner fa-spin me-2" />
-              Loading public SSH keys...
-            </div>
-          )}
-
-          {publicSSHKeysError && (
-            <div className="px-4 text-center py-8 text-red-500">
-              <i className="fa-solid fa-exclamation-triangle me-2" />
-              Error loading public SSH keys
-            </div>
-          )}
-
-          {publicSSHKeys && publicSSHKeys.length === 0 && (
-            <div className="px-4 py-4 text-gray-500">
-              No public SSH keys found
-            </div>
-          )}
-
-          {publicSSHKeys && publicSSHKeys.length > 0 && (
-            <div className="px-4 flex flex-col gap-4">
-              {publicSSHKeys.map((key, idx) => {
-                return <SSHKeyBox key={idx} keyValue={key} />;
-              })}
-            </div>
-          )}
-        </div>
       </div>
     </div>
   );
