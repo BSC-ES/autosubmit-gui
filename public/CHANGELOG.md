@@ -1,5 +1,15 @@
 ## Changelog
 
+### Pre-release v4.1.1-beta.2 - Release date: 2026-01-20
+
+* **Compatibility with Autosubmit API version >= [v4.1.2b3](https://pypi.org/project/autosubmit-api/v4.1.2b3/)**
+* Secret token login input characters are hidden now
+* Statistics bar chart visuals updated
+* Added a section to configure SSH runner username preference
+* Added the option to trigger the set status command via runners from the existing job modal
+* Fixed the issue where the tree view crashes when there are duplicate nodes
+* Multiple dependencies updates
+
 ### Pre-release v4.1.1-beta.1 - Release date: 2025-07-10
 
 * **Major change: Vite is now the build tool used in this project. CRA have been removed.**
