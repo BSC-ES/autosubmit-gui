@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
 import { STATUS_STYLES } from "../services/utils";
 import Modal from "./Modal";
+import ConfirmModal from "./ConfirmModal";
 import {
   commandGeneratorGraph,
   statusChangeTextGeneratorGraph,
@@ -8,30 +9,6 @@ import {
 import { useCopyToClipboard } from "@uidotdev/usehooks";
 import { RunnerOptionsFormSection } from "./RunnerOptionsFormSection";
 import { autosubmitApiV4 } from "../services/autosubmitApiV4";
-
-const ConfirmModal = ({ show, onConfirm, onCancel, message }) => {
-  return (
-    <Modal show={show} onClose={onCancel}>
-      <div className="bg-white text-black py-6 px-6 rounded-lg w-96">
-        <p className="mb-4">{message}</p>
-        <div className="flex justify-end gap-4">
-          <button
-            className="bg-gray-300 text-black px-4 py-2 rounded hover:bg-gray-400"
-            onClick={onCancel}
-          >
-            Cancel
-          </button>
-          <button
-            className="bg-success text-white px-4 py-2 rounded hover:bg-success/90"
-            onClick={onConfirm}
-          >
-            Confirm
-          </button>
-        </div>
-      </div>
-    </Modal>
-  );
-};
 
 export function ChangeStatusModal({ expid, selectedJobs, show, onHide }) {
   const copyToClipboard = useCopyToClipboard()[1];
@@ -150,7 +127,8 @@ export function ChangeStatusModal({ expid, selectedJobs, show, onHide }) {
 
             {isSubmitCommandError && (
               <div className="text-red-600 mt-2 text-sm">
-                Error running the set job status command. Please check your command configuration and try again.
+                Error running the set job status command. Please check your
+                command configuration and try again.
               </div>
             )}
 
