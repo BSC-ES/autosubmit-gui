@@ -1,5 +1,7 @@
 import { useState, useMemo } from "react";
 import { autosubmitApiV4 } from "../services/autosubmitApiV4";
+import * as Tooltip from "@radix-ui/react-tooltip";
+import { Link } from "react-router-dom";
 
 export const RunnerOptionsFormSection = ({ onSelectionChange }) => {
   const {
@@ -109,7 +111,36 @@ export const RunnerOptionsFormSection = ({ onSelectionChange }) => {
 
           {isSSHRunner && (
             <div className="flex flex-col border rounded py-3 px-4 gap-3 bg-gray-50 dark:bg-gray-800">
-              <div className="font-semibold text-sm">SSH Configuration:</div>
+              <div className="font-semibold text-sm">
+                SSH Configuration:{" "}
+                <Tooltip.Provider>
+                  <Tooltip.Root delayDuration={300}>
+                    <Tooltip.Trigger asChild>
+                      <i className="fa-solid fa-circle-question"></i>
+                    </Tooltip.Trigger>
+                    <Tooltip.Portal>
+                      <Tooltip.Content
+                        side="right"
+                        className="text-xs bg-black/85 text-white px-2 py-1 rounded max-w-[16rem] text-center z-[500]"
+                      >
+                        Using an SSH runner might require adding the API public
+                        key to your authorized_keys on the remote host. Visit
+                        the{" "}
+                        <Link
+                          to="/settings"
+                          className="underline"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Settings
+                        </Link>{" "}
+                        page for more info.
+                        <Tooltip.Arrow />
+                      </Tooltip.Content>
+                    </Tooltip.Portal>
+                  </Tooltip.Root>
+                </Tooltip.Provider>
+              </div>
 
               <div className="flex items-center">
                 <label className="font-medium min-w-[120px] text-sm">
