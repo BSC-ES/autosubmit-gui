@@ -310,7 +310,7 @@ const RunnerConfigSection = () => {
             Include these public SSH keys your authorized_keys file to allow SSH
             access to runners. Example command:{" "}
             <code className="border p-1 rounded bg-gray-100 dark:bg-gray-800 font-mono text-xs text-red-600">
-              cat $API_PUBLIC_KEY &gt;&gt; ~/.ssh/authorized_keys
+              echo $API_PUBLIC_KEY &gt;&gt; ~/.ssh/authorized_keys
             </code>{" "}
             where{" "}
             <code className="border p-1 rounded bg-gray-100 dark:bg-gray-800 font-mono text-xs text-red-600">
