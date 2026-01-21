@@ -28,7 +28,7 @@ jobs:
         run: yarn install
 
       - name: Cypress run
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v7
         env:
           REACT_APP_AUTOSUBMIT_API_SOURCE: "http://localhost:8000"
           REACT_APP_DARK_MODE_SWITCHER: true
@@ -64,7 +64,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Cypress run
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v7
         env:
           REACT_APP_AUTOSUBMIT_API_SOURCE: "http://localhost:8000" # This url is only used by the interceptor to mock the API
           REACT_APP_DARK_MODE_SWITCHER: true # Enable dark mode switcher
