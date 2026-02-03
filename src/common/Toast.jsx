@@ -1,7 +1,8 @@
+import { motion } from "framer-motion";
 import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { hideToast } from "../store/toastSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { cn } from "../services/utils";
+import { hideToast } from "../store/toastSlice";
 
 const Toast = () => {
   const dispatch = useDispatch();
@@ -52,10 +53,13 @@ const Toast = () => {
   return (
     <div className="fixed top-4 right-4 z-[9999] flex flex-col gap-2 max-w-md">
       {toasts.map((toast) => (
-        <div
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
           key={toast.id}
           className={cn(
-            "p-4 rounded-lg flex items-start gap-3 animate-slide-in-right",
+            "p-4 rounded-lg flex items-start gap-3",
             getToastStyles(toast.type),
           )}
         >
@@ -74,7 +78,7 @@ const Toast = () => {
           >
             <i className="fa-solid fa-xmark text-lg" />
           </button>
-        </div>
+        </motion.div>
       ))}
     </div>
   );
