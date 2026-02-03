@@ -1,6 +1,9 @@
+import { usePrevious } from "@uidotdev/usehooks";
 import { useCallback, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { autosubmitApiV4 } from "../services/autosubmitApiV4";
 import { cn } from "../services/utils";
+import { showToast } from "../store/toastSlice";
 import ConfirmModal from "./ConfirmModal";
 import Modal, { ModalContent, ModalHeader } from "./Modal";
 import { RunnerOptionsFormSection } from "./RunnerOptionsFormSection";
@@ -188,6 +191,7 @@ const StopCommandModal = ({ show, onClose, onSuccess, expid }) => {
 };
 
 const ExperimentRunStopCommand = ({ expid }) => {
+  const dispatch = useDispatch();
   const [showRunCmdModal, setShowRunCmdModal] = useState(false);
   const [showStopCmdModal, setShowStopCmdModal] = useState(false);
 
@@ -198,6 +202,34 @@ const ExperimentRunStopCommand = ({ expid }) => {
         pollingInterval: 10000,
       },
     );
+
+  const prevExpInfoData = usePrevious(expInfoData);
+
+  useEffect(() => {
+    if (
+      prevExpInfoData?.status === "ACTIVE" &&
+      expInfoData?.status !== "ACTIVE"
+    ) {
+      // Experiment has stopped
+      if (expInfoData?.status === "COMPLETED") {
+        dispatch(
+          showToast({
+            message: `Experiment ${expid} has completed successfully.`,
+            type: "success",
+            duration: 10000,
+          }),
+        );
+      } else {
+        dispatch(
+          showToast({
+            message: `Experiment ${expid} has stopped with status: ${expInfoData?.status}. If this was unexpected, please check the experiment logs for more details.`,
+            type: "info",
+            duration: 10000,
+          }),
+        );
+      }
+    }
+  }, [expInfoData]);
 
   const isRunning = expInfoData?.status === "ACTIVE" || false;
 
