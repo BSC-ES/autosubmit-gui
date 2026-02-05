@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useGetExperimentsQuery } from "../services/autosubmitApiV4";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import useASTitle from "../hooks/useASTitle";
 import useBreadcrumb from "../hooks/useBreadcrumb";
 import ExperimentCard from "../common/ExperimentCard";
@@ -166,7 +166,7 @@ const Home = () => {
                   <i
                     className={cn(
                       "fa-solid",
-                      showMoreFilters ? "fa-caret-up" : "fa-caret-down"
+                      showMoreFilters ? "fa-caret-up" : "fa-caret-down",
                     )}
                   ></i>
                 </button>
@@ -221,6 +221,11 @@ const Home = () => {
           </button>
 
           <IntervalButton className={"h-8"} intervalCallback={refetch} />
+
+          <Link to="/create-new-experiment" className="btn btn-sm bg-primary text-white hover:bg-primary/90 font-semibold">
+            <i className="fa-solid fa-plus me-1 text-xs"></i>
+            Create experiment
+          </Link>
         </div>
 
         <div className="flex gap-x-8 gap-y-3 items-center flex-wrap">

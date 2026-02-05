@@ -1,10 +1,11 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import useASTitle from "../hooks/useASTitle";
 import useBreadcrumb from "../hooks/useBreadcrumb";
 import { useForm } from "react-hook-form";
 import { autosubmitApiV4 } from "../services/autosubmitApiV4";
 import { RunnerOptionsFormSection } from "../common/RunnerOptionsFormSection";
-import { useCopyToClipboard } from "@uidotdev/usehooks";
+import { useNavigate } from "react-router-dom";
+import CommandPreview from "../common/CommandPreview";
 
 const CreateNewExperimentPage = () => {
   useASTitle("Create New Experiment");
@@ -14,8 +15,7 @@ const CreateNewExperimentPage = () => {
     },
   ]);
 
-  const copyToClipboard = useCopyToClipboard()[1];
-  const [copied, setCopied] = useState("Copy to clipboard");
+  const navigate = useNavigate();
   const [runnerProfileOptions, setRunnerProfileOptions] = useState({
     profile_name: "",
     profile_params: {},
@@ -24,6 +24,7 @@ const CreateNewExperimentPage = () => {
   const [
     createNewExperiment,
     {
+      data: createExpData,
       isLoading: isCreateExpLoading,
       isSuccess: isCreateExpSuccess,
       isError: isCreateExpError,
@@ -45,6 +46,10 @@ const CreateNewExperimentPage = () => {
 
   const experimentCommandPreview = useMemo(() => {
     let command = `autosubmit expid --description "${formData.description}"`;
+
+    if (formData.copy_expid) {
+      command += ` --copy "${formData.copy_expid}"`;
+    }
 
     if (formData.hpc) {
       command += ` --HPC "${formData.hpc}"`;
@@ -74,18 +79,34 @@ const CreateNewExperimentPage = () => {
     return command;
   }, [formData]);
 
-  const handleCopy = () => {
-    copyToClipboard(experimentCommandPreview);
-    setCopied("Copied!");
-    setTimeout(() => {
-      setCopied("Copy to clipboard");
-    }, 2000);
+  const onSubmit = (data) => {
+    const body = {
+      profile_name: runnerProfileOptions.profile_name,
+      profile_params: runnerProfileOptions.profile_params,
+      command_params: {
+        description: data.description,
+        hpc: data.hpc || null,
+        operational: data.type === "operational",
+        testcase: data.type === "testcase",
+        minimal: data.minimal || false,
+        use_local_minimal: data.use_local_minimal || false,
+        git_repo: data.git_repo || null,
+        git_branch: data.git_branch || null,
+        config_path: data.git_conf_dir || null,
+        copy: data.copy_expid || null,
+      },
+    };
+    console.log("Creating experiment with body:", body);
+    createNewExperiment(body);
   };
 
-  const onSubmit = (data) => {
-    console.log("Form Data:", data);
-    // Handle form submission logic here
-  };
+  useEffect(() => {
+    if (isCreateExpSuccess && createExpData?.expid) {
+      // Go to /experiment/{expid}/quick after successful creation
+      const expid = createExpData.expid;
+      navigate(`/experiment/${expid}/quick?new=true`);
+    }
+  }, [isCreateExpSuccess]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -113,6 +134,26 @@ const CreateNewExperimentPage = () => {
               {errors.description && (
                 <p className="text-red-500 text-sm mt-1">
                   {errors.description.message}
+                </p>
+              )}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-[100px_1fr] gap-4 items-center">
+            <label className="text-right" htmlFor="experiment-copy-expid">
+              Copy from
+            </label>
+            <div className="flex flex-col">
+              <input
+                type="text"
+                id="experiment-copy-expid"
+                className="form-input"
+                placeholder="Enter expid to copy from"
+                {...register("copy_expid")}
+              />
+              {errors.copy_expid && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.copy_expid.message}
                 </p>
               )}
             </div>
@@ -252,15 +293,7 @@ const CreateNewExperimentPage = () => {
           </div>
         </div>
 
-        <div className="bg-black text-white px-2 font-mono relative pt-8 py-4">
-          <button
-            className="absolute top-2 text-sm right-2 opacity-50 text-black bg-white px-2 rounded"
-            onClick={handleCopy}
-          >
-            <i className="fa-regular fa-copy"></i> {copied}
-          </button>
-          {experimentCommandPreview}
-        </div>
+        <CommandPreview command={experimentCommandPreview} className="mb-4" />
 
         <hr className="mt-6 mb-4" />
 

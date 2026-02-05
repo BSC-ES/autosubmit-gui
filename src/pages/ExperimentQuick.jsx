@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { MAX_ITEMS_QUICK_VIEW } from '../consts'
 import useASTitle from "../hooks/useASTitle"
 import useBreadcrumb from "../hooks/useBreadcrumb"
+import NewExperimentGuideModal from "../common/NewExperimentGuideModal"
 
 const QuickJobList = ({ jobs }) => {
   return (
@@ -124,6 +125,7 @@ const ExperimentQuick = () => {
 
   return (
     <div className="w-full flex flex-col gap-4 grow">
+      <NewExperimentGuideModal />
       {
         (data?.error) &&
         <span className="alert alert-danger rounded-2xl">
