@@ -174,7 +174,30 @@ export const autosubmitApiV4 = createApi({
                 method: "POST",
                 body
             })
-        })
+        }),
+        runnerRunExperiment: builder.mutation({
+            query: (body) => ({
+                url: `/runners/command/run-experiment`,
+                method: "POST",
+                body
+            })
+        }),
+        runnerStopExperiment: builder.mutation({
+            query: (body) => ({
+                url: `/runners/command/stop-experiment`,
+                method: "POST",
+                body
+            })
+        }),
+        runnerRunStatusCheck: builder.query({
+            query: ({ expid }) => ({
+                url: `/runners/command/get-runner-run-status`,
+                method: "POST",
+                body: { 
+                    expid: expid
+                 }
+            })
+        }),
     }),
 })
 

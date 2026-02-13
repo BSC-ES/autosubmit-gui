@@ -3,6 +3,7 @@ import { autosubmitApiV3 } from "../services/autosubmitApiV3";
 import { cn } from "../services/utils";
 import { ActiveIndicator } from "./ExperimentCard";
 import { DotLoader } from "./Loaders";
+import ExperimentRunStopCommand from "./ExperimentRunStopCommand";
 
 const ExperimentInfoHeader = ({ expid }) => {
   const [open, setOpen] = useState(false);
@@ -38,6 +39,9 @@ const ExperimentInfoHeader = ({ expid }) => {
               </>
             )}
           </div>
+
+          <ExperimentRunStopCommand expid={expid}/>
+
           <button
             onClick={handleToggle}
             className="btn rounded-full hover:bg-black/5 aspect-square"
