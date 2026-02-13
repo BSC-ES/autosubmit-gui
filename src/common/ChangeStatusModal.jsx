@@ -9,6 +9,7 @@ import {
 import { useCopyToClipboard } from "@uidotdev/usehooks";
 import { RunnerOptionsFormSection } from "./RunnerOptionsFormSection";
 import { autosubmitApiV4 } from "../services/autosubmitApiV4";
+import CommandPreview from "./CommandPreview";
 
 export function ChangeStatusModal({ expid, selectedJobs, show, onHide }) {
   const copyToClipboard = useCopyToClipboard()[1];
@@ -105,61 +106,60 @@ export function ChangeStatusModal({ expid, selectedJobs, show, onHide }) {
               <option value="txt">Text File</option>
             </select>
           </div>
-          <div className="bg-black text-white px-2 font-mono relative pt-8 py-4">
-            <button
-              className="absolute top-2 text-sm right-2 opacity-50 text-black bg-white px-2 rounded"
-              onClick={handleCopy}
-            >
-              <i className="fa-regular fa-copy"></i> {copied}
-            </button>
-            {type === "cmd" &&
-              commandGeneratorGraph(expid, selectedJobs, targetStatus)}
-            {type === "txt" &&
-              statusChangeTextGeneratorGraph(selectedJobs, targetStatus)
-                .split("\n")
-                .map((item, index) => <p key={index}>{item}</p>)}
-          </div>
 
-          <div className="py-2 flex flex-col items-center">
-            <RunnerOptionsFormSection
-              onSelectionChange={handleRunnerSelectionChange}
-            />
+          <CommandPreview
+            command={
+              type === "cmd"
+                ? commandGeneratorGraph(expid, selectedJobs, targetStatus)
+                : type === "txt" &&
+                  statusChangeTextGeneratorGraph(selectedJobs, targetStatus)
+                    .split("\n")
+                    .map((item, index) => <p key={index}>{item}</p>)
+            }
+          />
 
-            {isSubmitCommandError && (
-              <div className="text-red-600 mt-2 text-sm">
-                Error running the set job status command. Please check your
-                command configuration and try again.
-              </div>
-            )}
+          {type === "cmd" && (
+            <div className="py-2 flex flex-col items-center">
+              <RunnerOptionsFormSection
+                onSelectionChange={handleRunnerSelectionChange}
+              />
 
-            <button
-              className="mt-2 bg-success text-white px-4 py-2 rounded hover:bg-success/90 disabled:bg-success/70"
-              disabled={
-                !runnerProfileOptions.profile_name || submitCommandLoading
-              }
-              onClick={() => setShowConfirm(true)}
-            >
-              {submitCommandLoading ? (
-                <span>
-                  <i className="fa fa-spinner fa-spin me-2" /> RUNNING...
-                </span>
-              ) : (
-                "RUN COMMAND"
+              {isSubmitCommandError && (
+                <div className="text-red-600 mt-2 text-sm">
+                  Error running the set job status command. Please check your
+                  command configuration and try again.
+                </div>
               )}
-            </button>
 
-            <ConfirmModal
-              show={showConfirm}
-              onCancel={() => {
-                setShowConfirm(false);
-              }}
-              onConfirm={() => {
-                handleSubmitCommand();
-                setShowConfirm(false);
-              }}
-              message={`Are you sure you want to run the status change command on ${selectedJobs.length} jobs?`}
-            />
-          </div>
+              <button
+                className="mt-2 bg-success text-white px-4 py-2 rounded hover:bg-success/90 disabled:bg-success/70"
+                disabled={
+                  !runnerProfileOptions.profile_name || submitCommandLoading
+                }
+                onClick={() => setShowConfirm(true)}
+              >
+                {submitCommandLoading ? (
+                  <span>
+                    <i className="fa fa-spinner fa-spin me-2" /> RUNNING...
+                  </span>
+                ) : (
+                  "RUN COMMAND"
+                )}
+              </button>
+
+              <ConfirmModal
+                show={showConfirm}
+                onCancel={() => {
+                  setShowConfirm(false);
+                }}
+                onConfirm={() => {
+                  handleSubmitCommand();
+                  setShowConfirm(false);
+                }}
+                message={`Are you sure you want to run the status change command on ${selectedJobs.length} jobs?`}
+              />
+            </div>
+          )}
         </div>
       </div>
     </Modal>
