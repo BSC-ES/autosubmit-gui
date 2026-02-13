@@ -97,7 +97,7 @@ const PreferredUsernameInput = () => {
             "fa-solid",
             isUpdatingPreferredUsername
               ? "fa-spinner fa-spin"
-              : "fa-floppy-disk"
+              : "fa-floppy-disk",
           )}
         ></i>
       </button>
@@ -159,7 +159,7 @@ const TokenBox = ({ token }) => {
       >
         <i
           className={cn(
-            copied ? "fa-solid fa-check text-success" : "fa-regular fa-copy"
+            copied ? "fa-solid fa-check text-success" : "fa-regular fa-copy",
           )}
         />
       </button>
@@ -185,7 +185,7 @@ const SSHKeyBox = ({ keyValue }) => {
       >
         <i
           className={cn(
-            copied ? "fa-solid fa-check text-success" : "fa-regular fa-copy"
+            copied ? "fa-solid fa-check text-success" : "fa-regular fa-copy",
           )}
         />
       </button>
@@ -205,7 +205,7 @@ const RunnerProfileDetails = ({ profileName, profileConfig }) => {
       <span
         className={cn(
           "text-sm font-mono",
-          isUserProvided && "italic text-gray-500 dark:text-gray-500"
+          isUserProvided && "italic text-gray-500 dark:text-gray-500",
         )}
       >
         {isUserProvided ? `<${value}>` : value}
@@ -381,7 +381,7 @@ const RunnerConfigSection = () => {
                   profileName={runnerProfileName}
                   profileConfig={runnerProfileConfig}
                 />
-              )
+              ),
             )}
           </div>
         )}
@@ -443,7 +443,34 @@ const UserSettings = () => {
             </div>
 
             <div className="flex flex-wrap">
-              <span className="font-semibold me-4">Token: </span>
+              <span className="font-semibold me-4">
+                Token{" "}
+                <Tooltip.Provider>
+                  <Tooltip.Root delayDuration={300}>
+                    <Tooltip.Trigger>
+                      <i className="fa-solid fa-info-circle opacity-70" />
+                    </Tooltip.Trigger>
+                    <Tooltip.Content
+                      side="right"
+                      align="center"
+                      className="text-xs bg-black/85 text-white px-2 py-1 rounded max-w-[16rem] text-center font-normal"
+                    >
+                      This Bearer token is used to authenticate requests made to
+                      the Autosubmit API. Add it to the Authorization header of
+                      your HTTP requests with the format: <br />
+                      <code className="font-mono text-xs p-1 text-red-600">
+                        Authorization: Bearer &lt;token&gt;
+                      </code>
+                      <br />
+                      Keep it secure and do not share it with unauthorized
+                      parties.
+                      <Tooltip.Arrow />
+                    </Tooltip.Content>
+                  </Tooltip.Root>
+                </Tooltip.Provider>{" "}
+                :
+              </span>
+
               <TokenBox token={token} />
             </div>
           </div>
