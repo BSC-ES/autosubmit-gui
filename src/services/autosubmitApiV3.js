@@ -21,9 +21,6 @@ export const autosubmitApiV3 = createApi({
         getExperimentInfo: builder.query({
             query: (expid) => `expinfo/${expid}`
         }),
-        getExperimentQuickView: builder.query({
-            query: (expid) => `quick/${expid}`
-        }),
         getExperimentTreeView: builder.query({
             query: ({ expid, signal, runId }) => {
                 const args = {
@@ -106,7 +103,6 @@ export const autosubmitApiV3 = createApi({
 export const {
     useGetRunningExperimentsQuery,
     useGetExperimentInfoQuery,
-    useGetExperimentQuickViewQuery,
     useGetExperimentTreeViewQuery,
     useGetExperimentGraphViewQuery,
     useGetExperimentRunLogQuery,
