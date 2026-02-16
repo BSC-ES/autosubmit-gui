@@ -1,4 +1,4 @@
-describe("tree navigation", () => {
+describe("table view navigation", () => {
   const expid = "a6zi";
   before(() => {
     cy.byPassAuth();

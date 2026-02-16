@@ -46,10 +46,24 @@ export const autosubmitApiV4 = createApi({
             }
         }),
         getExperimentJobs: builder.query({
-            query: ({ expid }) => {
+            query: ({
+                expid,
+                view,
+                job_name,
+                status,
+                page,
+                page_size
+            }) => {
                 return {
                     url: `experiments/${expid}/jobs`,
-                    method: "GET"
+                    method: "GET",
+                    params: {
+                        view,
+                        job_name,
+                        status,
+                        page,
+                        page_size
+                    }
                 }
             }
         }),
@@ -201,9 +215,9 @@ export const autosubmitApiV4 = createApi({
             query: ({ expid }) => ({
                 url: `/runners/command/get-runner-run-status`,
                 method: "POST",
-                body: { 
+                body: {
                     expid: expid
-                 }
+                }
             })
         }),
         runnerCreateNewExperiment: builder.mutation({
