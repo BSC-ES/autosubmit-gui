@@ -198,6 +198,13 @@ export const autosubmitApiV4 = createApi({
                  }
             })
         }),
+        runnerCreateNewExperiment: builder.mutation({
+            query: (body) => ({
+                url: `/runners/command/create-experiment`,
+                method: "POST",
+                body
+            })
+        }),
     }),
 })
 
