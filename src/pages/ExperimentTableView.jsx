@@ -70,7 +70,7 @@ const ExperimentTableView = () => {
       exportableData,
       `${new Date().toISOString()}_AggregatedJobSections_${
         routeParams.expid
-      }.csv`
+      }.csv`,
     );
   };
 
@@ -86,7 +86,7 @@ const ExperimentTableView = () => {
     exportToCSV(
       ["Job Name", "Queue", "Run", "Status"],
       exportableData,
-      `${new Date().toISOString()}_JobList_${routeParams.expid}.csv`
+      `${new Date().toISOString()}_JobList_${routeParams.expid}.csv`,
     );
   };
 
@@ -128,8 +128,8 @@ const ExperimentTableView = () => {
                       "Average Queue",
                       "Run Sum",
                       "Average Run",
-                    ].map((item) => (
-                      <TableHeader>{item}</TableHeader>
+                    ].map((item, index) => (
+                      <TableHeader key={index}>{item}</TableHeader>
                     ))}
                   </TableRow>
                 </TableHead>

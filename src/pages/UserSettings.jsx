@@ -193,25 +193,25 @@ const SSHKeyBox = ({ keyValue }) => {
   );
 };
 
+const ConfigRow = ({ label, value, isUserProvided = false }) => (
+  <div className="flex items-center gap-3">
+    <span className="text-sm text-gray-600 dark:text-gray-400 min-w-[140px]">
+      {label}
+    </span>
+    <span
+      className={cn(
+        "text-sm font-mono",
+        isUserProvided && "italic text-gray-500 dark:text-gray-500",
+      )}
+    >
+      {isUserProvided ? `<${value}>` : value}
+    </span>
+  </div>
+);
+
 const RunnerProfileDetails = ({ profileName, profileConfig }) => {
   const isSSHRunner = profileConfig.RUNNER_TYPE === "SSH";
   const hasModules = profileConfig.MODULE_LOADER_TYPE !== "NO_MODULE";
-
-  const ConfigRow = ({ label, value, isUserProvided = false }) => (
-    <div className="flex items-center gap-3">
-      <span className="text-sm text-gray-600 dark:text-gray-400 min-w-[140px]">
-        {label}
-      </span>
-      <span
-        className={cn(
-          "text-sm font-mono",
-          isUserProvided && "italic text-gray-500 dark:text-gray-500",
-        )}
-      >
-        {isUserProvided ? `<${value}>` : value}
-      </span>
-    </div>
-  );
 
   const renderModules = (modules) => {
     if (Array.isArray(modules)) {
