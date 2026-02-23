@@ -152,6 +152,14 @@ export const autosubmitApiV4 = createApi({
                 }
             },
         }),
+        getRunnerEndpointsConfig: builder.query({
+            query: () => {
+                return {
+                    url: `/runners/configuration/endpoints`,
+                    method: "GET"
+                }
+            }
+        }),
         getRunnersConfigProfiles: builder.query({
             query: () => {
                 return {
