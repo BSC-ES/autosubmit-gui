@@ -29,6 +29,7 @@ import Footer from "./Footer";
 import TopAnnouncement from "./TopAnnouncement";
 import UserMetricsPage from "../pages/UserMetricsPage";
 import CreateNewExperimentPage from "../pages/CreateNewExperiment";
+import ExperimentGetStarted from "../pages/ExperimentGetStarted";
 
 const router = createBrowserRouter(
   [
@@ -75,6 +76,10 @@ const router = createBrowserRouter(
             {
               path: "/experiment/:expid",
               element: <ExperimentDetail />,
+            },
+            {
+              path: "/experiment/:expid/get-started",
+              element: <ExperimentGetStarted />,
             },
             {
               path: "/experiment/:expid/quick",

@@ -102,9 +102,9 @@ const CreateNewExperimentPage = () => {
 
   useEffect(() => {
     if (isCreateExpSuccess && createExpData?.expid) {
-      // Go to /experiment/{expid}/quick after successful creation
+      // Go to Get Started page after successful creation
       const expid = createExpData.expid;
-      navigate(`/experiment/${expid}/quick?new=true`);
+      navigate(`/experiment/${expid}/get-started`);
     }
   }, [isCreateExpSuccess]);
 
