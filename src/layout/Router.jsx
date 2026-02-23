@@ -28,6 +28,8 @@ import { useEffect } from "react";
 import Footer from "./Footer";
 import TopAnnouncement from "./TopAnnouncement";
 import UserMetricsPage from "../pages/UserMetricsPage";
+import CreateNewExperimentPage from "../pages/CreateNewExperiment";
+import ExperimentGetStarted from "../pages/ExperimentGetStarted";
 
 const router = createBrowserRouter(
   [
@@ -60,6 +62,10 @@ const router = createBrowserRouter(
           element: <UserSettings />,
         },
         {
+          path: "/create-new-experiment",
+          element: <CreateNewExperimentPage />,
+        },
+        {
           path: "/experiment/:expid",
           element: (
             <ExperimentWrapper>
@@ -70,6 +76,10 @@ const router = createBrowserRouter(
             {
               path: "/experiment/:expid",
               element: <ExperimentDetail />,
+            },
+            {
+              path: "/experiment/:expid/get-started",
+              element: <ExperimentGetStarted />,
             },
             {
               path: "/experiment/:expid/quick",
@@ -122,7 +132,7 @@ const router = createBrowserRouter(
   ],
   {
     basename: `${PUBLIC_URL || ""}`,
-  }
+  },
 );
 
 export default function Router() {
