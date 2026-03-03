@@ -4,23 +4,82 @@ import { useEffect, useState } from "react";
 import { MAX_ITEMS_QUICK_VIEW } from "../consts";
 import useASTitle from "../hooks/useASTitle";
 import useBreadcrumb from "../hooks/useBreadcrumb";
+import { cn } from "../services/utils";
+import { ChangeStatusModal } from "../common/ChangeStatusModal";
+import BottomPanel from "../common/BottomPanel";
+import FetchJobDetailCard from "../common/FetchJobDetailCard";
 
-const QuickJobList = ({ jobs }) => {
+const QuickJobList = ({ jobs, onSelectionChange }) => {
+  if (!Array.isArray(jobs) || jobs.length === 0) {
+    return (
+      <div className="w-full h-full flex flex-col items-center justify-center gap-4">
+        <i className="fa-regular fa-face-frown text-4xl text-primary"></i>
+        <span className="text text-gray-500">No jobs found</span>
+      </div>
+    );
+  }
+
+  const [selectedJobIds, setSelectedJobIds] = useState(new Set());
+  const [lastClickedIndex, setLastClickedIndex] = useState(null);
+
+  const handleJobClick = (index, jobName, event) => {
+    if (event.shiftKey && lastClickedIndex !== null && jobs) {
+      // Shift+click: select range
+      const start = Math.min(lastClickedIndex, index);
+      const end = Math.max(lastClickedIndex, index);
+      const newSelected = new Set(selectedJobIds);
+      for (let i = start; i <= end; i++) {
+        newSelected.add(jobs[i].refKey);
+      }
+      setSelectedJobIds(newSelected);
+    } else if (event.ctrlKey || event.metaKey) {
+      // Ctrl/Cmd+click: toggle selection
+      const newSelected = new Set(selectedJobIds);
+      if (newSelected.has(jobName)) {
+        newSelected.delete(jobName);
+      } else {
+        newSelected.add(jobName);
+      }
+      setSelectedJobIds(newSelected);
+      setLastClickedIndex(index);
+    } else {
+      // Regular click: select only this item
+      setSelectedJobIds(new Set([jobName]));
+      setLastClickedIndex(index);
+    }
+  };
+
+  useEffect(() => {
+    onSelectionChange(selectedJobIds);
+  }, [selectedJobIds]);
+
   return (
     <ul
-      className="text-sm flex flex-col gap-[0.35rem] py-1 font-thin"
+      className="text-sm flex flex-col gap-[0.3rem] py-1 font-thin"
       style={{
         fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
         color: "#333",
       }}
     >
-      {jobs.map((job) => {
+      {jobs.map((job, index) => {
+        const isSelected = selectedJobIds.has(job.refKey);
+
         return (
-          <li key={job.refKey} className="flex gap-3 px-6">
+          <li
+            key={job.refKey}
+            className="flex gap-3 px-6"
+            onClick={(event) => handleJobClick(index, job.refKey, event)}
+          >
             <span>
               <i className="fa-regular fa-circle text-primary" />
             </span>
-            <span dangerouslySetInnerHTML={{ __html: job.title }}></span>
+            <div
+              className={cn(
+                "px-1 py-[1px] hover:bg-gray-100 rounded cursor-pointer select-none",
+                isSelected && "bg-blue-100 hover:bg-blue-200",
+              )}
+              dangerouslySetInnerHTML={{ __html: job.title }}
+            ></div>
           </li>
         );
       })}
@@ -99,6 +158,19 @@ const ExperimentQuick = () => {
   const { data, isFetching, refetch } = useGetExperimentQuickViewQuery(
     routeParams.expid,
   );
+
+  const [showModal, setShowModal] = useState(false);
+  const toggleModal = (refresh = false) => {
+    setShowModal(!showModal);
+    if (refresh === true) {
+      refetch();
+    }
+  };
+
+  const [selectedJobIds, setSelectedJobIds] = useState(new Set());
+  const handleJobSelectionChange = (selectedIds) => {
+    setSelectedJobIds(selectedIds);
+  };
 
   useEffect(() => {
     if (data && Array.isArray(data.tree_view)) {
@@ -187,8 +259,44 @@ const ExperimentQuick = () => {
             <div className="spinner-border dark:invert" role="status"></div>
           </div>
         )}
-        <QuickJobList jobs={jobs}></QuickJobList>
+
+        <QuickJobList
+          jobs={jobs}
+          onSelectionChange={handleJobSelectionChange}
+        ></QuickJobList>
       </div>
+
+      {selectedJobIds.size > 0 && (
+        <BottomPanel
+          title={
+            selectedJobIds.size === 1
+              ? selectedJobIds.values().next().value
+              : `${selectedJobIds.size} jobs selected`
+          }
+        >
+          <div className="flex flex-col gap-3">
+            {selectedJobIds.size === 1 && (
+              <FetchJobDetailCard
+                expid={routeParams.expid}
+                jobName={selectedJobIds.values().next().value}
+              />
+            )}
+
+            <div className="flex items-center justify-center gap-3">
+              <div className="font-semibold">Actions:</div>
+              <button className="btn btn-primary" onClick={toggleModal}>
+                Change status
+              </button>
+            </div>
+            <ChangeStatusModal
+              selectedJobs={Array.from(selectedJobIds)}
+              show={showModal}
+              onHide={toggleModal}
+              expid={routeParams.expid}
+            />
+          </div>
+        </BottomPanel>
+      )}
     </div>
   );
 };
