@@ -1,15 +1,12 @@
-import { useMemo, useState } from "react";
-import { autosubmitApiV4 } from "../services/autosubmitApiV4";
-import { cn } from "../services/utils";
 import { Dialog } from "@headlessui/react";
-import Modal from "./Modal";
-import { statusCodeToStyle } from "../components/context/vars";
-import JobHistoryModal from "./JobHistoryModal";
-import { parseLogPath } from "../services/utils";
-import LogModal from "./LogModal";
 import { useCopyToClipboard } from "@uidotdev/usehooks";
+import { useMemo, useState } from "react";
 import { secondsToDelta } from "../components/context/utils";
-
+import { autosubmitApiV4 } from "../services/autosubmitApiV4";
+import { cn, parseLogPath } from "../services/utils";
+import JobHistoryModal from "./JobHistoryModal";
+import LogModal from "./LogModal";
+import Modal from "./Modal";
 
 const calculateChunkDates = (date, currentChunk, chunkUnit, chunkSize = 1) => {
   if (!date || !chunkUnit || !chunkSize) return ["-", "-"];
@@ -102,6 +99,25 @@ const FetchJobDetailCard = ({ expid, jobName }) => {
     expid: expid,
     job_name: jobName,
   });
+
+  const { data: jobParents } = autosubmitApiV4.endpoints.getJobParents.useQuery(
+    {
+      expid: expid,
+      job_name: jobName,
+    },
+  );
+
+  const { data: jobChildren } =
+    autosubmitApiV4.endpoints.getJobChildren.useQuery({
+      expid: expid,
+      job_name: jobName,
+    });
+
+  const { data: jobWrappers } =
+    autosubmitApiV4.endpoints.getJobWrapers.useQuery({
+      expid: expid,
+      job_name: jobName,
+    });
 
   const [start_date, end_date] = useMemo(() => {
     if (!jobData) return ["-", "-"];
@@ -206,7 +222,7 @@ const FetchJobDetailCard = ({ expid, jobName }) => {
           </span>
         </div>
         <div className="flex gap-x-4 gap-y-1 flex-wrap">
-          {/* TODO Queue/run times */}
+          {/* TODO Queue times */}
           {runTime && (
             <div>
               <span
@@ -229,7 +245,23 @@ const FetchJobDetailCard = ({ expid, jobName }) => {
           </div>
         </div>
 
-        {/* TODO parent / children nodes */}
+        <div className="flex gap-2 items-center flex-wrap">
+          <strong>Dependencies: </strong>
+          <button
+            className="btn btn-dark text-sm px-4 rounded-lg"
+            onClick={() => toggleModal("children")}
+            disabled={jobChildren?.children?.length <= 0}
+          >
+            <strong>CHILDREN:</strong> {jobChildren?.children?.length || "0"}
+          </button>
+          <button
+            className="btn btn-dark text-sm px-4 rounded-lg"
+            onClick={() => toggleModal("parents")}
+            disabled={jobParents?.parents?.length <= 0}
+          >
+            <strong>PARENTS:</strong> {jobParents?.parents?.length || "0"}
+          </button>
+        </div>
 
         <div className="flex flex-col gap-1 my-1">
           <div className="flex items-center h-8">
@@ -310,7 +342,6 @@ const FetchJobDetailCard = ({ expid, jobName }) => {
           )}
         </div>
 
-        {/* TODO performance metrics */}
         <div className="flex gap-x-4 gap-y-1 flex-wrap">
           {SYPD && (
             <div>
@@ -325,7 +356,18 @@ const FetchJobDetailCard = ({ expid, jobName }) => {
           )}
         </div>
 
-        {/* TODO wrapper info */}
+        {jobWrappers?.wrappers?.length > 0 && (
+          <div className="flex flex-wrap gap-4">
+            <span className="flex flex-wrap gap-x-2 items-center">
+              <strong>Wrapper:</strong>{" "}
+              {jobWrappers.wrappers.map((wrapper, index) => (
+                <span key={index} className="badge bg-light">
+                  {wrapper?.wrapper_name}
+                </span>
+              ))}
+            </span>
+          </div>
+        )}
 
         <button
           className="btn btn-primary text-sm font-semibold"
@@ -334,6 +376,52 @@ const FetchJobDetailCard = ({ expid, jobName }) => {
           <i className="fa-solid fa-clock-rotate-left me-1"></i> Job History
         </button>
       </div>
+
+      <Modal show={showModal.children} onClose={() => toggleModal("children")}>
+        <Dialog.Title
+          className={
+            "bg-dark text-white py-4 px-8 text-2xl font-semibold rounded-t-lg flex justify-between items-center"
+          }
+        >
+          <div>Children List</div>
+          <div
+            className="cursor-pointer"
+            onClick={() => toggleModal("children")}
+          >
+            <i className="fa-solid fa-xmark"></i>
+          </div>
+        </Dialog.Title>
+        <div className="bg-white text-black py-6 px-6 rounded-b-lg">
+          <ul className="list-disc ms-8">
+            {jobChildren?.children?.map((item, index) => (
+              <li key={index}>{item.job_name}</li>
+            ))}
+          </ul>
+        </div>
+      </Modal>
+
+      <Modal show={showModal.parents} onClose={() => toggleModal("parents")}>
+        <Dialog.Title
+          className={
+            "bg-dark text-white py-4 px-8 text-2xl font-semibold rounded-t-lg flex justify-between items-center"
+          }
+        >
+          <div>Parents List</div>
+          <div
+            className="cursor-pointer"
+            onClick={() => toggleModal("parents")}
+          >
+            <i className="fa-solid fa-xmark"></i>
+          </div>
+        </Dialog.Title>
+        <div className="bg-white text-black py-6 px-6 rounded-b-lg">
+          <ul className="list-disc ms-8">
+            {jobParents?.parents?.map((item, index) => (
+              <li key={index}>{item.job_name}</li>
+            ))}
+          </ul>
+        </div>
+      </Modal>
 
       <LogModal
         logFile={parseLogPath(jobData.out_path_local)}
