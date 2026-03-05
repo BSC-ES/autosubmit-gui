@@ -205,6 +205,30 @@ export const autosubmitApiV4 = createApi({
                 body
             })
         }),
+        getJobDetails: builder.query({
+            query: ({ expid, job_name }) => ({
+                url: `experiments/${expid}/jobs/${job_name}`,
+                method: "GET"
+            }),
+        }),
+        getJobParents: builder.query({
+            query: ({ expid, job_name }) => ({
+                url: `experiments/${expid}/jobs/${job_name}/parents`,
+                method: "GET"
+            }),
+        }),
+        getJobChildren: builder.query({
+            query: ({ expid, job_name }) => ({
+                url: `experiments/${expid}/jobs/${job_name}/children`,
+                method: "GET"
+            }),
+        }),
+        getJobWrapers: builder.query({
+            query: ({ expid, job_name }) => ({
+                url: `experiments/${expid}/jobs/${job_name}/wrappers`,
+                method: "GET"
+            }),
+        }),
     }),
 })
 
