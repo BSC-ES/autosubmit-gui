@@ -6,16 +6,16 @@ import {
   commandGeneratorGraph,
   statusChangeTextGeneratorGraph,
 } from "../components/context/utils";
-import { useCopyToClipboard } from "@uidotdev/usehooks";
 import { RunnerOptionsFormSection } from "./RunnerOptionsFormSection";
 import { autosubmitApiV4 } from "../services/autosubmitApiV4";
 import CommandPreview from "./CommandPreview";
 
-export function ChangeStatusModal({ expid, selectedJobs, show, onHide }) {
-  const copyToClipboard = useCopyToClipboard()[1];
-  const [targetStatus, setTargetStatus] = useState("WAITING");
-  const [type, setType] = useState("cmd");
-  const [copied, setCopied] = useState("Copy to clipboard");
+function ChangeStatusModalRunnerOptions({
+  expid,
+  selectedJobs,
+  targetStatus,
+  onHide,
+}) {
   const [runnerProfileOptions, setRunnerProfileOptions] = useState({
     profile_name: "",
     profile_params: {},
@@ -35,21 +35,7 @@ export function ChangeStatusModal({ expid, selectedJobs, show, onHide }) {
     if (isSubmitCommandSuccess) {
       onHide(true);
     }
-  }, [isSubmitCommandSuccess]);
-
-  const handleCopy = () => {
-    let content = "";
-    if (type === "cmd") {
-      content = commandGeneratorGraph(expid, selectedJobs, targetStatus);
-    } else if (type === "txt") {
-      content = statusChangeTextGeneratorGraph(selectedJobs, targetStatus);
-    }
-    copyToClipboard(content);
-    setCopied("Copied!");
-    setTimeout(() => {
-      setCopied("Copy to clipboard");
-    }, 2000);
-  };
+  }, [isSubmitCommandSuccess, onHide]);
 
   const handleRunnerSelectionChange = useCallback((selection) => {
     setRunnerProfileOptions(selection);
@@ -69,6 +55,55 @@ export function ChangeStatusModal({ expid, selectedJobs, show, onHide }) {
   };
 
   const [showConfirm, setShowConfirm] = useState(false);
+
+  return (
+    <div className="py-2 flex flex-col items-center">
+      <RunnerOptionsFormSection
+        onSelectionChange={handleRunnerSelectionChange}
+      />
+
+      {isSubmitCommandError && (
+        <div className="text-red-600 mt-2 text-sm">
+          Error running the set job status command. Please check your command
+          configuration and try again.
+        </div>
+      )}
+
+      <button
+        className="mt-2 bg-success text-white px-4 py-2 rounded hover:bg-success/90 disabled:bg-success/70"
+        disabled={!runnerProfileOptions.profile_name || submitCommandLoading}
+        onClick={() => setShowConfirm(true)}
+      >
+        {submitCommandLoading ? (
+          <span>
+            <i className="fa fa-spinner fa-spin me-2" /> RUNNING...
+          </span>
+        ) : (
+          "RUN COMMAND"
+        )}
+      </button>
+
+      <ConfirmModal
+        show={showConfirm}
+        onCancel={() => {
+          setShowConfirm(false);
+        }}
+        onConfirm={() => {
+          handleSubmitCommand();
+          setShowConfirm(false);
+        }}
+        message={`Are you sure you want to run the status change command on ${selectedJobs.length} jobs?`}
+      />
+    </div>
+  );
+}
+
+export function ChangeStatusModal({ expid, selectedJobs, show, onHide }) {
+  const [targetStatus, setTargetStatus] = useState("WAITING");
+  const [type, setType] = useState("cmd");
+
+  const { data: endpointConfigData, isFetching: isEndpointConfigFetching } =
+    autosubmitApiV4.endpoints.getRunnerEndpointsConfig.useQuery();
 
   return (
     <Modal show={show} onClose={() => onHide()}>
@@ -118,48 +153,21 @@ export function ChangeStatusModal({ expid, selectedJobs, show, onHide }) {
             }
           />
 
-          {type === "cmd" && (
-            <div className="py-2 flex flex-col items-center">
-              <RunnerOptionsFormSection
-                onSelectionChange={handleRunnerSelectionChange}
-              />
-
-              {isSubmitCommandError && (
-                <div className="text-red-600 mt-2 text-sm">
-                  Error running the set job status command. Please check your
-                  command configuration and try again.
-                </div>
-              )}
-
-              <button
-                className="mt-2 bg-success text-white px-4 py-2 rounded hover:bg-success/90 disabled:bg-success/70"
-                disabled={
-                  !runnerProfileOptions.profile_name || submitCommandLoading
-                }
-                onClick={() => setShowConfirm(true)}
-              >
-                {submitCommandLoading ? (
-                  <span>
-                    <i className="fa fa-spinner fa-spin me-2" /> RUNNING...
-                  </span>
-                ) : (
-                  "RUN COMMAND"
-                )}
-              </button>
-
-              <ConfirmModal
-                show={showConfirm}
-                onCancel={() => {
-                  setShowConfirm(false);
-                }}
-                onConfirm={() => {
-                  handleSubmitCommand();
-                  setShowConfirm(false);
-                }}
-                message={`Are you sure you want to run the status change command on ${selectedJobs.length} jobs?`}
-              />
-            </div>
-          )}
+          {type === "cmd" &&
+            (isEndpointConfigFetching ? (
+              <div className="text-sm opacity-50 text-center">
+                Loading runner endpoints configuration...
+              </div>
+            ) : (
+              endpointConfigData?.SET_JOB_STATUS?.ENABLED !== false && (
+                <ChangeStatusModalRunnerOptions
+                  expid={expid}
+                  selectedJobs={selectedJobs}
+                  targetStatus={targetStatus}
+                  onHide={onHide}
+                />
+              )
+            ))}
         </div>
       </div>
     </Modal>

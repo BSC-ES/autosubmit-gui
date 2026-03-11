@@ -1,4 +1,4 @@
-import { usePrevious } from "@uidotdev/usehooks";
+import { usePrevious, useVisibilityChange } from "@uidotdev/usehooks";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { autosubmitApiV4 } from "../services/autosubmitApiV4";
@@ -191,6 +191,7 @@ const StopCommandModal = ({ show, onClose, onSuccess, expid }) => {
 };
 
 const ExperimentRunStopCommand = ({ expid }) => {
+  const documentVisible = useVisibilityChange();
   const dispatch = useDispatch();
   const [showRunCmdModal, setShowRunCmdModal] = useState(false);
   const [showStopCmdModal, setShowStopCmdModal] = useState(false);
@@ -200,6 +201,7 @@ const ExperimentRunStopCommand = ({ expid }) => {
       { expid },
       {
         pollingInterval: 10000,
+        skip: !documentVisible, // Skip the query when the document is not visible
       },
     );
 

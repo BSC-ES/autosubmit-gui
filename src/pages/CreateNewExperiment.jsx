@@ -15,6 +15,9 @@ const CreateNewExperimentPage = () => {
     },
   ]);
 
+  const { data: endpointConfigData, isFetching: isEndpointConfigFetching } =
+    autosubmitApiV4.endpoints.getRunnerEndpointsConfig.useQuery();
+
   const navigate = useNavigate();
   const [runnerProfileOptions, setRunnerProfileOptions] = useState({
     profile_name: "",
@@ -295,34 +298,46 @@ const CreateNewExperimentPage = () => {
 
         <CommandPreview command={experimentCommandPreview} className="mb-4" />
 
-        <hr className="mt-6 mb-4" />
+        {isEndpointConfigFetching && (
+          <div className="text-sm opacity-50 text-center mt-8">
+            Loading runner endpoints configuration...
+          </div>
+        )}
 
-        <div className="py-2 flex flex-col items-center">
-          <RunnerOptionsFormSection
-            onSelectionChange={handleRunnerSelectionChange}
-          />
+        {!isEndpointConfigFetching &&
+          endpointConfigData?.CREATE_EXPERIMENT?.ENABLED !== false && (
+            <>
+              <hr className="mt-6 mb-4" />
 
-          {isCreateExpError && (
-            <div className="text-red-600 mt-2 text-sm">
-              Error running the experiment. Please check your configuration and
-              try again.
-            </div>
+              <div className="py-2 flex flex-col items-center">
+                <RunnerOptionsFormSection
+                  onSelectionChange={handleRunnerSelectionChange}
+                />
+
+                {isCreateExpError && (
+                  <div className="text-red-600 mt-2 text-sm">
+                    Error running the experiment. Please check your
+                    configuration and try again.
+                  </div>
+                )}
+
+                <button
+                  className="mt-2 bg-success text-white px-4 py-2 rounded hover:bg-success/90 disabled:bg-success/70"
+                  disabled={
+                    !runnerProfileOptions.profile_name || isCreateExpLoading
+                  }
+                >
+                  {isCreateExpLoading ? (
+                    <span>
+                      <i className="fa fa-spinner fa-spin me-2" /> CREATING...
+                    </span>
+                  ) : (
+                    "CREATE NEW EXPERIMENT"
+                  )}
+                </button>
+              </div>
+            </>
           )}
-
-          <button
-            className="mt-2 bg-success text-white px-4 py-2 rounded hover:bg-success/90 disabled:bg-success/70"
-            disabled={!runnerProfileOptions.profile_name || isCreateExpLoading}
-            onClick={() => setShowConfirm(true)}
-          >
-            {isCreateExpLoading ? (
-              <span>
-                <i className="fa fa-spinner fa-spin me-2" /> CREATING...
-              </span>
-            ) : (
-              "CREATE NEW EXPERIMENT"
-            )}
-          </button>
-        </div>
       </form>
     </div>
   );

@@ -4,6 +4,7 @@ import { cn } from "../services/utils";
 import { ActiveIndicator } from "./ExperimentCard";
 import { DotLoader } from "./Loaders";
 import ExperimentRunStopCommand from "./ExperimentRunStopCommand";
+import { autosubmitApiV4 } from "../services/autosubmitApiV4";
 
 const ExperimentInfoHeader = ({ expid }) => {
   const [open, setOpen] = useState(false);
@@ -13,6 +14,9 @@ const ExperimentInfoHeader = ({ expid }) => {
     isFetching: isExpInfoFetching,
     isError: isExpInfoError,
   } = autosubmitApiV3.endpoints.getExperimentInfo.useQuery(expid);
+
+  const { data: endpointConfigData, isFetching: isEndpointConfigFetching } =
+    autosubmitApiV4.endpoints.getRunnerEndpointsConfig.useQuery();
 
   const handleToggle = () => {
     setOpen((prev) => !prev);
@@ -40,7 +44,10 @@ const ExperimentInfoHeader = ({ expid }) => {
             )}
           </div>
 
-          <ExperimentRunStopCommand expid={expid}/>
+          {!isEndpointConfigFetching &&
+            endpointConfigData?.RUNNER_RUN?.ENABLED !== false && (
+              <ExperimentRunStopCommand expid={expid} />
+            )}
 
           <button
             onClick={handleToggle}
@@ -49,7 +56,7 @@ const ExperimentInfoHeader = ({ expid }) => {
             <i
               className={cn(
                 "ms-auto fa-solid",
-                open ? "fa-angle-down" : "fa-angle-up"
+                open ? "fa-angle-down" : "fa-angle-up",
               )}
             ></i>
           </button>
