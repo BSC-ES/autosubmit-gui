@@ -153,22 +153,21 @@ export function ChangeStatusModal({ expid, selectedJobs, show, onHide }) {
             }
           />
 
-          {type === "cmd" && isEndpointConfigFetching ? (
-            <div className="text-sm opacity-50 text-center">
-              Loading runner endpoints configuration...
-            </div>
-          ) : (
-            <>
-              {endpointConfigData?.SET_JOB_STATUS?.ENABLED !== false && (
+          {type === "cmd" &&
+            (isEndpointConfigFetching ? (
+              <div className="text-sm opacity-50 text-center">
+                Loading runner endpoints configuration...
+              </div>
+            ) : (
+              endpointConfigData?.SET_JOB_STATUS?.ENABLED !== false && (
                 <ChangeStatusModalRunnerOptions
                   expid={expid}
                   selectedJobs={selectedJobs}
                   targetStatus={targetStatus}
                   onHide={onHide}
                 />
-              )}
-            </>
-          )}
+              )
+            ))}
         </div>
       </div>
     </Modal>

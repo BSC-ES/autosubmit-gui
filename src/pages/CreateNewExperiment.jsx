@@ -326,7 +326,6 @@ const CreateNewExperimentPage = () => {
                   disabled={
                     !runnerProfileOptions.profile_name || isCreateExpLoading
                   }
-                  onClick={() => setShowConfirm(true)}
                 >
                   {isCreateExpLoading ? (
                     <span>
