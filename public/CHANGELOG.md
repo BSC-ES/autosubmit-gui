@@ -1,5 +1,14 @@
 ## Changelog
 
+### Pre-release v4.1.1-beta.3 - Release date: 2026-03-30
+
+* **Compatibility with Autosubmit API version >= [v4.1.2b4](https://pypi.org/project/autosubmit-api/v4.1.2b4/)**
+* Added a a toast notification system
+* Added interactive elements to start and stop the experiments
+* Added a page to create a new experiment
+* Added a handler to enable and disable interactive features (Job set status, Create experiment, start, stop)
+* Minor visual and usability improvements
+
 ### Pre-release v4.1.1-beta.2 - Release date: 2026-01-20
 
 * **Compatibility with Autosubmit API version >= [v4.1.2b3](https://pypi.org/project/autosubmit-api/v4.1.2b3/)**
