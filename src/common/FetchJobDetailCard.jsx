@@ -104,6 +104,7 @@ const FetchJobDetailCard = ({ expid, jobName }) => {
     {
       expid: expid,
       job_name: jobName,
+      include_status: true,
     },
   );
 
@@ -111,6 +112,7 @@ const FetchJobDetailCard = ({ expid, jobName }) => {
     autosubmitApiV4.endpoints.getJobChildren.useQuery({
       expid: expid,
       job_name: jobName,
+      include_status: true,
     });
 
   const { data: jobWrappers } =
@@ -394,7 +396,19 @@ const FetchJobDetailCard = ({ expid, jobName }) => {
         <div className="bg-white text-black py-6 px-6 rounded-b-lg">
           <ul className="list-disc ms-8">
             {jobChildren?.children?.map((item, index) => (
-              <li key={index}>{item.job_name}</li>
+              <li key={index}>
+                {item.job_name}{" "}
+                {item.status && (
+                  <span
+                    className={cn(
+                      "badge",
+                      `badge-status-${item.status.toLowerCase()}`,
+                    )}
+                  >
+                    {item.status}
+                  </span>
+                )}
+              </li>
             ))}
           </ul>
         </div>
@@ -417,7 +431,19 @@ const FetchJobDetailCard = ({ expid, jobName }) => {
         <div className="bg-white text-black py-6 px-6 rounded-b-lg">
           <ul className="list-disc ms-8">
             {jobParents?.parents?.map((item, index) => (
-              <li key={index}>{item.job_name}</li>
+              <li key={index}>
+                {item.job_name}{" "}
+                {item.status && (
+                  <span
+                    className={cn(
+                      "badge",
+                      `badge-status-${item.status.toLowerCase()}`,
+                    )}
+                  >
+                    {item.status}
+                  </span>
+                )}
+              </li>
             ))}
           </ul>
         </div>
