@@ -115,12 +115,6 @@ const FetchJobDetailCard = ({ expid, jobName }) => {
       include_status: true,
     });
 
-  const { data: jobWrappers } =
-    autosubmitApiV4.endpoints.getJobWrapers.useQuery({
-      expid: expid,
-      job_name: jobName,
-    });
-
   const [start_date, end_date] = useMemo(() => {
     if (!jobData) return ["-", "-"];
     return calculateChunkDates(
@@ -358,15 +352,13 @@ const FetchJobDetailCard = ({ expid, jobName }) => {
           )}
         </div>
 
-        {jobWrappers?.wrappers?.length > 0 && (
+        {jobData?.last_wrapper && (
           <div className="flex flex-wrap gap-4">
             <span className="flex flex-wrap gap-x-2 items-center">
               <strong>Wrapper:</strong>{" "}
-              {jobWrappers.wrappers.map((wrapper, index) => (
-                <span key={index} className="badge bg-light">
-                  {wrapper?.wrapper_name}
-                </span>
-              ))}
+              <span key={jobData.last_wrapper} className="badge bg-light">
+                {jobData.last_wrapper}
+              </span>
             </span>
           </div>
         )}

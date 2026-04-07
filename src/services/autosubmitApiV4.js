@@ -237,12 +237,6 @@ export const autosubmitApiV4 = createApi({
                 }
             }),
         }),
-        getJobWrapers: builder.query({
-            query: ({ expid, job_name }) => ({
-                url: `experiments/${expid}/jobs/${job_name}/wrappers`,
-                method: "GET"
-            }),
-        }),
     }),
 })
 
