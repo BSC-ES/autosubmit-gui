@@ -145,7 +145,7 @@ const FetchJobDetailCard = ({ expid, jobName }) => {
       }
     }
     return null;
-  }, [runTime]);
+  }, [runTime, jobData]);
 
   if (isJobDataFetching || isJobDataUninitialized) {
     return (
@@ -268,7 +268,7 @@ const FetchJobDetailCard = ({ expid, jobName }) => {
               className="grow truncate form-input py-0 h-full rounded-none border"
               type="text"
               value={jobData.out_path_local || "Not Available"}
-              id="g_out_t"
+              id={`g_out_t_${jobName}`}
               readOnly
               disabled
             />
@@ -296,7 +296,7 @@ const FetchJobDetailCard = ({ expid, jobName }) => {
               className="grow truncate form-input py-0 h-full rounded-none border"
               type="text"
               value={jobData.err_path_local || "Not Available"}
-              id="g_err_t"
+              id={`g_err_t_${jobName}`}
               readOnly
               disabled
             />
@@ -455,7 +455,7 @@ const FetchJobDetailCard = ({ expid, jobName }) => {
 
       <JobHistoryModal
         expid={expid}
-        jobName={jobData.name}
+        jobName={jobName}
         show={showModal.history}
         onHide={() => toggleModal("history")}
       />
