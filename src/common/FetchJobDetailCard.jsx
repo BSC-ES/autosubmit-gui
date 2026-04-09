@@ -7,6 +7,7 @@ import { cn, parseLogPath } from "../services/utils";
 import JobHistoryModal from "./JobHistoryModal";
 import LogModal from "./LogModal";
 import Modal from "./Modal";
+import * as Tooltip from "@radix-ui/react-tooltip";
 
 const calculateChunkDates = (date, currentChunk, chunkUnit, chunkSize = 1) => {
   if (!date || !chunkUnit || !chunkSize) return ["-", "-"];
@@ -137,6 +138,18 @@ const FetchJobDetailCard = ({ expid, jobName }) => {
     return null;
   }, [jobData]);
 
+  const queueTime = useMemo(() => {
+    if (
+      jobData &&
+      jobData.submit &&
+      jobData.start &&
+      ["RUNNING", "COMPLETED", "FAILED"].includes(jobData.status)
+    ) {
+      return calcRunTime(jobData.submit, jobData.start);
+    }
+    return null;
+  }, [jobData]);
+
   const SYPD = useMemo(() => {
     if (runTime && jobData.status === "COMPLETED" && jobData.chunk) {
       const yps = calcYPS(jobData.chunk_unit, jobData.chunk_size);
@@ -218,13 +231,38 @@ const FetchJobDetailCard = ({ expid, jobName }) => {
           </span>
         </div>
         <div className="flex gap-x-4 gap-y-1 flex-wrap">
-          {/* TODO Queue times */}
+          {queueTime && (
+            <div>
+              <span className="rounded-full text-center px-4 w-full bg-[pink] text-black">
+                <strong>
+                  Queue: {secondsToDelta(queueTime)}{" "}
+                  {jobData.last_wrapper && (
+                    <Tooltip.Provider>
+                      <Tooltip.Root delayDuration={300}>
+                        <Tooltip.Trigger className="cursor-help">
+                          <i className="fa-solid fa-warning opacity-70 text-sm" />
+                        </Tooltip.Trigger>
+                        <Tooltip.Content
+                          side="right"
+                          align="center"
+                          className="text-xs bg-black/85 text-white px-2 py-1 rounded max-w-[16rem] text-center font-normal"
+                        >
+                          The job belongs to a wrapper. The real queue time may
+                          be shorter than this, because the submit time is when
+                          the wrapper is submitted, not the job itself.
+                          <Tooltip.Arrow />
+                        </Tooltip.Content>
+                      </Tooltip.Root>
+                    </Tooltip.Provider>
+                  )}
+                </strong>
+              </span>
+            </div>
+          )}
+
           {runTime && (
             <div>
-              <span
-                className="rounded-full text-center px-4 w-full bg-success text-white"
-                style={{ width: "100%" }}
-              >
+              <span className="rounded-full text-center px-4 w-full bg-success text-white">
                 <strong>Run: {secondsToDelta(runTime)}</strong>
               </span>
             </div>
