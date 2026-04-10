@@ -36,7 +36,7 @@ const JobDetailCard = ({ expid, jobData, jobs }) => {
       let newParents = [];
       if (Array.isArray(jobData.children_list)) {
         newChildren = jobs.filter((job) =>
-          jobData.children_list.includes(job.id)
+          jobData.children_list.includes(job.id),
         );
       }
       if (Array.isArray(jobData.parent_list)) {
