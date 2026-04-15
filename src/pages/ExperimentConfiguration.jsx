@@ -187,7 +187,7 @@ const ExperimentConfigurationSelect = ({
         {runs.map((run) => {
           return (
             <option key={run.run_id} value={run.run_id}>
-              Run {run.run_id}
+              Run {run.run_id}{run.start && ` | Started at ${new Date(run.start).toISOString()}`}
             </option>
           );
         })}
