@@ -6,6 +6,7 @@ import { useCopyToClipboard } from "@uidotdev/usehooks";
 import { cn } from "../services/utils";
 import { autosubmitApiV4 } from "../services/autosubmitApiV4";
 import * as Tooltip from "@radix-ui/react-tooltip";
+import RunnerHelpModal from "../common/RunnerHelpModal";
 
 const PreferredUsernameInput = () => {
   const {
@@ -295,10 +296,23 @@ const RunnerConfigSection = () => {
     isLoading: publicSSHKeysLoading,
   } = autosubmitApiV4.endpoints.getPublicSSHKeys.useQuery();
 
+  const [showHelp, setShowHelp] = useState(false);
+
   return (
     <div className="border rounded-2xl px-8 pt-8 pb-12">
       <div className="flex flex-col">
-        <h2 className="text-3xl font-semibold">Runner configuration</h2>
+        <div className="flex items-center gap-2 text-xl mb-2">
+          <h2 className="text-3xl font-semibold">Runner configuration</h2>
+
+          <button
+            className="ml-1 w-6 h-6 rounded-full text-primary hover:bg-primary/10 transition-colors flex items-center justify-center"
+            onClick={() => setShowHelp(true)}
+            title="Runner profiles help"
+          >
+            <i className="fa-solid fa-circle-question"></i>
+          </button>
+          <RunnerHelpModal show={showHelp} onHide={() => setShowHelp(false)} />
+        </div>
 
         <hr className="mt-2 mb-8" />
 
