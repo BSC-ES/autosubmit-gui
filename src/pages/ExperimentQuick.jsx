@@ -226,6 +226,15 @@ const ExperimentQuick = () => {
             <option value="QUEUING">
               QUEUING ({(data && data.queuing) || 0})
             </option>
+            <option value="READY">
+              READY
+            </option>
+            <option value="WAITING">
+              WAITING
+            </option>
+            <option value="SUBMITTED">
+              SUBMITTED
+            </option>
           </select>
         </div>
         <div className="grow">
