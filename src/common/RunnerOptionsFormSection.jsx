@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { autosubmitApiV4 } from "../services/autosubmitApiV4";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { Link } from "react-router-dom";
+import RunnerHelpModal from "./RunnerHelpModal";
 
 export const RunnerOptionsFormSection = ({ onSelectionChange }) => {
   const {
@@ -18,11 +19,13 @@ export const RunnerOptionsFormSection = ({ onSelectionChange }) => {
 
   const activeRunnerProfiles = useMemo(
     () => (runnerProfiles ? Object.keys(runnerProfiles) : []),
-    [runnerProfiles]
+    [runnerProfiles],
   );
 
   const [selectedProfileName, setSelectedProfileName] = useState("");
   const [runnerConfig, setRunnerConfig] = useState({});
+
+  const [showHelp, setShowHelp] = useState(false);
 
   const selectedProfile = useMemo(() => {
     if (!selectedProfileName || !runnerProfiles) return null;
@@ -58,6 +61,11 @@ export const RunnerOptionsFormSection = ({ onSelectionChange }) => {
     });
   };
 
+  const handleToggleHelp = (e) => {
+    e.preventDefault();
+    setShowHelp((prev) => !prev);
+  };
+
   // Render loading/error states
   if (runnerProfilesLoading) {
     return <div className="text-gray-500">Loading runner profiles...</div>;
@@ -88,6 +96,14 @@ export const RunnerOptionsFormSection = ({ onSelectionChange }) => {
         <div className="text-sm text-gray-500">
           ({activeRunnerProfiles.length} profiles available)
         </div>
+        <button
+          className="ml-1 w-6 h-6 rounded-full text-primary hover:bg-primary/10 transition-colors flex items-center justify-center"
+          onClick={handleToggleHelp}
+          title="Runner profiles help"
+        >
+          <i className="fa-solid fa-circle-question"></i>
+        </button>
+        <RunnerHelpModal show={showHelp} onHide={() => setShowHelp(false)} />
       </div>
 
       {selectedProfile && (
@@ -182,7 +198,7 @@ export const RunnerOptionsFormSection = ({ onSelectionChange }) => {
                         onClick={() => {
                           handleSSHChange(
                             "USERNAME",
-                            preferredUsername.preferred_username
+                            preferredUsername.preferred_username,
                           );
                         }}
                       >
