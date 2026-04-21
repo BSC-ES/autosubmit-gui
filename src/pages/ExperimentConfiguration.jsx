@@ -45,7 +45,7 @@ const getSectionsHeadersMergeConfigs = (config1, config2) => {
   objectSections.forEach((key) => {
     let subsection = getSectionsHeadersMergeConfigs(
       config1 && typeof config1[key] === "object" ? config1[key] : {},
-      config2 && typeof config2[key] === "object" ? config2[key] : {}
+      config2 && typeof config2[key] === "object" ? config2[key] : {},
     );
     subsection = subsection.map((sub) => {
       return {
@@ -95,7 +95,7 @@ const ExperimentConfigurationCompare = ({
         } else {
           // Otherwise, filter the keys
           let _keys = section.keys.filter((key) =>
-            _isTextMatchingFilter(key, filter)
+            _isTextMatchingFilter(key, filter),
           );
           return {
             section: section.section,
@@ -130,11 +130,11 @@ const ExperimentConfigurationCompare = ({
             {section.keys.map((key) => {
               let leftSubValue = deepMapAccess(
                 configLeft,
-                section.section.concat(key)
+                section.section.concat(key),
               );
               let rightSubValue = deepMapAccess(
                 configRight,
-                section.section.concat(key)
+                section.section.concat(key),
               );
               // eslint-disable-next-line eqeqeq
               let isDifferent = leftSubValue != rightSubValue;
@@ -187,7 +187,9 @@ const ExperimentConfigurationSelect = ({
         {runs.map((run) => {
           return (
             <option key={run.run_id} value={run.run_id}>
-              Run {run.run_id}{run.start && ` | Started at ${new Date(run.start).toISOString()}`}
+              Run {run.run_id}
+              {run.start &&
+                ` | Started at ${new Date(run.start).toISOString()}`}
             </option>
           );
         })}
@@ -212,13 +214,13 @@ const ExperimentConfigurationControl = ({ expid, runs }) => {
   const [selectedRunLeft, setSelectedRunLeft] = useState(
     (allowedRunIds?.includes(searchParams.get("left")) &&
       searchParams.get("left")) ||
-      "fs"
+      "fs",
   );
   // use State last value of runs list or empty
   const [selectedRunRight, setSelectedRunRight] = useState(
     (allowedRunIds?.includes(searchParams.get("right")) &&
       searchParams.get("right")) ||
-      (runs?.length > 0 ? runs[0].run_id : "")
+      (runs?.length > 0 ? runs[0].run_id : ""),
   );
 
   useEffect(() => {
@@ -238,7 +240,7 @@ const ExperimentConfigurationControl = ({ expid, runs }) => {
     },
     {
       skip: !selectedRunLeft,
-    }
+    },
   );
 
   const {
@@ -252,7 +254,7 @@ const ExperimentConfigurationControl = ({ expid, runs }) => {
     },
     {
       skip: !selectedRunRight,
-    }
+    },
   );
 
   const handleFilterChange = (value) => {
@@ -353,8 +355,8 @@ const ExperimentConfigurationControl = ({ expid, runs }) => {
         </div>
       ) : (
         <ExperimentConfigurationCompare
-          configLeft={configLeft?.config || {}}
-          configRight={configRight?.config || {}}
+          configLeft={isErrorLeft ? {} : configLeft?.config || {}}
+          configRight={isErrorRight ? {} : configRight?.config || {}}
           filter={searchParams.get("filter") || ""}
         />
       )}
