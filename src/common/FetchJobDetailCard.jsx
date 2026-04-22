@@ -1,6 +1,5 @@
 import { useMemo } from "react";
 import { autosubmitApiV4 } from "../services/autosubmitApiV4";
-import { cn } from "../services/utils";
 import JobDetailCardLayout from "./JobDetailCardLayout";
 import * as Tooltip from "@radix-ui/react-tooltip";
 
@@ -166,8 +165,14 @@ const FetchJobDetailCard = ({ expid, jobName }) => {
   const wrapperQueueTooltip = jobData?.last_wrapper ? (
     <Tooltip.Provider>
       <Tooltip.Root delayDuration={300}>
-        <Tooltip.Trigger className="cursor-help">
-          <i className="fa-solid fa-warning opacity-70 text-sm" />
+        <Tooltip.Trigger
+          className="cursor-help"
+          aria-label="Wrapper job warning: queue time may be shorter than shown"
+        >
+          <i
+            className="fa-solid fa-warning opacity-70 text-sm"
+            aria-hidden="true"
+          />
         </Tooltip.Trigger>
         <Tooltip.Content
           side="right"
@@ -221,8 +226,8 @@ const FetchJobDetailCard = ({ expid, jobName }) => {
       runTime={runTime}
       status={jobData.status}
       statusClassName={`badge-status-${jobData.status.toLowerCase()}`}
-      children={normalizedChildren}
-      parents={normalizedParents}
+      childJobs={normalizedChildren}
+      parentJobs={normalizedParents}
       outPath={jobData.out_path_local}
       errPath={jobData.err_path_local}
       submitTime={jobData.submit}

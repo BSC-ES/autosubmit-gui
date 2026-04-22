@@ -87,8 +87,8 @@ const JobDetailCard = ({ expid, jobData, jobs }) => {
             backgroundColor: jobData.status_color,
             color: jobData.status === "RUNNING" ? "white" : "black",
           }}
-          children={normalizedChildren}
-          parents={normalizedParents}
+          childJobs={normalizedChildren}
+          parentJobs={normalizedParents}
           outPath={jobData.out}
           errPath={jobData.err}
           submitTime={jobData.submit}

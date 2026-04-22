@@ -35,8 +35,8 @@ import Modal from "./Modal";
  * @param {string} props.status - Job status string
  * @param {string} [props.statusClassName] - CSS class for status badge
  * @param {Object} [props.statusStyle] - Inline style for status badge
- * @param {Array<{name: string, status: string, statusClassName?: string, statusStyle?: Object}>} [props.children] - Children dependencies
- * @param {Array<{name: string, status: string, statusClassName?: string, statusStyle?: Object}>} [props.parents] - Parent dependencies
+ * @param {Array<{name: string, status: string, statusClassName?: string, statusStyle?: Object}>} [props.childJobs] - Children dependencies
+ * @param {Array<{name: string, status: string, statusClassName?: string, statusStyle?: Object}>} [props.parentJobs] - Parent dependencies
  * @param {string} [props.outPath] - Output log path
  * @param {string} [props.errPath] - Error log path
  * @param {string} [props.submitTime] - Submit timestamp
@@ -70,8 +70,8 @@ const JobDetailCardLayout = ({
   status,
   statusClassName,
   statusStyle,
-  children = [],
-  parents = [],
+  childJobs = [],
+  parentJobs = [],
   outPath,
   errPath,
   submitTime,
@@ -91,10 +91,10 @@ const JobDetailCardLayout = ({
     history: false,
   });
   const toggleModal = (modal) => {
-    setShowModal({
-      ...showModal,
-      [modal]: !showModal[modal],
-    });
+    setShowModal((prev) => ({
+      ...prev,
+      [modal]: !prev[modal],
+    }));
   };
 
   return (
@@ -192,16 +192,16 @@ const JobDetailCardLayout = ({
           <button
             className="btn btn-dark text-sm px-4 rounded-lg"
             onClick={() => toggleModal("children")}
-            disabled={children.length <= 0}
+            disabled={childJobs.length <= 0}
           >
-            <strong>CHILDREN:</strong> {children.length || "0"}
+            <strong>CHILDREN:</strong> {childJobs.length || "0"}
           </button>
           <button
             className="btn btn-dark text-sm px-4 rounded-lg"
             onClick={() => toggleModal("parents")}
-            disabled={parents.length <= 0}
+            disabled={parentJobs.length <= 0}
           >
-            <strong>PARENTS:</strong> {parents.length || "0"}
+            <strong>PARENTS:</strong> {parentJobs.length || "0"}
           </button>
         </div>
 
@@ -219,6 +219,7 @@ const JobDetailCardLayout = ({
               disabled
             />
             <button
+              type="button"
               className="btn btn-light text-sm h-full rounded-none border"
               disabled={!outPath}
               onClick={() => copyToClipboard(outPath || "")}
@@ -226,6 +227,7 @@ const JobDetailCardLayout = ({
               COPY
             </button>
             <button
+              type="button"
               className="btn btn-dark text-sm h-full rounded-s-none border"
               disabled={!outPath}
               onClick={() => toggleModal("outlog")}
@@ -333,17 +335,18 @@ const JobDetailCardLayout = ({
           }
         >
           <div>Children List</div>
-          <div
+          <button
+            type="button"
             className="cursor-pointer"
             onClick={() => toggleModal("children")}
           >
             <i className="fa-solid fa-xmark"></i>
-          </div>
+          </button>
         </Dialog.Title>
         <div className="bg-white text-black py-6 px-6 rounded-b-lg">
           <ul className="list-disc ms-8">
-            {children.map((item, index) => (
-              <li key={index}>
+            {childJobs.map((item, index) => (
+              <li key={`${index}-${item.name}`}>
                 {item.name}{" "}
                 <span
                   className={cn("badge", item.statusClassName)}
@@ -364,17 +367,18 @@ const JobDetailCardLayout = ({
           }
         >
           <div>Parents List</div>
-          <div
+          <button
+            type="button"
             className="cursor-pointer"
             onClick={() => toggleModal("parents")}
           >
             <i className="fa-solid fa-xmark"></i>
-          </div>
+          </button>
         </Dialog.Title>
         <div className="bg-white text-black py-6 px-6 rounded-b-lg">
           <ul className="list-disc ms-8">
-            {parents.map((item, index) => (
-              <li key={index}>
+            {parentJobs.map((item, index) => (
+              <li key={`${index}-${item.name}`}>
                 {item.name}{" "}
                 <span
                   className={cn("badge", item.statusClassName)}
