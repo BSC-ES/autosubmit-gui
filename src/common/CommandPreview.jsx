@@ -1,5 +1,5 @@
 import { useCopyToClipboard } from "@uidotdev/usehooks";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { cn } from "../services/utils";
 
 const CommandPreview = ({ command, className }) => {
@@ -14,6 +14,11 @@ const CommandPreview = ({ command, className }) => {
     }, 2000);
   };
 
+  const formattedCommand = useMemo(() => {
+    if (typeof command !== "string") return "";
+    return command.split("\n").map((line, index) => <p key={index}>{line}</p>);
+  }, [command]);
+
   return (
     <div
       className={cn(
@@ -27,7 +32,7 @@ const CommandPreview = ({ command, className }) => {
       >
         <i className="fa-regular fa-copy"></i> {copied}
       </button>
-      {command}
+      {formattedCommand}
     </div>
   );
 };
