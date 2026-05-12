@@ -148,8 +148,6 @@ export function ChangeStatusModal({ expid, selectedJobs, show, onHide }) {
                 ? commandGeneratorGraph(expid, selectedJobs, targetStatus)
                 : type === "txt" &&
                   statusChangeTextGeneratorGraph(selectedJobs, targetStatus)
-                    .split("\n")
-                    .map((item, index) => <p key={index}>{item}</p>)
             }
           />
 
