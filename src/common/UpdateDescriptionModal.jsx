@@ -1,7 +1,7 @@
 import { autosubmitApiV4 } from "../services/autosubmitApiV4";
 import CommandPreview from "./CommandPreview";
 import Modal from "./Modal";
-import { RunnerOptionsFormSection } from "../common/RunnerOptionsFormSection";
+import { RunnerOptionsFormSection } from "./RunnerOptionsFormSection";
 import { useCallback, useState, useEffect } from "react";
 
 const UpdateDescriptionModal = ({ expid, show, onHide }) => {
@@ -11,7 +11,6 @@ const UpdateDescriptionModal = ({ expid, show, onHide }) => {
   const [
     updateExperimentDescription,
     {
-      data: updateDescData,
       isLoading: isUpdateDescLoading,
       isSuccess: isUpdateDescSuccess,
       isError: isUpdateDescError,
