@@ -213,6 +213,13 @@ export const autosubmitApiV4 = createApi({
                 body
             })
         }),
+        runnerUpdateExperimentDescription: builder.mutation({
+            query: (body) => ({
+                url: `/runners/command/update-experiment-description`,
+                method: "POST",
+                body
+            })
+        }),
         getJobDetails: builder.query({
             query: ({ expid, job_name }) => ({
                 url: `experiments/${expid}/jobs/${job_name}`,
