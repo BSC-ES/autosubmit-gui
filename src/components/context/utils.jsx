@@ -146,8 +146,11 @@ export const groupByAndAggregate = (arrayObjects, key) => {
   return result;
 };
 
+/***
+ * Handle 2021-07-07-10:36:37 or 2026-05-13T14:49:02+0200 formats
+ * to generate a code like 2107071036 or 2605131449 (YYMMDDHHMM) to be used in the UI and to be able to sort by creation date.
+ */
 export const creationDateToId = (strCreationDate, intRunId) => {
-  // 2021-07-07-10:36:37
   if (
     strCreationDate === null ||
     strCreationDate === undefined ||
@@ -156,19 +159,13 @@ export const creationDateToId = (strCreationDate, intRunId) => {
   ) {
     return "NA";
   }
-  // console.log(strCreationDate);
-  const creationDate = strCreationDate.split("-");
-  const timeDay = creationDate[3].split(":");
+
   const code =
-    creationDate[0].substr(2, 2) +
-    "" +
-    creationDate[1] +
-    "" +
-    creationDate[2] +
-    "" +
-    timeDay[0] +
-    "" +
-    timeDay[1];
+    strCreationDate.substr(2, 2) +
+    strCreationDate.substr(5, 2) +
+    strCreationDate.substr(8, 2) +
+    strCreationDate.substr(11, 2) +
+    strCreationDate.substr(14, 2);
   return code;
 };
 
