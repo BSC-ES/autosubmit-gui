@@ -5,12 +5,16 @@ import { ActiveIndicator } from "./ExperimentCard";
 import { DotLoader } from "./Loaders";
 import ExperimentRunStopCommand from "./ExperimentRunStopCommand";
 import { autosubmitApiV4 } from "../services/autosubmitApiV4";
+import UpdateDescriptionModal from "./UpdateDescriptionModal";
 
 const ExperimentInfoHeader = ({ expid }) => {
   const [open, setOpen] = useState(false);
+  const [showUpdateDescriptionModal, setShowUpdateDescriptionModal] =
+    useState(false);
 
   const {
     data: expInfoData,
+    refetch: refetchExpInfo,
     isFetching: isExpInfoFetching,
     isError: isExpInfoError,
   } = autosubmitApiV3.endpoints.getExperimentInfo.useQuery(expid);
@@ -22,10 +26,20 @@ const ExperimentInfoHeader = ({ expid }) => {
     setOpen((prev) => !prev);
   };
 
+  const handleUpdDescModalHide = (refresh) => {
+    setShowUpdateDescriptionModal(false);
+    if (refresh) {
+      refetchExpInfo();
+    }
+  };
+
   return (
     <>
       <div className="flex flex-col gap-4 mb-2">
-        <div className="flex px-4 gap-6 items-center" onDoubleClick={handleToggle}>
+        <div
+          className="flex px-4 gap-6 items-center"
+          onDoubleClick={handleToggle}
+        >
           <ActiveIndicator isActive={expInfoData?.running} />
           <div className="text-xl font-semibold grow line-clamp-2">
             {isExpInfoFetching ? (
@@ -43,6 +57,23 @@ const ExperimentInfoHeader = ({ expid }) => {
               </>
             )}
           </div>
+
+          {!isExpInfoFetching && !isExpInfoError && (
+            <>
+              <button
+                onClick={() => setShowUpdateDescriptionModal(true)}
+                className="btn rounded-full hover:bg-black/5 aspect-square"
+                title="Update description"
+              >
+                <i className="fa-solid fa-pen-to-square text-gray-500 hover:text-gray-700 text-xl "></i>
+              </button>
+              <UpdateDescriptionModal
+                expid={expid}
+                show={showUpdateDescriptionModal}
+                onHide={handleUpdDescModalHide}
+              />
+            </>
+          )}
 
           {!isEndpointConfigFetching &&
             endpointConfigData?.RUNNER_RUN?.ENABLED !== false && (
