@@ -294,7 +294,7 @@ const JobDetailCardLayout = ({
                 title="Generalization of Simulated Years per Day."
               >
                 <strong>SYPD: </strong>
-                {SYPD}
+                {isNaN(SYPD) ? SYPD : Number(SYPD).toFixed(2)}
               </span>
             </div>
           )}
@@ -305,7 +305,7 @@ const JobDetailCardLayout = ({
                 title="Generalization of Actual SYPD."
               >
                 <strong>ASYPD: </strong>
-                {ASYPD}
+                {isNaN(ASYPD) ? ASYPD : Number(ASYPD).toFixed(2)}
               </span>
             </div>
           )}
