@@ -7,6 +7,8 @@ import { cn, getStatusBadgeStyle, JOB_STATUSES } from "../services/utils";
 import { ChangeStatusModal } from "../common/ChangeStatusModal";
 import BottomPanel from "../common/BottomPanel";
 import FetchJobDetailCard from "../common/FetchJobDetailCard";
+import { calcRunTime } from "../common/FetchJobDetailCard";
+import { secondsToDelta } from "../components/context/utils";
 import Paginator from "../common/Paginator";
 
 const DEFAULT_ITEMS_PER_PAGE = 100;
@@ -36,7 +38,7 @@ const DEFAULT_STATUS_QUICK_VIEW = "Any status";
  *   Callback invoked when the selection changes.
  * @returns {JSX.Element} The job list or an empty-list message.
  */
-const QuickJobList = ({ jobs, selection, onSelectionChange }) => {
+export const QuickJobList = ({ jobs, selection, onSelectionChange }) => {
   if (!Array.isArray(jobs) || jobs.length === 0) {
     return (
       <div className="w-full h-full flex flex-col items-center justify-center gap-4">
@@ -112,6 +114,12 @@ const QuickJobList = ({ jobs, selection, onSelectionChange }) => {
             >
               {job.name} <span className={cn("badge", getStatusBadgeStyle(job.status.toUpperCase()))}>#{job.status}</span>
             </div>
+            {job?.submit && job?.start && job?.finish && (
+              <span className="text-gray-500 ml-2">
+                ~ ( {secondsToDelta(calcRunTime(job.submit, job.start))} ) +{" "}
+                {secondsToDelta(calcRunTime(job.start, job.finish))}
+              </span>
+            )}
           </li>
         );
       })}
