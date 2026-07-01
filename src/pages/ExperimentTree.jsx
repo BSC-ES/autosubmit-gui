@@ -11,6 +11,7 @@ import RunsModal from "../common/RunsModal";
 import TreeContentHandler from "../components/context/tree/business/treeUpdate";
 import BottomPanel from "../common/BottomPanel";
 import { ChangeStatusModal } from "../common/ChangeStatusModal";
+import { cn } from "../services/utils";
 
 /***
  * param treeData: Array of objects representing the tree structure
@@ -118,17 +119,26 @@ const HierarchyTree = ({ treeDirs, onNodeSelect }) => {
   };
 
   return (
-    <ul>
+    <ul
+      className="text-sm flex flex-col gap-[0.35rem] py-1 font-thin"
+      style={{
+        fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
+        color: "#333",
+      }}
+    >
       {treeDirs &&
         treeDirs.length > 0 &&
         treeDirs.map((treeDir, index) => (
           <li key={index}>
             <span
-              className="cursor-pointer hover:bg-black/10 "
+              className="cursor-pointer hover:bg-black/10 flex gap-3"
               onClick={() => handleNodeSelect(treeDir)}
             >
-              {treeDir.title}{" "}
-              <span style={{ fontSize: "0.8em", color: "gray" }}>
+              <span>
+                <i className="fa-solid fa-folder" />
+              </span>
+              <span>{treeDir.title}</span>
+              {/* <span style={{ fontSize: "0.8em", color: "gray" }}>
                 {treeDir.statuses_counters &&
                   Object.entries(treeDir.statuses_counters).map(
                     ([status, count]) => (
@@ -137,7 +147,7 @@ const HierarchyTree = ({ treeDirs, onNodeSelect }) => {
                       </span>
                     ),
                   )}
-              </span>
+              </span> */}
             </span>
             {treeDir.children && treeDir.children.length > 0 && (
               <div style={{ marginLeft: "20px" }}>
@@ -212,36 +222,53 @@ const ExperimentTree = () => {
             <HierarchyTree treeDirs={tree} onNodeSelect={handleDirSelect} />
           </div>
 
-          <div className="flex flex-col border border-gray-300 rounded-lg p-4 w-3/4">
-            {selectedDir ? (
-              <div>
-                <h3>Selected Directory Details</h3>
-                <p>Date: {selectedDir.date || "Any"}</p>
-                <p>Member: {selectedDir.member || "Any"}</p>
-                <p>Section: {selectedDir.section || "Any"}</p>
+          <div className="flex flex-col border border-gray-300 rounded-lg w-3/4">
+            {!selectedDir && (
+              <div className="w-full h-full flex flex-col items-center justify-center gap-4">
+                <i className="fa-regular fa-face-smile text-4xl text-primary"></i>
+                <span className="text text-gray-500">
+                  Select a directory to view jobs
+                </span>
               </div>
-            ) : (
-              <p>Please select a directory from the tree to see its details.</p>
             )}
 
-            {
-              jobsData && jobsData.jobs && jobsData.jobs.length > 0 ? (
-                <div className="mt-4">
-                  <h4>Jobs in Selected Directory</h4>
-                  <ul>
-                    {jobsData.jobs.map((job) => (
-                      <li key={job.job_name}>
-                        {job.name} - Status: {job.status}
-                      </li>
-                    ))}
-                  </ul>
+            {jobsData && jobsData.jobs && jobsData.jobs.length > 0 ? (
+              <div className="mt-4">
+                <ul
+                  className="text-sm flex flex-col gap-[0.35rem] py-1 font-thin"
+                  style={{
+                    fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
+                    color: "#333",
+                  }}
+                >
+                  {jobsData.jobs.map((job) => (
+                    <li key={job.job_name} className="flex gap-3 px-6">
+                      <span>
+                        <i className="fa-regular fa-circle text-primary" />
+                      </span>
+                      <span>
+                        {job.name}{" "}
+                        <span
+                          className={cn(
+                            "badge",
+                            `badge-status-${job.status.toLowerCase()}`,
+                          )}
+                        >
+                          #{job.status}
+                        </span>
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              selectedDir && (
+                <div className="w-full h-full flex flex-col items-center justify-center gap-4">
+                  <i className="fa-regular fa-face-frown text-4xl text-primary"></i>
+                  <span className="text text-gray-500">No jobs found</span>
                 </div>
-              ) : (
-                selectedDir && (
-                  <p>No jobs found for the selected directory.</p>
-                )
               )
-            }
+            )}
           </div>
         </div>
       </div>
