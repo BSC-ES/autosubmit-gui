@@ -162,7 +162,7 @@ const HierarchyTree = ({ treeDirs, onNodeSelect, selectedNode }) => {
 
           return (
             <li key={index}>
-              <div className="flex" onClick={() => handleNodeSelect(treeDir)}>
+              <div className="flex items-center" onClick={() => handleNodeSelect(treeDir)}>
                 <span className="relative mr-4">
                   <i className="fa-solid fa-folder" />
                   {counter > 0 && (
@@ -174,25 +174,30 @@ const HierarchyTree = ({ treeDirs, onNodeSelect, selectedNode }) => {
 
                 <span
                   className={cn(
-                    "flex gap-2 px-1 py-[1px] hover:bg-gray-100 rounded cursor-pointer select-none",
+                    "flex items-center gap-2 px-1 py-[1px] hover:bg-gray-100 rounded cursor-pointer select-none",
                     isSelected && "bg-blue-100 hover:bg-blue-200",
                   )}
                 >
                   <span>{treeDir.title}</span>
 
-                  <span className="flex gap-1">
+                  <span className="flex items-center gap-1">
+                    {counter > 0 && (
+                      <span className="badge badge-status-completed text-[0.7rem] text-nowrap">
+                        {treeDir.diff_statuses_counters?.COMPLETED || 0}/{counter} COMPLETED
+                      </span>
+                    )}
                     {treeDir.diff_statuses_counters &&
                       Object.entries(treeDir.diff_statuses_counters).map(
                         ([status, count]) => {
                           if (
                             count > 0 &&
-                            ["WAITING", "COMPLETED", "FAILED"].includes(status)
+                            ["RUNNING", "QUEUING", "FAILED"].includes(status)
                           ) {
                             return (
                               <span
-                                className={`badge badge-status-${status.toLowerCase()} text-black`}
+                                className={`badge badge-status-${status.toLowerCase()} text-[0.7rem] text-nowrap`}
                               >
-                                {count}
+                                {count} {status}
                               </span>
                             );
                           }
@@ -202,7 +207,7 @@ const HierarchyTree = ({ treeDirs, onNodeSelect, selectedNode }) => {
                 </span>
               </div>
               {treeDir.children && treeDir.children.length > 0 && (
-                <div className="ml-8">
+                <div className="ml-6">
                   <HierarchyTree
                     treeDirs={treeDir.children}
                     onNodeSelect={handleNodeSelect}
@@ -291,7 +296,7 @@ const ExperimentTree = () => {
             </div>
           ) : (
             <>
-              <div className="relative flex flex-col max-h-full overflow-auto w-1/4 py-4 px-6 border rounded-lg custom-scrollbar bg-white">
+              <div className="w-1/3 relative flex flex-col max-h-full overflow-auto py-4 px-6 border rounded-lg custom-scrollbar bg-white">
                 <HierarchyTree
                   treeDirs={tree}
                   onNodeSelect={handleDirSelect}
@@ -299,7 +304,7 @@ const ExperimentTree = () => {
                 />
               </div>
 
-              <div className="relative flex flex-col max-h-full overflow-auto w-3/4 p-4 border rounded-lg custom-scrollbar bg-white">
+              <div className="w-2/3 relative flex flex-col max-h-full overflow-auto p-4 border rounded-lg custom-scrollbar bg-white">
                 {!selectedDir && (
                   <div className="w-full h-full flex flex-col items-center justify-center gap-4">
                     <i className="fa-regular fa-face-smile text-4xl text-primary"></i>
