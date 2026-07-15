@@ -162,7 +162,10 @@ const HierarchyTree = ({ treeDirs, onNodeSelect, selectedNode }) => {
 
           return (
             <li key={index}>
-              <div className="flex items-center" onClick={() => handleNodeSelect(treeDir)}>
+              <div
+                className="flex items-center"
+                onClick={() => handleNodeSelect(treeDir)}
+              >
                 <span className="relative mr-4">
                   <i className="fa-solid fa-folder" />
                   {counter > 0 && (
@@ -183,7 +186,8 @@ const HierarchyTree = ({ treeDirs, onNodeSelect, selectedNode }) => {
                   <span className="flex items-center gap-1">
                     {counter > 0 && (
                       <span className="badge badge-status-completed text-[0.7rem] text-nowrap">
-                        {treeDir.diff_statuses_counters?.COMPLETED || 0}/{counter} COMPLETED
+                        {treeDir.diff_statuses_counters?.COMPLETED || 0}/
+                        {counter} COMPLETED
                       </span>
                     )}
                     {treeDir.diff_statuses_counters &&
@@ -259,6 +263,7 @@ const ExperimentTree = () => {
     autosubmitApiV4.endpoints.getExperimentJobs.useQuery(
       {
         expid: routeParams.expid,
+        view: "extended",
         date: selectedDir?.date || undefined,
         member: selectedDir?.member || undefined,
         section: selectedDir?.section || undefined,

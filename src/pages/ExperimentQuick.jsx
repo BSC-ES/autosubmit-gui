@@ -8,6 +8,8 @@ import { cn } from "../services/utils";
 import { ChangeStatusModal } from "../common/ChangeStatusModal";
 import BottomPanel from "../common/BottomPanel";
 import FetchJobDetailCard from "../common/FetchJobDetailCard";
+import { calcRunTime } from "../common/FetchJobDetailCard";
+import { secondsToDelta } from "../components/context/utils";
 
 export const QuickJobList = ({ jobs, onSelectionChange }) => {
   if (!Array.isArray(jobs) || jobs.length === 0) {
@@ -88,7 +90,7 @@ export const QuickJobList = ({ jobs, onSelectionChange }) => {
                   "px-1 py-[1px] hover:bg-gray-100 rounded cursor-pointer select-none",
                   isSelected && "bg-blue-100 hover:bg-blue-200",
                 )}
-                dange>
+              >
                 {job.name}{" "}
                 <span
                   className={cn(
@@ -98,6 +100,12 @@ export const QuickJobList = ({ jobs, onSelectionChange }) => {
                 >
                   #{job.status}
                 </span>
+                {job?.submit && job?.start && job?.finish && (
+                  <span className="text-gray-500 ml-2">
+                    ~ ( {secondsToDelta(calcRunTime(job.submit, job.start))} ) +{" "}
+                    {secondsToDelta(calcRunTime(job.start, job.finish))}
+                  </span>
+                )}
               </div>
             )}
           </li>

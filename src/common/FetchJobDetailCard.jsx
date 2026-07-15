@@ -40,7 +40,7 @@ const calculateChunkDates = (date, currentChunk, chunkUnit, chunkSize = 1) => {
   return [formatDate(startDate), formatDate(endDate)];
 };
 
-const calcRunTime = (start, end) => {
+export const calcRunTime = (start, end) => {
   if (!start || !end) return "-";
   const startDate = new Date(start);
   const endDate = new Date(end);

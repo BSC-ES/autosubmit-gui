@@ -46,11 +46,19 @@ export const autosubmitApiV4 = createApi({
             }
         }),
         getExperimentJobs: builder.query({
-            query: ({ expid, date = undefined, member = undefined, section = undefined, chunk = undefined }) => {
+            query: ({
+                expid,
+                view = undefined,
+                date = undefined,
+                member = undefined,
+                section = undefined,
+                chunk = undefined,
+            }) => {
                 return {
                     url: `experiments/${expid}/jobs`,
                     method: "GET",
                     params: {
+                        view,
                         date,
                         member,
                         section,
