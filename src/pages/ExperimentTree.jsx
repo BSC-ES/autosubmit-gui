@@ -241,12 +241,27 @@ const ExperimentTree = () => {
     },
   ]);
 
-  const [selectedDir, setSelectedDir] = useState(null);
+  const fetchJobDetailCardRef = useRef(null);
 
-  const { data: jobsCategoryTreeData, isFetching: isTreeFetching } =
-    autosubmitApiV4.endpoints.getJobsCategoryTree.useQuery({
+  const [selectedDir, setSelectedDir] = useState(null);
+  const [activeMonitor, setActiveMonitor] = useState(false);
+
+  const toggleActiveMonitor = () => {
+    setActiveMonitor(!activeMonitor);
+  };
+
+  const {
+    data: jobsCategoryTreeData,
+    isFetching: isTreeFetching,
+    refetch: refetchTree,
+  } = autosubmitApiV4.endpoints.getJobsCategoryTree.useQuery(
+    {
       expid: routeParams.expid,
-    });
+    },
+    {
+      pollingInterval: activeMonitor ? 5000 : 0,
+    },
+  );
 
   const tree = useMemo(() => {
     if (jobsCategoryTreeData && jobsCategoryTreeData.category_tree)
@@ -259,43 +274,102 @@ const ExperimentTree = () => {
     setSelectedDir(dir);
   };
 
-  const { data: jobsData, isFetching: isJobsFetching } =
-    autosubmitApiV4.endpoints.getExperimentJobs.useQuery(
-      {
-        expid: routeParams.expid,
-        view: "extended",
-        date: selectedDir?.date || undefined,
-        member: selectedDir?.member || undefined,
-        section: selectedDir?.section || undefined,
-        chunk: selectedDir?.chunk || undefined,
-      },
-      {
-        skip: !selectedDir, // Skip fetching if no directory is selected
-      },
-    );
+  const {
+    data: jobsData,
+    isFetching: isJobsFetching,
+    refetch: refetchJobs,
+  } = autosubmitApiV4.endpoints.getExperimentJobs.useQuery(
+    {
+      expid: routeParams.expid,
+      view: "extended",
+      date: selectedDir?.date || undefined,
+      member: selectedDir?.member || undefined,
+      section: selectedDir?.section || undefined,
+      chunk: selectedDir?.chunk || undefined,
+    },
+    {
+      skip: !selectedDir, // Skip fetching if no directory is selected
+      pollingInterval: activeMonitor ? 5000 : 0,
+    },
+  );
 
   const [selectedJobIds, setSelectedJobIds] = useState(new Set());
   const handleJobSelectionChange = (selectedIds) => {
     setSelectedJobIds(selectedIds);
   };
 
+  const handleRefetch = () => {
+    refetchTree();
+    refetchJobs();
+  };
+
   const [showModal, setShowModal] = useState(false);
   const toggleModal = (refresh = false) => {
     setShowModal(!showModal);
     if (refresh === true) {
-      refetch();
+      handleRefetch();
     }
   };
+
+  const [filterJobsText, setFilterJobsText] = useState("");
+  const [filteredJobs, setFilteredJobs] = useState([]);
+
+  useEffect(() => {
+    fetchJobDetailCardRef.current?.refetch();
+  }, [jobsData]);
+
+  useEffect(() => {
+    setFilterJobsText("");
+  }, [selectedDir]);
+
+  useEffect(() => {
+    if (filterJobsText.trim() === "") {
+      setFilteredJobs(jobsData?.jobs || []);
+    } else {
+      const filtered = (jobsData?.jobs || []).filter((job) =>
+        job.name.toLowerCase().includes(filterJobsText.toLowerCase()),
+      );
+      setFilteredJobs(filtered);
+    }
+  }, [filterJobsText, jobsData]);
 
   return (
     <>
       <div className="w-full flex flex-col gap-4 grow">
-        <Link to={`/experiment/${routeParams.expid}/tree-legacy`}>
-          Go to Legacy Tree View
-        </Link>
+        <div className="flex items-center gap-2 justify-between">
+          <div className="flex items-center gap-2">
+            {/* TODO: Add the go to previous runs button */}
+            {/* <button className={"btn btn-primary font-bold "} title="Select Run">
+              <i className="fa-solid fa-clock-rotate-left me-2"></i> Run: Latest
+            </button> */}
+            <button
+              className={
+                "btn font-bold px-4 text-nowrap " +
+                (activeMonitor ? "btn-danger" : "btn-success")
+              }
+              onClick={toggleActiveMonitor}
+            >
+              {activeMonitor ? "STOP MONITORING" : "START MONITOR"}
+            </button>
+            <button
+              className="btn btn-success font-bold"
+              title="Refresh data"
+              onClick={handleRefetch}
+            >
+              <i className="fa-solid fa-rotate-right"></i>
+            </button>
+          </div>
+
+          <Link
+            to={`/experiment/${routeParams.expid}/tree-legacy`}
+            className="btn btn-dark font-bold px-4 text-nowrap"
+          >
+            Legacy View <i className="fa-solid fa-right-from-bracket ms-2"></i>
+          </Link>
+        </div>
 
         <div className="relative flex gap-4 grow basis-0 min-h-[70vh] lg:min-h-[50vh]">
-          {isTreeFetching ? (
+          {isTreeFetching && !activeMonitor ? (
             <div className="absolute inset-0 z-20 flex items-center justify-center bg-white">
               <div className="spinner-border dark:invert" role="status"></div>
             </div>
@@ -308,32 +382,53 @@ const ExperimentTree = () => {
                   selectedNode={selectedDir}
                 />
               </div>
-
-              <div className="w-2/3 relative flex flex-col max-h-full overflow-auto p-4 border rounded-lg custom-scrollbar bg-white">
-                {!selectedDir && (
-                  <div className="w-full h-full flex flex-col items-center justify-center gap-4">
-                    <i className="fa-regular fa-face-smile text-4xl text-primary"></i>
-                    <span className="text text-gray-500">
-                      Select a directory to view jobs
-                    </span>
-                  </div>
-                )}
-
-                {selectedDir && isJobsFetching && (
-                  <div className="absolute inset-0 z-20 flex items-center justify-center bg-white">
-                    <div
-                      className="spinner-border dark:invert"
-                      role="status"
-                    ></div>
-                  </div>
-                )}
-
-                {selectedDir && !isJobsFetching && (
-                  <QuickJobList
-                    jobs={jobsData?.jobs || []}
-                    onSelectionChange={handleJobSelectionChange}
+              <div className="w-2/3 flex flex-col h-full max-h-full gap-2">
+                <div className="flex items-center">
+                  <input
+                    className="form-input rounded grow"
+                    placeholder="Filter job..."
+                    value={filterJobsText}
+                    onChange={(e) => setFilterJobsText(e.target.value)}
                   />
-                )}
+                  {/* <button
+                    className="btn btn-dark border-dark font-bold px-4 rounded-s-none"
+                    onClick={() => setFilterJobsText(filterJobsText)}
+                  >
+                    Filter
+                  </button> */}
+                  <label className="ml-4 text-gray-500 text-sm">
+                    {filteredJobs.length} / {jobsData?.jobs?.length || 0} jobs
+                  </label>
+                </div>
+
+                <div className="relative flex flex-col max-h-full h-full overflow-auto p-4 border rounded-lg custom-scrollbar bg-white">
+                  {!selectedDir && (
+                    <div className="w-full h-full flex flex-col items-center justify-center gap-4">
+                      <i className="fa-regular fa-folder text-4xl text-primary"></i>
+                      <span className="text text-gray-500">
+                        Select a directory to view jobs
+                      </span>
+                    </div>
+                  )}
+
+                  {selectedDir && (
+                    <>
+                      {isJobsFetching && !activeMonitor ? (
+                        <div className="absolute inset-0 z-20 flex items-center justify-center bg-white">
+                          <div
+                            className="spinner-border dark:invert"
+                            role="status"
+                          ></div>
+                        </div>
+                      ) : (
+                        <QuickJobList
+                          jobs={filteredJobs}
+                          onSelectionChange={handleJobSelectionChange}
+                        />
+                      )}
+                    </>
+                  )}
+                </div>
               </div>
             </>
           )}
@@ -350,6 +445,7 @@ const ExperimentTree = () => {
           <div className="flex flex-col gap-3">
             {selectedJobIds.size === 1 && (
               <FetchJobDetailCard
+                ref={fetchJobDetailCardRef}
                 expid={routeParams.expid}
                 jobName={selectedJobIds.values().next().value}
               />
