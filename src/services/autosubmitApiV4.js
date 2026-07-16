@@ -46,10 +46,24 @@ export const autosubmitApiV4 = createApi({
             }
         }),
         getExperimentJobs: builder.query({
-            query: ({ expid }) => {
+            query: ({
+                expid,
+                view = undefined,
+                date = undefined,
+                member = undefined,
+                section = undefined,
+                chunk = undefined,
+            }) => {
                 return {
                     url: `experiments/${expid}/jobs`,
-                    method: "GET"
+                    method: "GET",
+                    params: {
+                        view,
+                        date,
+                        member,
+                        section,
+                        chunk
+                    }
                 }
             }
         }),
@@ -242,6 +256,12 @@ export const autosubmitApiV4 = createApi({
                 params: {
                     include_status: include_status
                 }
+            }),
+        }),
+        getJobsCategoryTree: builder.query({
+            query: ({ expid }) => ({
+                url: `experiments/${expid}/jobs-category-tree`,
+                method: "GET"
             }),
         }),
     }),

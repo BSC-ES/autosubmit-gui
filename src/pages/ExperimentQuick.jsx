@@ -8,8 +8,10 @@ import { cn } from "../services/utils";
 import { ChangeStatusModal } from "../common/ChangeStatusModal";
 import BottomPanel from "../common/BottomPanel";
 import FetchJobDetailCard from "../common/FetchJobDetailCard";
+import { calcRunTime } from "../common/FetchJobDetailCard";
+import { secondsToDelta } from "../components/context/utils";
 
-const QuickJobList = ({ jobs, onSelectionChange }) => {
+export const QuickJobList = ({ jobs, onSelectionChange }) => {
   if (!Array.isArray(jobs) || jobs.length === 0) {
     return (
       <div className="w-full h-full flex flex-col items-center justify-center gap-4">
@@ -62,24 +64,50 @@ const QuickJobList = ({ jobs, onSelectionChange }) => {
       }}
     >
       {jobs.map((job, index) => {
-        const isSelected = selectedJobIds.has(job.refKey);
+        const jobId = job.refKey || job.name;
+        const isSelected = selectedJobIds.has(jobId);
 
         return (
           <li
-            key={job.refKey}
+            key={jobId}
             className="flex gap-3 px-6"
-            onClick={(event) => handleJobClick(index, job.refKey, event)}
+            onClick={(event) => handleJobClick(index, jobId, event)}
           >
             <span>
               <i className="fa-regular fa-circle text-primary" />
             </span>
-            <div
-              className={cn(
-                "px-1 py-[1px] hover:bg-gray-100 rounded cursor-pointer select-none",
-                isSelected && "bg-blue-100 hover:bg-blue-200",
-              )}
-              dangerouslySetInnerHTML={{ __html: job.title }}
-            ></div>
+            {job.title ? (
+              <div
+                className={cn(
+                  "px-1 py-[1px] hover:bg-gray-100 rounded cursor-pointer select-none",
+                  isSelected && "bg-blue-100 hover:bg-blue-200",
+                )}
+                dangerouslySetInnerHTML={{ __html: job.title }}
+              ></div>
+            ) : (
+              <div
+                className={cn(
+                  "px-1 py-[1px] hover:bg-gray-100 rounded cursor-pointer select-none",
+                  isSelected && "bg-blue-100 hover:bg-blue-200",
+                )}
+              >
+                {job.name}{" "}
+                <span
+                  className={cn(
+                    "badge",
+                    `badge-status-${job.status.toLowerCase()}`,
+                  )}
+                >
+                  #{job.status}
+                </span>
+                {job?.submit && job?.start && job?.finish && (
+                  <span className="text-gray-500 ml-2">
+                    ~ ( {secondsToDelta(calcRunTime(job.submit, job.start))} ) +{" "}
+                    {secondsToDelta(calcRunTime(job.start, job.finish))}
+                  </span>
+                )}
+              </div>
+            )}
           </li>
         );
       })}
@@ -226,15 +254,9 @@ const ExperimentQuick = () => {
             <option value="QUEUING">
               QUEUING ({(data && data.queuing) || 0})
             </option>
-            <option value="READY">
-              READY
-            </option>
-            <option value="WAITING">
-              WAITING
-            </option>
-            <option value="SUBMITTED">
-              SUBMITTED
-            </option>
+            <option value="READY">READY</option>
+            <option value="WAITING">WAITING</option>
+            <option value="SUBMITTED">SUBMITTED</option>
           </select>
         </div>
         <div className="grow">

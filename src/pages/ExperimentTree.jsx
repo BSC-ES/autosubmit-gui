@@ -1,19 +1,233 @@
 import { useEffect, useMemo, useRef, useState, MutableRefObject } from "react";
-import { autosubmitApiV3 } from "../services/autosubmitApiV3";
-import { useParams } from "react-router-dom";
-import FancyTree from "../common/FancyTree";
+import { autosubmitApiV4 } from "../services/autosubmitApiV4";
+
+import { Link, useParams } from "react-router-dom";
 import useASTitle from "../hooks/useASTitle";
 import useBreadcrumb from "../hooks/useBreadcrumb";
-import JobDetailCard from "../common/JobDetailCard";
 import { useDispatch, useSelector } from "react-redux";
 import RunsModal from "../common/RunsModal";
 import TreeContentHandler from "../components/context/tree/business/treeUpdate";
 import BottomPanel from "../common/BottomPanel";
 import { ChangeStatusModal } from "../common/ChangeStatusModal";
+import { cn } from "../services/utils";
+import FetchJobDetailCard from "../common/FetchJobDetailCard";
+import { QuickJobList } from "./ExperimentQuick";
+
+/***
+ * param treeData: Array of objects representing the tree structure
+ */
+const getTreeDirs = (treeData) => {
+  const result = [];
+
+  // First level: date
+  Object.keys(treeData).forEach((date) => {
+    const dateNode = {
+      title: date,
+      key: date,
+      date: date,
+      member: "NA",
+      section: null,
+      chunk: "NA",
+      children: [],
+    };
+
+    let date_statuses_counters = {};
+    let diff_date_statuses_counters = {};
+
+    // Second level: member
+    Object.keys(treeData[date]).forEach((member) => {
+      const memberNode = {
+        title: member,
+        key: `${date}-${member}`,
+        date: date,
+        member: member,
+        section: null,
+        chunk: "NA",
+        children: [],
+      };
+
+      let member_statuses_counters = {};
+      let diff_member_statuses_counters = {};
+
+      // Third level: section
+      Object.keys(treeData[date][member]).forEach((section) => {
+        let section_statuses_counters = treeData[date][member][section];
+
+        let jobs_counter = 0;
+
+        Object.entries(section_statuses_counters).forEach(([status, count]) => {
+          jobs_counter += count;
+          if (member_statuses_counters[status]) {
+            member_statuses_counters[status] += count;
+          } else {
+            member_statuses_counters[status] = count;
+          }
+        });
+
+        // Check if the section has more than one job to determine if it's a directory
+        // If it has more than one job, we treat it as a directory; otherwise,
+        // we treat it as a leaf node that won't be displayed in the tree dir view.
+        const is_section_dir = jobs_counter > 1;
+        if (is_section_dir) {
+          const sectionNode = {
+            title: section,
+            key: `${date}-${member}-${section}`,
+            date: date,
+            member: member,
+            section: section,
+            chunk: null,
+            children: [],
+            statuses_counters: section_statuses_counters,
+            diff_statuses_counters: section_statuses_counters, // Not lower level, so we can use the same counters for diff
+          };
+
+          memberNode.children.push(sectionNode);
+        } else {
+          Object.entries(section_statuses_counters).forEach(
+            ([status, count]) => {
+              if (diff_member_statuses_counters[status]) {
+                diff_member_statuses_counters[status] += count;
+              } else {
+                diff_member_statuses_counters[status] = count;
+              }
+            },
+          );
+        }
+      });
+
+      memberNode.statuses_counters = member_statuses_counters;
+      memberNode.diff_statuses_counters = diff_member_statuses_counters;
+
+      // Update date level statuses counters
+      Object.entries(member_statuses_counters).forEach(([status, count]) => {
+        if (date_statuses_counters[status]) {
+          date_statuses_counters[status] += count;
+        } else {
+          date_statuses_counters[status] = count;
+        }
+      });
+
+      if (member === "NA") {
+        // Forward the children of the memberNode to the dateNode if member is "NA"
+        dateNode.children.push(...memberNode.children);
+      } else {
+        dateNode.children.push(memberNode);
+      }
+    });
+
+    dateNode.statuses_counters = date_statuses_counters;
+
+    // Subtract the statuses counters of the children
+    dateNode.diff_statuses_counters = date_statuses_counters;
+    Object.keys(dateNode.children).forEach((child) => {
+      const childNode = dateNode.children[child];
+      Object.entries(childNode.statuses_counters).forEach(([status, count]) => {
+        if (dateNode.diff_statuses_counters[status]) {
+          dateNode.diff_statuses_counters[status] -= count;
+        }
+      });
+    });
+
+    if (date === "NA") dateNode.title = "Keys";
+
+    result.push(dateNode);
+  });
+
+  console.log(JSON.stringify(result, null, 2));
+  return result;
+};
+
+const HierarchyTree = ({ treeDirs, onNodeSelect, selectedNode }) => {
+  const handleNodeSelect = (node) => {
+    if (onNodeSelect) {
+      onNodeSelect(node);
+    }
+  };
+
+  return (
+    <ul
+      className="text-sm flex flex-col gap-[0.35rem] py-1 font-thin"
+      style={{
+        fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
+        color: "#333",
+      }}
+    >
+      {treeDirs &&
+        treeDirs.length > 0 &&
+        treeDirs.map((treeDir, index) => {
+          const counter = Object.values(
+            treeDir.diff_statuses_counters || {},
+          ).reduce((acc, count) => acc + count, 0);
+          const isSelected = selectedNode && selectedNode.key === treeDir.key;
+
+          return (
+            <li key={index}>
+              <div
+                className="flex items-center"
+                onClick={() => handleNodeSelect(treeDir)}
+              >
+                <span className="relative mr-4">
+                  <i className="fa-solid fa-folder" />
+                  {counter > 0 && (
+                    <span className="absolute -top-1 -right-2 text-[0.6rem] bg-gray-400 text-white rounded-full aspect-square h-[0.8rem] w-[0.8rem] flex items-center justify-center">
+                      {counter}
+                    </span>
+                  )}
+                </span>
+
+                <span
+                  className={cn(
+                    "flex items-center gap-2 px-1 py-[1px] hover:bg-gray-100 rounded cursor-pointer select-none",
+                    isSelected && "bg-blue-100 hover:bg-blue-200",
+                  )}
+                >
+                  <span>{treeDir.title}</span>
+
+                  <span className="flex items-center gap-1">
+                    {counter > 0 && (
+                      <span className="badge badge-status-completed text-[0.7rem] text-nowrap">
+                        {treeDir.diff_statuses_counters?.COMPLETED || 0}/
+                        {counter} COMPLETED
+                      </span>
+                    )}
+                    {treeDir.diff_statuses_counters &&
+                      Object.entries(treeDir.diff_statuses_counters).map(
+                        ([status, count]) => {
+                          if (
+                            count > 0 &&
+                            ["RUNNING", "QUEUING", "FAILED"].includes(status)
+                          ) {
+                            return (
+                              <span
+                                className={`badge badge-status-${status.toLowerCase()} text-[0.7rem] text-nowrap`}
+                              >
+                                {count} {status}
+                              </span>
+                            );
+                          }
+                        },
+                      )}
+                  </span>
+                </span>
+              </div>
+              {treeDir.children && treeDir.children.length > 0 && (
+                <div className="ml-6">
+                  <HierarchyTree
+                    treeDirs={treeDir.children}
+                    onNodeSelect={handleNodeSelect}
+                    selectedNode={selectedNode}
+                  />
+                </div>
+              )}
+            </li>
+          );
+        })}
+    </ul>
+  );
+};
 
 const ExperimentTree = () => {
   const dispatch = useDispatch();
-  const authState = useSelector((state) => state.auth);
   const routeParams = useParams();
   useASTitle(`Experiment ${routeParams.expid} tree`);
   useBreadcrumb([
@@ -27,232 +241,107 @@ const ExperimentTree = () => {
     },
   ]);
 
-  /** @type {MutableRefObject<Fancytree.Fancytree>} */
-  const tree = useRef();
-  const filterRef = useRef();
+  const fetchJobDetailCardRef = useRef(null);
 
+  const [selectedDir, setSelectedDir] = useState(null);
   const [activeMonitor, setActiveMonitor] = useState(false);
-
-  const [jobs, setJobs] = useState([]);
-  const [selectedJobIds, setSelectedJobIds] = useState([]);
-  const selectedJob = useMemo(() => {
-    if (selectedJobIds.length === 1) {
-      return jobs.find((rawNode) => rawNode.label === selectedJobIds[0]);
-    }
-    return undefined;
-  }, [jobs, selectedJobIds]);
-
-  const [showRunsM, setShowRunsM] = useState(false);
-  const [selectedRun, setSelectedRun] = useState({
-    run_id: null,
-    created: null,
-  });
-
-  const [showModal, setShowModal] = useState(false);
-  const toggleModal = ( refresh = false ) => {
-    setShowModal(!showModal);
-    if (refresh === true) {
-      refetch();
-    }
-  };
-
-  const { data, isFetching, refetch, isError } =
-    autosubmitApiV3.endpoints.getExperimentTreeView.useQuery({
-      expid: routeParams.expid,
-      runId: selectedRun?.run_id,
-    });
-
-  const { data: pklData } = autosubmitApiV3.endpoints.getPklTreeInfo.useQuery(
-    {
-      expid: routeParams.expid,
-    },
-    {
-      skip: !activeMonitor || selectedRun?.run_id,
-      pollingInterval: 5 * 1000,
-    }
-  );
-
-  const assignKeysToTree = (tree) => {
-    if (Array.isArray(tree)) {
-      // Create a deep copy and assign keys
-      return tree.map((node) => {
-        const newNode = { ...node };
-        newNode.key = `${node.refKey}-${Math.random().toString(36).slice(2, 11)}`;
-        if (Array.isArray(newNode.children)) {
-          newNode.children = assignKeysToTree(newNode.children);
-        }
-        return newNode;
-      });
-    }
-  };
-
-  const dataTree = useMemo(() => assignKeysToTree(data?.tree || []), [data]);
-
-  useEffect(() => {
-    // Unmount component
-    return () => {
-      const promise = dispatch(
-        autosubmitApiV3.endpoints.showdownRoute.initiate(
-          {
-            route: "tree",
-            loggedUser: authState.user_id,
-            expid: routeParams.expid,
-          },
-          { forceRefetch: true }
-        )
-      );
-      promise.unsubscribe();
-    };
-    // eslint-disable-next-line
-  }, []);
-
-  useEffect(() => {
-    const newJobs = data?.jobs || [];
-    setJobs(newJobs);
-  }, [data]);
-
-  useEffect(() => {
-    let treeUpdater = new TreeContentHandler(
-      jobs,
-      data?.reference || {},
-      pklData,
-      false
-    );
-
-    if (tree.current && treeUpdater.validate()) {
-      const processResult = treeUpdater.processChanges(tree.current);
-      if (Array.isArray(processResult?.currentJobs)) {
-        setJobs(processResult.currentJobs);
-      }
-    }
-  }, [pklData]);
 
   const toggleActiveMonitor = () => {
     setActiveMonitor(!activeMonitor);
   };
 
-  const handleFilter = (e) => {
-    e.preventDefault();
-    if (tree.current) {
-      if (filterRef.current.value) {
-        tree.current.filterNodes(filterRef.current.value);
-      } else {
-        tree.current.clearFilter();
-      }
+  const {
+    data: jobsCategoryTreeData,
+    isFetching: isTreeFetching,
+    refetch: refetchTree,
+  } = autosubmitApiV4.endpoints.getJobsCategoryTree.useQuery(
+    {
+      expid: routeParams.expid,
+    },
+    {
+      pollingInterval: activeMonitor ? 5000 : 0,
+    },
+  );
+
+  const tree = useMemo(() => {
+    if (jobsCategoryTreeData && jobsCategoryTreeData.category_tree)
+      return getTreeDirs(jobsCategoryTreeData.category_tree);
+
+    return [];
+  }, [jobsCategoryTreeData]);
+
+  const handleDirSelect = (dir) => {
+    setSelectedDir(dir);
+  };
+
+  const {
+    data: jobsData,
+    isFetching: isJobsFetching,
+    refetch: refetchJobs,
+  } = autosubmitApiV4.endpoints.getExperimentJobs.useQuery(
+    {
+      expid: routeParams.expid,
+      view: "extended",
+      date: selectedDir?.date || undefined,
+      member: selectedDir?.member || undefined,
+      section: selectedDir?.section || undefined,
+      chunk: selectedDir?.chunk || undefined,
+    },
+    {
+      skip: !selectedDir, // Skip fetching if no directory is selected
+      pollingInterval: activeMonitor ? 5000 : 0,
+    },
+  );
+
+  const [selectedJobIds, setSelectedJobIds] = useState(new Set());
+  const handleJobSelectionChange = (selectedIds) => {
+    setSelectedJobIds(selectedIds);
+  };
+
+  const handleRefetch = () => {
+    refetchTree();
+    refetchJobs();
+  };
+
+  const [showModal, setShowModal] = useState(false);
+  const toggleModal = (refresh = false) => {
+    setShowModal(!showModal);
+    if (refresh === true) {
+      handleRefetch();
     }
   };
 
-  const handleClear = () => {
-    filterRef.current.value = "";
-    if (tree.current) tree.current.clearFilter();
-  };
+  const [filterJobsText, setFilterJobsText] = useState("");
+  const [filteredJobs, setFilteredJobs] = useState([]);
 
-  const handleSelectNodes = (_selectedNodes) => {
-    if (Array.isArray(_selectedNodes)) {
-      const newSelectedIds = _selectedNodes
-        .filter((node) => node?.folder === undefined)
-        .map((node) => node?.refKey);
-      setSelectedJobIds(newSelectedIds);
+  useEffect(() => {
+    fetchJobDetailCardRef.current?.refetch();
+  }, [jobsData]);
+
+  useEffect(() => {
+    setFilterJobsText("");
+  }, [selectedDir]);
+
+  useEffect(() => {
+    if (filterJobsText.trim() === "") {
+      setFilteredJobs(jobsData?.jobs || []);
     } else {
-      setSelectedJobIds([]);
+      const filtered = (jobsData?.jobs || []).filter((job) =>
+        job.name.toLowerCase().includes(filterJobsText.toLowerCase()),
+      );
+      setFilteredJobs(filtered);
     }
-  };
-
-  const handleExpand = () => {
-    if (tree.current) tree.current.expandAll();
-  };
-  const handleCollapse = () => {
-    if (tree.current) tree.current.expandAll(false);
-  };
-  const handleDefaultExpand = () => {
-    if (tree.current) {
-      tree.current.expandAll(false, {
-        noAnimation: true,
-        noEvents: true,
-      });
-      tree.current.getRootNode().children.forEach((node) => {
-        node.setExpanded();
-      });
-    }
-  };
-
-  const handleRunSelect = (item) => {
-    handleClear();
-    setSelectedRun(item);
-    setShowRunsM(false);
-  };
-
-  const handleResetRun = () => {
-    handleRunSelect({
-      run_id: null,
-      created: null,
-    });
-  };
-
-  const toggleShowRunsM = () => {
-    setShowRunsM(!showRunsM);
-  };
+  }, [filterJobsText, jobsData]);
 
   return (
     <>
-      <RunsModal
-        show={showRunsM}
-        onHide={toggleShowRunsM}
-        expid={routeParams.expid}
-        onRunSelect={handleRunSelect}
-      />
       <div className="w-full flex flex-col gap-4 grow">
-        {(isError || data?.error) && (
-          <span className="alert alert-danger rounded-2xl">
-            <i className="fa-solid fa-triangle-exclamation me-2"></i>{" "}
-            {data?.error_message || "Unknown error"}
-          </span>
-        )}
-
-        <div className="flex gap-2 items-center flex-wrap">
-          <div>
-            <button
-              className={
-                "btn btn-primary font-bold " +
-                (selectedRun?.run_id && " rounded-e-none")
-              }
-              title="Select Run"
-              onClick={toggleShowRunsM}
-            >
-              <i className="fa-solid fa-clock-rotate-left me-2"></i> Run:{" "}
-              {(selectedRun.run_id && selectedRun.created) || "Latest"}
-            </button>
-            {selectedRun?.run_id && (
-              <button
-                className="btn btn-light text-primary rounded-s-none border"
-                title="Reset to latest"
-                onClick={handleResetRun}
-              >
-                <i className="fa-solid fa-xmark"></i>
-              </button>
-            )}
-          </div>
-          <form className="grow flex flex-wrap" onSubmit={handleFilter}>
-            <input
-              ref={filterRef}
-              className="form-input rounded-e-none grow"
-              placeholder="Filter job..."
-            />
-            <button
-              type="submit"
-              className="btn btn-dark border-dark font-bold px-4 rounded-s-none rounded-e-none"
-            >
-              Filter
-            </button>
-            <button
-              type="button"
-              className="btn btn-light border font-bold px-4 rounded-s-none"
-              onClick={handleClear}
-            >
-              Clear
-            </button>
-          </form>
-          {!selectedRun?.run_id && (
+        <div className="flex items-center gap-2 justify-between">
+          <div className="flex items-center gap-2">
+            {/* TODO: Add the go to previous runs button */}
+            {/* <button className={"btn btn-primary font-bold "} title="Select Run">
+              <i className="fa-solid fa-clock-rotate-left me-2"></i> Run: Latest
+            </button> */}
             <button
               className={
                 "btn font-bold px-4 text-nowrap " +
@@ -262,76 +351,106 @@ const ExperimentTree = () => {
             >
               {activeMonitor ? "STOP MONITORING" : "START MONITOR"}
             </button>
-          )}
-          <button
-            className="btn btn-success font-bold"
-            title="Refresh data"
-            onClick={() => {
-              refetch();
-            }}
-          >
-            <i className="fa-solid fa-rotate-right"></i>
-          </button>
-        </div>
-
-        <div className="flex flex-wrap gap-2 items-center justify-between">
-          <span className="mx-2 text-sm">
-            Total #Jobs: {data?.total} | Chunk unit:{" "}
-            {data?.reference?.chunk_unit} | Chunk size:{" "}
-            {data?.reference?.chunk_size}
-          </span>
-          <div className="flex gap-2">
             <button
-              className="btn btn-success font-bold px-4 text-sm"
-              onClick={handleDefaultExpand}
+              className="btn btn-success font-bold"
+              title="Refresh data"
+              onClick={handleRefetch}
             >
-              Default Expand
-            </button>
-            <button
-              className="btn btn-primary font-bold px-4 text-sm"
-              onClick={handleExpand}
-            >
-              Expand All +
-            </button>
-            <button
-              className="btn btn-secondary font-bold px-4 text-sm"
-              onClick={handleCollapse}
-            >
-              Collapse All -
+              <i className="fa-solid fa-rotate-right"></i>
             </button>
           </div>
+
+          <Link
+            to={`/experiment/${routeParams.expid}/tree-legacy`}
+            className="btn btn-dark font-bold px-4 text-nowrap"
+          >
+            Legacy View <i className="fa-solid fa-right-from-bracket ms-2"></i>
+          </Link>
         </div>
 
-        <div className="relative grow basis-0 overflow-auto min-h-[70vh] lg:min-h-[50vh] w-full border p-4 rounded-lg custom-scrollbar bg-white">
-          {isFetching && (
+        <div className="relative flex gap-4 grow basis-0 min-h-[70vh] lg:min-h-[50vh]">
+          {isTreeFetching && !activeMonitor ? (
             <div className="absolute inset-0 z-20 flex items-center justify-center bg-white">
               <div className="spinner-border dark:invert" role="status"></div>
             </div>
+          ) : (
+            <>
+              <div className="w-1/3 relative flex flex-col max-h-full overflow-auto py-4 px-6 border rounded-lg custom-scrollbar bg-white">
+                <HierarchyTree
+                  treeDirs={tree}
+                  onNodeSelect={handleDirSelect}
+                  selectedNode={selectedDir}
+                />
+              </div>
+              <div className="w-2/3 flex flex-col h-full max-h-full gap-2">
+                <div className="flex items-center">
+                  <input
+                    className="form-input rounded grow"
+                    placeholder="Filter job..."
+                    value={filterJobsText}
+                    onChange={(e) => setFilterJobsText(e.target.value)}
+                  />
+                  {/* <button
+                    className="btn btn-dark border-dark font-bold px-4 rounded-s-none"
+                    onClick={() => setFilterJobsText(filterJobsText)}
+                  >
+                    Filter
+                  </button> */}
+                  <label className="ml-4 text-gray-500 text-sm">
+                    {filteredJobs.length} / {jobsData?.jobs?.length || 0} jobs
+                  </label>
+                </div>
+
+                <div className="relative flex flex-col max-h-full h-full overflow-auto p-4 border rounded-lg custom-scrollbar bg-white">
+                  {!selectedDir && (
+                    <div className="w-full h-full flex flex-col items-center justify-center gap-4">
+                      <i className="fa-regular fa-folder text-4xl text-primary"></i>
+                      <span className="text text-gray-500">
+                        Select a directory to view jobs
+                      </span>
+                    </div>
+                  )}
+
+                  {selectedDir && (
+                    <>
+                      {isJobsFetching && !activeMonitor ? (
+                        <div className="absolute inset-0 z-20 flex items-center justify-center bg-white">
+                          <div
+                            className="spinner-border dark:invert"
+                            role="status"
+                          ></div>
+                        </div>
+                      ) : (
+                        <QuickJobList
+                          jobs={filteredJobs}
+                          onSelectionChange={handleJobSelectionChange}
+                        />
+                      )}
+                    </>
+                  )}
+                </div>
+              </div>
+            </>
           )}
-          <FancyTree
-            tree={(_tree) => {
-              tree.current = _tree;
-            }}
-            source={dataTree}
-            onSelectNodes={handleSelectNodes}
-          />
         </div>
       </div>
-
-      {selectedJobIds.length > 0 && (
+      {selectedJobIds.size > 0 && (
         <BottomPanel
           title={
-            selectedJobIds.length === 1
-              ? selectedJobIds[0]
-              : `${selectedJobIds.length} jobs selected`
+            selectedJobIds.size === 1
+              ? selectedJobIds.values().next().value
+              : `${selectedJobIds.size} jobs selected`
           }
         >
           <div className="flex flex-col gap-3">
-            <JobDetailCard
-              expid={routeParams.expid}
-              jobData={selectedJob}
-              jobs={jobs}
-            />
+            {selectedJobIds.size === 1 && (
+              <FetchJobDetailCard
+                ref={fetchJobDetailCardRef}
+                expid={routeParams.expid}
+                jobName={selectedJobIds.values().next().value}
+              />
+            )}
+
             <div className="flex items-center justify-center gap-3">
               <div className="font-semibold">Actions:</div>
               <button className="btn btn-primary" onClick={toggleModal}>
@@ -339,7 +458,7 @@ const ExperimentTree = () => {
               </button>
             </div>
             <ChangeStatusModal
-              selectedJobs={selectedJobIds}
+              selectedJobs={Array.from(selectedJobIds)}
               show={showModal}
               onHide={toggleModal}
               expid={routeParams.expid}
