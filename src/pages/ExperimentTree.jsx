@@ -10,6 +10,8 @@ import RunsModal from "../common/RunsModal";
 import TreeContentHandler from "../components/context/tree/business/treeUpdate";
 import BottomPanel from "../common/BottomPanel";
 import { ChangeStatusModal } from "../common/ChangeStatusModal";
+import ExperimentEtaPanel from "../common/ExperimentEtaPanel";
+import { useWindowSize } from "@uidotdev/usehooks";
 
 const ExperimentTree = () => {
   const dispatch = useDispatch();
@@ -193,6 +195,18 @@ const ExperimentTree = () => {
     setShowRunsM(!showRunsM);
   };
 
+  const isMobile = useWindowSize().width < 1024;
+
+  const etaPanel = activeMonitor ? (
+    <ExperimentEtaPanel
+      activeMonitor={activeMonitor}
+      expid={routeParams.expid}
+      pklData={pklData}
+      jobs={jobs}
+      isMobile={isMobile}
+    />
+  ) : null;
+
   return (
     <>
       <RunsModal
@@ -302,21 +316,28 @@ const ExperimentTree = () => {
           </div>
         </div>
 
-        <div className="relative grow basis-0 overflow-auto min-h-[70vh] lg:min-h-[50vh] w-full border p-4 rounded-lg custom-scrollbar bg-white">
-          {isFetching && (
-            <div className="absolute inset-0 z-20 flex items-center justify-center bg-white">
-              <div className="spinner-border dark:invert" role="status"></div>
-            </div>
-          )}
-          <FancyTree
-            tree={(_tree) => {
-              tree.current = _tree;
-            }}
-            source={dataTree}
-            onSelectNodes={handleSelectNodes}
-          />
+        <div className="relative grow basis-0 min-h-[70vh] lg:min-h-[50vh] w-full">
+          {!isMobile && etaPanel}
+
+          <div className="relative h-full overflow-auto border p-4 rounded-lg custom-scrollbar bg-white">
+            {isFetching && (
+              <div className="absolute inset-0 z-20 flex items-center justify-center bg-white">
+                <div className="spinner-border dark:invert" role="status"></div>
+              </div>
+            )}
+
+            <FancyTree
+              tree={(_tree) => {
+                tree.current = _tree;
+              }}
+              source={dataTree}
+              onSelectNodes={handleSelectNodes}
+            />
+          </div>
         </div>
       </div>
+
+      {isMobile && etaPanel}
 
       {selectedJobIds.length > 0 && (
         <BottomPanel

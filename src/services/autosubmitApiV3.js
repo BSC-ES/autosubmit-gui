@@ -42,6 +42,10 @@ export const autosubmitApiV3 = createApi({
                 return args
             }
         }),
+        // FIXME: Should not be used until issue API#282 is resolved
+        getExperimentRunningStatus: builder.query({
+            query: (expid) => `ifrun/${expid}`
+        }),
         getExperimentRunLog: builder.query({
             query: (expid) => `exprun/${expid}`
         }),

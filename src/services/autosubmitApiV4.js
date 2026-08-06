@@ -244,6 +244,15 @@ export const autosubmitApiV4 = createApi({
                 }
             }),
         }),
+        getExperimentEta: builder.query({
+            query: ({ expid, section = "SIM" }) => ({
+                url: `experiments/${expid}/eta`,
+                method: "GET",
+                params: {
+                    section: section
+                },
+            }),
+        }),
     }),
 })
 
