@@ -10,6 +10,8 @@ import useBreadcrumb from "../hooks/useBreadcrumb";
 import BottomPanel from "../common/BottomPanel";
 import { ChangeStatusModal } from "../common/ChangeStatusModal";
 import { STATUS_STYLES } from "../services/utils";
+import ExperimentEtaPanel from "../common/ExperimentEtaPanel";
+import { useWindowSize } from "@uidotdev/usehooks";
 
 const ExperimentGraph = () => {
   const dispatch = useDispatch();
@@ -219,6 +221,18 @@ const ExperimentGraph = () => {
     cy.current.fit(vals);
   };
 
+  const isMobile = useWindowSize().width < 1024;
+
+  const etaPanel = activeMonitor ? (
+    <ExperimentEtaPanel
+      activeMonitor={activeMonitor}
+      expid={routeParams.expid}
+      pklData={pklData}
+      jobs={jobs}
+      isMobile={isMobile}
+    />
+  ) : null;
+
   return (
     <div className="w-full min-w-0 flex flex-col gap-4 grow">
       {(isError || data?.error) && (
@@ -306,6 +320,8 @@ const ExperimentGraph = () => {
       </div>
 
       <div className="flex grow border relative">
+        {!isMobile && etaPanel}
+
         {isFetching && (
           <div className="absolute inset-0 z-20 flex items-center justify-center bg-white">
             <div className="spinner-border dark:invert" role="status"></div>
@@ -319,6 +335,8 @@ const ExperimentGraph = () => {
           onSelectNodes={handleOnSelectNodes}
         />
       </div>
+
+      {isMobile && etaPanel}
 
       {selectedJobIds.length > 0 && (
         <BottomPanel
