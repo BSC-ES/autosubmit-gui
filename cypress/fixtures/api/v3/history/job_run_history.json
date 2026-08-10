@@ -1,0 +1,53 @@
+{
+    "error": false,
+    "error_message": "",
+    "history": [
+        {
+            "counter": 1,
+            "created": "2026-08-10T12:50:32+02:00",
+            "submit": "2026-08-10T12:50:22+02:00",
+            "start": "2026-08-10T12:50:22+02:00",
+            "finish": "2026-08-10T12:50:27+02:00",
+            "queue_time": "0:00:00",
+            "run_time": "0:00:05",
+            "ncpus": 0,
+            "wallclock": "24:00",
+            "qos": "debug",
+            "platform": "LOCAL",
+            "job_id": 182088,
+            "nodes": 0,
+            "energy": 0,
+            "status": "COMPLETED",
+            "ASYPD": null,
+            "SYPD": null,
+            "run_id": 2,
+            "run_created": "2026-08-10T12:50:19+02:00",
+            "out": "a06l_LOCAL_SETUP.20260810125022.out",
+            "err": "a06l_LOCAL_SETUP.20260810125022.err"
+        },
+        {
+            "counter": 0,
+            "created": "2026-08-10T12:40:11+0200",
+            "submit": "2026-08-10T12:40:01+0200",
+            "start": "2026-08-10T12:40:01+02:00",
+            "finish": "2026-08-10T12:40:06+02:00",
+            "queue_time": "0:00:00",
+            "run_time": "0:00:05",
+            "ncpus": 0,
+            "wallclock": "24:00",
+            "qos": "debug",
+            "platform": "LOCAL",
+            "job_id": 172292,
+            "nodes": 0,
+            "energy": 0,
+            "status": "COMPLETED",
+            "ASYPD": null,
+            "SYPD": null,
+            "run_id": 1,
+            "run_created": "2026-08-10T12:39:38+0200",
+            "out": "a06l_LOCAL_SETUP.20260810124001.out",
+            "err": "a06l_LOCAL_SETUP.20260810124001.err"
+        }
+    ],
+    "path_to_logs": "/home/pgoitia/autosubmit/a06l/tmp/LOG_a06l"
+}

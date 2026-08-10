@@ -1,0 +1,368 @@
+{
+    "tree": [
+        {
+            "title": "a06l_20000101 <span class='badge' style='background-color:yellow'> 5 / 5 COMPLETED </span>",
+            "folder": true,
+            "refKey": "a06l_20000101 <span class='badge' style='background-color:yellow'> 5 / 5 COMPLETED </span>",
+            "data": "Empty",
+            "expanded": true,
+            "children": [
+                {
+                    "title": "a06l_20000101_fc0 <span class='badge' style='background-color:yellow'> 5 / 5 COMPLETED</span> <span class='badge' style='background-color:#4dffa6'>&#10004;</span>",
+                    "folder": true,
+                    "refKey": "a06l_20000101_fc0",
+                    "data": "Empty",
+                    "expanded": false,
+                    "children": [
+                        {
+                            "title": "a06l_20000101_fc0_1_INI <span class='badge' style='background-color: yellow; color:#000;'>#COMPLETED</span> ~ ( 0:00:00 ) + 0:00:05",
+                            "refKey": "a06l_20000101_fc0_1_INI",
+                            "data": "Empty",
+                            "children": []
+                        },
+                        {
+                            "title": "a06l_20000101_fc0_1_SIM <span class='badge' style='background-color: yellow; color:#000;'>#COMPLETED</span> ~ ( 0:00:00 ) + 0:00:05",
+                            "refKey": "a06l_20000101_fc0_1_SIM",
+                            "data": "Empty",
+                            "children": []
+                        },
+                        {
+                            "title": "a06l_20000101_fc0_1_POST <span class='badge' style='background-color: yellow; color:#000;'>#COMPLETED</span> ~ ( 0:00:00 ) + 0:00:05",
+                            "refKey": "a06l_20000101_fc0_1_POST",
+                            "data": "Empty",
+                            "children": []
+                        },
+                        {
+                            "title": "a06l_20000101_fc0_1_CLEAN <span class='badge' style='background-color: yellow; color:#000;'>#COMPLETED</span> ~ ( 0:00:00 ) + 0:00:05",
+                            "refKey": "a06l_20000101_fc0_1_CLEAN",
+                            "data": "Empty",
+                            "children": []
+                        },
+                        {
+                            "title": "a06l_20000101_fc0_1_TRANSFER <span class='badge' style='background-color: yellow; color:#000;'>#COMPLETED</span> ~ ( 0:00:00 ) + 0:00:05 <span class='badge' style='background-color:#99ff66'>TARGET</span>",
+                            "refKey": "a06l_20000101_fc0_1_TRANSFER",
+                            "data": "Empty",
+                            "children": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "Keys",
+            "folder": true,
+            "refKey": "Keys",
+            "data": "Empty",
+            "expanded": true,
+            "children": [
+                {
+                    "title": "a06l_LOCAL_SETUP <span class='badge' style='background-color: yellow; color:#000;'>#COMPLETED</span> ~ ( 0:00:00 ) + 0:00:05 <span class='badge' style='background-color:#80d4ff'>SOURCE</span>",
+                    "refKey": "a06l_LOCAL_SETUP",
+                    "data": "Empty",
+                    "children": []
+                }
+            ]
+        }
+    ],
+    "jobs": [
+        {
+            "id": "a06l_LOCAL_SETUP",
+            "internal_id": "a06l_LOCAL_SETUP",
+            "label": "a06l_LOCAL_SETUP",
+            "status": "COMPLETED",
+            "status_code": 5,
+            "platform_name": "LOCAL",
+            "chunk": null,
+            "chunk_size": 1,
+            "chunk_unit": "month",
+            "member": null,
+            "title": "a06l_LOCAL_SETUP <span class='badge' style='background-color: yellow; color:#000;'>#COMPLETED</span> ~ ( 0:00:00 ) + 0:00:05 <span class='badge' style='background-color:#80d4ff'>SOURCE</span>",
+            "date": null,
+            "date_plus": null,
+            "split": null,
+            "splits": null,
+            "SYPD": null,
+            "ASYPD": null,
+            "minutes_queue": 0,
+            "minutes": 5,
+            "submit": "2026-08-10T12:50:22+02:00",
+            "start": "2026-08-10T12:50:22+02:00",
+            "finish": "2026-08-10T12:50:27+02:00",
+            "section": "LOCAL_SETUP",
+            "queue": "None",
+            "processors": 1,
+            "wallclock": "",
+            "wrapper": null,
+            "wrapper_code": null,
+            "children": 1,
+            "children_list": [
+                "a06l_20000101_fc0_1_INI"
+            ],
+            "parents": 0,
+            "parent_list": [],
+            "out": "/home/pgoitia/autosubmit/a06l/tmp/LOG_a06l/a06l_LOCAL_SETUP.20260810125022.out",
+            "err": "/home/pgoitia/autosubmit/a06l/tmp/LOG_a06l/a06l_LOCAL_SETUP.20260810125022.err",
+            "tree_parents": [],
+            "custom_directives": null,
+            "rm_id": 182088,
+            "status_color": "yellow",
+            "workflow_commit": ""
+        },
+        {
+            "id": "a06l_20000101_fc0_1_INI",
+            "internal_id": "a06l_20000101_fc0_1_INI",
+            "label": "a06l_20000101_fc0_1_INI",
+            "status": "COMPLETED",
+            "status_code": 5,
+            "platform_name": "LOCAL",
+            "chunk": 1,
+            "chunk_size": 1,
+            "chunk_unit": "month",
+            "member": "fc0",
+            "title": "a06l_20000101_fc0_1_INI <span class='badge' style='background-color: yellow; color:#000;'>#COMPLETED</span> ~ ( 0:00:00 ) + 0:00:05",
+            "date": "2000 01 01",
+            "date_plus": "2000 02 01",
+            "split": null,
+            "splits": null,
+            "SYPD": 1440.0,
+            "ASYPD": 720.0,
+            "minutes_queue": 0,
+            "minutes": 5,
+            "submit": "2026-08-10T12:50:42+02:00",
+            "start": "2026-08-10T12:50:42+02:00",
+            "finish": "2026-08-10T12:50:47+02:00",
+            "section": "INI",
+            "queue": "None",
+            "processors": 1,
+            "wallclock": "00:05",
+            "wrapper": null,
+            "wrapper_code": null,
+            "children": 1,
+            "children_list": [
+                "a06l_20000101_fc0_1_SIM"
+            ],
+            "parents": 1,
+            "parent_list": [
+                "a06l_LOCAL_SETUP"
+            ],
+            "out": "/home/pgoitia/autosubmit/a06l/tmp/LOG_a06l/a06l_20000101_fc0_1_INI.20260810125042.out",
+            "err": "/home/pgoitia/autosubmit/a06l/tmp/LOG_a06l/a06l_20000101_fc0_1_INI.20260810125042.err",
+            "tree_parents": [
+                "a06l_20000101_fc0"
+            ],
+            "custom_directives": null,
+            "rm_id": 182443,
+            "status_color": "yellow",
+            "workflow_commit": ""
+        },
+        {
+            "id": "a06l_20000101_fc0_1_SIM",
+            "internal_id": "a06l_20000101_fc0_1_SIM",
+            "label": "a06l_20000101_fc0_1_SIM",
+            "status": "COMPLETED",
+            "status_code": 5,
+            "platform_name": "LOCAL",
+            "chunk": 1,
+            "chunk_size": 1,
+            "chunk_unit": "month",
+            "member": "fc0",
+            "title": "a06l_20000101_fc0_1_SIM <span class='badge' style='background-color: yellow; color:#000;'>#COMPLETED</span> ~ ( 0:00:00 ) + 0:00:05",
+            "date": "2000 01 01",
+            "date_plus": "2000 02 01",
+            "split": null,
+            "splits": null,
+            "SYPD": 1440.0,
+            "ASYPD": 720.0,
+            "minutes_queue": 0,
+            "minutes": 5,
+            "submit": "2026-08-10T12:51:02+02:00",
+            "start": "2026-08-10T12:51:02+02:00",
+            "finish": "2026-08-10T12:51:07+02:00",
+            "section": "SIM",
+            "queue": "None",
+            "processors": 1,
+            "wallclock": "00:05",
+            "wrapper": null,
+            "wrapper_code": null,
+            "children": 1,
+            "children_list": [
+                "a06l_20000101_fc0_1_POST"
+            ],
+            "parents": 1,
+            "parent_list": [
+                "a06l_20000101_fc0_1_INI"
+            ],
+            "out": "/home/pgoitia/autosubmit/a06l/tmp/LOG_a06l/a06l_20000101_fc0_1_SIM.20260810125102.out",
+            "err": "/home/pgoitia/autosubmit/a06l/tmp/LOG_a06l/a06l_20000101_fc0_1_SIM.20260810125102.err",
+            "tree_parents": [
+                "a06l_20000101_fc0"
+            ],
+            "custom_directives": null,
+            "rm_id": 182783,
+            "status_color": "yellow",
+            "workflow_commit": ""
+        },
+        {
+            "id": "a06l_20000101_fc0_1_POST",
+            "internal_id": "a06l_20000101_fc0_1_POST",
+            "label": "a06l_20000101_fc0_1_POST",
+            "status": "COMPLETED",
+            "status_code": 5,
+            "platform_name": "LOCAL",
+            "chunk": 1,
+            "chunk_size": 1,
+            "chunk_unit": "month",
+            "member": "fc0",
+            "title": "a06l_20000101_fc0_1_POST <span class='badge' style='background-color: yellow; color:#000;'>#COMPLETED</span> ~ ( 0:00:00 ) + 0:00:05",
+            "date": "2000 01 01",
+            "date_plus": "2000 02 01",
+            "split": null,
+            "splits": null,
+            "SYPD": 1440.0,
+            "ASYPD": 720.0,
+            "minutes_queue": 0,
+            "minutes": 5,
+            "submit": "2026-08-10T12:51:23+02:00",
+            "start": "2026-08-10T12:51:23+02:00",
+            "finish": "2026-08-10T12:51:28+02:00",
+            "section": "POST",
+            "queue": "None",
+            "processors": 1,
+            "wallclock": "00:05",
+            "wrapper": null,
+            "wrapper_code": null,
+            "children": 1,
+            "children_list": [
+                "a06l_20000101_fc0_1_CLEAN"
+            ],
+            "parents": 1,
+            "parent_list": [
+                "a06l_20000101_fc0_1_SIM"
+            ],
+            "out": "/home/pgoitia/autosubmit/a06l/tmp/LOG_a06l/a06l_20000101_fc0_1_POST.20260810125123.out",
+            "err": "/home/pgoitia/autosubmit/a06l/tmp/LOG_a06l/a06l_20000101_fc0_1_POST.20260810125123.err",
+            "tree_parents": [
+                "a06l_20000101_fc0"
+            ],
+            "custom_directives": null,
+            "rm_id": 183086,
+            "status_color": "yellow",
+            "workflow_commit": ""
+        },
+        {
+            "id": "a06l_20000101_fc0_1_CLEAN",
+            "internal_id": "a06l_20000101_fc0_1_CLEAN",
+            "label": "a06l_20000101_fc0_1_CLEAN",
+            "status": "COMPLETED",
+            "status_code": 5,
+            "platform_name": "LOCAL",
+            "chunk": 1,
+            "chunk_size": 1,
+            "chunk_unit": "month",
+            "member": "fc0",
+            "title": "a06l_20000101_fc0_1_CLEAN <span class='badge' style='background-color: yellow; color:#000;'>#COMPLETED</span> ~ ( 0:00:00 ) + 0:00:05",
+            "date": "2000 01 01",
+            "date_plus": "2000 02 01",
+            "split": null,
+            "splits": null,
+            "SYPD": 1440.0,
+            "ASYPD": 720.0,
+            "minutes_queue": 0,
+            "minutes": 5,
+            "submit": "2026-08-10T12:51:43+02:00",
+            "start": "2026-08-10T12:51:43+02:00",
+            "finish": "2026-08-10T12:51:48+02:00",
+            "section": "CLEAN",
+            "queue": "None",
+            "processors": 1,
+            "wallclock": "00:05",
+            "wrapper": null,
+            "wrapper_code": null,
+            "children": 1,
+            "children_list": [
+                "a06l_20000101_fc0_1_TRANSFER"
+            ],
+            "parents": 1,
+            "parent_list": [
+                "a06l_20000101_fc0_1_POST"
+            ],
+            "out": "/home/pgoitia/autosubmit/a06l/tmp/LOG_a06l/a06l_20000101_fc0_1_CLEAN.20260810125143.out",
+            "err": "/home/pgoitia/autosubmit/a06l/tmp/LOG_a06l/a06l_20000101_fc0_1_CLEAN.20260810125143.err",
+            "tree_parents": [
+                "a06l_20000101_fc0"
+            ],
+            "custom_directives": null,
+            "rm_id": 183442,
+            "status_color": "yellow",
+            "workflow_commit": ""
+        },
+        {
+            "id": "a06l_20000101_fc0_1_TRANSFER",
+            "internal_id": "a06l_20000101_fc0_1_TRANSFER",
+            "label": "a06l_20000101_fc0_1_TRANSFER",
+            "status": "COMPLETED",
+            "status_code": 5,
+            "platform_name": "LOCAL",
+            "chunk": 1,
+            "chunk_size": 1,
+            "chunk_unit": "month",
+            "member": "fc0",
+            "title": "a06l_20000101_fc0_1_TRANSFER <span class='badge' style='background-color: yellow; color:#000;'>#COMPLETED</span> ~ ( 0:00:00 ) + 0:00:05 <span class='badge' style='background-color:#99ff66'>TARGET</span>",
+            "date": "2000 01 01",
+            "date_plus": "2000 02 01",
+            "split": null,
+            "splits": null,
+            "SYPD": 1440.0,
+            "ASYPD": 720.0,
+            "minutes_queue": 0,
+            "minutes": 5,
+            "submit": "2026-08-10T12:52:03+02:00",
+            "start": "2026-08-10T12:52:03+02:00",
+            "finish": "2026-08-10T12:52:08+02:00",
+            "section": "TRANSFER",
+            "queue": "None",
+            "processors": 1,
+            "wallclock": "",
+            "wrapper": null,
+            "wrapper_code": null,
+            "children": 0,
+            "children_list": [],
+            "parents": 1,
+            "parent_list": [
+                "a06l_20000101_fc0_1_CLEAN"
+            ],
+            "out": "/home/pgoitia/autosubmit/a06l/tmp/LOG_a06l/a06l_20000101_fc0_1_TRANSFER.20260810125203.out",
+            "err": "/home/pgoitia/autosubmit/a06l/tmp/LOG_a06l/a06l_20000101_fc0_1_TRANSFER.20260810125203.err",
+            "tree_parents": [
+                "a06l_20000101_fc0"
+            ],
+            "custom_directives": null,
+            "rm_id": 183913,
+            "status_color": "yellow",
+            "workflow_commit": ""
+        }
+    ],
+    "total": 6,
+    "reference": {
+        "a06l_20000101_fc0": {
+            "completed": 5,
+            "running": 0,
+            "queuing": 0,
+            "failed": 0,
+            "held": 0,
+            "total": 5
+        },
+        "completed_tag": " <span class='badge' style='background-color:%B'> %C / %T COMPLETED</span>",
+        "running_tag": " <span class='badge' style='background-color:green; color:#fff'>%R RUNNING</span>",
+        "queuing_tag": " <span class='badge' style='background-color:pink'>%Q QUEUING</span>",
+        "failed_tag": " <span class='badge' style='background-color:red'>%F FAILED</span>",
+        "held_tag": " <span class='badge' style='background-color:#fa8072; color:#fff'>%H HELD</span>",
+        "checkmark": " <span class='badge' style='background-color:#4dffa6'>&#10004;</span>",
+        "packages": [],
+        "chunk_unit": "month",
+        "chunk_size": 1
+    },
+    "error": false,
+    "error_message": "",
+    "pkl_timestamp": 1786360126
+}

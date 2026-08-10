@@ -1,0 +1,114 @@
+{
+    "tree": [
+        {
+            "title": "Keys",
+            "folder": true,
+            "refKey": "Keys",
+            "data": "Empty",
+            "expanded": true,
+            "children": [
+                {
+                    "title": "a06l_LOCAL_SETUP <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:00 ) + 0:00:05",
+                    "refKey": "a06l_LOCAL_SETUP",
+                    "data": "Empty",
+                    "children": []
+                }
+            ]
+        }
+    ],
+    "jobs": [
+        {
+            "id": "a06l_LOCAL_SETUP",
+            "internal_id": "a06l_LOCAL_SETUP",
+            "label": "a06l_LOCAL_SETUP",
+            "status": "COMPLETED",
+            "status_code": 5,
+            "platform_name": "LOCAL",
+            "chunk": 0,
+            "member": "LOCAL_SETUP",
+            "sync": false,
+            "title": "a06l_LOCAL_SETUP <span class='badge' style='background-color: yellow'>#COMPLETED</span> ~ ( 0:00:00 ) + 0:00:05",
+            "date": "",
+            "date_plus": "",
+            "SYPD": null,
+            "ASYPD": null,
+            "minutes_queue": 0,
+            "minutes": 5,
+            "submit": "2026-08-10-12:40:01",
+            "start": "2026-08-10-12:40:01",
+            "finish": "2026-08-10-12:40:06",
+            "section": "",
+            "queue": "debug",
+            "processors": 0,
+            "wallclock": "24:00",
+            "wrapper": null,
+            "wrapper_code": null,
+            "children": null,
+            "children_list": null,
+            "parents": null,
+            "out": "/home/pgoitia/autosubmit/a06l/tmp/LOG_a06l/a06l_LOCAL_SETUP.20260810124001.out",
+            "err": "/home/pgoitia/autosubmit/a06l/tmp/LOG_a06l/a06l_LOCAL_SETUP.20260810124001.err",
+            "tree_parents": [],
+            "parent_list": null,
+            "custom_directives": null,
+            "rm_id": 172292,
+            "status_color": "yellow"
+        }
+    ],
+    "total": 6,
+    "reference": {
+        "a06l_20000101_CLEAN": {
+            "completed": 1,
+            "running": 0,
+            "queuing": 0,
+            "failed": 0,
+            "total": 1
+        },
+        "a06l_20000101_TRANSFER": {
+            "completed": 1,
+            "running": 0,
+            "queuing": 0,
+            "failed": 0,
+            "total": 1
+        },
+        "a06l_20000101_SIM": {
+            "completed": 1,
+            "running": 0,
+            "queuing": 0,
+            "failed": 0,
+            "total": 1
+        },
+        "a06l_20000101_INI": {
+            "completed": 1,
+            "running": 0,
+            "queuing": 0,
+            "failed": 0,
+            "total": 1
+        },
+        "a06l_20000101_LOCAL_SETUP": {
+            "completed": 0,
+            "running": 0,
+            "queuing": 0,
+            "failed": 0,
+            "total": 0
+        },
+        "a06l_20000101_POST": {
+            "completed": 1,
+            "running": 0,
+            "queuing": 0,
+            "failed": 0,
+            "total": 1
+        },
+        "completed_tag": " <span class='badge' style='background-color:%B'> %C / %T COMPLETED</span>",
+        "running_tag": " <span class='badge' style='background-color:green; color:white'>%R RUNNING</span>",
+        "queuing_tag": " <span class='badge' style='background-color:pink'>%Q QUEUING</span>",
+        "failed_tag": " <span class='badge' style='background-color:red'>%F FAILED</span>",
+        "check_mark": " <span class='badge' style='background-color:#4dffa6'>&#10004;</span>",
+        "packages": [],
+        "chunk_unit": "month",
+        "chunk_size": 1
+    },
+    "error": false,
+    "error_message": "",
+    "pkl_timestamp": 10000000
+}
