@@ -1,5 +1,14 @@
 ## Changelog
 
+### Pre-release v4.1.1-beta.4 - Release date: 2026-08-11
+
+* **Compatibility with Autosubmit API version >= [v4.1.2b6](https://pypi.org/project/autosubmit-api/v4.1.2b6/)**
+* Quick view jobs are now selectable
+* Jobs panels now shows splits information
+* Fixed bug when opening the 
+* Added runner modal to update the description of the experiment
+* Multiple minor visual and functional fixes
+
 ### Pre-release v4.1.1-beta.3 - Release date: 2026-03-30
 
 * **Compatibility with Autosubmit API version >= [v4.1.2b4](https://pypi.org/project/autosubmit-api/v4.1.2b4/)**
