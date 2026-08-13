@@ -61,7 +61,7 @@ export const statusChangeTextGenerator = (jobs, status) => {
 
 export const secondsToDelta = (SECONDS) => {
   if (SECONDS > 0) {
-    let sec_num = SECONDS; // don't forget the second param
+    let sec_num = Math.round(SECONDS); // don't forget the second param
     let days = Math.floor(sec_num / (3600 * 24));
     let hours = Math.floor((sec_num - days * (3600 * 24)) / 3600);
     let minutes = Math.floor(
