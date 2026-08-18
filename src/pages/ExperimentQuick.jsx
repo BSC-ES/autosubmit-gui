@@ -1,7 +1,7 @@
 import { useParams, useSearchParams } from "react-router-dom";
 import { autosubmitApiV4 } from "../services/autosubmitApiV4";
 import { useEffect, useState, useMemo } from "react";
-import { MAX_ITEMS_QUICK_VIEW } from '../consts';
+import { DEFAULT_ITEMS_QUICK_VIEW } from '../consts';
 import useASTitle from "../hooks/useASTitle";
 import useBreadcrumb from "../hooks/useBreadcrumb";
 import { cn } from "../services/utils";
@@ -10,6 +10,7 @@ import BottomPanel from "../common/BottomPanel";
 import FetchJobDetailCard from "../common/FetchJobDetailCard";
 import Paginator from "../common/Paginator";
 
+const ITEMS_PER_PAGE_OPTIONS = [DEFAULT_ITEMS_QUICK_VIEW, 500, 1000];
 
 const QuickJobList = ({ jobs, onSelectionChange }) => {
   if (!Array.isArray(jobs) || jobs.length === 0) {
@@ -110,10 +111,22 @@ const ExperimentQuick = () => {
     return isNaN(page) ? 1 : page
   }, [searchParams])
 
+  const pageSize = useMemo(() => {
+    const raw = searchParams.get("page_size")
+    const size = parseInt(raw || "", 10)
+
+    // Ignore non-valid or non-whitelisted values
+    if (!Number.isFinite(size) || size <= 0 || !ITEMS_PER_PAGE_OPTIONS.includes(size)) {
+      return DEFAULT_ITEMS_QUICK_VIEW
+    }
+
+    return size
+  }, [searchParams])
+
   const { data, isFetching, refetch } = autosubmitApiV4.endpoints.getExperimentJobs.useQuery({
     expid: routeParams.expid,
     page: currentPage,
-    page_size: MAX_ITEMS_QUICK_VIEW,
+    page_size: pageSize,
     status: searchParams.get("status") || undefined,
     query: searchParams.get("query") || undefined
   }, {
@@ -147,6 +160,15 @@ const ExperimentQuick = () => {
       ...rest,
       page: 1,
       ...(event.target.value && { status: event.target.value })
+    })
+  }
+
+  const handlePageSizeChange = (e) => {
+    const newSize = parseInt(e.target.value, 10)
+    setSearchParams({
+      ...Object.fromEntries(searchParams.entries()),
+      page: 1,
+      page_size: newSize
     })
   }
 
@@ -238,6 +260,17 @@ const ExperimentQuick = () => {
       </div>
       <div className="flex justify-center items-center">
         <Paginator currentPage={currentPage} totalPages={data?.pagination?.total_pages || 1} onPageClick={handlePageClick}></Paginator>
+      </div>
+      <div className="flex justify-center items-center">
+        <label htmlFor="jobs-per-page" className="pr-2">Jobs per page:</label>
+        <select id="jobs-per-page" value={pageSize} onChange={handlePageSizeChange}
+          className="form-select border border-primary text-primary dark:bg-primary dark:text-white font-bold text-center">
+          {ITEMS_PER_PAGE_OPTIONS.map((option) => (
+            <option key={option} value={option}>
+              {option === DEFAULT_ITEMS_QUICK_VIEW ? `${option} (default)` : option}
+            </option>
+          ))}
+        </select>
       </div>
 
       {selectedJobIds.size > 0 && (
