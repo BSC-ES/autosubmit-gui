@@ -1,13 +1,16 @@
-import { useParams } from "react-router-dom";
-import { useGetExperimentQuickViewQuery } from "../services/autosubmitApiV3";
-import { useEffect, useState } from "react";
-import { MAX_ITEMS_QUICK_VIEW } from "../consts";
+import { useParams, useSearchParams } from "react-router-dom";
+import { autosubmitApiV4 } from "../services/autosubmitApiV4";
+import { useEffect, useState, useMemo } from "react";
+import { DEFAULT_ITEMS_QUICK_VIEW } from '../consts';
 import useASTitle from "../hooks/useASTitle";
 import useBreadcrumb from "../hooks/useBreadcrumb";
 import { cn } from "../services/utils";
 import { ChangeStatusModal } from "../common/ChangeStatusModal";
 import BottomPanel from "../common/BottomPanel";
 import FetchJobDetailCard from "../common/FetchJobDetailCard";
+import Paginator from "../common/Paginator";
+
+const ITEMS_PER_PAGE_OPTIONS = [DEFAULT_ITEMS_QUICK_VIEW, 500, 1000];
 
 const QuickJobList = ({ jobs, onSelectionChange }) => {
   if (!Array.isArray(jobs) || jobs.length === 0) {
@@ -29,7 +32,7 @@ const QuickJobList = ({ jobs, onSelectionChange }) => {
       const end = Math.max(lastClickedIndex, index);
       const newSelected = new Set(selectedJobIds);
       for (let i = start; i <= end; i++) {
-        newSelected.add(jobs[i].refKey);
+        newSelected.add(jobs[i].name);
       }
       setSelectedJobIds(newSelected);
     } else if (event.ctrlKey || event.metaKey) {
@@ -62,13 +65,13 @@ const QuickJobList = ({ jobs, onSelectionChange }) => {
       }}
     >
       {jobs.map((job, index) => {
-        const isSelected = selectedJobIds.has(job.refKey);
+        const isSelected = selectedJobIds.has(job.name);
 
         return (
           <li
-            key={job.refKey}
+            key={job.name}
             className="flex gap-3 px-6"
-            onClick={(event) => handleJobClick(index, job.refKey, event)}
+            onClick={(event) => handleJobClick(index, job.name, event)}
           >
             <span>
               <i className="fa-regular fa-circle text-primary" />
@@ -78,7 +81,7 @@ const QuickJobList = ({ jobs, onSelectionChange }) => {
                 "px-1 py-[1px] hover:bg-gray-100 rounded cursor-pointer select-none",
                 isSelected && "bg-blue-100 hover:bg-blue-200",
               )}
-              dangerouslySetInnerHTML={{ __html: job.title }}
+             >{job.name} <span className={cn("badge", `badge-status-${job.status.toLowerCase()}`)}>#{job.status}</span
             ></div>
           </li>
         );
@@ -87,55 +90,6 @@ const QuickJobList = ({ jobs, onSelectionChange }) => {
   );
 };
 
-/**
- * Filter the jobs received in the Quick View
- * @param {Array} baseData - Base Data
- * @param {string} filterText - Filter text. It can include ! at the begining for negation and * as a wildcard
- * @param {string} filterStatus - Posible values: ANY|COMPLETED|FAILED|RUNNING|QUEUING
- * @returns {Array}
- */
-const filterQuickView = (baseData, filterText, filterStatus) => {
-  let filterNorm = String(filterText).toUpperCase();
-
-  const isNegation = filterNorm.indexOf("!") === 0;
-  if (isNegation) {
-    filterNorm = filterNorm.substring(1);
-  }
-
-  const fields = filterNorm.split("*");
-
-  const newJobs = baseData.filter((item) => {
-    // Filter by status
-    let flagStatus = true;
-    if (filterStatus !== "ANY") {
-      flagStatus = item.status === filterStatus;
-    }
-
-    // Filter by text
-    let flagText = true;
-    let stringTest = String(item.refKey).toUpperCase();
-    for (let i = 0; i < fields.length; i++) {
-      if (fields[i].length > 0) {
-        if (stringTest.indexOf(fields[i]) > -1) {
-          let foundIndex = stringTest.indexOf(fields[i]) + fields[i].length;
-          stringTest = stringTest.substring(foundIndex);
-        } else {
-          flagText = false;
-          break;
-        }
-      }
-    }
-
-    // Use negation
-    if (isNegation) {
-      return !flagText && flagStatus;
-    } else {
-      return flagText && flagStatus;
-    }
-  });
-
-  return newJobs;
-};
 
 const ExperimentQuick = () => {
   const routeParams = useParams();
@@ -150,14 +104,34 @@ const ExperimentQuick = () => {
       route: `/experiment/${routeParams.expid}/quick`,
     },
   ]);
-  const [filters, setFilters] = useState({
-    status: "ANY",
-    filter: "",
-  });
-  const [jobs, setJobs] = useState([]);
-  const { data, isFetching, refetch } = useGetExperimentQuickViewQuery(
-    routeParams.expid,
-  );
+  const [searchParams, setSearchParams] = useSearchParams({});
+
+  const currentPage = useMemo(() => {
+    const page = parseInt(searchParams.get("page") || "1")
+    return isNaN(page) ? 1 : page
+  }, [searchParams])
+
+  const pageSize = useMemo(() => {
+    const raw = searchParams.get("page_size")
+    const size = parseInt(raw || "", 10)
+
+    // Ignore non-valid or non-whitelisted values
+    if (!Number.isFinite(size) || size <= 0 || !ITEMS_PER_PAGE_OPTIONS.includes(size)) {
+      return DEFAULT_ITEMS_QUICK_VIEW
+    }
+
+    return size
+  }, [searchParams])
+
+  const { data, isFetching, refetch } = autosubmitApiV4.endpoints.getExperimentJobs.useQuery({
+    expid: routeParams.expid,
+    page: currentPage,
+    page_size: pageSize,
+    status: searchParams.get("status") || undefined,
+    query: searchParams.get("query") || undefined
+  }, {
+    skip: !routeParams.expid
+  })
 
   const [showModal, setShowModal] = useState(false);
   const toggleModal = (refresh = false) => {
@@ -172,31 +146,42 @@ const ExperimentQuick = () => {
     setSelectedJobIds(selectedIds);
   };
 
-  useEffect(() => {
-    if (data && Array.isArray(data.tree_view)) {
-      let newJobs = filterQuickView(
-        data.tree_view,
-        filters.filter,
-        filters.status,
-      );
-      newJobs = newJobs.slice(0, MAX_ITEMS_QUICK_VIEW);
-      setJobs(newJobs);
-    }
-  }, [data, filters]);
-
-  const handleFilterChange = (event) => {
-    setFilters({
-      ...filters,
-      filter: event.target.value,
-    });
-  };
+  const handlePageClick = (e) => {
+    const selectedPage = e.selected
+    setSearchParams({
+      ...Object.fromEntries(searchParams.entries()),
+      page: selectedPage
+    })
+  }
 
   const handleStatusChange = (event) => {
-    setFilters({
-      ...filters,
-      status: event.target.value,
-    });
-  };
+    const { status, ...rest } = Object.fromEntries(searchParams.entries())
+    setSearchParams({
+      ...rest,
+      page: 1,
+      ...(event.target.value && { status: event.target.value })
+    })
+  }
+
+  const handlePageSizeChange = (e) => {
+    const newSize = parseInt(e.target.value, 10)
+    setSearchParams({
+      ...Object.fromEntries(searchParams.entries()),
+      page: 1,
+      page_size: newSize
+    })
+  }
+
+  const [queryInput, setQueryInput] = useState(searchParams.get("query") || "")
+
+  const handleFilterClick = () => {
+    const { query, ...rest } = Object.fromEntries(searchParams.entries())
+    setSearchParams({
+      ...rest,
+      page: 1,
+      ...(queryInput && { query: queryInput })
+    })
+  }
 
   return (
     <div className="w-full flex flex-col gap-4 grow">
@@ -209,48 +194,47 @@ const ExperimentQuick = () => {
       <div className="flex gap-3 items-center flex-wrap">
         <div>
           <select
-            value={filters.status}
+            value={searchParams.get("status") || ""}
             onChange={handleStatusChange}
             className="form-select border border-primary text-primary dark:bg-primary dark:text-white font-bold text-center"
           >
-            <option value="ANY">TOTAL ({(data && data.total) || 0})</option>
-            <option value="COMPLETED">
-              COMPLETED ({(data && data.completed) || 0})
+            <option value="" className="bg-primary text-white">TOTAL</option>
+            <option value="COMPLETED" className="badge-status-completed">
+              COMPLETED
             </option>
-            <option value="FAILED">
-              FAILED ({(data && data.failed) || 0})
+            <option value="FAILED" className="badge-status-failed">
+              FAILED
             </option>
-            <option value="RUNNING">
-              RUNNING ({(data && data.running) || 0})
+            <option value="RUNNING" className="badge-status-running">
+              RUNNING
             </option>
-            <option value="QUEUING">
-              QUEUING ({(data && data.queuing) || 0})
+            <option value="QUEUING" className="badge-status-queuing">
+              QUEUING
             </option>
-            <option value="READY">
+            <option value="READY" className="badge-status-ready">
               READY
             </option>
-            <option value="WAITING">
+            <option value="WAITING" className="badge-status-waiting">
               WAITING
             </option>
-            <option value="SUBMITTED">
+            <option value="SUBMITTED" className="badge-status-submitted">
               SUBMITTED
             </option>
           </select>
         </div>
-        <div className="grow">
+        <div className="grow flex">
           <input
-            value={filters.filter}
-            onChange={handleFilterChange}
-            className="form-input w-full"
+            className="form-input w-full rounded-r-none"
             placeholder="Filter job..."
-          />
-          {/* <button className="btn btn-dark fw-bold px-4">Filter</button> */}
+            value={queryInput}
+            onChange={(e) => setQueryInput(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleFilterClick()} />
+          <button className="btn btn-dark font-bold px-4 rounded-l-none border-l-0" onClick={handleFilterClick}>
+            Filter
+          </button>
         </div>
         <div className="text-sm" style={{ whiteSpace: "nowrap" }}>
-          Showing {jobs.length} of{" "}
-          <strong>
-            {data && data.tree_view && data.tree_view.length} total jobs
-          </strong>
+          Showing {data?.pagination?.page_items || "0"} of <strong>{data?.pagination?.total_items || "0"} total jobs</strong>
         </div>
         <button
           className="btn btn-success"
@@ -263,16 +247,30 @@ const ExperimentQuick = () => {
         </button>
       </div>
       <div className="relative grow basis-0 overflow-auto min-h-[70vh] lg:min-h-[50vh] w-full border p-4 rounded-lg custom-scrollbar bg-white">
-        {isFetching && (
+        {isFetching ? (
           <div className="absolute inset-0 z-20 flex items-center justify-center bg-white">
             <div className="spinner-border dark:invert" role="status"></div>
           </div>
+        ) : (
+          <QuickJobList
+            jobs={data?.jobs}
+            onSelectionChange={handleJobSelectionChange}
+          ></QuickJobList>
         )}
-
-        <QuickJobList
-          jobs={jobs}
-          onSelectionChange={handleJobSelectionChange}
-        ></QuickJobList>
+      </div>
+      <div className="flex justify-center items-center">
+        <Paginator currentPage={currentPage} totalPages={data?.pagination?.total_pages || 1} onPageClick={handlePageClick}></Paginator>
+      </div>
+      <div className="flex justify-center items-center">
+        <label htmlFor="jobs-per-page" className="pr-2">Jobs per page:</label>
+        <select id="jobs-per-page" value={pageSize} onChange={handlePageSizeChange}
+          className="form-select border border-primary text-primary dark:bg-primary dark:text-white font-bold text-center">
+          {ITEMS_PER_PAGE_OPTIONS.map((option) => (
+            <option key={option} value={option}>
+              {option === DEFAULT_ITEMS_QUICK_VIEW ? `${option} (default)` : option}
+            </option>
+          ))}
+        </select>
       </div>
 
       {selectedJobIds.size > 0 && (
