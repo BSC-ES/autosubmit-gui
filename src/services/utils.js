@@ -42,6 +42,21 @@ export const saveSVGObj = (svgData, filename) => {
   triggerDownload(svgUrl, filename)
 }
 
+export const JOB_STATUSES = [
+  "WAITING",
+  "READY",
+  "PREPARED",
+  "SUBMITTED",
+  "HELD",
+  "QUEUING",
+  "RUNNING",
+  "COMPLETED",
+  "FAILED",
+  "SUSPENDED",
+  "SKIPPED",
+  "DELAYED"
+]
+
 
 export const STATUS_STYLES = {
   "UNKNOWN": {
