@@ -1,8 +1,8 @@
 ## Changelog
 
-### Pre-release v4.1.1-beta.5 - Release date:
-* **Compatibility with Autosubmit API version >= 
-* Visual improvements (invert arrows in drop-down sections)
+### Pre-release v4.1.1-beta.5 - Unreleased
+* **Compatibility with Autosubmit API version >= [v4.1.2b7](https://pypi.org/project/autosubmit-api/v4.1.2b7/)** (unreleased)
+* Visual improvements (invert arrow direction in drop-down sections)
 
 ### Pre-release v4.1.1-beta.4 - Release date: 2026-08-11
 
