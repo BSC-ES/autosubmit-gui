@@ -6,6 +6,7 @@ import {
   CAS_THIRD_PARTY_LOGIN_URL,
   CAS_SERVICE_ID,
   GITHUB_CLIENT_ID,
+  GITHUB_REDIRECT_URI,
   OIDC_AUTHORIZATION_ENDPOINT,
   OIDC_CLIENT_ID,
 } from "../consts";
@@ -169,7 +170,8 @@ const Login = () => {
         ticket: ticket,
         service: service,
         code: code,
-        redirect_uri: currentURL,
+        redirect_uri:
+          AUTH_PROVIDER === "github" ? GITHUB_REDIRECT_URI : currentURL,
       });
     }
   }, []);
@@ -179,7 +181,10 @@ const Login = () => {
       const _target = `${OIDC_AUTHORIZATION_ENDPOINT}?scope=openid&response_type=code&client_id=${OIDC_CLIENT_ID}&redirect_uri=${currentURL}`;
       window.location.href = _target;
     } else if (AUTH_PROVIDER === "github") {
-      const _target = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&scope=read:user%20read:org`;
+      const redirectParam = GITHUB_REDIRECT_URI
+        ? `&redirect_uri=${encodeURIComponent(GITHUB_REDIRECT_URI)}`
+        : "";
+      const _target = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}${redirectParam}&scope=read:user%20read:org`;
       window.location.href = _target;
     } else {
       const _target = `${CAS_THIRD_PARTY_LOGIN_URL}?service=${service}`;
