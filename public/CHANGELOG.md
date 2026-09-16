@@ -1,5 +1,9 @@
 ## Changelog
 
+### Release v4.2.0 - Unreleased
+* **Compatibility with Autosubmit API version >= [v4.2.0](https://pypi.org/project/autosubmit-api/v4.2.0/)** (unreleased)
+* Visual improvements (invert arrow direction in drop-down sections)
+
 ### Release v4.1.1 - Release date: 2026-09-21
 
 * Supported Autosubmit API version: [4.1.2](https://pypi.org/project/autosubmit-api/4.1.2/)
