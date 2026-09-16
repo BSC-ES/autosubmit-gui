@@ -86,10 +86,10 @@ const ExperimentInfoHeader = ({ expid }) => {
           >
             <i
               className={cn(
-                "ms-auto fa-solid",
-                open ? "fa-angle-down" : "fa-angle-up",
+                "ms-auto fa-solid fa-angle-down transition-transform duration-200",
+                open && "rotate-180"
               )}
-            ></i>
+            />
           </button>
         </div>
 
