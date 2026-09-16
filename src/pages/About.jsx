@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import showdown from 'showdown'
 import useASTitle from '../hooks/useASTitle';
 import useBreadcrumb from '../hooks/useBreadcrumb';
 import packageJson from "../../package.json";
-import { Disclosure } from '@headlessui/react'
+import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
 import { cn } from '../services/utils'
 
 
@@ -86,13 +86,18 @@ const About = () => {
                   <Disclosure key={item.key}>
                     {({ open }) => (
                       <>
-                        <Disclosure.Button className="flex items-center py-2 px-4 w-full rounded-lg text-left bg-primary-200 text-primary-900 dark:bg-primary-800 dark:text-primary-100">
+                        <DisclosureButton className="flex items-center py-2 px-4 w-full rounded-lg text-left bg-primary-200 text-primary-900 dark:bg-primary-800 dark:text-primary-100">
                           {item.question}
-                          <i className={cn("ms-auto fa-solid", open ? "fa-angle-down" : "fa-angle-up")}></i>
-                        </Disclosure.Button>
-                        <Disclosure.Panel className="px-6 pb-4 ">
+                          <i
+                            className={cn(
+                              "ms-auto fa-solid fa-angle-down transition-transform duration-200",
+                              open && "rotate-180"
+                            )}
+                          />
+                        </DisclosureButton>
+                        <DisclosurePanel className="px-6 pb-4 ">
                           {item.answer}
-                        </Disclosure.Panel>
+                        </DisclosurePanel>
                       </>
                     )}
                   </Disclosure>
