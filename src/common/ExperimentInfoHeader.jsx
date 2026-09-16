@@ -40,7 +40,12 @@ const ExperimentInfoHeader = ({ expid }) => {
           className="flex px-4 gap-6 items-center"
           onDoubleClick={handleToggle}
         >
-          <ActiveIndicator isActive={expInfoData?.running} />
+          <div className="flex gap-3 items-center">
+            <ActiveIndicator isActive={expInfoData?.running} />
+            <div className="rounded-full bg-primary/10 px-3 py-1 text-lg text-primary font-bold">
+              {expid}
+            </div>
+          </div>
           <div className="text-xl font-semibold grow line-clamp-2">
             {isExpInfoFetching ? (
               <DotLoader dotClassName={"bg-black dark:bg-white"} />
