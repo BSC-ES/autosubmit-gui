@@ -1,4 +1,4 @@
-import CytoscapeComponent from "react-cytoscapejs";
+import CytoscapeComponent from "./CytoscapeComponentWebGl";
 import Cytoscape from "cytoscape";
 import { useEffect, useRef, MutableRefObject } from "react";
 import { triggerDownload } from "../services/utils";
@@ -42,7 +42,8 @@ const GRAPH_STYLE = [
     style: {
       label: "data(id)",
       "text-valign": "top",
-      "border-style": "dashed",
+      "border-style": "solid",
+      "background-opacity": 0.5,
       "text-margin-y": -8,
       "text-opacity": 0.75,
       "font-style": "italic",
