@@ -1,12 +1,14 @@
 import { cn } from "../services/utils";
 import { useDefault, useLocalStorage } from "@uidotdev/usehooks";
+import { CopyButton } from "./CopyButton";
 
-const BottomPanel = ({ children, title, onClose }) => {
+const BottomPanel = ({ children, title, onClose, allowTitleCopy = false }) => {
   const [defaultExpanded, saveDefaultExpanded] = useLocalStorage(
     "asgui.layout.experiment.bpanel.expanded",
     true
   );
   const [expand, setExpand] = useDefault(defaultExpanded);
+
   const toggleExpand = () => {
     setExpand(!expand);
     saveDefaultExpanded(!expand);
@@ -23,7 +25,19 @@ const BottomPanel = ({ children, title, onClose }) => {
         className="flex gap-3 px-6 py-3 bg-neutral-700 text-white items-center"
         onDoubleClick={toggleExpand}
       >
-        <div className="me-auto font-bold text-lg truncate">{title}</div>
+        <div className="me-auto flex items-center gap-2 font-bold">
+          <span className="text-lg">{title}</span>
+          {allowTitleCopy &&
+            <CopyButton
+              title={title}
+              bgColorClass="bg-neutral-600"
+              hoverBgColorClass="bg-neutral-800"
+              iconColorClass="text-white"
+              bgSize={6}
+            >
+            </CopyButton>
+          }
+        </div>
         <div
           className="cursor-pointer rounded-full w-8 h-8 flex items-center justify-center hover:bg-neutral-600"
           onClick={toggleExpand}

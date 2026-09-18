@@ -4,6 +4,7 @@
 * **Compatibility with Autosubmit API version >= [v4.2.0](https://pypi.org/project/autosubmit-api/v4.2.0/)** (unreleased)
 * Now the Quick View supports pagination.
 * Visual improvements (invert arrow direction in drop-down sections)
+* Now the job names can be easily copied from the job detail card. Improved all copy actions.
 
 ### Release v4.1.1 - Release date: 2026-09-21
 

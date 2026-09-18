@@ -346,6 +346,7 @@ const ExperimentTree = () => {
               ? selectedJobIds[0]
               : `${selectedJobIds.length} jobs selected`
           }
+          allowTitleCopy={selectedJobIds.length === 1}
         >
           <div className="flex flex-col gap-3">
             <JobDetailCard
