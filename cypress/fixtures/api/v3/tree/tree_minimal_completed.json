@@ -100,8 +100,8 @@
             ],
             "parents": 0,
             "parent_list": [],
-            "out": "/home/pgoitia/autosubmit/a06l/tmp/LOG_a06l/a06l_LOCAL_SETUP.20260810125022.out",
-            "err": "/home/pgoitia/autosubmit/a06l/tmp/LOG_a06l/a06l_LOCAL_SETUP.20260810125022.err",
+            "out": "/home/user/autosubmit/a06l/tmp/LOG_a06l/a06l_LOCAL_SETUP.20260810125022.out",
+            "err": "/home/user/autosubmit/a06l/tmp/LOG_a06l/a06l_LOCAL_SETUP.20260810125022.err",
             "tree_parents": [],
             "custom_directives": null,
             "rm_id": 182088,
@@ -145,8 +145,8 @@
             "parent_list": [
                 "a06l_LOCAL_SETUP"
             ],
-            "out": "/home/pgoitia/autosubmit/a06l/tmp/LOG_a06l/a06l_20000101_fc0_1_INI.20260810125042.out",
-            "err": "/home/pgoitia/autosubmit/a06l/tmp/LOG_a06l/a06l_20000101_fc0_1_INI.20260810125042.err",
+            "out": "/home/user/autosubmit/a06l/tmp/LOG_a06l/a06l_20000101_fc0_1_INI.20260810125042.out",
+            "err": "/home/user/autosubmit/a06l/tmp/LOG_a06l/a06l_20000101_fc0_1_INI.20260810125042.err",
             "tree_parents": [
                 "a06l_20000101_fc0"
             ],
@@ -192,8 +192,8 @@
             "parent_list": [
                 "a06l_20000101_fc0_1_INI"
             ],
-            "out": "/home/pgoitia/autosubmit/a06l/tmp/LOG_a06l/a06l_20000101_fc0_1_SIM.20260810125102.out",
-            "err": "/home/pgoitia/autosubmit/a06l/tmp/LOG_a06l/a06l_20000101_fc0_1_SIM.20260810125102.err",
+            "out": "/home/user/autosubmit/a06l/tmp/LOG_a06l/a06l_20000101_fc0_1_SIM.20260810125102.out",
+            "err": "/home/user/autosubmit/a06l/tmp/LOG_a06l/a06l_20000101_fc0_1_SIM.20260810125102.err",
             "tree_parents": [
                 "a06l_20000101_fc0"
             ],
@@ -239,8 +239,8 @@
             "parent_list": [
                 "a06l_20000101_fc0_1_SIM"
             ],
-            "out": "/home/pgoitia/autosubmit/a06l/tmp/LOG_a06l/a06l_20000101_fc0_1_POST.20260810125123.out",
-            "err": "/home/pgoitia/autosubmit/a06l/tmp/LOG_a06l/a06l_20000101_fc0_1_POST.20260810125123.err",
+            "out": "/home/user/autosubmit/a06l/tmp/LOG_a06l/a06l_20000101_fc0_1_POST.20260810125123.out",
+            "err": "/home/user/autosubmit/a06l/tmp/LOG_a06l/a06l_20000101_fc0_1_POST.20260810125123.err",
             "tree_parents": [
                 "a06l_20000101_fc0"
             ],
@@ -286,8 +286,8 @@
             "parent_list": [
                 "a06l_20000101_fc0_1_POST"
             ],
-            "out": "/home/pgoitia/autosubmit/a06l/tmp/LOG_a06l/a06l_20000101_fc0_1_CLEAN.20260810125143.out",
-            "err": "/home/pgoitia/autosubmit/a06l/tmp/LOG_a06l/a06l_20000101_fc0_1_CLEAN.20260810125143.err",
+            "out": "/home/user/autosubmit/a06l/tmp/LOG_a06l/a06l_20000101_fc0_1_CLEAN.20260810125143.out",
+            "err": "/home/user/autosubmit/a06l/tmp/LOG_a06l/a06l_20000101_fc0_1_CLEAN.20260810125143.err",
             "tree_parents": [
                 "a06l_20000101_fc0"
             ],
@@ -331,8 +331,8 @@
             "parent_list": [
                 "a06l_20000101_fc0_1_CLEAN"
             ],
-            "out": "/home/pgoitia/autosubmit/a06l/tmp/LOG_a06l/a06l_20000101_fc0_1_TRANSFER.20260810125203.out",
-            "err": "/home/pgoitia/autosubmit/a06l/tmp/LOG_a06l/a06l_20000101_fc0_1_TRANSFER.20260810125203.err",
+            "out": "/home/user/autosubmit/a06l/tmp/LOG_a06l/a06l_20000101_fc0_1_TRANSFER.20260810125203.out",
+            "err": "/home/user/autosubmit/a06l/tmp/LOG_a06l/a06l_20000101_fc0_1_TRANSFER.20260810125203.err",
             "tree_parents": [
                 "a06l_20000101_fc0"
             ],

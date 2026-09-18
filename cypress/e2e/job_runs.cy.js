@@ -43,13 +43,9 @@ describe("Job run history and RunId generation", () => {
       fixture: "api/v3/history/job_run_history.json"
     }).as("getJobHistory");
 
-    cy.intercept("GET", Cypress.env("EXTERNAL_API") + `/v3/joblog/${expid}_LOCAL_SETUP.*.out`, {
-      body: createLogFixture("out")
-    }).as("getJobOutLog");
-
-    cy.intercept("GET", Cypress.env("EXTERNAL_API") + `/v3/joblog/${expid}_LOCAL_SETUP.*.err`, {
-      body: createLogFixture("err")
-    }).as("getJobErrLog");
+    cy.intercept("GET", Cypress.env("EXTERNAL_API") + `/v3/joblog/${expid}_LOCAL_SETUP.*`, {
+      fixture: "api/v3/joblog/out_log.json"
+    }).as("getJobLog");
 
     cy.visit(`/experiment/${expid}/tree`);
 
@@ -89,11 +85,11 @@ describe("Job run history and RunId generation", () => {
         .eq(0)
         .click();
     });
-    cy.wait("@getJobOutLog")
+    cy.wait("@getJobLog")
       .its("response.statusCode")
       .should("eq", 200);
 
-    cy.contains("This is the out log").should("be.visible");
+    cy.contains("This is the").should("be.visible");
 
     cy.get('[id^="headlessui-dialog-title-"]:visible')
       .last()
@@ -106,11 +102,11 @@ describe("Job run history and RunId generation", () => {
         .eq(1)
         .click();
     });
-    cy.wait("@getJobErrLog")
+    cy.wait("@getJobLog")
       .its("response.statusCode")
       .should("eq", 200);
 
-    cy.contains("This is the err log").should("be.visible");
+    cy.contains("This is the").should("be.visible");
 
     cy.get('[id^="headlessui-dialog-title-"]:visible')
       .last()

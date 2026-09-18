@@ -395,7 +395,7 @@
             "dashed": false,
             "date": null,
             "date_plus": null,
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_LOCAL_SETUP.20240319135909.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_LOCAL_SETUP.20240319135909.err",
             "finish": "2024-03-19 13:59:02",
             "id": "a6zi_LOCAL_SETUP",
             "internal_id": "a6zi_LOCAL_SETUP",
@@ -404,7 +404,7 @@
             "member": null,
             "minutes": 6,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_LOCAL_SETUP.20240319135909.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_LOCAL_SETUP.20240319135909.out",
             "package": null,
             "parent_list": [],
             "parents": 0,
@@ -436,7 +436,7 @@
             "dashed": false,
             "date": null,
             "date_plus": null,
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_SYNCHRONIZE.20240319135923.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_SYNCHRONIZE.20240319135923.err",
             "finish": "2024-03-19 14:01:10",
             "id": "a6zi_SYNCHRONIZE",
             "internal_id": "a6zi_SYNCHRONIZE",
@@ -445,7 +445,7 @@
             "member": null,
             "minutes": 120,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_SYNCHRONIZE.20240319135923.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_SYNCHRONIZE.20240319135923.out",
             "package": null,
             "parent_list": [
                 "a6zi_LOCAL_SETUP"
@@ -479,7 +479,7 @@
             "dashed": false,
             "date": null,
             "date_plus": null,
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_REMOTE_SETUP.20240319140136.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_REMOTE_SETUP.20240319140136.err",
             "finish": "2024-03-19 14:46:03",
             "id": "a6zi_REMOTE_SETUP",
             "internal_id": "a6zi_REMOTE_SETUP",
@@ -488,7 +488,7 @@
             "member": null,
             "minutes": 2681,
             "minutes_queue": 4,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_REMOTE_SETUP.20240319140136.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_REMOTE_SETUP.20240319140136.out",
             "package": null,
             "parent_list": [
                 "a6zi_SYNCHRONIZE"
@@ -522,7 +522,7 @@
             "dashed": false,
             "date": "1850 01 01",
             "date_plus": "1850 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_INI.20240319144733.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_INI.20240319144733.err",
             "finish": "2024-03-19 14:51:17",
             "id": "a6zi_18500101_fc0_INI",
             "internal_id": "a6zi_18500101_fc0_INI",
@@ -531,7 +531,7 @@
             "member": "fc0",
             "minutes": 239,
             "minutes_queue": 66,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_INI.20240319144733.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_INI.20240319144733.out",
             "package": null,
             "parent_list": [
                 "a6zi_REMOTE_SETUP"
@@ -565,7 +565,7 @@
             "dashed": true,
             "date": "1850 01 01",
             "date_plus": "1851 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_1_SIM.20240319145207.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_1_SIM.20240319145207.err",
             "finish": "2024-03-19 18:02:54",
             "id": "a6zi_18500101_fc0_1_SIM",
             "internal_id": "a6zi_18500101_fc0_1_SIM",
@@ -574,7 +574,7 @@
             "member": "fc0",
             "minutes": 11409,
             "minutes_queue": 38,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_1_SIM.20240319145207.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_1_SIM.20240319145207.out",
             "package": "a6zi_ASThread_17108563159474_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_INI"
@@ -608,7 +608,7 @@
             "dashed": true,
             "date": "1851 01 01",
             "date_plus": "1852 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_2_SIM.20240319145207.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_2_SIM.20240319145207.err",
             "finish": "2024-03-19 21:11:26",
             "id": "a6zi_18500101_fc0_2_SIM",
             "internal_id": "a6zi_18500101_fc0_2_SIM",
@@ -617,7 +617,7 @@
             "member": "fc0",
             "minutes": 11312,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_2_SIM.20240319145207.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_2_SIM.20240319145207.out",
             "package": "a6zi_ASThread_17108563159474_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_1_SIM"
@@ -651,7 +651,7 @@
             "dashed": true,
             "date": "1852 01 01",
             "date_plus": "1853 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_3_SIM.20240319215423.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_3_SIM.20240319215423.err",
             "finish": "2024-03-20 03:23:20",
             "id": "a6zi_18500101_fc0_3_SIM",
             "internal_id": "a6zi_18500101_fc0_3_SIM",
@@ -660,7 +660,7 @@
             "member": "fc0",
             "minutes": 11393,
             "minutes_queue": 8344,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_3_SIM.20240319215423.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_3_SIM.20240319215423.out",
             "package": "a6zi_ASThread_17108816522924_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_2_SIM"
@@ -694,7 +694,7 @@
             "dashed": true,
             "date": "1853 01 01",
             "date_plus": "1854 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_4_SIM.20240319215423.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_4_SIM.20240319215423.err",
             "finish": "2024-03-20 06:32:25",
             "id": "a6zi_18500101_fc0_4_SIM",
             "internal_id": "a6zi_18500101_fc0_4_SIM",
@@ -703,7 +703,7 @@
             "member": "fc0",
             "minutes": 11345,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_4_SIM.20240319215423.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_4_SIM.20240319215423.out",
             "package": "a6zi_ASThread_17108816522924_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_3_SIM"
@@ -737,7 +737,7 @@
             "dashed": true,
             "date": "1854 01 01",
             "date_plus": "1855 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_5_SIM.20240319215423.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_5_SIM.20240319215423.err",
             "finish": "2024-03-20 09:42:09",
             "id": "a6zi_18500101_fc0_5_SIM",
             "internal_id": "a6zi_18500101_fc0_5_SIM",
@@ -746,7 +746,7 @@
             "member": "fc0",
             "minutes": 11384,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_5_SIM.20240319215423.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_5_SIM.20240319215423.out",
             "package": "a6zi_ASThread_17108816522924_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_4_SIM"
@@ -780,7 +780,7 @@
             "dashed": true,
             "date": "1855 01 01",
             "date_plus": "1856 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_6_SIM.20240319215423.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_6_SIM.20240319215423.err",
             "finish": "2024-03-20 12:52:28",
             "id": "a6zi_18500101_fc0_6_SIM",
             "internal_id": "a6zi_18500101_fc0_6_SIM",
@@ -789,7 +789,7 @@
             "member": "fc0",
             "minutes": 11419,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_6_SIM.20240319215423.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_6_SIM.20240319215423.out",
             "package": "a6zi_ASThread_17108816522924_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_5_SIM"
@@ -823,7 +823,7 @@
             "dashed": true,
             "date": "1856 01 01",
             "date_plus": "1857 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_7_SIM.20240319215423.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_7_SIM.20240319215423.err",
             "finish": "2024-03-20 16:01:32",
             "id": "a6zi_18500101_fc0_7_SIM",
             "internal_id": "a6zi_18500101_fc0_7_SIM",
@@ -832,7 +832,7 @@
             "member": "fc0",
             "minutes": 11344,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_7_SIM.20240319215423.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_7_SIM.20240319215423.out",
             "package": "a6zi_ASThread_17108816522924_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_6_SIM"
@@ -866,7 +866,7 @@
             "dashed": true,
             "date": "1857 01 01",
             "date_plus": "1858 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_8_SIM.20240319215423.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_8_SIM.20240319215423.err",
             "finish": "2024-03-20 19:09:58",
             "id": "a6zi_18500101_fc0_8_SIM",
             "internal_id": "a6zi_18500101_fc0_8_SIM",
@@ -875,7 +875,7 @@
             "member": "fc0",
             "minutes": 11306,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_8_SIM.20240319215423.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_8_SIM.20240319215423.out",
             "package": "a6zi_ASThread_17108816522924_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_7_SIM"
@@ -909,7 +909,7 @@
             "dashed": true,
             "date": "1858 01 01",
             "date_plus": "1859 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_9_SIM.20240319215423.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_9_SIM.20240319215423.err",
             "finish": "2024-03-20 22:18:23",
             "id": "a6zi_18500101_fc0_9_SIM",
             "internal_id": "a6zi_18500101_fc0_9_SIM",
@@ -918,7 +918,7 @@
             "member": "fc0",
             "minutes": 11305,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_9_SIM.20240319215423.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_9_SIM.20240319215423.out",
             "package": "a6zi_ASThread_17108816522924_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_8_SIM"
@@ -952,7 +952,7 @@
             "dashed": true,
             "date": "1859 01 01",
             "date_plus": "1860 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_10_SIM.20240319215423.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_10_SIM.20240319215423.err",
             "finish": "2024-03-21 01:27:15",
             "id": "a6zi_18500101_fc0_10_SIM",
             "internal_id": "a6zi_18500101_fc0_10_SIM",
@@ -961,7 +961,7 @@
             "member": "fc0",
             "minutes": 11332,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_10_SIM.20240319215423.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_10_SIM.20240319215423.out",
             "package": "a6zi_ASThread_17108816522924_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_9_SIM"
@@ -995,7 +995,7 @@
             "dashed": true,
             "date": "1860 01 01",
             "date_plus": "1861 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_11_SIM.20240319215423.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_11_SIM.20240319215423.err",
             "finish": "2024-03-21 04:36:46",
             "id": "a6zi_18500101_fc0_11_SIM",
             "internal_id": "a6zi_18500101_fc0_11_SIM",
@@ -1004,7 +1004,7 @@
             "member": "fc0",
             "minutes": 11371,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_11_SIM.20240319215423.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_11_SIM.20240319215423.out",
             "package": "a6zi_ASThread_17108816522924_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_10_SIM"
@@ -1038,7 +1038,7 @@
             "dashed": true,
             "date": "1861 01 01",
             "date_plus": "1862 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_12_SIM.20240319215423.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_12_SIM.20240319215423.err",
             "finish": "2024-03-21 07:46:01",
             "id": "a6zi_18500101_fc0_12_SIM",
             "internal_id": "a6zi_18500101_fc0_12_SIM",
@@ -1047,7 +1047,7 @@
             "member": "fc0",
             "minutes": 11355,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_12_SIM.20240319215423.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_12_SIM.20240319215423.out",
             "package": "a6zi_ASThread_17108816522924_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_11_SIM"
@@ -1081,7 +1081,7 @@
             "dashed": true,
             "date": "1862 01 01",
             "date_plus": "1863 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_13_SIM.20240321074621.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_13_SIM.20240321074621.err",
             "finish": "2024-03-21 11:58:10",
             "id": "a6zi_18500101_fc0_13_SIM",
             "internal_id": "a6zi_18500101_fc0_13_SIM",
@@ -1090,7 +1090,7 @@
             "member": "fc0",
             "minutes": 11290,
             "minutes_queue": 3819,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_13_SIM.20240321074621.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_13_SIM.20240321074621.out",
             "package": "a6zi_ASThread_17110035707450_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_12_SIM"
@@ -1124,7 +1124,7 @@
             "dashed": true,
             "date": "1863 01 01",
             "date_plus": "1864 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_14_SIM.20240321074621.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_14_SIM.20240321074621.err",
             "finish": "2024-03-21 15:06:16",
             "id": "a6zi_18500101_fc0_14_SIM",
             "internal_id": "a6zi_18500101_fc0_14_SIM",
@@ -1133,7 +1133,7 @@
             "member": "fc0",
             "minutes": 11286,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_14_SIM.20240321074621.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_14_SIM.20240321074621.out",
             "package": "a6zi_ASThread_17110035707450_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_13_SIM"
@@ -1167,7 +1167,7 @@
             "dashed": true,
             "date": "1864 01 01",
             "date_plus": "1865 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_15_SIM.20240321074621.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_15_SIM.20240321074621.err",
             "finish": "2024-03-21 18:15:16",
             "id": "a6zi_18500101_fc0_15_SIM",
             "internal_id": "a6zi_18500101_fc0_15_SIM",
@@ -1176,7 +1176,7 @@
             "member": "fc0",
             "minutes": 11340,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_15_SIM.20240321074621.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_15_SIM.20240321074621.out",
             "package": "a6zi_ASThread_17110035707450_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_14_SIM"
@@ -1210,7 +1210,7 @@
             "dashed": true,
             "date": "1865 01 01",
             "date_plus": "1866 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_16_SIM.20240321074621.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_16_SIM.20240321074621.err",
             "finish": "2024-03-21 21:23:12",
             "id": "a6zi_18500101_fc0_16_SIM",
             "internal_id": "a6zi_18500101_fc0_16_SIM",
@@ -1219,7 +1219,7 @@
             "member": "fc0",
             "minutes": 11276,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_16_SIM.20240321074621.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_16_SIM.20240321074621.out",
             "package": "a6zi_ASThread_17110035707450_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_15_SIM"
@@ -1253,7 +1253,7 @@
             "dashed": true,
             "date": "1866 01 01",
             "date_plus": "1867 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_17_SIM.20240321074621.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_17_SIM.20240321074621.err",
             "finish": "2024-03-22 00:30:47",
             "id": "a6zi_18500101_fc0_17_SIM",
             "internal_id": "a6zi_18500101_fc0_17_SIM",
@@ -1262,7 +1262,7 @@
             "member": "fc0",
             "minutes": 11255,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_17_SIM.20240321074621.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_17_SIM.20240321074621.out",
             "package": "a6zi_ASThread_17110035707450_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_16_SIM"
@@ -1296,7 +1296,7 @@
             "dashed": true,
             "date": "1867 01 01",
             "date_plus": "1868 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_18_SIM.20240321074621.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_18_SIM.20240321074621.err",
             "finish": "2024-03-22 03:38:49",
             "id": "a6zi_18500101_fc0_18_SIM",
             "internal_id": "a6zi_18500101_fc0_18_SIM",
@@ -1305,7 +1305,7 @@
             "member": "fc0",
             "minutes": 11282,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_18_SIM.20240321074621.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_18_SIM.20240321074621.out",
             "package": "a6zi_ASThread_17110035707450_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_17_SIM"
@@ -1339,7 +1339,7 @@
             "dashed": true,
             "date": "1868 01 01",
             "date_plus": "1869 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_19_SIM.20240321074621.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_19_SIM.20240321074621.err",
             "finish": "2024-03-22 06:47:13",
             "id": "a6zi_18500101_fc0_19_SIM",
             "internal_id": "a6zi_18500101_fc0_19_SIM",
@@ -1348,7 +1348,7 @@
             "member": "fc0",
             "minutes": 11304,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_19_SIM.20240321074621.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_19_SIM.20240321074621.out",
             "package": "a6zi_ASThread_17110035707450_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_18_SIM"
@@ -1382,7 +1382,7 @@
             "dashed": true,
             "date": "1869 01 01",
             "date_plus": "1870 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_20_SIM.20240321074621.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_20_SIM.20240321074621.err",
             "finish": "2024-03-22 09:54:31",
             "id": "a6zi_18500101_fc0_20_SIM",
             "internal_id": "a6zi_18500101_fc0_20_SIM",
@@ -1391,7 +1391,7 @@
             "member": "fc0",
             "minutes": 11238,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_20_SIM.20240321074621.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_20_SIM.20240321074621.out",
             "package": "a6zi_ASThread_17110035707450_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_19_SIM"
@@ -1425,7 +1425,7 @@
             "dashed": true,
             "date": "1870 01 01",
             "date_plus": "1871 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_21_SIM.20240321074621.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_21_SIM.20240321074621.err",
             "finish": "2024-03-22 13:02:05",
             "id": "a6zi_18500101_fc0_21_SIM",
             "internal_id": "a6zi_18500101_fc0_21_SIM",
@@ -1434,7 +1434,7 @@
             "member": "fc0",
             "minutes": 11254,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_21_SIM.20240321074621.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_21_SIM.20240321074621.out",
             "package": "a6zi_ASThread_17110035707450_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_20_SIM"
@@ -1468,7 +1468,7 @@
             "dashed": true,
             "date": "1871 01 01",
             "date_plus": "1872 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_22_SIM.20240321074621.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_22_SIM.20240321074621.err",
             "finish": "2024-03-22 16:10:22",
             "id": "a6zi_18500101_fc0_22_SIM",
             "internal_id": "a6zi_18500101_fc0_22_SIM",
@@ -1477,7 +1477,7 @@
             "member": "fc0",
             "minutes": 11297,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_22_SIM.20240321074621.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_22_SIM.20240321074621.out",
             "package": "a6zi_ASThread_17110035707450_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_21_SIM"
@@ -1511,7 +1511,7 @@
             "dashed": true,
             "date": "1872 01 01",
             "date_plus": "1873 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_23_SIM.20240322161039.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_23_SIM.20240322161039.err",
             "finish": "2024-03-22 20:15:18",
             "id": "a6zi_18500101_fc0_23_SIM",
             "internal_id": "a6zi_18500101_fc0_23_SIM",
@@ -1520,7 +1520,7 @@
             "member": "fc0",
             "minutes": 11354,
             "minutes_queue": 3325,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_23_SIM.20240322161039.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_23_SIM.20240322161039.out",
             "package": "a6zi_ASThread_17111202269568_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_22_SIM"
@@ -1554,7 +1554,7 @@
             "dashed": true,
             "date": "1873 01 01",
             "date_plus": "1874 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_24_SIM.20240322161039.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_24_SIM.20240322161039.err",
             "finish": "2024-03-22 23:23:52",
             "id": "a6zi_18500101_fc0_24_SIM",
             "internal_id": "a6zi_18500101_fc0_24_SIM",
@@ -1563,7 +1563,7 @@
             "member": "fc0",
             "minutes": 11314,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_24_SIM.20240322161039.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_24_SIM.20240322161039.out",
             "package": "a6zi_ASThread_17111202269568_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_23_SIM"
@@ -1597,7 +1597,7 @@
             "dashed": true,
             "date": "1874 01 01",
             "date_plus": "1875 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_25_SIM.20240322161039.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_25_SIM.20240322161039.err",
             "finish": "2024-03-23 02:31:55",
             "id": "a6zi_18500101_fc0_25_SIM",
             "internal_id": "a6zi_18500101_fc0_25_SIM",
@@ -1606,7 +1606,7 @@
             "member": "fc0",
             "minutes": 11283,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_25_SIM.20240322161039.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_25_SIM.20240322161039.out",
             "package": "a6zi_ASThread_17111202269568_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_24_SIM"
@@ -1640,7 +1640,7 @@
             "dashed": true,
             "date": "1875 01 01",
             "date_plus": "1876 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_26_SIM.20240322161039.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_26_SIM.20240322161039.err",
             "finish": "2024-03-23 05:40:32",
             "id": "a6zi_18500101_fc0_26_SIM",
             "internal_id": "a6zi_18500101_fc0_26_SIM",
@@ -1649,7 +1649,7 @@
             "member": "fc0",
             "minutes": 11317,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_26_SIM.20240322161039.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_26_SIM.20240322161039.out",
             "package": "a6zi_ASThread_17111202269568_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_25_SIM"
@@ -1683,7 +1683,7 @@
             "dashed": true,
             "date": "1876 01 01",
             "date_plus": "1877 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_27_SIM.20240322161039.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_27_SIM.20240322161039.err",
             "finish": "2024-03-23 08:49:56",
             "id": "a6zi_18500101_fc0_27_SIM",
             "internal_id": "a6zi_18500101_fc0_27_SIM",
@@ -1692,7 +1692,7 @@
             "member": "fc0",
             "minutes": 11363,
             "minutes_queue": 1,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_27_SIM.20240322161039.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_27_SIM.20240322161039.out",
             "package": "a6zi_ASThread_17111202269568_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_26_SIM"
@@ -1726,7 +1726,7 @@
             "dashed": true,
             "date": "1877 01 01",
             "date_plus": "1878 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_28_SIM.20240322161039.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_28_SIM.20240322161039.err",
             "finish": "2024-03-23 11:58:04",
             "id": "a6zi_18500101_fc0_28_SIM",
             "internal_id": "a6zi_18500101_fc0_28_SIM",
@@ -1735,7 +1735,7 @@
             "member": "fc0",
             "minutes": 11288,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_28_SIM.20240322161039.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_28_SIM.20240322161039.out",
             "package": "a6zi_ASThread_17111202269568_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_27_SIM"
@@ -1769,7 +1769,7 @@
             "dashed": true,
             "date": "1878 01 01",
             "date_plus": "1879 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_29_SIM.20240322161039.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_29_SIM.20240322161039.err",
             "finish": "2024-03-23 15:06:38",
             "id": "a6zi_18500101_fc0_29_SIM",
             "internal_id": "a6zi_18500101_fc0_29_SIM",
@@ -1778,7 +1778,7 @@
             "member": "fc0",
             "minutes": 11314,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_29_SIM.20240322161039.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_29_SIM.20240322161039.out",
             "package": "a6zi_ASThread_17111202269568_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_28_SIM"
@@ -1812,7 +1812,7 @@
             "dashed": true,
             "date": "1879 01 01",
             "date_plus": "1880 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_30_SIM.20240322161039.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_30_SIM.20240322161039.err",
             "finish": "2024-03-23 18:14:12",
             "id": "a6zi_18500101_fc0_30_SIM",
             "internal_id": "a6zi_18500101_fc0_30_SIM",
@@ -1821,7 +1821,7 @@
             "member": "fc0",
             "minutes": 11253,
             "minutes_queue": 1,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_30_SIM.20240322161039.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_30_SIM.20240322161039.out",
             "package": "a6zi_ASThread_17111202269568_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_29_SIM"
@@ -1855,7 +1855,7 @@
             "dashed": true,
             "date": "1880 01 01",
             "date_plus": "1881 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_31_SIM.20240322161039.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_31_SIM.20240322161039.err",
             "finish": "2024-03-23 21:24:09",
             "id": "a6zi_18500101_fc0_31_SIM",
             "internal_id": "a6zi_18500101_fc0_31_SIM",
@@ -1864,7 +1864,7 @@
             "member": "fc0",
             "minutes": 11397,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_31_SIM.20240322161039.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_31_SIM.20240322161039.out",
             "package": "a6zi_ASThread_17111202269568_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_30_SIM"
@@ -1898,7 +1898,7 @@
             "dashed": true,
             "date": "1881 01 01",
             "date_plus": "1882 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_32_SIM.20240322161039.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_32_SIM.20240322161039.err",
             "finish": "2024-03-24 00:33:28",
             "id": "a6zi_18500101_fc0_32_SIM",
             "internal_id": "a6zi_18500101_fc0_32_SIM",
@@ -1907,7 +1907,7 @@
             "member": "fc0",
             "minutes": 11359,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_32_SIM.20240322161039.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_32_SIM.20240322161039.out",
             "package": "a6zi_ASThread_17111202269568_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_31_SIM"
@@ -1941,7 +1941,7 @@
             "dashed": true,
             "date": "1882 01 01",
             "date_plus": "1883 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_33_SIM.20240324003349.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_33_SIM.20240324003349.err",
             "finish": "2024-03-24 03:43:48",
             "id": "a6zi_18500101_fc0_33_SIM",
             "internal_id": "a6zi_18500101_fc0_33_SIM",
@@ -1950,7 +1950,7 @@
             "member": "fc0",
             "minutes": 11384,
             "minutes_queue": 15,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_33_SIM.20240324003349.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_33_SIM.20240324003349.out",
             "package": "a6zi_ASThread_17112368179816_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_32_SIM"
@@ -1984,7 +1984,7 @@
             "dashed": true,
             "date": "1883 01 01",
             "date_plus": "1884 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_34_SIM.20240324003349.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_34_SIM.20240324003349.err",
             "finish": "2024-03-24 06:52:50",
             "id": "a6zi_18500101_fc0_34_SIM",
             "internal_id": "a6zi_18500101_fc0_34_SIM",
@@ -1993,7 +1993,7 @@
             "member": "fc0",
             "minutes": 11342,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_34_SIM.20240324003349.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_34_SIM.20240324003349.out",
             "package": "a6zi_ASThread_17112368179816_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_33_SIM"
@@ -2027,7 +2027,7 @@
             "dashed": true,
             "date": "1884 01 01",
             "date_plus": "1885 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_35_SIM.20240324003349.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_35_SIM.20240324003349.err",
             "finish": "2024-03-24 10:02:22",
             "id": "a6zi_18500101_fc0_35_SIM",
             "internal_id": "a6zi_18500101_fc0_35_SIM",
@@ -2036,7 +2036,7 @@
             "member": "fc0",
             "minutes": 11372,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_35_SIM.20240324003349.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_35_SIM.20240324003349.out",
             "package": "a6zi_ASThread_17112368179816_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_34_SIM"
@@ -2070,7 +2070,7 @@
             "dashed": true,
             "date": "1885 01 01",
             "date_plus": "1886 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_36_SIM.20240324003349.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_36_SIM.20240324003349.err",
             "finish": "2024-03-24 13:11:25",
             "id": "a6zi_18500101_fc0_36_SIM",
             "internal_id": "a6zi_18500101_fc0_36_SIM",
@@ -2079,7 +2079,7 @@
             "member": "fc0",
             "minutes": 11343,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_36_SIM.20240324003349.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_36_SIM.20240324003349.out",
             "package": "a6zi_ASThread_17112368179816_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_35_SIM"
@@ -2113,7 +2113,7 @@
             "dashed": true,
             "date": "1886 01 01",
             "date_plus": "1887 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_37_SIM.20240324003349.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_37_SIM.20240324003349.err",
             "finish": "2024-03-24 16:20:11",
             "id": "a6zi_18500101_fc0_37_SIM",
             "internal_id": "a6zi_18500101_fc0_37_SIM",
@@ -2122,7 +2122,7 @@
             "member": "fc0",
             "minutes": 11326,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_37_SIM.20240324003349.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_37_SIM.20240324003349.out",
             "package": "a6zi_ASThread_17112368179816_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_36_SIM"
@@ -2156,7 +2156,7 @@
             "dashed": true,
             "date": "1887 01 01",
             "date_plus": "1888 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_38_SIM.20240324003349.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_38_SIM.20240324003349.err",
             "finish": "2024-03-24 19:29:04",
             "id": "a6zi_18500101_fc0_38_SIM",
             "internal_id": "a6zi_18500101_fc0_38_SIM",
@@ -2165,7 +2165,7 @@
             "member": "fc0",
             "minutes": 11333,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_38_SIM.20240324003349.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_38_SIM.20240324003349.out",
             "package": "a6zi_ASThread_17112368179816_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_37_SIM"
@@ -2199,7 +2199,7 @@
             "dashed": true,
             "date": "1888 01 01",
             "date_plus": "1889 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_39_SIM.20240324003349.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_39_SIM.20240324003349.err",
             "finish": "2024-03-24 22:39:30",
             "id": "a6zi_18500101_fc0_39_SIM",
             "internal_id": "a6zi_18500101_fc0_39_SIM",
@@ -2208,7 +2208,7 @@
             "member": "fc0",
             "minutes": 11426,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_39_SIM.20240324003349.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_39_SIM.20240324003349.out",
             "package": "a6zi_ASThread_17112368179816_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_38_SIM"
@@ -2242,7 +2242,7 @@
             "dashed": true,
             "date": "1889 01 01",
             "date_plus": "1890 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_40_SIM.20240324003349.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_40_SIM.20240324003349.err",
             "finish": "2024-03-25 01:49:08",
             "id": "a6zi_18500101_fc0_40_SIM",
             "internal_id": "a6zi_18500101_fc0_40_SIM",
@@ -2251,7 +2251,7 @@
             "member": "fc0",
             "minutes": 11378,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_40_SIM.20240324003349.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_40_SIM.20240324003349.out",
             "package": "a6zi_ASThread_17112368179816_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_39_SIM"
@@ -2285,7 +2285,7 @@
             "dashed": true,
             "date": "1890 01 01",
             "date_plus": "1891 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_41_SIM.20240324003349.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_41_SIM.20240324003349.err",
             "finish": "2024-03-25 04:58:02",
             "id": "a6zi_18500101_fc0_41_SIM",
             "internal_id": "a6zi_18500101_fc0_41_SIM",
@@ -2294,7 +2294,7 @@
             "member": "fc0",
             "minutes": 11334,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_41_SIM.20240324003349.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_41_SIM.20240324003349.out",
             "package": "a6zi_ASThread_17112368179816_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_40_SIM"
@@ -2328,7 +2328,7 @@
             "dashed": true,
             "date": "1891 01 01",
             "date_plus": "1892 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_42_SIM.20240324003349.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_42_SIM.20240324003349.err",
             "finish": "2024-03-25 08:06:37",
             "id": "a6zi_18500101_fc0_42_SIM",
             "internal_id": "a6zi_18500101_fc0_42_SIM",
@@ -2337,7 +2337,7 @@
             "member": "fc0",
             "minutes": 11315,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_42_SIM.20240324003349.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_42_SIM.20240324003349.out",
             "package": "a6zi_ASThread_17112368179816_528_10",
             "parent_list": [
                 "a6zi_18500101_fc0_41_SIM"
@@ -2371,7 +2371,7 @@
             "dashed": true,
             "date": "1892 01 01",
             "date_plus": "1893 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_43_SIM.20240325080652.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_43_SIM.20240325080652.err",
             "finish": "2024-03-25 11:17:07",
             "id": "a6zi_18500101_fc0_43_SIM",
             "internal_id": "a6zi_18500101_fc0_43_SIM",
@@ -2380,7 +2380,7 @@
             "member": "fc0",
             "minutes": 11382,
             "minutes_queue": 33,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_43_SIM.20240325080652.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_43_SIM.20240325080652.out",
             "package": "a6zi_ASThread_17113504018271_528_8",
             "parent_list": [
                 "a6zi_18500101_fc0_42_SIM"
@@ -2414,7 +2414,7 @@
             "dashed": true,
             "date": "1893 01 01",
             "date_plus": "1894 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_44_SIM.20240325080652.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_44_SIM.20240325080652.err",
             "finish": "2024-03-25 14:27:00",
             "id": "a6zi_18500101_fc0_44_SIM",
             "internal_id": "a6zi_18500101_fc0_44_SIM",
@@ -2423,7 +2423,7 @@
             "member": "fc0",
             "minutes": 11392,
             "minutes_queue": 1,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_44_SIM.20240325080652.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_44_SIM.20240325080652.out",
             "package": "a6zi_ASThread_17113504018271_528_8",
             "parent_list": [
                 "a6zi_18500101_fc0_43_SIM"
@@ -2457,7 +2457,7 @@
             "dashed": true,
             "date": "1894 01 01",
             "date_plus": "1895 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_45_SIM.20240325080652.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_45_SIM.20240325080652.err",
             "finish": "2024-03-25 17:36:16",
             "id": "a6zi_18500101_fc0_45_SIM",
             "internal_id": "a6zi_18500101_fc0_45_SIM",
@@ -2466,7 +2466,7 @@
             "member": "fc0",
             "minutes": 11356,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_45_SIM.20240325080652.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_45_SIM.20240325080652.out",
             "package": "a6zi_ASThread_17113504018271_528_8",
             "parent_list": [
                 "a6zi_18500101_fc0_44_SIM"
@@ -2500,7 +2500,7 @@
             "dashed": true,
             "date": "1895 01 01",
             "date_plus": "1896 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_46_SIM.20240325080652.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_46_SIM.20240325080652.err",
             "finish": "2024-03-25 20:46:20",
             "id": "a6zi_18500101_fc0_46_SIM",
             "internal_id": "a6zi_18500101_fc0_46_SIM",
@@ -2509,7 +2509,7 @@
             "member": "fc0",
             "minutes": 11404,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_46_SIM.20240325080652.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_46_SIM.20240325080652.out",
             "package": "a6zi_ASThread_17113504018271_528_8",
             "parent_list": [
                 "a6zi_18500101_fc0_45_SIM"
@@ -2543,7 +2543,7 @@
             "dashed": true,
             "date": "1896 01 01",
             "date_plus": "1897 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_47_SIM.20240325080652.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_47_SIM.20240325080652.err",
             "finish": "2024-03-25 23:56:50",
             "id": "a6zi_18500101_fc0_47_SIM",
             "internal_id": "a6zi_18500101_fc0_47_SIM",
@@ -2552,7 +2552,7 @@
             "member": "fc0",
             "minutes": 11430,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_47_SIM.20240325080652.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_47_SIM.20240325080652.out",
             "package": "a6zi_ASThread_17113504018271_528_8",
             "parent_list": [
                 "a6zi_18500101_fc0_46_SIM"
@@ -2586,7 +2586,7 @@
             "dashed": true,
             "date": "1897 01 01",
             "date_plus": "1898 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_48_SIM.20240325080652.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_48_SIM.20240325080652.err",
             "finish": "2024-03-26 03:05:45",
             "id": "a6zi_18500101_fc0_48_SIM",
             "internal_id": "a6zi_18500101_fc0_48_SIM",
@@ -2595,7 +2595,7 @@
             "member": "fc0",
             "minutes": 11335,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_48_SIM.20240325080652.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_48_SIM.20240325080652.out",
             "package": "a6zi_ASThread_17113504018271_528_8",
             "parent_list": [
                 "a6zi_18500101_fc0_47_SIM"
@@ -2629,7 +2629,7 @@
             "dashed": true,
             "date": "1898 01 01",
             "date_plus": "1899 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_49_SIM.20240325080652.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_49_SIM.20240325080652.err",
             "finish": "2024-03-26 06:15:12",
             "id": "a6zi_18500101_fc0_49_SIM",
             "internal_id": "a6zi_18500101_fc0_49_SIM",
@@ -2638,7 +2638,7 @@
             "member": "fc0",
             "minutes": 11367,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_49_SIM.20240325080652.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_49_SIM.20240325080652.out",
             "package": "a6zi_ASThread_17113504018271_528_8",
             "parent_list": [
                 "a6zi_18500101_fc0_48_SIM"
@@ -2670,7 +2670,7 @@
             "dashed": true,
             "date": "1899 01 01",
             "date_plus": "1900 01 01",
-            "err": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_50_SIM.20240325080652.err",
+            "err": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_50_SIM.20240325080652.err",
             "finish": "2024-03-26 09:25:05",
             "id": "a6zi_18500101_fc0_50_SIM",
             "internal_id": "a6zi_18500101_fc0_50_SIM",
@@ -2679,7 +2679,7 @@
             "member": "fc0",
             "minutes": 11393,
             "minutes_queue": 0,
-            "out": "/home/ltenorio/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_50_SIM.20240325080652.out",
+            "out": "/home/user/autosubmit/a6zi/tmp/LOG_a6zi/a6zi_18500101_fc0_50_SIM.20240325080652.out",
             "package": "a6zi_ASThread_17113504018271_528_8",
             "parent_list": [
                 "a6zi_18500101_fc0_49_SIM"

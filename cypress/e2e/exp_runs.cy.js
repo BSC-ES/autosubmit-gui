@@ -97,7 +97,7 @@ describe("Experiment run history and RunId generation", () => {
       .should('be.visible')
       .click();
 
-    cy.contains("Run: Latest")  // Contains the remote ID of LOCAL_SETUP
+    cy.contains("Run: Latest")
       .should("be.visible");
   });
 
