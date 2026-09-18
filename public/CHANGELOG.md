@@ -2,7 +2,8 @@
 
 ### Pre-release v4.1.1-beta.5 - Unreleased
 * **Compatibility with Autosubmit API version >= [v4.1.2b7](https://pypi.org/project/autosubmit-api/v4.1.2b7/)** (unreleased)
-* Visual improvements (invert arrow direction in drop-down sections)
+* Visual improvements (invert arrow direction in drop-down sections).
+* Enabled a reverse progress bar to represent the remaining time to be hidden in notifications and fixed their style.
 
 ### Pre-release v4.1.1-beta.4 - Release date: 2026-08-11
 
