@@ -1,0 +1,42 @@
+{
+    "error": false,
+    "error_message": "",
+    "runs": [
+        {
+            "run_id": 2,
+            "created": "2026-08-07T13:02:48+02:00",
+            "finish": null,
+            "chunk_unit": "month",
+            "chunk_size": 1,
+            "submitted": 0,
+            "queuing": 0,
+            "running": 0,
+            "completed": 6,
+            "failed": 0,
+            "total": 6,
+            "suspended": 0,
+            "Parallelization": 1,
+            "SYPD": 1440.0,
+            "ASYPD": 720.0,
+            "CHSY": 0.0
+        },
+        {
+            "run_id": 1,
+            "created": "2026-08-07T12:19:06+0200",
+            "finish": "2026-08-07T13:02:47+02:00",
+            "chunk_unit": "month",
+            "chunk_size": 1,
+            "submitted": 0,
+            "queuing": 0,
+            "running": 0,
+            "completed": 6,
+            "failed": 0,
+            "total": 6,
+            "suspended": 0,
+            "Parallelization": 1,
+            "SYPD": 1440.0,
+            "ASYPD": 720.0,
+            "CHSY": 0.0
+        }
+    ]
+}
