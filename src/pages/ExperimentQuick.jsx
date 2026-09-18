@@ -282,6 +282,7 @@ const ExperimentQuick = () => {
               ? selectedJobIds.values().next().value
               : `${selectedJobIds.size} jobs selected`
           }
+          allowTitleCopy={selectedJobIds.size === 1}
         >
           <div className="flex flex-col gap-3">
             {selectedJobIds.size === 1 && (
