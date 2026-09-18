@@ -42,11 +42,14 @@ const ExperimentInfoHeader = ({ expid }) => {
         >
           <div className="flex gap-3 items-center">
             <ActiveIndicator isActive={expInfoData?.running} />
-            <div className="rounded-full bg-primary/10 px-3 py-1 text-lg text-primary font-bold">
+            <div
+              className="rounded-full bg-primary/10 px-3 py-1 text-lg text-primary font-bold"
+              onDoubleClick={(event) => event.stopPropagation()}
+            >
               {expid}
             </div>
           </div>
-          <div className="text-xl font-semibold grow line-clamp-2">
+          <div className="text-xl font-semibold grow">
             {isExpInfoFetching ? (
               <DotLoader dotClassName={"bg-black dark:bg-white"} />
             ) : (
@@ -57,45 +60,55 @@ const ExperimentInfoHeader = ({ expid }) => {
                     {"Error getting experiment info"}
                   </span>
                 ) : (
-                  <>{expInfoData?.description || "-"}</>
+                  <div
+                    className="w-fit max-w-full line-clamp-2"
+                    onDoubleClick={(event) => event.stopPropagation()}
+                  >
+                    {expInfoData?.description || "-"}
+                  </div>
                 )}
               </>
             )}
           </div>
 
-          {!isExpInfoFetching && !isExpInfoError && (
-            <>
-              <button
-                onClick={() => setShowUpdateDescriptionModal(true)}
-                className="btn rounded-full hover:bg-black/5 aspect-square"
-                title="Update description"
-              >
-                <i className="fa-solid fa-pen-to-square text-gray-500 hover:text-gray-700 text-xl "></i>
-              </button>
-              <UpdateDescriptionModal
-                expid={expid}
-                show={showUpdateDescriptionModal}
-                onHide={handleUpdDescModalHide}
-              />
-            </>
-          )}
-
-          {!isEndpointConfigFetching &&
-            endpointConfigData?.RUNNER_RUN?.ENABLED !== false && (
-              <ExperimentRunStopCommand expid={expid} />
+          <div
+            className="flex pl-4 gap-6 items-center"
+            onDoubleClick={(event) => event.stopPropagation()}
+          >
+            {!isExpInfoFetching && !isExpInfoError && (
+              <>
+                <button
+                  onClick={() => setShowUpdateDescriptionModal(true)}
+                  className="btn rounded-full hover:bg-black/5 aspect-square"
+                  title="Update description"
+                >
+                  <i className="fa-solid fa-pen-to-square text-gray-500 hover:text-gray-700 text-xl "></i>
+                </button>
+                <UpdateDescriptionModal
+                  expid={expid}
+                  show={showUpdateDescriptionModal}
+                  onHide={handleUpdDescModalHide}
+                />
+              </>
             )}
 
-          <button
-            onClick={handleToggle}
-            className="btn rounded-full hover:bg-black/5 aspect-square"
-          >
-            <i
-              className={cn(
-                "ms-auto fa-solid fa-angle-down transition-transform duration-200",
-                open && "rotate-180"
+            {!isEndpointConfigFetching &&
+              endpointConfigData?.RUNNER_RUN?.ENABLED !== false && (
+                <ExperimentRunStopCommand expid={expid} />
               )}
-            />
-          </button>
+
+            <button
+              onClick={handleToggle}
+              className="btn rounded-full hover:bg-black/5 aspect-square"
+            >
+              <i
+                className={cn(
+                  "ms-auto fa-solid fa-angle-down transition-transform duration-200",
+                  open && "rotate-180"
+                )}
+              />
+            </button>
+          </div>
         </div>
 
         {open && (
