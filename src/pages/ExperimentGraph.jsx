@@ -345,6 +345,7 @@ const ExperimentGraph = () => {
               ? selectedJobIds[0]
               : `${selectedJobIds.length} jobs selected`
           }
+          allowTitleCopy={selectedJobIds.length === 1}
           onClose={handleCloseJobDetail}
         >
           <div className="flex flex-col gap-3">
