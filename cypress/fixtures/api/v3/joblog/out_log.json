@@ -1,0 +1,14 @@
+{
+    "logfile": ".../a06l_LOCAL_SETUP.20260810125022.out",
+    "found": true,
+    "lastModified": "2026-08-10T12:50:33+02:00",
+    "timeStamp": 1786359033,
+    "error": false,
+    "error_message": "",
+    "logcontent": [
+        {
+            "index": 0,
+            "content": "This is the .out log"
+        }
+    ]
+}
