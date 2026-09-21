@@ -49,7 +49,7 @@ const ExperimentInfoHeader = ({ expid }) => {
               {expid}
             </div>
           </div>
-          <div className="text-xl font-semibold grow">
+          <div className="text-xl font-semibold grow min-w-0">
             {isExpInfoFetching ? (
               <DotLoader dotClassName={"bg-black dark:bg-white"} />
             ) : (
@@ -61,7 +61,7 @@ const ExperimentInfoHeader = ({ expid }) => {
                   </span>
                 ) : (
                   <div
-                    className="w-fit max-w-full line-clamp-2"
+                    className="w-fit max-w-full break-words line-clamp-2"
                     onDoubleClick={(event) => event.stopPropagation()}
                   >
                     {expInfoData?.description || "-"}
