@@ -1,7 +1,6 @@
 import { useParams, useSearchParams } from "react-router-dom";
 import { autosubmitApiV4 } from "../services/autosubmitApiV4";
 import { useEffect, useState, useMemo } from "react";
-import { DEFAULT_ITEMS_QUICK_VIEW } from '../consts';
 import useASTitle from "../hooks/useASTitle";
 import useBreadcrumb from "../hooks/useBreadcrumb";
 import { cn, getStatusBadgeStyle, JOB_STATUSES } from "../services/utils";
@@ -10,16 +9,11 @@ import BottomPanel from "../common/BottomPanel";
 import FetchJobDetailCard from "../common/FetchJobDetailCard";
 import Paginator from "../common/Paginator";
 
-const ITEMS_PER_PAGE_OPTIONS = [DEFAULT_ITEMS_QUICK_VIEW, 500, 1000];
+const DEFAULT_ITEMS_PER_PAGE = 100;
+const ITEMS_PER_PAGE_OPTIONS = [DEFAULT_ITEMS_PER_PAGE, 500, 1000];
 const DEFAULT_STATUS_QUICK_VIEW = "Any status";
 
-const QuickJobList = ({ jobs, selectedJobIds, onSelectionChange }) => {
-  const [lastClickedIndex, setLastClickedIndex] = useState(null);
-
-  useEffect(() => {
-    onSelectionChange(selectedJobIds);
-  }, [selectedJobIds, onSelectionChange]);
-
+const QuickJobList = ({ jobs, selection, onSelectionChange }) => {
   if (!Array.isArray(jobs) || jobs.length === 0) {
     return (
       <div className="w-full h-full flex flex-col items-center justify-center gap-4">
@@ -30,30 +24,30 @@ const QuickJobList = ({ jobs, selectedJobIds, onSelectionChange }) => {
   }
 
   const handleJobClick = (index, jobName, event) => {
-    if (event.shiftKey && lastClickedIndex !== null && jobs) {
-      // Shift+click: select range
-      const start = Math.min(lastClickedIndex, index);
-      const end = Math.max(lastClickedIndex, index);
-      const newSelected = new Set(selectedJobIds);
+    let newSelected = new Set(selection.jobIds);
+    let newLastClickedIndex = index;
+
+    if (event.shiftKey && selection.lastClickedIndex !== null) {
+      const start = Math.min(selection.lastClickedIndex, index);
+      const end = Math.max(selection.lastClickedIndex, index);
+
       for (let i = start; i <= end; i++) {
         newSelected.add(jobs[i].name);
       }
-      onSelectionChange(newSelected);
     } else if (event.ctrlKey || event.metaKey) {
-      // Ctrl/Cmd+click: toggle selection
-      const newSelected = new Set(selectedJobIds);
       if (newSelected.has(jobName)) {
         newSelected.delete(jobName);
       } else {
         newSelected.add(jobName);
       }
-      onSelectionChange(newSelected);
-      setLastClickedIndex(index);
     } else {
-      // Regular click: select only this item
-      onSelectionChange(new Set([jobName]));
-      setLastClickedIndex(index);
+      newSelected = new Set([jobName]);
     }
+
+    onSelectionChange({
+      jobIds: newSelected,
+      lastClickedIndex: newLastClickedIndex,
+    });
   };
 
   return (
@@ -65,7 +59,7 @@ const QuickJobList = ({ jobs, selectedJobIds, onSelectionChange }) => {
       }}
     >
       {jobs.map((job, index) => {
-        const isSelected = selectedJobIds.has(job.name);
+        const isSelected = selection.jobIds.has(job.name);
 
         return (
           <li
@@ -123,7 +117,7 @@ const ExperimentQuick = () => {
 
     // Ignore non-valid or non-whitelisted values
     if (!Number.isFinite(size) || !ITEMS_PER_PAGE_OPTIONS.includes(size)) {
-      return DEFAULT_ITEMS_QUICK_VIEW
+      return DEFAULT_ITEMS_PER_PAGE
     }
 
     return size
@@ -219,10 +213,15 @@ const ExperimentQuick = () => {
     }
   };
 
-  const [selectedJobIds, setSelectedJobIds] = useState(new Set());
+  const createEmptySelection = () => ({
+    jobIds: new Set(),
+    lastClickedIndex: 0,
+  });
+
+  const [selection, setSelection] = useState(createEmptySelection);
 
   useEffect(() => {
-    setSelectedJobIds(new Set());
+    setSelection(createEmptySelection());
   }, [routeParams.expid, currentPage, pageSize, status, jobName]);
 
   const handlePageClick = (e) => {
@@ -260,6 +259,9 @@ const ExperimentQuick = () => {
       ...(jobNameInput && { job_name: jobNameInput })
     })
   }
+
+  const totalItems = data?.pagination?.total_items ?? 0;
+  const pageItems = data?.pagination?.page_items ?? 0;
 
   return (
     <div className="w-full flex flex-col gap-4 grow">
@@ -299,8 +301,8 @@ const ExperimentQuick = () => {
         </div>
         <div className="flex items-center gap-1 text-sm" style={{ whiteSpace: "nowrap" }}>
           <span>Showing</span>
-          {data?.pagination?.total_items <= Math.min(...ITEMS_PER_PAGE_OPTIONS) ? (
-            <strong>{data?.pagination?.page_items || "0"}</strong>
+          {totalItems <= ITEMS_PER_PAGE_OPTIONS[0] ? (
+            <strong>{pageItems}</strong>
           ) : (
             <select id="jobs-per-page" value={pageSize} onChange={handlePageSizeChange}
               className="form-select border border-primary text-primary dark:bg-primary dark:text-white font-bold">
@@ -312,7 +314,7 @@ const ExperimentQuick = () => {
             </select>
           )}
           <span>of</span>
-          <strong>{data?.pagination?.total_items || "0"} jobs</strong>
+          <strong>{totalItems} jobs</strong>
         </div>
 
         <button
@@ -334,8 +336,8 @@ const ExperimentQuick = () => {
         ) : (
           <QuickJobList
             jobs={data?.jobs}
-            selectedJobIds={selectedJobIds}
-            onSelectionChange={setSelectedJobIds}
+            selection={selection}
+            onSelectionChange={setSelection}
           ></QuickJobList>
         )}
       </div>
@@ -343,19 +345,19 @@ const ExperimentQuick = () => {
         <Paginator currentPage={currentPage} totalPages={data?.pagination?.total_pages || 1} onPageClick={handlePageClick}></Paginator>
       </div>
 
-      {selectedJobIds.size > 0 && (
+      {selection.jobIds.size > 0 && (
         <BottomPanel
           title={
-            selectedJobIds.size === 1
-              ? selectedJobIds.values().next().value
-              : `${selectedJobIds.size} jobs selected`
+            selection.jobIds.size === 1
+              ? selection.jobIds.values().next().value
+              : `${selection.jobIds.size} jobs selected`
           }
         >
           <div className="flex flex-col gap-3">
-            {selectedJobIds.size === 1 && (
+            {selection.jobIds.size === 1 && (
               <FetchJobDetailCard
                 expid={routeParams.expid}
-                jobName={selectedJobIds.values().next().value}
+                jobName={selection.jobIds.values().next().value}
               />
             )}
 
@@ -366,7 +368,7 @@ const ExperimentQuick = () => {
               </button>
             </div>
             <ChangeStatusModal
-              selectedJobs={Array.from(selectedJobIds)}
+              selectedJobs={Array.from(selection.jobIds)}
               show={showModal}
               onHide={toggleModal}
               expid={routeParams.expid}

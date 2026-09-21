@@ -1,8 +1,6 @@
 export const AUTOSUBMIT_API_SOURCE = import.meta.env.REACT_APP_AUTOSUBMIT_API_SOURCE;
 export const PUBLIC_URL = import.meta.env.BASE_URL
 
-export const DEFAULT_ITEMS_QUICK_VIEW = 100;
-
 export const CUSTOM_LOGO_URL = import.meta.env.REACT_APP_CUSTOM_LOGO_URL;
 
 export const INTERVAL_BUTTON_REFRESH_RATE = import.meta.env.REACT_APP_INTERVAL_BUTTON_REFRESH_RATE || 10;
