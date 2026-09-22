@@ -15,7 +15,7 @@ import {
 import TimeScatterPlot from "../components/plots/TimeScatterPlot";
 import { cn, exportToCSV } from "../services/utils";
 import Modal from "../common/Modal";
-import { Dialog } from "@headlessui/react";
+import { DialogTitle } from "@headlessui/react";
 import {
   Table,
   TableBody,
@@ -534,18 +534,18 @@ const ExperimentPerformance = () => {
   return (
     <>
       <Modal show={showWarnings} onClose={toggleShowWarning}>
-        <Dialog.Title
+        <DialogTitle
           className={
-            "bg-warning text-white py-4 px-4 text-2xl font-semibold rounded-t-lg flex gap-4 justify-between items-center"
+            "bg-warning text-white py-4 px-6 text-2xl font-semibold rounded-t-lg flex gap-4 justify-between items-center"
           }
         >
           <span>
-            <i className="fa-solid fa-triangle-exclamation mx-2"></i> Warnings
+            <i className="fa-solid fa-triangle-exclamation"></i> Warnings
           </span>
           <div className="cursor-pointer" onClick={toggleShowWarning}>
             <i className="fa-solid fa-xmark"></i>
           </div>
-        </Dialog.Title>
+        </DialogTitle>
         <div className="bg-white text-black py-6 px-6 rounded-b-lg">
           <ol className="list-decimal ms-4">
             {data &&
@@ -558,16 +558,16 @@ const ExperimentPerformance = () => {
       </Modal>
 
       <Modal show={showHelp} onClose={toggleShowHelp}>
-        <Dialog.Title
-          className="bg-dark text-white py-4 px-4 text-2xl font-semibold rounded-t-lg flex justify-between items-center"
+        <DialogTitle
+          className="bg-dark text-white py-4 px-6 text-2xl font-semibold rounded-t-lg flex justify-between items-center"
         >
           <span>
-            <i className="fa-solid fa-circle-light mx-2"></i> Key information
+            <i className="fa-solid fa-circle-info"></i> Key information
           </span>
           <div className="cursor-pointer" onClick={toggleShowHelp}>
             <i className="fa-solid fa-xmark"></i>
           </div>
-        </Dialog.Title>
+        </DialogTitle>
         <div className="bg-white text-black py-6 px-6 rounded-b-lg space-y-6">
           <div>
             <div className="mb-4">
