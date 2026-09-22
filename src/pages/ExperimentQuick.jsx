@@ -13,6 +13,29 @@ const DEFAULT_ITEMS_PER_PAGE = 100;
 const ITEMS_PER_PAGE_OPTIONS = [DEFAULT_ITEMS_PER_PAGE, 500, 1000];
 const DEFAULT_STATUS_QUICK_VIEW = "Any status";
 
+/**
+ * @typedef {Object} Job
+ * @property {string} name - Unique name of the job.
+ * @property {string} status - Current status of the job.
+ */
+
+/**
+ * @typedef {Object} JobSelection
+ * @property {Set<string>} jobIds - Names of the selected jobs.
+ * @property {number} lastClickedIndex - Anchor index for range selection.
+ */
+
+
+/**
+ * Renders the jobs displayed in the quick view and handles selection.
+ *
+ * @param {Object} props - Component properties.
+ * @param {Job[]} props.jobs - Jobs to display.
+ * @param {JobSelection} props.selection - Current selection state.
+ * @param {(selection: JobSelection) => void} props.onSelectionChange -
+ *   Callback invoked when the selection changes.
+ * @returns {JSX.Element} The job list or an empty-list message.
+ */
 const QuickJobList = ({ jobs, selection, onSelectionChange }) => {
   if (!Array.isArray(jobs) || jobs.length === 0) {
     return (
@@ -23,6 +46,17 @@ const QuickJobList = ({ jobs, selection, onSelectionChange }) => {
     );
   }
 
+  /**
+   * Handles a click on a job according to the modifier keys pressed.
+   *
+   * A regular click replaces the current selection, Ctrl/Cmd-click toggles
+   * the clicked job, and Shift-click adds the range between the last clicked
+   * index and the current index.
+   *
+   * @param {number} index - Index of the clicked job.
+   * @param {string} jobName - Name of the clicked job.
+   * @param {Object} event - Click event.
+   */
   const handleJobClick = (index, jobName, event) => {
     let newSelected = new Set(selection.jobIds);
     let newLastClickedIndex = index;
@@ -86,6 +120,14 @@ const QuickJobList = ({ jobs, selection, onSelectionChange }) => {
 };
 
 
+/**
+ * Renders the quick view for an experiment.
+ *
+ * It manages query filters, pagination, job selection, job details,
+ * data refreshing, and status changes for selected jobs.
+ *
+ * @returns {JSX.Element} The experiment quick view page.
+ */
 const ExperimentQuick = () => {
   const routeParams = useParams();
   useASTitle(`Experiment ${routeParams.expid} quick view`);
@@ -101,16 +143,37 @@ const ExperimentQuick = () => {
   ]);
   const [searchParams, setSearchParams] = useSearchParams({});
 
+  /**
+   * Reads the selected status from the query string.
+   *
+   * @returns {string|undefined} A valid job status or `undefined`, 
+   * which disables the filter.
+   */
   const status = useMemo(() => {
     const raw = searchParams.get("status")
     return JOB_STATUSES.includes(raw) ? raw : undefined
   }, [searchParams])
 
+  /**
+   * Reads the current page from the query string.
+   * 
+   * Missing, non-numeric, or non-positive values fall back to page one.
+   *
+   * @returns {number} A valid page number starting at one.
+   */
   const currentPage = useMemo(() => {
     const page = parseInt(searchParams.get("page") || "1", 10)
     return !Number.isFinite(page) || page <= 0 ? 1 : page
   }, [searchParams])
 
+  /**
+   * Reads the page size from the query string.
+   * 
+   * Only values included in `ITEMS_PER_PAGE_OPTIONS` are accepted.
+   * Invalid values fall back to `DEFAULT_ITEMS_PER_PAGE`.
+   *
+   * @returns {number} A valid page size.
+   */
   const pageSize = useMemo(() => {
     const raw = searchParams.get("page_size")
     const size = parseInt(raw || "", 10)
@@ -127,10 +190,20 @@ const ExperimentQuick = () => {
 
   const jobName = searchParams.get("job_name") || undefined;
 
+  /**
+   * Synchronizes the job name input with the currently applied value
+   * from the query string.
+   */
   useEffect(() => {
     setJobNameInput(jobName || "");
   }, [jobName]);
 
+  /**
+   * Validates the status, page size, and page number query parameters.
+   *
+   * Invalid parameters are removed from the query string using
+   * replacement navigation.
+   */
   useEffect(() => {
     const rawStatus = searchParams.get("status");
     const rawPageSize = searchParams.get("page_size");
@@ -191,6 +264,10 @@ const ExperimentQuick = () => {
     skip: !routeParams.expid
   })
 
+  /**
+   * Checks whether the requested page exceeds the total number of pages
+   * returned by the API, and if so, navigates back to the first page.
+   */
   useEffect(() => {
     const totalPages = data?.pagination?.total_pages;
 
@@ -206,6 +283,12 @@ const ExperimentQuick = () => {
   }, [data, currentPage, searchParams, setSearchParams]);
 
   const [showModal, setShowModal] = useState(false);
+
+  /**
+   * Shows or hides the change status modal. Optionally refetches the job list.
+   *
+   * @param {boolean} [refresh=false] - Whether the job list should be refetched.
+   */
   const toggleModal = (refresh = false) => {
     setShowModal(!showModal);
     if (refresh === true) {
@@ -213,6 +296,11 @@ const ExperimentQuick = () => {
     }
   };
 
+  /**
+   * Creates the initial job selection state.
+   *
+   * @returns {JobSelection} The initial selection state.
+   */
   const createEmptySelection = () => ({
     jobIds: new Set(),
     lastClickedIndex: 0,
@@ -220,10 +308,19 @@ const ExperimentQuick = () => {
 
   const [selection, setSelection] = useState(createEmptySelection);
 
+  /**
+   * Clears the current selection whenever the list context changes,
+   * including the experiment, page, page size, status, or job name filter.
+   */
   useEffect(() => {
     setSelection(createEmptySelection());
   }, [routeParams.expid, currentPage, pageSize, status, jobName]);
 
+  /**
+   * Changes the current page while preserving the other query parameters.
+   *
+   * @param {{selected: number}} event - Pagination event from `Paginator`.
+   */
   const handlePageClick = (e) => {
     const selectedPage = e.selected
     setSearchParams({
@@ -232,6 +329,14 @@ const ExperimentQuick = () => {
     })
   }
 
+  /**
+   * Updates the status filter in the query string and resets pagination
+   * to the first page.
+   *
+   * Selecting the default status option removes the `status` parameter.
+   *
+   * @param {Object} event - Change event from the status selector.
+   */
   const handleStatusChange = (event) => {
     const { status, ...rest } = Object.fromEntries(searchParams.entries())
     const incomingStatus = event.target.value
@@ -242,6 +347,12 @@ const ExperimentQuick = () => {
     })
   }
 
+  /**
+   * Updates the page size in the query string and resets pagination
+   * to the first page.
+   *
+   * @param {Object} e - Change event from the page size selector.
+   */
   const handlePageSizeChange = (e) => {
     const newSize = parseInt(e.target.value, 10)
     setSearchParams({
@@ -251,6 +362,10 @@ const ExperimentQuick = () => {
     })
   }
 
+  /**
+   * Applies the job name filter using the text entered by the user and
+   * resets pagination to the first page.
+   */
   const handleFilterClick = () => {
     const { job_name, ...rest } = Object.fromEntries(searchParams.entries())
     setSearchParams({
@@ -260,15 +375,19 @@ const ExperimentQuick = () => {
     })
   }
 
+  // Values derived from the API response, used for rendering
   const totalItems = data?.pagination?.total_items ?? 0;
   const pageItems = data?.pagination?.page_items ?? 0;
+  const totalPages = data?.pagination?.total_pages ?? 1;
+  const jobList = data?.jobs || [];
+  const errorMessage = error?.data?.error_message || "Unknown error";
 
   return (
     <div className="w-full flex flex-col gap-4 grow">
       {isError && (
         <span className="alert alert-danger rounded-2xl">
           <i className="fa-solid fa-triangle-exclamation me-2"></i>{" "}
-          {error?.data?.error_message || "Unknown error"}
+          {errorMessage}
         </span>
       )}
       <div className="flex gap-3 items-center flex-wrap">
@@ -335,14 +454,14 @@ const ExperimentQuick = () => {
           </div>
         ) : (
           <QuickJobList
-            jobs={data?.jobs}
+            jobs={jobList}
             selection={selection}
             onSelectionChange={setSelection}
           ></QuickJobList>
         )}
       </div>
       <div id="paginator" className="flex justify-center items-center">
-        <Paginator currentPage={currentPage} totalPages={data?.pagination?.total_pages || 1} onPageClick={handlePageClick}></Paginator>
+        <Paginator currentPage={currentPage} totalPages={totalPages} onPageClick={handlePageClick}></Paginator>
       </div>
 
       {selection.jobIds.size > 0 && (
