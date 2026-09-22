@@ -123,7 +123,8 @@ export const autosubmitApiV4 = createApi({
                         url: `auth/oauth2/github/login`,
                         method: "GET",
                         params: {
-                            code: code
+                            code: code,
+                            redirect_uri: redirect_uri
                         }
                     }
                 } else {

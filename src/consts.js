@@ -16,6 +16,7 @@ export const CAS_SERVICE_ID = import.meta.env.REACT_APP_CAS_SERVICE_ID;
 
 // GitHub Auth
 export const GITHUB_CLIENT_ID = import.meta.env.REACT_APP_GITHUB_CLIENT_ID;
+export const GITHUB_REDIRECT_URI = import.meta.env.REACT_APP_GITHUB_REDIRECT_URI || undefined; // Optional. If not set (or empty), GitHub uses the callback URL configured in the OAuth app
 
 // OpenID Connect Auth
 export const OIDC_AUTHORIZATION_ENDPOINT = import.meta.env.REACT_APP_OIDC_AUTHORIZATION_ENDPOINT;
