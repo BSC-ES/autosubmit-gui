@@ -1,4 +1,4 @@
-describe("stats view navigation", () => {
+describe("log view navigation", () => {
   const expid = "a1vg";
   beforeEach(() => {
     cy.byPassAuth();
