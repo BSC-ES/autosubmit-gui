@@ -2,7 +2,7 @@ import useASTitle from "../hooks/useASTitle";
 import useBreadcrumb from "../hooks/useBreadcrumb";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useCopyToClipboard } from "@uidotdev/usehooks";
+import { CopyButton } from "../common/CopyButton";
 import { cn } from "../services/utils";
 import { autosubmitApiV4 } from "../services/autosubmitApiV4";
 import * as Tooltip from "@radix-ui/react-tooltip";
@@ -121,20 +121,10 @@ const PreferredUsernameInput = () => {
 
 const TokenBox = ({ token }) => {
   const [tokenHide, setTokenHide] = useState(true);
-  const copyToClipboard = useCopyToClipboard()[1];
-  const [copied, setCopied] = useState(false);
 
   const censorToken = (token) => {
     // replace all the characters to •
     return "•".repeat(token.length);
-  };
-
-  const handleCopy = () => {
-    copyToClipboard(token);
-    setCopied(true);
-    setTimeout(() => {
-      setCopied(false);
-    }, 2000);
   };
 
   return (
@@ -153,43 +143,18 @@ const TokenBox = ({ token }) => {
       >
         <i className={cn("fa-solid", tokenHide ? "fa-eye-slash" : "fa-eye")} />
       </button>
-      <button
-        title="Copy to clipboard"
-        className="border-l dark:border-l-neutral-600 px-2 opacity-70"
-        onClick={handleCopy}
-      >
-        <i
-          className={cn(
-            copied ? "fa-solid fa-check text-success" : "fa-regular fa-copy",
-          )}
-        />
-      </button>
+      <div className="border-l dark:border-l-neutral-600 px-1 opacity-70">
+        <CopyButton text={token} iconSizeClass="text-md" />
+      </div>
     </div>
   );
 };
 
 const SSHKeyBox = ({ keyValue }) => {
-  const [copied, setCopied] = useState(false);
-  const copyToClipboard = useCopyToClipboard()[1];
-  const handleCopy = () => {
-    copyToClipboard(keyValue);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
   return (
-    <div className="border rounded p-4 bg-gray-50 dark:bg-gray-800 flex items-start justify-between gap-2">
+    <div className="border rounded p-4 bg-gray-50 dark:bg-gray-800 flex items-center justify-between gap-2">
       <div className="font-mono break-all text-xs flex-1">{keyValue}</div>
-      <button
-        title="Copy to clipboard"
-        className="ml-2 px-2 py-1 text-xs border rounded opacity-70 hover:opacity-100 transition"
-        onClick={handleCopy}
-      >
-        <i
-          className={cn(
-            copied ? "fa-solid fa-check text-success" : "fa-regular fa-copy",
-          )}
-        />
-      </button>
+      <CopyButton text={keyValue} bgSize={8} roundedClass="rounded" iconSizeClass="text-sm" borderClass="border" />
     </div>
   );
 };
@@ -416,7 +381,7 @@ const UserSettings = () => {
 
   const authState = useSelector((state) => state.auth);
 
-  useEffect(() => {});
+  useEffect(() => { });
 
   return (
     <div className="flex flex-col gap-4">

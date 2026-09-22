@@ -25,17 +25,14 @@ const BottomPanel = ({ children, title, onClose, allowTitleCopy = false }) => {
         className="flex gap-3 px-6 py-3 bg-neutral-700 text-white items-center"
         onDoubleClick={toggleExpand}
       >
-        <div className="me-auto flex items-center gap-2 font-bold">
-          <span className="text-lg">{title}</span>
+        <div className="me-auto flex items-center gap-2 min-w-0">
+          <span className="text-lg truncate font-bold min-w-0 flex-1">{title}</span>
           {allowTitleCopy &&
             <CopyButton
-              title={title}
-              bgColorClass="bg-neutral-600"
-              hoverBgColorClass="bg-neutral-800"
+              text={title}
+              bgColorClass="bg-neutral-600 hover:bg-neutral-800"
               iconColorClass="text-white"
-              bgSize={6}
-            >
-            </CopyButton>
+            />
           }
         </div>
         <div
@@ -43,9 +40,7 @@ const BottomPanel = ({ children, title, onClose, allowTitleCopy = false }) => {
           onClick={toggleExpand}
           title="Collapse toggle"
         >
-          <i
-            className={cn("fa-solid", expand ? "fa-angle-down" : "fa-angle-up")}
-          ></i>
+          <i className={cn("fa-solid", expand ? "fa-angle-down" : "fa-angle-up")} />
         </div>
         {onClose && (
           <div
@@ -53,7 +48,7 @@ const BottomPanel = ({ children, title, onClose, allowTitleCopy = false }) => {
             onClick={handleClose}
             title="Close panel"
           >
-            <i className="fa-solid fa-xmark"></i>
+            <i className="fa-solid fa-xmark" />
           </div>
         )}
       </div>

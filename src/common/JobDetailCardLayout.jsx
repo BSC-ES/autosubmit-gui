@@ -219,7 +219,7 @@ const JobDetailCardLayout = ({
                 disabled
               />
               <span className="absolute end-0 h-full flex items-center pe-1">
-                <CopyButton title={outPath || ""} iconSizeClass="text-sm" />
+                <CopyButton text={outPath || ""} iconSizeClass="text-sm" />
               </span>
             </div>
             <button
@@ -247,7 +247,7 @@ const JobDetailCardLayout = ({
                 disabled
               />
               <span className="absolute end-0 h-full flex items-center pe-1">
-                <CopyButton title={errPath || ""} iconSizeClass="text-sm" />
+                <CopyButton text={errPath || ""} iconSizeClass="text-sm" />
               </span>
             </div>
             <button
