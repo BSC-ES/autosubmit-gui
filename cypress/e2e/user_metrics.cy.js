@@ -6,7 +6,7 @@ describe("user metrics view", () => {
 
     cy.intercept(
       "GET",
-      Cypress.env("EXTERNAL_API") + `/v4/experiments/${expid}/user-metrics-runs`,
+      `/v4/experiments/${expid}/user-metrics-runs`,
       {
         fixture: "api/v4/experiments/runs/minimal_run_list.json",
       }
@@ -14,7 +14,7 @@ describe("user metrics view", () => {
 
     cy.intercept(
       "GET",
-      Cypress.env("EXTERNAL_API") + `/v4/experiments/${expid}/runs/3/user-metrics`,
+      `/v4/experiments/${expid}/runs/3/user-metrics`,
       {
         fixture: "api/v4/experiments/runs/user-metrics/metrics.json",
       }
@@ -22,7 +22,7 @@ describe("user metrics view", () => {
 
     cy.intercept(
       "GET",
-      Cypress.env("EXTERNAL_API") + `/v4/experiments/${expid}/runs/1/user-metrics`,
+      `/v4/experiments/${expid}/runs/1/user-metrics`,
       {
         body: {
           run_id: 1,
@@ -59,7 +59,7 @@ describe("user metrics view", () => {
   it("cannot get runs", () => {
     cy.intercept(
       "GET",
-      Cypress.env("EXTERNAL_API") + `/v4/experiments/${expid}/user-metrics-runs`,
+      `/v4/experiments/${expid}/user-metrics-runs`,
       {
         body: {
           error: "Cannot get runs",

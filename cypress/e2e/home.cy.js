@@ -4,7 +4,7 @@ describe("Home Page Search Flow", () => {
   beforeEach(() => {
     cy.byPassAuth();
 
-    cy.intercept("GET", Cypress.env("EXTERNAL_API") + "/v4/experiments*", {
+    cy.intercept("GET", "/v4/experiments*", {
       fixture: "api/v4/experiments/oneresult.json",
     }).as("dummy_response");
 
@@ -46,7 +46,7 @@ describe("Navigation buttons", () => {
   beforeEach(() => {
     cy.byPassAuth();
     
-    cy.intercept("GET", Cypress.env("EXTERNAL_API") + "/v4/experiments*", {
+    cy.intercept("GET", "/v4/experiments*", {
       fixture: "api/v4/experiments/fullpage.json",
     }).as("dummy_response");
 

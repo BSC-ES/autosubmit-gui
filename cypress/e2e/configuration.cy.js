@@ -6,7 +6,7 @@ describe("configuration view", () => {
     
     cy.intercept(
       "GET",
-      Cypress.env("EXTERNAL_API") + `/v4/experiments/${expid}/runs`,
+      `/v4/experiments/${expid}/runs`,
       {
         fixture: "api/v4/experiments/runs/minimal_run_list.json",
       }
@@ -14,7 +14,7 @@ describe("configuration view", () => {
 
     cy.intercept(
       "GET",
-      Cypress.env("EXTERNAL_API") + `/v4/experiments/${expid}/filesystem-config`,
+      `/v4/experiments/${expid}/filesystem-config`,
       {
         body: {
           config: {
@@ -27,7 +27,7 @@ describe("configuration view", () => {
 
     cy.intercept(
       "GET",
-      Cypress.env("EXTERNAL_API") + `/v4/experiments/${expid}/runs/3/config`,
+      `/v4/experiments/${expid}/runs/3/config`,
       {
         body: {
           run_id: 3,

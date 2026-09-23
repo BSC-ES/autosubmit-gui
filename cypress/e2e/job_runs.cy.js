@@ -35,15 +35,15 @@ describe("Job run history and RunId generation", () => {
   beforeEach(() => {
     cy.byPassAuth();
 
-    cy.intercept("GET", Cypress.env("EXTERNAL_API") + `/v3/tree/${expid}`, {
+    cy.intercept("GET", `/v3/tree/${expid}`, {
       fixture: "api/v3/tree/tree_minimal_completed.json",
     }).as("getMinimalTree");
 
-    cy.intercept("GET", Cypress.env("EXTERNAL_API") + `/v3/history/${expid}/${expid}_LOCAL_SETUP`, {
+    cy.intercept("GET", `/v3/history/${expid}/${expid}_LOCAL_SETUP`, {
       fixture: "api/v3/history/job_run_history.json"
     }).as("getJobHistory");
 
-    cy.intercept("GET", Cypress.env("EXTERNAL_API") + `/v3/joblog/${expid}_LOCAL_SETUP.*`, {
+    cy.intercept("GET", `/v3/joblog/${expid}_LOCAL_SETUP.*`, {
       fixture: "api/v3/joblog/out_log.json"
     }).as("getJobLog");
 

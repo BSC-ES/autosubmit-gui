@@ -5,7 +5,7 @@ describe("performance view navigation", () => {
   before(() => {
     cy.byPassAuth();
     
-    cy.intercept("GET", Cypress.env("EXTERNAL_API") + "/v3/performance/*", {
+    cy.intercept("GET", "/v3/performance/*", {
       fixture: "api/v3/performance/performance.json",
     }).as("dummy_response");
 

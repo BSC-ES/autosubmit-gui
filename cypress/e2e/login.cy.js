@@ -4,7 +4,7 @@ describe("login", () => {
   it("error login", () => {
     cy.intercept(
       "GET",
-      Cypress.env("EXTERNAL_API") + `/v4/auth/verify-token`,
+      `/v4/auth/verify-token`,
       {
         statusCode: 401
       }
@@ -13,7 +13,7 @@ describe("login", () => {
     // intercept any login
     cy.intercept(
       "GET",
-      Cypress.env("EXTERNAL_API") + `/v4/auth/**/login*`,
+      `/v4/auth/**/login*`,
       {
         statusCode: 401
       }

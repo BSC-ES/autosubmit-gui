@@ -71,7 +71,6 @@ Then, you have to write a `.env.cypress` with the URL of your GUI and API like t
 
 ```bash
 CYPRESS_BASE_URL=http://localhost:3000/
-CYPRESS_EXTERNAL_API=http://127.0.0.1:8000
 ```
 
 Once done, you can run the tests by running `npm run cy:run` or interactively using `npm run cy:open`.

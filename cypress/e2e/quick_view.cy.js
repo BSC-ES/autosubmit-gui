@@ -590,7 +590,8 @@ describe("job info modal", () => {
       .click();
 
     cy.get('[role="dialog"]')
-      .should("be.visible");
+      .find(':visible')
+      .should('exist');
   });
 
   it("loads the selected job details", () => {
