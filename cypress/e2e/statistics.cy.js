@@ -3,7 +3,7 @@ describe("stats view navigation", () => {
   before(() => {
     cy.byPassAuth();
     
-    cy.intercept("GET", Cypress.env("EXTERNAL_API") + "/v3/stats/*/*/*", {
+    cy.intercept("GET", "/v3/stats/*/*/*", {
       fixture: "api/v3/stats/any0.json",
     }).as("dummy_response");
 

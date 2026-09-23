@@ -35,7 +35,6 @@ jobs:
           REACT_APP_TOP_ANNOUNCEMENT: "Testing production version"
           REACT_APP_AUTHENTICATION: true
           CYPRESS_BASE_URL: "http://localhost:4173" # 4173 is the default port for vite preview
-          CYPRESS_EXTERNAL_API: "http://localhost:8000"
         with:
           install-command: yarn install
           build: yarn build
@@ -71,7 +70,6 @@ jobs:
           REACT_APP_TOP_ANNOUNCEMENT: "Testing" # Set the announcement text
           REACT_APP_AUTHENTICATION: true # Enable authentication
           CYPRESS_BASE_URL: "http://localhost:3000"
-          CYPRESS_EXTERNAL_API: "http://localhost:8000"
         with:
           install-command: yarn install
           start: yarn start

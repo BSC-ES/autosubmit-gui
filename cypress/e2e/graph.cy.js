@@ -5,12 +5,12 @@ describe("navigation", () => {
     
     cy.intercept(
       "GET",
-      Cypress.env("EXTERNAL_API") + "/v3/graph/*/standard/none",
+      "/v3/graph/*/standard/none",
       {
         fixture: "api/v3/graph/standard_none.json",
       }
     ).as("dummy_response");
-    cy.intercept("GET", Cypress.env("EXTERNAL_API") + "/v3/pklinfo/*/*", {
+    cy.intercept("GET", "/v3/pklinfo/*/*", {
       fixture: "api/v3/pklinfo/graphpkl.json",
     }).as("dummy_response");
 

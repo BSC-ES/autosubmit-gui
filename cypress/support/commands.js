@@ -28,7 +28,7 @@ Cypress.Commands.add("byPassAuth", () => {
   window.localStorage.setItem("token", "dummy_token")
   cy.intercept(
     "GET",
-    Cypress.env("EXTERNAL_API") + `/v4/auth/verify-token`,
+    `/v4/auth/verify-token`,
     {
       statusCode: 200,
       body: {

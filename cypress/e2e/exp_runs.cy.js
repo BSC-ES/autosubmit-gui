@@ -23,15 +23,15 @@ describe("Experiment run history and RunId generation", () => {
   beforeEach(() => {
     cy.byPassAuth();
 
-    cy.intercept("GET", Cypress.env("EXTERNAL_API") + `/v3/tree/${expid}`, {
+    cy.intercept("GET", `/v3/tree/${expid}`, {
       fixture: "api/v3/tree/tree_minimal_completed.json",
     }).as("getMinimalTree");
 
-    cy.intercept("GET", Cypress.env("EXTERNAL_API") + `/v3/runs/${expid}`, {
+    cy.intercept("GET", `/v3/runs/${expid}`, {
       fixture: "api/v3/runs/exp_runs.json"
     }).as("getExperimentRuns");
 
-    cy.intercept("GET", Cypress.env("EXTERNAL_API") + `/v3/rundetail/${expid}/1`, {
+    cy.intercept("GET", `/v3/rundetail/${expid}/1`, {
       fixture: "api/v3/runs/rundetail_local_single.json"
     }).as("getRunDetail");
 

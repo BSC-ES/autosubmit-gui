@@ -3,11 +3,11 @@ describe("log view navigation", () => {
   beforeEach(() => {
     cy.byPassAuth();
     
-    cy.intercept("GET", Cypress.env("EXTERNAL_API") + "/v3/exprun/*", {
+    cy.intercept("GET", "/v3/exprun/*", {
       fixture: "api/v3/exprun/run_log.json",
     }).as("dummy_run_response");
 
-    cy.intercept("GET", Cypress.env("EXTERNAL_API") + "/v3/exp-recovery-logs/*", {
+    cy.intercept("GET", "/v3/exp-recovery-logs/*", {
       fixture: "api/v3/exp-recovery-logs/platforms_recovery_logs.json",
     }).as("dummy_exp_recovery_logs_response");
   });

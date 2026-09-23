@@ -3,10 +3,10 @@ describe("tree navigation", () => {
   before(() => {
     cy.byPassAuth();
     
-    cy.intercept("GET", Cypress.env("EXTERNAL_API") + "/v3/tree/*", {
+    cy.intercept("GET", "/v3/tree/*", {
       fixture: "api/v3/tree/tree_wrappers.json",
     }).as("dummy_response");
-    cy.intercept("GET", Cypress.env("EXTERNAL_API") + "/v3/pkltreeinfo/**/*", {
+    cy.intercept("GET", "/v3/pkltreeinfo/**/*", {
       fixture: "api/v3/pkltreeinfo/treepkl.json",
     }).as("dummy_monitor_response");
 
