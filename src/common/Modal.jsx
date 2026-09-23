@@ -1,17 +1,17 @@
-import { Dialog } from "@headlessui/react";
+import { Dialog, DialogTitle, DialogPanel } from "@headlessui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "../services/utils";
 
 const ModalHeader = ({ children, className }) => {
   return (
-    <Dialog.Title
+    <DialogTitle
       className={cn(
         "bg-dark text-white py-4 px-4 text-2xl font-semibold rounded-t-lg flex gap-4 justify-between items-center",
         className
       )}
     >
       {children}
-    </Dialog.Title>
+    </DialogTitle>
   );
 };
 
@@ -58,9 +58,9 @@ const Modal = ({ show, onClose, children }) => {
             className="fixed inset-0 overflow-y-auto"
           >
             <div className="flex min-h-full items-center justify-center p-4">
-              <Dialog.Panel className="drop-shadow max-w-[95vw]">
+              <DialogPanel className="drop-shadow max-w-[95vw]">
                 {children}
-              </Dialog.Panel>
+              </DialogPanel>
             </div>
           </motion.div>
         </Dialog>

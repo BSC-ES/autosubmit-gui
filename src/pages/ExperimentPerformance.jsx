@@ -14,8 +14,7 @@ import {
 } from "../components/context/utils";
 import TimeScatterPlot from "../components/plots/TimeScatterPlot";
 import { cn, exportToCSV } from "../services/utils";
-import Modal from "../common/Modal";
-import { DialogTitle } from "@headlessui/react";
+import { Modal, ModalHeader, ModalContent } from "../common/Modal";
 import {
   Table,
   TableBody,
@@ -534,19 +533,15 @@ const ExperimentPerformance = () => {
   return (
     <>
       <Modal show={showWarnings} onClose={toggleShowWarning}>
-        <DialogTitle
-          className={
-            "bg-warning text-white py-4 px-6 text-2xl font-semibold rounded-t-lg flex gap-4 justify-between items-center"
-          }
-        >
+        <ModalHeader className={"bg-warning"}>
           <span>
             <i className="fa-solid fa-triangle-exclamation mr-2" /> Warnings
           </span>
           <div className="cursor-pointer" onClick={toggleShowWarning}>
             <i className="fa-solid fa-xmark"></i>
           </div>
-        </DialogTitle>
-        <div className="bg-white text-black py-6 px-6 rounded-b-lg">
+        </ModalHeader>
+        <ModalContent>
           <ol className="list-decimal ms-4">
             {data &&
               Array.isArray(data.warnings_job_data) &&
@@ -554,21 +549,19 @@ const ExperimentPerformance = () => {
                 <li key={warning}>{warning}</li>
               ))}
           </ol>
-        </div>
+        </ModalContent>
       </Modal>
 
       <Modal show={showHelp} onClose={toggleShowHelp}>
-        <DialogTitle
-          className="bg-dark text-white py-4 px-6 text-2xl font-semibold rounded-t-lg flex justify-between items-center"
-        >
+        <ModalHeader>
           <span>
             <i className="fa-solid fa-circle-info mr-2" /> Key information
           </span>
           <div className="cursor-pointer" onClick={toggleShowHelp}>
             <i className="fa-solid fa-xmark" />
           </div>
-        </DialogTitle>
-        <div className="bg-white text-black py-6 px-6 rounded-b-lg space-y-6">
+        </ModalHeader>
+        <ModalContent>
           <div>
             <div className="mb-4">
               <h4 className="text-xl font-semibold mb-2">Considered Jobs</h4>
@@ -715,7 +708,7 @@ const ExperimentPerformance = () => {
               </p>
             </ul>
           </div>
-        </div>
+        </ModalContent>
       </Modal>
 
       <div className="w-full grow flex flex-col gap-4 min-w-0">
