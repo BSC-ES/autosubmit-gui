@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Dialog } from "@headlessui/react";
-import { useCopyToClipboard } from "@uidotdev/usehooks";
 import { secondsToDelta } from "../components/context/utils";
 import { cn, parseLogPath } from "../services/utils";
 import JobHistoryModal from "./JobHistoryModal";
 import LogModal from "./LogModal";
 import Modal from "./Modal";
+import CopyButton from "./CopyButton";
 
 /**
  * Presentational component for job detail cards.
@@ -81,8 +81,6 @@ const JobDetailCardLayout = ({
   ASYPD,
   wrapper,
 }) => {
-  const copyToClipboard = useCopyToClipboard()[1];
-
   const [showModal, setShowModal] = useState({
     children: false,
     parents: false,
@@ -210,22 +208,20 @@ const JobDetailCardLayout = ({
             <span className="h-full rounded-s bg-light px-2 text-sm flex items-center border font-mono">
               OUT
             </span>
-            <input
-              className="grow truncate form-input py-0 h-full rounded-none border"
-              type="text"
-              value={outPath || "Not Available"}
-              id={`g_out_t_${jobName}`}
-              readOnly
-              disabled
-            />
-            <button
-              type="button"
-              className="btn btn-light text-sm h-full rounded-none border"
-              disabled={!outPath}
-              onClick={() => copyToClipboard(outPath || "")}
-            >
-              COPY
-            </button>
+            <div className="relative grow h-full flex items-center">
+              <input
+                className="w-full truncate form-input py-0 h-full rounded-none border pe-6"
+                type="text"
+                value={outPath || "Not Available"}
+                title={outPath || "Not Available"}
+                id={`g_out_t_${jobName}`}
+                readOnly
+                disabled
+              />
+              <span className="absolute end-0 h-full flex items-center pe-1">
+                <CopyButton text={outPath || ""} iconSizeClass="text-sm" />
+              </span>
+            </div>
             <button
               type="button"
               className="btn btn-dark text-sm h-full rounded-s-none border"
@@ -240,21 +236,20 @@ const JobDetailCardLayout = ({
             <span className="h-full rounded-s bg-light px-2 text-sm flex items-center border font-mono">
               ERR
             </span>
-            <input
-              className="grow truncate form-input py-0 h-full rounded-none border"
-              type="text"
-              value={errPath || "Not Available"}
-              id={`g_err_t_${jobName}`}
-              readOnly
-              disabled
-            />
-            <button
-              className="btn btn-light text-sm h-full rounded-none border"
-              disabled={!errPath}
-              onClick={() => copyToClipboard(errPath || "")}
-            >
-              COPY
-            </button>
+            <div className="relative grow h-full flex items-center">
+              <input
+                className="w-full truncate form-input py-0 h-full rounded-none border pe-6"
+                type="text"
+                value={errPath || "Not Available"}
+                title={errPath || "Not Available"}
+                id={`g_err_t_${jobName}`}
+                readOnly
+                disabled
+              />
+              <span className="absolute end-0 h-full flex items-center pe-1">
+                <CopyButton text={errPath || ""} iconSizeClass="text-sm" />
+              </span>
+            </div>
             <button
               className="btn btn-dark text-sm h-full rounded-s-none border"
               disabled={!errPath}

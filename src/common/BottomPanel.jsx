@@ -1,12 +1,14 @@
 import { cn } from "../services/utils";
 import { useDefault, useLocalStorage } from "@uidotdev/usehooks";
+import CopyButton from "./CopyButton";
 
-const BottomPanel = ({ children, title, onClose }) => {
+const BottomPanel = ({ children, title, onClose, allowTitleCopy = false }) => {
   const [defaultExpanded, saveDefaultExpanded] = useLocalStorage(
     "asgui.layout.experiment.bpanel.expanded",
     true
   );
   const [expand, setExpand] = useDefault(defaultExpanded);
+
   const toggleExpand = () => {
     setExpand(!expand);
     saveDefaultExpanded(!expand);
@@ -23,15 +25,22 @@ const BottomPanel = ({ children, title, onClose }) => {
         className="flex gap-3 px-6 py-3 bg-neutral-700 text-white items-center"
         onDoubleClick={toggleExpand}
       >
-        <div className="me-auto font-bold text-lg truncate">{title}</div>
+        <div className="me-auto flex items-center gap-2 min-w-0">
+          <span className="text-lg truncate font-bold min-w-0 flex-1">{title}</span>
+          {allowTitleCopy &&
+            <CopyButton
+              text={title}
+              bgColorClass="bg-neutral-600 hover:bg-neutral-800"
+              iconColorClass="text-white"
+            />
+          }
+        </div>
         <div
           className="cursor-pointer rounded-full w-8 h-8 flex items-center justify-center hover:bg-neutral-600"
           onClick={toggleExpand}
           title="Collapse toggle"
         >
-          <i
-            className={cn("fa-solid", expand ? "fa-angle-down" : "fa-angle-up")}
-          ></i>
+          <i className={cn("fa-solid", expand ? "fa-angle-down" : "fa-angle-up")} />
         </div>
         {onClose && (
           <div
@@ -39,7 +48,7 @@ const BottomPanel = ({ children, title, onClose }) => {
             onClick={handleClose}
             title="Close panel"
           >
-            <i className="fa-solid fa-xmark"></i>
+            <i className="fa-solid fa-xmark" />
           </div>
         )}
       </div>
