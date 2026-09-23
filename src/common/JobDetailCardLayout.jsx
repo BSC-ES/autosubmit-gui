@@ -5,7 +5,7 @@ import { cn, parseLogPath } from "../services/utils";
 import JobHistoryModal from "./JobHistoryModal";
 import LogModal from "./LogModal";
 import Modal from "./Modal";
-import { CopyButton } from "./CopyButton";
+import CopyButton from "./CopyButton";
 
 /**
  * Presentational component for job detail cards.

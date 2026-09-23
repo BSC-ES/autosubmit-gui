@@ -2,11 +2,11 @@ import useASTitle from "../hooks/useASTitle";
 import useBreadcrumb from "../hooks/useBreadcrumb";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { CopyButton } from "../common/CopyButton";
 import { cn } from "../services/utils";
 import { autosubmitApiV4 } from "../services/autosubmitApiV4";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import RunnerHelpModal from "../common/RunnerHelpModal";
+import CopyButton from "../common/CopyButton";
 
 const PreferredUsernameInput = () => {
   const {
@@ -144,7 +144,7 @@ const TokenBox = ({ token }) => {
         <i className={cn("fa-solid", tokenHide ? "fa-eye-slash" : "fa-eye")} />
       </button>
       <div className="border-l dark:border-l-neutral-600 px-1 opacity-70">
-        <CopyButton text={token} iconSizeClass="text-md" />
+        <CopyButton text={token} iconSizeClass="text-base" />
       </div>
     </div>
   );

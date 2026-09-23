@@ -1,6 +1,6 @@
-import { CopyButton } from "./CopyButton";
 import { useMemo } from "react";
 import { cn } from "../services/utils";
+import CopyButton from "./CopyButton";
 
 const CommandPreview = ({ command, className }) => {
   const formattedCommand = useMemo(() => {
@@ -17,7 +17,7 @@ const CommandPreview = ({ command, className }) => {
     >
       <div className="absolute top-2 right-2">
         <CopyButton
-          text={formattedCommand}
+          text={command}
           copyText="Copy command"
           iconColorClickedClass="text-green-900"
           bgColorClass="bg-white/70 hover:bg-white/60"

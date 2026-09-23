@@ -7,14 +7,15 @@ const EVENTS_TIMEOUT = 2500;
  * A button that copies text to the clipboard and provides temporary
  * visual feedback.
  *
- * The button displays one of three states:
+ * The button displays one of two states:
  *
  * - `idle`: The text can be copied.
- * - `copied`: The text was copied successfully.
- * - `failed`: Copying the text failed.
+ * - `copied`: Copy button has been clicked and the text is being copied.
  *
  * The feedback state is automatically reset after `EVENTS_TIMEOUT`
  * milliseconds. The state is also reset whenever the `text` prop changes.
+ * The library used, kept for compatibility, limits the implementation of a
+ * failed state, so the button will always display a success state when clicked.
  *
  * @param {Object} props
  * @param {string} [props.text=""] - Text to copy to the clipboard.
@@ -28,8 +29,6 @@ const EVENTS_TIMEOUT = 2500;
  *   the copy icon.
  * @param {string} [props.iconColorClickedClass="text-success"] - CSS
  *   class for the icon displayed after a successful copy.
- * @param {string} [props.iconColorFailedClass="text-orange-500"] - CSS
- *   class for the icon displayed when copying fails.
  * @param {string} [props.iconSizeClass="text-xs"] - CSS class controlling
  *   the icon size.
  * @param {string} [props.roundedClass="rounded-full"] - CSS class for
@@ -40,13 +39,12 @@ const EVENTS_TIMEOUT = 2500;
  *
  * @returns {JSX.Element} A button that copies the provided text.
  */
-export const CopyButton = ({
+const CopyButton = ({
   text = "",
   copyText = "",
   bgColorClass = "",
   iconColorClass = "text-black",
   iconColorClickedClass = "text-success",
-  iconColorFailedClass = "text-orange-500",
   iconSizeClass = "text-xs",
   roundedClass = "rounded-full",
   borderClass = "",
@@ -90,13 +88,8 @@ export const CopyButton = ({
       clearTimeout(timeoutRef.current);
     }
 
-    try {
-      await copyToClipboard(text);
-      setStatus("copied");
-    } catch {
-      // Not expected, just in case
-      setStatus("failed");
-    }
+    copyToClipboard(text);
+    setStatus("copied");
 
     timeoutRef.current = setTimeout(() => {
       setStatus("idle");
@@ -114,12 +107,8 @@ export const CopyButton = ({
         icon: `fa-solid fa-check ${iconColorClickedClass}`,
         label: "Copied!",
       },
-      failed: {
-        icon: `fa-solid fa-triangle-exclamation ${iconColorFailedClass}`,
-        label: "Failed to copy",
-      },
     }),
-    [iconColorClass, iconColorClickedClass, iconColorFailedClass]
+    [iconColorClass, iconColorClickedClass]
   );
 
   const { icon, label } = statusConfiguration[status];
@@ -147,3 +136,5 @@ export const CopyButton = ({
     </button>
   );
 };
+
+export default CopyButton;

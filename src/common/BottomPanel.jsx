@@ -1,6 +1,6 @@
 import { cn } from "../services/utils";
 import { useDefault, useLocalStorage } from "@uidotdev/usehooks";
-import { CopyButton } from "./CopyButton";
+import CopyButton from "./CopyButton";
 
 const BottomPanel = ({ children, title, onClose, allowTitleCopy = false }) => {
   const [defaultExpanded, saveDefaultExpanded] = useLocalStorage(
