@@ -540,7 +540,7 @@ const ExperimentPerformance = () => {
           }
         >
           <span>
-            <i className="fa-solid fa-triangle-exclamation"></i> Warnings
+            <i className="fa-solid fa-triangle-exclamation mr-2" /> Warnings
           </span>
           <div className="cursor-pointer" onClick={toggleShowWarning}>
             <i className="fa-solid fa-xmark"></i>
@@ -562,10 +562,10 @@ const ExperimentPerformance = () => {
           className="bg-dark text-white py-4 px-6 text-2xl font-semibold rounded-t-lg flex justify-between items-center"
         >
           <span>
-            <i className="fa-solid fa-circle-info"></i> Key information
+            <i className="fa-solid fa-circle-info mr-2" /> Key information
           </span>
           <div className="cursor-pointer" onClick={toggleShowHelp}>
-            <i className="fa-solid fa-xmark"></i>
+            <i className="fa-solid fa-xmark" />
           </div>
         </DialogTitle>
         <div className="bg-white text-black py-6 px-6 rounded-b-lg space-y-6">
