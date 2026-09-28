@@ -1,8 +1,8 @@
 ## Changelog
 
-### Pre-release v4.2.0 - Unreleased
+### Release v4.2.0 - Release date: 2026-09-28
 
-* **Compatibility with Autosubmit API version >= [v4.2.0](https://pypi.org/project/autosubmit-api/v4.2.0/)** (unreleased)
+* **Compatibility with Autosubmit API version >= [v4.2.0](https://pypi.org/project/autosubmit-api/4.2.0/)**
 * Now the Quick View supports pagination.
 * Estimated time for experiment sections completion is now available in the Tree and Graph views while monitoring.
 * Now the job names can be easily copied from the job detail card. Improved all copy actions.
