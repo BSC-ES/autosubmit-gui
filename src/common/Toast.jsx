@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { cn } from "../services/utils";
 import { hideToast } from "../store/toastSlice";
 
+const FADE_DURATION = 300; // Duration of the fade-out animation in milliseconds
+
 const Toast = () => {
   const dispatch = useDispatch();
   const toasts = useSelector((state) => state.toast.toasts);
@@ -54,12 +56,15 @@ const Toast = () => {
     <div className="fixed top-4 right-4 z-[9999] flex flex-col gap-2 max-w-md">
       {toasts.map((toast) => (
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3 }}
+          initial={{ opacity: 1 }}
+          animate={{ opacity: 0 }}
+          transition={{
+            delay: Math.max((toast.duration - FADE_DURATION) / 1000, 0),
+            duration: 0.3,
+          }}
           key={toast.id}
           className={cn(
-            "p-4 rounded-lg flex items-start gap-3",
+            "relative overflow-hidden p-4 rounded-xl flex gap-3 items-center",
             getToastStyles(toast.type),
           )}
         >
@@ -78,6 +83,12 @@ const Toast = () => {
           >
             <i className="fa-solid fa-xmark text-lg" />
           </button>
+          <motion.div
+            initial={{ scaleX: 1 }}
+            animate={{ scaleX: 0 }}
+            transition={{ duration: (toast.duration - FADE_DURATION) / 1000, ease: "linear" }}
+            className="absolute bottom-0 left-0 right-0 h-1 origin-left bg-current opacity-30"
+          />
         </motion.div>
       ))}
     </div>
