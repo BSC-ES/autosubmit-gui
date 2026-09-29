@@ -22,65 +22,32 @@ const AnimatedBG = () => {
   const [scope2, animate2] = useAnimate();
 
   useEffect(() => {
-    animate(
-      [
-        [
-          scope.current,
-          {
-            pathLength: 1,
-            pathOffset: 0,
-          },
-          {
-            duration: 2,
-          },
-        ],
-        [
-          scope.current,
-          {
-            pathLength: 1,
-            pathOffset: 1,
-          },
-          {
-            duration: 2,
-            delay: 1,
-          },
-        ],
-      ],
-      {
-        repeat: Infinity,
-      }
-    );
+    if (!scope.current || !scope2.current) return undefined;
 
-    animate2(
-      [
-        [
-          scope2.current,
-          {
-            pathLength: 1,
-            pathOffset: 0,
-          },
-          {
-            duration: 2,
-          },
-        ],
-        [
-          scope2.current,
-          {
-            pathLength: 1,
-            pathOffset: 1,
-          },
-          {
-            duration: 2,
-            delay: 1,
-          },
-        ],
-      ],
+    const animatedPath = {
+      pathLength: [0, 1, 1],
+      pathOffset: [0, 0, 1],
+    };
+
+    const animationOptions = {
+      duration: 5,
+      ease: "linear",
+      repeat: Infinity,
+    };
+
+    const controls = animate(scope.current, animatedPath, animationOptions);
+    const controls2 = animate2(scope2.current, animatedPath,
       {
-        repeat: Infinity,
+        ...animationOptions,
         delay: 1.5,
       }
     );
-  }, []);
+
+    return () => {
+      controls?.stop();
+      controls2?.stop();
+    };
+  }, [animate, animate2]);
 
   return (
     <svg
