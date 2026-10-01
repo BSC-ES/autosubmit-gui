@@ -1,5 +1,5 @@
 # Phase 1: Build the app
-FROM node:iron-bullseye-slim AS build
+FROM node:jod-trixie-slim AS build
 
 # Install git
 RUN apt-get update && apt-get install -y git
