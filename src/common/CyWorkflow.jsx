@@ -1,7 +1,7 @@
 import CytoscapeComponent from "react-cytoscapejs";
 import Cytoscape from "cytoscape";
-import { useEffect, useRef, MutableRefObject } from "react";
-import { triggerDownload } from "../services/utils";
+import { useEffect, useRef, RefObject } from "react";
+import { triggerDownload, fitActiveJobsInView } from "../services/utils";
 
 const GRAPH_STYLE = [
   {
@@ -130,7 +130,7 @@ const GRAPH_STYLE = [
 ];
 
 const CyWorkflow = ({ elements, onSelectNodes, cy: forwardCy }) => {
-  /** @type {MutableRefObject<Cytoscape.Core>} */
+  /** @type {RefObject<Cytoscape.Core>} */
   const cy = useRef();
 
   const handleSelect = () => {
@@ -183,18 +183,33 @@ const CyWorkflow = ({ elements, onSelectNodes, cy: forwardCy }) => {
     cy.current.fit();
   };
 
+  const handleFocusActive = () => {
+    fitActiveJobsInView(cy);
+  };
+
   const handleDownload = async () => {
     const uri = await cy.current.png({ output: "base64uri" });
     triggerDownload(uri, `graph_view.png`);
   };
 
   return (
-    <div className="w-full h-full relative bg-white">
-      <div className="absolute top-0 left-0 z-10 bg-neutral-200 text-black opacity-50 flex gap-3 px-2">
-        <button onClick={handleFit} title="Fit">
+    <div className="w-full h-full relative bg-white rounded-md">
+      <div className="absolute top-0 left-0 rounded-br-md z-10 bg-neutral-200/50 text-black/50 flex gap-3 px-2">
+        <button onClick={handleFit} title="Fit workflow" className="hover:text-black hover:opacity-100">
           <i className="fa-solid fa-maximize"></i>
         </button>
-        <button onClick={handleDownload} title="Download current viewport">
+        <button
+          onClick={handleFocusActive}
+          title="Focus active jobs"
+          className="hover:text-black hover:opacity-100"
+        >
+          <i className="fa-solid fa-crosshairs"></i>
+        </button>
+        <button
+          onClick={handleDownload}
+          title="Download current viewport"
+          className="hover:text-black hover:opacity-100"
+        >
           <i className="fa-solid fa-floppy-disk"></i>
         </button>
       </div>
@@ -210,7 +225,7 @@ const CyWorkflow = ({ elements, onSelectNodes, cy: forwardCy }) => {
         minZoom={1e-3}
         wheelSensitivity={0.4}
       />
-      <div className="absolute bottom-0 right-0 z-10 bg-neutral-200 text-black opacity-50 px-2 py-2 text-xs">
+      <div className="absolute bottom-0 right-0 z-10 bg-neutral-200 text-black opacity-50 px-2 py-2 text-xs rounded-tl-md">
         <div>
           Box selection: <kbd className="kbd-key">Shift + LClick</kbd>
         </div>

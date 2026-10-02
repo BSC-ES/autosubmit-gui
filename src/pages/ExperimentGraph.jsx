@@ -1,6 +1,6 @@
 import { autosubmitApiV3 } from "../services/autosubmitApiV3";
 import { useParams } from "react-router-dom";
-import { useEffect, useState, useMemo, useRef, MutableRefObject } from "react";
+import { useEffect, useState, useMemo, useRef, RefObject } from "react";
 import JobDetailCard from "../common/JobDetailCard";
 import CyWorkflow from "../common/CyWorkflow";
 import Cytoscape from "cytoscape";
@@ -9,7 +9,7 @@ import useASTitle from "../hooks/useASTitle";
 import useBreadcrumb from "../hooks/useBreadcrumb";
 import BottomPanel from "../common/BottomPanel";
 import { ChangeStatusModal } from "../common/ChangeStatusModal";
-import { STATUS_STYLES } from "../services/utils";
+import { STATUS_STYLES, fitActiveJobsInView } from "../services/utils";
 import ExperimentEtaPanel from "../common/ExperimentEtaPanel";
 import { useWindowSize } from "@uidotdev/usehooks";
 
@@ -29,7 +29,7 @@ const ExperimentGraph = () => {
     },
   ]);
 
-  /** @type {MutableRefObject<Cytoscape.Core>} */
+  /** @type {RefObject<Cytoscape.Core>} */
   const cy = useRef();
 
   const filterRef = useRef();
@@ -126,6 +126,20 @@ const ExperimentGraph = () => {
       setGraphElements(newElems);
     }
   }, [data]);
+
+
+  useEffect(() => {
+    if (!cy.current || graphElements.length === 0) {
+      return;
+    }
+
+    const animationFrame = fitActiveJobsInView(cy);
+
+    return () => {
+      cancelAnimationFrame(animationFrame);
+    };
+  }, [graphElements]);
+
 
   useEffect(() => {
     if (pklData) {
@@ -319,7 +333,7 @@ const ExperimentGraph = () => {
         </div>
       </div>
 
-      <div className="flex grow border relative">
+      <div className="flex grow border rounded-md relative">
         {!isMobile && etaPanel}
 
         {isFetching && (

@@ -57,6 +57,8 @@ export const JOB_STATUSES = [
   "DELAYED"
 ]
 
+const ACTIVE_JOB_STATUSES = ["RUNNING", "QUEUING", "SUBMITTED"];
+
 
 export const STATUS_STYLES = {
   "UNKNOWN": {
@@ -109,3 +111,18 @@ export const parseLogPath = (logfile) => {
   const logFileName = logPathSplit.pop();
   return logFileName;
 };
+
+export const fitActiveJobsInView = (cy) => {
+  return requestAnimationFrame(() => {
+    const activeJobsSelector = ACTIVE_JOB_STATUSES.map(
+      (status) => `node[status = '${status}']`
+    ).join(", ");
+
+    const activeJobs = cy.current.nodes(activeJobsSelector);
+
+    if (activeJobs.length > 0) {
+      cy.current.fit(activeJobs, 200);
+    }
+  });
+}
+
