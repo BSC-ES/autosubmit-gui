@@ -66,6 +66,14 @@ const GRAPH_STYLE = [
   })),
 ];
 
+const getWheelZoomFactor = (zoom) => {
+  const minFactor = 1.06;
+  const maxFactor = 1.25;
+  const factor = 1 + 0.18 / Math.sqrt(Math.max(zoom, 0.01));
+
+  return Math.min(maxFactor, Math.max(minFactor, factor));
+};
+
 const CyWorkflow = ({ elements, onSelectNodes, cy: forwardCy }) => {
   /** @type {RefObject<Cytoscape.Core>} */
   const cy = useRef();
@@ -104,8 +112,43 @@ const CyWorkflow = ({ elements, onSelectNodes, cy: forwardCy }) => {
       }, 100);
     });
 
+    const container = cy.current.container();
+
+    const handleWheel = (event) => {
+      event.preventDefault();
+
+      const currentZoom = cy.current.zoom();
+      const factor = getWheelZoomFactor(currentZoom);
+      const nextZoom = event.deltaY < 0
+        ? currentZoom * factor
+        : currentZoom / factor;
+
+      const bounds = container.getBoundingClientRect();
+
+      cy.current.zoom({
+        level: nextZoom,
+        renderedPosition: {
+          x: event.clientX - bounds.left,
+          y: event.clientY - bounds.top,
+        },
+      });
+    };
+
+    container.addEventListener("wheel", handleWheel, {
+      passive: false,
+    });
+
     //Unmount component
-    return () => {};
+    return () => {
+      clearTimeout(selectEventTimeout);
+      clearTimeout(unselectEventTimeout);
+
+      cy.current.removeListener("add", "node:parent");
+      cy.current.removeListener("select", "node:childless");
+      cy.current.removeListener("unselect", "node:childless");
+
+      container.removeEventListener("wheel", handleWheel);
+    };
     // eslint-disable-next-line
   }, []);
 
@@ -160,7 +203,7 @@ const CyWorkflow = ({ elements, onSelectNodes, cy: forwardCy }) => {
         stylesheet={GRAPH_STYLE}
         maxZoom={4}
         minZoom={1e-3}
-        wheelSensitivity={0.4}
+        userZoomingEnabled={false}
       />
       <StatusLegend />
       <div className="absolute bottom-0 right-0 z-10 bg-neutral-200 text-black opacity-50 hover:opacity-100 px-2 py-2 text-xs rounded-tl-md">
