@@ -1,46 +1,7 @@
 import { clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 
-export function cn(...inputs) {
-  return twMerge(clsx(inputs))
-}
-
-
-export const triggerDownload = (href, download) => {
-  let link = document.createElement("a");
-  link.href = href;
-  link.download = download;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-}
-
-
-/**
- * Very simple export to CSV utility
- * @param {Array} columns 
- * @param {Array<Array>} data 
- * @param {string} filename 
- */
-export const exportToCSV = (columns, data, filename, sep = ",") => {
-  let csvContent = "data:text/csv;charset=utf-8,";
-  csvContent += columns.join(sep) + "\n";
-  csvContent += data.map(row => row.join(sep)).join("\n");
-
-  const encodedUri = encodeURI(csvContent);
-
-  // Trigger download action
-  triggerDownload(encodedUri, filename)
-}
-
-
-export const saveSVGObj = (svgData, filename) => {
-  const svgString = (new XMLSerializer()).serializeToString(svgData);
-  const svgBlob = new Blob([svgString], { type: "image/svg+xml;charset=utf-8" });
-  const svgUrl = URL.createObjectURL(svgBlob);
-
-  triggerDownload(svgUrl, filename)
-}
+export const SELECTOR_DEFAULT_STATUS = "Any status";
 
 export const JOB_STATUSES = [
   "WAITING",
@@ -57,8 +18,22 @@ export const JOB_STATUSES = [
   "DELAYED"
 ]
 
-const ACTIVE_JOB_STATUSES = ["RUNNING", "QUEUING", "SUBMITTED"];
+export const ACTIVE_JOB_STATUSES = ["RUNNING", "QUEUING", "SUBMITTED"];
 
+export const STATUS_COLORS = {
+  WAITING: "#d4d4d4",
+  READY: "lightblue",
+  PREPARED: "lightsalmon",
+  SUBMITTED: "cyan",
+  HELD: "salmon",
+  QUEUING: "lightpink",
+  RUNNING: "green",
+  COMPLETED: "yellow",
+  FAILED: "red",
+  SUSPENDED: "orange",
+  SKIPPED: "lightyellow",
+  DELAYED: "lightcyan",
+};
 
 export const STATUS_STYLES = {
   "UNKNOWN": {
@@ -102,6 +77,44 @@ export const STATUS_STYLES = {
   },
 }
 
+export function cn(...inputs) {
+  return twMerge(clsx(inputs))
+}
+
+export const triggerDownload = (href, download) => {
+  let link = document.createElement("a");
+  link.href = href;
+  link.download = download;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+/**
+ * Very simple export to CSV utility
+ * @param {Array} columns 
+ * @param {Array<Array>} data 
+ * @param {string} filename 
+ */
+export const exportToCSV = (columns, data, filename, sep = ",") => {
+  let csvContent = "data:text/csv;charset=utf-8,";
+  csvContent += columns.join(sep) + "\n";
+  csvContent += data.map(row => row.join(sep)).join("\n");
+
+  const encodedUri = encodeURI(csvContent);
+
+  // Trigger download action
+  triggerDownload(encodedUri, filename)
+}
+
+export const saveSVGObj = (svgData, filename) => {
+  const svgString = (new XMLSerializer()).serializeToString(svgData);
+  const svgBlob = new Blob([svgString], { type: "image/svg+xml;charset=utf-8" });
+  const svgUrl = URL.createObjectURL(svgBlob);
+
+  triggerDownload(svgUrl, filename)
+}
+
 export const getStatusBadgeStyle = (status) => {
   return STATUS_STYLES[status]?.badge || "badge-status-unknown";
 };
@@ -111,18 +124,3 @@ export const parseLogPath = (logfile) => {
   const logFileName = logPathSplit.pop();
   return logFileName;
 };
-
-export const fitActiveJobsInView = (cy) => {
-  return requestAnimationFrame(() => {
-    const activeJobsSelector = ACTIVE_JOB_STATUSES.map(
-      (status) => `node[status = '${status}']`
-    ).join(", ");
-
-    const activeJobs = cy.current.nodes(activeJobsSelector);
-
-    if (activeJobs.length > 0) {
-      cy.current.fit(activeJobs, 200);
-    }
-  });
-}
-
