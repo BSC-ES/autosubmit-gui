@@ -1,7 +1,8 @@
 import CytoscapeComponent from "react-cytoscapejs";
 import Cytoscape from "cytoscape";
 import { useEffect, useRef, RefObject } from "react";
-import { triggerDownload, fitActiveJobsInView } from "../services/utils";
+import { triggerDownload, JOB_STATUSES, STATUS_COLORS } from "../../services/utils";
+import { anyActiveJobs, fitJobsInView, fitActiveJobsInView } from "./graphUtils";
 
 const GRAPH_STYLE = [
   {
@@ -55,78 +56,12 @@ const GRAPH_STYLE = [
       "border-style": "dashed",
     },
   },
-  {
-    selector: "node[status='WAITING']",
+  ...JOB_STATUSES.map((status) => ({
+    selector: `node[status='${status}']`,
     style: {
-      backgroundColor: "#aaaaaa",
+      backgroundColor: STATUS_COLORS[status],
     },
-  },
-  {
-    selector: "node[status='READY']",
-    style: {
-      backgroundColor: "lightblue",
-    },
-  },
-  {
-    selector: "node[status='PREPARED']",
-    style: {
-      backgroundColor: "lightsalmon",
-    },
-  },
-  {
-    selector: "node[status='SUBMITTED']",
-    style: {
-      backgroundColor: "cyan",
-    },
-  },
-  {
-    selector: "node[status='HELD']",
-    style: {
-      backgroundColor: "salmon",
-    },
-  },
-  {
-    selector: "node[status='QUEUING']",
-    style: {
-      backgroundColor: "lightpink",
-    },
-  },
-  {
-    selector: "node[status='RUNNING']",
-    style: {
-      backgroundColor: "green",
-    },
-  },
-  {
-    selector: "node[status='COMPLETED']",
-    style: {
-      backgroundColor: "yellow",
-    },
-  },
-  {
-    selector: "node[status='FAILED']",
-    style: {
-      backgroundColor: "red",
-    },
-  },
-  {
-    selector: "node[status='SUSPENDED']",
-    style: {
-      backgroundColor: "orange",
-    },
-  },
-  {
-    selector: "node[status='SKIPPED']",
-    style: {
-      backgroundColor: "lightyellow",
-    },
-  },
-  {
-    selector: "node[status='DELAYED']",
-    style: {
-      backgroundColor: "lightcyan",
-    },
-  },
+  })),
 ];
 
 const CyWorkflow = ({ elements, onSelectNodes, cy: forwardCy }) => {
@@ -139,13 +74,6 @@ const CyWorkflow = ({ elements, onSelectNodes, cy: forwardCy }) => {
   };
 
   useEffect(() => {
-    // Mount component
-
-    // First add
-    cy.current.one("add", "node", () => {
-      cy.current.fit();
-    });
-
     // On wrapper add
     cy.current.on("add", "node:parent", (e) => {
       const selectedNodes = cy.current.filter("node:parent");
@@ -175,12 +103,12 @@ const CyWorkflow = ({ elements, onSelectNodes, cy: forwardCy }) => {
     });
 
     //Unmount component
-    return () => {};
+    return () => { };
     // eslint-disable-next-line
   }, []);
 
   const handleFit = () => {
-    cy.current.fit();
+    fitJobsInView(cy, {});
   };
 
   const handleFocusActive = () => {
@@ -201,7 +129,8 @@ const CyWorkflow = ({ elements, onSelectNodes, cy: forwardCy }) => {
         <button
           onClick={handleFocusActive}
           title="Focus active jobs"
-          className="hover:text-black hover:opacity-100"
+          className="enabled:hover:text-black enabled:hover:opacity-100 disabled:opacity-50"
+          disabled={!anyActiveJobs(elements)}
         >
           <i className="fa-solid fa-crosshairs"></i>
         </button>
