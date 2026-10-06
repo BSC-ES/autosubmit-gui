@@ -4,7 +4,7 @@ import store from './store'
 import Toast from './common/Toast'
 
 // Add stylings
-import "./App.scss"
+import "./App.css"
 
 const App = () => {
 

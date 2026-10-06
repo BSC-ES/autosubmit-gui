@@ -1,14 +1,13 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import "@fortawesome/fontawesome-free/css/all.min.css";
+
+@config "../tailwind.config.js";
 
 @font-face {
   font-family: "Source Sans 3";
   src: url("../public/fonts/SourceSans3-VariableFont_wght.ttf")
     format("truetype-variations");
 }
-
-@import "@fortawesome/fontawesome-free/css/all.min.css";
 
 @layer base {
   html {
@@ -21,6 +20,14 @@
 
   div {
     @apply border-neutral-200 dark:border-neutral-700;
+  }
+
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: #e5e7eb;
   }
 }
 
