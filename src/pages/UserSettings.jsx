@@ -34,7 +34,6 @@ const PreferredUsernameInput = () => {
       setPreferredUsernameInput(data.preferred_username);
       setIsDirty(false);
     }
-    console.log("preferredUsernameError", preferredUsernameError || "none");
     if (preferredUsernameError && preferredUsernameError.status === 404) {
       setIsNotAvailable(true);
     } else {
