@@ -23,7 +23,3 @@ export const autosubmitApiDefault = createApi({
         }),
     }),
 })
-
-export const {
-    useGetApiDetailsQuery
-} = autosubmitApiDefault

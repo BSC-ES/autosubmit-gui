@@ -77,7 +77,7 @@ const About = () => {
             href="https://github.com/BSC-ES/autosubmit-gui/issues" target='_blank' className='text-primary-600 dark:text-primary-400' rel="noreferrer"
           >Autosubmit GUI Issues page</a>.</p>
         </div>
-        <div className='w-full text-right text-black/50 dark:text-white/50'><strong>— GUI Version {packageJson.version}</strong>{apiVersion && `, running with API v${apiVersion}`}</div>
+        <div className='w-full text-right text-black/50 dark:text-white/50'><strong>— GUI Version {packageJson.version}</strong>{apiVersion && <>, running with <a href="https://autosubmit-api.readthedocs.io/en/latest/" target="_blank" className='text-primary-600 dark:text-primary-400'>API Version {apiVersion}</a></>}</div>
       </div>
 
       <div className='border rounded-2xl px-8 pt-6 pb-8'>
