@@ -3,6 +3,8 @@ import Cytoscape from "cytoscape";
 import { useEffect, useRef, RefObject } from "react";
 import { triggerDownload, JOB_STATUSES, STATUS_COLORS } from "../../services/utils";
 import { anyActiveJobs, fitJobsInView, fitActiveJobsInView } from "./graphUtils";
+import StatusLegend from "./StatusLegend";
+import { attachStatusLegendToImage } from "./statusLegendUtils";
 
 const GRAPH_STYLE = [
   {
@@ -116,13 +118,19 @@ const CyWorkflow = ({ elements, onSelectNodes, cy: forwardCy }) => {
   };
 
   const handleDownload = async () => {
-    const uri = await cy.current.png({ output: "base64uri" });
-    triggerDownload(uri, `graph_view.png`);
+    const uri = cy.current.png({ output: "base64uri" });
+    const imageUrl = await attachStatusLegendToImage(uri);
+
+    triggerDownload(imageUrl, "graph_view.png");
+
+    setTimeout(() => {
+      URL.revokeObjectURL(imageUrl);
+    }, 0);
   };
 
   return (
     <div className="w-full h-full relative bg-white rounded-md">
-      <div className="absolute top-0 left-0 rounded-br-md z-10 bg-neutral-200/50 text-black/50 flex gap-3 px-2">
+      <div className="absolute top-0 left-0 rounded-br-md z-10 bg-neutral-200 opacity-50 hover:opacity-100 text-black/50 flex gap-3 px-2">
         <button onClick={handleFit} title="Fit workflow" className="hover:text-black hover:opacity-100">
           <i className="fa-solid fa-maximize"></i>
         </button>
@@ -154,7 +162,8 @@ const CyWorkflow = ({ elements, onSelectNodes, cy: forwardCy }) => {
         minZoom={1e-3}
         wheelSensitivity={0.4}
       />
-      <div className="absolute bottom-0 right-0 z-10 bg-neutral-200 text-black opacity-50 px-2 py-2 text-xs rounded-tl-md">
+      <StatusLegend />
+      <div className="absolute bottom-0 right-0 z-10 bg-neutral-200 text-black opacity-50 hover:opacity-100 px-2 py-2 text-xs rounded-tl-md">
         <div>
           Box selection: <kbd className="kbd-key">Shift + LClick</kbd>
         </div>
