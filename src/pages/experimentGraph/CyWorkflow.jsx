@@ -103,7 +103,7 @@ const CyWorkflow = ({ elements, onSelectNodes, cy: forwardCy }) => {
     });
 
     //Unmount component
-    return () => { };
+    return () => {};
     // eslint-disable-next-line
   }, []);
 
