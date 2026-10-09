@@ -3,6 +3,7 @@
 ### Release v4.2.1 - Unreleased
 
 * Enabled auto-focus in the experiment graph and added smooth animations. Improved responsiveness.
+* Now the experiment graph displays a legend for the different statuses.
 
 ### Release v4.2.0 - Release date: 2026-09-28
 
