@@ -1,7 +1,8 @@
 import CytoscapeComponent from "react-cytoscapejs";
 import Cytoscape from "cytoscape";
-import { useEffect, useRef, MutableRefObject } from "react";
-import { triggerDownload } from "../services/utils";
+import { useEffect, useRef, RefObject } from "react";
+import { triggerDownload, JOB_STATUSES, STATUS_COLORS } from "../../services/utils";
+import { anyActiveJobs, fitJobsInView, fitActiveJobsInView } from "./graphUtils";
 
 const GRAPH_STYLE = [
   {
@@ -55,82 +56,16 @@ const GRAPH_STYLE = [
       "border-style": "dashed",
     },
   },
-  {
-    selector: "node[status='WAITING']",
+  ...JOB_STATUSES.map((status) => ({
+    selector: `node[status='${status}']`,
     style: {
-      backgroundColor: "#aaaaaa",
+      backgroundColor: STATUS_COLORS[status],
     },
-  },
-  {
-    selector: "node[status='READY']",
-    style: {
-      backgroundColor: "lightblue",
-    },
-  },
-  {
-    selector: "node[status='PREPARED']",
-    style: {
-      backgroundColor: "lightsalmon",
-    },
-  },
-  {
-    selector: "node[status='SUBMITTED']",
-    style: {
-      backgroundColor: "cyan",
-    },
-  },
-  {
-    selector: "node[status='HELD']",
-    style: {
-      backgroundColor: "salmon",
-    },
-  },
-  {
-    selector: "node[status='QUEUING']",
-    style: {
-      backgroundColor: "lightpink",
-    },
-  },
-  {
-    selector: "node[status='RUNNING']",
-    style: {
-      backgroundColor: "green",
-    },
-  },
-  {
-    selector: "node[status='COMPLETED']",
-    style: {
-      backgroundColor: "yellow",
-    },
-  },
-  {
-    selector: "node[status='FAILED']",
-    style: {
-      backgroundColor: "red",
-    },
-  },
-  {
-    selector: "node[status='SUSPENDED']",
-    style: {
-      backgroundColor: "orange",
-    },
-  },
-  {
-    selector: "node[status='SKIPPED']",
-    style: {
-      backgroundColor: "lightyellow",
-    },
-  },
-  {
-    selector: "node[status='DELAYED']",
-    style: {
-      backgroundColor: "lightcyan",
-    },
-  },
+  })),
 ];
 
 const CyWorkflow = ({ elements, onSelectNodes, cy: forwardCy }) => {
-  /** @type {MutableRefObject<Cytoscape.Core>} */
+  /** @type {RefObject<Cytoscape.Core>} */
   const cy = useRef();
 
   const handleSelect = () => {
@@ -139,13 +74,6 @@ const CyWorkflow = ({ elements, onSelectNodes, cy: forwardCy }) => {
   };
 
   useEffect(() => {
-    // Mount component
-
-    // First add
-    cy.current.one("add", "node", () => {
-      cy.current.fit();
-    });
-
     // On wrapper add
     cy.current.on("add", "node:parent", (e) => {
       const selectedNodes = cy.current.filter("node:parent");
@@ -180,7 +108,11 @@ const CyWorkflow = ({ elements, onSelectNodes, cy: forwardCy }) => {
   }, []);
 
   const handleFit = () => {
-    cy.current.fit();
+    fitJobsInView(cy, {});
+  };
+
+  const handleFocusActive = () => {
+    fitActiveJobsInView(cy);
   };
 
   const handleDownload = async () => {
@@ -189,12 +121,24 @@ const CyWorkflow = ({ elements, onSelectNodes, cy: forwardCy }) => {
   };
 
   return (
-    <div className="w-full h-full relative bg-white">
-      <div className="absolute top-0 left-0 z-10 bg-neutral-200 text-black opacity-50 flex gap-3 px-2">
-        <button onClick={handleFit} title="Fit">
+    <div className="w-full h-full relative bg-white rounded-md">
+      <div className="absolute top-0 left-0 rounded-br-md z-10 bg-neutral-200/50 text-black/50 flex gap-3 px-2">
+        <button onClick={handleFit} title="Fit workflow" className="hover:text-black hover:opacity-100">
           <i className="fa-solid fa-maximize"></i>
         </button>
-        <button onClick={handleDownload} title="Download current viewport">
+        <button
+          onClick={handleFocusActive}
+          title="Focus active jobs"
+          className="enabled:hover:text-black enabled:hover:opacity-100 disabled:opacity-50"
+          disabled={!anyActiveJobs(elements)}
+        >
+          <i className="fa-solid fa-crosshairs"></i>
+        </button>
+        <button
+          onClick={handleDownload}
+          title="Download current viewport"
+          className="hover:text-black hover:opacity-100"
+        >
           <i className="fa-solid fa-floppy-disk"></i>
         </button>
       </div>
@@ -210,7 +154,7 @@ const CyWorkflow = ({ elements, onSelectNodes, cy: forwardCy }) => {
         minZoom={1e-3}
         wheelSensitivity={0.4}
       />
-      <div className="absolute bottom-0 right-0 z-10 bg-neutral-200 text-black opacity-50 px-2 py-2 text-xs">
+      <div className="absolute bottom-0 right-0 z-10 bg-neutral-200 text-black opacity-50 px-2 py-2 text-xs rounded-tl-md">
         <div>
           Box selection: <kbd className="kbd-key">Shift + LClick</kbd>
         </div>

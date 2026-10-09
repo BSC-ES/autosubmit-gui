@@ -1,4 +1,4 @@
-import { useEffect, useRef, MutableRefObject } from "react";
+import { useEffect, useRef, RefObject } from "react";
 import $ from "jquery";
 import "jquery.fancytree/dist/modules/jquery.fancytree.clones";
 import "jquery.fancytree/dist/modules/jquery.fancytree.filter";
@@ -48,7 +48,7 @@ const FANCY_TREE_OPTIONS = {
  * @param {function} props.onSelectNodes
  */
 const FancyTree = ({ source, tree: forwardTree, onSelectNodes, className }) => {
-  /** @type {MutableRefObject<Fancytree.Fancytree>} */
+  /** @type {RefObject<Fancytree.Fancytree>} */
   const tree = useRef();
 
   useEffect(() => {

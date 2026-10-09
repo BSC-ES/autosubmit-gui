@@ -1,5 +1,10 @@
 ## Changelog
 
+### Release v4.3.0 - Unreleased
+
+* **Compatibility with Autosubmit API version >= [v4.3.0](https://pypi.org/project/autosubmit-api/4.3.0/) (unreleased)**
+* Enabled auto-focus in the experiment graph and added smooth animations.
+
 ### Release v4.2.0 - Release date: 2026-09-28
 
 * **Compatibility with Autosubmit API version >= [v4.2.0](https://pypi.org/project/autosubmit-api/4.2.0/)**
