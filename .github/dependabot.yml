@@ -22,4 +22,8 @@ updates:
       interval: "daily"
     labels:
       - 'dependencies'
-
+    groups:
+      react-stack:
+        patterns:
+          - "react"
+          - "react-dom"
