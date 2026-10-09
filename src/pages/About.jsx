@@ -4,7 +4,8 @@ import useASTitle from '../hooks/useASTitle';
 import useBreadcrumb from '../hooks/useBreadcrumb';
 import packageJson from "../../package.json";
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
-import { cn } from '../services/utils'
+import { cn } from '../services/utils';
+import { autosubmitApiDefault } from '../services/autosubmitApiDefault';
 
 
 const FAQ = [
@@ -50,6 +51,9 @@ const About = () => {
     }
   ])
   const [markdown, setMarkdown] = useState("")
+  const { data: apiDetails } = autosubmitApiDefault.endpoints.getApiDetails.useQuery();
+
+  const apiVersion = apiDetails?.version;
 
   useEffect(() => {
     fetch(`CHANGELOG.md`)
@@ -73,7 +77,7 @@ const About = () => {
             href="https://github.com/BSC-ES/autosubmit-gui/issues" target='_blank' className='text-primary-600 dark:text-primary-400' rel="noreferrer"
           >Autosubmit GUI Issues page</a>.</p>
         </div>
-        <div className='w-full text-right text-black/50 dark:text-white/50'>— GUI Version: {packageJson.version}</div>
+        <div className='w-full text-right text-black/50 dark:text-white/50'><strong>— GUI Version {packageJson.version}</strong>{apiVersion && <>, running with <a href="https://autosubmit-api.readthedocs.io/en/latest/" target="_blank" className='text-primary-600 dark:text-primary-400'>API Version {apiVersion}</a></>}</div>
       </div>
 
       <div className='border rounded-2xl px-8 pt-6 pb-8'>
