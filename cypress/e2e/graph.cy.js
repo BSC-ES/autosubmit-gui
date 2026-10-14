@@ -23,11 +23,12 @@ describe("navigation", () => {
     cy.wait(500);
     cy.contains("STOP MONITOR").click();
 
-    cy.get('[placeholder="Filter job..."]').type("SYNCHRONIZE");
+    cy.get('[placeholder="Filter job name..."]').type("SYNCHRONIZE");
     cy.contains("Filter").click();
     cy.get("#bottom-panel-header").contains("a6zi_SYNCHRONIZE").should("exist");
     cy.contains("Clear").click();
 
+    cy.get("#status-filter").select("COMPLETED");
     cy.get(".fa-check").click();
     cy.contains("54 jobs selected").should("exist");
     cy.contains("Change status").click();
