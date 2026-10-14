@@ -5,6 +5,7 @@
 * **Compatibility with Autosubmit API version >= [v4.3.0](https://pypi.org/project/autosubmit-api/4.3.0/) (unreleased)**
 * Enabled auto-focus in the experiment graph and added smooth animations.
 * Now the experiment graph displays a legend for the different statuses.
+* Implemented adaptive zoom speed in the experiment graph so that all the workflows can be explored quickly regardless their sizes. 
 
 ### Release v4.2.0 - Release date: 2026-09-28
 
