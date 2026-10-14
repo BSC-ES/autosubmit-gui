@@ -45,6 +45,7 @@ import CopyButton from "./CopyButton";
  * @param {string} [props.SYPD] - SYPD value
  * @param {string} [props.ASYPD] - ASYPD value
  * @param {string} [props.wrapper] - Wrapper name
+ * @param {string} [props.cpu_time_raw] - CPU time raw value
  */
 const JobDetailCardLayout = ({
   expid,
@@ -80,6 +81,7 @@ const JobDetailCardLayout = ({
   SYPD,
   ASYPD,
   wrapper,
+  cpu_time_raw
 }) => {
   const [showModal, setShowModal] = useState({
     children: false,
@@ -301,6 +303,19 @@ const JobDetailCardLayout = ({
               >
                 <strong>ASYPD: </strong>
                 {isNaN(ASYPD) ? ASYPD : Number(ASYPD).toFixed(2)}
+              </span>
+            </div>
+          )}
+          {cpu_time_raw && (
+            <div>
+              <span
+                className="bg-primary text-white rounded-full px-4"
+                title="CPU Time Raw."
+              >
+                <strong>CPU Time: </strong>
+                {isNaN(cpu_time_raw)
+                  ? cpu_time_raw
+                  : Number(cpu_time_raw).toFixed(2)}
               </span>
             </div>
           )}
