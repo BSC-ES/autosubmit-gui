@@ -106,16 +106,19 @@ export const QuickJobList = ({ jobs, selection, onSelectionChange }) => {
             <span>
               <i className="fa-regular fa-circle text-primary" />
             </span>
-            <div
-              className={cn(
-                "px-1 py-[1px] hover:bg-gray-100 rounded cursor-pointer select-none",
-                isSelected && "bg-blue-100 hover:bg-blue-200",
-              )}
-            >
-              {job.name} <span className={cn("badge", getStatusBadgeStyle(job.status.toUpperCase()))}>#{job.status}</span>
+            <div className="flex gap-2">
+              <div
+                className={cn(
+                  "px-1 py-[1px] hover:bg-gray-100 rounded cursor-pointer select-none",
+                  isSelected && "bg-blue-100 hover:bg-blue-200",
+                )}
+              >
+                {job.name}
+              </div>
+              <span className={cn("flex items-center badge", getStatusBadgeStyle(job.status.toUpperCase()))}>{job.status}</span>
             </div>
             {job?.submit && job?.start && job?.finish && (
-              <span className="text-gray-500 ml-2">
+              <span className="text-gray-500">
                 ~ ( {secondsToDelta(calcRunTime(job.submit, job.start))} ) +{" "}
                 {secondsToDelta(calcRunTime(job.start, job.finish))}
               </span>
