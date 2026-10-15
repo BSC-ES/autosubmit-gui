@@ -15,15 +15,15 @@ const ExperimentTreeLegacy = () => {
   const dispatch = useDispatch();
   const authState = useSelector((state) => state.auth);
   const routeParams = useParams();
-  useASTitle(`Experiment ${routeParams.expid} tree`);
+  useASTitle(`Experiment ${routeParams.expid} tree (legacy)`);
   useBreadcrumb([
     {
       name: `Experiment ${routeParams.expid}`,
       route: `/experiment/${routeParams.expid}`,
     },
     {
-      name: `Tree View`,
-      route: `/experiment/${routeParams.expid}/tree`,
+      name: `Legacy Tree View`,
+      route: `/experiment/${routeParams.expid}/tree-legacy`,
     },
   ]);
 

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState, MutableRefObject } from "react";
 import { autosubmitApiV4 } from "../services/autosubmitApiV4";
 
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 import useASTitle from "../hooks/useASTitle";
 import useBreadcrumb from "../hooks/useBreadcrumb";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,9 +11,12 @@ import BottomPanel from "../common/BottomPanel";
 import { ChangeStatusModal } from "../common/ChangeStatusModal";
 import ExperimentEtaPanel from "../common/ExperimentEtaPanel";
 import { useWindowSize } from "@uidotdev/usehooks";
-import { cn } from "../services/utils";
+import { cn, JOB_STATUSES } from "../services/utils";
 import FetchJobDetailCard from "../common/FetchJobDetailCard";
 import { QuickJobList } from "./ExperimentQuick";
+
+const DEFAULT_ITEMS_PER_PAGE = 100;
+const ITEMS_PER_PAGE_OPTIONS = [DEFAULT_ITEMS_PER_PAGE, 500, 1000];
 
 /***
  * param treeData: Array of objects representing the tree structure
@@ -168,14 +171,15 @@ const HierarchyTree = ({ treeDirs, onNodeSelect, selectedNode }) => {
                 className="flex items-center"
                 onClick={() => handleNodeSelect(treeDir)}
               >
-                <span className="relative mr-4">
+                <div className="flex mr-2">
+                  <i className="fa-solid fa-caret-down mr-1" />
                   <i className="fa-solid fa-folder" />
-                  {counter > 0 && (
+                  {/* {counter > 0 && (
                     <span className="absolute -top-1 -right-2 text-[0.6rem] bg-gray-400 text-white rounded-full aspect-square h-[0.8rem] w-[0.8rem] flex items-center justify-center">
                       {counter}
                     </span>
-                  )}
-                </span>
+                  )} TODO: REMOVE SINCE IT'S ALREADY DISPLAYED IN THE COMPLETED BADGE*/} 
+                </div>
 
                 <span
                   className={cn(
@@ -184,33 +188,38 @@ const HierarchyTree = ({ treeDirs, onNodeSelect, selectedNode }) => {
                   )}
                 >
                   <span>{treeDir.title}</span>
-
-                  <span className="flex items-center gap-1">
-                    {counter > 0 && (
-                      <span className="badge badge-status-completed text-[0.7rem] text-nowrap">
-                        {treeDir.diff_statuses_counters?.COMPLETED || 0}/
-                        {counter} COMPLETED
-                      </span>
-                    )}
-                    {treeDir.diff_statuses_counters &&
-                      Object.entries(treeDir.diff_statuses_counters).map(
-                        ([status, count]) => {
-                          if (
-                            count > 0 &&
-                            ["RUNNING", "QUEUING", "FAILED"].includes(status)
-                          ) {
-                            return (
-                              <span
-                                className={`badge badge-status-${status.toLowerCase()} text-[0.7rem] text-nowrap`}
-                              >
-                                {count} {status}
-                              </span>
-                            );
-                          }
-                        },
-                      )}
-                  </span>
                 </span>
+                <div className="flex items-center gap-1 ml-2">
+                  {counter > 0 && (
+                    <span
+                      className={cn(
+                        "badge text-[0.7rem] text-nowrap",
+                        (treeDir.diff_statuses_counters?.COMPLETED || 0) === counter
+                          ? "badge-status-completed"
+                          : "badge-status-some-completed",
+                      )}
+                    >
+                      {treeDir.diff_statuses_counters?.COMPLETED || 0}/{counter} COMPLETED
+                    </span>
+                  )}
+                  {treeDir.diff_statuses_counters &&
+                    Object.entries(treeDir.diff_statuses_counters).map(
+                      ([status, count]) => {
+                        if (
+                          count > 0 &&
+                          ["RUNNING", "QUEUING", "FAILED"].includes(status)
+                        ) {
+                          return (
+                            <span
+                              className={`badge badge-status-${status.toLowerCase()} text-[0.7rem] text-nowrap`}
+                            >
+                              {count} {status}
+                            </span>
+                          );
+                        }
+                      },
+                    )}
+                </div>
               </div>
               {treeDir.children && treeDir.children.length > 0 && (
                 <div className="ml-6">
@@ -242,6 +251,54 @@ const ExperimentTree = () => {
       route: `/experiment/${routeParams.expid}/tree`,
     },
   ]);
+  const [searchParams, setSearchParams] = useSearchParams({});
+
+  /**
+   * Reads the selected status from the query string.
+   *
+   * @returns {string|undefined} A valid job status or `undefined`, 
+   * which disables the filter.
+   */
+  const status = useMemo(() => {
+    const raw = searchParams.get("status")
+    return JOB_STATUSES.includes(raw) ? raw : undefined
+  }, [searchParams])
+
+  /**
+   * Reads the current page from the query string.
+   * 
+   * Missing, non-numeric, or non-positive values fall back to page one.
+   *
+   * @returns {number} A valid page number starting at one.
+   */
+  const currentPage = useMemo(() => {
+    const page = parseInt(searchParams.get("page") || "1", 10)
+    return !Number.isFinite(page) || page <= 0 ? 1 : page
+  }, [searchParams])
+
+  /**
+   * Reads the page size from the query string.
+   * 
+   * Only values included in `ITEMS_PER_PAGE_OPTIONS` are accepted.
+   * Invalid values fall back to `DEFAULT_ITEMS_PER_PAGE`.
+   *
+   * @returns {number} A valid page size.
+   */
+  const pageSize = useMemo(() => {
+    const raw = searchParams.get("page_size")
+    const size = parseInt(raw || "", 10)
+
+    // Ignore non-valid or non-whitelisted values
+    if (!Number.isFinite(size) || !ITEMS_PER_PAGE_OPTIONS.includes(size)) {
+      return DEFAULT_ITEMS_PER_PAGE
+    }
+
+    return size
+  }, [searchParams])
+
+  const [jobNameInput, setJobNameInput] = useState(searchParams.get("job_name") || "")
+
+  const jobName = searchParams.get("job_name") || undefined;
 
   const fetchJobDetailCardRef = useRef(null);
 
@@ -284,6 +341,10 @@ const ExperimentTree = () => {
     {
       expid: routeParams.expid,
       view: "extended",
+      job_name: jobName,
+      status: status,
+      page: currentPage,
+      page_size: pageSize,
       date: selectedDir?.date || undefined,
       member: selectedDir?.member || undefined,
       section: selectedDir?.section || undefined,
@@ -294,11 +355,6 @@ const ExperimentTree = () => {
       pollingInterval: activeMonitor ? 5000 : 0,
     },
   );
-
-  const [selectedJobIds, setSelectedJobIds] = useState(new Set());
-  const handleJobSelectionChange = (selectedIds) => {
-    setSelectedJobIds(selectedIds);
-  };
 
   const handleRefetch = () => {
     refetchTree();
@@ -315,6 +371,9 @@ const ExperimentTree = () => {
 
   const [filterJobsText, setFilterJobsText] = useState("");
   const [filteredJobs, setFilteredJobs] = useState([]);
+
+  const [leftColumnWidth, setLeftColumnWidth] = useState(33.333);
+  const [isResizingColumns, setIsResizingColumns] = useState(false);
 
   useEffect(() => {
     fetchJobDetailCardRef.current?.refetch();
@@ -335,10 +394,48 @@ const ExperimentTree = () => {
     }
   }, [filterJobsText, jobsData]);
 
+  /**
+   * Creates the initial job selection state.
+   *
+   * @returns {JobSelection} The initial selection state.
+   */
+  const createEmptySelection = () => ({
+    jobIds: new Set(),
+    lastClickedIndex: 0,
+  });
+
+  const [selection, setSelection] = useState(createEmptySelection);
+
+  /**
+   * Clears the current selection whenever the list context changes,
+   * including the experiment, page, page size, status, or job name filter.
+   */
+  useEffect(() => {
+    setSelection(createEmptySelection());
+  }, [routeParams.expid, selectedDir, currentPage, pageSize, jobName]);
+
+  const isMobile = useWindowSize().width < 1024;
+
+  const etaPanel = activeMonitor ? (
+    <ExperimentEtaPanel
+      activeMonitor={activeMonitor}
+      expid={routeParams.expid}
+      pklData={jobsData}
+      jobs={filteredJobs}
+      isMobile={isMobile}
+    />
+  ) : null;
+
   return (
     <>
       <div className="w-full flex flex-col gap-4 grow">
         <div className="flex items-center gap-2 justify-between">
+          <Link
+            to={`/experiment/${routeParams.expid}/tree-legacy`}
+            className="btn btn-dark font-bold px-4 text-nowrap"
+          >
+            Legacy View <i className="fa-solid fa-right-from-bracket ml-2"></i>
+          </Link>
           <div className="flex items-center gap-2">
             {/* TODO: Add the go to previous runs button */}
             {/* <button className={"btn btn-primary font-bold "} title="Select Run">
@@ -361,43 +458,64 @@ const ExperimentTree = () => {
               <i className="fa-solid fa-rotate-right"></i>
             </button>
           </div>
-
-          <Link
-            to={`/experiment/${routeParams.expid}/tree-legacy`}
-            className="btn btn-dark font-bold px-4 text-nowrap"
-          >
-            Legacy View <i className="fa-solid fa-right-from-bracket ms-2"></i>
-          </Link>
         </div>
 
-        <div className="relative flex gap-4 grow basis-0 min-h-[70vh] lg:min-h-[50vh]">
+        <div
+          className="group relative flex grow basis-0 min-h-[70vh] lg:min-h-[50vh]"
+          onMouseMove={(event) => {
+            if (!isResizingColumns) return;
+            const bounds = event.currentTarget.getBoundingClientRect();
+            const width =
+              ((event.clientX - bounds.left) / bounds.width) * 100;
+            setLeftColumnWidth(Math.min(70, Math.max(20, width))); // TODO: make the content to overflow instead of adjust the inner widths
+          }}
+          onMouseUp={() => setIsResizingColumns(false)}
+          onMouseLeave={() => setIsResizingColumns(false)}
+        >
           {isTreeFetching && !activeMonitor ? (
             <div className="absolute inset-0 z-20 flex items-center justify-center bg-white">
               <div className="spinner-border dark:invert" role="status"></div>
             </div>
           ) : (
             <>
-              <div className="w-1/3 relative flex flex-col max-h-full overflow-auto py-4 px-6 border rounded-lg custom-scrollbar bg-white">
+              <div
+                className="relative flex flex-col max-h-full overflow-auto p-4 border rounded-lg custom-scrollbar bg-white"
+                style={{ width: `${leftColumnWidth}%` }}
+              >
                 <HierarchyTree
                   treeDirs={tree}
                   onNodeSelect={handleDirSelect}
                   selectedNode={selectedDir}
                 />
               </div>
-              <div className="w-2/3 flex flex-col h-full max-h-full gap-2">
+              <div
+                role="separator"
+                aria-orientation="vertical"
+                aria-label="Resize columns"
+                className="relative z-10 px-1 mx-1 w-1 cursor-col-resize opacity-0 transition-opacity active:opacity-100 hover:opacity-100 bg-[radial-gradient(circle,#9ca3af_1px,transparent_1px)] [background-size:4px_4px]"
+                onMouseDown={(event) => {
+                  event.preventDefault();
+                  setIsResizingColumns(true);
+                }}
+              />
+              <div
+                className="flex min-w-0 flex-1 flex-col h-full max-h-full gap-2"
+              >
                 <div className="flex items-center">
-                  <input
-                    className="form-input rounded grow"
-                    placeholder="Filter job..."
-                    value={filterJobsText}
-                    onChange={(e) => setFilterJobsText(e.target.value)}
-                  />
-                  {/* <button
-                    className="btn btn-dark border-dark font-bold px-4 rounded-s-none"
-                    onClick={() => setFilterJobsText(filterJobsText)}
-                  >
-                    Filter
-                  </button> */}
+                  <div className="grow flex">
+                    <input
+                      className="form-input rounded-lg rounded-r-none grow"
+                      placeholder="Filter job..."
+                      value={filterJobsText}
+                      onChange={(e) => setFilterJobsText(e.target.value)}
+                    />
+                    <button
+                      className="btn btn-dark font-bold px-4 rounded-l-none border-l-0"
+                      onClick={() => setFilterJobsText(filterJobsText)}
+                    >
+                      Filter
+                    </button>
+                  </div>
                   <label className="ml-4 text-gray-500 text-sm">
                     {filteredJobs.length} / {jobsData?.jobs?.length || 0} jobs
                   </label>
@@ -423,10 +541,14 @@ const ExperimentTree = () => {
                           ></div>
                         </div>
                       ) : (
-                        <QuickJobList
-                          jobs={filteredJobs}
-                          onSelectionChange={handleJobSelectionChange}
-                        />
+                        <>
+                          {!isMobile && etaPanel}
+                          <QuickJobList
+                            jobs={filteredJobs}
+                            selection={selection}
+                            onSelectionChange={setSelection}
+                          />
+                        </>
                       )}
                     </>
                   )}
@@ -436,20 +558,23 @@ const ExperimentTree = () => {
           )}
         </div>
       </div>
-      {selectedJobIds.size > 0 && (
+
+      {isMobile && etaPanel}
+
+      {selection.jobIds.size > 0 && (
         <BottomPanel
           title={
-            selectedJobIds.size === 1
-              ? selectedJobIds.values().next().value
-              : `${selectedJobIds.size} jobs selected`
+            selection.jobIds.size === 1
+              ? selection.jobIds.values().next().value
+              : `${selection.jobIds.size} jobs selected`
           }
         >
           <div className="flex flex-col gap-3">
-            {selectedJobIds.size === 1 && (
+            {selection.jobIds.size === 1 && (
               <FetchJobDetailCard
                 ref={fetchJobDetailCardRef}
                 expid={routeParams.expid}
-                jobName={selectedJobIds.values().next().value}
+                jobName={selection.jobIds.values().next().value}
               />
             )}
 
@@ -460,7 +585,7 @@ const ExperimentTree = () => {
               </button>
             </div>
             <ChangeStatusModal
-              selectedJobs={Array.from(selectedJobIds)}
+              selectedJobs={Array.from(selection.jobIds)}
               show={showModal}
               onHide={toggleModal}
               expid={routeParams.expid}
