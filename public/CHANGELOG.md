@@ -1,5 +1,10 @@
 ## Changelog
 
+### Release v4.3.0 - Unreleased
+
+* **Compatibility with Autosubmit API version >= [v4.3.0](https://pypi.org/project/autosubmit-api/4.3.0/) (unreleased)**
+* An enhanced tree view is now available! It solves performance concerns by implementing lazy loading and pagination.
+
 ### Release v4.2.1 - Release date: 2026-11-10
 
 * Enabled auto-focus in the experiment graph and added smooth animations. Improved responsiveness.
