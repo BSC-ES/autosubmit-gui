@@ -23,6 +23,8 @@ export const OIDC_AUTHORIZATION_ENDPOINT = import.meta.env.REACT_APP_OIDC_AUTHOR
 export const OIDC_CLIENT_ID = import.meta.env.REACT_APP_OIDC_CLIENT_ID;
 
 // Other
-export const DARK_MODE_SWITCHER = ["true", "T"].includes(import.meta.env.REACT_APP_DARK_MODE_SWITCHER);; // Experimental feature. Default: false.
+export const DARK_MODE_SWITCHER = ["true", "T"].includes(import.meta.env.REACT_APP_DARK_MODE_SWITCHER); // Experimental feature. Default: false.
 
 export const TOP_ANNOUNCEMENT = import.meta.env.REACT_APP_TOP_ANNOUNCEMENT;
+
+export const MAINTENANCE_URL = import.meta.env.REACT_APP_MAINTENANCE_URL || "/maintenance.json"; // Default: /maintenance.json. The URL to check if the maintenance mode is enabled. Allows customizing the message. It should return a JSON with the following structure: { "enabled": boolean, "title": string, "message": string }
