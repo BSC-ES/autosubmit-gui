@@ -11,231 +11,13 @@ import BottomPanel from "../common/BottomPanel";
 import { ChangeStatusModal } from "../common/ChangeStatusModal";
 import ExperimentEtaPanel from "../common/ExperimentEtaPanel";
 import { useWindowSize } from "@uidotdev/usehooks";
-import { cn, JOB_STATUSES } from "../services/utils";
+import { JOB_STATUSES } from "../services/utils";
 import FetchJobDetailCard from "../common/FetchJobDetailCard";
 import { QuickJobList } from "./ExperimentQuick";
+import HierarchyTree from "../common/HierarchyTree";
 
 const DEFAULT_ITEMS_PER_PAGE = 100;
 const ITEMS_PER_PAGE_OPTIONS = [DEFAULT_ITEMS_PER_PAGE, 500, 1000];
-
-/***
- * param treeData: Array of objects representing the tree structure
- */
-const getTreeDirs = (treeData) => {
-  const result = [];
-
-  // First level: date
-  Object.keys(treeData).forEach((date) => {
-    const dateNode = {
-      title: date,
-      key: date,
-      date: date,
-      member: "NA",
-      section: null,
-      chunk: "NA",
-      children: [],
-    };
-
-    let date_statuses_counters = {};
-    let diff_date_statuses_counters = {};
-
-    // Second level: member
-    Object.keys(treeData[date]).forEach((member) => {
-      const memberNode = {
-        title: member,
-        key: `${date}-${member}`,
-        date: date,
-        member: member,
-        section: null,
-        chunk: "NA",
-        children: [],
-      };
-
-      let member_statuses_counters = {};
-      let diff_member_statuses_counters = {};
-
-      // Third level: section
-      Object.keys(treeData[date][member]).forEach((section) => {
-        let section_statuses_counters = treeData[date][member][section];
-
-        let jobs_counter = 0;
-
-        Object.entries(section_statuses_counters).forEach(([status, count]) => {
-          jobs_counter += count;
-          if (member_statuses_counters[status]) {
-            member_statuses_counters[status] += count;
-          } else {
-            member_statuses_counters[status] = count;
-          }
-        });
-
-        // Check if the section has more than one job to determine if it's a directory
-        // If it has more than one job, we treat it as a directory; otherwise,
-        // we treat it as a leaf node that won't be displayed in the tree dir view.
-        const is_section_dir = jobs_counter > 1;
-        if (is_section_dir) {
-          const sectionNode = {
-            title: section,
-            key: `${date}-${member}-${section}`,
-            date: date,
-            member: member,
-            section: section,
-            chunk: null,
-            children: [],
-            statuses_counters: section_statuses_counters,
-            diff_statuses_counters: section_statuses_counters, // Not lower level, so we can use the same counters for diff
-          };
-
-          memberNode.children.push(sectionNode);
-        } else {
-          Object.entries(section_statuses_counters).forEach(
-            ([status, count]) => {
-              if (diff_member_statuses_counters[status]) {
-                diff_member_statuses_counters[status] += count;
-              } else {
-                diff_member_statuses_counters[status] = count;
-              }
-            },
-          );
-        }
-      });
-
-      memberNode.statuses_counters = member_statuses_counters;
-      memberNode.diff_statuses_counters = diff_member_statuses_counters;
-
-      // Update date level statuses counters
-      Object.entries(member_statuses_counters).forEach(([status, count]) => {
-        if (date_statuses_counters[status]) {
-          date_statuses_counters[status] += count;
-        } else {
-          date_statuses_counters[status] = count;
-        }
-      });
-
-      if (member === "NA") {
-        // Forward the children of the memberNode to the dateNode if member is "NA"
-        dateNode.children.push(...memberNode.children);
-      } else {
-        dateNode.children.push(memberNode);
-      }
-    });
-
-    dateNode.statuses_counters = date_statuses_counters;
-
-    // Subtract the statuses counters of the children
-    dateNode.diff_statuses_counters = date_statuses_counters;
-    Object.keys(dateNode.children).forEach((child) => {
-      const childNode = dateNode.children[child];
-      Object.entries(childNode.statuses_counters).forEach(([status, count]) => {
-        if (dateNode.diff_statuses_counters[status]) {
-          dateNode.diff_statuses_counters[status] -= count;
-        }
-      });
-    });
-
-    if (date === "NA") dateNode.title = "Keys";
-
-    result.push(dateNode);
-  });
-
-  console.log(JSON.stringify(result, null, 2));
-  return result;
-};
-
-const HierarchyTree = ({ treeDirs, onNodeSelect, selectedNode }) => {
-  const handleNodeSelect = (node) => {
-    if (onNodeSelect) {
-      onNodeSelect(node);
-    }
-  };
-
-  return (
-    <ul
-      className="text-sm flex flex-col gap-[0.35rem] py-1 font-thin"
-      style={{
-        fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
-        color: "#333",
-      }}
-    >
-      {treeDirs &&
-        treeDirs.length > 0 &&
-        treeDirs.map((treeDir, index) => {
-          const counter = Object.values(
-            treeDir.diff_statuses_counters || {},
-          ).reduce((acc, count) => acc + count, 0);
-          const isSelected = selectedNode && selectedNode.key === treeDir.key;
-
-          return (
-            <li key={index}>
-              <div
-                className="flex items-center"
-                onClick={() => handleNodeSelect(treeDir)}
-              >
-                <div className="flex mr-2">
-                  <i className="fa-solid fa-caret-down mr-1" />
-                  <i className="fa-solid fa-folder" />
-                  {/* {counter > 0 && (
-                    <span className="absolute -top-1 -right-2 text-[0.6rem] bg-gray-400 text-white rounded-full aspect-square h-[0.8rem] w-[0.8rem] flex items-center justify-center">
-                      {counter}
-                    </span>
-                  )} TODO: REMOVE SINCE IT'S ALREADY DISPLAYED IN THE COMPLETED BADGE*/} 
-                </div>
-
-                <span
-                  className={cn(
-                    "flex items-center gap-2 px-1 py-[1px] hover:bg-gray-100 rounded cursor-pointer select-none",
-                    isSelected && "bg-blue-100 hover:bg-blue-200",
-                  )}
-                >
-                  <span>{treeDir.title}</span>
-                </span>
-                <div className="flex items-center gap-1 ml-2">
-                  {counter > 0 && (
-                    <span
-                      className={cn(
-                        "badge text-[0.7rem] text-nowrap",
-                        (treeDir.diff_statuses_counters?.COMPLETED || 0) === counter
-                          ? "badge-status-completed"
-                          : "badge-status-some-completed",
-                      )}
-                    >
-                      {treeDir.diff_statuses_counters?.COMPLETED || 0}/{counter} COMPLETED
-                    </span>
-                  )}
-                  {treeDir.diff_statuses_counters &&
-                    Object.entries(treeDir.diff_statuses_counters).map(
-                      ([status, count]) => {
-                        if (
-                          count > 0 &&
-                          ["RUNNING", "QUEUING", "FAILED"].includes(status)
-                        ) {
-                          return (
-                            <span
-                              className={`badge badge-status-${status.toLowerCase()} text-[0.7rem] text-nowrap`}
-                            >
-                              {count} {status}
-                            </span>
-                          );
-                        }
-                      },
-                    )}
-                </div>
-              </div>
-              {treeDir.children && treeDir.children.length > 0 && (
-                <div className="ml-6">
-                  <HierarchyTree
-                    treeDirs={treeDir.children}
-                    onNodeSelect={handleNodeSelect}
-                    selectedNode={selectedNode}
-                  />
-                </div>
-              )}
-            </li>
-          );
-        })}
-    </ul>
-  );
-};
 
 const ExperimentTree = () => {
   const dispatch = useDispatch();
@@ -308,26 +90,6 @@ const ExperimentTree = () => {
   const toggleActiveMonitor = () => {
     setActiveMonitor(!activeMonitor);
   };
-
-  const {
-    data: jobsCategoryTreeData,
-    isFetching: isTreeFetching,
-    refetch: refetchTree,
-  } = autosubmitApiV4.endpoints.getJobsCategoryTree.useQuery(
-    {
-      expid: routeParams.expid,
-    },
-    {
-      pollingInterval: activeMonitor ? 5000 : 0,
-    },
-  );
-
-  const tree = useMemo(() => {
-    if (jobsCategoryTreeData && jobsCategoryTreeData.category_tree)
-      return getTreeDirs(jobsCategoryTreeData.category_tree);
-
-    return [];
-  }, [jobsCategoryTreeData]);
 
   const handleDirSelect = (dir) => {
     setSelectedDir(dir);
@@ -472,90 +234,83 @@ const ExperimentTree = () => {
           onMouseUp={() => setIsResizingColumns(false)}
           onMouseLeave={() => setIsResizingColumns(false)}
         >
-          {isTreeFetching && !activeMonitor ? (
-            <div className="absolute inset-0 z-20 flex items-center justify-center bg-white">
-              <div className="spinner-border dark:invert" role="status"></div>
-            </div>
-          ) : (
-            <>
-              <div
-                className="relative flex flex-col max-h-full overflow-auto p-4 border rounded-lg custom-scrollbar bg-white"
-                style={{ width: `${leftColumnWidth}%` }}
-              >
-                <HierarchyTree
-                  treeDirs={tree}
-                  onNodeSelect={handleDirSelect}
-                  selectedNode={selectedDir}
+          <div
+            className="relative flex flex-col max-h-full overflow-auto p-4 border rounded-lg custom-scrollbar bg-white"
+            style={{ width: `${leftColumnWidth}%` }}
+          >
+            <HierarchyTree
+              expid={routeParams.expid}
+              onNodeSelect={handleDirSelect}
+              selectedNode={selectedDir}
+              activeMonitor={activeMonitor}
+            />
+          </div>
+          <div
+            role="separator"
+            aria-orientation="vertical"
+            aria-label="Resize columns"
+            className="relative z-10 px-1 mx-1 w-1 cursor-col-resize opacity-0 transition-opacity active:opacity-100 hover:opacity-100 bg-[radial-gradient(circle,#9ca3af_1px,transparent_1px)] [background-size:4px_4px]"
+            onMouseDown={(event) => {
+              event.preventDefault();
+              setIsResizingColumns(true);
+            }}
+          />
+          <div
+            className="flex min-w-0 flex-1 flex-col h-full max-h-full gap-2"
+          >
+            <div className="flex items-center">
+              <div className="grow flex">
+                <input
+                  className="form-input rounded-lg rounded-r-none grow"
+                  placeholder="Filter job..."
+                  value={filterJobsText}
+                  onChange={(e) => setFilterJobsText(e.target.value)}
                 />
+                <button
+                  className="btn btn-dark font-bold px-4 rounded-l-none border-l-0"
+                  onClick={() => setFilterJobsText(filterJobsText)}
+                >
+                  Filter
+                </button>
               </div>
-              <div
-                role="separator"
-                aria-orientation="vertical"
-                aria-label="Resize columns"
-                className="relative z-10 px-1 mx-1 w-1 cursor-col-resize opacity-0 transition-opacity active:opacity-100 hover:opacity-100 bg-[radial-gradient(circle,#9ca3af_1px,transparent_1px)] [background-size:4px_4px]"
-                onMouseDown={(event) => {
-                  event.preventDefault();
-                  setIsResizingColumns(true);
-                }}
-              />
-              <div
-                className="flex min-w-0 flex-1 flex-col h-full max-h-full gap-2"
-              >
-                <div className="flex items-center">
-                  <div className="grow flex">
-                    <input
-                      className="form-input rounded-lg rounded-r-none grow"
-                      placeholder="Filter job..."
-                      value={filterJobsText}
-                      onChange={(e) => setFilterJobsText(e.target.value)}
-                    />
-                    <button
-                      className="btn btn-dark font-bold px-4 rounded-l-none border-l-0"
-                      onClick={() => setFilterJobsText(filterJobsText)}
-                    >
-                      Filter
-                    </button>
-                  </div>
-                  <label className="ml-4 text-gray-500 text-sm">
-                    {filteredJobs.length} / {jobsData?.jobs?.length || 0} jobs
-                  </label>
+              <label className="ml-4 text-gray-500 text-sm">
+                {filteredJobs.length} / {jobsData?.jobs?.length || 0} jobs
+              </label>
+            </div>
+
+            <div className="relative flex flex-col max-h-full h-full overflow-auto p-4 border rounded-lg custom-scrollbar bg-white">
+              {!selectedDir && (
+                <div className="w-full h-full flex flex-col items-center justify-center gap-4">
+                  <i className="fa-regular fa-folder text-4xl text-primary"></i>
+                  <span className="text text-gray-500">
+                    Select a directory to view jobs
+                  </span>
                 </div>
+              )}
 
-                <div className="relative flex flex-col max-h-full h-full overflow-auto p-4 border rounded-lg custom-scrollbar bg-white">
-                  {!selectedDir && (
-                    <div className="w-full h-full flex flex-col items-center justify-center gap-4">
-                      <i className="fa-regular fa-folder text-4xl text-primary"></i>
-                      <span className="text text-gray-500">
-                        Select a directory to view jobs
-                      </span>
+              {selectedDir && (
+                <>
+                  {isJobsFetching && !activeMonitor ? (
+                    <div className="absolute inset-0 z-20 flex items-center justify-center bg-white">
+                      <div
+                        className="spinner-border dark:invert"
+                        role="status"
+                      ></div>
                     </div>
-                  )}
-
-                  {selectedDir && (
+                  ) : (
                     <>
-                      {isJobsFetching && !activeMonitor ? (
-                        <div className="absolute inset-0 z-20 flex items-center justify-center bg-white">
-                          <div
-                            className="spinner-border dark:invert"
-                            role="status"
-                          ></div>
-                        </div>
-                      ) : (
-                        <>
-                          {!isMobile && etaPanel}
-                          <QuickJobList
-                            jobs={filteredJobs}
-                            selection={selection}
-                            onSelectionChange={setSelection}
-                          />
-                        </>
-                      )}
+                      {!isMobile && etaPanel}
+                      <QuickJobList
+                        jobs={filteredJobs}
+                        selection={selection}
+                        onSelectionChange={setSelection}
+                      />
                     </>
                   )}
-                </div>
-              </div>
-            </>
-          )}
+                </>
+              )}
+            </div>
+          </div>
         </div>
       </div>
 
@@ -568,6 +323,7 @@ const ExperimentTree = () => {
               ? selection.jobIds.values().next().value
               : `${selection.jobIds.size} jobs selected`
           }
+          allowTitleCopy={selection.jobIds.size === 1}
         >
           <div className="flex flex-col gap-3">
             {selection.jobIds.size === 1 && (
