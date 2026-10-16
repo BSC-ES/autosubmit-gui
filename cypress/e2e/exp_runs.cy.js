@@ -35,7 +35,7 @@ describe("Experiment run history and RunId generation", () => {
       fixture: "api/v3/runs/rundetail_local_single.json"
     }).as("getRunDetail");
 
-    cy.visit(`/experiment/${expid}/tree`);
+    cy.visit(`/experiment/${expid}/tree-legacy`);
 
     cy.wait("@getMinimalTree")
       .its("response.statusCode")
