@@ -1,5 +1,10 @@
 ## Changelog
 
+### Release v4.3.0 - Unreleased
+
+* **Compatibility with Autosubmit API version >= [v4.3.0](https://pypi.org/project/autosubmit-api/4.3.0/) (unreleased)**
+* Maintenance mode is now available for the GUI.
+
 ### Release v4.2.0 - Release date: 2026-09-28
 
 * **Compatibility with Autosubmit API version >= [v4.2.0](https://pypi.org/project/autosubmit-api/4.2.0/)**
