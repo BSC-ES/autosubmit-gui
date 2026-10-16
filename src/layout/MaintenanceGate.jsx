@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Maintenance from "../pages/Maintenance";
+import MaintenanceContext from "../contexts/MaintenanceContext";
 import { MAINTENANCE_URL } from "../consts";
 
 const isValidTimestampFormat = (timestamp) => {
@@ -21,6 +22,7 @@ const parseScheduleDate = (value, field) => {
 
 const MaintenanceGate = ({ children }) => {
     const [config, setConfig] = useState(null);
+    const [bannerData, setBannerData] = useState(null);
     const [checked, setChecked] = useState(false); // to avoid rendering the children before the maintenance check is complete
 
     useEffect(() => {
@@ -29,8 +31,12 @@ const MaintenanceGate = ({ children }) => {
 
         const checkMaintenance = async () => {
             let isWithinSchedule = true;
+            let isUpcoming = false;
 
             try {
+                if (!MAINTENANCE_URL) {
+                    return;
+                }
                 const response = await fetch(MAINTENANCE_URL, {
                     cache: "no-store",
                     signal: controller.signal,
@@ -44,7 +50,7 @@ const MaintenanceGate = ({ children }) => {
                     throw new Error(`HTTP ${response.status}`);
                 }
 
-                // Ignore the SPA fallback and when the JSON file is missing
+                // Ignore non-JSON responses, including the SPA fallback
                 if (
                     !response.headers
                         .get("content-type")
@@ -98,9 +104,10 @@ const MaintenanceGate = ({ children }) => {
 
                     const currentTimestamp = Date.now();
 
-                    isWithinSchedule =
-                        (!hasStart || currentTimestamp >= startTimestamp) &&
+                    isWithinSchedule = (!hasStart || currentTimestamp >= startTimestamp) &&
                         (!hasEnd || currentTimestamp < endTimestamp);
+
+                    isUpcoming = hasStart && currentTimestamp < startTimestamp;
                 }
 
                 // Update the state only if the component is still mounted
@@ -109,6 +116,11 @@ const MaintenanceGate = ({ children }) => {
                         enabled: nextConfig.enabled && isWithinSchedule,
                         title: nextConfig.title,
                         message: nextConfig.message,
+                        start: nextConfig.start,
+                        end: nextConfig.end,
+                    });
+                    setBannerData({
+                        isUpcoming: nextConfig.enabled && isUpcoming,
                         start: nextConfig.start,
                         end: nextConfig.end,
                     });
@@ -154,7 +166,11 @@ const MaintenanceGate = ({ children }) => {
         );
     }
 
-    return children;
+    return (
+        <MaintenanceContext.Provider value={bannerData}>
+            {children}
+        </MaintenanceContext.Provider>
+    );
 };
 
 export default MaintenanceGate;

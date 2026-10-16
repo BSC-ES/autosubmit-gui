@@ -27,4 +27,4 @@ export const DARK_MODE_SWITCHER = ["true", "T"].includes(import.meta.env.REACT_A
 
 export const TOP_ANNOUNCEMENT = import.meta.env.REACT_APP_TOP_ANNOUNCEMENT;
 
-export const MAINTENANCE_URL = import.meta.env.REACT_APP_MAINTENANCE_URL || "/maintenance.json"; // Default: /maintenance.json. The URL to check if the maintenance mode is enabled. Allows customizing the message. It should return a JSON with the following structure: { "enabled": boolean, "title": string, "message": string }
+export const MAINTENANCE_URL = import.meta.env.REACT_APP_MAINTENANCE_URL || `${PUBLIC_URL}/maintenance.json`; // Default: <PUBLIC_URL>/maintenance.json. The URL to check if the maintenance mode is enabled. Allows customizing the message. It must return a JSON with the following structure: { "enabled": boolean, "title": string, "message": string }. Optionally, ``start`` and ``end`` UTC timestamps can be included to define the maintenance window in ISO 8601 format

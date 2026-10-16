@@ -31,27 +31,15 @@ const Maintenance = ({ title, message, start, end }) => {
 
                 {(start || end) && (
                     <div className="flex flex-col gap-1 text-sm text-neutral-500 border p-4">
+                        <p className="font-bold">Maintenance schedule:</p>
                         {start && (
-                            <span>
-                                <strong>Start:</strong> {new Date(start).toLocaleString()}
-                                
-                            </span>
+                            <p><strong>Start:</strong> {new Date(start).toLocaleString()}</p>
                         )}
                         {end && (
-                            <span>
-                                <strong>End:</strong> {new Date(end).toLocaleString()}
-                            </span>
+                            <p><strong>End:</strong> {new Date(end).toLocaleString()}</p>
                         )}
                     </div>
                 )}
-
-                <button
-                    type="button"
-                    onClick={() => window.location.reload()}
-                    className="btn btn-light self-center border px-5 py-2 text-center font-semibold"
-                >
-                    Check again
-                </button>
             </motion.div>
 
             <AnimatedBackground />
