@@ -3,7 +3,7 @@ import Logo from "../common/Logo.svg?react";
 import AnimatedBackground from "../common/AnimatedBackground";
 import useASTitle from "../hooks/useASTitle";
 
-const Maintenance = ({ title, message }) => {
+const Maintenance = ({ title, message, start, end }) => {
     useASTitle(`Maintenance`);
 
     return (
@@ -28,6 +28,22 @@ const Maintenance = ({ title, message }) => {
 
                     <p className="whitespace-pre-line text-neutral-600">{message}</p>
                 </div>
+
+                {(start || end) && (
+                    <div className="flex flex-col gap-1 text-sm text-neutral-500 border p-4">
+                        {start && (
+                            <span>
+                                <strong>Start:</strong> {new Date(start).toLocaleString()}
+                                
+                            </span>
+                        )}
+                        {end && (
+                            <span>
+                                <strong>End:</strong> {new Date(end).toLocaleString()}
+                            </span>
+                        )}
+                    </div>
+                )}
 
                 <button
                     type="button"
