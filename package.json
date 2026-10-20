@@ -25,7 +25,7 @@
     "@reduxjs/toolkit": "^2.13.0",
     "@uidotdev/usehooks": "^2.4.1",
     "clsx": "^2.1.1",
-    "cytoscape": "^3.34.3",
+    "cytoscape": "^3.34.4",
     "d3": "^7.9.0",
     "framer-motion": "^14.1.0",
     "jquery": "^4.0.0",
