@@ -83,6 +83,9 @@ export const STATUS_STYLES = {
   "RUNNING": {
     badge: "badge-status-running"
   },
+  "SOME_COMPLETED": {
+    badge: "badge-status-some-completed"
+  },
   "COMPLETED": {
     badge: "badge-status-completed"
   },
