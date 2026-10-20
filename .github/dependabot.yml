@@ -4,26 +4,54 @@
 # https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
 
 version: 2
-updates:
 
+updates:
   # Maintain dependencies for GitHub Actions
   - package-ecosystem: "github-actions"
-    # Workflow files stored in the default location of `.github/workflows`. (You don't need to specify `/.github/workflows` for `directory`. You can use `directory: "/"`.)
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "monthly"
     labels:
-      - 'dependencies'
+      - "dependencies"
+    groups:
+      actions:
+        applies-to: "version-updates"
+        patterns:
+          - "*"
+      actions-security:
+        applies-to: "security-updates"
+        patterns:
+          - "*"
 
-  # Maintain dependencies for NPM
+  # Maintain dependencies for npm
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:
-      interval: "daily"
+      interval: "monthly"
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: "[Dependency update] "
     labels:
-      - 'dependencies'
+      - "dependencies"
     groups:
+      # React and ReactDOM versions must always match.
+      # Extra validation is done in the CI.
       react-stack:
         patterns:
           - "react"
           - "react-dom"
+
+      # Group all other dependencies together for non-major updates.
+      general-updates:
+        applies-to: "version-updates"
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+
+      # Security updates, which ignore the interval setting.
+      security:
+        applies-to: "security-updates"
+        patterns:
+          - "*"
