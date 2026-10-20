@@ -45,6 +45,9 @@ next-env.d.ts
 .env
 .env.*
 
+# maintenance config
+/maintenance.json
+
 # misc
 .nyc_output/
 
