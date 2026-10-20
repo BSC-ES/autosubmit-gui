@@ -47,7 +47,7 @@
     "@vitejs/plugin-react": "^6.1.2",
     "autoprefixer": "^10.6.1",
     "cypress": "^16.2.0",
-    "dotenv": "^18.0.7",
+    "dotenv": "^18.0.8",
     "eslint": "^10.13.0",
     "postcss": "^8.5.30",
     "tailwindcss": "3",
