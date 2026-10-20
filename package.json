@@ -27,7 +27,7 @@
     "clsx": "^2.1.1",
     "cytoscape": "^3.34.4",
     "d3": "^7.9.0",
-    "framer-motion": "^14.1.0",
+    "framer-motion": "^14.3.0",
     "jquery": "^4.0.0",
     "jquery.fancytree": "^2.38.3",
     "react": "^19.3.1",
