@@ -36,7 +36,7 @@
     "react-hook-form": "^7.90.0",
     "react-redux": "^9.3.0",
     "react-router-dom": "^7.18.4",
-    "sass": "^1.105.1",
+    "sass": "^1.105.2",
     "showdown": "^2.1.0",
     "tailwind-merge": "^3.7.0"
   },
