@@ -20,12 +20,6 @@ export default defineConfig(({ mode }) => {
       // fancytree is mixed fix: https://stackoverflow.com/questions/77421447/how-to-solve-require-is-not-defined-in-vite
       commonjsOptions: { transformMixedEsModules: true }
     },
-    resolve: {
-      alias: {
-        // Trick for fancytree: https://github.com/mar10/fancytree/wiki/TutorialIntegration
-        'jquery': import.meta.resolve('jquery')
-      }
-    },
     server: {
       port: 3000,
       open: true,
