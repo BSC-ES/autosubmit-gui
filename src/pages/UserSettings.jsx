@@ -7,6 +7,11 @@ import { autosubmitApiV4 } from "../services/autosubmitApiV4";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import RunnerHelpModal from "../common/RunnerHelpModal";
 import CopyButton from "../common/CopyButton";
+import Modal, { ModalContent, ModalHeader } from "../common/Modal";
+
+const SECRET_COOLDOWN_SECONDS = 10;
+const SECRET_AUTOHIDE_SECONDS = 10;
+const SECRET_MASK = "•".repeat(80);
 
 const PreferredUsernameInput = () => {
   const {
@@ -118,42 +123,184 @@ const PreferredUsernameInput = () => {
   );
 };
 
-const TokenBox = ({ token }) => {
-  const [tokenHide, setTokenHide] = useState(true);
+const RevealSecretModal = ({ show, onHide, onReveal }) => {
+  const [remainingSeconds, setRemainingSeconds] = useState(SECRET_COOLDOWN_SECONDS);
+  const isCooldownComplete = remainingSeconds === 0;
 
-  const censorToken = (token) => {
-    // replace all the characters to •
-    return "•".repeat(token.length);
-  };
+  useEffect(() => {
+    setRemainingSeconds(SECRET_COOLDOWN_SECONDS);
+
+    if (!show) {
+      return undefined;
+    }
+
+    const cooldown = setInterval(() => {
+      setRemainingSeconds((seconds) => Math.max(seconds - 1, 0));
+    }, 1000);
+    return () => clearInterval(cooldown);
+  }, [show]);
+
+  return (
+    <Modal show={show} onClose={onHide}>
+      <ModalHeader className="bg-red-400 text-white">
+        <span><i className="fa-solid fa-triangle-exclamation mr-2" /> You are about to reveal a secret key</span>
+        <button className="cursor-pointer" onClick={onHide}>
+          <i className="fa-solid fa-xmark" />
+        </button>
+      </ModalHeader>
+      <ModalContent>
+        <div className="py-2 flex flex-col max-w-[600px] gap-2">
+          <p className="font-semibold mb-4 gap-2 text-center">
+            Please, read the following advisory before performing any action.
+          </p>
+          <p>
+            Anyone with access to your secret key may be able to access private information and
+            perform actions on your behalf.
+          </p>
+          <p>
+            Do not share it or include it in screenshots, logs, or public repositories. If you
+            believe it has been exposed, please get in touch with the Autosubmit administrator
+            promptly.
+          </p>
+          <p>
+            Once revealed, you will have {SECRET_AUTOHIDE_SECONDS} seconds to copy the secret key.
+          </p>
+          <div className="flex justify-center mt-4 gap-4">
+            <button
+              type="button"
+              onClick={onReveal}
+              disabled={!isCooldownComplete}
+              className="border rounded px-4 py-2 disabled:opacity-50 bg-orange-400 text-white hover:bg-orange-500 transition"
+            >
+              Understood, reveal{!isCooldownComplete ? ` (${remainingSeconds})` : ""}
+            </button>
+            <button
+              type="button"
+              onClick={onHide}
+              className="border rounded px-4 py-2 bg-gray-200 hover:bg-gray-300 transition"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </ModalContent>
+    </Modal>
+  );
+};
+
+const HideRevealButton = ({ isRevealed, iconSize }) => {
+  return (
+    isRevealed ? (
+      <>
+        <i className={`fa-solid fa-unlock group-hover:hidden ${iconSize}`}></i>
+        <i className={`fa-solid fa-lock hidden group-hover:inline ${iconSize}`}></i>
+        <span>Hide</span>
+      </>
+    ) : (
+      <>
+        <i className={`fa-solid fa-lock group-hover:hidden ${iconSize}`}></i>
+        <i className={`fa-solid fa-unlock hidden group-hover:inline ${iconSize}`}></i>
+        <span>Reveal</span>
+      </>
+    )
+  );
+};
+
+const TokenBox = ({ token }) => {
+  const [showSecretModal, setShowSecretModal] = useState(false);
+  const [isRevealed, setIsRevealed] = useState(false);
 
   return (
     <div className="flex border rounded grow overflow-hidden">
       <input
-        className="grow px-2 truncate min-w-0"
+        className={cn("grow px-2 truncate min-w-0", !token ? "text-gray-500" : "")}
         type="text"
-        value={tokenHide ? censorToken(token) : token}
+        value={token ? (isRevealed ? token : SECRET_MASK) : "Token not available"}
         readOnly
         disabled
       />
-      <button
-        title={tokenHide ? "Show" : "Hide"}
-        className="border-l dark:border-l-neutral-600 px-2 opacity-70"
-        onClick={() => setTokenHide(!tokenHide)}
-      >
-        <i className={cn("fa-solid", tokenHide ? "fa-eye-slash" : "fa-eye")} />
-      </button>
-      <div className="border-l dark:border-l-neutral-600 px-1 opacity-70">
-        <CopyButton text={token} iconSizeClass="text-base" />
-      </div>
+      {isRevealed && (
+        <CopyButton
+          text={token}
+          copyText="Copy token"
+          bgColorClass="bg-gray-50 border-l hover:bg-neutral-200 transition"
+          iconSizeClass="text-sm"
+          roundedClass=""
+        />
+      )}
+      {token && (
+        <button
+          onClick={() => {
+            if (isRevealed) {
+              setIsRevealed(false);
+              setShowSecretModal(false);
+              return;
+            }
+            setShowSecretModal(true);
+          }}
+          className="group border-l px-2 bg-gray-100 hover:bg-neutral-200 transition flex items-center justify-center gap-1"
+          title={isRevealed ? "Hide token" : "Reveal token"}
+        >
+          <HideRevealButton isRevealed={isRevealed} iconSize="text-sm" />
+        </button>
+      )}
+      <RevealSecretModal
+        show={showSecretModal}
+        onHide={() => setShowSecretModal(false)}
+        onReveal={() => {
+          setIsRevealed(true);
+          setShowSecretModal(false);
+          setTimeout(() => setIsRevealed(false), SECRET_AUTOHIDE_SECONDS * 1000);
+        }}
+      />
     </div>
   );
 };
 
 const SSHKeyBox = ({ keyValue }) => {
+  const [showSecretModal, setShowSecretModal] = useState(false);
+  const [isRevealed, setIsRevealed] = useState(false);
+
   return (
-    <div className="border rounded p-4 bg-gray-50 dark:bg-gray-800 flex items-center justify-between gap-2">
-      <div className="font-mono break-all text-xs flex-1">{keyValue}</div>
-      <CopyButton text={keyValue} bgSize={8} roundedClass="rounded" iconSizeClass="text-sm" borderClass="border" />
+    <div className="border rounded p-3 bg-gray-50 dark:bg-gray-800 flex items-center justify-between gap-2">
+      <div className="font-mono break-all text-xs flex-1">{isRevealed ? keyValue : SECRET_MASK}</div>
+      {isRevealed && (
+        <div>
+          <CopyButton
+            text={keyValue}
+            copyText="Copy SSH key"
+            bgSize={8}
+            roundedClass="rounded"
+            borderClass="border"
+            iconSizeClass="text-sm"
+          />
+        </div>
+      )}
+      {keyValue && (
+        <button
+          onClick={() => {
+            if (isRevealed) {
+              setIsRevealed(false);
+              setShowSecretModal(false);
+              return;
+            }
+            setShowSecretModal(true);
+          }}
+          className="group h-8 border px-2 rounded hover:bg-neutral-200 transition flex items-center justify-center gap-1"
+          title={isRevealed ? "Hide SSH Key" : "Reveal SSH Key"}
+        >
+          <HideRevealButton isRevealed={isRevealed} />
+        </button>
+      )}
+      <RevealSecretModal
+        show={showSecretModal}
+        onHide={() => setShowSecretModal(false)}
+        onReveal={() => {
+          setIsRevealed(true);
+          setShowSecretModal(false);
+          setTimeout(() => setIsRevealed(false), SECRET_AUTOHIDE_SECONDS * 1000);
+        }}
+      />
     </div>
   );
 };

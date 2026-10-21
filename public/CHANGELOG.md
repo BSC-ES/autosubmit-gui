@@ -1,5 +1,9 @@
 ## Changelog
 
+### Release v4.2.1 - Unreleased
+
+* Masks have been applied to secrets in the user settings.
+
 ### Release v4.2.0 - Release date: 2026-09-28
 
 * **Compatibility with Autosubmit API version >= [v4.2.0](https://pypi.org/project/autosubmit-api/4.2.0/)**
