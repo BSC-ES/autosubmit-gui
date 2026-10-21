@@ -1,16 +1,17 @@
-import { autosubmitApiV3 } from "../services/autosubmitApiV3";
+import { autosubmitApiV3 } from "../../services/autosubmitApiV3";
 import { useParams } from "react-router-dom";
-import { useEffect, useState, useMemo, useRef, MutableRefObject } from "react";
-import JobDetailCard from "../common/JobDetailCard";
-import CyWorkflow from "../common/CyWorkflow";
+import { useEffect, useState, useMemo, useRef, RefObject } from "react";
+import JobDetailCard from "../../common/JobDetailCard";
+import CyWorkflow from "./CyWorkflow";
 import Cytoscape from "cytoscape";
 import { useDispatch, useSelector } from "react-redux";
-import useASTitle from "../hooks/useASTitle";
-import useBreadcrumb from "../hooks/useBreadcrumb";
-import BottomPanel from "../common/BottomPanel";
-import { ChangeStatusModal } from "../common/ChangeStatusModal";
-import { STATUS_STYLES } from "../services/utils";
-import ExperimentEtaPanel from "../common/ExperimentEtaPanel";
+import useASTitle from "../../hooks/useASTitle";
+import useBreadcrumb from "../../hooks/useBreadcrumb";
+import BottomPanel from "../../common/BottomPanel";
+import { ChangeStatusModal } from "../../common/ChangeStatusModal";
+import { getStatusBadgeStyle, JOB_STATUSES, SELECTOR_DEFAULT_STATUS } from "../../services/utils";
+import { fitJobsInView, fitActiveJobsInView } from "./graphUtils";
+import ExperimentEtaPanel from "../../common/ExperimentEtaPanel";
 import { useWindowSize } from "@uidotdev/usehooks";
 
 const ExperimentGraph = () => {
@@ -29,7 +30,7 @@ const ExperimentGraph = () => {
     },
   ]);
 
-  /** @type {MutableRefObject<Cytoscape.Core>} */
+  /** @type {RefObject<Cytoscape.Core>} */
   const cy = useRef();
 
   const filterRef = useRef();
@@ -127,6 +128,20 @@ const ExperimentGraph = () => {
     }
   }, [data]);
 
+
+  useEffect(() => {
+    if (!cy.current || graphElements.length === 0) {
+      return;
+    }
+
+    const animationFrame = fitActiveJobsInView(cy);
+
+    return () => {
+      cancelAnimationFrame(animationFrame);
+    };
+  }, [graphElements]);
+
+
   useEffect(() => {
     if (pklData) {
       let newJobData = {};
@@ -141,9 +156,7 @@ const ExperimentGraph = () => {
 
         if (newJob.status_code !== incomingData.status_code) {
           changeLog.push(
-            `[${new Date().toISOString()}] ${newJob.id} change status to ${
-              incomingData.status
-            }`
+            `[${new Date().toISOString()}] ${newJob.id} change status to ${incomingData.status}`
           );
           // network.body.nodes[newJob.id].options.color.background = incomingData.status_color
           cy.current
@@ -183,8 +196,10 @@ const ExperimentGraph = () => {
     if (searchValue) {
       cy.current.nodes().unselect();
       const vals = cy.current.filter(`node[id *= '${searchValue}']`);
-      vals.select();
-      cy.current.fit(vals);
+      if (vals.length > 0) {
+        vals.select();
+        fitJobsInView(cy, vals);
+      }
     } else {
       handleClear();
     }
@@ -217,8 +232,10 @@ const ExperimentGraph = () => {
     const selStatus = statusSelectRef.current.value;
     cy.current.nodes().unselect();
     const vals = cy.current.filter(`node[status = '${selStatus}']`);
-    vals.select();
-    cy.current.fit(vals);
+    if (vals.length > 0) {
+      vals.select();
+      fitJobsInView(cy, vals);
+    }
   };
 
   const isMobile = useWindowSize().width < 1024;
@@ -242,12 +259,12 @@ const ExperimentGraph = () => {
         </span>
       )}
 
-      <div className="flex gap-2 items-center flex-wrap">
+      <div className="flex gap-3 items-center flex-wrap">
         <form className="grow flex flex-wrap" onSubmit={handleFilter}>
           <input
             ref={filterRef}
             className="form-input rounded-e-none grow"
-            placeholder="Filter job..."
+            placeholder="Filter job name..."
           />
           <button
             type="submit"
@@ -290,25 +307,19 @@ const ExperimentGraph = () => {
             Chunk size: {data?.chunk_size}
           </span>
         </div>
-        <div className="flex items-center gap-2">
-          <div>Select by status:</div>
+        <div className="flex items-stretch gap-3">
+          <div className="flex items-center">Select by status:</div>
           <select
+            id="status-filter"
             ref={statusSelectRef}
-            className={"bg-white text-black border text-center px-2"}
+            className="form-select border border-primary text-primary dark:bg-primary dark:text-white font-bold text-center"
           >
-            {Object.keys(STATUS_STYLES)
-              .sort()
-              .map((key) => {
-                return (
-                  <option
-                    key={key}
-                    value={key}
-                    className={STATUS_STYLES[key].badge}
-                  >
-                    {key}
-                  </option>
-                );
-              })}
+            <option value="" className="bg-white text-black">{SELECTOR_DEFAULT_STATUS}</option>
+            {JOB_STATUSES.map((status) => (
+              <option key={status} value={status} className={getStatusBadgeStyle(status)}>
+                {status}
+              </option>
+            ))}
           </select>
           <button
             className="btn btn-success text-sm"
@@ -319,7 +330,7 @@ const ExperimentGraph = () => {
         </div>
       </div>
 
-      <div className="flex grow border relative">
+      <div className="flex grow border rounded-md relative">
         {!isMobile && etaPanel}
 
         {isFetching && (
