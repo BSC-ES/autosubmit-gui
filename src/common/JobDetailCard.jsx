@@ -97,6 +97,7 @@ const JobDetailCard = ({ expid, jobData, jobs }) => {
           SYPD={jobData.SYPD}
           ASYPD={jobData.ASYPD}
           wrapper={jobData.wrapper}
+          cpu_time_raw={jobData.CPUTimeRAW}
         />
       )}
     </>
