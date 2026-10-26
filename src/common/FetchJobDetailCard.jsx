@@ -3,41 +3,11 @@ import { autosubmitApiV4 } from "../services/autosubmitApiV4";
 import JobDetailCardLayout from "./JobDetailCardLayout";
 import * as Tooltip from "@radix-ui/react-tooltip";
 
-const calculateChunkDates = (date, currentChunk, chunkUnit, chunkSize = 1) => {
-  if (!date || !chunkUnit || !chunkSize) return ["-", "-"];
+const formatDate = (date) => {
+  if (!date) return "-";
+  const formattedDate = String(date).match(/^(\d{4})(\d{2})(\d{2})$/);
 
-  const year = parseInt(date.substring(0, 4));
-  const month = parseInt(date.substring(4, 6)) - 1; // Months are 0-indexed
-  const day = parseInt(date.substring(6, 8));
-  let startDate = new Date(year, month, day);
-  let endDate = new Date(year, month, day);
-
-  if (currentChunk && chunkUnit) {
-    let chunkPrev = (currentChunk - 1) * chunkSize;
-    let chunkNext = currentChunk * chunkSize;
-    if (chunkUnit === "year") {
-      endDate.setFullYear(endDate.getFullYear() + chunkNext);
-      startDate.setFullYear(startDate.getFullYear() + chunkPrev);
-    } else if (chunkUnit === "month") {
-      endDate.setMonth(endDate.getMonth() + chunkNext);
-      startDate.setMonth(startDate.getMonth() + chunkPrev);
-    } else if (chunkUnit === "day") {
-      endDate.setDate(endDate.getDate() + chunkNext);
-      startDate.setDate(startDate.getDate() + chunkPrev);
-    } else if (chunkUnit === "hour") {
-      endDate.setHours(endDate.getHours() + Math.floor(chunkNext / 24));
-      startDate.setHours(startDate.getHours() + Math.floor(chunkPrev / 24));
-    }
-  }
-
-  const formatDate = (date) => {
-    const y = date.getFullYear();
-    const m = String(date.getMonth() + 1).padStart(2, "0");
-    const d = String(date.getDate()).padStart(2, "0");
-    return `${y} ${m} ${d}`;
-  };
-
-  return [formatDate(startDate), formatDate(endDate)];
+  return formattedDate?.slice(1).join(" ") ?? "-";
 };
 
 const calcRunTime = (start, end) => {
@@ -93,16 +63,6 @@ const FetchJobDetailCard = ({ expid, jobName }) => {
       job_name: jobName,
       include_status: true,
     });
-
-  const [start_date, end_date] = useMemo(() => {
-    if (!jobData) return ["-", "-"];
-    return calculateChunkDates(
-      jobData.date,
-      jobData.chunk,
-      jobData.chunk_unit,
-      jobData.chunk_size,
-    );
-  }, [jobData]);
 
   const runTime = useMemo(() => {
     if (
@@ -208,8 +168,8 @@ const FetchJobDetailCard = ({ expid, jobName }) => {
     <JobDetailCardLayout
       expid={expid}
       jobName={jobName}
-      startDate={start_date}
-      endDate={end_date}
+      startDate={formatDate(jobData.start_date)}
+      endDate={formatDate(jobData.end_date)}
       section={jobData.section}
       member={jobData.member}
       chunk={jobData.chunk}
