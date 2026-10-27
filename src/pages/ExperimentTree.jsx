@@ -178,6 +178,29 @@ const ExperimentTree = () => {
 
   const isMobile = useWindowSize().width < 1024;
 
+  const [showRunsM, setShowRunsM] = useState(false);
+  const [selectedRun, setSelectedRun] = useState({
+    run_id: null,
+    created: null,
+  });
+
+  const handleRunSelect = (item) => {
+    // handleClear();
+    setSelectedRun(item);
+    setShowRunsM(false);
+  };
+
+  const handleResetRun = () => {
+    handleRunSelect({
+      run_id: null,
+      created: null,
+    });
+  };
+
+  const toggleShowRunsM = () => {
+    setShowRunsM(!showRunsM);
+  };
+
   const etaPanel = activeMonitor ? (
     <ExperimentEtaPanel
       activeMonitor={activeMonitor}
@@ -190,19 +213,45 @@ const ExperimentTree = () => {
 
   return (
     <>
+      <RunsModal
+        show={showRunsM}
+        onHide={toggleShowRunsM}
+        expid={routeParams.expid}
+        onRunSelect={handleRunSelect}
+      />
       <div className="w-full flex flex-col gap-4 grow">
-        <div className="flex items-center gap-2 justify-between">
-          <Link
-            to={`/experiment/${routeParams.expid}/tree-legacy`}
-            className="btn btn-dark font-bold px-4 text-nowrap"
-          >
-            Legacy View <i className="fa-solid fa-right-from-bracket ml-2"></i>
-          </Link>
+        <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            {/* TODO: Add the go to previous runs button */}
-            {/* <button className={"btn btn-primary font-bold "} title="Select Run">
-              <i className="fa-solid fa-clock-rotate-left me-2"></i> Run: Latest
-            </button> */}
+            <div className="flex items-center">
+              <button
+                className={
+                  "btn btn-primary font-bold" +
+                  (selectedRun?.run_id ? " rounded-e-none" : "")
+                }
+                title="Select run"
+                onClick={toggleShowRunsM}
+              >
+                <i className="fa-solid fa-clock-rotate-left me-2" /> Run:{" "}
+                {(selectedRun.run_id && selectedRun.created) || "Latest"}
+              </button>
+              {selectedRun?.run_id && (
+                <button
+                  className="btn btn-light text-primary rounded-s-none ring-1 ring-inset ring-neutral-300"
+                  title="Reset to latest"
+                  onClick={handleResetRun}
+                >
+                  <i className="fa-solid fa-xmark" />
+                </button>
+              )}
+            </div>
+            <Link
+              to={`/experiment/${routeParams.expid}/tree-legacy`}
+              className="btn btn-dark font-bold px-4 text-nowrap"
+            >
+              Legacy View <i className="fa-solid fa-right-from-bracket ml-2" />
+            </Link>
+          </div>
+          <div className="flex items-center gap-2">
             <button
               className={
                 "btn font-bold px-4 text-nowrap " +
