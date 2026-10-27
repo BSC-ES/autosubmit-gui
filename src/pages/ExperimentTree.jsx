@@ -12,6 +12,7 @@ import { JOB_STATUSES } from "../services/utils";
 import FetchJobDetailCard from "../common/FetchJobDetailCard";
 import JobList from "../common/JobList";
 import HierarchyTree from "../common/HierarchyTree";
+import Paginator from "../common/Paginator";
 
 const DEFAULT_ITEMS_PER_PAGE = 100;
 const ITEMS_PER_PAGE_OPTIONS = [DEFAULT_ITEMS_PER_PAGE, 500, 1000];
@@ -114,6 +115,19 @@ const ExperimentTree = () => {
     },
   );
 
+  /**
+   * Changes the current page while preserving the other query parameters.
+   *
+   * @param {{selected: number}} event - Pagination event from `Paginator`.
+   */
+  const handlePageClick = (e) => {
+    const selectedPage = e.selected
+    setSearchParams({
+      ...Object.fromEntries(searchParams.entries()),
+      page: selectedPage
+    })
+  }
+
   const handleRefetch = () => {
     refetchTree();
     refetchJobs();
@@ -206,6 +220,18 @@ const ExperimentTree = () => {
       isMobile={isMobile}
     />
   ) : null;
+
+  const breadcrumbValues = [
+    selectedDir?.date,
+    selectedDir?.member,
+    selectedDir?.section,
+  ].filter((value) => value != null && value !== "NA");
+
+  // Values derived from the API response, used for rendering
+  const totalItems = jobsData?.pagination?.total_items ?? 0;
+  const pageItems = jobsData?.pagination?.page_items ?? 0;
+  const totalPages = jobsData?.pagination?.total_pages ?? 1;
+  const showPaginator = selectedDir && totalPages > 1 && pageItems > 0;
 
   return (
     <>
@@ -323,54 +349,76 @@ const ExperimentTree = () => {
               </label>
             </div>
             <div className="flex flex-col min-h-0 max-h-full h-full overflow-hidden border rounded-lg bg-white">
-              <div className="relative flex-1 min-h-0 overflow-auto p-4 custom-scrollbar">
-                {!selectedDir && (
-                  <div className="w-full h-full flex flex-col items-center justify-center gap-4">
-                    <i className="fa-regular fa-folder text-4xl text-primary"></i>
-                    <span className="text text-gray-500">
-                      Select a directory to view jobs
-                    </span>
+              <div className="relative flex-1 min-h-0">
+                <div
+                  className={`relative h-full overflow-auto p-4 custom-scrollbar ${showPaginator ? "pb-16" : ""}`}
+                >
+                  {!selectedDir && (
+                    <div className="w-full h-full flex flex-col items-center justify-center gap-4">
+                      <i className="fa-regular fa-folder text-4xl text-primary"></i>
+                      <span className="text text-gray-500">
+                        Select a directory to view jobs
+                      </span>
+                    </div>
+                  )}
+
+                  {selectedDir && (
+                    <>
+                      {isJobsFetching && !activeMonitor ? (
+                        <div className="absolute inset-0 flex items-center justify-center bg-white">
+                          <div
+                            className="spinner-border dark:invert"
+                            role="status"
+                          ></div>
+                        </div>
+                      ) : (
+                        <>
+                          {!isMobile && etaPanel}
+                          <JobList
+                            jobs={filteredJobs}
+                            selection={selection}
+                            onSelectionChange={setSelection}
+                          />
+                        </>
+                      )}
+                    </>
+                  )}
+                </div>
+
+                {showPaginator && (
+                  <div
+                    id="paginator"
+                    className="absolute bottom-4 left-0 right-0 flex justify-center items-center"
+                  >
+                    <div className="flex justify-center w-max rounded-full border p-1.5 bg-white/50 shadow-md backdrop-blur-md">
+                      <Paginator
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onPageClick={handlePageClick}
+                        buttonSize={8}
+                      />
+                    </div>
                   </div>
                 )}
-
-                {selectedDir && (
-                  <>
-                    {isJobsFetching && !activeMonitor ? (
-                      <div className="absolute inset-0 flex items-center justify-center bg-white">
-                        <div
-                          className="spinner-border dark:invert"
-                          role="status"
-                        ></div>
-                      </div>
-                    ) : (
-                      <>
-                        {!isMobile && etaPanel}
-                        <JobList
-                          jobs={filteredJobs}
-                          selection={selection}
-                          onSelectionChange={setSelection}
-                        />
-                      </>
-                    )}
-                  </>
-                )}
               </div>
+
               {selectedDir && (
-                <div className="flex shrink-0 items-center py-0.5 px-4 text-sm bg-neutral-100 border-t">
+                <div className="flex items-center py-0.5 px-4 text-sm bg-neutral-100 border-t">
                   <p className="m-0 flex items-center gap-1">
-                    {[selectedDir?.date, selectedDir?.member, selectedDir?.section]
-                      .filter((value) => value != null)
-                      .map((value, index) => (
-                        <span
-                          key={`${value}-${index}`}
-                          className="flex items-center gap-1"
-                        >
-                          {index > 0 && (
-                            <i className="fa-solid fa-chevron-right text-xs" />
-                          )}
-                          {value}
-                        </span>
-                      ))}
+                    {breadcrumbValues.length > 0 ? (
+                      breadcrumbValues.map((value, index) => (
+                          <span
+                            key={`${value}-${index}`}
+                            className="flex items-center gap-1"
+                          >
+                            {index > 0 && (
+                              <i className="fa-solid fa-chevron-right text-xs" />
+                            )}
+                            {value}
+                          </span>
+                        ))
+                      ) : "Keys"
+                    }
                   </p>
                 </div>
               )}
