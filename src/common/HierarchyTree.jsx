@@ -37,7 +37,11 @@ const HierarchyTree = ({ expid, onNodeSelect, selectedNode, activeMonitor }) => 
                         className="flex items-center gap-2 cursor-pointer"
                         onClick={(event) => {
                             handleNodeSelect(treeDir);
-                            if (treeDir.children && treeDir.children.length > 0) {
+                            if (
+                                treeDir.children
+                                && treeDir.children.length > 0
+                                && expandedNodes[treeDir.key] === false
+                            ) {
                                 handleNodeExpand(event, treeDir.key);
                             }
                         }}
