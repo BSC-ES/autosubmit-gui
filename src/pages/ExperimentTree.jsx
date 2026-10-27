@@ -322,37 +322,57 @@ const ExperimentTree = () => {
                 {filteredJobs.length} / {jobsData?.jobs?.length || 0} jobs
               </label>
             </div>
+            <div className="flex flex-col min-h-0 max-h-full h-full overflow-hidden border rounded-lg bg-white">
+              <div className="relative flex-1 min-h-0 overflow-auto p-4 custom-scrollbar">
+                {!selectedDir && (
+                  <div className="w-full h-full flex flex-col items-center justify-center gap-4">
+                    <i className="fa-regular fa-folder text-4xl text-primary"></i>
+                    <span className="text text-gray-500">
+                      Select a directory to view jobs
+                    </span>
+                  </div>
+                )}
 
-            <div className="relative flex flex-col max-h-full h-full overflow-auto p-4 border rounded-lg custom-scrollbar bg-white">
-              {!selectedDir && (
-                <div className="w-full h-full flex flex-col items-center justify-center gap-4">
-                  <i className="fa-regular fa-folder text-4xl text-primary"></i>
-                  <span className="text text-gray-500">
-                    Select a directory to view jobs
-                  </span>
-                </div>
-              )}
-
+                {selectedDir && (
+                  <>
+                    {isJobsFetching && !activeMonitor ? (
+                      <div className="absolute inset-0 flex items-center justify-center bg-white">
+                        <div
+                          className="spinner-border dark:invert"
+                          role="status"
+                        ></div>
+                      </div>
+                    ) : (
+                      <>
+                        {!isMobile && etaPanel}
+                        <JobList
+                          jobs={filteredJobs}
+                          selection={selection}
+                          onSelectionChange={setSelection}
+                        />
+                      </>
+                    )}
+                  </>
+                )}
+              </div>
               {selectedDir && (
-                <>
-                  {isJobsFetching && !activeMonitor ? (
-                    <div className="absolute inset-0 z-20 flex items-center justify-center bg-white">
-                      <div
-                        className="spinner-border dark:invert"
-                        role="status"
-                      ></div>
-                    </div>
-                  ) : (
-                    <>
-                      {!isMobile && etaPanel}
-                      <JobList
-                        jobs={filteredJobs}
-                        selection={selection}
-                        onSelectionChange={setSelection}
-                      />
-                    </>
-                  )}
-                </>
+                <div className="flex shrink-0 items-center py-0.5 px-4 text-sm bg-neutral-100 border-t">
+                  <p className="m-0 flex items-center gap-1">
+                    {[selectedDir?.date, selectedDir?.member, selectedDir?.section]
+                      .filter((value) => value != null)
+                      .map((value, index) => (
+                        <span
+                          key={`${value}-${index}`}
+                          className="flex items-center gap-1"
+                        >
+                          {index > 0 && (
+                            <i className="fa-solid fa-chevron-right text-xs" />
+                          )}
+                          {value}
+                        </span>
+                      ))}
+                  </p>
+                </div>
               )}
             </div>
           </div>
