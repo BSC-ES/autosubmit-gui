@@ -1,26 +1,22 @@
-import { useEffect, useMemo, useRef, useState, MutableRefObject } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { autosubmitApiV4 } from "../services/autosubmitApiV4";
-
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import useASTitle from "../hooks/useASTitle";
 import useBreadcrumb from "../hooks/useBreadcrumb";
-import { useDispatch, useSelector } from "react-redux";
 import RunsModal from "../common/RunsModal";
-import TreeContentHandler from "../components/context/tree/business/treeUpdate";
 import BottomPanel from "../common/BottomPanel";
 import { ChangeStatusModal } from "../common/ChangeStatusModal";
 import ExperimentEtaPanel from "../common/ExperimentEtaPanel";
 import { useWindowSize } from "@uidotdev/usehooks";
 import { JOB_STATUSES } from "../services/utils";
 import FetchJobDetailCard from "../common/FetchJobDetailCard";
-import { QuickJobList } from "./ExperimentQuick";
+import JobList from "../common/JobList";
 import HierarchyTree from "../common/HierarchyTree";
 
 const DEFAULT_ITEMS_PER_PAGE = 100;
 const ITEMS_PER_PAGE_OPTIONS = [DEFAULT_ITEMS_PER_PAGE, 500, 1000];
 
 const ExperimentTree = () => {
-  const dispatch = useDispatch();
   const routeParams = useParams();
   useASTitle(`Experiment ${routeParams.expid} tree`);
   useBreadcrumb([
@@ -349,7 +345,7 @@ const ExperimentTree = () => {
                   ) : (
                     <>
                       {!isMobile && etaPanel}
-                      <QuickJobList
+                      <JobList
                         jobs={filteredJobs}
                         selection={selection}
                         onSelectionChange={setSelection}
