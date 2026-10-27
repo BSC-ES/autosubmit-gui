@@ -95,6 +95,7 @@ const ExperimentTree = () => {
   const {
     data: jobsData,
     isFetching: isJobsFetching,
+    isLoading: isJobsLoading,
     refetch: refetchJobs,
   } = autosubmitApiV4.endpoints.getExperimentJobs.useQuery(
     {
@@ -344,9 +345,6 @@ const ExperimentTree = () => {
                   Filter
                 </button>
               </div>
-              <label className="ml-4 text-gray-500 text-sm">
-                {filteredJobs.length} / {jobsData?.jobs?.length || 0} jobs
-              </label>
             </div>
             <div className="flex flex-col min-h-0 max-h-full h-full overflow-hidden border rounded-lg bg-white">
               <div className="relative flex-1 min-h-0">
@@ -420,6 +418,11 @@ const ExperimentTree = () => {
                       ) : "Keys"
                     }
                   </p>
+                  {!isJobsLoading && (
+                    <label className="ml-auto text-gray-500 text-sm">
+                      Showing <span className="font-semibold">{pageItems}</span> of <span className="font-bold">{totalItems || 0}</span> jobs
+                    </label>
+                  )}
                 </div>
               )}
             </div>
