@@ -21,7 +21,7 @@ const HierarchyTree = ({ expid, onNodeSelect, selectedNode, activeMonitor }) => 
 
         return (
             <li key={treeDir.key || index}>
-                <div className="flex items-center">
+                <div className="flex items-center my-0.5">
                     {treeDir.children && treeDir.children.length > 0 ? (
                         <i
                             className={cn(
@@ -82,7 +82,7 @@ const HierarchyTree = ({ expid, onNodeSelect, selectedNode, activeMonitor }) => 
                             : "grid-rows-[1fr] opacity-100",
                     )}>
                         <div className="min-h-0">
-                            <ul className="flex flex-col gap-[0.35rem]">
+                            <ul className="flex flex-col my-0.5">
                                 {renderNodes(treeDir.children)}
                             </ul>
                         </div>
