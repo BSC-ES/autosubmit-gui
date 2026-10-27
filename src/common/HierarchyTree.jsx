@@ -35,7 +35,12 @@ const HierarchyTree = ({ expid, onNodeSelect, selectedNode, activeMonitor }) => 
                     )}
                     <div
                         className="flex items-center gap-2 cursor-pointer"
-                        onClick={() => handleNodeSelect(treeDir)}
+                        onClick={(event) => {
+                            handleNodeSelect(treeDir);
+                            if (treeDir.children && treeDir.children.length > 0) {
+                                handleNodeExpand(event, treeDir.key);
+                            }
+                        }}
                     >
                         <i className="fa-solid fa-folder" />
                         <span className={cn(
