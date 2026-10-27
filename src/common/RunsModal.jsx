@@ -1,7 +1,7 @@
 import { autosubmitApiV3 } from "../services/autosubmitApiV3";
 import { creationDateToId } from "../components/context/utils";
 import Modal from "./Modal";
-import { Dialog } from "@headlessui/react";
+import { DialogTitle } from "@headlessui/react";
 import {
   Table,
   TableBody,
@@ -21,7 +21,7 @@ const RunsModal = ({ expid, show, onHide, onRunSelect }) => {
 
   return (
     <Modal show={show} onClose={onHide}>
-      <Dialog.Title
+      <DialogTitle
         className={
           "bg-dark text-white py-4 px-4 text-2xl font-semibold rounded-t-lg flex gap-4 justify-between items-center"
         }
@@ -33,7 +33,7 @@ const RunsModal = ({ expid, show, onHide, onRunSelect }) => {
         <div className="cursor-pointer" onClick={onHide}>
           <i className="fa-solid fa-xmark"></i>
         </div>
-      </Dialog.Title>
+      </DialogTitle>
       <div className="bg-white text-black py-6 px-6 rounded-b-lg">
         {isFetching ? (
           <div className="w-full h-full flex items-center justify-center">

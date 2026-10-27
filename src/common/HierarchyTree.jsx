@@ -92,14 +92,14 @@ const HierarchyTree = ({ expid, onNodeSelect, selectedNode, activeMonitor }) => 
             <div className="relative">
                 <div className="absolute top-0 right-0 z-10 flex flex-wrap gap-2 items-start text-xs text-white opacity-50 hover:opacity-75 transition-opacity">
                     <button
-                        className="w-6 h-6 inline-flex items-center justify-center rounded-md bg-primary shadow-lg opacity-50 hover:opacity-100 active:scale-90 active:opacity-100 transition-transform"
+                        className="w-6 h-6 inline-flex items-center justify-center rounded-md bg-primary shadow-lg opacity-50 hover:opacity-100 active:scale-95 active:opacity-100 transition-transform"
                         onClick={(event) => handleAllNodesExpand(event, true)}
                         title="Expand all"
                     >
                         <i class="fa-solid fa-square-caret-down" />
                     </button>
                     <button
-                        className="w-6 h-6 inline-flex items-center justify-center rounded-md bg-secondary shadow-md opacity-50 hover:opacity-100 active:scale-90 active:opacity-100 transition-transform"
+                        className="w-6 h-6 inline-flex items-center justify-center rounded-md bg-secondary shadow-md opacity-50 hover:opacity-100 active:scale-95 active:opacity-100 transition-transform"
                         onClick={(event) => handleAllNodesExpand(event, false)}
                         title="Collapse all"
                     >
