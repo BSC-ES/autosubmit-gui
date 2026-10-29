@@ -146,6 +146,10 @@ const CyWorkflow = ({ elements, onSelectNodes, cy: forwardCy }) => {
         cy={(_cy) => {
           cy.current = _cy;
           forwardCy(_cy);
+
+          if (window.Cypress) { // Expose the Cytoscape instance to Cypress
+            window.workflowCy = _cy;
+          }
         }}
         className="w-full h-full min-h-[50vh]"
         elements={elements}
