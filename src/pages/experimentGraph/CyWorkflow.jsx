@@ -123,9 +123,11 @@ const CyWorkflow = ({ elements, onSelectNodes, cy: forwardCy }) => {
 
     triggerDownload(imageUrl, "graph_view.png");
 
-    setTimeout(() => {
-      URL.revokeObjectURL(imageUrl);
-    }, 0);
+    if (imageUrl.startsWith("blob:")) {
+      setTimeout(() => {
+        URL.revokeObjectURL(imageUrl);
+      }, 0);
+    }
   };
 
   return (
