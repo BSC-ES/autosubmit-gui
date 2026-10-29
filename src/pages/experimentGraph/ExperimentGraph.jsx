@@ -259,8 +259,8 @@ const ExperimentGraph = () => {
         </span>
       )}
 
-      <div className="flex gap-3 items-center flex-wrap">
-        <form className="grow flex flex-wrap" onSubmit={handleFilter}>
+      <div className="flex flex-col gap-3 items-center md:flex-row">
+        <form className="w-full md:grow flex" onSubmit={handleFilter}>
           <input
             ref={filterRef}
             className="form-input rounded-e-none grow"
@@ -280,53 +280,55 @@ const ExperimentGraph = () => {
             Clear
           </button>
         </form>
-        <button
-          className={
-            "btn font-bold text-white px-4 text-nowrap " +
-            (activeMonitor ? "btn-danger" : "btn-success")
-          }
-          onClick={toggleActiveMonitor}
-        >
-          {activeMonitor ? "STOP MONITORING" : "START MONITOR"}
-        </button>
-        <button
-          className="btn btn-success font-bold text-white"
-          title="Refresh data"
-          onClick={() => {
-            refetch();
-          }}
-        >
-          <i className="fa-solid fa-rotate-right"></i>
-        </button>
+        <div className="flex gap-3 ">
+          <button
+            className={
+              "btn font-bold text-white px-4 text-nowrap " +
+              (activeMonitor ? "btn-danger" : "btn-success")
+            }
+            onClick={toggleActiveMonitor}
+          >
+            {activeMonitor ? "STOP MONITORING" : "START MONITOR"}
+          </button>
+          <button
+            className="btn btn-success font-bold text-white"
+            title="Refresh data"
+            onClick={() => {
+              refetch();
+            }}
+          >
+            <i className="fa-solid fa-rotate-right"></i>
+          </button>
+        </div>
       </div>
 
-      <div className="flex items-center">
-        <div className="me-auto">
-          <span className="mx-2 text-sm">
-            Total #Jobs: {data?.total_jobs} | Chunk unit: {data?.chunk_unit} |
-            Chunk size: {data?.chunk_size}
-          </span>
+      <div className="flex flex-col items-center gap-3 md:flex-row md:justify-between">
+        <div className="mx-2 text-sm">
+          Total #Jobs: {data?.total_jobs} | Chunk unit: {data?.chunk_unit} |
+          Chunk size: {data?.chunk_size}
         </div>
-        <div className="flex items-stretch gap-3">
-          <div className="flex items-center">Select by status:</div>
-          <select
-            id="status-filter"
-            ref={statusSelectRef}
-            className="form-select border border-primary text-primary dark:bg-primary dark:text-white font-bold text-center"
-          >
-            <option value="" className="bg-white text-black">{SELECTOR_DEFAULT_STATUS}</option>
-            {JOB_STATUSES.map((status) => (
-              <option key={status} value={status} className={getStatusBadgeStyle(status)}>
-                {status}
-              </option>
-            ))}
-          </select>
-          <button
-            className="btn btn-success text-sm"
-            onClick={handleSelectByStatus}
-          >
-            <i className="fa-solid fa-check"></i>
-          </button>
+        <div className="flex items-center gap-3">
+          <span>Select by status:</span>
+          <div className="flex items-stretch gap-3">
+            <select
+              id="status-filter"
+              ref={statusSelectRef}
+              className="form-select border border-primary text-primary font-bold text-center"
+            >
+              <option value="" className="bg-white text-black">{SELECTOR_DEFAULT_STATUS}</option>
+              {JOB_STATUSES.map((status) => (
+                <option key={status} value={status} className={getStatusBadgeStyle(status)}>
+                  {status}
+                </option>
+              ))}
+            </select>
+            <button
+              className="btn btn-success text-sm"
+              onClick={handleSelectByStatus}
+            >
+              <i className="fa-solid fa-check"></i>
+            </button>
+          </div>
         </div>
       </div>
 
