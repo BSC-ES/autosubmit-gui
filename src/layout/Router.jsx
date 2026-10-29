@@ -10,7 +10,7 @@ import About from "../pages/About";
 import ExperimentWrapper from "./ExperimentWrapper";
 import ExperimentTree from "../pages/ExperimentTree";
 import ExperimentDetail from "../pages/ExperimentDetail";
-import ExperimentGraph from "../pages/ExperimentGraph";
+import ExperimentGraph from "../pages/experimentGraph/ExperimentGraph";
 import Breadcrumb from "../common/Breadcrumb";
 import ExperimentRunLog from "../pages/ExperimentRunLog";
 import ExperimentConfiguration from "../pages/ExperimentConfiguration";

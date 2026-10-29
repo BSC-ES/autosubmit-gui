@@ -3,7 +3,7 @@ import { autosubmitApiV4 } from "../services/autosubmitApiV4";
 import { useEffect, useState, useMemo } from "react";
 import useASTitle from "../hooks/useASTitle";
 import useBreadcrumb from "../hooks/useBreadcrumb";
-import { cn, getStatusBadgeStyle, JOB_STATUSES } from "../services/utils";
+import { cn, getStatusBadgeStyle, JOB_STATUSES, SELECTOR_DEFAULT_STATUS } from "../services/utils";
 import { ChangeStatusModal } from "../common/ChangeStatusModal";
 import BottomPanel from "../common/BottomPanel";
 import FetchJobDetailCard from "../common/FetchJobDetailCard";
@@ -11,7 +11,6 @@ import Paginator from "../common/Paginator";
 
 const DEFAULT_ITEMS_PER_PAGE = 100;
 const ITEMS_PER_PAGE_OPTIONS = [DEFAULT_ITEMS_PER_PAGE, 500, 1000];
-const DEFAULT_STATUS_QUICK_VIEW = "Any status";
 
 /**
  * @typedef {Object} Job
@@ -375,6 +374,15 @@ const ExperimentQuick = () => {
     })
   }
 
+  const handleClear = () => {
+    setJobNameInput("")
+    const { job_name, ...rest } = Object.fromEntries(searchParams.entries())
+    setSearchParams({
+      ...rest,
+      page: 1
+    })
+  };
+
   // Values derived from the API response, used for rendering
   const totalItems = data?.pagination?.total_items ?? 0;
   const pageItems = data?.pagination?.page_items ?? 0;
@@ -398,7 +406,7 @@ const ExperimentQuick = () => {
             onChange={handleStatusChange}
             className="form-select border border-primary text-primary dark:bg-primary dark:text-white font-bold text-center"
           >
-            <option value="" className="bg-white text-black">{DEFAULT_STATUS_QUICK_VIEW}</option>
+            <option value="" className="bg-white text-black">{SELECTOR_DEFAULT_STATUS}</option>
             {JOB_STATUSES.map((status) => (
               <option key={status} value={status} className={getStatusBadgeStyle(status)}>
                 {status}
@@ -414,8 +422,15 @@ const ExperimentQuick = () => {
             value={jobNameInput}
             onChange={(e) => setJobNameInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleFilterClick()} />
-          <button className="btn btn-dark font-bold px-4 rounded-l-none border-l-0" onClick={handleFilterClick}>
+          <button className="btn btn-dark font-bold px-4 rounded-none border-l-0" onClick={handleFilterClick}>
             Filter
+          </button>
+          <button
+            type="button"
+            className="btn btn-light border font-bold px-4 rounded-s-none"
+            onClick={handleClear}
+          >
+            Clear
           </button>
         </div>
         <div className="flex items-center gap-1 text-sm" style={{ whiteSpace: "nowrap" }}>
