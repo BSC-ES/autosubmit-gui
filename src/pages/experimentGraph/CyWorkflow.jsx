@@ -10,6 +10,8 @@ const MIN_WHEEL_ZOOM_FACTOR = 1.06;
 const MAX_WHEEL_ZOOM_FACTOR = 1.25;
 const MIN_ZOOM_FOR_WHEEL_STEP = 0.01;
 const WHEEL_ZOOM_STEP_SCALE = 0.18;
+const WHEEL_PIXELS_PER_STEP = 100;
+const WHEEL_LINE_HEIGHT = 16; // Approx.
 
 const GRAPH_STYLE = [
   {
@@ -122,18 +124,33 @@ const CyWorkflow = ({ elements, onSelectNodes, cy: forwardCy }) => {
     const container = cy.current.container();
 
     const handleWheel = (event) => {
-      if (event.deltaY === 0) return; // No zooming if no vertical scroll
+      // Read the scroll units before reading the vertical displacement
+      const deltaMode = event.deltaMode;
+      const deltaY = event.deltaY;
 
-      event.preventDefault();
+      if (deltaY === 0) return; // Ignore events with no vertical movement
 
+      event.preventDefault(); // Prevent the default scroll behavior of the browser
+
+      // Normalize the displacement to pixels
+      let deltaPixels;
+      if (deltaMode === WheelEvent.DOM_DELTA_LINE) {
+        deltaPixels = deltaY * WHEEL_LINE_HEIGHT;
+      } else if (deltaMode === WheelEvent.DOM_DELTA_PAGE) {
+        deltaPixels = deltaY * container.clientHeight;
+      } else {
+        deltaPixels = deltaY;
+      }
+
+      // Compute the next zoom level based on the current zoom and the scroll displacement
       const currentZoom = cy.current.zoom();
       const factor = getWheelZoomFactor(currentZoom);
-      const nextZoom = event.deltaY < 0
-        ? currentZoom * factor
-        : currentZoom / factor;
+      // Instead of applying a full step per event, it is fractional
+      const steps = -deltaPixels / WHEEL_PIXELS_PER_STEP;
+      const nextZoom = currentZoom * Math.pow(factor, steps);
 
+      // Apply the zoom with the mouse position as the center of the zoom
       const bounds = container.getBoundingClientRect();
-
       cy.current.zoom({
         level: nextZoom,
         renderedPosition: {
