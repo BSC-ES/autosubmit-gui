@@ -9,7 +9,7 @@ import useASTitle from "../../hooks/useASTitle";
 import useBreadcrumb from "../../hooks/useBreadcrumb";
 import BottomPanel from "../../common/BottomPanel";
 import { ChangeStatusModal } from "../../common/ChangeStatusModal";
-import { getStatusBadgeStyle, JOB_STATUSES, SELECTOR_DEFAULT_STATUS } from "../../services/utils";
+import { getStatusBadgeStyle, JOB_STATUSES } from "../../services/utils";
 import { fitJobsInView, fitActiveJobsInView } from "./graphUtils";
 import ExperimentEtaPanel from "../../common/ExperimentEtaPanel";
 import { useWindowSize } from "@uidotdev/usehooks";
@@ -149,15 +149,11 @@ const ExperimentGraph = () => {
         newJobData[job.name] = job;
       });
 
-      let changeLog = [];
       const newJobs = jobs.map((job) => {
         let newJob = { ...job };
         const incomingData = newJobData[job.id];
 
         if (newJob.status_code !== incomingData.status_code) {
-          changeLog.push(
-            `[${new Date().toISOString()}] ${newJob.id} change status to ${incomingData.status}`
-          );
           // network.body.nodes[newJob.id].options.color.background = incomingData.status_color
           cy.current
             .nodes(`node[id = "${newJob.id}"]`)
@@ -195,7 +191,9 @@ const ExperimentGraph = () => {
     const searchValue = filterRef.current.value;
     if (searchValue) {
       cy.current.nodes().unselect();
-      const vals = cy.current.filter(`node[id *= '${searchValue}']`);
+      const vals = cy.current.nodes().filter((node) =>
+        node.id().includes(searchValue),
+      );
       if (vals.length > 0) {
         vals.select();
         fitJobsInView(cy, vals);
@@ -308,14 +306,13 @@ const ExperimentGraph = () => {
           Chunk size: {data?.chunk_size}
         </div>
         <div className="flex items-center gap-3">
-          <span>Select by status:</span>
           <div className="flex items-stretch gap-3">
             <select
               id="status-filter"
               ref={statusSelectRef}
               className="form-select border border-primary text-primary font-bold text-center"
             >
-              <option value="" className="bg-white text-black">{SELECTOR_DEFAULT_STATUS}</option>
+              <option value="" className="bg-white text-black">Select by status</option>
               {JOB_STATUSES.map((status) => (
                 <option key={status} value={status} className={getStatusBadgeStyle(status)}>
                   {status}
