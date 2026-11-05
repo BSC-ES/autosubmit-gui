@@ -142,7 +142,7 @@ export const attachStatusLegendToImage = async (imageSource) => {
         const context = canvas.getContext("2d");
 
         if (!context) {
-            return;
+            return imageSource;
         }
 
         context.drawImage(graphImage, 0, 0);
@@ -155,4 +155,4 @@ export const attachStatusLegendToImage = async (imageSource) => {
     }
 
     return imageSource;
-}
+};
