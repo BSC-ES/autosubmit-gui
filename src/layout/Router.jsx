@@ -27,6 +27,7 @@ import { appActions } from "../store/appSlice";
 import { useEffect } from "react";
 import Footer from "./Footer";
 import TopAnnouncement from "./TopAnnouncement";
+import MaintenanceAnnouncement from "./MaintenanceAnnouncement";
 import UserMetricsPage from "../pages/UserMetricsPage";
 import CreateNewExperimentPage from "../pages/CreateNewExperiment";
 import ExperimentGetStarted from "../pages/ExperimentGetStarted";
@@ -38,6 +39,7 @@ const router = createBrowserRouter(
       element: (
         <>
           <TopAnnouncement />
+          <MaintenanceAnnouncement />
           <main className="container flex flex-col min-h-screen w-screen px-6">
             <Navbar />
             <Breadcrumb />

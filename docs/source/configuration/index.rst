@@ -12,6 +12,7 @@ General variables
 * ``REACT_APP_AUTOSUBMIT_API_SOURCE``: Defines the API URI. For more information check `autosubmit_api <https://github.com/BSC-ES/autosubmit-api>`_.
 * ``PUBLIC_URL``: This allows to serve the GUI from another subpath. Remind that this works with Vite's ``base`` option.
 * ``REACT_APP_DARK_MODE_SWITCHER`` *(experimental feature)*: Default ``false``. Set it to ``true`` if you want to enable the Dark mode feature.
+* ``REACT_APP_MAINTENANCE_URL``: An optional URL to check if the maintenance mode is enabled. Allows customizing the message. It must return a JSON with the following structure: { "enabled": boolean, "title": string, "message": string }. Optionally, ``start`` and ``end`` UTC timestamps can be included to define the maintenance window in ISO 8601 format. Default: ``<PUBLIC_URL>/maintenance.json``.
 
 
 Authentication variables
