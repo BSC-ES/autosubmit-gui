@@ -128,7 +128,7 @@ const HierarchyTree = forwardRef(function HierarchyTree(
         </div>
     ) : (
         <>
-            <div className="sticky top-0 z-10 flex items-center mb-2 gap-2 border border-gray-150 bg-white rounded-xl p-2">
+            <div className="sticky top-0 z-10 flex items-center mb-2 gap-2 border border-gray-150 bg-white/50 backdrop-blur-md rounded-xl p-2">
                 <div className="relative min-w-0 flex-1">
                     <input
                         className="form-input w-full h-8 rounded-lg"
