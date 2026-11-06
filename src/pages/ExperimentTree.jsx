@@ -430,9 +430,9 @@ const ExperimentTree = () => {
                 {showPaginator && (
                   <div
                     id="paginator"
-                    className="absolute bottom-4 left-0 right-0 flex justify-center items-center"
+                    className="pointer-events-none absolute bottom-4 left-0 right-0 flex justify-center items-center"
                   >
-                    <div className="flex justify-center w-max rounded-xl border p-2 bg-white/50 shadow-md backdrop-blur-md">
+                    <div className="pointer-events-auto flex justify-center w-max rounded-xl border p-2 bg-white/50 shadow-md backdrop-blur-md">
                       <Paginator
                         currentPage={currentPage}
                         totalPages={totalPages}
