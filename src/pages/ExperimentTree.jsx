@@ -251,7 +251,9 @@ const ExperimentTree = () => {
     levels.slice(clickedLevel + 1).forEach((level) => {
       selectedNode[level] = "NA";
     });
-    selectedNode.chunk = "NA";
+    // API requires to explicitly set the chunk to "NA" for directories that are not chunks
+    selectedNode.chunk = "NA"; // A previous breadcrumb will never be a chunk
+    delete selectedNode.section; // Chunk and section are mutually exclusive
     selectedNode.key = levels
       .slice(0, clickedLevel + 1)
       .map((level) => selectedNode[level])
