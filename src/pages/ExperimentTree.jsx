@@ -277,8 +277,8 @@ const ExperimentTree = () => {
         onRunSelect={handleRunSelect}
       />
       <div className="w-full flex flex-col gap-4 grow">
-        <div className="flex items-center justify-between">
-            <div className="flex items-center">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div className="flex items-center">
               <button
                 className={
                   "btn btn-primary font-bold" +
@@ -321,7 +321,7 @@ const ExperimentTree = () => {
         </div>
 
         <div
-          className="group relative flex grow basis-0 min-h-[70vh] lg:min-h-[50vh]"
+          className="group relative flex min-h-[120vh] grow basis-0 flex-col gap-2 lg:min-h-[50vh] lg:flex-row lg:gap-0"
           onMouseMove={(event) => {
             if (!isResizingColumns) return;
             const bounds = event.currentTarget.getBoundingClientRect();
@@ -333,8 +333,8 @@ const ExperimentTree = () => {
           onMouseLeave={() => setIsResizingColumns(false)}
         >
           <div
-            className="relative flex flex-col max-h-full overflow-auto p-4 border rounded-lg custom-scrollbar bg-white"
-            style={{ width: `${leftColumnWidth}%` }}
+            className="relative flex h-[50vh] min-h-0 w-full flex-col overflow-auto rounded-lg border bg-white p-3 custom-scrollbar lg:h-auto lg:max-h-full lg:p-4"
+            style={{ width: isMobile ? "100%" : `${leftColumnWidth}%` }}
           >
             <HierarchyTree
               ref={hierarchyTreeRef}
@@ -349,17 +349,17 @@ const ExperimentTree = () => {
             aria-orientation="vertical"
             aria-label="Resize columns"
             title="Drag to resize"
-            className="relative z-10 px-1 mx-1 w-1 cursor-col-resize opacity-0 transition-opacity active:opacity-100 hover:opacity-100 bg-[radial-gradient(circle,#9ca3af_1px,transparent_1px)] [background-size:4px_4px]"
+            className="relative z-10 mx-1 hidden w-1 cursor-col-resize px-1 opacity-0 transition-opacity active:opacity-100 hover:opacity-100 lg:block bg-[radial-gradient(circle,#9ca3af_1px,transparent_1px)] [background-size:4px_4px]"
             onMouseDown={(event) => {
               event.preventDefault();
               setIsResizingColumns(true);
             }}
           />
           <div
-            className="flex min-w-0 flex-1 flex-col h-full max-h-full gap-2"
+            className="flex min-h-0 min-w-0 flex-1 flex-col gap-2 lg:h-full lg:max-h-full"
           >
             <div className="flex items-center">
-              <div className="grow flex">
+              <div className="flex w-full grow">
                 <div className="relative grow">
                   <input
                     className="form-input w-full rounded-lg rounded-r-none pr-9"
