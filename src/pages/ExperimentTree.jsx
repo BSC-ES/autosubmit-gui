@@ -264,7 +264,7 @@ const ExperimentTree = () => {
   const totalItems = jobsData?.pagination?.total_items ?? 0;
   const pageItems = jobsData?.pagination?.page_items ?? 0;
   const totalPages = jobsData?.pagination?.total_pages ?? 1;
-  const showPaginator = selectedDir && totalPages > 1 && pageItems > 0;
+  const showPaginator = selectedDir && totalPages > 1 && pageItems > 0 && !isJobsFetching;
 
   return (
     <>
