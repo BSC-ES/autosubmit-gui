@@ -7,11 +7,13 @@ import { cn, getStatusBadgeStyle } from "../services/utils";
  * @property {string} name - Unique name of the job.
  * @property {string} status - Current status of the job.
  */
+
 /**
  * @typedef {Object} JobSelection
  * @property {Set<string>} jobIds - Names of the selected jobs.
  * @property {number} lastClickedIndex - Anchor index for range selection.
  */
+
 /**
  * Renders the jobs displayed in the quick view and handles selection.
  *
@@ -21,14 +23,21 @@ import { cn, getStatusBadgeStyle } from "../services/utils";
  * @param {(selection: JobSelection) => void} props.onSelectionChange -
  *   Callback invoked when the selection changes.
  * @returns {JSX.Element} The job list or an empty-list message.
+ * @param {string} props.tip - A tip to display to the user.
+ * @returns {JSX.Element} The job list or an empty-list message.
  */
-
-const JobList = ({ jobs, selection, onSelectionChange }) => {
+const JobList = ({ jobs, selection, tip }) => {
   if (!Array.isArray(jobs) || jobs.length === 0) {
     return (
       <div className="w-full h-full flex flex-col items-center justify-center gap-4">
         <i className="fa-regular fa-face-frown text-4xl text-primary"></i>
         <span className="text text-gray-500">No jobs found</span>
+        {tip && (
+          <div className="alert bg-primary-500 text-white border-0 font-semibold py-2 px-3 ">
+            <i className="fa-solid fa-circle-info me-2"></i>
+            {tip}
+          </div>
+        )}
       </div>
     );
   }
