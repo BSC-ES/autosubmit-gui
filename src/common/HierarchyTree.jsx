@@ -1,7 +1,11 @@
+import { forwardRef, useImperativeHandle } from "react";
 import useHierarchyTree from "../hooks/useHierarchyTree";
 import { cn } from "../services/utils";
 
-const HierarchyTree = ({ expid, onNodeSelect, selectedNode, activeMonitor }) => {
+const HierarchyTree = forwardRef(function HierarchyTree(
+    { expid, onNodeSelect, selectedNode, activeMonitor },
+    ref,
+) {
     const {
         treeDirs,
         isTreeFetching,
@@ -11,6 +15,12 @@ const HierarchyTree = ({ expid, onNodeSelect, selectedNode, activeMonitor }) => 
         handleNodeExpand,
         handleAllNodesExpand,
     } = useHierarchyTree({ expid, onNodeSelect, activeMonitor });
+
+    useImperativeHandle(
+        ref,
+        () => ({ refetchTree }),
+        [refetchTree],
+    );
 
     const renderNodes = (nodes) => nodes?.map((treeDir, index) => {
         const counter = Object.values(treeDir.diff_statuses_counters || {}).reduce(
@@ -127,6 +137,6 @@ const HierarchyTree = ({ expid, onNodeSelect, selectedNode, activeMonitor }) => 
             </div>
         </>
     )
-};
+});
 
 export default HierarchyTree;
