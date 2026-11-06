@@ -278,7 +278,6 @@ const ExperimentTree = () => {
       />
       <div className="w-full flex flex-col gap-4 grow">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
             <div className="flex items-center">
               <button
                 className={
@@ -301,13 +300,6 @@ const ExperimentTree = () => {
                 </button>
               )}
             </div>
-            <Link
-              to={`/experiment/${routeParams.expid}/tree-legacy`}
-              className="btn btn-dark font-bold px-4 text-nowrap"
-            >
-              Legacy View <i className="fa-solid fa-right-from-bracket ml-2" />
-            </Link>
-          </div>
           <div className="flex items-center gap-2">
             <button
               className={
