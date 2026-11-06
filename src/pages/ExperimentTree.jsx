@@ -173,7 +173,7 @@ const ExperimentTree = () => {
 
   const filteredJobs = jobsData?.jobs || [];
 
-  const [leftColumnWidth, setLeftColumnWidth] = useState(33.333);
+  const [leftColumnWidth, setLeftColumnWidth] = useState(30);
   const [isResizingColumns, setIsResizingColumns] = useState(false);
 
   useEffect(() => {
@@ -327,7 +327,7 @@ const ExperimentTree = () => {
             const bounds = event.currentTarget.getBoundingClientRect();
             const width =
               ((event.clientX - bounds.left) / bounds.width) * 100;
-            setLeftColumnWidth(Math.min(70, Math.max(20, width))); // TODO: make the content to overflow instead of adjust the inner widths
+            setLeftColumnWidth(Math.min(50, Math.max(20, width)));
           }}
           onMouseUp={() => setIsResizingColumns(false)}
           onMouseLeave={() => setIsResizingColumns(false)}
@@ -348,6 +348,7 @@ const ExperimentTree = () => {
             role="separator"
             aria-orientation="vertical"
             aria-label="Resize columns"
+            title="Drag to resize"
             className="relative z-10 px-1 mx-1 w-1 cursor-col-resize opacity-0 transition-opacity active:opacity-100 hover:opacity-100 bg-[radial-gradient(circle,#9ca3af_1px,transparent_1px)] [background-size:4px_4px]"
             onMouseDown={(event) => {
               event.preventDefault();
@@ -388,10 +389,10 @@ const ExperimentTree = () => {
                 </button>
               </div>
             </div>
-            <div className="flex flex-col min-h-0 max-h-full h-full overflow-hidden border rounded-lg bg-white">
+            <div className="flex flex-col min-h-0 max-h-full h-full border rounded-lg bg-white">
               <div className="relative flex-1 min-h-0">
                 <div
-                  className={`relative h-full overflow-auto p-4 custom-scrollbar ${showPaginator ? "pb-16" : ""}`}
+                  className={`relative h-full overflow-auto p-4 custom-scrollbar ${showPaginator ? "pb-20" : ""}`}
                 >
                   {!selectedDir && (
                     <div className="w-full h-full flex flex-col items-center justify-center gap-4">
