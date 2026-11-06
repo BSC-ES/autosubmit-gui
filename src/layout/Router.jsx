@@ -9,6 +9,7 @@ import Navbar from "./Navbar";
 import About from "../pages/About";
 import ExperimentWrapper from "./ExperimentWrapper";
 import ExperimentTree from "../pages/ExperimentTree";
+import ExperimentTreeLegacy from "../pages/ExperimentTreeLegacy";
 import ExperimentDetail from "../pages/ExperimentDetail";
 import ExperimentGraph from "../pages/ExperimentGraph";
 import Breadcrumb from "../common/Breadcrumb";
@@ -88,6 +89,10 @@ const router = createBrowserRouter(
             {
               path: "/experiment/:expid/tree",
               element: <ExperimentTree />,
+            },
+            {
+              path: "/experiment/:expid/tree-legacy",
+              element: <ExperimentTreeLegacy />,
             },
             {
               path: "/experiment/:expid/graph",

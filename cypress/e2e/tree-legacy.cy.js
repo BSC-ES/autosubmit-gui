@@ -1,4 +1,4 @@
-describe("tree navigation", () => {
+describe("tree legacy navigation", () => {
   const expid = "a6zi";
   before(() => {
     cy.byPassAuth();
@@ -10,7 +10,7 @@ describe("tree navigation", () => {
       fixture: "api/v3/pkltreeinfo/treepkl.json",
     }).as("dummy_monitor_response");
 
-    cy.visit(`/experiment/${expid}/tree`);
+    cy.visit(`/experiment/${expid}/tree-legacy`);
   });
 
   it("monito, filter and selection", () => {
