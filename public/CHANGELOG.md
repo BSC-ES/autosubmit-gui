@@ -1,10 +1,13 @@
 ## Changelog
 
-### Release v4.2.1 - Unreleased
+### Release v4.2.1 - Release date: 2026-11-10
 
 * Enabled auto-focus in the experiment graph and added smooth animations. Improved responsiveness.
 * Now the experiment graph displays a legend for the different statuses.
 * Implemented adaptive zoom speed in the experiment graph so that all the workflows can be explored quickly regardless their sizes. 
+* Dependency and security updates.
+* Upgraded the Docker base image to NodeJS v22 and Debian 13.
+* API version is now displayed in the "About" page alongside GUI's.
 
 ### Release v4.2.0 - Release date: 2026-09-28
 
