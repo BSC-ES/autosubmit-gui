@@ -94,13 +94,13 @@ const JobList = ({ jobs, selection, onSelectionChange, tip }) => {
         return (
           <li
             key={job.name}
-            className="flex gap-3 px-6"
+            className="flex gap-3 mx-6"
             onClick={(event) => handleJobClick(index, job.name, event)}
           >
             <span>
               <i className="fa-regular fa-circle text-primary" />
             </span>
-            <div className="flex gap-2 pr-6">
+            <div className="flex items-center gap-2">
               <div
                 className={cn(
                   "px-1 py-[1px] hover:bg-gray-100 rounded cursor-pointer select-none",
@@ -109,10 +109,10 @@ const JobList = ({ jobs, selection, onSelectionChange, tip }) => {
               >
                 {job.name}
               </div>
-              <span className={cn("flex items-center badge", getStatusBadgeStyle(job.status.toUpperCase()))}>{job.status}</span>
+              <span className={cn("badge", getStatusBadgeStyle(job.status.toUpperCase()))}>{job.status}</span>
             </div>
             {job?.submit && job?.start && job?.finish && (
-              <span className="text-gray-500">
+              <span className="text-gray-500 whitespace-nowrap">
                 ~ ( {secondsToDelta(calcRunTime(job.submit, job.start))} ) +{" "}
                 {secondsToDelta(calcRunTime(job.start, job.finish))}
               </span>
