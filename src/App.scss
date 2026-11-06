@@ -118,7 +118,7 @@
   }
 
   .badge-status-completed {
-    @apply bg-[yellow] text-black;
+    @apply border border-[yellow] bg-[yellow] text-black;
   }
 
   .badge-status-failed {
