@@ -112,4 +112,17 @@ describe("navigation", () => {
     waitForFit();
     expectNodeInViewport("a6zi_LOCAL_SETUP", false);
   });
+
+  it("the status legend is present and can be toggled", () => {
+    const getLegend = () =>
+      cy.contains("Status legend").parent().parent();
+
+    getLegend().should("exist");
+
+    cy.get('button[title="Expand status legend"]').click();
+    getLegend().should("contain", "READY");
+
+    cy.get('button[title="Minimize status legend"]').click();
+    getLegend().should("not.contain", "READY");
+  });
 });
