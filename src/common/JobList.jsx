@@ -26,7 +26,7 @@ import { cn, getStatusBadgeStyle } from "../services/utils";
  * @param {string} props.tip - A tip to display to the user.
  * @returns {JSX.Element} The job list or an empty-list message.
  */
-const JobList = ({ jobs, selection, tip }) => {
+const JobList = ({ jobs, selection, onSelectionChange, tip }) => {
   if (!Array.isArray(jobs) || jobs.length === 0) {
     return (
       <div className="w-full h-full flex flex-col items-center justify-center gap-4">
