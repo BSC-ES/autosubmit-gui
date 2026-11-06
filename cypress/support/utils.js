@@ -16,3 +16,5 @@ export const JOB_STATUSES = [
 export const DEFAULT_ITEMS_QUICK_VIEW = 100;
 
 export const DEFAULT_STATUS_QUICK_VIEW = "Any status";
+
+export const GRAPH_FIT_DURATION = 500;

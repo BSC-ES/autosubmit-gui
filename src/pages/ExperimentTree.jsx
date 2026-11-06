@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, MutableRefObject } from "react";
+import { useEffect, useMemo, useRef, useState, RefObject } from "react";
 import { autosubmitApiV3 } from "../services/autosubmitApiV3";
 import { useParams } from "react-router-dom";
 import FancyTree from "../common/FancyTree";
@@ -29,7 +29,7 @@ const ExperimentTree = () => {
     },
   ]);
 
-  /** @type {MutableRefObject<Fancytree.Fancytree>} */
+  /** @type {RefObject<Fancytree.Fancytree>} */
   const tree = useRef();
   const filterRef = useRef();
 

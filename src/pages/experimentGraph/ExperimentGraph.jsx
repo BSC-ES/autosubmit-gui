@@ -1,16 +1,17 @@
-import { autosubmitApiV3 } from "../services/autosubmitApiV3";
+import { autosubmitApiV3 } from "../../services/autosubmitApiV3";
 import { useParams } from "react-router-dom";
-import { useEffect, useState, useMemo, useRef, MutableRefObject } from "react";
-import JobDetailCard from "../common/JobDetailCard";
-import CyWorkflow from "../common/CyWorkflow";
+import { useEffect, useState, useMemo, useRef, RefObject } from "react";
+import JobDetailCard from "../../common/JobDetailCard";
+import CyWorkflow from "./CyWorkflow";
 import Cytoscape from "cytoscape";
 import { useDispatch, useSelector } from "react-redux";
-import useASTitle from "../hooks/useASTitle";
-import useBreadcrumb from "../hooks/useBreadcrumb";
-import BottomPanel from "../common/BottomPanel";
-import { ChangeStatusModal } from "../common/ChangeStatusModal";
-import { STATUS_STYLES } from "../services/utils";
-import ExperimentEtaPanel from "../common/ExperimentEtaPanel";
+import useASTitle from "../../hooks/useASTitle";
+import useBreadcrumb from "../../hooks/useBreadcrumb";
+import BottomPanel from "../../common/BottomPanel";
+import { ChangeStatusModal } from "../../common/ChangeStatusModal";
+import { getStatusBadgeStyle, JOB_STATUSES } from "../../services/utils";
+import { fitJobsInView, fitActiveJobsInView } from "./graphUtils";
+import ExperimentEtaPanel from "../../common/ExperimentEtaPanel";
 import { useWindowSize } from "@uidotdev/usehooks";
 
 const ExperimentGraph = () => {
@@ -29,7 +30,7 @@ const ExperimentGraph = () => {
     },
   ]);
 
-  /** @type {MutableRefObject<Cytoscape.Core>} */
+  /** @type {RefObject<Cytoscape.Core>} */
   const cy = useRef();
 
   const filterRef = useRef();
@@ -127,6 +128,20 @@ const ExperimentGraph = () => {
     }
   }, [data]);
 
+
+  useEffect(() => {
+    if (!cy.current || graphElements.length === 0) {
+      return;
+    }
+
+    const animationFrame = fitActiveJobsInView(cy);
+
+    return () => {
+      cancelAnimationFrame(animationFrame);
+    };
+  }, [graphElements]);
+
+
   useEffect(() => {
     if (pklData) {
       let newJobData = {};
@@ -134,17 +149,11 @@ const ExperimentGraph = () => {
         newJobData[job.name] = job;
       });
 
-      let changeLog = [];
       const newJobs = jobs.map((job) => {
         let newJob = { ...job };
         const incomingData = newJobData[job.id];
 
         if (newJob.status_code !== incomingData.status_code) {
-          changeLog.push(
-            `[${new Date().toISOString()}] ${newJob.id} change status to ${
-              incomingData.status
-            }`
-          );
           // network.body.nodes[newJob.id].options.color.background = incomingData.status_color
           cy.current
             .nodes(`node[id = "${newJob.id}"]`)
@@ -179,12 +188,16 @@ const ExperimentGraph = () => {
 
   const handleFilter = (e) => {
     e.preventDefault();
-    const searchValue = filterRef.current.value;
+    const searchValue = filterRef.current.value.trim().toLowerCase();
     if (searchValue) {
       cy.current.nodes().unselect();
-      const vals = cy.current.filter(`node[id *= '${searchValue}']`);
-      vals.select();
-      cy.current.fit(vals);
+      const vals = cy.current.nodes().filter((node) =>
+        node.id().toLowerCase().includes(searchValue),
+      );
+      if (vals.length > 0) {
+        vals.select();
+        fitJobsInView(cy, vals);
+      }
     } else {
       handleClear();
     }
@@ -197,8 +210,7 @@ const ExperimentGraph = () => {
 
   const handleOnSelectNodes = (_selectedNodes) => {
     if (Array.isArray(_selectedNodes)) {
-      const newSelectedIds = _selectedNodes.map((item) => item.data.id);
-      setSelectedJobIds(newSelectedIds);
+      setSelectedJobIds(_selectedNodes);
     } else {
       setSelectedJobIds([]);
     }
@@ -217,8 +229,10 @@ const ExperimentGraph = () => {
     const selStatus = statusSelectRef.current.value;
     cy.current.nodes().unselect();
     const vals = cy.current.filter(`node[status = '${selStatus}']`);
-    vals.select();
-    cy.current.fit(vals);
+    if (vals.length > 0) {
+      vals.select();
+      fitJobsInView(cy, vals);
+    }
   };
 
   const isMobile = useWindowSize().width < 1024;
@@ -242,12 +256,12 @@ const ExperimentGraph = () => {
         </span>
       )}
 
-      <div className="flex gap-2 items-center flex-wrap">
-        <form className="grow flex flex-wrap" onSubmit={handleFilter}>
+      <div className="flex flex-col gap-3 items-center md:flex-row">
+        <form className="w-full md:grow flex" onSubmit={handleFilter}>
           <input
             ref={filterRef}
             className="form-input rounded-e-none grow"
-            placeholder="Filter job..."
+            placeholder="Filter job name..."
           />
           <button
             type="submit"
@@ -263,63 +277,58 @@ const ExperimentGraph = () => {
             Clear
           </button>
         </form>
-        <button
-          className={
-            "btn font-bold text-white px-4 text-nowrap " +
-            (activeMonitor ? "btn-danger" : "btn-success")
-          }
-          onClick={toggleActiveMonitor}
-        >
-          {activeMonitor ? "STOP MONITORING" : "START MONITOR"}
-        </button>
-        <button
-          className="btn btn-success font-bold text-white"
-          title="Refresh data"
-          onClick={() => {
-            refetch();
-          }}
-        >
-          <i className="fa-solid fa-rotate-right"></i>
-        </button>
-      </div>
-
-      <div className="flex items-center">
-        <div className="me-auto">
-          <span className="mx-2 text-sm">
-            Total #Jobs: {data?.total_jobs} | Chunk unit: {data?.chunk_unit} |
-            Chunk size: {data?.chunk_size}
-          </span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div>Select by status:</div>
-          <select
-            ref={statusSelectRef}
-            className={"bg-white text-black border text-center px-2"}
-          >
-            {Object.keys(STATUS_STYLES)
-              .sort()
-              .map((key) => {
-                return (
-                  <option
-                    key={key}
-                    value={key}
-                    className={STATUS_STYLES[key].badge}
-                  >
-                    {key}
-                  </option>
-                );
-              })}
-          </select>
+        <div className="flex gap-3 ">
           <button
-            className="btn btn-success text-sm"
-            onClick={handleSelectByStatus}
+            className={
+              "btn font-bold text-white px-4 text-nowrap " +
+              (activeMonitor ? "btn-danger" : "btn-success")
+            }
+            onClick={toggleActiveMonitor}
           >
-            <i className="fa-solid fa-check"></i>
+            {activeMonitor ? "STOP MONITORING" : "START MONITOR"}
+          </button>
+          <button
+            className="btn btn-success font-bold text-white"
+            title="Refresh data"
+            onClick={() => {
+              refetch();
+            }}
+          >
+            <i className="fa-solid fa-rotate-right"></i>
           </button>
         </div>
       </div>
 
-      <div className="flex grow border relative">
+      <div className="flex flex-col items-center gap-3 md:flex-row md:justify-between">
+        <div className="mx-2 text-sm">
+          Total #Jobs: {data?.total_jobs} | Chunk unit: {data?.chunk_unit} |
+          Chunk size: {data?.chunk_size}
+        </div>
+        <div className="flex items-center gap-3">
+          <div className="flex items-stretch gap-3">
+            <select
+              id="status-filter"
+              ref={statusSelectRef}
+              className="form-select border border-primary text-primary font-bold text-center"
+            >
+              <option value="" className="bg-white text-black">Select by status</option>
+              {JOB_STATUSES.map((status) => (
+                <option key={status} value={status} className={getStatusBadgeStyle(status)}>
+                  {status}
+                </option>
+              ))}
+            </select>
+            <button
+              className="btn btn-success text-sm"
+              onClick={handleSelectByStatus}
+            >
+              <i className="fa-solid fa-check"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex grow border rounded-md relative">
         {!isMobile && etaPanel}
 
         {isFetching && (
