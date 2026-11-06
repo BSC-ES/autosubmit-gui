@@ -133,6 +133,28 @@ const ExperimentTree = () => {
     })
   }
 
+  const handleJobSearch = () => {
+    const nextSearchParams = Object.fromEntries(searchParams.entries());
+    const nextJobName = jobNameInput.trim();
+
+    if (nextJobName) {
+      nextSearchParams.job_name = nextJobName;
+    } else {
+      delete nextSearchParams.job_name;
+    }
+
+    nextSearchParams.page = "1";
+    setSearchParams(nextSearchParams);
+  }
+
+  const handleClearJobSearch = () => {
+    setJobNameInput("");
+    const nextSearchParams = Object.fromEntries(searchParams.entries());
+    delete nextSearchParams.job_name;
+    nextSearchParams.page = "1";
+    setSearchParams(nextSearchParams);
+  }
+
   const handleRefetch = () => {
     hierarchyTreeRef.current?.refetchTree();
 
@@ -149,8 +171,7 @@ const ExperimentTree = () => {
     }
   };
 
-  const [filterJobsText, setFilterJobsText] = useState("");
-  const [filteredJobs, setFilteredJobs] = useState([]);
+  const filteredJobs = jobsData?.jobs || [];
 
   const [leftColumnWidth, setLeftColumnWidth] = useState(33.333);
   const [isResizingColumns, setIsResizingColumns] = useState(false);
@@ -158,21 +179,6 @@ const ExperimentTree = () => {
   useEffect(() => {
     fetchJobDetailCardRef.current?.refetch();
   }, [jobsData]);
-
-  useEffect(() => {
-    setFilterJobsText("");
-  }, [selectedDir]);
-
-  useEffect(() => {
-    if (filterJobsText.trim() === "") {
-      setFilteredJobs(jobsData?.jobs || []);
-    } else {
-      const filtered = (jobsData?.jobs || []).filter((job) =>
-        job.name.toLowerCase().includes(filterJobsText.toLowerCase()),
-      );
-      setFilteredJobs(filtered);
-    }
-  }, [filterJobsText, jobsData]);
 
   /**
    * Creates the initial job selection state.
@@ -359,15 +365,30 @@ const ExperimentTree = () => {
           >
             <div className="flex items-center">
               <div className="grow flex">
-                <input
-                  className="form-input rounded-lg rounded-r-none grow"
-                  placeholder="Filter job..."
-                  value={filterJobsText}
-                  onChange={(e) => setFilterJobsText(e.target.value)}
-                />
+                <div className="relative grow">
+                  <input
+                    className="form-input w-full rounded-lg rounded-r-none pr-9"
+                    placeholder="Filter by job name..."
+                    value={jobNameInput}
+                    onChange={(e) => setJobNameInput(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") handleJobSearch();
+                    }}
+                  />
+                  {jobNameInput && (
+                    <button
+                      type="button"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-800"
+                      title="Clear job name filter"
+                      onClick={handleClearJobSearch}
+                    >
+                      <i className="fa-solid fa-xmark" />
+                    </button>
+                  )}
+                </div>
                 <button
                   className="btn btn-dark font-bold px-4 rounded-l-none border-l-0"
-                  onClick={() => setFilterJobsText(filterJobsText)}
+                  onClick={handleJobSearch}
                 >
                   Filter
                 </button>
@@ -403,6 +424,7 @@ const ExperimentTree = () => {
                             jobs={filteredJobs}
                             selection={selection}
                             onSelectionChange={setSelection}
+                            tip={jobName && "You may want to remove the name filter"}
                           />
                         </>
                       )}
