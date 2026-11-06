@@ -100,7 +100,7 @@ const JobList = ({ jobs, selection, tip }) => {
             <span>
               <i className="fa-regular fa-circle text-primary" />
             </span>
-            <div className="flex gap-2">
+            <div className="flex gap-2 pr-6">
               <div
                 className={cn(
                   "px-1 py-[1px] hover:bg-gray-100 rounded cursor-pointer select-none",
