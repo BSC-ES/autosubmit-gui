@@ -16,6 +16,7 @@ import Paginator from "../common/Paginator";
 
 const DEFAULT_ITEMS_PER_PAGE = 100;
 const ITEMS_PER_PAGE_OPTIONS = [DEFAULT_ITEMS_PER_PAGE, 500, 1000];
+const BREADCRUMB_LEVELS = ["date", "member", "section"];
 
 const ExperimentTree = () => {
   const routeParams = useParams();
@@ -31,7 +32,9 @@ const ExperimentTree = () => {
     },
   ]);
   const [searchParams, setSearchParams] = useSearchParams({});
-
+  
+  const hierarchyTreeRef = useRef(null);
+  
   /**
    * Reads the selected status from the query string.
    *
@@ -96,6 +99,7 @@ const ExperimentTree = () => {
     data: jobsData,
     isFetching: isJobsFetching,
     isLoading: isJobsLoading,
+    isUninitialized: isJobsUninitialized,
     refetch: refetchJobs,
   } = autosubmitApiV4.endpoints.getExperimentJobs.useQuery(
     {
@@ -130,8 +134,11 @@ const ExperimentTree = () => {
   }
 
   const handleRefetch = () => {
-    refetchTree();
-    refetchJobs();
+    hierarchyTreeRef.current?.refetchTree();
+
+    if (!isJobsUninitialized) {
+      refetchJobs();
+    }
   };
 
   const [showModal, setShowModal] = useState(false);
@@ -222,11 +229,30 @@ const ExperimentTree = () => {
     />
   ) : null;
 
-  const breadcrumbValues = [
-    selectedDir?.date,
-    selectedDir?.member,
-    selectedDir?.section,
-  ].filter((value) => value != null && value !== "NA");
+  const breadcrumbItems = [
+    ["date", selectedDir?.date],
+    ["member", selectedDir?.member],
+    ["section", selectedDir?.section],
+  ]
+    .filter(([, value]) => value != null && value !== "NA")
+    .map(([key, value]) => ({ key, value }));
+
+  const handleBreadcrumbClick = (item) => {
+    const levels = BREADCRUMB_LEVELS;
+    const selectedNode = { ...selectedDir };
+    const clickedLevel = levels.indexOf(item.key);
+
+    levels.slice(clickedLevel + 1).forEach((level) => {
+      selectedNode[level] = "NA";
+    });
+    selectedNode.chunk = "NA";
+    selectedNode.key = levels
+      .slice(0, clickedLevel + 1)
+      .map((level) => selectedNode[level])
+      .join("-");
+
+    handleDirSelect(selectedNode);
+  };
 
   // Values derived from the API response, used for rendering
   const totalItems = jobsData?.pagination?.total_items ?? 0;
@@ -311,6 +337,7 @@ const ExperimentTree = () => {
             style={{ width: `${leftColumnWidth}%` }}
           >
             <HierarchyTree
+              ref={hierarchyTreeRef}
               expid={routeParams.expid}
               onNodeSelect={handleDirSelect}
               selectedNode={selectedDir}
@@ -403,18 +430,28 @@ const ExperimentTree = () => {
               {selectedDir && (
                 <div className="flex items-center py-0.5 px-4 text-sm bg-neutral-100 border-t">
                   <p className="m-0 flex items-center gap-1">
-                    {breadcrumbValues.length > 0 ? (
-                      breadcrumbValues.map((value, index) => (
-                          <span
-                            key={`${value}-${index}`}
-                            className="flex items-center gap-1"
-                          >
-                            {index > 0 && (
-                              <i className="fa-solid fa-chevron-right text-xs" />
-                            )}
-                            {value}
-                          </span>
-                        ))
+                    {breadcrumbItems.length > 0 ? (
+                      breadcrumbItems.map((item, index) => (
+                        <span
+                          key={`${item.value}-${index}`}
+                          className="flex items-center gap-1"
+                        >
+                          {index > 0 && (
+                            <i className="fa-solid fa-chevron-right text-xs" />
+                          )}
+                          {index < breadcrumbItems.length - 1 ? (
+                            <button
+                              type="button"
+                              className="hover:underline"
+                              onClick={() => handleBreadcrumbClick(item)}
+                            >
+                              {item.value}
+                            </button>
+                          ) : (
+                            item.value
+                          )}
+                        </span>
+                      ))
                       ) : "Keys"
                     }
                   </p>
