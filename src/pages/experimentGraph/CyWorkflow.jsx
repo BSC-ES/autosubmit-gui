@@ -70,7 +70,7 @@ const CyWorkflow = ({ elements, onSelectNodes, cy: forwardCy }) => {
 
   const handleSelect = () => {
     const selectedNodes = cy.current.filter("node:selected:childless");
-    onSelectNodes(selectedNodes.jsons());
+    onSelectNodes(selectedNodes.map((node) => node.id()));
   };
 
   useEffect(() => {
@@ -103,7 +103,7 @@ const CyWorkflow = ({ elements, onSelectNodes, cy: forwardCy }) => {
     });
 
     //Unmount component
-    return () => {};
+    return () => { };
     // eslint-disable-next-line
   }, []);
 

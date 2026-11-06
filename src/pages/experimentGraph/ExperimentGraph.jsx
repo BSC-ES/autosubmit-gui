@@ -188,11 +188,11 @@ const ExperimentGraph = () => {
 
   const handleFilter = (e) => {
     e.preventDefault();
-    const searchValue = filterRef.current.value;
+    const searchValue = filterRef.current.value.trim().toLowerCase();
     if (searchValue) {
       cy.current.nodes().unselect();
       const vals = cy.current.nodes().filter((node) =>
-        node.id().includes(searchValue),
+        node.id().toLowerCase().includes(searchValue),
       );
       if (vals.length > 0) {
         vals.select();
@@ -210,8 +210,7 @@ const ExperimentGraph = () => {
 
   const handleOnSelectNodes = (_selectedNodes) => {
     if (Array.isArray(_selectedNodes)) {
-      const newSelectedIds = _selectedNodes.map((item) => item.data.id);
-      setSelectedJobIds(newSelectedIds);
+      setSelectedJobIds(_selectedNodes);
     } else {
       setSelectedJobIds([]);
     }
