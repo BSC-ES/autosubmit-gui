@@ -128,7 +128,7 @@ const HierarchyTree = forwardRef(function HierarchyTree(
         </div>
     ) : (
         <>
-            <div className="sticky top-0 z-10 flex items-center mb-2 gap-2 border border-gray-150 bg-white/50 backdrop-blur-md rounded-xl p-2">
+            <div className="flex items-center mb-4 gap-2">
                 <div className="relative min-w-0 flex-1">
                     <input
                         className="form-input w-full h-8 rounded-lg"
@@ -174,19 +174,21 @@ const HierarchyTree = forwardRef(function HierarchyTree(
                         </button>
                 </div>
             </div>
-            <ul
-                className="text-sm flex flex-col gap-[0.35rem] py-1 font-thin"
-                style={{
-                    fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
-                    color: "#333",
-                }}
-            >
-                {filteredTreeDirs?.length > 0 ? (
-                    renderNodes(filteredTreeDirs)
-                ) : (
-                    <li className="py-2 text-gray-500">No directories found</li>
-                )}
-            </ul>
+            <div className="overflow-x-auto">
+                <ul
+                    className="w-fit min-w-full pr-6 text-sm flex flex-col gap-[0.35rem] py-1 font-thin"
+                    style={{
+                        fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
+                        color: "#333",
+                    }}
+                >
+                    {filteredTreeDirs?.length > 0 ? (
+                        renderNodes(filteredTreeDirs)
+                    ) : (
+                        <li className="py-2 text-gray-500">No directories found</li>
+                    )}
+                </ul>
+            </div>
         </>
     )
 });
