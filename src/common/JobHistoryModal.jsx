@@ -40,7 +40,8 @@ const JobHistoryModal = ({ expid, jobName, show, onHide }) => {
         item.queue_time,
         item.run_time,
         item.status,
-        formatNumberMoney(item.energy, true),
+        item.energy,
+        item.CPUTimeRAW,
         item.SYPD,
         item.ASYPD,
         item.wallclock,
@@ -60,6 +61,7 @@ const JobHistoryModal = ({ expid, jobName, show, onHide }) => {
         "Run",
         "Status",
         "Energy",
+        "CPUTimeRAW",
         "SYPD",
         "ASYPD",
         "Wallclock",
@@ -106,6 +108,7 @@ const JobHistoryModal = ({ expid, jobName, show, onHide }) => {
                       "Run",
                       "Status",
                       "Energy",
+                      "CPUTimeRAW",
                       "SYPD",
                       "ASYPD",
                       "Wallclock",
@@ -180,6 +183,9 @@ const JobHistoryModal = ({ expid, jobName, show, onHide }) => {
                       </TableCell>
                       <TableCell>
                         {formatNumberMoney(item.energy, true)}
+                      </TableCell>
+                      <TableCell>
+                        {formatNumberMoney(item.CPUTimeRAW, true)}
                       </TableCell>
                       <TableCell>
                         {item.run_id ? (
