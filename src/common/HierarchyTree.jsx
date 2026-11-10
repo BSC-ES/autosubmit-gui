@@ -174,7 +174,7 @@ const HierarchyTree = forwardRef(function HierarchyTree(
                         </button>
                 </div>
             </div>
-            <div className="overflow-x-auto">
+            <div className="flex-1 min-h-0 overflow-auto">
                 <ul
                     className="w-fit min-w-full pr-6 text-sm flex flex-col gap-[0.35rem] py-1 font-thin"
                     style={{

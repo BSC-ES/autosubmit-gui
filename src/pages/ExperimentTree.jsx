@@ -333,7 +333,7 @@ const ExperimentTree = () => {
           onMouseLeave={() => setIsResizingColumns(false)}
         >
           <div
-            className="relative flex h-[50vh] min-h-0 w-full flex-col overflow-auto rounded-lg border bg-white p-3 custom-scrollbar lg:h-auto lg:max-h-full lg:p-4"
+            className="relative flex h-[50vh] min-h-0 w-full flex-col rounded-lg border bg-white p-3 custom-scrollbar lg:h-auto lg:max-h-full lg:p-4"
             style={{ width: isMobile ? "100%" : `${leftColumnWidth}%` }}
           >
             <HierarchyTree
