@@ -75,6 +75,14 @@ export const autosubmitApiV4 = createApi({
                 }
             }
         }),
+        getExperimentWrappers: builder.query({
+            query: ({ expid }) => {
+                return {
+                    url: `experiments/${expid}/wrappers`,
+                    method: "GET"
+                }
+            }
+        }),
         getExperimentRuns: builder.query({
             query: ({ expid }) => {
                 return {

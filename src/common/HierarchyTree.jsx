@@ -122,11 +122,7 @@ const HierarchyTree = forwardRef(function HierarchyTree(
         );
     });
 
-    return !treeDirs && isTreeFetching ? (
-        <div className="absolute inset-0 z-20 flex items-center justify-center bg-white">
-            <div className="spinner-border dark:invert" role="status"></div>
-        </div>
-    ) : (
+    return (
         <>
             <div className="flex items-center mb-4 gap-2">
                 <div className="relative min-w-0 flex-1">
@@ -174,23 +170,31 @@ const HierarchyTree = forwardRef(function HierarchyTree(
                         </button>
                 </div>
             </div>
-            <div className="flex-1 min-h-0 overflow-auto">
-                <ul
-                    className="w-fit min-w-full pr-6 text-sm flex flex-col gap-[0.35rem] py-1 font-thin"
-                    style={{
-                        fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
-                        color: "#333",
-                    }}
-                >
-                    {filteredTreeDirs?.length > 0 ? (
-                        renderNodes(filteredTreeDirs)
-                    ) : (
-                        <li className="py-2 text-gray-500">No directories found</li>
-                    )}
-                </ul>
+            <div className="relative flex-1 min-h-0">
+                {!treeDirs && isTreeFetching ? (
+                    <div className="absolute inset-0 z-20 flex items-center justify-center bg-white">
+                        <div className="spinner-border dark:invert" role="status" />
+                    </div>
+                ) : (
+                    <div className="h-full overflow-auto custom-scrollbar">
+                        <ul
+                            className="w-fit min-w-full pr-6 text-sm flex flex-col gap-[0.35rem] py-1 font-thin"
+                            style={{
+                                fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
+                                color: "#333",
+                            }}
+                        >
+                            {filteredTreeDirs?.length > 0 ? (
+                                renderNodes(filteredTreeDirs)
+                            ) : (
+                                <li className="py-2 text-gray-500">No directories found</li>
+                            )}
+                        </ul>
+                    </div>
+                )}
             </div>
         </>
-    )
+    );
 });
 
 export default HierarchyTree;
