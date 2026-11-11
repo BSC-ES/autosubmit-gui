@@ -109,7 +109,9 @@ const JobList = ({ jobs, selection, onSelectionChange, tip }) => {
               >
                 {job.name}
               </div>
-              <span className={cn("badge", getStatusBadgeStyle(job.status.toUpperCase()))}>{job.status}</span>
+              {job.status && (
+                <span className={cn("badge", getStatusBadgeStyle(job.status.toUpperCase()))}>{job.status}</span>
+              )}
             </div>
             {job?.submit && job?.start && job?.finish && (
               <span className="text-gray-500 whitespace-nowrap">
