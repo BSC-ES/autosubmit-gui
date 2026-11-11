@@ -379,7 +379,7 @@ const ExperimentTree = () => {
             data-sections-panel
           >
             <section className={cn(
-              "flex min-h-0 flex-col rounded-lg border bg-white p-3 mb-1",
+              "flex min-h-0 flex-col overflow-hidden rounded-lg border bg-white p-3 mb-1",
               isTreeExpanded ? "flex-grow" : "flex-none",
             )} style={isTreeExpanded ? { flexGrow: treeHeight, flexBasis: 0 } : undefined}>
               <button
@@ -418,7 +418,7 @@ const ExperimentTree = () => {
               <DragableSeparator setIsResizing={setIsResizingSections} orientation="vertical" />
             )}
             <section className={cn(
-              "flex min-h-0 flex-col rounded-lg border bg-white p-3 mt-1",
+              "flex min-h-0 flex-col overflow-hidden rounded-lg border bg-white p-3 mt-1",
               areWrappersAvailable ? "flex" : "hidden",
               areWrappersExpanded ? "flex-grow" : "flex-none",
             )} style={areWrappersExpanded ? { flexGrow: 100 - treeHeight, flexBasis: 0 } : undefined}>
