@@ -8,11 +8,13 @@ import BottomPanel from "../common/BottomPanel";
 import { ChangeStatusModal } from "../common/ChangeStatusModal";
 import ExperimentEtaPanel from "../common/ExperimentEtaPanel";
 import { useWindowSize } from "@uidotdev/usehooks";
-import { JOB_STATUSES } from "../services/utils";
+import { cn, JOB_STATUSES } from "../services/utils";
 import FetchJobDetailCard from "../common/FetchJobDetailCard";
 import JobList from "../common/JobList";
 import HierarchyTree from "../common/HierarchyTree";
+import WrapperList from "../common/WrapperList";
 import Paginator from "../common/Paginator";
+import DragableSeparator from "../common/DragableSeparator";
 
 const DEFAULT_ITEMS_PER_PAGE = 100;
 const ITEMS_PER_PAGE_OPTIONS = [DEFAULT_ITEMS_PER_PAGE, 500, 1000];
@@ -32,9 +34,10 @@ const ExperimentTree = () => {
     },
   ]);
   const [searchParams, setSearchParams] = useSearchParams({});
-  
+
   const hierarchyTreeRef = useRef(null);
-  
+  const wrapperListRef = useRef(null);
+
   /**
    * Reads the selected status from the query string.
    *
@@ -85,7 +88,12 @@ const ExperimentTree = () => {
   const fetchJobDetailCardRef = useRef(null);
 
   const [selectedDir, setSelectedDir] = useState(null);
+  const [selectedWrapper, setSelectedWrapper] = useState(null);
   const [activeMonitor, setActiveMonitor] = useState(false);
+  const [isTreeExpanded, setIsTreeExpanded] = useState(true);
+  const [areWrappersExpanded, setAreWrappersExpanded] = useState(false);
+  const [treeHeight, setTreeHeight] = useState(60);
+  const [isResizingSections, setIsResizingSections] = useState(false);
 
   const toggleActiveMonitor = () => {
     setActiveMonitor(!activeMonitor);
@@ -93,6 +101,12 @@ const ExperimentTree = () => {
 
   const handleDirSelect = (dir) => {
     setSelectedDir(dir);
+    setSelectedWrapper(null);
+  };
+
+  const handleWrapperSelect = (wrapper) => {
+    setSelectedDir(null);
+    setSelectedWrapper(wrapper);
   };
 
   const {
@@ -157,6 +171,7 @@ const ExperimentTree = () => {
 
   const handleRefetch = () => {
     hierarchyTreeRef.current?.refetchTree();
+    wrapperListRef.current?.refetchWrappers();
 
     if (!isJobsUninitialized) {
       refetchJobs();
@@ -172,6 +187,11 @@ const ExperimentTree = () => {
   };
 
   const filteredJobs = jobsData?.jobs || [];
+  const wrapperJobs = useMemo(
+    () => (selectedWrapper?.job_names || []).map((name) => ({ name })),
+    [selectedWrapper],
+  );
+  const displayedJobs = selectedWrapper ? wrapperJobs : filteredJobs;
 
   const [leftColumnWidth, setLeftColumnWidth] = useState(30);
   const [isResizingColumns, setIsResizingColumns] = useState(false);
@@ -198,7 +218,7 @@ const ExperimentTree = () => {
    */
   useEffect(() => {
     setSelection(createEmptySelection());
-  }, [routeParams.expid, selectedDir, currentPage, pageSize, jobName]);
+  }, [routeParams.expid, selectedDir, selectedWrapper, currentPage, pageSize, jobName]);
 
   const isMobile = useWindowSize().width < 1024;
 
@@ -225,7 +245,7 @@ const ExperimentTree = () => {
     setShowRunsM(!showRunsM);
   };
 
-  const etaPanel = activeMonitor ? (
+  const etaPanel = activeMonitor && selectedDir ? (
     <ExperimentEtaPanel
       activeMonitor={activeMonitor}
       expid={routeParams.expid}
@@ -266,7 +286,17 @@ const ExperimentTree = () => {
   const totalItems = jobsData?.pagination?.total_items ?? 0;
   const pageItems = jobsData?.pagination?.page_items ?? 0;
   const totalPages = jobsData?.pagination?.total_pages ?? 1;
-  const showPaginator = selectedDir && totalPages > 1 && pageItems > 0 && !isJobsFetching;
+  const showPaginator = selectedDir && !selectedWrapper && totalPages > 1 && pageItems > 0 && !isJobsFetching;
+
+  const [areWrappersAvailable, setAreWrappersAvailable] = useState(false);
+
+  useEffect(() => {
+    // Wrappers might arrive after the tree
+    if (!areWrappersAvailable) {
+      setIsTreeExpanded(true);
+      setIsResizingSections(false);
+    }
+  }, [areWrappersAvailable]);
 
   return (
     <>
@@ -279,27 +309,27 @@ const ExperimentTree = () => {
       <div className="w-full flex flex-col gap-4 grow">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center">
+            <button
+              className={
+                "btn btn-primary font-bold" +
+                (selectedRun?.run_id ? " rounded-e-none" : "")
+              }
+              title="Select run"
+              onClick={toggleShowRunsM}
+            >
+              <i className="fa-solid fa-clock-rotate-left me-2" /> Run:{" "}
+              {(selectedRun.run_id && selectedRun.created) || "Latest"}
+            </button>
+            {selectedRun?.run_id && (
               <button
-                className={
-                  "btn btn-primary font-bold" +
-                  (selectedRun?.run_id ? " rounded-e-none" : "")
-                }
-                title="Select run"
-                onClick={toggleShowRunsM}
+                className="btn btn-light text-primary rounded-s-none ring-1 ring-inset ring-neutral-300"
+                title="Reset to latest"
+                onClick={handleResetRun}
               >
-                <i className="fa-solid fa-clock-rotate-left me-2" /> Run:{" "}
-                {(selectedRun.run_id && selectedRun.created) || "Latest"}
+                <i className="fa-solid fa-xmark" />
               </button>
-              {selectedRun?.run_id && (
-                <button
-                  className="btn btn-light text-primary rounded-s-none ring-1 ring-inset ring-neutral-300"
-                  title="Reset to latest"
-                  onClick={handleResetRun}
-                >
-                  <i className="fa-solid fa-xmark" />
-                </button>
-              )}
-            </div>
+            )}
+          </div>
           <div className="flex items-center gap-2">
             <button
               className={
@@ -323,38 +353,104 @@ const ExperimentTree = () => {
         <div
           className="group relative flex min-h-[120vh] grow basis-0 flex-col gap-2 lg:min-h-[50vh] lg:flex-row lg:gap-0"
           onMouseMove={(event) => {
-            if (!isResizingColumns) return;
+            if (!isResizingColumns && !isResizingSections) return;
             const bounds = event.currentTarget.getBoundingClientRect();
-            const width =
-              ((event.clientX - bounds.left) / bounds.width) * 100;
-            setLeftColumnWidth(Math.min(50, Math.max(20, width)));
+            if (isResizingColumns) {
+              const width = ((event.clientX - bounds.left) / bounds.width) * 100;
+              setLeftColumnWidth(Math.min(50, Math.max(20, width)));
+            }
+            if (isResizingSections && isTreeExpanded && areWrappersExpanded) {
+              const height = ((event.clientY - bounds.top) / bounds.height) * 100;
+              setTreeHeight(Math.min(80, Math.max(20, height)));
+            }
           }}
-          onMouseUp={() => setIsResizingColumns(false)}
-          onMouseLeave={() => setIsResizingColumns(false)}
+          onMouseUp={() => {
+            setIsResizingColumns(false);
+            setIsResizingSections(false);
+          }}
+          onMouseLeave={() => {
+            setIsResizingColumns(false);
+            setIsResizingSections(false);
+          }}
         >
           <div
-            className="relative flex h-[50vh] min-h-0 w-full flex-col rounded-lg border bg-white p-3 custom-scrollbar lg:h-auto lg:max-h-full lg:p-4"
-            style={{ width: isMobile ? "100%" : `${leftColumnWidth}%` }}
+            className="relative flex h-[50vh] min-h-0 w-full flex-col lg:h-auto lg:max-h-full lg:w-[var(--left-column-width)]"
+            style={{ "--left-column-width": `${leftColumnWidth}%` }}
+            data-sections-panel
           >
-            <HierarchyTree
-              ref={hierarchyTreeRef}
-              expid={routeParams.expid}
-              onNodeSelect={handleDirSelect}
-              selectedNode={selectedDir}
-              activeMonitor={activeMonitor}
-            />
+            <section className={cn(
+              "flex min-h-0 flex-col rounded-lg border bg-white p-3 mb-1",
+              isTreeExpanded ? "flex-grow" : "flex-none",
+            )} style={isTreeExpanded ? { flexGrow: treeHeight, flexBasis: 0 } : undefined}>
+              <button
+                type="button"
+                className="flex items-center justify-between p-2 font-semibold text-primary-700"
+                onClick={() => {
+                  if (areWrappersAvailable) {
+                    setIsTreeExpanded((expanded) => !expanded);
+                  }
+                }}
+              >
+                <span className="flex items-center gap-3">
+                  <i className="fa-solid fa-folder-tree"></i>Experiment tree
+                </span>
+                {areWrappersAvailable && (
+                  <i className={cn(
+                    "fa-solid fa-angle-down text-xs transition-transform duration-200",
+                    isTreeExpanded && "rotate-180",
+                  )} />
+                )}
+              </button>
+              <div className={cn(
+                "min-h-0 flex-1 flex-col pt-3",
+                isTreeExpanded ? "flex" : "hidden",
+              )}>
+                <HierarchyTree
+                  ref={hierarchyTreeRef}
+                  expid={routeParams.expid}
+                  onNodeSelect={handleDirSelect}
+                  selectedNode={selectedDir}
+                  activeMonitor={activeMonitor}
+                />
+              </div>
+            </section>
+            {isTreeExpanded && areWrappersExpanded && (
+              <DragableSeparator setIsResizing={setIsResizingSections} orientation="vertical" />
+            )}
+            <section className={cn(
+              "flex min-h-0 flex-col rounded-lg border bg-white p-3 mt-1",
+              areWrappersAvailable ? "flex" : "hidden",
+              areWrappersExpanded ? "flex-grow" : "flex-none",
+            )} style={areWrappersExpanded ? { flexGrow: 100 - treeHeight, flexBasis: 0 } : undefined}>
+              <button
+                type="button"
+                className="flex items-center justify-between p-2 font-semibold text-primary-700"
+                onClick={() => setAreWrappersExpanded((expanded) => !expanded)}
+              >
+                <span className="flex items-center gap-3">
+                  <i className="fa-solid fa-layer-group"></i>Wrappers
+                </span>
+                <i className={cn(
+                  "fa-solid fa-angle-down text-xs transition-transform duration-200",
+                  areWrappersExpanded && "rotate-180",
+                )} />
+              </button>
+              <div className={cn(
+                "min-h-0 flex-1 flex-col pt-3",
+                areWrappersExpanded ? "flex" : "hidden",
+              )}>
+                <WrapperList
+                  ref={wrapperListRef}
+                  expid={routeParams.expid}
+                  onNodeSelect={handleWrapperSelect}
+                  selectedNode={selectedWrapper}
+                  activeMonitor={activeMonitor}
+                  setAreWrappersAvailable={setAreWrappersAvailable}
+                />
+              </div>
+            </section>
           </div>
-          <div
-            role="separator"
-            aria-orientation="vertical"
-            aria-label="Resize columns"
-            title="Drag to resize"
-            className="relative z-10 mx-1 hidden w-1 cursor-col-resize px-1 opacity-0 transition-opacity active:opacity-100 hover:opacity-100 lg:block bg-[radial-gradient(circle,#9ca3af_1px,transparent_1px)] [background-size:4px_4px]"
-            onMouseDown={(event) => {
-              event.preventDefault();
-              setIsResizingColumns(true);
-            }}
-          />
+          <DragableSeparator setIsResizing={setIsResizingColumns} orientation="horizontal" margin={1} />
           <div
             className="flex min-h-0 min-w-0 flex-1 flex-col gap-2 lg:h-full lg:max-h-full"
           >
@@ -394,7 +490,7 @@ const ExperimentTree = () => {
                 <div
                   className={`relative h-full overflow-auto p-4 custom-scrollbar ${showPaginator ? "pb-20" : ""}`}
                 >
-                  {!selectedDir && (
+                  {!selectedDir && !selectedWrapper && (
                     <div className="w-full h-full flex flex-col items-center justify-center gap-4">
                       <i className="fa-regular fa-folder text-4xl text-primary"></i>
                       <span className="text text-gray-500">
@@ -403,9 +499,9 @@ const ExperimentTree = () => {
                     </div>
                   )}
 
-                  {selectedDir && (
+                  {(selectedDir || selectedWrapper) && (
                     <>
-                      {isJobsFetching && !activeMonitor ? (
+                      {selectedDir && !selectedWrapper && isJobsFetching && !activeMonitor ? (
                         <div className="absolute inset-0 flex items-center justify-center bg-white">
                           <div
                             className="spinner-border dark:invert"
@@ -416,7 +512,7 @@ const ExperimentTree = () => {
                         <>
                           {!isMobile && etaPanel}
                           <JobList
-                            jobs={filteredJobs}
+                            jobs={displayedJobs}
                             selection={selection}
                             onSelectionChange={setSelection}
                             tip={jobName && "You may want to remove the name filter"}
@@ -469,12 +565,24 @@ const ExperimentTree = () => {
                           )}
                         </span>
                       ))
-                      ) : "Keys"
+                    ) : "Keys"
                     }
                   </p>
                   {!isJobsLoading && (
                     <label className="ml-auto text-gray-500 text-sm">
                       Showing <span className="font-semibold">{pageItems}</span> of <span className="font-bold">{totalItems || 0}</span> jobs
+                    </label>
+                  )}
+                </div>
+              )}
+              {selectedWrapper && (
+                <div className="flex items-center py-0.5 px-4 text-sm bg-neutral-100 border-t">
+                  <p className="m-0 flex items-center gap-1">
+                    Wrappers <i className="fa-solid fa-chevron-right text-xs" /> {selectedWrapper.wrapper_name}
+                  </p>
+                  {!isJobsLoading && (
+                    <label className="ml-auto text-gray-500 text-sm">
+                      Showing <span className="font-bold">{wrapperJobs.length}</span> jobs
                     </label>
                   )}
                 </div>
