@@ -141,6 +141,11 @@ const BarPlot = ({
         ? Math.floor((svgHeight - 3 * padding) / numBars - barPadding)
         : barPadding;
 
+    const barTransition = d3
+      .transition()
+      .duration(750)
+      .ease(d3.easeCubicOut);
+
     valueKeys.forEach((key, index) => {
       const barColor = colorMap[key] || "#999999";
       groupsEnter
@@ -172,9 +177,7 @@ const BarPlot = ({
         .on("mouseout", hideTooltip)
         .on("touchstart", (event, d) => showTooltip(event, d))
         .on("touchend", hideTooltip)
-        .transition()
-        .duration(750)
-        .ease(d3.easeCubicOut)
+        .transition(barTransition)
         .attr("width", (d) => {
           return xScaleQueue(Number.parseFloat(d[key] || 0));
         });
