@@ -333,6 +333,12 @@ const ExperimentTree = () => {
     && pageItems > 0
     && !isJobsFetching;
 
+  const jobsCountLabel = !isJobsFetching ? (
+    <label className="ml-auto text-gray-500 text-sm">
+      Showing <span className="font-semibold">{pageItems}</span> of <span className="font-bold">{totalItems || 0}</span> jobs
+    </label>
+  ) : null;
+
   return (
     <>
       <RunsModal
@@ -602,11 +608,7 @@ const ExperimentTree = () => {
                     ) : "Keys"
                     }
                   </p>
-                  {!isJobsLoading && (
-                    <label className="ml-auto text-gray-500 text-sm">
-                      Showing <span className="font-semibold">{pageItems}</span> of <span className="font-bold">{totalItems || 0}</span> jobs
-                    </label>
-                  )}
+                  {!isJobsFetching && jobsCountLabel}
                 </div>
               )}
               {selectedWrapper && (
@@ -614,11 +616,7 @@ const ExperimentTree = () => {
                   <p className="m-0 flex items-center gap-1">
                     Wrappers <i className="fa-solid fa-chevron-right text-xs" /> {selectedWrapper.wrapper_name}
                   </p>
-                  {!isJobsLoading && (
-                    <label className="ml-auto text-gray-500 text-sm">
-                      Showing <span className="font-bold">{pageItems}</span> jobs
-                    </label>
-                  )}
+                  {!isJobsFetching && jobsCountLabel}
                 </div>
               )}
             </div>
