@@ -222,7 +222,7 @@ const HierarchyTree = forwardRef(function HierarchyTree(
                             {filteredTreeDirs?.length > 0 ? (
                                 renderNodes(filteredTreeDirs)
                             ) : (
-                                <li className="py-2 text-gray-500">No directories found</li>
+                                <li className="px-2 text-gray-500">No directories found</li>
                             )}
                         </ul>
                     </div>
