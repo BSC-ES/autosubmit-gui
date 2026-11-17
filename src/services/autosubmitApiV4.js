@@ -56,7 +56,8 @@ export const autosubmitApiV4 = createApi({
                 date,
                 member,
                 section,
-                chunk
+                chunk,
+                wrapper
             }) => {
                 return {
                     url: `experiments/${expid}/jobs`,
@@ -70,16 +71,9 @@ export const autosubmitApiV4 = createApi({
                         date,
                         member,
                         section,
-                        chunk
+                        chunk,
+                        wrapper
                     }
-                }
-            }
-        }),
-        getExperimentWrappers: builder.query({
-            query: ({ expid }) => {
-                return {
-                    url: `experiments/${expid}/wrappers`,
-                    method: "GET"
                 }
             }
         }),
