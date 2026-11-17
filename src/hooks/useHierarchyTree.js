@@ -1,26 +1,16 @@
 import { useState, useMemo } from "react";
-import { autosubmitApiV4 } from "../services/autosubmitApiV4";
 
 const useHierarchyTree = ({
-  expid,
   onNodeSelect,
-  activeMonitor
+  jobsCategoryTreeData,
+  isTreeFetching,
+  refetchTree,
 }) => {
-  const {
-    data: jobsCategoryTreeData,
-    isFetching: isTreeFetching,
-    refetch: refetchTree,
-  } = autosubmitApiV4.endpoints.getJobsCategoryTree.useQuery(
-    {
-      expid: expid,
-    },
-    {
-      pollingInterval: activeMonitor ? 5000 : 0,
-    },
-  );
-
-  /***
-   * param treeData: Array of objects representing the tree structure
+  /**
+   * Builds the directory-oriented tree used by the hierarchy view.
+   *
+   * @param {Object} treeData - Tree data grouped by date, member, and section.
+   * @returns {Array<Object>} The hierarchy tree nodes.
    */
   const getTreeDirs = (treeData) => {
     const result = [];
@@ -38,7 +28,6 @@ const useHierarchyTree = ({
       };
 
       let date_statuses_counters = {};
-      let diff_date_statuses_counters = {};
 
       // Second level: member
       Object.keys(treeData[date]).forEach((member) => {
@@ -71,8 +60,7 @@ const useHierarchyTree = ({
           });
 
           // Check if the section has more than one job to determine if it's a directory
-          // If it has more than one job, we treat it as a directory; otherwise,
-          // we treat it as a leaf node that won't be displayed in the tree dir view.
+          // or a leaf node. If it is a leaf, it will not be displayed in the tree directory view.
           const is_section_dir = jobs_counter > 1;
           if (is_section_dir) {
             const sectionNode = {

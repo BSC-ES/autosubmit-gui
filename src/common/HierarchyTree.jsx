@@ -2,8 +2,26 @@ import { forwardRef, useImperativeHandle, useMemo, useState } from "react";
 import useHierarchyTree from "../hooks/useHierarchyTree";
 import { cn } from "../services/utils";
 
+/**
+ * Displays a selectable, expandable hierarchical representation of the workflow.
+ *
+ * @param {Object} props Component properties.
+ * @param {Function} props.onNodeSelect Callback for when a directory is selected.
+ * @param {Object|null} props.selectedNode Currently selected directory.
+ * @param {Array} props.jobsCategoryTreeData Category hierarchy data.
+ * @param {boolean} [props.isTreeFetching] Whether the hierarchy is loading.
+ * @param {Function} [props.refetchTree] Function used to refresh the hierarchy.
+ * @param {React.Ref} ref Exposes the tree refresh method to the parent.
+ * @returns {JSX.Element} The hierarchy tree UI.
+ */
 const HierarchyTree = forwardRef(function HierarchyTree(
-    { expid, onNodeSelect, selectedNode, activeMonitor },
+    {
+        onNodeSelect,
+        selectedNode,
+        jobsCategoryTreeData,
+        isTreeFetching: providedTreeFetching,
+        refetchTree: providedRefetchTree,
+    },
     ref,
 ) {
     const {
@@ -14,7 +32,12 @@ const HierarchyTree = forwardRef(function HierarchyTree(
         handleNodeSelect,
         handleNodeExpand,
         handleAllNodesExpand,
-    } = useHierarchyTree({ expid, onNodeSelect, activeMonitor });
+    } = useHierarchyTree({
+        onNodeSelect,
+        jobsCategoryTreeData,
+        isTreeFetching: providedTreeFetching,
+        refetchTree: providedRefetchTree,
+    });
 
     useImperativeHandle(
         ref,
@@ -28,6 +51,12 @@ const HierarchyTree = forwardRef(function HierarchyTree(
     const filteredTreeDirs = useMemo(() => {
         if (!normalizedFilter) return treeDirs;
 
+        /**
+         * Keeps matching nodes and their ancestors in the filtered hierarchy.
+         *
+         * @param {Array} nodes Nodes to filter.
+         * @returns {Array} Filtered nodes.
+         */
         const filterNodes = (nodes = []) => nodes
             .map((node) => {
                 const children = filterNodes(node.children);
@@ -42,6 +71,12 @@ const HierarchyTree = forwardRef(function HierarchyTree(
         return filterNodes(treeDirs);
     }, [normalizedFilter, treeDirs]);
 
+    /**
+     * Recursively renders directory nodes and their status counters.
+     *
+     * @param {Array} nodes Nodes to render.
+     * @returns {JSX.Element[]} Rendered directory elements.
+     */
     const renderNodes = (nodes) => nodes?.map((treeDir, index) => {
         const counter = Object.values(treeDir.diff_statuses_counters || {}).reduce(
             (acc, count) => acc + count,
@@ -92,7 +127,7 @@ const HierarchyTree = forwardRef(function HierarchyTree(
                                     ? "badge-status-completed"
                                     : "badge-status-some-completed",
                             )}>
-                                {treeDir.diff_statuses_counters?.COMPLETED || 0}/{counter} COMPLETED
+                                {treeDir.diff_statuses_counters?.COMPLETED || 0} / {counter} COMPLETED
                             </span>
                         )}
                         {Object.entries(treeDir.diff_statuses_counters || {}).map(([status, count]) => (
@@ -152,22 +187,22 @@ const HierarchyTree = forwardRef(function HierarchyTree(
                         ? "max-w-[5rem] translate-x-0 opacity-100"
                         : "pointer-events-none max-w-0 -translate-x-2 opacity-0",
                 )}>
-                        <button
-                            type="button"
-                            className="w-8 h-8 inline-flex items-center justify-center rounded-md border border-primary text-primary hover:opacity-100 active:scale-95 active:opacity-100 transition-transform"
-                            onClick={(event) => handleAllNodesExpand(event, true)}
-                            title="Expand all"
-                        >
-                            <i className="fa-solid fa-square-caret-down" />
-                        </button>
-                        <button
-                            type="button"
-                            className="w-8 h-8 inline-flex items-center justify-center rounded-md border border-secondary text-secondary hover:opacity-100 active:scale-95 active:opacity-100 transition-transform"
-                            onClick={(event) => handleAllNodesExpand(event, false)}
-                            title="Collapse all"
-                        >
-                            <i className="fa-solid fa-square-caret-up" />
-                        </button>
+                    <button
+                        type="button"
+                        className="w-8 h-8 inline-flex items-center justify-center rounded-md bg-primary-50 border border-neutral-300 text-primary hover:bg-primary-100 active:scale-95 active:opacity-100 transition-transform"
+                        onClick={(event) => handleAllNodesExpand(event, true)}
+                        title="Expand all"
+                    >
+                        <i className="fa-regular fa-square-caret-down" />
+                    </button>
+                    <button
+                        type="button"
+                        className="w-8 h-8 inline-flex items-center justify-center rounded-md bg-secondary-50 border border-neutral-300 text-secondary hover:bg-secondary-100 active:bg-secondary-200 active:scale-95 active:opacity-100 transition-transform"
+                        onClick={(event) => handleAllNodesExpand(event, false)}
+                        title="Collapse all"
+                    >
+                        <i className="fa-regular fa-square-caret-up" />
+                    </button>
                 </div>
             </div>
             <div className="relative flex-1 min-h-0">

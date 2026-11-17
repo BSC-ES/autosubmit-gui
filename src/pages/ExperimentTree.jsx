@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { autosubmitApiV4 } from "../services/autosubmitApiV4";
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import useASTitle from "../hooks/useASTitle";
 import useBreadcrumb from "../hooks/useBreadcrumb";
 import RunsModal from "../common/RunsModal";
@@ -21,6 +21,7 @@ const ITEMS_PER_PAGE_OPTIONS = [DEFAULT_ITEMS_PER_PAGE, 500, 1000];
 const BREADCRUMB_LEVELS = ["date", "member", "section"];
 
 const ExperimentTree = () => {
+  // Route, query-string and DOM references
   const routeParams = useParams();
   useASTitle(`Experiment ${routeParams.expid} tree`);
   useBreadcrumb([
@@ -36,7 +37,34 @@ const ExperimentTree = () => {
   const [searchParams, setSearchParams] = useSearchParams({});
 
   const hierarchyTreeRef = useRef(null);
-  const wrapperListRef = useRef(null);
+  const fetchJobDetailCardRef = useRef(null);
+
+  /** Creates the initial job selection state. */
+  const createEmptySelection = () => ({
+    jobIds: new Set(),
+    lastClickedIndex: 0,
+  });
+
+
+  // Component state
+  const [jobNameInput, setJobNameInput] = useState(searchParams.get("job_name") || "")
+  const [selectedDir, setSelectedDir] = useState(null);
+  const [selectedWrapper, setSelectedWrapper] = useState(null);
+  const [activeMonitor, setActiveMonitor] = useState(false);
+  const [isTreeExpanded, setIsTreeExpanded] = useState(true);
+  const [areWrappersExpanded, setAreWrappersExpanded] = useState(false);
+  const [treeHeight, setTreeHeight] = useState(60);
+  const [isResizingSections, setIsResizingSections] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [leftColumnWidth, setLeftColumnWidth] = useState(30);
+  const [isResizingColumns, setIsResizingColumns] = useState(false);
+  const [selection, setSelection] = useState(createEmptySelection);
+  const [showRunsM, setShowRunsM] = useState(false);
+  const [selectedRun, setSelectedRun] = useState({
+    run_id: null,
+    created: null,
+  });
+  const [areWrappersAvailable, setAreWrappersAvailable] = useState(false);
 
   /**
    * Reads the selected status from the query string.
@@ -81,34 +109,11 @@ const ExperimentTree = () => {
     return size
   }, [searchParams])
 
-  const [jobNameInput, setJobNameInput] = useState(searchParams.get("job_name") || "")
-
   const jobName = searchParams.get("job_name") || undefined;
+  const wrapper = searchParams.get("wrapper") || undefined;
 
-  const fetchJobDetailCardRef = useRef(null);
 
-  const [selectedDir, setSelectedDir] = useState(null);
-  const [selectedWrapper, setSelectedWrapper] = useState(null);
-  const [activeMonitor, setActiveMonitor] = useState(false);
-  const [isTreeExpanded, setIsTreeExpanded] = useState(true);
-  const [areWrappersExpanded, setAreWrappersExpanded] = useState(false);
-  const [treeHeight, setTreeHeight] = useState(60);
-  const [isResizingSections, setIsResizingSections] = useState(false);
-
-  const toggleActiveMonitor = () => {
-    setActiveMonitor(!activeMonitor);
-  };
-
-  const handleDirSelect = (dir) => {
-    setSelectedDir(dir);
-    setSelectedWrapper(null);
-  };
-
-  const handleWrapperSelect = (wrapper) => {
-    setSelectedDir(null);
-    setSelectedWrapper(wrapper);
-  };
-
+  // Experiment data queries
   const {
     data: jobsData,
     isFetching: isJobsFetching,
@@ -127,15 +132,57 @@ const ExperimentTree = () => {
       member: selectedDir?.member || undefined,
       section: selectedDir?.section || undefined,
       chunk: selectedDir?.chunk || undefined,
+      wrapper,
     },
     {
-      skip: !selectedDir, // Skip fetching if no directory is selected
+      skip: !selectedDir && !wrapper,
       pollingInterval: activeMonitor ? 5000 : 0,
     },
   );
 
+  const {
+    data: jobsCategoryTreeData,
+    isFetching: isTreeFetching,
+    refetch: refetchTree,
+  } = autosubmitApiV4.endpoints.getJobsCategoryTree.useQuery({
+    expid: routeParams.expid,
+  }, {
+    pollingInterval: activeMonitor ? 5000 : 0,
+  });
+
+
+  // User actions
+  /** Toggles polling of the experiment data. */
+  const toggleActiveMonitor = () => {
+    setActiveMonitor(!activeMonitor);
+  };
+
+  /** Selects a directory. Wrapper-specific URL state is cleared. */
+  const handleDirSelect = (dir) => {
+    setSelectedDir(dir);
+    setSelectedWrapper(null);
+    const nextSearchParams = Object.fromEntries(searchParams.entries());
+    delete nextSearchParams.wrapper;
+    delete nextSearchParams.page;
+    setSearchParams(nextSearchParams);
+  };
+
+  /** Selects a wrapper. Directory-specific URL state is cleared. */
+  const handleWrapperSelect = (wrapper) => {
+    setSelectedDir(null);
+    setSelectedWrapper(wrapper);
+    const nextSearchParams = Object.fromEntries(searchParams.entries());
+    nextSearchParams.wrapper = wrapper.wrapper_name;
+    delete nextSearchParams.date;
+    delete nextSearchParams.member;
+    delete nextSearchParams.section;
+    delete nextSearchParams.chunk;
+    delete nextSearchParams.page;
+    setSearchParams(nextSearchParams);
+  };
+
   /**
-   * Changes the current page while preserving the other query parameters.
+   * Changes just the current page in the query.
    *
    * @param {{selected: number}} event - Pagination event from `Paginator`.
    */
@@ -147,6 +194,7 @@ const ExperimentTree = () => {
     })
   }
 
+  /** Applies the job-name input as a URL filter. */
   const handleJobSearch = () => {
     const nextSearchParams = Object.fromEntries(searchParams.entries());
     const nextJobName = jobNameInput.trim();
@@ -161,6 +209,7 @@ const ExperimentTree = () => {
     setSearchParams(nextSearchParams);
   }
 
+  /** Removes the job-name URL filter. */
   const handleClearJobSearch = () => {
     setJobNameInput("");
     const nextSearchParams = Object.fromEntries(searchParams.entries());
@@ -169,16 +218,15 @@ const ExperimentTree = () => {
     setSearchParams(nextSearchParams);
   }
 
+  /** Refreshes the category tree. */
   const handleRefetch = () => {
-    hierarchyTreeRef.current?.refetchTree();
-    wrapperListRef.current?.refetchWrappers();
-
+    refetchTree();
     if (!isJobsUninitialized) {
       refetchJobs();
     }
   };
 
-  const [showModal, setShowModal] = useState(false);
+  /** Opens or closes the "change status" modal and optionally refreshes its data. */
   const toggleModal = (refresh = false) => {
     setShowModal(!showModal);
     if (refresh === true) {
@@ -186,54 +234,14 @@ const ExperimentTree = () => {
     }
   };
 
-  const filteredJobs = jobsData?.jobs || [];
-  const wrapperJobs = useMemo(
-    () => (selectedWrapper?.job_names || []).map((name) => ({ name })),
-    [selectedWrapper],
-  );
-  const displayedJobs = selectedWrapper ? wrapperJobs : filteredJobs;
-
-  const [leftColumnWidth, setLeftColumnWidth] = useState(30);
-  const [isResizingColumns, setIsResizingColumns] = useState(false);
-
-  useEffect(() => {
-    fetchJobDetailCardRef.current?.refetch();
-  }, [jobsData]);
-
-  /**
-   * Creates the initial job selection state.
-   *
-   * @returns {JobSelection} The initial selection state.
-   */
-  const createEmptySelection = () => ({
-    jobIds: new Set(),
-    lastClickedIndex: 0,
-  });
-
-  const [selection, setSelection] = useState(createEmptySelection);
-
-  /**
-   * Clears the current selection whenever the list context changes,
-   * including the experiment, page, page size, status, or job name filter.
-   */
-  useEffect(() => {
-    setSelection(createEmptySelection());
-  }, [routeParams.expid, selectedDir, selectedWrapper, currentPage, pageSize, jobName]);
-
-  const isMobile = useWindowSize().width < 1024;
-
-  const [showRunsM, setShowRunsM] = useState(false);
-  const [selectedRun, setSelectedRun] = useState({
-    run_id: null,
-    created: null,
-  });
-
+  /** Change run selection. */
   const handleRunSelect = (item) => {
     // handleClear();
     setSelectedRun(item);
     setShowRunsM(false);
   };
 
+  /** Clears the selected run so the latest run is used. */
   const handleResetRun = () => {
     handleRunSelect({
       run_id: null,
@@ -241,28 +249,12 @@ const ExperimentTree = () => {
     });
   };
 
+  /** Toggles visibility of the run selector modal. */
   const toggleShowRunsM = () => {
     setShowRunsM(!showRunsM);
   };
 
-  const etaPanel = activeMonitor && selectedDir ? (
-    <ExperimentEtaPanel
-      activeMonitor={activeMonitor}
-      expid={routeParams.expid}
-      pklData={jobsData}
-      jobs={filteredJobs}
-      isMobile={isMobile}
-    />
-  ) : null;
-
-  const breadcrumbItems = [
-    ["date", selectedDir?.date],
-    ["member", selectedDir?.member],
-    ["section", selectedDir?.section],
-  ]
-    .filter(([, value]) => value != null && value !== "NA")
-    .map(([key, value]) => ({ key, value }));
-
+  /** Moves the directory selection back to a breadcrumb level. */
   const handleBreadcrumbClick = (item) => {
     const levels = BREADCRUMB_LEVELS;
     const selectedNode = { ...selectedDir };
@@ -282,21 +274,64 @@ const ExperimentTree = () => {
     handleDirSelect(selectedNode);
   };
 
-  // Values derived from the API response, used for rendering
+
+  // Effects that react to fetched data or selection changes
+  /** Update the job detail card when the jobs are fetched. */
+  useEffect(() => {
+    fetchJobDetailCardRef.current?.refetch();
+  }, [jobsData]);
+
+  /** Keep the selected wrapper object in sync with the URL and API response. */
+  useEffect(() => {
+    if (!wrapper) {
+      setSelectedWrapper(null);
+      return;
+    }
+
+    setSelectedWrapper({
+      key: wrapper,
+      wrapper_name: wrapper,
+      diff_statuses_counters: jobsCategoryTreeData?.wrapper_tree?.[wrapper] || {},
+    });
+  }, [jobsCategoryTreeData, wrapper]);
+
+  /**
+   * Clears the current selection whenever the list context changes.
+   */
+  useEffect(() => {
+    setSelection(createEmptySelection());
+  }, [routeParams.expid, selectedDir, selectedWrapper, currentPage, pageSize, jobName]);
+
+
+  // Derived values for rendering
+  const filteredJobs = jobsData?.jobs || [];
+  const isMobile = useWindowSize().width < 1024;
+
+  const etaPanel = activeMonitor && selectedDir ? (
+    <ExperimentEtaPanel
+      activeMonitor={activeMonitor}
+      expid={routeParams.expid}
+      pklData={jobsData}
+      jobs={filteredJobs}
+      isMobile={isMobile}
+    />
+  ) : null;
+
+  const breadcrumbItems = [
+    ["date", selectedDir?.date],
+    ["member", selectedDir?.member],
+    ["section", selectedDir?.section],
+  ]
+    .filter(([, value]) => value != null && value !== "NA")
+    .map(([key, value]) => ({ key, value }));
+
   const totalItems = jobsData?.pagination?.total_items ?? 0;
   const pageItems = jobsData?.pagination?.page_items ?? 0;
   const totalPages = jobsData?.pagination?.total_pages ?? 1;
-  const showPaginator = selectedDir && !selectedWrapper && totalPages > 1 && pageItems > 0 && !isJobsFetching;
-
-  const [areWrappersAvailable, setAreWrappersAvailable] = useState(false);
-
-  useEffect(() => {
-    // Wrappers might arrive after the tree
-    if (!areWrappersAvailable) {
-      setIsTreeExpanded(true);
-      setIsResizingSections(false);
-    }
-  }, [areWrappersAvailable]);
+  const showPaginator = (selectedDir || selectedWrapper)
+    && totalPages > 1
+    && pageItems > 0
+    && !isJobsFetching;
 
   return (
     <>
@@ -384,7 +419,7 @@ const ExperimentTree = () => {
             )} style={isTreeExpanded ? { flexGrow: treeHeight, flexBasis: 0 } : undefined}>
               <button
                 type="button"
-                className="flex items-center justify-between p-2 font-semibold text-primary-700"
+                className="flex items-center justify-between px-2 font-semibold text-primary-700"
                 onClick={() => {
                   if (areWrappersAvailable) {
                     setIsTreeExpanded((expanded) => !expanded);
@@ -407,10 +442,11 @@ const ExperimentTree = () => {
               )}>
                 <HierarchyTree
                   ref={hierarchyTreeRef}
-                  expid={routeParams.expid}
+                  jobsCategoryTreeData={jobsCategoryTreeData}
+                  isTreeFetching={isTreeFetching}
+                  refetchTree={refetchTree}
                   onNodeSelect={handleDirSelect}
                   selectedNode={selectedDir}
-                  activeMonitor={activeMonitor}
                 />
               </div>
             </section>
@@ -424,7 +460,7 @@ const ExperimentTree = () => {
             )} style={areWrappersExpanded ? { flexGrow: 100 - treeHeight, flexBasis: 0 } : undefined}>
               <button
                 type="button"
-                className="flex items-center justify-between p-2 font-semibold text-primary-700"
+                className="flex items-center justify-between px-2 font-semibold text-primary-700"
                 onClick={() => setAreWrappersExpanded((expanded) => !expanded)}
               >
                 <span className="flex items-center gap-3">
@@ -440,11 +476,9 @@ const ExperimentTree = () => {
                 areWrappersExpanded ? "flex" : "hidden",
               )}>
                 <WrapperList
-                  ref={wrapperListRef}
-                  expid={routeParams.expid}
-                  onNodeSelect={handleWrapperSelect}
-                  selectedNode={selectedWrapper}
-                  activeMonitor={activeMonitor}
+                  wrapperTree={jobsCategoryTreeData?.wrapper_tree}
+                  onWrapperSelect={handleWrapperSelect}
+                  selectedWrapper={selectedWrapper}
                   setAreWrappersAvailable={setAreWrappersAvailable}
                 />
               </div>
@@ -501,7 +535,7 @@ const ExperimentTree = () => {
 
                   {(selectedDir || selectedWrapper) && (
                     <>
-                      {selectedDir && !selectedWrapper && isJobsFetching && !activeMonitor ? (
+                      {isJobsFetching && !activeMonitor ? (
                         <div className="absolute inset-0 flex items-center justify-center bg-white">
                           <div
                             className="spinner-border dark:invert"
@@ -512,7 +546,7 @@ const ExperimentTree = () => {
                         <>
                           {!isMobile && etaPanel}
                           <JobList
-                            jobs={displayedJobs}
+                            jobs={filteredJobs}
                             selection={selection}
                             onSelectionChange={setSelection}
                             tip={jobName && "You may want to remove the name filter"}
@@ -533,7 +567,7 @@ const ExperimentTree = () => {
                         currentPage={currentPage}
                         totalPages={totalPages}
                         onPageClick={handlePageClick}
-                        buttonSize={8}
+                        small={true}
                       />
                     </div>
                   </div>
@@ -582,7 +616,7 @@ const ExperimentTree = () => {
                   </p>
                   {!isJobsLoading && (
                     <label className="ml-auto text-gray-500 text-sm">
-                      Showing <span className="font-bold">{wrapperJobs.length}</span> jobs
+                      Showing <span className="font-bold">{pageItems}</span> jobs
                     </label>
                   )}
                 </div>
