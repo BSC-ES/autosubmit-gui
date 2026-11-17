@@ -1,6 +1,6 @@
 import { useMemo } from "react"
 
-const Paginator = ({ totalPages, currentPage = 1, siblingSize = 1, onPageClick, buttonSize = 10 }) => {
+const Paginator = ({ totalPages, currentPage = 1, siblingSize = 1, onPageClick, small = false }) => {
 
   const pages = useMemo(() => {
     let rangeSize = Math.min(totalPages, siblingSize * 2 + 1)
@@ -11,7 +11,8 @@ const Paginator = ({ totalPages, currentPage = 1, siblingSize = 1, onPageClick, 
     return newPages
   }, [totalPages, currentPage, siblingSize])
 
-  const buttonClass = `h-${buttonSize} min-w-${buttonSize} ${buttonSize >= 10 ? "text-sm" : "text-xs"}`
+  const sizeClass = small ? "h-8 min-w-8 text-xs" : "h-10 min-w-10 text-sm"
+  const buttonClass = `${sizeClass} px-2 inline-flex`
 
   return (
     <>
