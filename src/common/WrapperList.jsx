@@ -126,7 +126,7 @@ const WrapperList = ({ wrapperTree, onWrapperSelect, selectedWrapper, setAreWrap
                                 );
                             })
                         ) : (
-                            <li className="py-2 text-gray-500">No wrappers found</li>
+                            <li className="px-2 text-gray-500">No wrappers found</li>
                         )}
                     </ul>
                 </div>
