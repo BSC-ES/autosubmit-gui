@@ -123,7 +123,7 @@ const ExperimentTree = () => {
   } = autosubmitApiV4.endpoints.getExperimentJobs.useQuery(
     {
       expid: routeParams.expid,
-      view: "extended",
+      view: "base",
       job_name: jobName,
       status: status,
       page: currentPage,
@@ -393,7 +393,7 @@ const ExperimentTree = () => {
         </div>
 
         <div
-          className="group relative flex min-h-[120vh] grow basis-0 flex-col gap-2 lg:min-h-[50vh] lg:flex-row lg:gap-0"
+          className="group relative flex flex-col gap-2 lg:grow lg:min-h-[50vh] lg:flex-row lg:gap-0"
           onMouseMove={(event) => {
             if (!isResizingColumns && !isResizingSections) return;
             const bounds = event.currentTarget.getBoundingClientRect();
@@ -416,14 +416,14 @@ const ExperimentTree = () => {
           }}
         >
           <div
-            className="relative flex h-[50vh] min-h-0 w-full flex-col lg:h-auto lg:max-h-full lg:w-[var(--left-column-width)]"
+            className="relative flex h-auto min-h-0 w-full flex-col lg:h-auto lg:max-h-full lg:w-[var(--left-column-width)]"
             style={{ "--left-column-width": `${leftColumnWidth}%` }}
             data-sections-panel
           >
             <section className={cn(
               "flex min-h-0 flex-col overflow-hidden rounded-lg border bg-white p-3 mb-1",
-              isTreeExpanded ? "flex-grow" : "flex-none",
-            )} style={isTreeExpanded ? { flexGrow: treeHeight, flexBasis: 0 } : undefined}>
+              isTreeExpanded ? "h-[50vh] lg:flex-grow" : "h-auto lg:flex-none",
+            )} style={isTreeExpanded && !isMobile ? { flexGrow: treeHeight, flexBasis: 0 } : undefined}>
               <button
                 type="button"
                 className="flex items-center justify-between px-2 font-semibold text-primary-700"
@@ -458,13 +458,15 @@ const ExperimentTree = () => {
               </div>
             </section>
             {isTreeExpanded && areWrappersExpanded && (
-              <DragableSeparator setIsResizing={setIsResizingSections} orientation="vertical" />
+              <div className="hidden lg:block">
+                <DragableSeparator setIsResizing={setIsResizingSections} orientation="vertical" />
+              </div>
             )}
             <section className={cn(
               "flex min-h-0 flex-col overflow-hidden rounded-lg border bg-white p-3 mt-1",
               areWrappersAvailable ? "flex" : "hidden",
-              areWrappersExpanded ? "flex-grow" : "flex-none",
-            )} style={areWrappersExpanded ? { flexGrow: 100 - treeHeight, flexBasis: 0 } : undefined}>
+              areWrappersExpanded ? "h-[50vh] lg:flex-grow" : "h-auto lg:flex-none",
+            )} style={areWrappersExpanded && !isMobile ? { flexGrow: 100 - treeHeight, flexBasis: 0 } : undefined}>
               <button
                 type="button"
                 className="flex items-center justify-between px-2 font-semibold text-primary-700"
@@ -491,9 +493,11 @@ const ExperimentTree = () => {
               </div>
             </section>
           </div>
-          <DragableSeparator setIsResizing={setIsResizingColumns} orientation="horizontal" margin={1} />
+          <div className="hidden lg:block">
+            <DragableSeparator setIsResizing={setIsResizingColumns} orientation="horizontal" margin={1} />
+          </div>
           <div
-            className="flex min-h-0 min-w-0 flex-1 flex-col gap-2 lg:h-full lg:max-h-full"
+            className="flex min-w-0 flex-1 flex-col gap-2 lg:h-full lg:min-h-0 lg:max-h-full"
           >
             <div className="flex items-center">
               <div className="flex w-full grow">
@@ -526,7 +530,7 @@ const ExperimentTree = () => {
                 </button>
               </div>
             </div>
-            <div className="flex flex-col min-h-0 max-h-full h-full border rounded-lg bg-white">
+            <div className="flex h-[50vh] flex-col border rounded-lg bg-white lg:h-full">
               <div className="relative flex-1 min-h-0">
                 <div
                   className={`relative h-full overflow-auto p-4 custom-scrollbar ${showPaginator ? "pb-20" : ""}`}
