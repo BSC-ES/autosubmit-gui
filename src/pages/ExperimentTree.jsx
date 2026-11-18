@@ -307,11 +307,12 @@ const ExperimentTree = () => {
   const filteredJobs = jobsData?.jobs || [];
   const isMobile = useWindowSize().width < 1024;
 
-  const etaPanel = activeMonitor && selectedDir ? (
+  const etaPanel = activeMonitor ? (
     <ExperimentEtaPanel
       activeMonitor={activeMonitor}
       expid={routeParams.expid}
       pklData={jobsData}
+      sectionsTree={jobsCategoryTreeData?.category_tree || {}}
       jobs={filteredJobs}
       isMobile={isMobile}
     />
@@ -530,6 +531,11 @@ const ExperimentTree = () => {
                 <div
                   className={`relative h-full overflow-auto p-4 custom-scrollbar ${showPaginator ? "pb-20" : ""}`}
                 >
+                  {!isMobile && (
+                    <div className="sticky top-0 z-10">
+                      {etaPanel}
+                    </div>
+                  )}
                   {!selectedDir && !selectedWrapper && (
                     <div className="w-full h-full flex flex-col items-center justify-center gap-4">
                       <i className="fa-regular fa-folder text-4xl text-primary"></i>
@@ -538,7 +544,6 @@ const ExperimentTree = () => {
                       </span>
                     </div>
                   )}
-
                   {(selectedDir || selectedWrapper) && (
                     <>
                       {isJobsFetching && !activeMonitor ? (
@@ -550,7 +555,6 @@ const ExperimentTree = () => {
                         </div>
                       ) : (
                         <>
-                          {!isMobile && etaPanel}
                           <JobList
                             jobs={filteredJobs}
                             selection={selection}
