@@ -44,7 +44,7 @@ const ExperimentEtaView = ({
 
   const positionClass = isMobile
     ? ""
-    : "absolute right-4 top-4 z-10 backdrop-blur-md";
+    : "absolute right-1 top-1 z-10 backdrop-blur-md";
 
   const containerClass = isMobile
     ? "w-full rounded-lg border p-4"
