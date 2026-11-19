@@ -24,6 +24,16 @@ const ActiveIndicator = ({ isActive }) => {
   );
 };
 
+const CardInfoItem = ({ iconClass, label, value }) => {
+  const text = value || "-";
+  return (
+    <div className="flex items-center gap-3 min-w-0 text-sm" title={`${label}: ${text}`}>
+      <i className={cn("fa-solid shrink-0", iconClass)} />
+      <span className="truncate">{text}</span>
+    </div>
+  );
+};
+
 const ExperimentCard = forwardRef(({ experiment }, ref) => {
   const isActive = useMemo(() => {
     return experiment?.status === "RUNNING";
@@ -140,22 +150,11 @@ const ExperimentCard = forwardRef(({ experiment }, ref) => {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 px-2 gap-2">
-            <div className="text-sm" title="User">
-              <i className="fa-solid fa-user me-3" /> {experiment.user || "-"}
-            </div>
-            <div className="text-sm" title="HPC">
-              <i className="fa-solid fa-computer me-3" />{" "}
-              {experiment.hpc || "-"}
-            </div>
-            <div className="text-sm" title="Autosubmit version">
-              <i className="fa-solid fa-code-commit me-3" />{" "}
-              {experiment.version || "-"}
-            </div>
-            <div className="text-sm" title="Last modified date">
-              <i className="fa-solid fa-calendar me-3" />{" "}
-              {experiment.modified || "-"}
-            </div>
+          <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,max-content)] px-2 gap-x-4 gap-y-2">
+            <CardInfoItem iconClass="fa-user" label="User" value={experiment.user} />
+            <CardInfoItem iconClass="fa-computer" label="HPC" value={experiment.hpc} />
+            <CardInfoItem iconClass="fa-code-commit" label="Autosubmit version" value={experiment.version} />
+            <CardInfoItem iconClass="fa-calendar" label="Last modified date" value={experiment.modified} />
           </div>
         </div>
       </div>
