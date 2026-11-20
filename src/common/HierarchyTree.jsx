@@ -49,7 +49,7 @@ const HierarchyTree = forwardRef(function HierarchyTree(
     const [isFilterActive, setIsFilterActive] = useState(false);
     const normalizedFilter = nameFilter.trim().toLowerCase();
     const filteredTreeDirs = useMemo(() => {
-        if (!normalizedFilter) return treeDirs;
+        if (!treeDirs || !normalizedFilter) return treeDirs;
 
         /**
          * Keeps matching nodes and their ancestors in the filtered hierarchy.
