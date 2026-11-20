@@ -7,7 +7,6 @@ import RunsModal from "../common/RunsModal";
 import BottomPanel from "../common/BottomPanel";
 import { ChangeStatusModal } from "../common/ChangeStatusModal";
 import ExperimentEtaPanel from "../common/ExperimentEtaPanel";
-import { useWindowSize } from "@uidotdev/usehooks";
 import { cn, JOB_STATUSES } from "../services/utils";
 import FetchJobDetailCard from "../common/FetchJobDetailCard";
 import JobList from "../common/JobList";
@@ -305,8 +304,6 @@ const ExperimentTree = () => {
 
   // Derived values for rendering
   const filteredJobs = jobsData?.jobs || [];
-  const isMobile = useWindowSize().width < 1024;
-
   const etaPanel = activeMonitor ? (
     <ExperimentEtaPanel
       activeMonitor={activeMonitor}
@@ -314,7 +311,6 @@ const ExperimentTree = () => {
       pklData={jobsData}
       sectionsTree={jobsCategoryTreeData?.category_tree || {}}
       jobs={filteredJobs}
-      isMobile={isMobile}
     />
   ) : null;
 
@@ -422,8 +418,8 @@ const ExperimentTree = () => {
           >
             <section className={cn(
               "flex min-h-0 flex-col overflow-hidden rounded-lg border bg-white p-3 mb-1",
-              isTreeExpanded ? "h-[50vh] lg:flex-grow" : "h-auto lg:flex-none",
-            )} style={isTreeExpanded && !isMobile ? { flexGrow: treeHeight, flexBasis: 0 } : undefined}>
+              isTreeExpanded ? "h-[50vh] lg:[flex-grow:var(--tree-flex-grow)] lg:basis-0" : "h-auto lg:flex-none",
+            )} style={{ "--tree-flex-grow": treeHeight }}>
               <button
                 type="button"
                 className="flex items-center justify-between px-2 font-semibold text-primary-700"
@@ -465,8 +461,8 @@ const ExperimentTree = () => {
             <section className={cn(
               "flex min-h-0 flex-col overflow-hidden rounded-lg border bg-white p-3 mt-1",
               areWrappersAvailable ? "flex" : "hidden",
-              areWrappersExpanded ? "h-[50vh] lg:flex-grow" : "h-auto lg:flex-none",
-            )} style={areWrappersExpanded && !isMobile ? { flexGrow: 100 - treeHeight, flexBasis: 0 } : undefined}>
+              areWrappersExpanded ? "h-[50vh] lg:[flex-grow:var(--wrappers-flex-grow)] lg:basis-0" : "h-auto lg:flex-none",
+            )} style={{ "--wrappers-flex-grow": 100 - treeHeight }}>
               <button
                 type="button"
                 className="flex items-center justify-between px-2 font-semibold text-primary-700"
@@ -535,11 +531,9 @@ const ExperimentTree = () => {
                 <div
                   className={`relative h-full overflow-auto p-4 custom-scrollbar ${showPaginator ? "pb-20" : ""}`}
                 >
-                  {!isMobile && (
-                    <div className="sticky top-0 z-10">
-                      {etaPanel}
-                    </div>
-                  )}
+                  <div className="sticky top-0 z-10 hidden h-0 lg:block">
+                    {etaPanel}
+                  </div>
                   {!selectedDir && !selectedWrapper && (
                     <div className="w-full h-full flex flex-col items-center justify-center gap-4">
                       <i className="fa-regular fa-folder text-4xl text-primary"></i>
@@ -632,7 +626,9 @@ const ExperimentTree = () => {
         </div>
       </div>
 
-      {isMobile && etaPanel}
+      <div className="lg:hidden">
+        {etaPanel}
+      </div>
 
       {selection.jobIds.size > 0 && (
         <BottomPanel
