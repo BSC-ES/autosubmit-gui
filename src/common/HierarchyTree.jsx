@@ -91,7 +91,7 @@ const HierarchyTree = forwardRef(function HierarchyTree(
                         <i
                             className={cn(
                                 "fa-solid fa-caret-down mr-1 cursor-pointer transition-transform duration-300 ease-in-out",
-                                !normalizedFilter && expandedNodes[treeDir.key] === false && "-rotate-90",
+                                expandedNodes[treeDir.key] === false && "-rotate-90",
                             )}
                             onClick={(event) => handleNodeExpand(event, treeDir.key)}
                         />
@@ -142,7 +142,7 @@ const HierarchyTree = forwardRef(function HierarchyTree(
                 {treeDir.children && treeDir.children.length > 0 && (
                     <div className={cn(
                         "ml-6 grid overflow-hidden transition-[grid-template-rows,opacity] duration-300 ease-in-out",
-                        !normalizedFilter && expandedNodes[treeDir.key] === false
+                        expandedNodes[treeDir.key] === false
                             ? "grid-rows-[0fr] opacity-0"
                             : "grid-rows-[1fr] opacity-100",
                     )}>
