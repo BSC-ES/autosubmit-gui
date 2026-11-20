@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { autosubmitApiV4 } from "../services/autosubmitApiV4";
-import { useParams, useSearchParams } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 import useASTitle from "../hooks/useASTitle";
 import useBreadcrumb from "../hooks/useBreadcrumb";
 import RunsModal from "../common/RunsModal";
@@ -663,6 +663,15 @@ const ExperimentTree = () => {
           </div>
         </BottomPanel>
       )}
+      <div className="flex items-center justify-center text-sm text-gray-500 px-4 py-1.5">
+        <span>
+          Looking for the classic tree view? You can find it{" "}
+          <Link to={`/experiment/${routeParams.expid}/tree-legacy`} className="text-primary hover:underline">
+            here
+          </Link>
+          .
+        </span>
+      </div>
     </>
   );
 };
