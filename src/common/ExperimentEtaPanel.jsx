@@ -5,31 +5,30 @@ const ExperimentEtaPanel = ({
   activeMonitor,
   expid,
   pklData,
-  jobs = [],
-  isMobile = false
+  sectionsTree,
+  jobs,
 }) => {
   const {
     selectedEtaSection,
     setUserSelectedEtaSection,
-    sections,
+    chunkSections,
     etaData,
     isEtaError,
     etaError,
     etaTotalChunks,
     etaCompletedChunks,
-  } = useExperimentEta({ activeMonitor, expid, pklData, jobs });
+  } = useExperimentEta({ activeMonitor, expid, pklData, sectionsTree, jobs });
 
   return (
     <ExperimentEtaView
       selectedEtaSection={selectedEtaSection}
       onSelectedEtaSectionChange={setUserSelectedEtaSection}
-      sections={sections}
+      sections={chunkSections}
       etaData={etaData}
       isEtaError={isEtaError}
       etaError={etaError}
       etaTotalChunks={etaTotalChunks}
       etaCompletedChunks={etaCompletedChunks}
-      isMobile={isMobile}
     />
   );
 };

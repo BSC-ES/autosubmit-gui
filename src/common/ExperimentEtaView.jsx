@@ -14,7 +14,6 @@ const ExperimentEtaView = ({
   etaError,
   etaTotalChunks,
   etaCompletedChunks,
-  isMobile = false,
 }) => {
   const etaSeconds =
     etaData?.eta_seconds != null
@@ -42,26 +41,18 @@ const ExperimentEtaView = ({
 
   const [isMinimized, setIsMinimized] = useState(false);
 
-  const positionClass = isMobile
-    ? ""
-    : "absolute right-4 top-4 z-10 backdrop-blur-md";
-
-  const containerClass = isMobile
-    ? "w-full rounded-lg border p-4"
-    : "w-full rounded-lg border p-4 bg-white/50 shadow-lg backdrop-blur-md";
+  const panelClass = "lg:absolute lg:right-1 lg:top-1 lg:z-10 lg:backdrop-blur-md";
 
   return (
     <AnimatePresence mode="wait">
       {isMinimized ? (
         <motion.div
           key="eta-minimized"
-          layout
-          layoutId="eta-shell"
           initial={{ opacity: 0.9, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0.9, scale: 0.98 }}
           transition={{ duration: 0.14, ease: [0.14, 1, 0.36, 1] }}
-          className={positionClass}
+          className={panelClass}
         >
           <button
             title="Show ETA panel"
@@ -77,30 +68,26 @@ const ExperimentEtaView = ({
       ) : (
         <motion.div
           key="eta-expanded"
-          layout
-          layoutId="eta-shell"
           initial={{ opacity: 0.95, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0.95, scale: 0.98 }}
           transition={{ duration: 0.14, ease: [0.14, 1, 0.36, 1] }}
-          className={positionClass}
+          className={panelClass}
         >
-          <div className={containerClass}>
+          <div className="w-full rounded-lg border bg-white/50 p-4 shadow-lg backdrop-blur-md lg:bg-white/50">
             <div className="mb-3 flex justify-between gap-3">
               <div className="font-semibold">
                 <i className="fa-solid fa-clock-rotate-left"></i>
                 <span className="ml-2">Estimated finish time</span>
               </div>
-              {!isMobile && (
-                <button
-                  title="Minimize ETA panel"
-                  type="button"
-                  className="rounded-md px-2 py-1 text-sm hover:bg-neutral-100"
-                  onClick={() => setIsMinimized(true)}
-                >
-                  <i className="fa-solid fa-compress"></i>
-                </button>
-              )}
+              <button
+                title="Minimize ETA panel"
+                type="button"
+                className="hidden rounded-md px-2 py-1 text-sm hover:bg-neutral-100 lg:block"
+                onClick={() => setIsMinimized(true)}
+              >
+                <i className="fa-solid fa-compress"></i>
+              </button>
             </div>
 
             <div className="flex items-center justify-between gap-4">
