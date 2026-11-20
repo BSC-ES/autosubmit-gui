@@ -365,6 +365,54 @@ const PerformanceSummary = ({ data }) => {
   );
 };
 
+const OtherMetricsSection = ({ data }) => {
+  const [metrics, setMetrics] = useState(null);
+
+  useEffect(() => {
+    if (data && Array.isArray(data.considered)) {
+      let newMetrics = {
+        "Mean SYPD per chunk": data.mean_sypd_per_chunk,
+        "Mean QSYPD per chunk": data.mean_qsypd_per_chunk,
+        "Experiment throughput": data.experiment_throughput,
+        "Mean CSYPD per chunk": data.mean_csypd_per_chunk,
+        "Mean CQSYPD per chunk": data.mean_cqsypd_per_chunk,
+      };
+      setMetrics(newMetrics);
+    }
+  }, [data]);
+
+  return (
+    <div className="mt-4">
+      <Table>
+        <TableHead>
+          <TableRow className="bg-primary-200 font-bold">
+            {["Metric", "Value"].map((title) => (
+              <TableHeader className="py-1" key={title}>
+                {title}
+              </TableHeader>
+            ))}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {metrics &&
+            Object.keys(metrics).map((key) => {
+              return (
+                <TableRow key={key}>
+                  <TableCell className="py-1 font-bold">{key}</TableCell>
+                  <TableCell className={cn("py-1 font-bold")}>
+                    <span className="rounded px-1 bg-light">
+                      {formatNumberMoney(metrics[key])}
+                    </span>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+        </TableBody>
+      </Table>
+    </div>
+  );
+};
+
 const PerformanceSustainability = ({ data }) => {
   
   const computeStats = (values) => {
@@ -470,6 +518,7 @@ const ExperimentPerformance = () => {
   const routeParams = useParams();
   const [showWarnings, setShowWarnings] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
+  const [showOtherMetrics, setShowOtherMetrics] = useState(false);
 
   useASTitle(`Experiment ${routeParams.expid} performance`);
   useBreadcrumb([
@@ -799,6 +848,23 @@ const ExperimentPerformance = () => {
                         <strong>MAD</strong>: Mean Absolute Deviation Around the
                         Mean.
                       </span>
+                      <Collapsible.Root
+                        className="py-4"
+                        open={showOtherMetrics}
+                        onOpenChange={setShowOtherMetrics}
+                      >
+                        <Collapsible.Trigger className="border border-primary-600 rounded text-primary-600 w-full font-semibold py-1 hover:opacity-95">
+                          {showOtherMetrics
+                            ? "Hide"
+                            : "Display"}{" other metrics"}
+                          <i className="ms-1 fa-solid fa-eye"></i>
+                        </Collapsible.Trigger>
+                        <Collapsible.Content>
+                          <div className="overflow-auto custom-scrollbar max-h-[40vh]">
+                            <OtherMetricsSection data={data} />
+                          </div>
+                        </Collapsible.Content>
+                      </Collapsible.Root>
                     </div>
                   </div>
                 </div>
