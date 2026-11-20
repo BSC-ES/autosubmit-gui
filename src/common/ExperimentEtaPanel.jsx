@@ -7,7 +7,6 @@ const ExperimentEtaPanel = ({
   pklData,
   sectionsTree,
   jobs,
-  isMobile = false
 }) => {
   const {
     selectedEtaSection,
@@ -30,7 +29,6 @@ const ExperimentEtaPanel = ({
       etaError={etaError}
       etaTotalChunks={etaTotalChunks}
       etaCompletedChunks={etaCompletedChunks}
-      isMobile={isMobile}
     />
   );
 };
