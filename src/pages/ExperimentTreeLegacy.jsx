@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState, MutableRefObject } from "react";
 import { autosubmitApiV3 } from "../services/autosubmitApiV3";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import FancyTree from "../common/FancyTree";
 import useASTitle from "../hooks/useASTitle";
 import useBreadcrumb from "../hooks/useBreadcrumb";
@@ -209,6 +209,16 @@ const ExperimentTreeLegacy = () => {
 
   return (
     <>
+      <div className="flex items-center alert alert-warning rounded-2xl">
+        <i className="fa-solid fa-triangle-exclamation me-2"></i>
+        <span>
+          The classic tree view is no longer maintained and it will be removed in a future version. For a better experience and performance, please use the{" "}
+          <Link to={`/experiment/${routeParams.expid}/tree`} className="text-primary hover:underline">
+            new tree view
+          </Link>
+          .
+        </span>
+      </div>
       <RunsModal
         show={showRunsM}
         onHide={toggleShowRunsM}
