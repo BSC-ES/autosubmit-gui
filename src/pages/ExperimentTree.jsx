@@ -389,7 +389,7 @@ const ExperimentTree = () => {
         </div>
 
         <div
-          className="group relative flex flex-col gap-2 lg:grow lg:min-h-[50vh] lg:flex-row lg:gap-0"
+          className="group relative flex flex-col gap-2 lg:grow lg:basis-0 lg:min-h-[50vh] lg:flex-row lg:gap-0"
           onMouseMove={(event) => {
             if (!isResizingColumns && !isResizingSections) return;
             const bounds = event.currentTarget.getBoundingClientRect();
@@ -412,7 +412,7 @@ const ExperimentTree = () => {
           }}
         >
           <div
-            className="relative flex h-auto min-h-0 w-full flex-col lg:h-auto lg:max-h-full lg:w-[var(--left-column-width)]"
+            className="relative flex h-[50vh] min-h-0 w-full flex-col lg:h-auto lg:max-h-full lg:w-[var(--left-column-width)]"
             style={{ "--left-column-width": `${leftColumnWidth}%` }}
             data-sections-panel
           >
@@ -526,7 +526,7 @@ const ExperimentTree = () => {
                 </button>
               </div>
             </div>
-            <div className="flex h-[50vh] flex-col border rounded-lg bg-white lg:h-full">
+            <div className="flex h-[50vh] flex-col overflow-hidden border rounded-lg bg-white lg:h-auto lg:flex-1">
               <div className="relative flex-1 min-h-0">
                 <div
                   className={`relative h-full overflow-auto p-4 custom-scrollbar ${showPaginator ? "pb-20" : ""}`}
@@ -583,7 +583,7 @@ const ExperimentTree = () => {
               </div>
 
               {selectedDir && (
-                <div className="flex items-center py-0.5 px-4 text-sm bg-neutral-100 border-t">
+                <div className="flex shrink-0 items-center py-0.5 px-4 text-sm bg-neutral-100 border-t">
                   <p className="m-0 flex items-center gap-1">
                     {breadcrumbItems.length > 0 ? (
                       breadcrumbItems.map((item, index) => (
@@ -614,7 +614,7 @@ const ExperimentTree = () => {
                 </div>
               )}
               {selectedWrapper && (
-                <div className="flex items-center py-0.5 px-4 text-sm bg-neutral-100 border-t">
+                <div className="flex shrink-0 items-center py-0.5 px-4 text-sm bg-neutral-100 border-t">
                   <p className="m-0 flex items-center gap-1">
                     Wrappers <i className="fa-solid fa-chevron-right text-xs" /> {selectedWrapper.wrapper_name}
                   </p>
