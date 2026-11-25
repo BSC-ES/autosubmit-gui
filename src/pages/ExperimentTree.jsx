@@ -44,6 +44,14 @@ const ExperimentTree = () => {
     lastClickedIndex: 0,
   });
 
+  /** Clear the last clicked index of a selection. */
+  const clearLastClickedIndex = () => {
+    setSelection(prev => ({
+      ...prev,
+      lastClickedIndex: 0,
+    }));
+  };
+
 
   // Component state
   const [jobNameInput, setJobNameInput] = useState(searchParams.get("job_name") || "")
@@ -122,7 +130,7 @@ const ExperimentTree = () => {
   } = autosubmitApiV4.endpoints.getExperimentJobs.useQuery(
     {
       expid: routeParams.expid,
-      view: "base",
+      view: "extended",
       job_name: jobName,
       status: status,
       page: currentPage,
@@ -295,10 +303,15 @@ const ExperimentTree = () => {
   }, [jobsCategoryTreeData, wrapper]);
 
   /**
-   * Clears the current selection whenever the list context changes.
+   * Clears the current selection whenever the experiment context changes.
    */
   useEffect(() => {
     setSelection(createEmptySelection());
+  }, [routeParams.expid]);
+
+  /** Clears the last clicked index of a selection when the context changes. */
+  useEffect(() => {
+    clearLastClickedIndex();
   }, [routeParams.expid, selectedDir, selectedWrapper, currentPage, pageSize, jobName]);
 
 
@@ -544,7 +557,7 @@ const ExperimentTree = () => {
                   )}
                   {(selectedDir || selectedWrapper) && (
                     <>
-                      {isJobsFetching && !activeMonitor ? (
+                      {isJobsFetching ? (
                         <div className="absolute inset-0 flex items-center justify-center bg-white">
                           <div
                             className="spinner-border dark:invert"
@@ -637,6 +650,7 @@ const ExperimentTree = () => {
               ? selection.jobIds.values().next().value
               : `${selection.jobIds.size} jobs selected`
           }
+          onClose={() => setSelection(createEmptySelection())}
           allowTitleCopy={selection.jobIds.size === 1}
         >
           <div className="flex flex-col gap-3">
