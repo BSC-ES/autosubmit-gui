@@ -150,7 +150,7 @@ const ExperimentCard = forwardRef(({ experiment }, ref) => {
             </div>
           </div>
 
-          <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,max-content)] px-2 gap-x-4 gap-y-2">
+          <div className="grid grid-cols-2 px-2 gap-2">
             <CardInfoItem iconClass="fa-user" label="User" value={experiment.user} />
             <CardInfoItem iconClass="fa-computer" label="HPC" value={experiment.hpc} />
             <CardInfoItem iconClass="fa-code-commit" label="Autosubmit version" value={experiment.version} />
