@@ -499,10 +499,15 @@ const ExperimentTree = () => {
                   areWrappersExpanded && "rotate-180",
                 )} />
               </button>
-              <div className={cn(
-                "min-h-0 flex-1 flex-col pt-3",
-                areWrappersExpanded ? "flex" : "hidden",
-              )}>
+              <div
+                className={cn(
+                  "min-h-0 flex-1 flex-col pt-3",
+                  areWrappersExpanded ? "flex" : "hidden",
+                )}
+                onClick={() => {
+                  if (selectedWrapper) handleWrapperSelect(null);
+                }}
+              >
                 <WrapperList
                   wrapperTree={jobsCategoryTreeData?.wrapper_tree}
                   onWrapperSelect={handleWrapperSelect}
@@ -523,7 +528,7 @@ const ExperimentTree = () => {
                 <div className="relative grow">
                   <input
                     className="form-input w-full rounded-lg rounded-r-none pr-9"
-                    placeholder="Filter by job name..."
+                    placeholder="Filter jobs by name..."
                     value={jobNameInput}
                     onChange={(e) => setJobNameInput(e.target.value)}
                     onKeyDown={(e) => {
