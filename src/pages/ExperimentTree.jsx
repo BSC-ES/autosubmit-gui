@@ -67,10 +67,11 @@ const ExperimentTree = () => {
   const [isResizingColumns, setIsResizingColumns] = useState(false);
   const [selection, setSelection] = useState(createEmptySelection);
   const [showRunsM, setShowRunsM] = useState(false);
-  const [selectedRun, setSelectedRun] = useState({
-    run_id: null,
-    created: null,
-  });
+  // TODO: Enable run selection once the API supports it again (#446)
+  // const [selectedRun, setSelectedRun] = useState({
+  //   run_id: null,
+  //   created: null,
+  // });
   const [areWrappersAvailable, setAreWrappersAvailable] = useState(false);
 
   /**
@@ -124,7 +125,6 @@ const ExperimentTree = () => {
   const {
     data: jobsData,
     isFetching: isJobsFetching,
-    isLoading: isJobsLoading,
     isUninitialized: isJobsUninitialized,
     refetch: refetchJobs,
   } = autosubmitApiV4.endpoints.getExperimentJobs.useQuery(
@@ -241,20 +241,22 @@ const ExperimentTree = () => {
     }
   };
 
-  /** Change run selection. */
-  const handleRunSelect = (item) => {
-    // handleClear();
-    setSelectedRun(item);
-    setShowRunsM(false);
-  };
+  // /** Change run selection. */
+  // TODO: Enable run selection once the API supports it again (#446)
+  // const handleRunSelect = (item) => {
+  //   // handleClear();
+  //   setSelectedRun(item);
+  //   setShowRunsM(false);
+  // };
 
   /** Clears the selected run so the latest run is used. */
-  const handleResetRun = () => {
-    handleRunSelect({
-      run_id: null,
-      created: null,
-    });
-  };
+  // TODO: Enable run selection once the API supports it again (#446)
+  // const handleResetRun = () => {
+  //   handleRunSelect({
+  //     run_id: null,
+  //     created: null,
+  //   });
+  // };
 
   /** Toggles visibility of the run selector modal. */
   const toggleShowRunsM = () => {
@@ -355,11 +357,19 @@ const ExperimentTree = () => {
         show={showRunsM}
         onHide={toggleShowRunsM}
         expid={routeParams.expid}
-        onRunSelect={handleRunSelect}
+        // onRunSelect={handleRunSelect} TODO: Enable run selection once the API supports it again (#446)
       />
       <div className="w-full flex flex-col gap-4 grow">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center">
+            <button
+              className={"btn btn-primary font-bold"}
+              title="Select run"
+              onClick={toggleShowRunsM}
+            >
+              <i className="fa-solid fa-clock-rotate-left me-2" /> View runs
+            </button>
+            {/* TODO: Enable run selection once the API supports it again (#446)
             <button
               className={
                 "btn btn-primary font-bold" +
@@ -379,7 +389,7 @@ const ExperimentTree = () => {
               >
                 <i className="fa-solid fa-xmark" />
               </button>
-            )}
+            )} */}
           </div>
           <div className="flex items-center gap-2">
             <button

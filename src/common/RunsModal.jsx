@@ -45,7 +45,7 @@ const RunsModal = ({ expid, show, onHide, onRunSelect }) => {
               <TableHead className="sticky top-0 bg-white">
                 <TableRow>
                   {[
-                    "Select",
+                    // "Select", TODO: Enable run selection once the API supports it again (#446)
                     "RunId",
                     "Created",
                     "Finish",
@@ -70,6 +70,7 @@ const RunsModal = ({ expid, show, onHide, onRunSelect }) => {
                 {data?.runs &&
                   data.runs.map((item) => (
                     <TableRow key={item.run_id}>
+                      {/* TODO: Enable run selection once the API supports it again (#446)
                       <TableCell className="text-center">
                         <button
                           className={
@@ -80,7 +81,7 @@ const RunsModal = ({ expid, show, onHide, onRunSelect }) => {
                         >
                           <i className="fas fa-eye"></i>
                         </button>
-                      </TableCell>
+                      </TableCell> */}
                       <TableCell>
                         {creationDateToId(String(item.created), item.run_id)}{" "}
                         <span className="bg-primary text-white rounded px-1">
