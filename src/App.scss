@@ -113,8 +113,12 @@
     @apply bg-[green] text-white;
   }
 
+  .badge-status-some-completed {
+    @apply border border-primary bg-transparent text-primary;
+  }
+
   .badge-status-completed {
-    @apply bg-[yellow] text-black;
+    @apply border border-[yellow] bg-[yellow] text-black;
   }
 
   .badge-status-failed {

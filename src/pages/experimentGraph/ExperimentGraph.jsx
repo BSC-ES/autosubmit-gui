@@ -12,7 +12,6 @@ import { ChangeStatusModal } from "../../common/ChangeStatusModal";
 import { getStatusBadgeStyle, JOB_STATUSES } from "../../services/utils";
 import { fitJobsInView, fitActiveJobsInView } from "./graphUtils";
 import ExperimentEtaPanel from "../../common/ExperimentEtaPanel";
-import { useWindowSize } from "@uidotdev/usehooks";
 
 const ExperimentGraph = () => {
   const dispatch = useDispatch();
@@ -235,15 +234,12 @@ const ExperimentGraph = () => {
     }
   };
 
-  const isMobile = useWindowSize().width < 1024;
-
   const etaPanel = activeMonitor ? (
     <ExperimentEtaPanel
       activeMonitor={activeMonitor}
       expid={routeParams.expid}
       pklData={pklData}
       jobs={jobs}
-      isMobile={isMobile}
     />
   ) : null;
 
@@ -329,7 +325,7 @@ const ExperimentGraph = () => {
       </div>
 
       <div className="flex grow border rounded-md relative">
-        {!isMobile && etaPanel}
+        <div className="hidden lg:block">{etaPanel}</div>
 
         {isFetching && (
           <div className="absolute inset-0 z-20 flex items-center justify-center bg-white">
@@ -345,7 +341,7 @@ const ExperimentGraph = () => {
         />
       </div>
 
-      {isMobile && etaPanel}
+      <div className="lg:hidden">{etaPanel}</div>
 
       {selectedJobIds.length > 0 && (
         <BottomPanel

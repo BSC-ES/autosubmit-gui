@@ -1,6 +1,6 @@
 import { useMemo } from "react"
 
-const Paginator = ({ totalPages, currentPage = 1, siblingSize = 1, onPageClick }) => {
+const Paginator = ({ totalPages, currentPage = 1, siblingSize = 1, onPageClick, small = false }) => {
 
   const pages = useMemo(() => {
     let rangeSize = Math.min(totalPages, siblingSize * 2 + 1)
@@ -11,13 +11,16 @@ const Paginator = ({ totalPages, currentPage = 1, siblingSize = 1, onPageClick }
     return newPages
   }, [totalPages, currentPage, siblingSize])
 
+  const sizeClass = small ? "h-8 min-w-8 text-xs" : "h-10 min-w-10 text-sm"
+  const buttonClass = `${sizeClass} px-2 inline-flex`
+
   return (
     <>
       {
         totalPages > 0 &&
         <div className="flex items-center gap-2">
           <button
-            className={"h-10 min-w-10 px-3 btn btn-light bg-transparent rounded-full text-primary"}
+            className={buttonClass + " btn btn-light bg-transparent rounded-full text-primary"}
             disabled={(currentPage <= 1)}
             onClick={() => onPageClick({ selected: currentPage - 1 })}>
             <i className="fa-solid fa-angle-left"></i>
@@ -25,7 +28,7 @@ const Paginator = ({ totalPages, currentPage = 1, siblingSize = 1, onPageClick }
           {
             !pages.includes(1) &&
             <button type="button"
-              className={"h-10 min-w-10 px-3 btn rounded-full btn-light bg-transparent text-primary"}
+              className={buttonClass + " btn rounded-full btn-light bg-transparent text-primary"}
               onClick={() => onPageClick({ selected: 1 })}>
               <span className="text-sm">1</span>
             </button>
@@ -38,7 +41,7 @@ const Paginator = ({ totalPages, currentPage = 1, siblingSize = 1, onPageClick }
             pages.map(item => {
               return (
                 <button key={item} type="button"
-                  className={"h-10 min-w-10 px-3 btn rounded-full " + ((currentPage === item) ? "btn-primary" : "btn-light bg-transparent text-primary")}
+                  className={buttonClass + " btn rounded-full " + ((currentPage === item) ? "btn-primary" : "btn-light bg-transparent text-primary")}
                   onClick={() => onPageClick({ selected: item })}>
                   <span className="text-sm">{item + 0}</span>
                 </button>
@@ -52,13 +55,13 @@ const Paginator = ({ totalPages, currentPage = 1, siblingSize = 1, onPageClick }
           {
             !pages.includes(totalPages) &&
             <button type="button"
-              className={"h-10 min-w-10 px-3 btn rounded-full btn-light bg-transparent text-primary"}
+              className={buttonClass + " btn rounded-full btn-light bg-transparent text-primary"}
               onClick={() => onPageClick({ selected: totalPages })}>
               <span className="text-sm">{totalPages}</span>
             </button>
           }
           <button
-            className={"h-10 min-w-10 px-3 btn btn-light bg-transparent rounded-full text-primary"}
+            className={buttonClass + " btn btn-light bg-transparent rounded-full text-primary"}
             disabled={(currentPage >= totalPages)}
             onClick={() => onPageClick({ selected: currentPage + 1 })}>
             <i className="fa-solid fa-angle-right"></i>

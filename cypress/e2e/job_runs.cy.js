@@ -22,16 +22,6 @@ describe("Job run history and RunId generation", () => {
     "NNodes"
   ];
 
-  const createLogFixture = (type = "out") => ({
-    "logfile": `.../a06l_LOCAL_SETUP.20260810125022.${type}`,
-    "found": true,
-    "lastModified": "2026-08-10T12:50:33+02:00",
-    "timeStamp": 1786359033,
-    "error": false,
-    "error_message": "",
-    "logcontent": [{ "index": 0, "content": `This is the ${type} log` }]
-  });
-
   beforeEach(() => {
     cy.byPassAuth();
 
@@ -47,7 +37,7 @@ describe("Job run history and RunId generation", () => {
       fixture: "api/v3/joblog/out_log.json"
     }).as("getJobLog");
 
-    cy.visit(`/experiment/${expid}/tree`);
+    cy.visit(`/experiment/${expid}/tree-legacy`);
 
     cy.wait("@getMinimalTree")
       .its("response.statusCode")

@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { forwardRef, useImperativeHandle, useMemo } from "react";
 import { autosubmitApiV4 } from "../services/autosubmitApiV4";
 import JobDetailCardLayout from "./JobDetailCardLayout";
 import * as Tooltip from "@radix-ui/react-tooltip";
@@ -40,7 +40,7 @@ const calculateChunkDates = (date, currentChunk, chunkUnit, chunkSize = 1) => {
   return [formatDate(startDate), formatDate(endDate)];
 };
 
-const calcRunTime = (start, end) => {
+export const calcRunTime = (start, end) => {
   if (!start || !end) return "-";
   const startDate = new Date(start);
   const endDate = new Date(end);
@@ -68,18 +68,19 @@ const calcYPS = (chunkUnit, chunkSize) => {
  * @param {string} props.jobName - Job name to display in the card header
  * @returns {JSX.Element}
  */
-const FetchJobDetailCard = ({ expid, jobName }) => {
+const FetchJobDetailCard = forwardRef(({ expid, jobName }, ref) => {
   const {
     data: jobData,
     isFetching: isJobDataFetching,
     isError: isJobDataError,
     isUninitialized: isJobDataUninitialized,
+    refetch: refetchJobData,
   } = autosubmitApiV4.endpoints.getJobDetails.useQuery({
     expid: expid,
     job_name: jobName,
   });
 
-  const { data: jobParents } = autosubmitApiV4.endpoints.getJobParents.useQuery(
+  const { data: jobParents, refetch: refetchJobParents } = autosubmitApiV4.endpoints.getJobParents.useQuery(
     {
       expid: expid,
       job_name: jobName,
@@ -87,12 +88,20 @@ const FetchJobDetailCard = ({ expid, jobName }) => {
     },
   );
 
-  const { data: jobChildren } =
+  const { data: jobChildren, refetch: refetchJobChildren } =
     autosubmitApiV4.endpoints.getJobChildren.useQuery({
       expid: expid,
       job_name: jobName,
       include_status: true,
     });
+
+  useImperativeHandle(ref, () => ({
+    refetch: () => {
+      refetchJobData();
+      refetchJobParents();
+      refetchJobChildren();
+    },
+  }));
 
   const [start_date, end_date] = useMemo(() => {
     if (!jobData) return ["-", "-"];
@@ -237,6 +246,8 @@ const FetchJobDetailCard = ({ expid, jobName }) => {
       wrapper={jobData.last_wrapper}
     />
   );
-};
+});
+
+FetchJobDetailCard.displayName = "FetchJobDetailCard";
 
 export default FetchJobDetailCard;
